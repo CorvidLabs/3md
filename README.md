@@ -11,7 +11,9 @@ depth means. Time for a daily planner. Frames for an animation. Layers for
 annotations. Space for a scene.
 
 **[Try the interactive demo](https://corvidlabs.github.io/3md/)** (also on
-[corvidlabs.xyz/3md](https://corvidlabs.xyz/3md/)).
+[corvidlabs.xyz/3md](https://corvidlabs.xyz/3md/)), or
+**[browse all 100 examples](https://corvidlabs.github.io/3md/gallery.html)** in the
+[gallery](gallery/).
 
 <p align="center">
   <a href="https://corvidlabs.github.io/3md/"><img src="docs/demo.png" alt="The 3md interactive demo: planes stacked along the Z axis with a synced source view" width="760"></a>
