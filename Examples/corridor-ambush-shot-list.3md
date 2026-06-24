@@ -1,0 +1,141 @@
+---
+3md: 1.0
+axis: frame
+title: The Corridor — Shot List
+view: present
+scene: INT. HOTEL CORRIDOR — NIGHT
+location: Bucharest Palace Hotel, 4th floor
+director: Leif
+dp: Marta Czajka
+lens: Zeiss CP.3 35mm + 85mm
+fps: 0
+category: Entertainment
+---
+A single scene. Seven shots. One ambush.
+The corridor is 34 meters long. Elena knows someone is at the end of it.
+
+@plane z=0 label="1 — ESTABLISH"
+## Shot 1 · Wide · Locked · T2.8
+**Lens:** 35mm  **Format:** 2.39:1
+
+The full corridor recedes to a **hard vanishing point**.
+Fluorescent tube at meter 22 is flickering — **practical only**, no fill.
+
+```
+==[ CAMERA ]=========================================[ END ]==
+   ←——————————————— 34 m ————————————————→
+   [Elena enters frame left, back to us, still]
+```
+
+> **Note to Marta:** Hold this frame for six full seconds before she moves.
+> The audience must feel the length before she commits to it.
+
+**CUT when:** her right foot crosses the threshold.
+
+@plane z=1 label="2 — FACE CHECK"
+## Shot 2 · OTS · Handheld · T2.0
+**Lens:** 85mm  **Format:** 2.39:1
+
+Over Elena's right shoulder. Camera slightly HIGH — we see the top of her head and 20 meters of empty corridor.
+
+- [ ] Hold perfectly still for 2 seconds
+- [ ] Then **one micro-push** — 4 cm toward the vanishing point
+- [ ] Breath on the lens. No wipe.
+
+**Sound design:** Sub-bass rumble at 38 Hz enters here, inaudible but felt.
+The frame ahead stays **empty the entire shot**.
+
+**CUT when:** she takes her first step.
+
+@plane z=2 label="3 — FEET"
+## Shot 3 · Insert · Low · Locked · T4.0
+**Lens:** 35mm  **Format:** 1.85:1 (letterbox opens slightly — audiences won't consciously notice)
+
+Camera at floor level, 8 cm off carpet. Elena's heels **fill the bottom third**.
+
+```
+[carpet grain] [heel] [heel] [carpet grain]
+   ←— her shadow stretches RIGHT (flicker source is LEFT) —→
+```
+
+**Duration:** 4 seconds exactly.
+Each footfall sounds **slightly wrong** — 2 dB louder than real life, mixed in post.
+
+> This is the shot that makes the audience hold their breath.
+> They don't know why. That's the point.
+
+**CUT on:** the flicker dying — full darkness for 1 frame.
+
+@plane z=3 label="4 — THE DOOR"
+## Shot 4 · Insert · Eye-line · Handheld · T1.4
+**Lens:** 85mm  **Format:** 2.39:1
+
+Room 412. The door at the corridor's end.
+**Under-door light** — warm amber, 2700K. Someone is inside.
+
+- The door handle is **slightly ajar**. 3 cm. Pre-set by props.
+- **NO rack focus.** Elena's reflection in the brass handle stays soft.
+- Camera operator: **do not compensate for your own heartbeat.**
+
+Duration: 3 seconds.
+
+**CUT on:** the door handle moving. 1 cm. Then stopping.
+
+@plane z=4 label="5 — REACTION"
+## Shot 5 · CU · Locked · T1.4
+**Lens:** 85mm  **Format:** 2.39:1 · **Camera:** Eye level, dead center
+
+Elena's face. **Left eye dominates frame.**
+
+```
+[out of focus corridor behind] [LEFT EYE — sharp] [right eye — soft]
+```
+
+She does **nothing**. That is the performance.
+Duration is entirely her call — we keep rolling until she blinks.
+**Average take: 7 seconds. Print the longest one.**
+
+> To the actor: "You already know what's in that room.
+> The audience doesn't. Your job is to let us watch you decide."
+
+**CUT on:** the blink.
+
+@plane z=5 label="6 — APPROACH"
+## Shot 6 · Tracking · Steadicam · T2.8
+**Lens:** 35mm  **Format:** 2.39:1
+
+Steadicam LEADS Elena by 2 meters, retreating toward room 412.
+Speed: **exactly her walking pace**. Operator: do not accelerate.
+
+The corridor walls compress as we approach. Practical sconces pass.
+Door 407 — 408 — 410 — 411 — **412 filling frame**.
+
+- [ ] Ambient sound drops 6 dB over 8 seconds (automation in mix)
+- [ ] Flicker tube behind us — her shadow now precedes her
+- [ ] Steadicam operator: **stop 1 m short of the door**, let her walk into it
+
+**DO NOT CUT.** Hold on the door after she reaches it.
+She raises her hand to knock. **FREEZE on this frame — 2 seconds.** Then:
+
+@plane z=6 label="7 — THE KNOCK"
+## Shot 7 · Wide · Locked · T4.0 · FROM INSIDE ROOM
+**Lens:** 35mm  **Format:** 2.39:1
+
+**Camera is now inside room 412**, shooting THROUGH the door (practical door with lens port, pre-rigged by art dept).
+
+We see the door from the inside. The under-door gap glows corridor-white.
+
+```
+[dark room foreground] [DOOR CENTER FRAME] [dark room foreground]
+                              ↑
+                    [her shadow, under gap]
+```
+
+**Three knocks.** Practical sound only — no foley sweetening.
+Hold on empty door for **4 seconds after the third knock.**
+
+> End of scene. Do not cut to black.
+> Let the projector burn the door into the audience.
+> They knock back in their heads. That's the movie.
+
+**PRINT TAKES:** 2B, 5A, 7C

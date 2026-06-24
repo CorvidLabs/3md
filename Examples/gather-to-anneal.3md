@@ -1,0 +1,168 @@
+---
+3md: 1.0
+axis: step
+title: Hand-Blown Vase: Gather to Anneal
+view: present
+glass: borosilicate, COE 33
+furnace_temp: 2100°F
+annealer_temp: 960°F
+blowtube: 5/8" stainless, 60"
+estimated_time: 45 min
+category: Home
+---
+A hand-blown vase from first gather to the annealer — each step a plane, each plane a breath.
+
+@plane z=0 label="The Gather"
+# First Gather
+
+Dip the **cold blowtube** into the furnace at a **45° angle**, rotating steadily at ~2 rpm. Pull a gather of roughly **300g** of molten soda-lime glass — it should glow **bright orange**, almost white at the surface.
+
+**Feel for:** uniform heat across the gather. Any dark streaks mean cold spots — reheat in the glory hole before proceeding.
+
+> "The gather is a promise. A cold spot is a broken one."
+
+- Rotate continuously — gravity is always pulling
+- Target gather diameter: **5–6 cm**
+- Time in furnace: **8–12 seconds**
+
+[[z=1|Ready to marver →]]
+
+@plane z=1 label="Marvering"
+# Marver the Gather
+
+Roll the gather on the **steel marver table**, applying gentle downward pressure to:
+
+1. Cool the outer skin slightly (makes it workable)
+2. Center the mass on the pipe
+3. Consolidate any bubbles toward the tip
+
+**Marver pattern:**
+```
+← roll 3× →  then  ↺ rotate 90°  then  ← roll 3× →
+```
+
+Target shape after marvering: a **smooth teardrop**, tip pointing away from you, ~7 cm long.
+
+- Do NOT press hard — you want even skin, not a flat spot
+- Return to the **glory hole** at 2050°F for 20–30 seconds if the glass stiffens
+- Skin temp after marvering: ~1400°F
+
+[[z=2|First blow →]]
+
+@plane z=2 label="First Blow"
+# Opening the Bubble
+
+Cap the end of the tube with your **thumb**, then place your lips on the mouthpiece. One **slow, steady breath** — about 2 psi — to open the initial bubble.
+
+**What you're looking for:**
+- A small, even dome forming at the tip (~2 cm diameter)
+- No lopsided bulge (rotate if it pulls to one side)
+- The glass should still glow **deep orange**
+
+> Do NOT blow hard. The glass does the work. You are just suggesting.
+
+| Mistake | Fix |
+|---|---|
+| Bubble off-center | Reheat and gravity-correct with pipe angle |
+| Bubble collapsed | Glass too cold — back to glory hole |
+| Too large too fast | You over-blew — marver back down |
+
+[[z=3|Shaping the neck →]]
+
+@plane z=3 label="Neck & Shoulder"
+# Pulling the Neck
+
+With **jacks** (V-shaped graphite tool), score a **neck** ~8 cm from the blowtube end while rotating. Apply steady inward pressure at ~1400°F to pinch the shoulder.
+
+**The neck defines everything.** Too thin too early and the vase will collapse under its own weight. Target neck diameter: **2.8 cm**.
+
+After jacking the neck, use a **block** (wet cherry wood, 10 cm bowl) to cup and round the **shoulder** below it:
+
+```
+      [blowtube]
+         |
+    _____|_____    ← neck: 2.8 cm
+   /           \   ← shoulder
+  |             |  ← body (expanding)
+   \___________/
+```
+
+Reheat in glory hole: **25 seconds**, constant rotation. Then [[z=4|blow the body →]].
+
+@plane z=4 label="Blowing the Body"
+# Expanding the Body
+
+Now the real blow. Tilt the pipe **downward at 30°** — gravity assists the expansion — and deliver a **sustained breath** over 3–4 seconds while rotating.
+
+**Target dimensions:**
+- Body diameter: **12 cm**
+- Body height (below neck): **18 cm**
+- Wall thickness: **3–4 mm** (hold up to a light — even glow = even walls)
+
+Gravity + rotation + breath work together. If one side thickens, tilt the pipe that side up and let gravity thin it out. Three reheats in the glory hole are normal here.
+
+> The vase is not made — it is coaxed.
+
+Check wall thickness by holding the glowing form in front of the bench light. Dark bands = thick spots. Rotate and reheat those areas selectively.
+
+[[z=5|Color & detail →]]
+
+@plane z=5 label="Color & Detail"
+# Adding Color
+
+Return the hot vase body to the marver and roll across **crushed dichroic frit** (pre-laid in a 15 cm strip). The frit adheres instantly at surface temp >1300°F.
+
+- **Frit used:** copper ruby + silver amber, 80/20 mix
+- **Marver roll:** 2 passes, 180° apart
+- **Reheat:** 30 seconds at 2000°F to melt frit flush with surface
+
+Optional: use a **pick** (tungsten rod) to drag color lines while the glass is at 1600°F — one long pull from shoulder to base creates an elegant **feathered streak**.
+
+```
+Surface after frit + pick drag:
+ ≋≋≋≋≋≋≋   ← amber streaks
+≋≋≋≋≋≋≋≋≋
+ ≋≋≋≋≋≋≋   ← ruby base
+```
+
+Two more glory-hole passes to fully integrate color. Then [[z=6|open the lip →]].
+
+@plane z=6 label="Opening the Lip"
+# Flaring the Lip
+
+Score a **transfer mark** just above the neck with a wet iron rod, then use a **punty** (solid iron rod with a small glass blob) to attach to the **base** of the vase.
+
+Tap the score line — the vase transfers to the punty. Now you can open the top:
+
+1. Reheat the lip end to **bright orange** (1600°F)
+2. Insert **jacks** into the opening and gently spread — 3 mm per pass
+3. Target lip diameter: **9 cm**, flared at ~15° outward
+4. Optionally use a **paddle** to flatten the lip plane for a clean horizontal edge
+
+> This is the moment the vase becomes a vase. Before this, it was just a bubble.
+
+Final lip thickness: **2.5 mm**. Smooth, even, no drips at rim. Knock off the punty with a sharp tap. The piece drops into the **waiting ceramic fiber blanket**.
+
+[[z=7|Into the annealer →]]
+
+@plane z=7 label="Annealing"
+# Annealing: The Long Cool
+
+Place the vase immediately into the **annealer kiln**, preheated to **960°F** (the strain point of soda-lime glass). This temperature relieves internal stress built up during shaping.
+
+**Annealing schedule:**
+
+| Phase | Temp | Duration |
+|---|---|---|
+| Soak | 960°F | 30 min |
+| Slow cool | 960 → 700°F | 90 min |
+| Fast cool | 700 → 400°F | 60 min |
+| Room temp | 400 → 70°F | 8 hrs |
+
+**Total annealing time: ~10 hours.** Open kiln door only after glass is below 100°F.
+
+Glass that skips annealing will shatter from thermal shock — sometimes hours later, sometimes days, always dramatically.
+
+> Tomorrow morning, the vase will be waiting. That is the glassblower's patience — you make it today, you have it tomorrow.
+
+**Finished piece:** 21 cm tall, 12 cm wide, copper-ruby dichroic fade, feathered amber pull, 2 mm flared lip. One of a kind.

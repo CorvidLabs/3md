@@ -1,0 +1,112 @@
+---
+3md: 1.0
+axis: season
+title: A Year in the Hive
+view: present
+colony: Langstroth 10-frame, overwintered double-deep
+location: Zone 6b, Upper Midwest
+category: Education
+---
+Follow one colony — roughly 60,000 bees at peak — through the wheel of the year.
+
+@plane z=0 label="Winter"
+# Winter — The Cluster
+**December through February**
+
+The colony has contracted to a tight **winter cluster**, about the size of a volleyball, pressing against comb cells full of stored honey. There are no drones. The worker population has dropped to ~10,000 — but these are *fat-bodied winter bees*, loaded with vitellogenin protein, built to live 6 months instead of 6 weeks.
+
+The cluster generates heat by vibrating their flight muscles without moving their wings. Core temperature stays at **93 °F (34 °C)** even when it is −20 °F outside.
+
+> The bees do not hibernate. They are awake, burning through ~25 lb of honey between October and March.
+
+**What to watch:**
+- [ ] Heft the hive — if it feels light (< 40 lb), emergency feed fondant
+- [ ] Entrance reducer in place — blocks mice, not airflow
+- [ ] No peeking before 45 °F days
+
+---
+*Next: [[z=1|Spring buildup begins the moment the queen lays again]]*
+
+@plane z=1 label="Early Spring"
+# Early Spring — The Hunger Gap
+**March through April**
+
+The queen began laying in January — just a few hundred eggs a day — and now the cluster is expanding fast. This is the **most dangerous month**. Brood must be kept at 95 °F, which burns honey faster than summer, but there is almost nothing blooming yet.
+
+**Population curve:**
+| Month | Approximate Workers |
+|-------|-------------------|
+| Feb   | 8,000 |
+| Mar   | 18,000 |
+| Apr   | 35,000 |
+| May   | 55,000 |
+
+The beekeeper's job right now: **do not disturb**, but do feed.
+
+A 1:1 sugar syrup (1 lb sugar : 1 lb water) mimics nectar and triggers comb-building. Pollen substitute patties — compressed powder of soy flour, brewers yeast, and real pollen — feed the nurse bees so they can produce royal jelly for the larvae.
+
+> First dandelion sighted = first real pollen flight of the year. The foragers come home with **bright orange saddle-bags** on their hind legs.
+
+---
+*Next: [[z=2|The swarm impulse arrives with the main nectar flow]]*
+
+@plane z=2 label="Late Spring"
+# Late Spring — The Swarm Impulse
+**May through June**
+
+The hive is at capacity: 60,000 bees, brood in every frame, nectar coming in faster than it can be cured. The colony does what it evolved to do — **it prepares to divide**.
+
+Workers build **swarm cells**: large, peanut-shaped queen cells hanging from the bottom of frames. When the first cell is capped, the old queen leaves with roughly half the workers in a **prime swarm**. They boil out of the entrance in a roaring cloud, circle for 20 minutes, and land in a temporary bivouac — often a tree branch — while scouts search for a new cavity.
+
+The swarm hangs, surprisingly docile, for 1 to 3 days.
+
+**Swarm prevention checklist:**
+- [ ] Add a honey super before frames are 80% full
+- [ ] Split the hive: move the old queen + 3 frames of brood to a new box
+- [ ] Destroy all but one swarm cell in the parent hive (leave the best)
+- [ ] Re-queen with a bought queen if genetics are poor
+
+> A swarm is the colony's *reproductive success* — from the bees' perspective, everything else was just preparation for this moment.
+
+---
+*Next: [[z=3|The nectar flow — the reason beekeepers keep bees]]*
+
+@plane z=3 label="Summer"
+# Summer — The Flow
+**June through August**
+
+White clover, basswood, black locust, goldenrod. The major nectar sources vary by region, but for 4 to 8 weeks, foragers make **up to 10 trips per day**, each returning with a 40 mg droplet of nectar in her honey stomach.
+
+**From nectar to honey — the numbers:**
+- 1 lb of honey requires ~5 lb of nectar
+- 5 lb of nectar requires ~20,000 forager trips
+- A strong hive can cap **3–5 lb of honey per day** during a hard flow
+
+Back in the hive, **house bees** receive the nectar, add enzymes (invertase, glucose oxidase), and spread it in open cells. Fanners stand at the entrance and beat their wings for hours, evaporating moisture from 80% down to **17–18% water** — the threshold where honey is shelf-stable forever.
+
+> A capped super frame holds about **6 lb of honey**. A full 10-frame honey super: ~60 lb.
+
+**Mite check:** Varroa destructor populations double every 28 days during brood season. Do an **alcohol wash** (300 bees, count mites): treat if > 2 mites per 100 bees.
+
+---
+*Next: [[z=4|The colony prepares for another winter]]*
+
+@plane z=4 label="Fall"
+# Fall — The Reckoning
+**September through November**
+
+The goldenrod finishes. Drone eviction begins: workers bite the legs of the few hundred remaining drones and drag them to the entrance. Drones cannot sting, cannot forage, contribute nothing to winter survival. They die on the landing board within hours.
+
+The queen is laying **winter bees** now — the same long-lived, fat-bodied workers who will carry the colony through to March. She will reduce laying to near-zero by November.
+
+**The beekeeper's fall checklist:**
+- [ ] Harvest honey supers (leave 60–80 lb for the bees in the deeps)
+- [ ] Treat for Varroa: oxalic acid dribble or vaporization works when brood is minimal
+- [ ] Combine weak colonies — a small colony cannot generate enough cluster heat
+- [ ] Mouse guard on the entrance: 3/8-inch mesh strip, stapled
+- [ ] Insulate the top if your winters go below 0 °F for weeks
+
+> The colony you take into winter is the colony you get in spring. There is no recovering from a bad fall.
+
+---
+*Back to [[z=0|the cluster waiting out the cold]]*

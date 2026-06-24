@@ -1,0 +1,107 @@
+---
+3md: 1.0
+axis: depth
+title: Tell Jezreel — Trench G
+view: elevator
+site: Tell Jezreel, Jezreel Valley, Israel
+trench: G (5 × 5 m), opened 2024 season
+excavator: Dr. Mara Sondheim, Area Supervisor
+datum: 182.4 m asl
+category: Information
+---
+Trench G, opened May 2024. Scrape down with me — each centimeter counts.
+
+@plane z=0 label="Surface (0–15 cm)"
+# Topsoil & Disturbance Layer
+**Munsell:** 10YR 4/3 — brown, loose, modern rootlets throughout.
+
+Modern intrusions dominate. Bulldozer scar cuts SW corner at 7 cm; tractor tread impressions visible in plan.
+
+**Finds bag G-001:**
+- 3× machine-made glass sherds (post-1940)
+- 1× pull-tab aluminum (Goldstar beer, c. 1985)
+- Olive root mat, *Olea europaea*, modern grove above
+
+> "Nothing here worth drawing. Keep going." — field note, 6 May 2024
+
+@plane z=1 label="Ottoman (15–38 cm)"
+# Ottoman Horizon — c. 1600–1900 CE
+**Munsell:** 10YR 5/4 — yellowish brown, compact, charcoal flecks.
+
+Hard-packed surface at 22 cm. Possible threshing floor: dense phytolith scatter, cereal chaff impressions in silty matrix. A 2 cm lens of ash sits directly atop it.
+
+**Finds bag G-007:**
+- 14× hand-made Gaza Ware sherds (buff fabric, red painted bands)
+- 1× Ottoman copper *para* coin, heavily corroded — **pending numismatic ID**
+- 3× clay tobacco pipe fragments (çubuk), white-slipped
+
+**Feature 14:** Robber trench cuts south baulk — stone robbing event, likely 18th c.
+
+@plane z=2 label="Crusader (38–61 cm)"
+# Crusader/Frankish Destruction Layer — c. 1187 CE
+**Munsell:** 2.5YR 4/6 — reddish brown; intense burning event.
+
+Thick (8 cm) destruction debris: mudbrick collapse, vitrified daub, calcined animal bone. Saladin's 1187 campaign destroyed the Frankish manor recorded in the *Tabula Rogeria* as *Gesdreel*.
+
+**Finds bag G-019:**
+- 2× Crusader *denier tournois* silver coins (Kingdom of Jerusalem, 1148–1187 CE range)
+- 11× Frankish wheel-thrown fine ware (cream fabric, green glaze drips)
+- 1× iron crossbow bolt tip, 9.4 cm, square-section — **conservation priority**
+- Burnt olive wood charcoal → submitted for AMS: **Lab #OxA-41882**
+
+*Absolute date expected back September 2024. Predicted 1150–1200 CE.*
+
+@plane z=3 label="Byzantine (61–90 cm)"
+# Byzantine Farmstead — c. 500–700 CE
+**Munsell:** 10YR 6/3 — pale brown, loose sand, lime mortar chunks.
+
+Plaster floor surface at 74 cm (F.22): white hydraulic lime, 1.5 cm thick, red-painted border stripe intact at north edge. Room function unclear; seed press weight found *in situ* suggests olive processing.
+
+**Finds bag G-031:**
+- 38× Late Roman amphora (LRA 1 type, Cilician origin — olive oil trade)
+- 1× bronze coin, *nummus*, nearly illegible — likely Justinian I reign (527–565 CE)
+- Bone stylus, 8.1 cm, incised cross near tip
+- Mosaic tesserae scatter (white limestone): floor above destroyed, tesserae washed down
+
+**Ceramic specialist note:** LRA 1 amphora concentration suggests storage/redistribution node on Byzantine road visible in aerial survey 400 m east.
+
+@plane z=4 label="Iron Age II (90–130 cm)"
+# Israelite Occupation — Iron Age IIB, c. 900–750 BCE
+**Munsell:** 7.5YR 5/4 — brown, dense, high ceramic concentration.
+
+This is the layer. Tell Jezreel is synonymous with the Omride dynasty; this horizon is coeval with **Ahab's royal enclosure** documented in Trenches A–D, 60 m north.
+
+**Finds bag G-048:**
+- 112× Iron Age IIB sherds — store jars (collared rim), cooking pots, *lmlk* handle fragment (four-winged seal impression, *Hebron* — administrative storage)
+- 1× ivory plaque fragment, 3.4 × 2.1 cm, lotus carved in relief → **Tell Jezreel ivories assemblage**
+- Carbonized barley (*Hordeum vulgare*) in sealed pit F.29 → AMS submitted
+- 3× loom weights, fired clay, biconical
+
+**Phytolith analysis pending.** Grain storage function strongly implied for this cell of the enclosure.
+
+@plane z=5 label="Iron Age I (130–158 cm)"
+# Pre-Omride Gap — Iron Age I, c. 1150–950 BCE
+**Munsell:** 10YR 6/4 — light yellowish brown, sparse finds, wind-blown silt lenses.
+
+Occupation hiatus or light pastoral use. No architectural remains; only pits and ephemeral surfaces. Collared-rim store jars continue but density drops sharply. Possibly open grazing land between the Late Bronze collapse and the Omride building program.
+
+**Finds bag G-059:**
+- 9× collared-rim store jar body sherds
+- 1× bronze fibula, simple arc type
+- Animal bone: *Bos taurus* (cattle), *Capra aegagrus hircus* (goat) — pastoral assemblage
+
+> The silence between cities. Nothing marks this earth but hoofprints that decomposed three thousand years ago.
+
+@plane z=6 label="Late Bronze (158–190 cm)"
+# Egyptian-Canaanite Town — Late Bronze IIB, c. 1350–1150 BCE
+**Munsell:** 5YR 5/6 — yellowish red, dense mud-brick melt, high bone density.
+
+Mud-brick architecture fully exposed at 168 cm: two walls meeting at right angle, mud-brick (32 × 16 × 8 cm), still standing 4 courses. Egyptian influence pervasive — this is the era of Thutmose III's campaigns; Jezreel appears in the **Karnak toponym lists** (list 1, entry 84, *i-dz-r-ʿr*).
+
+**Finds bag G-071:**
+- 1× Canaanite storage jar, complete, mended — **78 cm tall, red-slipped**
+- 1× Egyptian blue faience amulet, Bes figure, 2.2 cm — import or local copy?
+- 4× Cypriot Base Ring II ware juglets (opium poppy morphology debated in literature)
+- Cuneiform tablet fragment? **3 signs visible** → epigraphic photography submitted to Göttingen
+
+**Absolute date:** Thermoluminescence on mudbrick (Lab #TL-2024-88): **1290 ± 65 BCE**. High-confidence Late Bronze IIB.

@@ -1,0 +1,183 @@
+---
+3md: 1.0
+axis: step
+title: Welwyn North Interlocking — Down Fast to Platform 2
+view: present
+signalbox: Welwyn North SB (NX panel, 1959)
+route: 1D77 King's Cross → Cambridge, Down Fast → Platform 2
+timetable: 14:23 pass, 0 min late
+operator: Leif H., Monday turn
+category: Engineering
+---
+You are setting road for 1D77 through Welwyn North. Seven interlocking steps, one keystroke at a time. Each plane is a discrete state the frame must pass through before the next can be entered.
+
+@plane z=0 label="Idle — Line Clear"
+
+## 🟩 All Normal, Line Clear
+
+The panel is quiet. Berth track circuits show white. Signal WN15 (Down Fast home) stands at **Danger — Red**.
+
+```
+ WN13  WN15        WN17
+  🟥    🟥          🟥
+   |     |           |
+===⬛====⬛===[23]===⬛===
+         DF          P2
+         ^
+      1D77 approaching (1.2 miles)
+```
+
+- All points: normal (N)
+- Track circuits: clear
+- Lock: no routes set
+
+> Bell received from Hitchin: **2-1** (Express Passenger approaching). Acknowledged with **2-1**.
+
+---
+**Next action:** Set points 23A/23B to Platform 2 road. [[z=1|Step 1 →]]
+
+@plane z=1 label="Points Normal → Reverse"
+
+## ⚙️ Points 23A and 23B — Calling Over
+
+Operate point switches **23A** (trailing) then **23B** (facing) on the NX panel.
+
+| Point | Normal position | Required | Movement |
+|-------|----------------|----------|----------|
+| 23A   | Down Fast through | Reverse | Swing trailing end toward P2 |
+| 23B   | Down Fast through | Reverse | Swing facing end toward P2 |
+
+```
+Before:          After:
+ DF ──────────    DF ──────┐
+         P2 │              P2
+            │
+```
+
+- Points motor runs: **4.2 seconds**
+- Detection lights: red (moving) → **white (detected, reversed)**
+- Facing point lock energised: **FPL 23B confirmed**
+
+> **Warning:** If 23B detection fails, route cannot be set. Check point heaters — last frost 06:14 this morning.
+
+[[z=0|← Back]] · [[z=2|Step 2 →]]
+
+@plane z=2 label="Overlap Check"
+
+## 🔒 Overlap — TC24 Must Be Clear
+
+The interlocking will not release the proceed aspect until the **overlap track circuit TC24** (80 metres beyond WN17, the starting signal) is proved clear.
+
+```
+WN17 (starting)
+  |
+  |——— 80m overlap ———|
+  |                   |
+ [23]               [TC24]
+                       ^
+               Must show WHITE (clear)
+               before WN15 can clear
+```
+
+- TC24 status: **CLEAR** ✓
+- Overlap route locked in rear of WN17
+- Conflicting route via WN19 (Up Slow cross-over): **locked out** automatically
+
+> The 14:19 Up Slow (2C44) cleared TC24 at 14:21:08. Two minutes and counting — plenty of room.
+
+[[z=1|← Back]] · [[z=3|Step 3 →]]
+
+@plane z=3 label="Route Set — Signals Clear"
+
+## 🟢 Route Proved, Signals Clear
+
+Interlocking logic satisfied. Press **WN15 signal button** — route lights up on the panel, signal clears.
+
+```
+ WN13  WN15        WN17
+  🟥    🟢          🟡
+   |     |           |
+===⬛====⬛===[23R]==⬛===
+         DF          P2
+                ^
+           route lit (yellow)
+```
+
+- WN15: **Proceed — Double Yellow** (two-aspect clear)
+- WN17: **Caution — Single Yellow** (platform starter, held at danger until 1D77 booked stop)
+- Points 23A/23B: **locked reversed** for duration of route
+- Route indicator at WN15: **"2"** (feather, lit)
+
+> The driver will see double yellow at WN15 and ease off for the platform starter.
+
+[[z=2|← Back]] · [[z=4|Step 4 →]]
+
+@plane z=4 label="Train Entering Section"
+
+## 🚆 1D77 Fouling the Berth
+
+14:23:41 — 1D77 hits **TC20** (approach berth). Signal description populates automatically on the panel.
+
+```
+ TC20  TC21   TC22  [23R] TC23
+  🟫    ⬛      ⬛           ⬛
+         |
+      1D77 here
+      Class 387, 8-car, 163m
+      Driver: reported on time
+```
+
+- TC20: **occupied** (red)
+- WN15 clears to single yellow as train passes (track-circuit replacement)
+- Route remains locked — **cannot be cancelled** while train is on route
+
+> Standard. You watch the berths walk the train down the panel. Satisfying, like a bead on a wire.
+
+[[z=3|← Back]] · [[z=5|Step 5 →]]
+
+@plane z=5 label="Platform Occupied"
+
+## 🛑 Platform 2 — Train Standing
+
+14:24:09 — 1D77 comes to a stand. TC23 occupied, TC22 occupied. WN17 holds at **Danger**.
+
+```
+         [23R]  TC23    P2 platform
+                 🟫🟫🟫🟫🟫🟫🟫🟫
+                 |← 163m Class 387 →|
+
+WN17: 🟥  (platform starter — DANGER)
+```
+
+- Route automatically **replaced** once all berths behind WN17 re-clear
+- Points 23A/23B: still locked reversed
+- Station call: **1 min 30 sec** scheduled
+
+> Station supervisor presses the "right away" plunger at 14:25:38. One pip on the bell, driver acknowledges two toots.
+
+[[z=4|← Back]] · [[z=6|Step 6 →]]
+
+@plane z=6 label="Departure — Route Released"
+
+## 🟢 Right Away — WN17 Clears
+
+14:25:40 — "Right Away" received. Clear WN17 (Down Platform 2 starter) for onward section to Knebworth.
+
+```
+WN17 (starter, P2)
+  🟢  PROCEED
+   |
+   |——— TC24 overlap still held ———|
+   |
+  TC24: CLEAR ✓
+  Section to Knebworth: LINE CLEAR (received 14:24:55)
+```
+
+- WN17: **Proceed — Green** (line clear to Knebworth home)
+- Train departs 14:25:42 (**2 minutes late** — boarding overrun)
+- As 1D77 clears TC23: points 23A/23B **release**, motor swings back to **Normal**
+- Route extinguishes on panel — back to [[z=0|idle state]]
+
+> Log entry: `14:23 1D77 arr P2, 14:25 dep, 2L. Pts 23 op x2. No irregularities. WNS.`
+
+The panel goes quiet again. Next working: 14:31, the Up Fast empty stock from Cambridge.

@@ -1,0 +1,143 @@
+---
+3md: 1.0
+axis: layer
+title: The Anatomy of a Letterform
+view: stack
+subject: lowercase 'g' (double-storey), set in Garamond Premier Pro, 72pt
+designer: Claude Garamond, c. 1540
+category: Education
+---
+Peel back the layers of a single glyph — the double-storey **g** — from its skeleton to its surface.
+
+@plane z=0 label="Skeleton"
+# The Skeleton
+
+Everything begins with an **invisible armature** — the ductus, the path a broad-nib pen would trace.
+
+```
+     ___
+    /   \
+   |  +  |   ← optical center (not geometric)
+    \___/
+      |
+    __|__
+   /     \
+  |   +   |  ← counter (lower bowl)
+   \_____/
+```
+
+The double-storey g descends from humanist manuscript hands. Its two loops mirror the **binocular structure of the eye** — which is why it feels familiar even before you name it.
+
+- **Stress angle:** ~15° (oblique, matching the pen hold)
+- **Joins:** thin strokes at the northwest and southeast
+- No curves are geometric arcs; every path is **optically corrected**
+
+@plane z=1 label="Proportions"
+# Proportions & Metrics
+
+| Zone | Name | Garamond value (UPM 1000) |
+|---|---|---|
+| Top of ascender | **Ascender line** | 720 |
+| Top of uppercase | **Cap height** | 660 |
+| Top of x | **x-height** | 430 |
+| Bottom of roman | **Baseline** | 0 |
+| Bottom of g's ear | **Descender line** | −220 |
+
+The upper bowl of the g sits **entirely within the x-height zone** (430 → 0). The link — that sinuous neck — drops through the baseline. The lower bowl and ear extend into the descender zone.
+
+> **Ear:** the small terminal stroke projecting from the upper-right of the bowl. In Garamond it is a teardrop, not a spur — a marker of Renaissance origin.
+
+@plane z=2 label="Strokes"
+# Named Strokes
+
+Every line has a name. Learn them and you can **diagnose any typeface** in seconds.
+
+- **Bowl** — the closed, rounded form. The g has two: *upper bowl* (smaller) and *lower bowl* (larger, open at base in some cuts).
+- **Link** — the curved stroke connecting the two bowls. Its weight and angle define the typeface's personality.
+- **Ear** — terminal at the upper-right of the upper bowl. Garamond's ear curves gently clockwise; Gill Sans omits it entirely.
+- **Loop** — the lower, sometimes open, counter. In italic g, it frequently remains open.
+- **Spine** — not present in g, but its absence here distinguishes g from s.
+- **Counter** — the enclosed (or partially enclosed) white space *inside* each bowl. White space is as designed as the black ink.
+
+Stroke width follows **thick-thin contrast**: stems are ~140 units wide; hairlines ~30 units.
+
+@plane z=3 label="Terminals"
+# Terminals & Finishing Details
+
+The moment a stroke ends is where the designer's hand shows most clearly.
+
+**Garamond Premier Pro lowercase g terminals:**
+
+1. **Ear terminal** — a ball terminal with slight leftward tilt, ~40 units diameter
+2. **Link-to-lower-bowl join** — a cupped, concave junction; the ink trap prevents fill at small sizes
+3. **Lower bowl opening** — in the roman, the loop closes; in italic, it opens into a flag terminal pointing ~40° left
+
+### Ink Traps
+
+At the junction of the link and lower bowl, Garamond cuts a tiny notch — an **ink trap** — visible only under magnification. At 8pt, ink floods the junction; the trap pre-compensates so the join reads clean.
+
+> "The eye does not see type. The eye sees the spaces type creates." — Adrian Frutiger
+
+@plane z=4 label="Spacing"
+# Side Bearings & Spacing
+
+The g is not an island. Its metrics reach into the words around it.
+
+```
+  |← LSB →|← glyph width →|← RSB →|
+           gggggggggggggggg
+```
+
+- **Left side bearing (LSB):** ~30 units — tight, because the upper bowl's curve provides optical distance
+- **Right side bearing (RSB):** ~35 units — slightly wider; the ear's horizontal projection demands breathing room
+- **Advance width:** ~530 units total
+
+**Kerning pairs (Garamond, selected):**
+
+| Pair | Kern value | Why |
+|---|---|---|
+| `Ag` | −18 | A's right leg tucks under g's bowl |
+| `gy` | −12 | y's left arm echoes g's right curve |
+| `fg` | +8 | f's arm and g's ear collide without space |
+
+Spacing is **not optical illusion correction** — it is optical illusion *construction*. The goal is equal apparent whitespace, not equal measured whitespace.
+
+@plane z=5 label="Rendering"
+# From Outline to Pixel
+
+The Bézier outline is only halfway to the reader's eye.
+
+### Hinting
+
+At 16px on a 96dpi screen, the g's lower bowl is ~7 pixels tall. Without hints, the counter disappears. **TrueType delta hints** snap stems to pixel boundaries:
+
+- Stem width forced to 2px at 12–14px
+- Bowl counter forced open with a minimum 1px gap
+- Link thinned to 1px below 18px
+
+### Variable Font Axes (Garamond Premier Variable, hypothetical)
+
+| Axis tag | Range | Effect on g |
+|---|---|---|
+| `wght` | 300–700 | Link thickens; ear becomes ball vs. flag |
+| `opsz` | 6–72 | At 6pt: wider counters, open loop; at 72pt: tighter spacing, refined ear |
+| `ital` | 0–1 | Loop opens; link angle shifts from 15° to 8° |
+
+> The double-storey g is the **canary of type rendering** — if your g looks good, your rasterizer is working.
+
+@plane z=6 label="Recognition"
+# The g as Diagnostic Glyph
+
+Typographers use the g (and the a) to fingerprint unknown typefaces.
+
+**Field guide — what the g tells you:**
+
+- **Double-storey g with open loop** → Probably a text face designed for optical sizes (Garamond, Minion, Arno)
+- **Double-storey g with closed loop** → Classical, upright roman (Times New Roman, Palatino)
+- **Single-storey g** → Humanist sans or geometric (Gill Sans, Futura, Optima)
+- **Single-storey g with large loop** → Contemporary neutral (Inter, DM Sans)
+- **Rotated-ear g** → Early digital constraints or deliberate retro (ITC Garamond — controversial)
+
+> Adobe's Robert Slimbach recut Garamond in 1989 after studying specimens at the Plantin-Moretus Museum in Antwerp. He corrected the ear angle that had drifted in earlier revivals. That correction is visible — to a trained eye — in a single glyph.
+
+See the skeleton that started it all: [[z=0|back to skeleton]]

@@ -1,0 +1,108 @@
+---
+3md: 1.0
+axis: round
+title: Curtain Call Trivia
+view: present
+host: The House
+contestants: 3
+prize: $10,000
+rules: Advance with the arrow keys. No peeking ahead.
+category: Entertainment
+---
+Welcome to **Curtain Call** — where every slide is a secret, and every secret is worth money.
+
+*Advance each plane to reveal the question. Advance again for the answer. No cheating.*
+
+@plane z=0 label="Round 1 — Question"
+# Round 1: "Lights, Camera..."
+
+> *"This director won the Academy Award for Best Director four times — more than anyone else in history. Name them."*
+
+---
+
+**Difficulty:** ⭐⭐⭐  
+**Category:** Cinema  
+**Wager window open.** Lock in your answer before advancing.
+
+@plane z=1 label="Round 1 — Answer"
+# Round 1: Answer
+
+## **John Ford**
+
+*The Informer* (1935), *The Grapes of Wrath* (1940), *How Green Was My Valley* (1941), *The Quiet Man* (1952).
+
+---
+
+> "Ford said directing was 'just pointing a camera.' Four Oscars disagree."
+
+**Correct?** Tally your points. On to Round 2. [[z=2|Next question →]]
+
+@plane z=2 label="Round 2 — Question"
+# Round 2: "By the Numbers"
+
+> *"In what year did Jeopardy! first air on network television — and on which network?"*
+
+---
+
+**Difficulty:** ⭐⭐  
+**Category:** Television History  
+**Wager window open.**
+
+@plane z=3 label="Round 2 — Answer"
+# Round 2: Answer
+
+## **1964, NBC**
+
+The original *Jeopardy!* hosted by Art Fleming premiered **March 30, 1964** on NBC. Alex Trebek's version launched in 1984 in syndication.
+
+---
+
+> "Art Fleming hosted 2,858 episodes. Trebek hosted 8,245. Both answered in the form of a question."
+
+**Correct?** [[z=4|Round 3 →]]
+
+@plane z=4 label="Round 3 — Question"
+# Round 3: "Final Curtain"
+
+*Double points. No lifelines. This is it.*
+
+> *"What single word completes all three of these game show titles:*  
+> *The Price Is ___,*  
+> *Let's Make a ___,*  
+> *and Deal or No ___?"*
+
+---
+
+**Difficulty:** ⭐  
+**Category:** Trick Question  
+**Ten seconds. Clock is running.**
+
+@plane z=5 label="Round 3 — Answer"
+# Round 3: Answer
+
+## It's a trick — there is no single word.
+
+- *The Price Is **Right***
+- *Let's Make a **Deal***
+- *Deal or No **Deal***
+
+---
+
+> "The oldest rule in show business: read the whole question before you buzz in."
+
+**Final scores, please. The curtain drops.**
+
+@plane z=6 label="Scoreboard"
+# Final Scoreboard
+
+| Round | Topic | Points |
+|-------|-------|--------|
+| 1 | John Ford, Best Director | 100 |
+| 2 | Jeopardy! premiere, 1964, NBC | 100 |
+| 3 | Trick question — no answer | 200 |
+
+---
+
+**Perfect score: 400 pts**
+
+> *"Thank you for playing Curtain Call. Come back next week — the questions get harder, and the curtain gets heavier."*

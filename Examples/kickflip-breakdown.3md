@@ -1,0 +1,169 @@
+---
+3md: 1.0
+axis: frame
+title: Kickflip: Frame by Frame
+view: play
+fps: 7
+deck: 8.0" Powell-Peralta
+trick: Kickflip
+filmed: Manual pad, Pier 7
+category: Animation
+---
+One kickflip, 8 frames, ~0.4 seconds of air.
+
+@plane z=0 label="Setup"
+## Pop Stance
+
+```
+    O          <- head
+    |
+   /|\         <- arms loose, weight centered
+   / \
+  /   \
+ /     \
+f-------h      <- feet: f=front (toes over bolts), h=heel (tail pocket)
+=======[]      <- board flat on ground
+```
+
+**Front foot:** balls of toes just behind front bolts, angled ~45°
+**Back foot:** heel on tail, ready to pop
+**Knees:** bent ~30°, coiled
+
+---
+
+@plane z=1 label="Pop"
+## Tail Strike
+
+```
+    O
+    |
+   \|/         <- arms swing up for momentum
+    |
+   / \
+  /   \
+ f     H       <- back foot drives tail into ground
+      /|
+     / |
+    /  |       <- tail kisses concrete
+===---/
+```
+
+**Back foot snaps tail** — 100% of your weight loads the tail for ~0.05 sec
+**Sound:** that sharp *crack* you can hear from 30 feet away
+**Board angle:** ~15° nose-up as tail hits
+
+---
+
+@plane z=2 label="Flick"
+## The Flick
+
+```
+      O
+     \|/
+      |
+    f~          <- front foot slides up and OUT off the nose edge
+      \
+       \
+        board rotating ↻
+        =======
+```
+
+**Front foot action:** slide up the deck, let the outside edge of your shoe catch the nose pocket, then FLICK outward
+**This is the whole trick.** Bad flick = late flip, no flip, or a vampire.
+**Rotation target:** 360° along the board's long axis
+
+---
+
+@plane z=3 label="Flight-Low"
+## Board Leaves Feet (Frame 1)
+
+```
+      O
+     /|\        <- arms wide for balance
+    / | \
+   /  |  \
+  /   |   \
+        [====]  <- board rising, ~15° into flip, nose still high
+```
+
+**Board height:** ~6 inches off ground
+**Flip progress:** 60° rotated
+**Feet:** both in the air, front foot pulling back from the flick, back foot tucking up
+
+---
+
+@plane z=4 label="Flight-Peak"
+## Peak of the Pop
+
+```
+       O
+      /|\
+     / | \
+    /  |  \
+   /   |   \
+        |
+       [=]      <- board vertical — 90° flip point
+        |
+```
+
+**This is where you COMMIT.** Board is perfectly vertical.
+**Height:** ~14 inches — your highest point
+**Eyes:** watching the grip tape, waiting for it to come around
+**Do not bail here.**
+
+---
+
+@plane z=5 label="Flight-Catch"
+## Board Comes Around
+
+```
+       O
+      /|\
+     /   \
+    f     h     <- feet dropping DOWN toward board
+        [====]  <- board 270° through flip, grip facing up
+```
+
+**Grip tape is visible again** — this is your cue to catch
+**Front foot:** drops first, aiming for the front bolts
+**Back foot:** follows to the tail bolts
+**Common bail:** catching too early (over the nose) = nose catch
+
+---
+
+@plane z=6 label="Land"
+## Lock In
+
+```
+      O
+      |
+     \|/
+      |
+    f---h       <- both feet over bolts, knees soft
+    =======[]   <- board back on ground, trucks absorb impact
+```
+
+**Both feet land simultaneously** over the bolts — not the nose, not the tail
+**Knees:** bend to absorb ~1.5x bodyweight on landing
+**Weight:** centered, equal on both feet
+**Roll away.** That's it.
+
+---
+
+@plane z=7 label="Slow-Mo Stats"
+## By the Numbers
+
+| Phase | Duration | Board Rotation |
+|---|---|---|
+| Pop (tail strike) | 0.05 sec | 0° → 0° |
+| Flick | 0.04 sec | 0° → 60° |
+| Flight low | 0.06 sec | 60° → 90° |
+| Peak | 0.08 sec | 90° → 270° |
+| Catch | 0.06 sec | 270° → 360° |
+| Land | 0.05 sec | 360° → locked |
+
+**Total air time:** ~0.34 seconds
+**Max height (deck):** ~14 inches
+**Flip axis:** longitudinal (nose-to-tail)
+
+> "The kickflip isn't magic. It's geometry with consequence." — some dude at a park

@@ -1,0 +1,112 @@
+---
+3md: 1.0
+axis: stop
+title: Blackpoll Warbler: The Atlantic Sprint
+view: present
+species: Setophaga striata
+route: Boreal Canada → Caribbean / South America
+peak: Late September – early November
+record_nonstop_flight: ~2,770 km over open Atlantic
+weight_at_departure: ~20 g (nearly double pre-migration mass)
+category: Maps
+---
+*The Blackpoll Warbler weighs less than a AA battery. Every fall it makes one of the longest nonstop overwater flights of any bird on Earth. This is its journey, stop by stop.*
+
+@plane z=0 label="Breeding Grounds"
+## Stop 0 — Boreal Spruce, Northern Canada
+**July – August · ~55°N**
+
+Deep in the spruce-fir belt of Quebec, Labrador, and the Yukon, the male Blackpoll sings his thin, rising *tsit-tsit-tsit-tsit* from the canopy top. By late August he has gone quiet.
+
+The bird begins hyperphagia — eating nearly nonstop, targeting high-lipid berries and insects. Body fat climbs from 3 % to 40 % of total mass. Organs shrink. The digestive tract partially atrophies to save weight.
+
+**What to watch for:**
+- Pale yellowish feet (field mark)
+- Striped cap, white cheeks
+- Constant foraging, barely pausing
+
+> *"It is building a fuel tank for a flight over the void."*
+> — Pete Dunne, *Pete Dunne's Essential Field Guide Companion*
+
+@plane z=1 label="Staging: Maritime Canada"
+## Stop 1 — Bay of Fundy Staging
+**Late August – mid September · ~45°N**
+
+Thousands funnel into coastal Nova Scotia, New Brunswick, and Maine. The Bay of Fundy's shoreline is thick with them in goldenrod and alder thickets. Grand Manan Island sees peak counts of **5,000+ per day** during good weather.
+
+They wait. They study the sky.
+
+**Departure conditions required:**
+- High-pressure system building to the northwest
+- NW winds at 1,500–3,000 m altitude
+- Clear skies, falling temperatures
+
+A bird that leaves in a SW headwind dies at sea. The wait can stretch two weeks.
+
+**eBird hotspots:** Brier Island, NS · Seal Cove, Grand Manan · Pemaquid Point, ME
+
+@plane z=2 label="The Atlantic Launch"
+## Stop 2 — The Point of No Return
+**Mid September – early October · ~42°N**
+
+From Cape Cod, Long Island, or the Jersey Shore, the birds depart after dark, climbing to 3,000–5,000 m. At that altitude, jet-stream-adjacent NW winds carry them SE at ground speeds exceeding **100 km/h**.
+
+```
+ALTITUDE PROFILE (approximate)
+5,000 m |               ████
+4,000 m |           ████████
+3,000 m |       ████████████
+2,000 m | ██████████████████
+1,000 m | ████████████████████
+   0 m  | ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓  ← ocean
+         Cape Cod → Bermuda →
+```
+
+Heart rate: ~1,300 beats per minute at cruise.
+Flight duration: **72–88 hours nonstop.**
+Fat burned: ~0.5 % of body mass per hour.
+
+They cannot land. There is only water below.
+
+@plane z=3 label="Bermuda Rescue"
+## Stop 3 — Bermuda: The Lifeboat
+**Late September – October · 32°N, 64°W**
+
+Bermuda sits alone in the Atlantic, 1,050 km from Cape Hatteras. For exhausted or storm-blown birds it is survival. When a cold front stalls a cohort over open ocean, Bermuda's cedar groves and golf courses fill with warblers — thousands landing in a single night.
+
+**Local birders call these "fallouts."**
+
+A healthy bird may skip Bermuda entirely, arcing southeast toward the Caribbean. A storm-caught bird may weigh only 7 g on arrival — less than half its departure mass.
+
+**Recommended lodging for the birder:** The Arboretum, Paget Parish — free entry, remarkable fallout site.
+
+*Bermuda represents ~38 % of all Blackpoll recoveries from geolocator studies.*
+
+@plane z=4 label="Caribbean Landfall"
+## Stop 4 — Lesser Antilles Landfall
+**Early–mid October · ~13°–17°N**
+
+Barbados, Trinidad, the Windward Islands. The birds drop from the sky at dawn, landing in any tree available — hotel courtyards, mango groves, mangroves. They are emaciated. They sleep.
+
+Over 10–14 days they rebuild fat reserves on tropical fruit and insects.
+
+**Barbados Bird Observatory counts:** peak single-day record — **820 Blackpolls** in one morning, October 9, 2019.
+
+The bird that left New England at 20 g arrived here at roughly 9–11 g. It has burned the equivalent of a human running 5 back-to-back marathons without food or water.
+
+@plane z=5 label="South American Wintering"
+## Stop 5 — Amazonian Winter Quarters
+**November – March · ~0°–10°S**
+
+The final destination: the Amazon Basin, the Guianas, northwestern Brazil. The Blackpoll disappears into mixed-species flocks in the forest understory, spending five months in near-anonymity.
+
+**Total round-trip distance:** ~12,400 km
+**Nonstop oceanic leg:** ~2,770 km (verified by geolocator, 2015 study, *Biology Letters*)
+**Survival rate, first year:** ~40 %
+
+In spring the bird retraces the route over land — through Central America, the Gulf Coast, the Mississippi flyway — a gentler northbound journey.
+
+> *It will be back on that same spruce in Quebec by late May.*
+> *The same bird. The same tree.*
+
+**Further reading:** DeLuca et al. (2015) "Transoceanic migration by a 12 g songbird." *Biology Letters* 11:20141045.

@@ -1,0 +1,196 @@
+---
+3md: 1.0
+axis: stage
+title: The Cipher Vault Cascade
+view: present
+designer: Leif
+theme: Cold War espionage archivesa
+players: 2–6
+target-time: 60 min
+difficulty: ★★★★☆
+category: Entertainment
+---
+
+A five-room puzzle chain inside a decommissioned Soviet listening post. Each stage locks the next behind a physical or cognitive barrier. Run top-to-bottom to build, stage by stage.
+
+@plane z=0 label="Entry Hall — The Dead Drop"
+
+# Stage 0 · Entry Hall
+
+**Room:** A cramped anteroom wallpapered with Cyrillic bureaucratic forms. One bare bulb. A corkboard with seven pinned index cards, each bearing a 4-digit number in red ink.
+
+## The Lock
+🔒 **4-digit padlock** on the inner door.
+
+## Puzzle: Frequency of Betrayal
+The index cards are numbered: `1961`, `1963`, `1968`, `1972`, `1975`, `1979`, `1983`.
+
+A framed portrait on the wall shows **Yuri Andropov** (KGB director 1967–1982). His tenure spans exactly **15 years**.
+
+> "Trust the director. Count only the years he watched."
+
+Cards falling inside 1967–1982: `1968`, `1972`, `1975`, `1979` → **4 cards**.
+
+**Code: `1968`** (first year inside his watch — the year of Prague Spring, the year the post was activated).
+
+## Designer Notes
+- Red herrings: two cards are slightly water-damaged to draw attention away.
+- Flavor audio cue: teletype clatter loops from a hidden speaker.
+- Physical lock placement: bolted to a 1950s filing cabinet drawer, not the door.
+
+@plane z=1 label="Signals Room — The Numbers Station"
+
+# Stage 1 · Signals Room
+
+**Room:** Banks of Bakelite radio equipment, analog dials, reel-to-reel recorders. A live shortwave receiver hisses static. A printed broadcast schedule is taped to the console.
+
+## The Lock
+🔒 **3-letter combination padlock** (letters A–Z) on the tape archive cabinet.
+
+## Puzzle: The One-Time Pad
+Players receive an envelope marked **PRIORITY — BURN AFTER USE** containing:
+
+```
+INTERCEPT 1975-11-04:
+DELTA  FOXTROT  KILO
+  4      6       11
+```
+
+A laminated **NATO phonetic alphabet** sheet hangs on the wall. Subtract the number from the letter's position:
+
+| Phonetic | Position | Minus | Result |
+|----------|----------|-------|--------|
+| DELTA    | 4        | 4     | **0 → wraps to Z** |
+| FOXTROT  | 6        | 6     | **0 → wraps to Z** |
+| KILO     | 11       | 11    | **0 → wraps to Z** |
+
+Wait — that collapses. Second intercept card (found under the reel-to-reel):
+
+```
+CORRECTION CIPHER: SHIFT +3
+```
+
+Reapply: D(4)−4+3=3 → **C**, F(6)−6+3=3 → **C**, K(11)−11+3=3 → **C**... still wrong.
+
+The *real* decode: use the **broadcast schedule times** (03:00, 06:00, 11:00) as the shift values.
+
+D+3 = **G**, F+6 = **L**, K+11 = **V** → **GLV**
+
+**Code: `GLV`**
+
+## Designer Notes
+- The envelope is printed on authentic-looking Soviet form stock.
+- The correction card is a deliberate misdirect — players must notice the schedule.
+
+@plane z=2 label="Cartography Room — The Dead Zone"
+
+# Stage 2 · Cartography Room
+
+**Room:** A long table with a 1:50,000 topographic map of a fictional Baltic coastline pinned flat under acetate. Grease pencils hang on strings. Six numbered red pins mark locations.
+
+## The Lock
+🔒 **Directional lock** (U/D/L/R) — 6-move sequence — on the map cabinet.
+
+## Puzzle: Grid Reference Navigation
+The six pins mark grid references. A decoded field report (retrieved from Stage 1's cabinet) reads:
+
+> "Move from ALPHA toward BRAVO, then turn toward CHARLIE. Cross DELTA, bypass ECHO, finish at FOXTROT."
+
+Plotting the pins on the grid:
+
+```
+· · · C · ·
+· · · · · ·
+A · · D · F
+· · B · E ·
+· · · · · ·
+```
+
+Walking the path:
+- A→B: **Down, Right**
+- B→C turn: **Up, Up**
+- C→D: **Down**
+- D→E: (bypassed) continue **Right**
+- E→F: **Up, Right**
+
+Sequence: **D R U U D R** → but directional lock uses single moves:
+
+**↓ → ↑ ↑ ↓ →**
+
+**Code: `DOWN RIGHT UP UP DOWN RIGHT`**
+
+## Designer Notes
+- Map is hand-illustrated by a local cartographer; no real place names.
+- The acetate layer lets players draw routes with grease pencil — wipe clean between groups.
+- Pins are color-coded by NATO alphabet card retrieved earlier, rewarding continuity.
+
+@plane z=3 label="Cryptanalysis Lab — The Enigma Closet"
+
+# Stage 3 · Cryptanalysis Lab
+
+**Room:** A small windowless room smelling of carbon paper. A functional replica **Enigma machine** (3-rotor, built from laser-cut acrylic) sits on a desk. A single encoded message is framed on the wall.
+
+## The Lock
+🔒 **5-digit electronic keypad** on the reinforced server-room door.
+
+## Puzzle: The Wren's Message
+Framed ciphertext:
+
+```
+XVLQZ MRPOW
+```
+
+The Enigma replica has starting rotor positions marked with colored tape: **R-E-D**.
+
+A manual on the desk shows the simplified rotor wiring used in this replica (provided as a laminated reference card). Players physically type the ciphertext; the machine's output window reveals:
+
+```
+F O U R T  Y N I N E
+```
+
+**FORTY NINE → `49`**
+
+But the keypad needs 5 digits. The mission dossier from Stage 0 listed the post's activation year: **1968**.
+
+`1968` + `49` = **`2017`** — the year the post was *deactivated*, as per a plaque the players walked past at the entrance.
+
+**Code: `02017`**
+
+## Designer Notes
+- The Enigma replica uses a simplified 13-character substitution so solve time stays under 8 minutes.
+- The `49` is also visible as a faded stamp on the original intercept envelope from Stage 1 — a reward for observant players who held onto it.
+- Red herring: a second encoded message in the desk drawer decodes to "LOOK ELSEWHERE."
+
+@plane z=4 label="The Vault — Final Extraction"
+
+# Stage 4 · The Vault
+
+**Room:** A 1.5m × 1.5m steel-lined inner sanctum. A single pedestal holds a **briefcase handcuffed to a chain**. The briefcase face has a **dial combination lock** and a **key lock**.
+
+## The Lock
+🔒 **Dial lock** (3 numbers, 0–99) + **physical key** (hidden in plain sight).
+
+## Puzzle: The Triple Agent's Confession
+Inside the server room (opened by Stage 3) is a dossier stamped **TRIPLE AGENT — EYES ONLY**:
+
+> "My three handlers knew me by different numbers.
+> The Americans gave me **17**.
+> The British gave me **34**.
+> My own people — they gave me the sum."
+
+**17 + 34 = 51**
+
+Dial sequence: **17 · 34 · 51**
+
+**The Key:** It has been hanging on the room's single bare bulb socket since Stage 0 — overlooked because it blends into the fixture. The mission briefing at the very start said: *"In this business, the most important thing is always in the last place you look — or the first place you stopped looking."*
+
+**Code: dial `17-34-51` + the bulb-socket key**
+
+## Designer Notes
+- The briefcase contains a debriefing card, a Soviet commemorative pin, and the players' photo (taken at entry, printed during the 60 minutes by the GM).
+- The key placement rewards players who re-examine Stage 0 spaces — or punishes groups who never look up.
+- Average solve time across all five stages: **47 minutes**. Target window: 45–58 min.
+
+---
+
+> **GM Reset Checklist:** Re-pin index cards · Reload intercept envelope · Wipe map acetate · Reset Enigma rotors to R-E-D · Re-lock all five locks · Rehang key on bulb socket · Restart teletype audio loop

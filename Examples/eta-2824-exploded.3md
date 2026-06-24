@@ -1,0 +1,191 @@
+---
+3md: 1.0
+axis: layer
+title: ETA 2824-2 Movement — Layer by Layer
+view: stack
+caliber: ETA 2824-2
+diameter: 25.60 mm
+height: 4.60 mm
+jewels: 25
+beat: 28,800 vph
+power_reserve: 38–42 hours
+category: Engineering
+---
+An automatic movement, peeled apart. From the dial you can almost see through to the mainspring.
+
+@plane z=0 label="Dial Side"
+
+## Dial — The Face You Trust
+
+```
+  ┌─────────────────────────────┐
+  │  ○  12  ○                   │
+  │  ●           ●              │
+  │ 9 ●     •     ● 3           │
+  │  ●           ●              │
+  │  ○   6   ○        [D]       │
+  └─────────────────────────────┘
+```
+
+- Applied indices: polished brass, 0.35 mm proud of the chapter ring
+- Date window at 3 o'clock — cyclops optional on the crystal above
+- Seconds hand sweeps at **8 ticks/sec** — that silky ETA glide
+- Cannon pinion seats friction-tight on the center wheel pipe
+
+> Dial feet pass through movement at 1:30 and 7:30 — mark them before removing.
+
+@plane z=1 label="Keyless Works"
+
+## Keyless Works — Setting & Winding Interface
+
+| Part | Function | Material |
+|---|---|---|
+| Crown wheel | Transmits crown rotation inward | Hardened steel |
+| Clutch lever | Engages winding vs. setting | Brass + spring |
+| Setting lever | Locks hand-setting position | Steel |
+| Intermediate setting wheel | Drives minute wheel in set mode | Brass |
+| Rocking bar | Detects stem position | Blued steel |
+
+**Stem positions:**
+- Position 0 (pushed in) → normal running
+- Position 1 (one click) → date quick-set, crown wheel idle
+- Position 2 (pulled out) → hands set via minute train
+
+The rocking bar pivot is **0.6 mm** — do not let it fall free during service.
+
+@plane z=2 label="Gear Train"
+
+## Gear Train — The Power Path
+
+```
+Mainspring barrel
+      │  (first wheel, 80 teeth)
+      ▼
+  Center wheel ── cannon pinion ──▶ minute hand
+  (64 teeth / 8 leaf pinion)
+      │
+      ▼
+  Third wheel (75 teeth / 8 leaf)
+      │
+      ▼
+  Fourth wheel (seconds, 80 teeth / 7 leaf)
+      │
+      ▼
+  Escape wheel (15 teeth / 7 leaf)
+```
+
+- Mainspring: **1.25 mm wide, 0.115 mm thick, 385 mm long**
+- Center wheel completes one revolution per **60 minutes** (canonical)
+- Fourth wheel: one revolution per **60 seconds** — mounts the seconds hand
+- Total gear ratio barrel→escape: ~**36,000 : 1**
+
+Power flows right-to-left across the movement bridge. [[z=3|see pallet fork]] for where it stops.
+
+@plane z=3 label="Escapement"
+
+## Escapement — Where Energy Becomes Time
+
+```
+      /‾‾‾\          ← entry pallet stone (ruby)
+     /       \
+----| escape  |----  ← 15 teeth, 1.5° locking angle
+     \       /
+      \_____/
+         |
+    ════╪════        ← pallet fork (lever escapement)
+         |
+     ○───┤            ← impulse pin on balance roller
+         |
+      balance
+      wheel
+```
+
+- Pallet stones: **natural ruby**, 0.70 mm × 0.35 mm
+- Draw angle: **11°** — prevents accidental unlocking under shock
+- Guard pin clears the safety roller notch to within **0.05 mm**
+- If the lever doesn't snap crisply between banking pins → worn pallet pivot
+
+The fork converts the gear train's continuous torque into 28,800 discrete impulses per hour.
+
+@plane z=4 label="Balance"
+
+## Balance Wheel — The Heartbeat
+
+**Frequency:** 4 Hz (28,800 A/h) — one tick every **0.178 seconds**
+
+```
+        ╔═══╗
+       ║     ║      ← rim: glucydur (beryllium-copper)
+      ║   ·   ║
+      ║   │   ║     ← staff pivot: ø 0.07 mm ← yes, 70 microns
+      ║   │   ║
+       ║     ║
+        ╚═══╝
+          │
+     ─────┴─────    ← hairspring: flat breguet overcoil
+                      material: nivarox 1 alloy
+                      wire width: ~0.015 mm
+                      turns: 11.5
+```
+
+- Timing screws (4 × brass, 4 × steel) adjust **rate and poise**
+- Hairspring collet: friction-fitted — never force
+- Replacement balance costs more than the rest of the service
+
+**Rule of thumb:** if amplitude drops below 200° the movement will mis-set dates.
+
+@plane z=5 label="Rotor & Bridge"
+
+## Rotor & Reversing Wheels — Automatic Wind
+
+The 2824-2 winds in **both directions** via two reversing wheels under the oscillating weight.
+
+```
+  ┌──────────────────────────────────┐
+  │   ╭────────────────────────╮     │
+  │   │   rotor bearing (ball) │     │
+  │   ╰──────────┬─────────────╯     │
+  │              │                   │
+  │   ┌──────────▼──────────┐        │
+  │   │ ratchet wheel 1  →  │ ─────▶ │ ratchet click
+  │   │ ratchet wheel 2  →  │ ─────▶ │ (to barrel)
+  │   └─────────────────────┘        │
+  └──────────────────────────────────┘
+```
+
+- Rotor weight: **21-carat gold** in the top spec; tungsten in base editions
+- Rotor clamp screw: **0.5 mm slot**, torque to 0.3 N·cm — no more
+- Ball bearing cage: replace every 5–7 years regardless of feel
+- Reversing click springs: inspect for fatigue cracks at pivot tab
+
+Full wind from flat takes ~650 rotor oscillations on the wrist. [[z=6|power reserve detail]].
+
+@plane z=6 label="Mainspring Barrel"
+
+## Mainspring Barrel — 38 Hours in a Can
+
+```
+┌────────────────────────────────────────┐
+│                                        │
+│    ┌────────────────────────────┐      │
+│    │  ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓   │      │
+│    │  ▓▓ mainspring coil ▓▓▓   │      │  ← barrel (ø 13.4 mm)
+│    │  ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓   │      │
+│    └────────────────────────────┘      │
+│                 │                      │
+│           arbor (center)               │
+│                 │                      │
+│       barrel click + ratchet           │
+│      (prevents mainspring snap-back)   │
+└────────────────────────────────────────┘
+```
+
+**Service notes:**
+- Clean barrel interior with pegwood — no lint, no scratch
+- Lube mainspring: **Moebius 8200** (synthetic, not grease) — 0.5 mg max
+- Check for **set** in the spring: if it won't coil flat it's done
+- Barrel click spring: replace if tip has any blueing or bend
+
+> "A properly lubed barrel buys you five extra years. A dry one buys you a full overhaul." — anonymous bench veteran
+
+Tension stored here flows through all six layers above.
