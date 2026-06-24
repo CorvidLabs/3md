@@ -25,9 +25,9 @@
 // is the same code published as @corvidlabs/threemd.
 import { parse, type Document, type Plane } from "../../js/src/index.ts";
 
-type Mode = "stack" | "play" | "layers" | "scene" | "parallax" | "present" | "elevator" | "blend";
+type Mode = "stack" | "play" | "layers" | "scene" | "parallax" | "present" | "elevator" | "blend" | "single";
 
-const VALID_MODES = ["stack", "play", "layers", "scene", "parallax", "present", "elevator", "blend"] as const;
+const VALID_MODES = ["stack", "play", "layers", "scene", "parallax", "present", "elevator", "blend", "single"] as const;
 
 const AXIS_MODE: Record<string, Mode> = {
   time: "stack",
@@ -641,6 +641,24 @@ export class ThreeMDElement extends HTMLElement {
     }
 
     if (!this._els.length) return;
+
+    // Single-card view: one stationary card whose contents swap as you scrub.
+    // No deck, no 3D - the other planes fade out and the focused one fades in.
+    if (m === "single") {
+      this._els.forEach((el, idx) => {
+        const on = idx === fr;
+        el.style.transform = "translate3d(0px,0px,0px) scale(1)";
+        el.style.opacity = on ? "1" : "0";
+        el.style.zIndex = on ? "10" : "0";
+        el.classList.toggle("hot", false);
+        el.classList.toggle("dim", false);
+      });
+      this._scene.style.transform = "translateZ(0px)";
+      this._updateReadout();
+      this._maybeEmit(fr);
+      return;
+    }
+
     const n = this._els.length;
 
     this._els.forEach((el, idx) => {
