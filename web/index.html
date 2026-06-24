@@ -509,7 +509,10 @@ function buildExtra(){
 }
 function togglePlay(){const b=extra.querySelector(".pbtn");
   if(playing){playing=false;clearInterval(playTimer);playTimer=null;if(b)b.textContent="▶ play";}
-  else{playing=true;if(b)b.textContent="⏸ pause";playTimer=setInterval(()=>{target=(Math.round(target)+1)%doc.planes.length;updateReadout();highlightSource();},460);}
+  else{playing=true;if(b)b.textContent="⏸ pause";
+    const fps=parseInt(doc.metadata.fps,10);
+    const delay=fps>0?Math.min(1000,Math.max(90,1000/fps)):460;
+    playTimer=setInterval(()=>{target=(Math.round(target)+1)%doc.planes.length;updateReadout();highlightSource();},delay);}
 }
 function setTarget(i){target=Math.max(0,Math.min(doc.planes.length-1,i));scrub.value=String(target);updateReadout();highlightSource();}
 function updateReadout(){const i=Math.round(target);const p=doc.planes[i];if(!p)return;
@@ -522,8 +525,8 @@ scrub.addEventListener("input",()=>{target=parseFloat(scrub.value);updateReadout
 document.getElementById("prev").onclick=()=>setTarget(Math.round(target)-1);
 document.getElementById("next").onclick=()=>setTarget(Math.round(target)+1);
 window.addEventListener("keydown",e=>{
-  if(e.key==="ArrowRight"||e.key==="ArrowUp"){setTarget(Math.round(target)+1);e.preventDefault();}
-  if(e.key==="ArrowLeft"||e.key==="ArrowDown"){setTarget(Math.round(target)-1);e.preventDefault();}
+  if(e.key==="ArrowRight"){setTarget(Math.round(target)+1);e.preventDefault();}
+  if(e.key==="ArrowLeft"){setTarget(Math.round(target)-1);e.preventDefault();}
 });
 
 stage.addEventListener("mousemove",e=>{const r=stage.getBoundingClientRect();tmx=((e.clientX-r.left)/r.width-.5);tmy=((e.clientY-r.top)/r.height-.5);
@@ -540,7 +543,7 @@ function loop(){
     if(m==="stack"){z=-idx*150;y=idx*26-(n-1)*13;x=idx*30-(n-1)*15;if(idx===fr){z+=120;s=1.05;hot=true;}}
     else if(m==="play"){z=-idx*150;y=idx*26-(n-1)*13;x=idx*30-(n-1)*15;if(idx===fr){z+=130;s=1.06;hot=true;}else dim=true;}
     else if(m==="layers"){z=-idx*120;y=idx*30-(n-1)*15;x=idx*34-(n-1)*17;if(hidden.has(idx))dim=true;else if(idx===fr){z+=90;s=1.04;hot=true;}}
-    else if(m==="scene"){const p=doc.planes[idx];x=(p.x||0)*4.2;y=-(p.y||0)*4.2;z=-(p.z||idx)*150;if(idx===fr){hot=true;s=1.05;}}
+    else if(m==="scene"){const p=doc.planes[idx];x=(p.x||0)*4.2;y=-(p.y||0)*4.2;z=-p.z*150;if(idx===fr){hot=true;s=1.05;}}
     else if(m==="parallax"){z=-idx*175;const near=n-idx;x=-mx*near*48;y=-my*near*26;s=1+(n-1-idx)*.07;if(idx===fr)hot=true;}
     else if(m==="present"){const d=idx-focus;if(Math.abs(d)<.5){x=0;y=0;z=120;s=1.18;o=1;hot=true;}else{x=d*70;z=-180-Math.abs(d)*50;s=.6;o=.22;dim=true;}}
     else if(m==="elevator"){const d=idx-focus;y=d*150;z=-Math.abs(d)*120;s=Math.abs(d)<.5?1.06:.82;o=Math.max(.12,1-Math.abs(d)*.45);if(Math.abs(d)<.5)hot=true;else dim=true;}
