@@ -15,7 +15,7 @@ annotations. Space for a scene.
 **[viewer &amp; editor](https://corvidlabs.github.io/3md/viewer.html)** (paste any
 `.3md` and share a link), read the
 **[docs](https://corvidlabs.github.io/3md/docs.html)**, or
-**[browse all 100 examples](https://corvidlabs.github.io/3md/gallery.html)** in the
+**[browse 135 examples](https://corvidlabs.github.io/3md/gallery.html)** in the
 [gallery](gallery/).
 
 <p align="center">
@@ -151,13 +151,16 @@ See [SPEC.md](SPEC.md) for the full grammar and conformance rules.
 
 ## Examples
 
-The [Examples/](Examples) directory has ten documents spanning many axis types:
+The [Examples/](Examples) directory has eleven curated documents spanning many
+axis types (and the [gallery](gallery/) has 135 more, from medical charts and
+weather to games, maps, and animations):
 
 - [`daily-planner.3md`](Examples/daily-planner.3md) - `axis: time`, one plane per day.
 - [`animation.3md`](Examples/animation.3md) - `axis: frame`, one plane per frame.
 - [`layered-notes.3md`](Examples/layered-notes.3md) - `axis: layer`, stacked overlay layers.
 - [`dungeon.3md`](Examples/dungeon.3md) - `axis: space`, rooms wired with `[[z=N]]` cross-plane links.
 - [`tide-pool.3md`](Examples/tide-pool.3md) - `axis: depth`, authored by an AI from the spec alone (see [docs/PROOF.md](docs/PROOF.md)).
+- [`game-of-life.3md`](Examples/game-of-life.3md) - `axis: frame`, a real 24-generation Conway run (animates, and renders as a 3D object in the viewer's blend view).
 - [`3md-in-3md.3md`](Examples/3md-in-3md.3md) - 3md explained in 3md, with a `@plane` inside a code fence.
 - Plus `recipe`, `changelog`, `resume`, and `kanban`.
 
