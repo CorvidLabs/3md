@@ -1,0 +1,77 @@
+---
+3md: 1.0
+axis: time
+title: 5-Day Strength Program - Hypertrophy Block, Week 3
+athlete: intermediate lifter
+block: Hypertrophy, week 3 of 4 (volume peak)
+units: kg
+notation: sets x reps @ RPE
+---
+A full training week, one workout per day. Each plane is a training day.
+Scrub the Z axis to move through the week. RPE = rate of perceived exertion (1-10).
+Loads are examples; adjust to your own working weights.
+
+@plane z=0 label="Day 1 - Push (chest/shoulders/triceps)"
+# Day 1: Push
+
+| Exercise               | Sets x Reps | Load   | RPE | Rest  |
+|------------------------|-------------|--------|-----|-------|
+| Barbell bench press    | 4 x 6       | 80     | 8   | 3 min |
+| Incline DB press       | 3 x 10      | 28 ea  | 8   | 2 min |
+| Overhead press         | 3 x 8       | 45     | 8   | 2 min |
+| Cable lateral raise    | 4 x 15      | 9      | 9   | 60 s  |
+| Triceps rope pushdown  | 3 x 12      | 30     | 9   | 60 s  |
+
+- Warm up shoulders thoroughly; this is the volume-peak week.
+
+@plane z=1 label="Day 2 - Pull (back/biceps)"
+# Day 2: Pull
+
+| Exercise               | Sets x Reps | Load   | RPE | Rest  |
+|------------------------|-------------|--------|-----|-------|
+| Deadlift               | 3 x 5       | 130    | 8   | 4 min |
+| Weighted pull-up       | 4 x 6       | +10    | 8   | 3 min |
+| Chest-supported row    | 3 x 10      | 60     | 8   | 2 min |
+| Face pull              | 3 x 15      | 20     | 9   | 60 s  |
+| EZ-bar curl            | 3 x 10      | 30     | 9   | 90 s  |
+
+@plane z=2 label="Day 3 - Legs (quad focus)"
+# Day 3: Legs (quad focus)
+
+| Exercise               | Sets x Reps | Load   | RPE | Rest  |
+|------------------------|-------------|--------|-----|-------|
+| Back squat             | 4 x 6       | 110    | 8   | 4 min |
+| Leg press              | 3 x 12      | 200    | 8   | 2 min |
+| Romanian deadlift      | 3 x 10      | 90     | 8   | 2 min |
+| Leg extension          | 3 x 15      | 50     | 9   | 60 s  |
+| Standing calf raise    | 4 x 12      | 80     | 9   | 60 s  |
+
+- [ ] Track squat bar speed; if grinding below RPE target, deload next week.
+
+@plane z=3 label="Day 4 - Upper (volume/pump)"
+# Day 4: Upper accessory
+
+| Exercise               | Sets x Reps | Load   | RPE | Rest  |
+|------------------------|-------------|--------|-----|-------|
+| Incline bench press    | 4 x 8       | 65     | 8   | 2 min |
+| Single-arm DB row      | 3 x 12      | 32 ea  | 8   | 90 s  |
+| Machine shoulder press | 3 x 12      | 40     | 9   | 90 s  |
+| Cable fly              | 3 x 15      | 12     | 9   | 60 s  |
+| Hammer curl + dip ss   | 3 x 12      | varies | 9   | 60 s  |
+
+This day mirrors the heavy push of [[z=0|Day 1]] but at lighter, higher-rep loads.
+
+@plane z=4 label="Day 5 - Legs (hamstring/glute)"
+# Day 5: Legs (posterior chain)
+
+| Exercise               | Sets x Reps | Load   | RPE | Rest  |
+|------------------------|-------------|--------|-----|-------|
+| Front squat            | 3 x 8       | 80     | 8   | 3 min |
+| Hip thrust             | 4 x 10      | 100    | 8   | 2 min |
+| Lying leg curl         | 4 x 12      | 45     | 9   | 90 s  |
+| Walking lunge          | 3 x 20 steps| 20 ea  | 8   | 90 s  |
+| Seated calf raise      | 4 x 15      | 45     | 9   | 60 s  |
+
+## Weekly notes
+- Weekend: full rest, 8+ hours sleep, protein ~1.8 g/kg bodyweight.
+- Next week is a deload: cut volume ~40%, keep intensity moderate.

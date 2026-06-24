@@ -1,0 +1,72 @@
+---
+3md: 1.0
+axis: step
+title: File Transfer Manifest for release-2.4.0
+job: backup-sync-9f12
+direction: workstation to archive-nas
+total_files: 4
+total_bytes: 1207959552
+algorithm: sha256
+---
+Transfer of the 2.4.0 release bundle to the archive NAS. Each plane is a stage of
+the pipeline. Scrub the Z axis to follow the bytes from queued to verified.
+
+@plane z=0 label="Queued"
+# 1. Queued
+
+Files staged and hashed at the source. Nothing has moved yet.
+
+| File | Size | Source sha256 (head) |
+| --- | --- | --- |
+| release-2.4.0.tar.gz | 982.4 MB | 4f3c9a1b... |
+| checksums.txt | 1.2 KB | 7b8e0d22... |
+| changelog.md | 18.7 KB | c1a4f5e9... |
+| sbom.spdx.json | 169.0 MB | 9d2266af... |
+
+Status: 0 / 4 transferred. Waiting for a connection slot.
+
+@plane z=1 label="Transferring"
+# 2. Transferring
+
+Active copy over rsync-over-ssh. Resumable on drop.
+
+```
+release-2.4.0.tar.gz   [##########] 100%   982.4 MB / 982.4 MB
+checksums.txt          [##########] 100%     1.2 KB /   1.2 KB
+changelog.md           [##########] 100%    18.7 KB /  18.7 KB
+sbom.spdx.json         [######....]  61%   103.0 MB / 169.0 MB
+```
+
+Throughput: 118 MB/s. ETA: 1s. Status: 3 / 4 complete, 1 in flight.
+
+@plane z=2 label="Verifying"
+# 3. Verifying
+
+Re-hash each file at the destination and compare against the manifest from
+[[z=0|the queued stage]].
+
+| File | Source sha256 (head) | Dest sha256 (head) | Match |
+| --- | --- | --- | --- |
+| release-2.4.0.tar.gz | 4f3c9a1b... | 4f3c9a1b... | yes |
+| checksums.txt | 7b8e0d22... | 7b8e0d22... | yes |
+| changelog.md | c1a4f5e9... | c1a4f5e9... | yes |
+| sbom.spdx.json | 9d2266af... | 9d2266af... | yes |
+
+All 4 checksums match. No corruption detected.
+
+@plane z=3 label="Done"
+# 4. Done
+
+Transfer complete and verified.
+
+| Metric | Value |
+| --- | --- |
+| Files transferred | 4 / 4 |
+| Bytes transferred | 1,207,959,552 |
+| Verified | 4 / 4 |
+| Failed | 0 |
+| Elapsed | 00:11:24 |
+| Avg throughput | 105 MB/s |
+
+Snapshot pinned at archive-nas:/vol/releases/2.4.0/. Safe to delete the source
+staging copy.

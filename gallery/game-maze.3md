@@ -1,0 +1,90 @@
+---
+3md: 1.0
+axis: space
+title: The Hedge Maze
+genre: "navigation"
+start: "z=0"
+goal: "z=4"
+---
+Navigate the hedge maze. Each plane is one cell you stand in, drawn as an ASCII
+grid where `@` is you, `#` is hedge, `.` is open ground, and `X` marks the goal.
+Pick a direction; a wall blocks you, an opening lets you through. Find the center.
+Start at [[z=0|the entrance]].
+
+@plane z=0 label="entrance" x=0 y=0
+# Entrance
+```
+#########
+#@......#
+#.#####.#
+#.#...#.#
+#.#.#.#.#
+#...#...#
+#########
+```
+The way in. A gap opens to the east and a corridor runs south.
+
+- Go east to [[z=1|the east passage]].
+- Go south to [[z=2|the south corridor]].
+
+@plane z=1 label="east-passage" x=1 y=0
+# East Passage
+```
+#########
+#.....@.#
+#.#####.#
+#.#...#.#
+#.#.#.#.#
+#...#...#
+#########
+```
+A dead end ahead. Only the south turn or the way back are open.
+
+- Go south to [[z=3|the bend]].
+- Go back west to [[z=0|the entrance]].
+
+@plane z=2 label="south-corridor" x=0 y=1
+# South Corridor
+```
+#########
+#.......#
+#@#####.#
+#.#...#.#
+#.#.#.#.#
+#...#...#
+#########
+```
+Hedge on both sides. The path continues down, then turns east at the bottom.
+
+- Continue south then east to [[z=3|the bend]].
+- Go back north to [[z=0|the entrance]].
+
+@plane z=3 label="bend" x=1 y=1
+# The Bend
+```
+#########
+#.......#
+#.#####.#
+#.#...#@#
+#.#.#.#.#
+#...#...#
+#########
+```
+Two corridors meet here. A narrow gap to the west opens toward the center.
+
+- Slip west into [[z=4|the center]].
+- Go back to [[z=2|the south corridor]].
+
+@plane z=4 label="center" x=2 y=1
+# The Center
+```
+#########
+#.......#
+#.#####.#
+#.#.X.#.#
+#.#@#.#.#
+#...#...#
+#########
+```
+You reach the heart of the maze and touch the marker `X`. The hedges seem to
+exhale. You solved it. The End.

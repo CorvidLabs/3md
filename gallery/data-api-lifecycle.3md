@@ -1,0 +1,101 @@
+---
+3md: 1.0
+axis: step
+title: API Request Lifecycle: POST /v1/orders
+endpoint: POST /v1/orders
+service: api-gateway
+trace_id: 4f9a-2b71-c003
+status: 201 Created
+---
+One request, traced end to end. Each plane is a stage the request passes through.
+Scrub the Z axis to follow a single POST from the wire to the response.
+
+@plane z=0 label="Ingress and TLS"
+# 1. Ingress and TLS
+
+The request arrives at the edge and is terminated.
+
+```
+POST /v1/orders HTTP/2
+Host: api.corvid.dev
+Authorization: Bearer eyJhbGciOi...
+Content-Type: application/json
+Content-Length: 142
+```
+
+| Field | Value |
+| --- | --- |
+| Client IP | 203.0.113.44 |
+| TLS | 1.3, cert valid |
+| Trace started | 4f9a-2b71-c003 |
+
+@plane z=1 label="Auth and Rate Limit"
+# 2. Auth and Rate Limit
+
+Verify the bearer token and check the caller's quota.
+
+```
+[ ok ]  token verified  (sub=acct_8821, exp ok)
+[ ok ]  scope check      orders:write present
+[ ok ]  rate limit       17 / 1000 this minute
+```
+
+If the token had failed here, the request would short-circuit to a 401 and never
+reach [[z=3|the handler]].
+
+@plane z=2 label="Validation"
+# 3. Validation
+
+Parse and validate the JSON body against the schema.
+
+```json
+{
+  "sku": "WIDGET-BLUE-M",
+  "quantity": 2,
+  "ship_to": "acct_8821_addr_1"
+}
+```
+
+```
+[ ok ]  sku exists
+[ ok ]  quantity >= 1
+[ ok ]  ship_to belongs to caller
+```
+
+@plane z=3 label="Business Handler"
+# 4. Business Handler
+
+Reserve inventory and create the order record.
+
+```
+[ ok ]  inventory.reserve(WIDGET-BLUE-M, 2)   -> reserved
+[ ok ]  db INSERT orders                       -> id=ord_55012
+[ ok ]  events.publish("order.created")        -> queued
+```
+
+| Field | Value |
+| --- | --- |
+| Order ID | ord_55012 |
+| DB latency | 8 ms |
+| Reserved | 2 units |
+
+@plane z=4 label="Response and Logging"
+# 5. Response and Logging
+
+Serialize the result, emit metrics, and close the trace.
+
+```
+HTTP/2 201 Created
+Location: /v1/orders/ord_55012
+Content-Type: application/json
+
+{ "id": "ord_55012", "status": "confirmed" }
+```
+
+| Field | Value |
+| --- | --- |
+| Status | 201 Created |
+| Total latency | 31 ms |
+| Trace closed | 4f9a-2b71-c003 |
+
+Lifecycle complete. The full path from [[z=0|ingress]] to here took 31 ms.

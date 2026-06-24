@@ -1,0 +1,90 @@
+---
+3md: 1.0
+axis: step
+title: Tic-Tac-Toe, X Wins
+players: "X and O"
+result: "X wins on the diagonal"
+---
+A full game of tic-tac-toe played out one move per plane. Scrub the Z axis to
+replay it move by move. X takes the center, O blocks clumsily, and X closes the
+top-left to bottom-right diagonal for the win.
+
+@plane z=0 label="empty board"
+```
+ . | . | . 
+---+---+---
+ . | . | . 
+---+---+---
+ . | . | . 
+```
+The board is empty. X to move first.
+
+@plane z=1 label="X center"
+```
+ . | . | . 
+---+---+---
+ . | X | . 
+---+---+---
+ . | . | . 
+```
+X1: center. The strongest opening square.
+
+@plane z=2 label="O top-right"
+```
+ . | . | O 
+---+---+---
+ . | X | . 
+---+---+---
+ . | . | . 
+```
+O1: takes the top-right corner.
+
+@plane z=3 label="X top-left"
+```
+ X | . | O 
+---+---+---
+ . | X | . 
+---+---+---
+ . | . | . 
+```
+X2: top-left corner, threatening the main diagonal.
+
+@plane z=4 label="O blocks diagonal"
+```
+ X | . | O 
+---+---+---
+ . | X | . 
+---+---+---
+ . | . | O 
+```
+O2: takes bottom-right to block the diagonal... but that square also helps O.
+
+@plane z=5 label="X forks middle-left"
+```
+ X | . | O 
+---+---+---
+ X | X | . 
+---+---+---
+ . | . | O 
+```
+X3: middle-left. Now X threatens both the left column and the middle row.
+
+@plane z=6 label="O blocks left column"
+```
+ X | . | O 
+---+---+---
+ X | X | . 
+---+---+---
+ O | . | O 
+```
+O3: blocks the left column at bottom-left. But the middle row is wide open.
+
+@plane z=7 label="X wins middle row"
+```
+ X | . | O 
+---+---+---
+ X | X | X 
+---+---+---
+ O | . | O 
+```
+X4: middle-right completes the middle row. Three X in a row. X wins. The End.

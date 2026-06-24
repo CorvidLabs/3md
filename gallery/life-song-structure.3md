@@ -1,0 +1,89 @@
+---
+3md: 1.0
+axis: section
+title: Wildflower Road - Song Chart
+key: G major
+tempo: "92 bpm"
+time_signature: "4/4"
+capo: "2"
+---
+A full song chart laid out by section. Each plane is one section of the
+arrangement; scrub the Z axis to walk through the form from intro to outro. Chords
+are given relative to the capo (capo 2, so shapes in G sound in A). Strum pattern
+unless noted: D DU UDU.
+
+@plane z=0 label="Intro"
+# Intro (4 bars)
+Fingerpicked, no vocals. Sets the mood.
+
+```
+| G   | Cadd9 | G   | D/F# |
+```
+
+Let the last D/F# ring, then the band comes in on [[z=1|the first verse]].
+
+@plane z=1 label="Verse 1"
+# Verse 1 (8 bars)
+Full strum enters here.
+
+```
+| G        | Cadd9    | G        | D        |
+| Em       | C        | G    D   | G        |
+```
+
+Lyric: "Down the wildflower road where the gravel turns to gold..."
+
+@plane z=2 label="Pre-Chorus"
+# Pre-Chorus (4 bars)
+Build. Hold back the strum, palm-muted eighths.
+
+```
+| Em       | C        | G        | D        |
+```
+
+Crescendo into the downbeat of [[z=3|the chorus]].
+
+@plane z=3 label="Chorus"
+# Chorus (8 bars)
+Open up, full voicings, harmonies on the title line.
+
+```
+| C        | G        | D        | Em       |
+| C        | G        | D        | G        |
+```
+
+Lyric hook: "And I'll carry you home, carry you home."
+
+@plane z=4 label="Verse 2"
+# Verse 2 (8 bars)
+Same chords as [[z=1|Verse 1]]. Add a tambourine on beats 2 and 4.
+
+```
+| G        | Cadd9    | G        | D        |
+| Em       | C        | G    D   | G        |
+```
+
+@plane z=5 label="Bridge"
+# Bridge (6 bars)
+New harmonic color. Drop to a single guitar and voice for the first two bars.
+
+```
+| Am       | Em       | C        | D        |
+| Am       | D        |
+```
+
+Big ritardando on the last D, then crash back into the final chorus.
+
+@plane z=6 label="Final Chorus"
+# Final Chorus (8 bars)
+Repeat [[z=3|the chorus]] twice, second time up a step in energy. Everyone sings.
+
+@plane z=7 label="Outro"
+# Outro (4 bars)
+Wind down to the intro figure, fingerpicked again.
+
+```
+| G   | Cadd9 | G   | G |
+```
+
+Final chord: let G ring and fade.

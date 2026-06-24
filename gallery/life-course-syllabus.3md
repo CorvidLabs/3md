@@ -1,0 +1,69 @@
+---
+3md: 1.0
+axis: time
+title: Intro to Film Photography
+course_code: PHOT 101
+meeting: Tuesdays 18:00 to 20:30
+instructor: J. Okafor
+weeks: "6"
+---
+A six-week course syllabus. The axis is time: each plane is one week of class,
+scrub the Z axis to move through the term. Every plane lists the topic, the
+in-class work, the assignment due, and what to bring. Camera required by week 1; a
+35mm SLR loaner is available on request.
+
+@plane z=0 label="Week 1 - The Camera"
+# Week 1: The Camera and the Frame
+Topic: how a film SLR works. Aperture, shutter, ISO, and the exposure triangle.
+
+- In class: load a roll, dry-fire metering drills, composition walk outside
+- Assignment due: none
+- Bring: your camera, one roll of ISO 400 black and white film
+- Read: handout on the exposure triangle
+
+The shooting habits you build now pay off when we develop in [[z=2|week 3]].
+
+@plane z=1 label="Week 2 - Light and Exposure"
+# Week 2: Reading Light
+Topic: metering modes, the zone system basics, exposure compensation.
+
+- In class: bracket the same scene across five stops, predict the results
+- Assignment due: shoot a full roll exploring hard versus soft light
+- Bring: your exposed roll from this week, light meter app on your phone
+- Read: chapter 2, "Previsualization"
+
+@plane z=2 label="Week 3 - Developing"
+# Week 3: Developing Film
+Topic: the darkroom chemistry workflow, developer, stop, fix, wash.
+
+- In class: develop the roll you shot in [[z=1|week 2]], step by step
+- Assignment due: bring two exposed rolls ready to develop
+- Bring: notebook, an old shirt, your exposed rolls
+- Safety: closed-toe shoes required in the darkroom
+
+@plane z=3 label="Week 4 - Printing"
+# Week 4: The Enlarger
+Topic: contact sheets, test strips, dodging and burning.
+
+- In class: make a contact sheet, then one fine 8x10 print
+- Assignment due: a contact sheet from your best roll so far
+- Bring: your developed negatives in sleeves
+- Read: chapter 4, "From Negative to Print"
+
+@plane z=4 label="Week 5 - The Project"
+# Week 5: Studio and Critique Prep
+Topic: building a cohesive series, sequencing, and self-editing.
+
+- In class: edit your negatives down to a six-image series, peer feedback
+- Assignment due: a working edit of 12 candidate prints
+- Bring: all prints made so far, pushpins
+- Note: final series due next week
+
+@plane z=5 label="Week 6 - Final Critique"
+# Week 6: Final Critique
+Topic: present and defend your finished series.
+
+- In class: gallery walk and group critique of every student's final six prints
+- Assignment due: final mounted series of six prints plus a one-paragraph statement
+- Bring: your matted prints ready to hang
+- Looking back: the strongest work usually traces to habits set in [[z=0|week 1]].

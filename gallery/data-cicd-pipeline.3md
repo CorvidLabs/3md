@@ -1,0 +1,78 @@
+---
+3md: 1.0
+axis: stage
+title: CI/CD Pipeline for api-gateway
+trigger: push to main
+commit: 7a6b5c4
+runner: corvid-ci
+status: passed
+---
+The build pipeline, stage by stage. Each plane is one stage; scrub the Z axis to
+walk from checkout to deploy. A stage only runs if every earlier stage passed.
+
+@plane z=0 label="Checkout and Setup"
+# 1. Checkout and Setup
+
+Clone the repo at the triggering commit and restore caches.
+
+```
+[ ok ]  git checkout 7a6b5c4
+[ ok ]  restore cache: ~/.bun (hit)
+[ ok ]  bun install --frozen-lockfile
+```
+
+Duration: 14s. Status: passed.
+
+@plane z=1 label="Lint and Typecheck"
+# 2. Lint and Typecheck
+
+Static analysis. No network, fully cached.
+
+```
+[ ok ]  bun run lint        0 errors, 0 warnings
+[ ok ]  bun run typecheck    no type errors
+```
+
+Duration: 22s. Status: passed.
+
+@plane z=2 label="Unit Tests"
+# 3. Unit Tests
+
+Run the suite with coverage gating at 80%.
+
+```
+[ ok ]  bun test
+        148 pass, 0 fail, 0 skip
+        coverage: lines 87.3%  (gate 80%)
+```
+
+Duration: 41s. Status: passed.
+
+@plane z=3 label="Build Image"
+# 4. Build Image
+
+Build and tag the container, push to the registry.
+
+```
+[ ok ]  docker build -t api-gateway:7a6b5c4 .
+[ ok ]  docker push registry.corvid/api-gateway:7a6b5c4
+        digest: sha256:b91f...e07a
+```
+
+Duration: 1m 38s. Status: passed.
+
+@plane z=4 label="Deploy to Staging"
+# 5. Deploy to Staging
+
+Roll the new image onto staging and run smoke checks.
+
+```
+[ ok ]  kubectl set image deploy/api-gateway app=...:7a6b5c4
+[ ok ]  rollout complete (3/3 pods ready)
+[ ok ]  smoke: GET /healthz -> 200
+```
+
+Duration: 55s. Status: passed.
+
+Promotion to production is gated on a manual approval. The artifact built in
+[[z=3|the build image stage]] is the exact image that will be promoted.

@@ -1,0 +1,80 @@
+---
+3md: 1.0
+axis: time
+title: Commit History for feature/auth-rework
+branch: feature/auth-rework
+base: main
+repo: corvid/api-gateway
+---
+A readable commit log. Each plane is one commit, oldest at z=0. Scrub forward in
+time to watch the branch take shape.
+
+@plane z=0 label="Scaffold auth module" sha="a1b2c3d" author="leif"
+# a1b2c3d  Add: auth module scaffold
+
+    2026-06-18 09:14  leif
+
+Created the empty module and wired it into the router.
+
+```
+ src/auth/index.ts      | 12 ++++++++++++
+ src/auth/types.ts      |  8 ++++++++
+ src/router.ts          |  3 +++
+ 3 files changed, 23 insertions(+)
+```
+
+@plane z=1 label="Token verification" sha="d4e5f6a" author="leif"
+# d4e5f6a  Add: JWT verification middleware
+
+    2026-06-19 11:02  leif
+
+Verify and decode bearer tokens, reject expired ones.
+
+```
+ src/auth/verify.ts         | 64 +++++++++++++++++++++++++++++
+ src/auth/verify.test.ts    | 41 ++++++++++++++++
+ 2 files changed, 105 insertions(+)
+```
+
+@plane z=2 label="Refresh token flow" sha="9c8b7a6" author="dana"
+# 9c8b7a6  Add: refresh token rotation
+
+    2026-06-20 15:47  dana
+
+Issue a new refresh token on use and revoke the old one.
+
+```
+ src/auth/refresh.ts        | 88 +++++++++++++++++++++++++++++++++
+ src/auth/store.ts          | 33 +++++++++++++
+ 2 files changed, 121 insertions(+)
+```
+
+Builds on the verifier from [[z=1|the token verification commit]].
+
+@plane z=3 label="Fix clock skew bug" sha="2f1e0d9" author="leif"
+# 2f1e0d9  Fix: allow 30s clock skew on expiry
+
+    2026-06-22 10:30  leif
+
+Tokens were rejected one second early under load. Added a leeway window.
+
+```
+ src/auth/verify.ts         |  6 +++---
+ src/auth/verify.test.ts    | 14 ++++++++++++++
+ 2 files changed, 17 insertions(+), 3 deletions(-)
+```
+
+@plane z=4 label="Docs and changelog" sha="7a6b5c4" author="dana"
+# 7a6b5c4  Update: auth docs and changelog
+
+    2026-06-23 16:18  dana
+
+Documented the refresh flow and added a migration note for existing clients.
+
+```
+ docs/auth.md     | 72 ++++++++++++++++++++++++++++++++
+ CHANGELOG.md     |  9 +++++
+ 2 files changed, 81 insertions(+)
+```
+
+Ready for review. Diff is +347 / -6 across 5 commits.

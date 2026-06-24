@@ -1,0 +1,90 @@
+---
+3md: 1.0
+axis: time
+title: ACL Reconstruction - Recovery Timeline
+procedure: Left ACL reconstruction, hamstring autograft
+surgery_date: 2026-04-02
+surgeon: Dr. P. Nakamura
+pt_clinic: Riverside Sports Rehab
+---
+Post-operative rehabilitation plotted by phase, from surgery to return to sport.
+Each plane is a recovery phase; scrub the Z axis to move forward in healing time.
+Pain and swelling are tracked alongside functional milestones.
+
+@plane z=0 label="Phase 0 - Week 0 to 2"
+# Phase 0: Acute (Weeks 0-2)
+
+**Goals:** Protect the graft, control swelling, restore full extension.
+
+## Status
+- Pain: 6/10 at rest, managed with scheduled acetaminophen + short opioid taper.
+- Swelling: marked, knee circumference +4 cm vs right.
+- ROM: 0-90 degrees target by end of week 2.
+
+## Program
+- [x] Heel slides, quad sets, straight-leg raises
+- [x] Ice + elevation 20 min, 4x/day
+- [x] Brace locked in extension for ambulation
+- [x] Weight-bearing as tolerated with crutches
+
+@plane z=1 label="Phase 1 - Week 2 to 6"
+# Phase 1: Early strengthening (Weeks 2-6)
+
+**Goals:** Full ROM, normalize gait, wean off crutches.
+
+## Status
+- Pain: 2/10, only with end-range flexion.
+- Swelling: mild, +1 cm.
+- ROM: 0-130 degrees achieved.
+
+## Program
+- [x] Stationary bike (low resistance)
+- [x] Mini-squats 0-60 degrees, calf raises
+- [x] Discontinue crutches once gait is non-antalgic
+- [ ] Begin closed-chain leg press, light
+
+@plane z=2 label="Phase 2 - Month 2 to 4"
+# Phase 2: Strength and proprioception (Months 2-4)
+
+**Goals:** Restore quad strength symmetry, single-leg balance.
+
+## Status
+- Pain: 0/10 with daily activity.
+- Quad strength: ~70% of contralateral on isokinetic test.
+
+## Program
+- Progressive leg press, hamstring curls, step-ups
+- Single-leg balance on foam, perturbation training
+- Pool jogging, elliptical
+- **No cutting, pivoting, or running yet.**
+
+@plane z=3 label="Phase 3 - Month 4 to 6"
+# Phase 3: Return to running (Months 4-6)
+
+**Goals:** Graduated running program, plyometric introduction.
+
+## Status
+- Quad strength: 85% symmetry by month 5.
+- Hop test (single-leg): 88% limb symmetry index.
+
+## Program
+- Linear running progression (walk/run intervals to continuous)
+- Double-leg then single-leg jumps, box drops
+- Agility ladder, light deceleration drills
+
+@plane z=4 label="Phase 4 - Month 6 to 9"
+# Phase 4: Return to sport (Months 6-9)
+
+**Goals:** Pass return-to-sport battery, full clearance.
+
+## Return-to-sport criteria
+- [ ] Limb symmetry index > 90% on hop battery
+- [ ] Quad strength > 90% symmetry
+- [ ] No effusion after high-load sessions
+- [ ] Completed sport-specific cutting/pivoting progression
+- [ ] Psychological readiness (ACL-RSI) score acceptable
+
+## Notes
+Earliest typical clearance is 9 months to reduce re-rupture risk; do not rush
+back to pivoting sport before criteria are met. Reflect on the swelling baseline
+from [[z=0|the acute phase]] when judging how far the knee has come.

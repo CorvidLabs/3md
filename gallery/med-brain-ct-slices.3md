@@ -1,0 +1,118 @@
+---
+3md: 1.0
+axis: depth
+title: Head CT - Axial Slices (Superior to Inferior)
+modality: CT, non-contrast
+study: Routine head, 5 mm axial reconstruction
+indication: Headache, rule out acute hemorrhage
+orientation: radiological (patient left = image right)
+---
+A non-contrast head CT read slice by slice from the vertex down to the skull base.
+Each plane is one axial level; scrub the Z axis to descend through the head.
+Grids are schematic cross-sections - any non-space, non-dot character is tissue.
+
+@plane z=0 label="Vertex - high convexity"
+# Slice 1: High convexity (z = vertex)
+
+Superior frontal and parietal lobes. Interhemispheric fissure midline.
+
+```
+.......#######.......
+....###############..
+..####OOOOOOOOO####...
+.####OOO     OOO####..
+.####OO   |   OO####..
+.####OOO  |  OOO####..
+..####OOOOOOOOO####...
+....###############..
+.......#######.......
+```
+
+- `#` = skull / scalp
+- `O` = cortex and white matter
+- `|` = interhemispheric fissure (midline)
+
+**Read:** No extra-axial collection. Sulci symmetric. Midline preserved.
+
+@plane z=1 label="Lateral ventricles - bodies"
+# Slice 2: Bodies of the lateral ventricles
+
+```
+......###########......
+...###OOOOOOOOOOO###...
+..##OOOOOO|OOOOOO##....
+.##OOOO ~~~|~~~ OOO##..
+.##OOO ~LV~|~LV~ OO##..
+.##OOOO ~~~|~~~ OOO##..
+..##OOOOOO|OOOOOO##....
+...###OOOOOOOOOOO###...
+......###########......
+```
+
+- `~` = CSF in lateral ventricles (LV)
+- `O` = brain parenchyma
+
+**Read:** Lateral ventricles symmetric, normal size. No mass effect.
+
+@plane z=2 label="Basal ganglia / third ventricle"
+# Slice 3: Basal ganglia and third ventricle
+
+```
+.......#########.......
+....##OOOOOOOOOOO##....
+..##OOO[CN][CN]OOO##...
+.##OO[P]  ~|~  [P]OO##.
+.##OO[GP]~3V~[GP]OO##..
+.##OO[P]  ~|~  [P]OO##.
+..##OOO[CN][CN]OOO##...
+....##OOOOOOOOOOO##....
+.......#########.......
+```
+
+- `[CN]` = caudate nucleus head
+- `[P]` = putamen, `[GP]` = globus pallidus
+- `~3V~` = third ventricle
+
+**Read:** Gray-white differentiation preserved. No hyperdensity to suggest acute blood. No hypodensity to suggest established infarct. Compare with [[z=3|the suprasellar level]] for the circle of Willis.
+
+@plane z=3 label="Suprasellar cistern"
+# Slice 4: Suprasellar cistern and midbrain
+
+```
+.......#########.......
+....##OOOOOOOOOOO##....
+..##OOOO  ***  OOOO##..
+.##OOO *star-cistern* O##
+.##OOOO [MB-pons] OOO##.
+..##OOOOOOOOOOOOOOO##..
+....##OOO     OOO##....
+......##temporal##.....
+.......#########.......
+```
+
+- `***` / `star-cistern` = suprasellar (star-shaped) cistern - patent
+- `[MB-pons]` = midbrain / upper pons
+
+**Read:** Basal cisterns patent. No effacement to suggest herniation or diffuse edema.
+
+@plane z=4 label="Skull base / posterior fossa"
+# Slice 5: Posterior fossa and skull base
+
+```
+.......#########.......
+....###OOOOOOOOO###....
+..###OO[cerebellum]OO###
+.###OO    ~4V~    OO###.
+.###OO [L-hemi][R-hemi]##
+..###OOOOOOOOOOOOO###..
+....####[petrous]####..
+.......#########.......
+```
+
+- `~4V~` = fourth ventricle (midline, CSF)
+- `[petrous]` = petrous temporal bone
+
+**Read:** Cerebellar hemispheres symmetric, fourth ventricle midline and normal. No posterior fossa hemorrhage.
+
+## Impression
+No acute intracranial hemorrhage, mass effect, or large territorial infarct on this non-contrast study.

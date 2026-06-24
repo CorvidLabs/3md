@@ -1,0 +1,164 @@
+---
+3md: 1.0
+axis: time
+title: 7-Day Forecast for Portland, OR
+location: Portland, OR
+units: fahrenheit
+issued: 2026-06-24 06:00 PDT
+source: corvid-weather
+---
+A seven day outlook. Each plane is one day; scrub the Z axis to move through the
+week. The little sky grid is a rough cloud-cover sketch, not a satellite image.
+
+@plane z=0 label="Wed Jun 24"
+# Wednesday, June 24
+
+Mostly sunny and warm. Light afternoon breeze off the river.
+
+| Metric | Value |
+| --- | --- |
+| High | 81F |
+| Low | 58F |
+| Conditions | Mostly sunny |
+| Precip | 0% |
+| Wind | NW 6 mph |
+| Humidity | 41% |
+
+```
+sky  . . * . . .   (* = thin cloud)
+     . . . . . .
+sun  \ | /
+    -- O --
+     / | \
+```
+
+Pollen is high today; see the weekend cooldown at [[z=4|Sunday]].
+
+@plane z=1 label="Thu Jun 25"
+# Thursday, June 25
+
+Sun gives way to high clouds by evening.
+
+| Metric | Value |
+| --- | --- |
+| High | 83F |
+| Low | 60F |
+| Conditions | Sunny then high clouds |
+| Precip | 5% |
+| Wind | W 8 mph |
+| Humidity | 44% |
+
+```
+sky  * * . * . *
+     . * . . * .
+sun     \ | /
+       -- O --
+```
+
+@plane z=2 label="Fri Jun 26"
+# Friday, June 26
+
+Warmest day of the stretch. Stay hydrated.
+
+| Metric | Value |
+| --- | --- |
+| High | 88F |
+| Low | 62F |
+| Conditions | Hot and clear |
+| Precip | 0% |
+| Wind | NW 5 mph |
+| Humidity | 38% |
+
+```
+sky  . . . . . .
+     . . . . . .
+sun   \  |  /
+     --  O  --
+      /  |  \
+```
+
+@plane z=3 label="Sat Jun 27"
+# Saturday, June 27
+
+Clouds build through the day. A stray afternoon shower is possible.
+
+| Metric | Value |
+| --- | --- |
+| High | 79F |
+| Low | 61F |
+| Conditions | Partly cloudy, isolated showers |
+| Precip | 30% |
+| Wind | SW 10 mph |
+| Humidity | 55% |
+
+```
+sky  ~ ~ * ~ * ~
+     * ~ * ~ * *
+     . ' . ' . '   (' = light shower)
+```
+
+@plane z=4 label="Sun Jun 28"
+# Sunday, June 28
+
+Cooler and gray. Showers likely in the morning.
+
+| Metric | Value |
+| --- | --- |
+| High | 68F |
+| Low | 55F |
+| Conditions | Cloudy, AM showers |
+| Precip | 70% |
+| Wind | SW 12 mph |
+| Humidity | 72% |
+
+```
+sky  ~ ~ ~ ~ ~ ~
+     ~ ~ ~ ~ ~ ~
+     ' ' . ' ' .
+     . ' ' . ' '
+```
+
+A welcome break from the heat of [[z=2|Friday]].
+
+@plane z=5 label="Mon Jun 29"
+# Monday, June 29
+
+Clearing out. Morning fog burns off by midday.
+
+| Metric | Value |
+| --- | --- |
+| High | 73F |
+| Low | 54F |
+| Conditions | AM fog then sun |
+| Precip | 10% |
+| Wind | N 7 mph |
+| Humidity | 60% |
+
+```
+sky  = = = = = =   (= = fog layer)
+     . . * . . .
+sun     \ | /
+       -- O --
+```
+
+@plane z=6 label="Tue Jun 30"
+# Tuesday, June 30
+
+Back to comfortable early-summer sun.
+
+| Metric | Value |
+| --- | --- |
+| High | 77F |
+| Low | 56F |
+| Conditions | Sunny |
+| Precip | 0% |
+| Wind | NW 6 mph |
+| Humidity | 47% |
+
+```
+sky  . . . * . .
+     . . . . . .
+sun   \  |  /
+     --  O  --
+      /  |  \
+```

@@ -1,0 +1,82 @@
+---
+3md: 1.0
+axis: space
+title: Downtown Transit Map
+city: Portland
+line: MAX Blue Line
+note: x and y are abstract grid coordinates, not real distances
+---
+A schematic transit map. Each plane is a stop placed by x/y on a shared grid, so a
+spatial viewer can lay them out as a route diagram. The axis is space: z just
+orders the stops west to east along the line. Use the overview grid below to see
+the whole route, then scrub through individual stops for details.
+
+```
+   y
+ 5 |        Library(2)
+ 4 |  Civic(0)
+ 3 |          Pioneer(3)----Mall(4)
+ 2 |   Goose(1)
+ 1 |                              Convention(5)
+   +-------------------------------------------- x
+     1    2    3    4    5    6    7    8
+```
+
+@plane z=0 x=2 y=4 label="Civic Center West"
+# Civic Center West
+Western terminus of the downtown segment.
+
+- Transfers: Streetcar A Loop
+- Nearby: Providence Park stadium, food carts on SW 10th
+- Accessible: yes, level boarding
+- Bike share dock: 12 slots
+
+Next stop east is [[z=1|Goose Hollow]].
+
+@plane z=1 x=3 y=2 label="Goose Hollow"
+# Goose Hollow
+Quiet residential stop at the base of the hill.
+
+- Transfers: Bus 15
+- Nearby: Lincoln High School, Tanner Springs Park
+- Accessible: yes
+- Park and ride: no
+
+@plane z=2 x=4 y=5 label="Central Library"
+# Central Library
+Busy midday stop.
+
+- Transfers: Bus 20, Bus 12
+- Nearby: Multnomah County Central Library, Director Park
+- Accessible: yes, elevator to platform
+- Ticket machine: 2 on platform
+
+@plane z=3 x=5 y=3 label="Pioneer Square"
+# Pioneer Square
+The hub. Highest ridership on the line.
+
+- Transfers: MAX Red, Green, and Yellow lines
+- Nearby: Pioneer Courthouse Square, shopping core
+- Accessible: yes
+- Staffed info booth: weekdays 8 to 18
+
+This is the interchange. Eastbound continues to [[z=4|Mall stop]]; for the western
+end go back to [[z=0|Civic Center]].
+
+@plane z=4 x=7 y=3 label="Mall and 5th"
+# Mall and 5th
+Transit mall stop with frequent buses.
+
+- Transfers: Bus 1, Bus 9, Bus 17
+- Nearby: Pioneer Place mall, Apple Store
+- Accessible: yes
+- Real-time arrivals sign: yes
+
+@plane z=5 x=8 y=1 label="Convention Center"
+# Convention Center
+Eastern terminus of the downtown segment, across the river.
+
+- Transfers: Bus 6
+- Nearby: Oregon Convention Center, Rose Quarter
+- Accessible: yes
+- Park and ride: 400 spaces

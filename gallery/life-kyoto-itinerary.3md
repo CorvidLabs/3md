@@ -1,0 +1,69 @@
+---
+3md: 1.0
+axis: time
+title: Five Days in Kyoto
+travelers: "2"
+season: autumn
+budget_per_day: "12000 yen"
+---
+A day-by-day trip plan for Kyoto in mid-November. Each plane is one day; scrub the
+Z axis to move forward and backward through the trip. The arrival day is z=0 and
+the departure day is z=4. Hotel is the Hotel Kanra near Kyoto Station for all
+nights, so every day starts and ends there.
+
+@plane z=0 label="Day 1 - Arrival and Higashiyama"
+# Day 1: Arrival and Higashiyama
+Land at Kansai (KIX), take the Haruka express to Kyoto Station (75 min).
+
+- 14:00 Check in at Hotel Kanra, drop bags
+- 15:30 Walk Kiyomizu-dera temple before it closes (last entry 17:30)
+- 17:00 Stroll the slopes of Sannenzaka and Ninenzaka
+- 19:00 Dinner: ramen at Honke Daiichiasahi near the station
+
+Light first day to shake off the flight. See [[z=4|the departure plan]] now so
+you book the airport train in advance.
+
+@plane z=1 label="Day 2 - Arashiyama"
+# Day 2: Arashiyama
+Take the JR Sagano line from Kyoto Station to Saga-Arashiyama (15 min).
+
+- 08:30 Bamboo Grove early, before the crowds
+- 09:30 Okochi Sanso garden and matcha
+- 11:00 Tenryu-ji temple and its pond garden
+- 12:30 Lunch: yudofu (hot tofu) at Shoraian by the river
+- 14:00 Iwatayama Monkey Park hike
+- 16:00 Cross the Togetsukyo bridge, coffee at Arabica Kyoto
+
+@plane z=2 label="Day 3 - Fushimi and Gion"
+# Day 3: Fushimi Inari and Gion
+Big walking day. Comfortable shoes.
+
+- 07:30 Fushimi Inari shrine, hike the full torii gate trail to the summit
+- 11:00 Return, lunch: kitsune udon near the shrine entrance
+- 13:30 Nishiki Market for snacks and knives
+- 16:00 Rest at the hotel
+- 18:00 Gion district at dusk, watch for geiko along Hanamikoji
+- 19:30 Dinner: kaiseki at Gion Karyo (reserve ahead)
+
+@plane z=3 label="Day 4 - Temples and tea"
+# Day 4: Golden Pavilion and tea
+Bus day. Buy an all-day bus pass at the station kiosk.
+
+- 09:00 Kinkaku-ji, the Golden Pavilion
+- 10:30 Ryoan-ji rock garden
+- 12:00 Lunch near Ryoan-ji
+- 14:00 Ginkaku-ji, the Silver Pavilion
+- 15:00 Walk the Philosopher's Path
+- 17:00 Tea ceremony at Camellia in Higashiyama
+
+@plane z=4 label="Day 5 - Departure"
+# Day 5: Departure
+Checkout is 11:00. Allow 90 minutes to the airport.
+
+- 08:30 Last breakfast at the hotel cafe
+- 09:30 Souvenir run at Kyoto Station's Isetan
+- 10:45 Checkout, store bags if needed
+- 12:00 Haruka express back to KIX
+- 15:00 Flight home
+
+If you skipped anything, the easy wins were on [[z=0]] in Higashiyama.

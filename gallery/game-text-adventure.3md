@@ -1,0 +1,50 @@
+---
+3md: 1.0
+axis: space
+title: The Lighthouse at Gale Point
+genre: "choose-your-path"
+start: "z=0"
+endings: "4"
+---
+A branching text adventure. Each plane is a location; follow the cross-plane
+links to make choices. Some paths loop, some end well, some end badly. Your
+choices truly matter: only one route reaches the lamp room with the key in hand.
+Begin at [[z=0|the shore]].
+
+@plane z=0 label="shore" x=0 y=0
+# The Shore at Gale Point
+Salt wind tears at your coat. The lighthouse looms black against a bruised sky,
+its lamp dark for the first time in forty years. A locked gate bars the path up,
+and a tilted boathouse sags by the water.
+
+- Try the gate to [[z=1|the cliff path]].
+- Search the [[z=2|boathouse]] first.
+
+@plane z=1 label="cliff-path" x=0 y=1
+# The Cliff Path
+The gate is locked fast. Without a key you can only stand here while spray soaks
+you through. The climb is impossible.
+
+- Go back down to [[z=0|the shore]].
+
+@plane z=2 label="boathouse" x=1 y=0
+# The Boathouse
+Rotting oars and a coil of rope. Half buried in sand under an overturned dinghy,
+something glints: a heavy iron key on a ring of green corrosion. You pocket it.
+
+- Now take the key to [[z=3|the gate]].
+- Leave it and return to [[z=0|the shore]].
+
+@plane z=3 label="gate-unlocked" x=1 y=1
+# The Gate Swings Open
+The iron key turns with a shriek of rust. The path up the cliff is yours. Wind
+hammers you as you climb to the lighthouse door, which stands ajar.
+
+- Enter the tower and climb to [[z=4|the lamp room]].
+- Lose your nerve and retreat to [[z=0|the shore]].
+
+@plane z=4 label="ending-win" x=2 y=1
+# The Lamp Room
+You crank the great brass mechanism. With a groan the lens begins to turn, and a
+white beam stabs out across the black water. Somewhere offshore a ship's horn
+answers, grateful and alive. You lit the dark. The End.

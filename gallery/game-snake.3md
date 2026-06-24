@@ -1,0 +1,133 @@
+---
+3md: 1.0
+axis: frame
+title: Snake
+fps: "8"
+legend: "@ head, o body, * food, # wall"
+---
+A round of Snake. Each plane is one frame; play them in order. The snake starts
+three segments long, moves right toward the food, eats it and grows to four, then
+turns down to chase the next pellet and grows to five. `@` is the head, `o` is
+the body, `*` is food, `#` is the wall.
+
+@plane z=0 label="frame 0"
+```
+############
+#..........#
+#..ooo@....#
+#......*...#
+#..........#
+#..........#
+#..........#
+#..........#
+#..........#
+############
+```
+The snake heads right. Food sits just ahead and one row down.
+
+@plane z=1 label="frame 1"
+```
+############
+#..........#
+#...ooo@...#
+#......*...#
+#..........#
+#..........#
+#..........#
+#..........#
+#..........#
+############
+```
+One step right. The food is now directly below the head.
+
+@plane z=2 label="frame 2 (eats food)"
+```
+############
+#..........#
+#....ooo...#
+#......@...#
+#..........#
+#..........#
+#..........#
+#..........#
+#..........#
+############
+```
+The snake turns down and swallows the pellet. It grows: the tail does not
+shrink this step, so the body is now four long.
+
+@plane z=3 label="frame 3"
+```
+############
+#..........#
+#.....oo...#
+#.....oo...#
+#......@...#
+#..........#
+#...*......#
+#..........#
+#..........#
+############
+```
+Moving down, four segments long. A new pellet appears to the lower left.
+
+@plane z=4 label="frame 4"
+```
+############
+#..........#
+#..........#
+#.....oo...#
+#.....oo...#
+#......@...#
+#...*......#
+#..........#
+#..........#
+############
+```
+Still heading down toward the new food.
+
+@plane z=5 label="frame 5"
+```
+############
+#..........#
+#..........#
+#..........#
+#.....oo...#
+#.....oo...#
+#.....o@...#
+#...*......#
+#..........#
+############
+```
+The head reaches the pellet's row. It will turn left now.
+
+@plane z=6 label="frame 6"
+```
+############
+#..........#
+#..........#
+#..........#
+#..........#
+#.....ooo..#
+#....oo@...#
+#...*......#
+#..........#
+############
+```
+Turning left along the row, closing on the food.
+
+@plane z=7 label="frame 7 (eats food)"
+```
+############
+#..........#
+#..........#
+#..........#
+#..........#
+#....ooooo.#
+#...@oo....#
+#..........#
+#..........#
+############
+```
+The head reaches the pellet and eats it, growing to five segments. Score climbs.
+The End of this round.

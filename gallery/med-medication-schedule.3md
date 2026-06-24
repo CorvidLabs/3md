@@ -1,0 +1,66 @@
+---
+3md: 1.0
+axis: time
+title: Daily Medication Schedule - Polypharmacy Plan
+patient: Chen, Mei
+conditions: Type 2 diabetes, hypertension, hypothyroidism, GERD
+pharmacist_review: 2026-06-15
+allergies: penicillin (rash)
+---
+A full-day medication administration record organized by time of day.
+Each plane is a dosing window; scrub the Z axis to walk through the day.
+Times follow a 24-hour clock. Always confirm against the official MAR.
+
+@plane z=0 label="07:00 - Before breakfast"
+# 07:00 - Empty stomach, before breakfast
+
+| Drug                  | Dose      | Route | Notes                              |
+|-----------------------|-----------|-------|------------------------------------|
+| Levothyroxine         | 88 mcg    | PO    | 30-60 min before food, water only  |
+| Pantoprazole          | 40 mg     | PO    | 30 min before first meal           |
+
+- [ ] Wait at least 4 hours before taking calcium or iron (interferes with levothyroxine absorption).
+
+@plane z=1 label="08:00 - With breakfast"
+# 08:00 - With breakfast
+
+| Drug                  | Dose      | Route | Notes                              |
+|-----------------------|-----------|-------|------------------------------------|
+| Metformin XR          | 1000 mg   | PO    | Take with food to reduce GI upset  |
+| Lisinopril            | 10 mg     | PO    | Monitor for dry cough              |
+| Atorvastatin          | 20 mg     | PO    | Can take any time; grouped here    |
+
+- Check fasting glucose before eating; log in diary.
+
+@plane z=2 label="13:00 - With lunch"
+# 13:00 - With lunch
+
+| Drug                  | Dose      | Route | Notes                              |
+|-----------------------|-----------|-------|------------------------------------|
+| Amlodipine            | 5 mg      | PO    | For BP; watch for ankle swelling   |
+
+- No diabetes medication at lunch on current regimen.
+
+@plane z=3 label="18:00 - With dinner"
+# 18:00 - With dinner
+
+| Drug                  | Dose      | Route | Notes                              |
+|-----------------------|-----------|-------|------------------------------------|
+| Metformin XR          | 1000 mg   | PO    | Second daily dose, with food       |
+
+- [ ] Recheck BP if home reading was > 150/90 at any point today.
+
+@plane z=4 label="22:00 - Bedtime"
+# 22:00 - Bedtime
+
+| Drug                  | Dose      | Route | Notes                              |
+|-----------------------|-----------|-------|------------------------------------|
+| Aspirin               | 81 mg     | PO    | Low-dose, cardioprotective         |
+
+## PRN (as needed)
+- Acetaminophen 500 mg PO q6h PRN pain - max 3 g/day.
+- **Avoid NSAIDs** (ibuprofen, naproxen) given lisinopril plus diabetes - kidney risk.
+
+## Key interaction reminders
+- Penicillin allergy on file - confirm any new antibiotic is not a beta-lactam first.
+- Levothyroxine timing is the most fragile part of this schedule; see [[z=0|the 07:00 window]].

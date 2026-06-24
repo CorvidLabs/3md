@@ -1,0 +1,82 @@
+---
+3md: 1.0
+axis: layer
+title: Anterior Forearm - Layered Anatomy
+region: Right forearm, anterior (volar) aspect
+purpose: Teaching reference for medical and PA students
+view: anterior, from superficial to deep
+---
+A dissection-style walk through the anterior forearm, peeled one layer at a time.
+Each plane is an anatomical layer; toggle the Z axis from skin down to bone.
+Schematic cross-sections use grids - any non-space, non-dot mark is a structure.
+
+@plane z=0 label="Layer 1 - Skin and superficial fascia"
+# Layer 1: Skin and superficial fascia
+
+```
+.~~~~~~~~~~~~~~~~~~~~~.
+.SSSSSSSSSSSSSSSSSSSSS.   S = epidermis/dermis
+.fffffffffffffffffffff.   f = subcutaneous fat
+.--v---------------v--.   v = superficial veins
+......................
+```
+
+## Contents
+- Cephalic vein (lateral), basilic vein (medial), median antebrachial vein.
+- Medial and lateral antebrachial cutaneous nerves.
+- Superficial lymphatics draining to the cubital and axillary nodes.
+
+@plane z=1 label="Layer 2 - Superficial flexor muscles"
+# Layer 2: Superficial flexor compartment
+
+```
+.#####################.   # = deep (antebrachial) fascia
+.[PT][FCR][PL][FCU]....   muscle bellies, lateral to medial
+.[--- FDS broad sheet ---].
+.......................
+```
+
+## Muscles (lateral to medial)
+- **Pronator teres (PT)**
+- **Flexor carpi radialis (FCR)**
+- **Palmaris longus (PL)** - absent in ~15% of people
+- **Flexor carpi ulnaris (FCU)**
+- **Flexor digitorum superficialis (FDS)** - intermediate, deep to the above
+
+All arise from the common flexor origin on the medial epicondyle.
+
+@plane z=2 label="Layer 3 - Deep flexors and neurovascular"
+# Layer 3: Deep flexors and the neurovascular plane
+
+```
+.[==== FDP ====][FPL ].   FDP = flexor digitorum profundus
+.....<UA>.....<RA>.....   RA/UA = radial / ulnar artery
+......(MN).....(UN)....   MN = median n., UN = ulnar n.
+.[===== PQ distal =====].  PQ = pronator quadratus (distal)
+```
+
+## Contents
+- **Flexor digitorum profundus (FDP)** and **flexor pollicis longus (FPL)**.
+- **Median nerve** runs between FDS and FDP; **ulnar nerve** with the ulnar artery medially.
+- **Radial artery** lies lateral, palpable at the wrist.
+- See deeper bone relations at [[z=3|the radius and ulna layer]].
+
+@plane z=3 label="Layer 4 - Bones and interosseous membrane"
+# Layer 4: Radius, ulna, and interosseous membrane
+
+```
+....(((RADIUS)))......(((ULNA)))....
+....   O lateral        O medial   .
+....    \\              //         .
+....     \\== IOM fibers ==//       .
+.................................. .
+```
+
+## Contents
+- **Radius** (lateral) and **ulna** (medial).
+- **Interosseous membrane (IOM)** transfers load from radius to ulna; fibers run obliquely distomedially.
+- Anterior interosseous nerve and vessels run on the membrane, supplying deep flexors and pronator quadratus.
+
+## Clinical note
+A high median nerve lesion (between FDS/FDP) weakens FPL and the radial half of FDP, giving the
+characteristic loss of the thumb and index distal flexion ("benediction" attempt to make a fist).

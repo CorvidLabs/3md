@@ -1,0 +1,89 @@
+---
+3md: 1.0
+axis: version
+title: Database Migration Sequence
+database: app_production
+engine: postgres 16
+current_version: 0004
+direction: forward
+---
+The schema migration chain. Each plane is one numbered migration; apply them in
+Z order. Each plane carries the up SQL and the matching rollback.
+
+@plane z=0 label="0001 initial schema"
+# 0001  initial schema
+
+```sql
+CREATE TABLE users (
+  id          BIGSERIAL PRIMARY KEY,
+  email       TEXT NOT NULL UNIQUE,
+  created_at  TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+```
+
+Rollback:
+
+```sql
+DROP TABLE users;
+```
+
+@plane z=1 label="0002 add password hash"
+# 0002  add password hash
+
+```sql
+ALTER TABLE users ADD COLUMN password_hash TEXT;
+UPDATE users SET password_hash = '' WHERE password_hash IS NULL;
+ALTER TABLE users ALTER COLUMN password_hash SET NOT NULL;
+```
+
+Rollback:
+
+```sql
+ALTER TABLE users DROP COLUMN password_hash;
+```
+
+@plane z=2 label="0003 sessions table"
+# 0003  sessions table
+
+```sql
+CREATE TABLE sessions (
+  id          UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id     BIGINT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  expires_at  TIMESTAMPTZ NOT NULL,
+  created_at  TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+CREATE INDEX idx_sessions_user ON sessions(user_id);
+```
+
+Rollback:
+
+```sql
+DROP TABLE sessions;
+```
+
+This table is what the refresh-token rotation in [[z=3|migration 0004]] extends.
+
+@plane z=3 label="0004 refresh rotation"
+# 0004  refresh rotation
+
+```sql
+ALTER TABLE sessions
+  ADD COLUMN refresh_token TEXT,
+  ADD COLUMN rotated_from  UUID REFERENCES sessions(id);
+
+CREATE UNIQUE INDEX idx_sessions_refresh
+  ON sessions(refresh_token)
+  WHERE refresh_token IS NOT NULL;
+```
+
+Rollback:
+
+```sql
+DROP INDEX idx_sessions_refresh;
+ALTER TABLE sessions
+  DROP COLUMN rotated_from,
+  DROP COLUMN refresh_token;
+```
+
+Current head. The next planned migration (0005) will add a partial index for
+expired-session cleanup.

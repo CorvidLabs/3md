@@ -1,0 +1,61 @@
+---
+3md: 1.0
+axis: scene
+title: The Lighthouse Letter
+genre: literary short fiction
+pov: third person, close
+word_count: "approx 900"
+---
+A short story told in scenes. The axis is scene: each plane is one scene of the
+narrative, and the story is meant to be read straight through from z=0. Cross-plane
+links mark the callbacks and foreshadowing, so a reader can jump between the seed
+of an image and its payoff. The non-linear links are intentional craft, not
+navigation chrome.
+
+@plane z=0 label="The Arrival"
+# Scene 1: The Arrival
+Mara reached the island on the last ferry of October, the only passenger. The
+lighthouse stood white against a bruised sky, and the keeper's cottage crouched
+beside it like an afterthought. Her aunt had left her the place in a will written
+in a hand Mara did not recognize.
+
+On the kitchen table sat a single envelope, unopened, addressed to no one. She did
+not touch it. Not yet. She would learn what it held in [[z=3|the reading]].
+
+@plane z=1 label="The First Night"
+# Scene 2: The First Night
+The lamp upstairs still turned. Someone had kept it running. Mara climbed the
+spiral stairs and found the lens immaculate, the brass polished, a logbook open to
+yesterday's date though the cottage had supposedly stood empty for a year.
+
+The last entry read only: "She is coming. Keep the light." Mara closed the book
+and told herself it meant nothing.
+
+@plane z=2 label="The Visitor"
+# Scene 3: The Visitor
+By morning a man waited at the door, oilskin dripping, a fisherman from the
+mainland named Ezra. He had rowed across to warn her. "Your aunt walked into the
+water," he said, "the night the letter came back unopened." He looked past her to
+the table. "Is that it? The one she could never send?"
+
+Mara realized he meant the envelope she had seen on [[z=0|the night she arrived]].
+
+@plane z=3 label="The Reading"
+# Scene 4: The Reading
+Alone again, Mara opened it. The letter was her aunt's confession: forty years
+ago she had let a ship founder on the rocks rather than relight a lamp she had let
+go dark out of grief. The envelope had been addressed, stamped, and never sent,
+returned to her own hands because she could not name a soul to forgive her.
+
+The ink of the final line matched the logbook upstairs from [[z=1|the first night]]:
+"Keep the light."
+
+@plane z=4 label="The Light"
+# Scene 5: The Light
+That evening Mara climbed the stairs and did not let the lamp falter. The beam
+swept the black water, steady, mile after mile. Ezra's boat was a small bright
+splinter heading safely home.
+
+She understood now what [[z=2|the fisherman]] had carried across the strait, and
+why her aunt had stayed. Some debts you do not pay off. You keep them turning,
+night after night, so no one else goes down in the dark.

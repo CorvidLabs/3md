@@ -1,0 +1,109 @@
+---
+3md: 1.0
+axis: layer
+title: Spanish Kitchen Verbs Deck
+level: A2
+deck_size: "6 cards"
+direction: en to es
+---
+A flashcard deck for kitchen and cooking verbs. The axis is layer: each plane is a
+layer of the same study card, not a separate card. A study tool reveals layers in
+order so you can self-test. Layer z=0 is the prompt (English), z=1 is the target
+word, z=2 is pronunciation, z=3 is the meaning and an example, z=4 is conjugation
+help, and z=5 is a mnemonic. Cards are separated by horizontal rules within each
+layer so all six cards stay aligned across layers.
+
+@plane z=0 label="Prompt (English)"
+# Layer 0: Prompt
+Cover everything below and recall the Spanish.
+
+1. to chop
+---
+2. to boil
+---
+3. to fry
+---
+4. to bake
+---
+5. to stir
+---
+6. to taste
+
+@plane z=1 label="Target word (Spanish)"
+# Layer 1: Target word
+
+1. picar
+---
+2. hervir
+---
+3. freir
+---
+4. hornear
+---
+5. remover
+---
+6. probar
+
+Stuck on the sound of any of these? Reveal [[z=2|pronunciation]].
+
+@plane z=2 label="Pronunciation"
+# Layer 2: Pronunciation (approximate)
+
+1. pee-KAR
+---
+2. air-VEER
+---
+3. fray-EER
+---
+4. or-neh-AR
+---
+5. reh-mo-VAIR
+---
+6. pro-BAR
+
+@plane z=3 label="Meaning and example"
+# Layer 3: Meaning and example
+
+1. picar: to chop or mince. "Voy a picar la cebolla." (I am going to chop the onion.)
+---
+2. hervir: to boil. "El agua ya hierve." (The water is already boiling.)
+---
+3. freir: to fry. "Frio los huevos en aceite." (I fry the eggs in oil.)
+---
+4. hornear: to bake. "Horneo el pan 40 minutos." (I bake the bread 40 minutes.)
+---
+5. remover: to stir. "Remueve la salsa sin parar." (Stir the sauce without stopping.)
+---
+6. probar: to taste or try. "Prueba la sopa, por favor." (Taste the soup, please.)
+
+@plane z=4 label="Conjugation help"
+# Layer 4: Conjugation (present, yo form)
+
+1. picar -> yo pico (regular -ar)
+---
+2. hervir -> yo hiervo (e to ie stem change)
+---
+3. freir -> yo frio (irregular, accent on the i)
+---
+4. hornear -> yo horneo (regular -ar)
+---
+5. remover -> yo remuevo (o to ue stem change)
+---
+6. probar -> yo pruebo (o to ue stem change)
+
+@plane z=5 label="Mnemonic"
+# Layer 5: Mnemonic
+
+1. picar sounds like "pick at" the vegetables.
+---
+2. hervir: "her veer" toward the boiling pot.
+---
+3. freir: "fry" hides right inside fre-IR.
+---
+4. hornear: a "horn" oven, a horno, where you bake.
+---
+5. remover: you "re-move" the spoon around and around.
+---
+6. probar: to "probe" the soup is to taste it.
+
+If you got the word but missed the conjugation, drill [[z=4|the yo forms]] again.

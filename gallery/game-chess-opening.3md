@@ -1,0 +1,90 @@
+---
+3md: 1.0
+axis: step
+title: The Italian Game
+opening: "Italian Game"
+eco: "C50"
+notation: "algebraic"
+---
+The Italian Game, one of the oldest chess openings, played move by move. Each
+plane is the board after a half-move (ply), shown from White's side with rank 8
+at the top. Lowercase = Black, uppercase = White, `.` = empty square.
+
+@plane z=0 label="start position"
+```
+r n b q k b n r
+p p p p p p p p
+. . . . . . . .
+. . . . . . . .
+. . . . . . . .
+. . . . . . . .
+P P P P P P P P
+R N B Q K B N R
+```
+The starting position. White to move.
+
+@plane z=1 label="1. e4"
+```
+r n b q k b n r
+p p p p p p p p
+. . . . . . . .
+. . . . . . . .
+. . . . P . . .
+. . . . . . . .
+P P P P . P P P
+R N B Q K B N R
+```
+1. e4. White claims the center with the king's pawn.
+
+@plane z=2 label="1... e5"
+```
+r n b q k b n r
+p p p p . p p p
+. . . . . . . .
+. . . . p . . .
+. . . . P . . .
+. . . . . . . .
+P P P P . P P P
+R N B Q K B N R
+```
+1... e5. Black answers symmetrically, contesting the center.
+
+@plane z=3 label="2. Nf3"
+```
+r n b q k b n r
+p p p p . p p p
+. . . . . . . .
+. . . . p . . .
+. . . . P . . .
+. . . . . N . .
+P P P P . P P P
+R N B Q K B . R
+```
+2. Nf3. White attacks the e5 pawn and develops the king's knight.
+
+@plane z=4 label="2... Nc6"
+```
+r . b q k b n r
+p p p p . p p p
+. . n . . . . .
+. . . . p . . .
+. . . . P . . .
+. . . . . N . .
+P P P P . P P P
+R N B Q K B . R
+```
+2... Nc6. Black defends e5 and develops in turn.
+
+@plane z=5 label="3. Bc4"
+```
+r . b q k b n r
+p p p p . p p p
+. . n . . . . .
+. . . . p . . .
+. . B . P . . .
+. . . . . N . .
+P P P P . P P P
+R N B Q K . . R
+```
+3. Bc4. The defining move: the bishop eyes the f7 square. This is the Italian
+Game. From here both sides may castle and the middlegame begins. The End.

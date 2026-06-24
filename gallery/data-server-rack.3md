@@ -1,0 +1,87 @@
+---
+3md: 1.0
+axis: space
+title: Server Rack and Network Map: Rack B
+site: PDX-DC1
+rack: B
+height_u: 8
+note: z is rack depth tier; x and y place each node on the floor/rack plan
+---
+A spatial map of rack B. The Z axis is a logical depth tier (edge in front,
+storage at back); `x` and `y` give each plane's position on the rack/floor plan
+for a spatial viewer. The ASCII shows the front elevation of the rack.
+
+Rack B front elevation:
+
+```
++--------------------------------------+
+| U8  [ switch-core-1   ] 48-port 10G  |
+| U7  [ fw-edge-1       ] firewall     |
+| U6  [ web-01          ] app node     |
+| U5  [ web-02          ] app node     |
+| U4  [ db-primary      ] postgres     |
+| U3  [ db-replica      ] postgres     |
+| U2  [ nas-archive     ] 96 TB        |
+| U1  [ pdu / blank     ]              |
++--------------------------------------+
+```
+
+@plane z=0 x=0 y=0 label="Edge: core switch"
+# Edge tier: switch-core-1 (U8)
+
+The top-of-rack switch. Everything in the rack uplinks here.
+
+| Field | Value |
+| --- | --- |
+| Mgmt IP | 10.0.0.2 |
+| Uplink | 2x 40G to spine |
+| Ports used | 18 / 48 |
+| Position | U8, front |
+
+@plane z=1 x=0 y=1 label="Edge: firewall"
+# Edge tier: fw-edge-1 (U7)
+
+North-south traffic policy enforcement.
+
+| Field | Value |
+| --- | --- |
+| Mgmt IP | 10.0.0.3 |
+| Throughput | 10 Gbps |
+| Rules | 214 active |
+| Position | U7, front |
+
+@plane z=2 x=1 y=0 label="App: web-01 and web-02"
+# App tier: web-01 / web-02 (U6, U5)
+
+Two stateless app nodes behind the edge. Either can be drained for maintenance.
+
+| Node | IP | Role | Position |
+| --- | --- | --- | --- |
+| web-01 | 10.0.1.11 | app | U6, front |
+| web-02 | 10.0.1.12 | app | U5, front |
+
+Both nodes talk to the database tier at [[z=3|the data tier]].
+
+@plane z=3 x=1 y=1 label="Data: primary and replica"
+# Data tier: db-primary / db-replica (U4, U3)
+
+Streaming replication, primary plus one hot standby.
+
+| Node | IP | Role | Position |
+| --- | --- | --- | --- |
+| db-primary | 10.0.2.21 | postgres primary | U4, front |
+| db-replica | 10.0.2.22 | postgres replica | U3, front |
+
+@plane z=4 x=2 y=1 label="Storage: archive NAS"
+# Storage tier: nas-archive (U2)
+
+Bulk storage and backup target for the rest of the rack.
+
+| Field | Value |
+| --- | --- |
+| Mgmt IP | 10.0.3.31 |
+| Capacity | 96 TB raw, 64 TB usable |
+| Protocols | NFS, SMB |
+| Position | U2, rear-cabled |
+
+This is the destination referenced by the backup job manifest elsewhere in ops.

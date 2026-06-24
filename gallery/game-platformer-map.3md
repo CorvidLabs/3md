@@ -1,0 +1,80 @@
+---
+3md: 1.0
+axis: space
+title: Sky Ruins, Level 1-1
+genre: "platformer level map"
+legend: "P player, # ground, = platform, ^ spike, $ coin, F flag, D door"
+start: "z=0"
+---
+A side-scrolling platformer level laid out as connected screens. Each plane is
+one screen with x/y placement so a spatial viewer tiles them into the full level.
+Walk right through the screens, drop through a pipe to a secret room, then reach
+the flag. Cross-plane links are the screen exits.
+
+@plane z=0 label="screen 1 start" x=0 y=0
+```
+................
+................
+......$.........
+....====........
+................
+..P.........$...
+.........====...
+................
+##############D#
+```
+The starting screen. Grab the coin off the floating platform. A door `D` on the
+right edge leads onward.
+
+- Walk right through the door to [[z=1|screen 2]].
+
+@plane z=1 label="screen 2 spikes" x=1 y=0
+```
+................
+................
+........$.......
+.....==.........
+................
+...==.....==....
+................
+.....^^^.....D..
+####....########
+```
+Mind the gap and the spikes `^`. Time your jumps across the platforms. Another
+door on the right continues the level.
+
+- Drop into the gap to reach [[z=3|the secret room]].
+- Cross safely and go right to [[z=2|the finish screen]].
+
+@plane z=2 label="screen 3 finish" x=2 y=0
+```
+..............F.
+..............=.
+.........$....=.
+.......====...=.
+..............=.
+...==.........=.
+..........$...=.
+..====........=.
+##############D#
+```
+The final climb. Stair up the platforms to the flag `F` at the top right. The
+door `D` lets you go back if you missed a coin.
+
+- Reach the flag to finish, or go back to [[z=1|screen 2]].
+
+@plane z=3 label="secret room" x=1 y=-1
+```
+################
+#..............#
+#...$$$$$$.....#
+#..............#
+#....======....#
+#..............#
+#..........D...#
+################
+```
+A hidden bonus room below screen 2, full of coins. The door `D` warps you back
+up to continue.
+
+- Collect the coins and return to [[z=1|screen 2]].

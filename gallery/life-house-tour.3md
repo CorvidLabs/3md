@@ -1,0 +1,62 @@
+---
+3md: 1.0
+axis: floor
+title: Maple Street House Tour
+listing: "412 Maple Street"
+type: 3-bed Craftsman
+square_feet: "2150"
+year_built: "1924"
+---
+A floor-by-floor walkthrough of a house for sale. The axis is floor: each plane is
+a level of the building, from the basement up to the attic. Scrub the Z axis to
+climb the house. Negative z is below grade. Use this as an open-house handout or a
+listing supplement.
+
+@plane z=-1 label="Basement"
+# Basement (below grade)
+Partially finished, dry, good ceiling height.
+
+- Laundry room with washer and dryer included
+- Utility area: gas furnace (2019), 50-gallon water heater (2021)
+- Finished rec room with carpet, 280 sq ft
+- Storage room with built-in shelving
+- One small egress window
+
+Mechanicals are all here. The living spaces start one flight up on [[z=0|the main floor]].
+
+@plane z=0 label="Main Floor"
+# Main Floor
+The heart of the house. Original oak floors throughout.
+
+- Front entry with coat closet and the original leaded-glass door
+- Living room with a working wood-burning fireplace
+- Formal dining room with built-in china cabinet
+- Kitchen: quartz counters, gas range, eat-in nook
+- Half bath off the hallway
+- Back mudroom to the yard
+
+Stairs at the front hall lead up to [[z=1|the bedrooms]].
+
+@plane z=1 label="Second Floor"
+# Second Floor
+All three bedrooms and the full baths.
+
+- Primary bedroom, 16 by 14, with two closets
+- Primary ensuite: walk-in shower, double vanity
+- Bedroom 2, 12 by 11, currently an office
+- Bedroom 3, 11 by 10, with the original built-in window seat
+- Hall bath with a clawfoot tub
+- Linen closet
+
+@plane z=2 label="Attic"
+# Attic (top level)
+Finished bonus space under the gable.
+
+- Open flex room, roughly 350 usable sq ft with sloped ceilings
+- Currently a playroom and reading loft
+- Two dormer windows, lots of light
+- Insulated and on its own mini-split for heating and cooling
+- Plenty of eave storage behind knee-wall doors
+
+Could be a fourth bedroom or studio. Note the dry, conditioned storage that
+complements [[z=-1|the basement storage]] below.

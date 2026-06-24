@@ -1,0 +1,81 @@
+---
+3md: 1.0
+axis: time
+title: Household Budget Q1
+currency: USD
+household: "2 adults"
+target_savings_rate: "20 percent"
+---
+A monthly household budget for the first quarter. Each plane is one month; scrub
+the Z axis to compare months. Income is steady at 6,200 take-home; the goal is to
+keep total spending under 4,960 so 20 percent goes to savings. Each plane closes
+with a quick verdict.
+
+@plane z=0 label="January"
+# January
+Income: 6,200
+
+| Category        | Budget | Actual |
+| --------------- | ------ | ------ |
+| Rent            | 1,950  | 1,950  |
+| Groceries       | 650    | 712    |
+| Utilities       | 280    | 305    |
+| Transport       | 220    | 198    |
+| Dining out      | 300    | 384    |
+| Subscriptions   | 95     | 95     |
+| Misc            | 200    | 240    |
+| Savings         | 1,240  | 1,016  |
+
+Verdict: holiday hangover. Dining out and groceries ran hot, savings missed by
+224. Tighten dining in [[z=1|February]].
+
+@plane z=1 label="February"
+# February
+Income: 6,200
+
+| Category        | Budget | Actual |
+| --------------- | ------ | ------ |
+| Rent            | 1,950  | 1,950  |
+| Groceries       | 650    | 631    |
+| Utilities       | 280    | 290    |
+| Transport       | 220    | 205    |
+| Dining out      | 300    | 268    |
+| Subscriptions   | 95     | 80     |
+| Misc            | 200    | 150    |
+| Savings         | 1,240  | 1,426  |
+
+Verdict: back on track. Cancelled one streaming service and cooked at home. Beat
+the savings target by 186. Carry the momentum into [[z=2|March]].
+
+@plane z=2 label="March"
+# March
+Income: 6,200
+
+| Category        | Budget | Actual |
+| --------------- | ------ | ------ |
+| Rent            | 1,950  | 1,950  |
+| Groceries       | 650    | 668    |
+| Utilities       | 280    | 240    |
+| Transport       | 220    | 230    |
+| Dining out      | 300    | 295    |
+| Subscriptions   | 80     | 80     |
+| Misc            | 200    | 310    |
+| Savings         | 1,240  | 1,227  |
+
+Verdict: nearly on target. A car repair pushed Misc up, but lower heating helped.
+Savings within 13 of goal.
+
+@plane z=3 label="Q1 Summary"
+# Q1 Summary
+Three-month roll-up.
+
+| Metric                | Amount  |
+| --------------------- | ------- |
+| Total income          | 18,600  |
+| Total spending        | 14,931  |
+| Total saved           | 3,669   |
+| Savings rate          | 19.7%   |
+
+Just shy of the 20 percent goal, dragged down by [[z=0|January]]. Action for next
+quarter: cap dining out at 280 and build a 200/month repair buffer so a single
+[[z=2|car repair]] does not blow the Misc line.

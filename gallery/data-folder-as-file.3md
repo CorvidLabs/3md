@@ -1,0 +1,145 @@
+---
+3md: 1.0
+axis: layer
+title: Portable Folder: tempo-cli
+package: tempo-cli
+version: 0.3.1
+note: each plane is one file in the folder; the document IS the directory
+---
+This single document is a whole folder. Each plane is one file: its `label` and
+`path` attribute give the file path, and its body is the file contents. Read it
+top to bottom to browse the project, or expand a plane to read one file.
+
+Directory tree:
+
+```
+tempo-cli/
+  README.md
+  package.json
+  src/
+    index.ts
+    timer.ts
+  config/
+    default.json
+```
+
+@plane z=0 label="README.md" path="README.md"
+# README.md
+
+```markdown
+# tempo-cli
+
+A tiny command-line stopwatch and countdown timer.
+
+## Install
+
+    bun install
+    bun link
+
+## Usage
+
+    tempo start            # start a stopwatch
+    tempo count 5m         # count down 5 minutes
+    tempo start --label "deep work"
+
+Configuration lives in config/default.json. See the timer implementation in
+the src/timer.ts file of this folder.
+```
+
+@plane z=1 label="package.json" path="package.json"
+# package.json
+
+```json
+{
+  "name": "tempo-cli",
+  "version": "0.3.1",
+  "type": "module",
+  "bin": { "tempo": "src/index.ts" },
+  "scripts": {
+    "start": "bun run src/index.ts",
+    "test": "bun test"
+  },
+  "engines": { "bun": ">=1.0.0" }
+}
+```
+
+@plane z=2 label="src/index.ts" path="src/index.ts"
+# src/index.ts
+
+```typescript
+import { Timer } from "./timer.ts";
+import config from "../config/default.json";
+
+const [, , command, arg] = process.argv;
+const timer = new Timer({ tickMs: config.tickMs });
+
+switch (command) {
+  case "start":
+    timer.start(arg ?? config.defaultLabel);
+    break;
+  case "count":
+    timer.countdown(arg ?? config.defaultCountdown);
+    break;
+  default:
+    console.log("usage: tempo <start|count> [arg]");
+}
+```
+
+The `Timer` class is defined in [[z=3|src/timer.ts]].
+
+@plane z=3 label="src/timer.ts" path="src/timer.ts"
+# src/timer.ts
+
+```typescript
+export interface TimerOptions {
+  tickMs: number;
+}
+
+export class Timer {
+  private readonly tickMs: number;
+
+  constructor(options: TimerOptions) {
+    this.tickMs = options.tickMs;
+  }
+
+  start(label: string): void {
+    const begun = Date.now();
+    setInterval(() => {
+      const elapsed = Math.floor((Date.now() - begun) / 1000);
+      process.stdout.write(`\r[${label}] ${elapsed}s`);
+    }, this.tickMs);
+  }
+
+  countdown(spec: string): void {
+    let remaining = this.parse(spec);
+    const id = setInterval(() => {
+      process.stdout.write(`\r${remaining}s remaining `);
+      if (remaining-- <= 0) {
+        clearInterval(id);
+        console.log("\nDone.");
+      }
+    }, 1000);
+  }
+
+  private parse(spec: string): number {
+    const m = spec.match(/^(\d+)(s|m|h)$/);
+    if (!m) return 0;
+    const n = Number(m[1]);
+    return m[2] === "h" ? n * 3600 : m[2] === "m" ? n * 60 : n;
+  }
+}
+```
+
+Defaults are read from the config file at [[z=4|config/default.json]].
+
+@plane z=4 label="config/default.json" path="config/default.json"
+# config/default.json
+
+```json
+{
+  "tickMs": 1000,
+  "defaultLabel": "session",
+  "defaultCountdown": "5m",
+  "beepOnDone": true
+}
+```

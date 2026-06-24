@@ -1,0 +1,67 @@
+---
+3md: 1.0
+axis: time
+title: Backyard Vegetable Garden Plan
+zone: USDA 7b
+plot: 4 raised beds, 4ft by 8ft each
+sun: full sun, 8 hours
+---
+A season-by-season plan for a four-bed raised garden. The axis is time: each plane
+is a season, scrub the Z axis to walk through the gardening year. Bed numbers (B1
+to B4) are consistent across seasons so you can practice crop rotation. The layout
+below shows the beds.
+
+```
+   [ B1 ]   [ B2 ]
+   [ B3 ]   [ B4 ]
+   (path runs north-south down the middle)
+```
+
+@plane z=0 label="Early Spring"
+# Early Spring (March to April)
+Cool weather. Last frost expected mid-April; protect tender starts.
+
+- B1: peas (sugar snap), spinach, radishes
+- B2: lettuce mix, arugula, scallions
+- B3: prep and amend with compost, plant garlic if not already in
+- B4: cover crop (crimson clover) turned under late April
+
+Tasks: build pea trellis, start tomato and pepper seeds indoors. The starts you
+sow now go into the ground in [[z=1|summer]].
+
+@plane z=1 label="Summer"
+# Summer (May to August)
+Peak growth. Water deeply in the early morning.
+
+- B1: tomatoes (Sungold, San Marzano) on stakes
+- B2: peppers and basil, cucumbers on the trellis from spring
+- B3: bush beans, zucchini, marigolds for pest control
+- B4: sweet corn block, with squash at the base
+
+Tasks: mulch heavily, side-dress tomatoes with compost mid-June, harvest beans
+every other day. Plan the fall sowings on [[z=2|autumn]] before the corn finishes.
+
+@plane z=2 label="Autumn"
+# Autumn (September to October)
+Cooling off. Second cool-season crop and cleanup.
+
+- B1: clear tomatoes, sow garlic for next year
+- B2: fall lettuce, kale, Swiss chard
+- B3: turnips, beets, more radishes
+- B4: broccoli and cauliflower transplants
+
+Tasks: pull spent summer plants, top up compost, sow cover crop where beds are
+empty.
+
+@plane z=3 label="Winter"
+# Winter (November to February)
+Rest and plan. Most beds dormant.
+
+- B1: garlic overwintering under straw mulch
+- B2: kale and chard under a low tunnel, harvest as needed
+- B3: bare, cover-cropped, resting the soil
+- B4: bare, sheet-mulched with leaves
+
+Tasks: order seeds, sharpen and oil tools, sketch next year's rotation so heavy
+feeders move off [[z=1|the summer tomato bed]]. The cycle restarts at
+[[z=0|early spring]].

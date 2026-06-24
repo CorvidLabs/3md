@@ -1,0 +1,101 @@
+---
+3md: 1.0
+axis: time
+title: Inpatient Chart - Rivera, J. (MRN 0048-2291)
+patient: Rivera, Jordan
+dob: 1971-03-14
+admit_dx: Community-acquired pneumonia, right lower lobe
+attending: Dr. A. Okafor
+unit: 4 West, Bed 12
+---
+Progress chart for a 5-day admission. Each plane is one hospital day.
+Scrub the Z axis to follow vitals, labs, and the treatment course over time.
+
+@plane z=0 label="Day 1 - Admission"
+# Hospital Day 1 (2026-06-19)
+
+**Chief complaint:** 3 days of productive cough, fever, right-sided pleuritic chest pain.
+
+## Vitals
+| Time  | Temp (C) | HR  | BP      | RR | SpO2  |
+|-------|----------|-----|---------|----|-------|
+| 08:00 | 39.1     | 112 | 104/68  | 26 | 89% RA|
+| 14:00 | 38.6     | 104 | 110/70  | 22 | 94% 2L|
+
+## Labs
+- WBC 16.4 (84% neutrophils)
+- CRP 188 mg/L
+- Lactate 2.1 mmol/L
+- Blood cultures x2 drawn before antibiotics
+
+## Plan
+- [x] Start ceftriaxone 1 g IV q24h
+- [x] Start azithromycin 500 mg IV q24h
+- [x] O2 via nasal cannula, titrate to SpO2 > 92%
+- [x] CXR confirms RLL consolidation
+- CURB-65 score 2 - admit to floor
+
+@plane z=1 label="Day 2"
+# Hospital Day 2 (2026-06-20)
+
+## Vitals
+| Time  | Temp (C) | HR  | BP      | RR | SpO2   |
+|-------|----------|-----|---------|----|--------|
+| 06:00 | 38.4     | 98  | 116/72  | 20 | 93% 2L |
+| 18:00 | 37.9     | 92  | 118/74  | 19 | 95% 2L |
+
+## Notes
+- Patient reports cough slightly looser, pain improved with scheduled acetaminophen.
+- Blood cultures: no growth at 24h.
+- Continuing antibiotics. Trending in the right direction; compare with [[z=4|the discharge summary]].
+
+@plane z=2 label="Day 3"
+# Hospital Day 3 (2026-06-21)
+
+## Vitals
+| Time  | Temp (C) | HR | BP     | RR | SpO2     |
+|-------|----------|----|--------|----|----------|
+| 06:00 | 37.4     | 86 | 122/76 | 18 | 96% 1L   |
+| 18:00 | 37.1     | 82 | 120/78 | 17 | 95% RA   |
+
+## Labs
+- WBC down to 11.2
+- CRP 96 mg/L (falling)
+
+## Plan
+- [x] Wean off supplemental O2, tolerated room air this afternoon.
+- [x] Transition azithromycin IV to PO.
+
+@plane z=3 label="Day 4"
+# Hospital Day 4 (2026-06-22)
+
+## Vitals
+| Time  | Temp (C) | HR | BP     | RR | SpO2   |
+|-------|----------|----|--------|----|--------|
+| 06:00 | 36.9     | 78 | 124/80 | 16 | 97% RA |
+
+## Notes
+- Afebrile > 24h, ambulating in hall without desaturation.
+- Step down ceftriaxone to oral amoxicillin-clavulanate 875/125 mg q12h.
+- WBC 8.9, CRP 41 mg/L.
+- Anticipate discharge tomorrow if stable overnight.
+
+@plane z=4 label="Day 5 - Discharge"
+# Hospital Day 5 (2026-06-23) - DISCHARGE
+
+## Discharge vitals
+- Temp 36.7 C, HR 74, BP 126/78, RR 15, SpO2 98% RA
+
+## Discharge summary
+- Diagnosis: CAP, RLL, resolving.
+- Hospital course uncomplicated; rapid response to beta-lactam plus macrolide.
+
+## Discharge medications
+1. Amoxicillin-clavulanate 875/125 mg PO q12h - complete 5 more days
+2. Guaifenesin PRN cough
+3. Resume home lisinopril 10 mg daily
+
+## Follow-up
+- [ ] PCP in 7-10 days
+- [ ] Repeat CXR in 6 weeks to confirm resolution
+- Return precautions: fever > 38.5, worsening dyspnea, chest pain.

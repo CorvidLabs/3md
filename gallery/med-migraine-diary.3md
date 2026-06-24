@@ -1,0 +1,88 @@
+---
+3md: 1.0
+axis: time
+title: Migraine Symptom Diary - Episode Phases
+patient: self-tracked
+purpose: Identify triggers and track treatment response across an attack
+neurologist: Dr. R. Solberg
+preventive: topiramate 50 mg BID
+---
+One migraine attack tracked through its natural phases, hours apart.
+Each plane is a phase of the episode; scrub the Z axis to follow the attack
+from the first warning signs through to recovery. Pain scale is 0-10.
+
+@plane z=0 label="Prodrome - hours before"
+# Prodrome (T minus 6 hours)
+
+**Pain:** 0/10 (no head pain yet)
+
+## Early warning signs
+- Yawning frequently, unusual food cravings (chocolate).
+- Mild neck stiffness, irritability, difficulty concentrating.
+- Increased thirst and urination.
+
+## Suspected triggers (last 24h)
+- Poor sleep (5 hours), skipped lunch, weather front moving in.
+
+## Action
+- [x] Hydrate, eat a balanced snack
+- [x] Note prodrome in app - early triptan window may help
+
+@plane z=1 label="Aura - 30 to 60 min before"
+# Aura (T minus 45 minutes)
+
+**Pain:** 1/10 (building pressure)
+
+## Aura features
+- Visual: shimmering zigzag scotoma in left visual field, expanding over ~20 min.
+- Mild tingling in the right hand (paresthesia).
+- Aura fully reversible, lasting under an hour - typical for this patient.
+
+## Action
+- [x] Move to a dark, quiet room
+- [x] Take rizatriptan 10 mg at first sign (do NOT wait for full headache)
+
+@plane z=2 label="Headache - peak attack"
+# Headache phase (T 0 to +4 hours)
+
+**Pain:** 8/10, throbbing, left temporal, unilateral
+
+## Associated symptoms
+- Photophobia and phonophobia (light and sound sensitivity).
+- Nausea, one episode of vomiting.
+- Pain worse with movement; bending over intensifies it.
+
+## Treatment given
+| Time   | Medication            | Effect at 2h        |
+|--------|-----------------------|---------------------|
+| T 0    | rizatriptan 10 mg     | partial relief      |
+| T +2h  | rizatriptan 10 mg (2nd)| pain down to 4/10  |
+| T +2h  | ondansetron 4 mg ODT  | nausea controlled   |
+
+Compare the early warning at [[z=0|the prodrome]] - acting then might have blunted this peak.
+
+@plane z=3 label="Resolution - fading"
+# Resolution (T +4 to +8 hours)
+
+**Pain:** 3/10, dull and diffuse
+
+- Throbbing has settled to a generalized ache.
+- Light sensitivity easing; able to tolerate dim screen.
+- Slept 2 hours, woke with further improvement.
+- No additional triptan needed (max 2 doses/24h reached).
+
+@plane z=4 label="Postdrome - the migraine hangover"
+# Postdrome (Day after)
+
+**Pain:** 0-1/10
+
+## Lingering symptoms
+- Fatigue, feeling "wrung out," mild difficulty concentrating.
+- Tender scalp on the affected side.
+- Mood low, appetite slowly returning.
+
+## Episode review
+- Total attack duration: ~26 hours including postdrome.
+- Likely trigger stack: sleep deprivation + missed meal + barometric change.
+- [ ] Discuss with neurologist whether to add a CGRP-targeted preventive
+- [ ] Prioritize consistent sleep and regular meals this week

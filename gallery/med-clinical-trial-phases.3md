@@ -1,0 +1,91 @@
+---
+3md: 1.0
+axis: stage
+title: Clinical Trial Roadmap - CRV-208 (novel GLP-1/GIP agonist)
+sponsor: Corvid Therapeutics
+indication: Type 2 diabetes with obesity
+ind_number: 162447
+status: Phase 2 active
+---
+The full development pathway for an investigational drug, from lab to label.
+Each plane is a regulatory stage; scrub the Z axis to advance through the program.
+Sample sizes and endpoints are representative of a typical metabolic program.
+
+@plane z=0 label="Preclinical"
+# Stage 0: Preclinical
+
+**Objective:** Establish safety and biological rationale before first human dose.
+
+- In vitro receptor binding and selectivity (GLP-1 vs GIP).
+- Rodent and non-rodent toxicology (28-day and 13-week GLP studies).
+- Pharmacokinetics, metabolism, carcinogenicity signals (thyroid C-cell focus).
+- [x] IND-enabling package assembled
+- [x] FDA IND cleared, 30-day safety hold passed
+
+@plane z=1 label="Phase 1 - Safety"
+# Stage 1: Phase 1
+
+**Objective:** Safety, tolerability, dose-ranging in humans.
+
+| Parameter        | Value                                   |
+|------------------|-----------------------------------------|
+| Population       | Healthy adult volunteers                |
+| N                | 64                                      |
+| Design           | SAD then MAD, placebo-controlled        |
+| Primary endpoint | Adverse events, max tolerated dose      |
+| Duration         | ~4 months                               |
+
+- Dose-limiting toxicity: nausea at the highest single ascending dose.
+- PK supports once-weekly subcutaneous dosing.
+
+@plane z=2 label="Phase 2 - Efficacy signal"
+# Stage 2: Phase 2 (ACTIVE)
+
+**Objective:** Proof of concept, dose selection, preliminary efficacy.
+
+| Parameter        | Value                                       |
+|------------------|---------------------------------------------|
+| Population       | T2DM, BMI 30-45, HbA1c 7.0-10.0%            |
+| N                | 320, four arms                              |
+| Design           | Randomized, double-blind, placebo-controlled|
+| Primary endpoint | Change in HbA1c at 24 weeks                  |
+| Key secondary    | Percent body weight reduction at 24 weeks   |
+
+- [x] Enrollment complete
+- [ ] 24-week readout (expected Q4 2026)
+- Interim DSMB review: no unexpected safety signals.
+
+@plane z=3 label="Phase 3 - Confirmatory"
+# Stage 3: Phase 3
+
+**Objective:** Confirm efficacy and safety in large, diverse populations.
+
+| Parameter        | Value                                          |
+|------------------|------------------------------------------------|
+| Population       | T2DM, broad inclusion incl. cardiovascular risk|
+| N                | ~2,400 across multiple trials                   |
+| Design           | RCT vs placebo and active comparator            |
+| Primary endpoint | HbA1c and weight at 52 and 72 weeks             |
+| Dedicated study  | Cardiovascular outcomes (MACE) sub-trial        |
+
+- Multi-region (US, EU, APAC) to support global filing.
+- Built on the dose chosen back in [[z=2|the Phase 2 stage]].
+
+@plane z=4 label="Regulatory review"
+# Stage 4: Regulatory submission and review
+
+- Compile NDA / MAA with integrated safety and efficacy summaries.
+- FDA review clock (standard ~10 months) and advisory committee, if convened.
+- EMA CHMP opinion and national implementation.
+- [ ] Label negotiation (indication wording, REMS if required)
+- [ ] Decision: approval, complete response letter, or refusal
+
+@plane z=5 label="Phase 4 - Post-marketing"
+# Stage 5: Phase 4 (post-marketing)
+
+**Objective:** Monitor real-world safety and long-term outcomes.
+
+- Pharmacovigilance and spontaneous adverse event reporting.
+- Required post-marketing studies (e.g., long-term thyroid surveillance registry).
+- Real-world effectiveness, adherence, and health-economics data.
+- Potential label expansion to adjacent indications (e.g., obesity without diabetes).

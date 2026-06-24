@@ -1,0 +1,93 @@
+---
+3md: 1.0
+axis: frame
+title: ECG Lead II - One Cardiac Cycle (Animated)
+lead: II
+rate: ~75 bpm (normal sinus rhythm)
+paper_speed: 25 mm/s
+purpose: Teaching aid - play frames in order to trace one heartbeat
+---
+A single normal cardiac cycle on ECG lead II, drawn one frame at a time.
+Each plane is an animation frame; play the Z axis in order to watch the trace
+build P wave, QRS complex, and T wave. Any non-space, non-dot mark is the trace.
+
+@plane z=0 label="Frame 0 - baseline"
+# Frame 0: Isoelectric baseline
+
+```
+.........................................
+.........................................
+.........................................
+.________________________________________
+.........................................
+.........................................
+```
+
+The heart is in electrical diastole. Flat baseline before atrial depolarization.
+
+@plane z=1 label="Frame 1 - P wave"
+# Frame 1: P wave (atrial depolarization)
+
+```
+.........................................
+.........................................
+.......-.................................
+.____--.--_______________________________
+.........................................
+.........................................
+```
+
+Small rounded upward deflection - the atria depolarize. Then the PR segment
+(the brief flat stretch) as the signal pauses at the AV node.
+
+@plane z=2 label="Frame 2 - QRS upstroke"
+# Frame 2: Q dip and R upstroke
+
+```
+.................../......................
+................../.......................
+.......-........./........................
+.____--.--___.__/_________________________
+............\\./..........................
+.............V............................
+```
+
+Tiny Q dip, then the sharp tall R upstroke as the ventricles begin to depolarize.
+This is the start of the [[z=3|full QRS complex]].
+
+@plane z=3 label="Frame 3 - QRS complete"
+# Frame 3: Full QRS complex
+
+```
+.................../\\.....................
+................../..\\....................
+.......-........./....\\...................
+.____--.--___.__/......\\____.____________
+............\\./........\\.../.............
+.............V...........\\./..............
+.........................V................
+```
+
+The complete QRS: small Q, tall R peak, deep S trough. Rapid ventricular
+depolarization - the loudest electrical event of the cycle.
+
+@plane z=4 label="Frame 4 - T wave"
+# Frame 4: T wave (ventricular repolarization)
+
+```
+.................../\\.....................
+................../..\\.......___..........
+.......-........./....\\...../...\\.........
+.____--.--___.__/......\\__/.....\\___.____
+............\\./........\\./...............
+.............V...........V................
+```
+
+After the ST segment (flat, on the baseline), the broad upward T wave marks
+ventricular repolarization. The cycle then returns to baseline and repeats.
+
+## Reading checklist
+- [x] P before every QRS, QRS after every P (sinus rhythm)
+- [x] Narrow QRS (< 120 ms)
+- [x] Upright T in lead II
+- Estimated rate from R-R interval: ~75 bpm.
