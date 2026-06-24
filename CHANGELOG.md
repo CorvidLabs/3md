@@ -1,5 +1,12 @@
 # Changelog
 
+## [v0.2.0] - 2026-06-23
+
+### Other
+
+- Add HTML renderer, threemd CLI, TS package, and cross-language conformance (b9bd327)
+- Fix web demo source-panel highlighting (broken @plane markup) (7937526)
+
 ## [v0.1.0] - 2026-06-23
 
 ### Other
