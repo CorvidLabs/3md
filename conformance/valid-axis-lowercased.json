@@ -1,0 +1,21 @@
+{
+  "name": "axis value is trimmed and lowercased",
+  "source": "---\n3md: 0.1\naxis:   Frame  \n---\n@plane z=0\nbody\n",
+  "expected": {
+    "version": "0.1",
+    "axis": "frame",
+    "title": null,
+    "metadata": {},
+    "preamble": null,
+    "planes": [
+      {
+        "z": 0,
+        "label": null,
+        "x": null,
+        "y": null,
+        "attributes": {},
+        "body": "body"
+      }
+    ]
+  }
+}

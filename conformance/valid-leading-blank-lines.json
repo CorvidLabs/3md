@@ -1,0 +1,21 @@
+{
+  "name": "leading blank lines before the frontmatter fence are allowed",
+  "source": "\n\n   \n---\n3md: 0.1\n---\nbody here\n",
+  "expected": {
+    "version": "0.1",
+    "axis": "layer",
+    "title": null,
+    "metadata": {},
+    "preamble": null,
+    "planes": [
+      {
+        "z": 0,
+        "label": null,
+        "x": null,
+        "y": null,
+        "attributes": {},
+        "body": "body here"
+      }
+    ]
+  }
+}

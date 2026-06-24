@@ -1,0 +1,21 @@
+{
+  "name": "frontmatter skips comment and blank lines and strips quotes",
+  "source": "---\n# this is a comment in frontmatter\n3md: \"0.1\"\n\naxis: 'layer'\ntitle: 'Quoted Title'\n# another comment\nnote: \"has spaces inside\"\n---\nPreamble line.\n\n@plane z=0\nbody\n",
+  "expected": {
+    "version": "0.1",
+    "axis": "layer",
+    "title": "Quoted Title",
+    "metadata": { "note": "has spaces inside" },
+    "preamble": "Preamble line.",
+    "planes": [
+      {
+        "z": 0,
+        "label": null,
+        "x": null,
+        "y": null,
+        "attributes": {},
+        "body": "body"
+      }
+    ]
+  }
+}

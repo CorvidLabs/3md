@@ -1,0 +1,29 @@
+{
+  "name": "CRLF line endings are normalized to LF",
+  "source": "---\r\n3md: 0.1\r\naxis: frame\r\n---\r\n@plane z=0 label=\"frame-0\"\r\nfirst\r\n\r\n@plane z=1 label=\"frame-1\"\r\nsecond\r\n",
+  "expected": {
+    "version": "0.1",
+    "axis": "frame",
+    "title": null,
+    "metadata": {},
+    "preamble": null,
+    "planes": [
+      {
+        "z": 0,
+        "label": "frame-0",
+        "x": null,
+        "y": null,
+        "attributes": {},
+        "body": "first"
+      },
+      {
+        "z": 1,
+        "label": "frame-1",
+        "x": null,
+        "y": null,
+        "attributes": {},
+        "body": "second"
+      }
+    ]
+  }
+}

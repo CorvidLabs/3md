@@ -1,0 +1,5 @@
+{
+  "name": "document without a frontmatter fence is rejected",
+  "source": "# Just Markdown\n\nNo frontmatter at all.\n",
+  "error": "missingFrontmatter"
+}

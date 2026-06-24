@@ -1,0 +1,5 @@
+{
+  "name": "frontmatter line without a colon separator is rejected",
+  "source": "---\n3md: 0.1\nthis line has no colon\n---\nbody\n",
+  "error": "invalidFrontmatter"
+}

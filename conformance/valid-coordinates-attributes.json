@@ -1,0 +1,21 @@
+{
+  "name": "coordinates, label, and extra attributes are captured",
+  "source": "---\n3md: 0.1\naxis: space\n---\n@plane z=2 x=-16.5 y=-26 label=\"back drop\" author='counsel' role=lead\nNotes here.\n",
+  "expected": {
+    "version": "0.1",
+    "axis": "space",
+    "title": null,
+    "metadata": {},
+    "preamble": null,
+    "planes": [
+      {
+        "z": 2,
+        "label": "back drop",
+        "x": -16.5,
+        "y": -26,
+        "attributes": { "author": "counsel", "role": "lead" },
+        "body": "Notes here."
+      }
+    ]
+  }
+}

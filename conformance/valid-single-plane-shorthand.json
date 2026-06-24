@@ -1,0 +1,21 @@
+{
+  "name": "single-plane shorthand wraps body at z=0 when no directives",
+  "source": "---\n3md: 0.1\n---\n# Just Markdown\n\nNo planes declared here.\n",
+  "expected": {
+    "version": "0.1",
+    "axis": "layer",
+    "title": null,
+    "metadata": {},
+    "preamble": null,
+    "planes": [
+      {
+        "z": 0,
+        "label": null,
+        "x": null,
+        "y": null,
+        "attributes": {},
+        "body": "# Just Markdown\n\nNo planes declared here."
+      }
+    ]
+  }
+}

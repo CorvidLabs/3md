@@ -1,0 +1,29 @@
+{
+  "name": "z accepts negative and decimal values and keeps source order",
+  "source": "---\n3md: 0.1\n---\n@plane z=1.5\nfirst\n\n@plane z=-2\nsecond\n",
+  "expected": {
+    "version": "0.1",
+    "axis": "layer",
+    "title": null,
+    "metadata": {},
+    "preamble": null,
+    "planes": [
+      {
+        "z": 1.5,
+        "label": null,
+        "x": null,
+        "y": null,
+        "attributes": {},
+        "body": "first"
+      },
+      {
+        "z": -2,
+        "label": null,
+        "x": null,
+        "y": null,
+        "attributes": {},
+        "body": "second"
+      }
+    ]
+  }
+}

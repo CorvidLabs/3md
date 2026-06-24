@@ -1,0 +1,5 @@
+{
+  "name": "two planes sharing the same z value are rejected",
+  "source": "---\n3md: 0.1\n---\n@plane z=0\nfirst\n\n@plane z=0\nsecond\n",
+  "error": "duplicatePlane"
+}

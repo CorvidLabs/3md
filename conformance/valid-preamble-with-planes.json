@@ -1,0 +1,29 @@
+{
+  "name": "preamble is preserved when planes follow and quoted attribute keeps spaces",
+  "source": "---\n3md: 0.1\naxis: layer\n---\nThe base layer is the source text.\nHigher layers are overlays.\n\n@plane z=0 label=\"the source\"\nSection 4 body.\n\n@plane z=1 label=\"plain english\" x=0 y=0\nYou have 30 days.\n",
+  "expected": {
+    "version": "0.1",
+    "axis": "layer",
+    "title": null,
+    "metadata": {},
+    "preamble": "The base layer is the source text.\nHigher layers are overlays.",
+    "planes": [
+      {
+        "z": 0,
+        "label": "the source",
+        "x": null,
+        "y": null,
+        "attributes": {},
+        "body": "Section 4 body."
+      },
+      {
+        "z": 1,
+        "label": "plain english",
+        "x": 0,
+        "y": 0,
+        "attributes": {},
+        "body": "You have 30 days."
+      }
+    ]
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "name": "valid multi-plane document with title, metadata, and preamble",
+  "source": "---\n3md: 0.1\naxis: time\ntitle: Week of June 22\nauthor: leif\n---\nPlan for the week. Each plane is a day; scrub the Z axis to move through time.\n\n@plane z=0 label=\"Monday\"\n# Monday\n- [ ] Standup at 9\n- [x] Coffee\n\n@plane z=1 label=\"Tuesday\"\n# Tuesday\n- [ ] Lunch with design\n\n@plane z=2 label=\"Wednesday\"\n# Wednesday\n- [ ] Ship 0.1 tag\n",
+  "expected": {
+    "version": "0.1",
+    "axis": "time",
+    "title": "Week of June 22",
+    "metadata": { "author": "leif" },
+    "preamble": "Plan for the week. Each plane is a day; scrub the Z axis to move through time.",
+    "planes": [
+      {
+        "z": 0,
+        "label": "Monday",
+        "x": null,
+        "y": null,
+        "attributes": {},
+        "body": "# Monday\n- [ ] Standup at 9\n- [x] Coffee"
+      },
+      {
+        "z": 1,
+        "label": "Tuesday",
+        "x": null,
+        "y": null,
+        "attributes": {},
+        "body": "# Tuesday\n- [ ] Lunch with design"
+      },
+      {
+        "z": 2,
+        "label": "Wednesday",
+        "x": null,
+        "y": null,
+        "attributes": {},
+        "body": "# Wednesday\n- [ ] Ship 0.1 tag"
+      }
+    ]
+  }
+}

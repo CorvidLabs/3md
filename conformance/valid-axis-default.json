@@ -1,0 +1,21 @@
+{
+  "name": "axis defaults to layer when omitted",
+  "source": "---\n3md: 0.1\ntitle: No axis declared\n---\nJust a body.\n",
+  "expected": {
+    "version": "0.1",
+    "axis": "layer",
+    "title": "No axis declared",
+    "metadata": {},
+    "preamble": null,
+    "planes": [
+      {
+        "z": 0,
+        "label": null,
+        "x": null,
+        "y": null,
+        "attributes": {},
+        "body": "Just a body."
+      }
+    ]
+  }
+}

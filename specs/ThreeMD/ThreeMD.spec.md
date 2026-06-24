@@ -9,6 +9,7 @@ files:
   - Sources/ThreeMD/ParseError.swift
   - Sources/ThreeMD/Parser.swift
   - Sources/ThreeMD/Serializer.swift
+  - Sources/ThreeMD/HTMLRenderer.swift
 
 db_tables: []
 depends_on: []
@@ -36,6 +37,7 @@ the implementing API.
 | `ParseError` | Errors thrown while parsing 3md source. |
 | `Parser` | Parses 3md source text into a `Document`. |
 | `Serializer` | Renders a `Document` back into 3md source text. |
+| `HTMLRenderer` | Renders a `Document` as a standalone, accessible HTML5 document. |
 
 ### Functions
 
@@ -43,6 +45,7 @@ the implementing API.
 |----------|-----------|-------------|
 | `Parser.parse` | `func parse(_ source: String) throws -> Document` | Parse 3md source into a document. |
 | `Serializer.render` | `func render(_ document: Document) -> String` | Render a document to 3md text. |
+| `HTMLRenderer.render` | `func render(_ document: Document) -> String` | Render a document to a standalone HTML5 string. |
 | `Document.planesByZ` | `var planesByZ: [Plane]` | Planes sorted by ascending z. |
 | `Document.plane(atZ:)` | `func plane(atZ z: Double) -> Plane?` | Look up a plane by z. |
 
@@ -84,3 +87,4 @@ Then the result has two planes ordered by source position, each carrying its
 | Version | Date | Changes |
 |---------|------|---------|
 | 1 | 2026-06-23 | Initial spec for the 0.1 parser and serializer. |
+| 1 | 2026-06-23 | Add HTMLRenderer: standalone HTML5 output with per-plane sections, HTML escaping, axis and title metadata. |

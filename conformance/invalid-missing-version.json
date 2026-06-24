@@ -1,0 +1,5 @@
+{
+  "name": "frontmatter without the 3md version key is rejected",
+  "source": "---\naxis: time\ntitle: No version\n---\nbody\n",
+  "error": "missingVersion"
+}

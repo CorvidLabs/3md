@@ -1,0 +1,21 @@
+{
+  "name": "a plane directive with no following content has an empty body",
+  "source": "---\n3md: 0.1\n---\n@plane z=0 label=\"empty\"\n",
+  "expected": {
+    "version": "0.1",
+    "axis": "layer",
+    "title": null,
+    "metadata": {},
+    "preamble": null,
+    "planes": [
+      {
+        "z": 0,
+        "label": "empty",
+        "x": null,
+        "y": null,
+        "attributes": {},
+        "body": ""
+      }
+    ]
+  }
+}

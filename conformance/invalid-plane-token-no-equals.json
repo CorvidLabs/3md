@@ -1,0 +1,5 @@
+{
+  "name": "a plane attribute token with no equals sign is rejected (Swift throws; it is not skipped)",
+  "source": "---\n3md: 0.1\n---\n@plane z=0 bareword\nbody\n",
+  "error": "invalidPlaneDirective"
+}

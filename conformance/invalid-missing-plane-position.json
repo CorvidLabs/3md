@@ -1,0 +1,5 @@
+{
+  "name": "a plane directive with no z attribute is rejected",
+  "source": "---\n3md: 0.1\n---\n@plane label=\"no z here\"\nbody\n",
+  "error": "missingPlanePosition"
+}

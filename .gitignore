@@ -13,3 +13,10 @@ augur.json
 
 # Local agent/harness state
 .claude/
+
+# JS package (js/)
+node_modules/
+js/dist/
+
+# Stray swiftc byproducts
+*.dia

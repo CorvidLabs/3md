@@ -1,0 +1,12 @@
+{
+  "name": "frontmatter only with no body yields no planes",
+  "source": "---\n3md: 0.1\naxis: layer\n---\n",
+  "expected": {
+    "version": "0.1",
+    "axis": "layer",
+    "title": null,
+    "metadata": {},
+    "preamble": null,
+    "planes": []
+  }
+}
