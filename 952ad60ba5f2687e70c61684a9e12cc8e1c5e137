@@ -1,1 +1,2 @@
 {"commit":"952ad60ba5f2687e70c61684a9e12cc8e1c5e137","confidence":0.6636915459459459,"humanApproved":false,"note":"release v0.2.0","reviewer":"agent:claude","testsPassed":true,"timestamp":1782268255,"verdict":"proceed"}
+{"commit":"952ad60ba5f2687e70c61684a9e12cc8e1c5e137","confidence":0.6636915459459459,"humanApproved":false,"publicKey":"8L3Inb9GXaWv3TM69s1ikAuDcel9F4rtknLZXBkudyI=","reviewer":"agent:claude","signature":"Ojc2dwrIxyl1cF0gKBeua9pqndJxtcJxGbacKynJOlTi13sqBholNAUNb8i+Ez/3rSCAkRsazR9qNgascrw7BA==","testsPassed":true,"timestamp":1782268498,"verdict":"proceed"}
