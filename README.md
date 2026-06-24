@@ -15,8 +15,8 @@ annotations. Space for a scene.
 **[viewer &amp; editor](https://corvidlabs.github.io/3md/viewer.html)** (paste any
 `.3md` and share a link), read the
 **[docs](https://corvidlabs.github.io/3md/docs.html)**, or
-**[browse 135 examples](https://corvidlabs.github.io/3md/gallery.html)** in the
-[gallery](gallery/).
+**[browse 141 examples](https://corvidlabs.github.io/3md/gallery.html)** in the
+gallery (all of [`Examples/`](Examples), rendered live).
 
 <p align="center">
   <a href="https://corvidlabs.github.io/3md/"><img src="docs/demo.png" alt="The 3md interactive demo: planes stacked along the Z axis with a synced source view" width="760"></a>
@@ -151,9 +151,10 @@ See [SPEC.md](SPEC.md) for the full grammar and conformance rules.
 
 ## Examples
 
-The [Examples/](Examples) directory has eleven curated documents spanning many
-axis types (and the [gallery](gallery/) has 135 more, from medical charts and
-weather to games, maps, and animations):
+The [Examples/](Examples) directory holds all 141 example documents across 13
+axis types - from medical charts, weather, and file transfers to games, maps,
+and animations. Browse them all live in the
+[gallery viewer](https://corvidlabs.github.io/3md/gallery.html); a few highlights:
 
 - [`daily-planner.3md`](Examples/daily-planner.3md) - `axis: time`, one plane per day.
 - [`animation.3md`](Examples/animation.3md) - `axis: frame`, one plane per frame.

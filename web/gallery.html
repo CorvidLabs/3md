@@ -3,18 +3,18 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>3md gallery · 100 examples</title>
-<meta name="description" content="A gallery of 100 example .3md documents spanning every meaning of the Z axis, each rendered live in the 3D lab." />
+<title>3md gallery · 141 examples</title>
+<meta name="description" content="A gallery of 141 example .3md documents spanning every meaning of the Z axis, each rendered live in the 3D lab." />
 <link rel="icon" href="assets/favicon.svg" />
 <meta property="og:type" content="website" />
-<meta property="og:title" content="3md gallery · 100 examples" />
-<meta property="og:description" content="Browse 100 example .3md documents across every axis, each rendered live in the 3D lab." />
+<meta property="og:title" content="3md gallery · 141 examples" />
+<meta property="og:description" content="Browse 141 example .3md documents across every axis, each rendered live in the 3D lab." />
 <meta property="og:url" content="https://corvidlabs.github.io/3md/gallery.html" />
 <meta property="og:image" content="https://corvidlabs.github.io/3md/social-preview.png" />
 <meta property="og:image:width" content="1280" />
 <meta property="og:image:height" content="640" />
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="3md gallery · 100 examples" />
+<meta name="twitter:title" content="3md gallery · 141 examples" />
 <meta name="twitter:image" content="https://corvidlabs.github.io/3md/social-preview.png" />
 
 <!-- CorvidLabs theme pre-paint (must run before CSS) -->
@@ -183,7 +183,7 @@
 
   <header class="hero">
     <div class="eyebrow">the .3md gallery</div>
-    <h1 class="wordmark">100 examples<span class="z">.</span></h1>
+    <h1 class="wordmark">141 examples<span class="z">.</span></h1>
     <p class="tagline">Browse every <em>axis</em> in the library and render each one live in the lab.</p>
     <p class="sub">time · frame · layer · depth · space · slide · floor · step · status · version</p>
   </header>
@@ -234,7 +234,7 @@
   </section>
 
   <footer>
-    <div class="pill"><span class="pulse"></span> CI green · Swift parser · 100 example documents</div>
+    <div class="pill"><span class="pulse"></span> CI green · Swift parser · 141 example documents</div>
     <div class="pill mono"><a href="https://github.com/CorvidLabs/3md">github.com/CorvidLabs/3md</a></div>
   </footer>
 </div>
@@ -511,6 +511,11 @@ fetch("gallery-data.json")
   .then(r=>{if(!r.ok)throw new Error("failed to load gallery-data.json: "+r.status);return r.json();})
   .then(data=>{
     EXAMPLES=Array.isArray(data)?data:[];
+    // Keep the visible count in sync with the data so it never goes stale.
+    const n=EXAMPLES.length;
+    const wm=document.querySelector(".wordmark"); if(wm)wm.innerHTML=`${n} examples<span class="z">.</span>`;
+    const pill=document.querySelector(".pill"); if(pill)pill.innerHTML=`<span class="pulse"></span> CI green · Swift parser · ${n} example documents`;
+    document.title=`3md gallery · ${n} examples`;
     buildList();
     if(EXAMPLES.length){
       const first=document.querySelector(".entry");
