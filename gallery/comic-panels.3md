@@ -1,0 +1,75 @@
+---
+3md: 1.0
+axis: frame
+title: "The Last Slice"
+strip: daily four-panel
+author: M. Corvid
+characters: Pia (cartographer), Boop (the cat)
+---
+A four-panel comic strip read frame by frame. Each `@plane` is one panel,
+laid out left to right across two rows. Step through the panels in order, or
+jump straight to the [[z=3|punchline]].
+
+@plane z=0 x=0 y=0 label="Panel 1: The Setup"
+# Panel 1 - "Mine"
+
+**Wide shot.** A small kitchen at midnight. Pia stands at the counter in a
+striped robe, holding a single slice of cold pizza on a paper towel. The fridge
+door hangs open, casting a rectangle of light across the floor.
+
+> **PIA:** One slice left. I have been thinking about you all day.
+
+On the floor, just inside the fridge-light, two round eyes catch the glow.
+
+*SFX (tiny, bottom-right):* `...thmp.`
+
+Next: she sets it down for one fatal second. See [[z=1|Panel 2]].
+
+@plane z=1 x=1 y=0 label="Panel 2: The Turn"
+# Panel 2 - "One Second"
+
+**Medium shot.** Pia turns toward the sink to grab a napkin. Her back is to the
+counter. The slice sits alone on its paper towel, steam-less and perfect.
+
+Boop the cat is mid-leap, a gray comma of motion, paws already over the edge of
+the counter. Nobody is looking at Boop. That is the whole problem.
+
+> **PIA (off-panel):** Where do we keep the- oh, never mind.
+
+*SFX (large, diagonal):* `WHUMP-SKITTER`
+
+Compare the calm of [[z=0|Panel 1]] with what comes [[z=2|next]].
+
+@plane z=2 x=0 y=1 label="Panel 3: The Reveal"
+# Panel 3 - "Evidence"
+
+**Close-up, low angle.** The paper towel is empty except for one greasy ring and
+a single pepperoni, abandoned like a coin. Pia's hand hovers over the spot, fingers
+spread, frozen in disbelief.
+
+Off to the left edge, the very tip of a gray tail is exiting the frame.
+
+> **PIA:** Boop.
+>
+> **PIA:** *Boop.*
+
+*SFX (small, trailing):* `crunch ... crunch ...`
+
+The verdict lands in [[z=3|Panel 4]].
+
+@plane z=3 x=1 y=1 label="Panel 4: The Punchline"
+# Panel 4 - "Shared Custody"
+
+**Two shot.** Pia sits cross-legged on the kitchen floor, defeated and a little
+amused. Boop sits beside her, washing one paw with the serene confidence of a
+creature who has eaten and regrets nothing.
+
+> **PIA:** You know that was mine, right?
+>
+> **BOOP:** *(blinks slowly)*
+>
+> **PIA:** ...Fine. Half. From now on, half.
+
+*Caption box (bottom):* And that is how the treaty was signed.
+
+Read it again from [[z=0|Panel 1]].

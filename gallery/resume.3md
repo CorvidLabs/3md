@@ -1,0 +1,107 @@
+---
+3md: 1.0
+axis: depth
+title: Maya Okafor - Resume
+subtitle: A layered resume, from a six-second skim to a full deep dive
+name: Maya Okafor
+role: Staff Backend Engineer
+location: Lisbon, Portugal (UTC+0)
+contact: maya.okafor@example.com
+---
+Read top down. The shallowest plane (z=0) is the recruiter skim. Each plane
+underneath adds detail, so a hiring manager can stop reading the moment they
+have what they need or keep descending for evidence.
+
+@plane z=0 label="The skim (6 seconds)" x=0 y=0
+# Maya Okafor
+
+**Staff Backend Engineer** - distributed systems, payments infrastructure, Go and Rust.
+
+12 years building systems that move money and stay up. Cut p99 latency on a
+payment authorization path from 840 ms to 120 ms while tripling throughput.
+
+- Now: Staff Engineer, Tessellate Payments (2021 to present)
+- Before: Senior Engineer, Northwind Logistics; Engineer, Bluefin Mobile
+- Strengths: high-throughput services, idempotency and exactly-once semantics, on-call leadership
+- Open to: Staff or Principal backend roles, remote or Lisbon-based
+
+Need more than the headline? Drop to [[z=1|the highlights]].
+
+@plane z=1 label="The highlights (1 minute)" x=0 y=0
+# What I actually did
+
+## Tessellate Payments - Staff Backend Engineer (2021 to present)
+- Re-architected the authorization pipeline around an append-only ledger,
+  removing a class of double-charge bugs that had caused 30+ incidents a year.
+- Drove p99 latency from 840 ms to 120 ms by replacing a synchronous fraud
+  check with a speculative-execution pattern and a 50 ms budget.
+- Led the on-call rotation for 14 engineers; cut paging volume 60 percent by
+  killing flappy alerts and adding SLO-based alerting.
+
+## Northwind Logistics - Senior Engineer (2017 to 2021)
+- Built the route-optimization service handling 2 million shipments a day.
+- Migrated a 400-table monolith to a set of bounded services with zero downtime.
+
+## Bluefin Mobile - Engineer (2014 to 2017)
+- Owned the push-notification fan-out service (peak 1.2 million sends per minute).
+
+Want the proof behind the numbers? See [[z=2|the deep dive]].
+For the toolbox and credentials, jump to [[z=3|skills and education]].
+
+@plane z=2 label="The deep dive (the evidence)" x=0 y=0
+# How the work was done
+
+## Case study: the 840 ms to 120 ms latency cut
+The authorization path made a blocking call to a third-party fraud scorer that
+averaged 600 ms and spiked to 2 seconds. Rather than wait, I changed the flow:
+
+1. **Speculate.** Authorize optimistically against a local risk model (8 ms)
+   and release the hold immediately, with a hard 50 ms budget.
+2. **Reconcile.** Fire the slow fraud check asynchronously; if it later
+   disagrees, reverse via the ledger (see [[z=1|the ledger work]]).
+3. **Cap the blast radius.** Speculative auth only applies under a per-merchant
+   risk ceiling, so a bad model never exposes more than a bounded dollar amount.
+
+Result: p99 dropped from 840 ms to 120 ms, chargebacks rose by less than 0.02
+percent, and throughput went from 4k to 13k authorizations per second on the
+same hardware.
+
+## Case study: killing double charges with an append-only ledger
+The old system stored balances as mutable rows, so a retried request could
+apply a charge twice. I modeled every money movement as an immutable event
+keyed by a client-supplied idempotency token. Replaying events became the
+source of truth; balances became a derived, cacheable projection.
+
+- 30+ double-charge incidents per year went to zero in the 18 months after.
+- Reconciliation that took a nightly 4-hour batch became a streaming view.
+
+## How I lead
+- I write the postmortem myself when I am the incident commander, blameless and
+  specific, with one owned action item per contributing cause.
+- I pair with new hires for their first two on-call shifts before they solo.
+
+Curious about the raw toolset? Continue to [[z=3|skills and education]].
+
+@plane z=3 label="Skills, tools, and education" x=0 y=0
+# The toolbox
+
+## Languages and runtimes
+- **Daily:** Go, Rust, SQL (PostgreSQL), Bash
+- **Comfortable:** Python, TypeScript, Kotlin
+- **Reading level:** C, Elixir
+
+## Systems and infrastructure
+- Kafka and NATS for event streaming, gRPC and Protobuf for service contracts
+- PostgreSQL (logical replication, partitioning), Redis, ScyllaDB
+- Kubernetes, Terraform, and a strong bias toward boring, observable deployments
+- OpenTelemetry, Prometheus, and Grafana for the metrics that back [[z=2|the case studies]]
+
+## Education
+- B.Sc. Computer Science, University of Cape Town (2014), first-class honours
+- Thesis: consensus under partial synchrony, comparing Raft and Viewstamped Replication
+
+## Selected talks and writing
+- "Exactly-once is a lie, idempotency is the truth" - GopherCon EU, 2023
+- "Speculative authorization for low-latency payments" - internal eng blog, 2022
+
+Done reading? Head back to [[z=0|the skim]] or revisit [[z=1|the highlights]].

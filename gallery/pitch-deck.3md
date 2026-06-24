@@ -1,0 +1,109 @@
+---
+3md: 1.0
+axis: slide
+title: Driftwood - Inventory Intelligence for Independent Cafes
+company: Driftwood
+stage: Seed
+ask: $1.5M
+deck-version: v7
+presenter: Mara Okonkwo, CEO
+---
+Driftwood seed round, slide deck. Jump to the [[z=5|ask]] if you are short on time.
+
+@plane z=0 label="Title" x=0 y=0
+# Driftwood
+
+### Inventory intelligence for independent cafes
+
+Stop guessing what to order. Driftwood reads your point-of-sale feed, predicts demand by the cup, and places supplier orders before you run dry.
+
+Mara Okonkwo, CEO and co-founder
+Seed round, raising $1.5M
+
+San Francisco, CA - driftwood.coffee
+
+@plane z=1 label="Problem" x=1 y=0
+# The 4am order is a coin flip
+
+A typical independent cafe runs on the owner's memory. At close, the owner eyeballs the shelves and texts the roaster and the dairy supplier with a rough guess.
+
+- Over-order and milk spoils, oat cartons expire, beans go stale. The average shop we surveyed throws out 11% of perishable spend every month.
+- Under-order and the espresso machine sits idle by 2pm on a sunny Saturday. A single "sorry, we are out of oat milk" costs roughly $90 in walked customers.
+- The owner spends 5 to 7 hours a week on ordering and supplier back-and-forth instead of running the floor.
+
+There are 38,000 independent cafes in the US. None of the tools built for restaurant chains fit a 2-person shop. See how we fix this on [[z=2|the solution slide]].
+
+@plane z=2 label="Solution" x=2 y=0
+# Order the right amount, automatically
+
+Driftwood connects to the POS in one click (Square, Toast, Clover) and learns each shop's rhythm.
+
+1. **Predict** - We forecast demand per ingredient using the shop's own sales history, weather, local events, and day-of-week patterns.
+2. **Suggest** - Every evening the owner gets one text: "Order 12 gallons whole milk, 4 cases oat, 8 lbs house blend. Tap to confirm."
+3. **Place** - One tap sends purchase orders straight to existing suppliers over email or EDI. No new supplier accounts required.
+
+The owner stays in control and approves every order. Driftwood just removes the guesswork. The numbers behind this are on [[z=3|the traction slide]].
+
+@plane z=3 label="Traction" x=3 y=0
+# Cafes are paying and staying
+
+We launched the paid product in September 2025.
+
+- **47 paying cafes** across the Bay Area and Portland
+- **$9,400 MRR**, growing 22% month over month for the last five months
+- **Net revenue retention 118%** - shops add locations and upgrade tiers
+- **Logo churn under 2%** monthly
+
+What customers see after 90 days on Driftwood:
+
+| Metric | Before | After |
+| --- | --- | --- |
+| Perishable waste | 11% of spend | 4% of spend |
+| Hours/week on ordering | 6.0 | 1.5 |
+| Stockout days/month | 7 | 1 |
+
+"I got my Sunday mornings back." - Dani R., owner, Tidepool Coffee, Oakland
+
+@plane z=4 label="Market and model" x=4 y=0
+# A wedge into a $4B back office
+
+**Market**
+
+- 38,000 independent US cafes (SAM) at $1,200/year ACV = roughly $46M.
+- Expand to bakeries, juice bars, and ghost kitchens: 210,000 small food businesses (TAM), a $4B+ back-office software opportunity.
+
+**Business model**
+
+- SaaS subscription, $79 to $149/month by volume tier.
+- Phase two: take a small rebate on supplier orders routed through Driftwood, aligning our revenue with the spend we already manage.
+
+**Unit economics today**
+
+- CAC $310, blended payback 4.1 months.
+- Gross margin 81%. LTV:CAC of 6.2 at current churn.
+
+Where the $1.5M goes is on [[z=5|the ask]].
+
+@plane z=5 label="The ask" x=5 y=0
+# Raising $1.5M to reach 500 cafes
+
+We are raising a $1.5M seed to hit $1M ARR and Series A metrics within 18 months.
+
+**Use of funds**
+
+- 50% - Engineering: supplier integrations and a self-serve onboarding flow.
+- 30% - Go-to-market: two regional reps and roaster-partner referrals.
+- 20% - Operations and runway buffer.
+
+**Milestones this funding buys**
+
+- 500 paying cafes and $1M ARR
+- Automated supplier rebate revenue live in 3 metro areas
+- Onboarding time cut from 2 days to under 1 hour
+
+**The team**
+
+- Mara Okonkwo, CEO - ran ops for a 9-location cafe group, scaled it from 2 shops.
+- Theo Lindqvist, CTO - ex-Square, built the forecasting platform for seller analytics.
+
+Back to [[z=0|the top]]. Let's talk: mara@driftwood.coffee

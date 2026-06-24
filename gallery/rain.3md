@@ -1,0 +1,111 @@
+---
+3md: 1.0
+axis: frame
+title: Falling Rain
+fps: 8
+loop: true
+charset: ascii
+description: A five-frame ASCII rain loop. Drops fall, land, and splash.
+---
+A short looping animation of rain falling on flat ground. Each plane is one
+frame; play them in `z` order at the rate given by `fps` (8 frames per second),
+then jump from the last frame back to [[z=0|the first]] to loop.
+
+The drop glyphs are `'` (high, just spawned), `.` (mid-air), and `:` (low, about
+to land). The ground line is a row of `_`. A landing is drawn as `v`, and the
+splash that follows is a spray of `*` and `^`. Read the frames in order to see a
+single column of rain complete one fall-and-splash cycle.
+
+@plane z=0 label="Spawn" x=0 y=0
+# Frame 1 - drops spawn at the top
+
+New drops appear near the cloud line. Nothing has fallen far yet, so the lower
+rows are still clear.
+
+```
+   '     '      '
+      '       '
+   .      '
+        .
+                 .
+.
+
+________________________
+```
+
+Next: the drops begin to [[z=1|fall]].
+
+@plane z=1 label="Falling" x=0 y=1
+# Frame 2 - the column descends
+
+Every drop has moved down one row. The high `'` glyphs have become mid-air `.`
+glyphs, and a fresh row of `'` spawns up top to keep the loop seamless.
+
+```
+   '     '      '
+      .       .
+   .      .
+        :
+                 :
+     .
+________________________
+```
+
+The leading drop is now a low `:`, one row above the ground. Watch it
+[[z=2|land]] next.
+
+@plane z=2 label="Impact" x=0 y=2
+# Frame 3 - first contact
+
+The leading drop reaches the ground and flattens into a `v`. The rest of the
+column keeps descending behind it.
+
+```
+   .     '      .
+      :       :
+   :      :
+        v
+                 .
+     :
+_______v________________
+```
+
+A `v` marks the exact impact point. The energy of that hit becomes a
+[[z=3|splash]].
+
+@plane z=3 label="Splash" x=0 y=3
+# Frame 4 - the splash blooms
+
+The landing throws droplets outward and upward. `^` is the rising spray, `*` is
+the scatter at ground level.
+
+```
+   :     .      :
+      .       .
+   .      .
+       ^^^
+                 v
+     .
+______*^^^*_____________
+```
+
+The splash is at its widest here. In the final frame it [[z=4|settles]].
+
+@plane z=4 label="Settle" x=0 y=4
+# Frame 5 - the splash settles, the loop resets
+
+The spray falls back, leaving only faint `*` marks that will fade. The column
+above has marched down one more row, ready to feed the next cycle.
+
+```
+   .     :      .
+      .       :
+   :      :
+        :
+                 ^
+     :
+_______*________________
+```
+
+That is one full cycle. Loop back to [[z=0|Frame 1]] and the rain keeps
+falling. At 8 fps the whole sequence runs in roughly 0.6 seconds per drop.

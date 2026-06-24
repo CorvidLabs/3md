@@ -1,0 +1,130 @@
+---
+3md: 1.0
+axis: frame
+title: EKG Heartbeat ASCII Animation
+fps: 12
+loop: true
+lead: II
+rhythm: normal sinus
+bpm: 72
+artist: CorvidLabs
+---
+A single cardiac cycle drawn in monospace ASCII, swept left to right like a
+trace crawling across a bedside monitor. Play the frames in order (0 through 4)
+and then jump back to [[z=0|frame 0]] to repeat at a steady 72 beats per minute.
+
+Each plane is one cel. The waveform is the classic Lead II morphology: a small
+P wave, the tall sharp QRS spike, and a rounded T wave, all riding along an
+isoelectric baseline drawn with dots. The bright cursor character (the rightmost
+non-dot column) marks where the beam is painting right now.
+
+Render at 12 fps for a calm resting rhythm. Double the rate to roughly 24 fps and
+the same five frames read as a tachycardic run.
+
+@plane z=0 x=0 y=0 label="Baseline"
+# Frame 0 - Baseline (TP segment)
+
+The trace rests on the isoelectric line. Electrically the heart is quiet here,
+between the end of one T wave and the start of the next P wave. The beam glides
+flat, building the calm that makes the coming spike read as sudden.
+
+```
+.........................................
+.........................................
+___________________________________......
+.........................................
+.........................................
+```
+
+- Segment: TP (diastole, ventricles filling)
+- Baseline: flat, isoelectric
+- Cursor: sweeping right along the floor
+
+The atria are about to fire: continue to [[z=1|frame 1, P wave]].
+
+@plane z=1 x=8 y=-1 label="P wave"
+# Frame 1 - P wave (atrial depolarization)
+
+A small, smooth bump lifts off the baseline. This is atrial depolarization, the
+electrical signal that squeezes the atria and tops off the ventricles. It is
+gentle and rounded, never sharp.
+
+```
+.........................................
+.............-.-.........................
+__________--.....--________________......
+.........................................
+.........................................
+```
+
+- Wave: P (small, rounded, upright in Lead II)
+- Duration: brief, well under the QRS that follows
+- Then: a flat PR segment as the signal pauses at the AV node
+
+The pause ends and the ventricles fire hard: see [[z=2|frame 2, QRS spike]].
+
+@plane z=2 x=16 y=-3 label="QRS spike"
+# Frame 2 - QRS complex (ventricular depolarization)
+
+The signature spike. A tiny dip (Q), a tall narrow tower (R), then a dip below
+the line (S), all in a flash. This is the ventricles depolarizing and is the
+beat you would feel as a pulse at the wrist.
+
+```
+...................|.....................
+...................|.....................
+__________--.....-.|.--__________________
+...................|.|...................
+...................|.|..................
+```
+
+- Q: small downward dip before the tower
+- R: tall sharp peak (the headline of the whole trace)
+- S: dip below baseline right after R
+- Width: narrow, the mark of a healthy conduction path
+
+The peak has passed; the ventricles now reset in [[z=3|frame 3, T wave]].
+
+@plane z=3 x=24 y=-1 label="T wave"
+# Frame 3 - T wave (ventricular repolarization)
+
+After the spike, the line returns and a broad, rounded hill follows. This is
+repolarization, the ventricles recharging for the next beat. The T wave is wider
+and softer than the P wave and trails the QRS by a short ST segment.
+
+```
+.........................................
+............................--.--........
+__________--.....-.|.--___--.....--______
+...................|.|...................
+...................|.|..................
+```
+
+- Wave: T (broad, rounded, upright in Lead II)
+- ST segment: flat stretch between the S dip and the T hill
+- Meaning: ventricles recharging, refractory to a new beat
+
+One full cycle is on screen. Now the trace settles back down:
+go to [[z=4|frame 4, Return to baseline]].
+
+@plane z=4 x=32 y=0 label="Return to baseline"
+# Frame 4 - Return to baseline (cycle complete)
+
+The T wave eases back down and the trace flattens out. The full P-QRS-T complex
+is behind us and the monitor is quiet again, ready for the next sweep. At 72 bpm
+this whole sequence takes about 0.83 seconds.
+
+```
+.........................................
+.........................................
+__________--.....-.|.--___--.....--______
+...................|.|...................
+...................|.|..................
+```
+
+- Complex: one complete P-QRS-T now drawn in full
+- Baseline: flat again, beam approaching the right edge
+- Next: wrap to the left edge and start over
+
+The beam wraps to the left edge and the rhythm repeats from
+[[z=0|frame 0, Baseline]].

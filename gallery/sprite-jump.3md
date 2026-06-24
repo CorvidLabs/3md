@@ -1,0 +1,129 @@
+---
+3md: 1.0
+axis: frame
+title: ASCII Jump Sprite Sequence
+fps: 12
+loop: false
+direction: rightward
+gravity: 9.8 (stylized)
+artist: CorvidLabs
+---
+A five-frame character jump drawn in monospace ASCII, the kind you would wire to
+the jump button in a side-scrolling platformer. Play the frames in order
+(0, 1, 2, 3, 4), holding [[z=2|the apex]] for a beat or two of hang time, then
+either snap back to [[z=0|the idle stance]] on landing or chain into a run.
+
+Each plane is one drawn cel plus the engine notes (vertical velocity, collision
+box, and which input or trigger advances to the next frame). Render at 12 fps for
+a snappy arcade feel; stretch frames 1 and 3 by a frame each for a floatier,
+moon-gravity jump. The `x`/`y` offsets trace the arc of the body's center so a
+spatial viewer can lay the cels out along the jump path.
+
+@plane z=0 x=0 y=0 label="Crouch / Anticipation"
+# Frame 0 - Crouch (Anticipation)
+
+The jump button is pressed and the character coils down for one frame before
+leaving the ground. This squash is the windup that sells the launch: the more
+the knees bend here, the higher the jump reads.
+
+```
+   ___
+  (o.o)
+  /[ ]\
+ _|   |_
+```
+
+- Vertical velocity: 0 (still grounded)
+- Pose: knees bent, arms drawn back, weight low over the feet
+- Collision box: full width, short height (crouched)
+- Advance on: jump input held for 1 frame, then release into [[z=1|the launch]]
+
+Tip: hold this frame an extra tick if the player taps jump while moving fast, so
+a running jump still gets its windup.
+
+@plane z=1 x=3 y=-4 label="Launch / Push-off"
+# Frame 1 - Launch (Push-off)
+
+Legs snap straight and the body stretches upward as the feet leave the floor.
+This is the fastest-moving frame, so a slight vertical smear or a single-pixel
+trail sells the speed. Velocity is at its peak and positive (rising).
+
+```
+  \o/
+   |
+  / \
+   ' '
+```
+
+- Vertical velocity: maximum upward (initial jump impulse)
+- Pose: arms thrown up, legs extending, toes pointing down
+- Collision box: tall and narrow (stretched)
+- Advance on: one frame elapsed, gravity begins to subtract from velocity
+
+Coming up off the floor leads into the slowing rise of [[z=2|the apex]].
+
+@plane z=2 x=6 y=-7 label="Apex / Hang Time"
+# Frame 2 - Apex (Hang Time)
+
+The top of the arc. Vertical velocity has decayed to roughly zero, so this is the
+frame to hold for hang time. Tucking the knees here reads as control and gives
+the player a clear "now I am floating" beat before the fall.
+
+```
+   o
+  /|\
+  / \
+```
+
+- Vertical velocity: near 0 (rising has stopped, falling has not begun)
+- Pose: knees tucked, arms out for balance, body compact at the peak
+- Collision box: compact (tucked)
+- Advance on: hold 1 to 3 frames, then let gravity pull into [[z=3|the fall]]
+
+This is the only frame you should ever pause on; everything before it is
+[[z=1|the rise]] and everything after is the drop.
+
+@plane z=3 x=9 y=-4 label="Fall / Descent"
+# Frame 3 - Fall (Descent)
+
+Gravity wins and the character drops. The body unfolds and the legs reach down,
+anticipating the ground. Velocity is now negative and growing as the fall
+accelerates, the mirror of the launch frame.
+
+```
+  \ /
+   |
+  /o\
+  | |
+```
+
+- Vertical velocity: increasing downward (accelerating fall)
+- Pose: arms lifting from the drop, legs extending toward the floor
+- Collision box: tall again, feet leading the descent
+- Advance on: collision with ground detected, snap to [[z=4|the landing]]
+
+If the player holds a direction here, carry horizontal momentum so the landing
+lands forward of [[z=0|the original crouch]].
+
+@plane z=4 x=12 y=0 label="Land / Recovery"
+# Frame 4 - Land (Recovery)
+
+The feet hit and the body absorbs the impact with a deep squash, the heaviest
+pose of the sequence. A small dust puff or a one-frame screen nudge here makes
+the landing feel weighty. After this recovery the character either eases back to
+neutral or buffers straight into a run.
+
+```
+  ___
+ (-.-)
+ /[ ]\
+=|   |=
+```
+
+- Vertical velocity: 0 (grounded, impact absorbed)
+- Pose: deep crouch, arms low, dust kicking out at the feet
+- Collision box: widest and shortest of the sequence (impact squash)
+- Advance on: 1 to 2 recovery frames, then return to [[z=0|the idle crouch]]
+
+Loop note: this jump does not auto-repeat. Recovery resolves to idle and waits
+for the next jump input, so playback ends here unless the player presses again.

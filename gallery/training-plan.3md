@@ -1,0 +1,125 @@
+---
+3md: 1.0
+axis: time
+title: 16-Week Marathon Training Plan
+plan: Beginner to First Marathon
+goal_time: sub-4:30
+peak_weekly_mileage: 42
+race: October 11 Sunday
+---
+A four-month build toward 26.2 miles, organized one plane per training block.
+Each block stacks on the one before it: base first, then strength, then peak
+volume, then a taper that sets up race day. Read the planes in Z order.
+
+All paces assume an easy effort of roughly 10:30 per mile and a goal marathon
+pace (GMP) near 10:18 per mile. Long runs are on Sundays. Take rest seriously,
+it is where the adaptation actually happens.
+
+@plane z=0 label="Base (Weeks 1-4)"
+# Block 1: Base Building
+
+The job here is simple: run consistently and get your body used to time on feet.
+Keep every run conversational. If you cannot speak a full sentence, slow down.
+
+| Week | Mon  | Tue 5K easy | Wed   | Thu 4mi | Fri  | Sat 3mi | Sun long | Total |
+|------|------|-------------|-------|---------|------|---------|----------|-------|
+| 1    | rest | 3.0         | cross | 4.0     | rest | 3.0     | 6.0      | 16    |
+| 2    | rest | 3.0         | cross | 4.0     | rest | 3.0     | 7.0      | 17    |
+| 3    | rest | 4.0         | cross | 4.0     | rest | 3.0     | 8.0      | 19    |
+| 4    | rest | 4.0         | cross | 5.0     | rest | 3.0     | 6.0      | 18    |
+
+Week 4 is a small step-back week (note the shorter long run) so the legs absorb
+the first three weeks before you push on.
+
+## Focus for this block
+
+- Build the Sunday long run by no more than 1 mile per week.
+- Cross-training (Wed) is a 40-minute easy bike or swim, zero pounding.
+- Buy real shoes now and start breaking them in, not in week 15.
+
+Next up: [[z=1|Block 2 adds tempo work]] once the aerobic base is in place.
+
+@plane z=1 label="Strength (Weeks 5-8)"
+# Block 2: Strength and Tempo
+
+Now we introduce quality. One weekly tempo run teaches your legs to clear
+lactate at a faster, sustained effort. Tempo pace is "comfortably hard", roughly
+9:45 per mile, about 35 seconds quicker than easy pace.
+
+| Week | Tue easy | Wed tempo        | Thu easy | Sun long | Total |
+|------|----------|------------------|----------|----------|-------|
+| 5    | 4.0      | 2mi @ 9:45       | 4.0      | 10.0     | 24    |
+| 6    | 4.0      | 3mi @ 9:45       | 5.0      | 12.0     | 28    |
+| 7    | 5.0      | 4mi @ 9:45       | 5.0      | 13.0     | 31    |
+| 8    | 4.0      | 2mi @ 9:45       | 4.0      | 10.0     | 26    |
+
+Week 8 cuts back again. Resist the urge to "make up" the volume, the cutback is
+load-bearing.
+
+## Workout detail: the tempo run
+
+1. 1 mile easy warm-up.
+2. The tempo block at 9:45 (hold it steady, do not start too hot).
+3. 1 mile easy cool-down.
+
+Add two short strength sessions a week: squats, lunges, single-leg calf raises,
+and planks. Strong hips and core are what keep your form together at mile 22.
+
+Back to [[z=0|the base block]] if a run still feels hard, or push on to
+[[z=2|peak mileage]] when the tempos feel repeatable.
+
+@plane z=2 label="Peak (Weeks 9-13)"
+# Block 3: Peak Mileage
+
+The most demanding block. This is where you bank the long runs that make 26.2
+possible and rehearse goal marathon pace (GMP, near 10:18) on tired legs.
+
+| Week | Wed quality       | Sun long             | Total |
+|------|-------------------|----------------------|-------|
+| 9    | 4mi @ 9:45 tempo  | 15.0                 | 33    |
+| 10   | 5mi @ 9:45 tempo  | 17.0                 | 36    |
+| 11   | 6x800m @ 5K pace  | 18.0 (last 4 @ GMP)  | 38    |
+| 12   | 5mi @ 9:45 tempo  | 20.0 (last 6 @ GMP)  | 42    |
+| 13   | 4mi @ 9:45 tempo  | 14.0                 | 34    |
+
+The week-12 long run of 20 miles is the keystone of the whole plan. The final
+6 miles at goal pace teach you what mile 20 of the race will actually feel like.
+
+## Fueling the long run
+
+- Practice race-day breakfast 3 hours before every long run.
+- Take a gel every 40-45 minutes, starting at minute 40 (do not wait until you
+  feel empty).
+- Drink to thirst, roughly 4-6 oz every 20 minutes in the heat.
+- Whatever you eat and drink here is exactly what you use on [[z=3|race day]].
+
+Week 13 begins the wind-down. Do not panic, [[z=3|the taper]] is when fitness
+becomes performance.
+
+@plane z=3 label="Taper and Race (Weeks 14-16)"
+# Block 4: Taper and Race Day
+
+Mileage drops sharply while intensity stays sharp. You will feel restless and
+slightly slow, this is normal and means the taper is working. The hay is in the
+barn.
+
+| Week | Wed              | Sun long | Total | Note                  |
+|------|------------------|----------|-------|-----------------------|
+| 14   | 4mi @ GMP        | 12.0     | 28    | first taper week      |
+| 15   | 3mi @ GMP        | 8.0      | 20    | sleep is the workout  |
+| 16   | 2mi shakeout     | 26.2     | race  | trust the training    |
+
+## Race week checklist
+
+- [ ] Lay out clothes, bib, and gels the night before (nothing new on race day).
+- [ ] Eat a familiar dinner, hydrate, and stop drinking caffeine early.
+- [ ] Set two alarms. Arrive at the start with time to spare.
+
+## Race-day pacing
+
+1. **Miles 1-6:** start 10-15 seconds SLOWER than GMP. Bank patience, not time.
+2. **Miles 7-20:** settle into goal pace (about 10:18) and run the tangents.
+3. **Miles 21-26.2:** this is the race. Hold form, shorten your stride, finish.
+
+You arrived here from [[z=2|the 20-mile peak run]]. Everything you rehearsed
+there, the fuel, the pace, the patience, is the plan for today. Go get it.

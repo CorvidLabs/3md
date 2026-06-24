@@ -1,0 +1,83 @@
+---
+3md: 1.0
+axis: depth
+title: Stormcaller Skill Tree
+class: Stormcaller (lightning mage)
+notation: SP means skill points
+---
+The Stormcaller tree spends from the surface inward. Tier 1 sits at the
+foreground (the skills you reach first), and each deeper plane gates behind the
+one above it. Read from `z=0` down to `z=3`; deeper tiers cost more SP and demand
+prerequisites from the tier above.
+
+Total to fully clear: 31 SP across four tiers.
+
+@plane z=0 label="Tier 1 - Foundations" x=0 y=0
+# Tier 1: Foundations
+
+No prerequisites. Available at level 1. Spend here first.
+
+| Skill        | Cost | Effect                                            |
+|--------------|------|---------------------------------------------------|
+| Spark        | 1 SP | Bolt for 12 damage, 4m range, no cooldown         |
+| Static Field | 2 SP | Standing still builds a charge that shocks on hit |
+| Quick Hands  | 1 SP | Cast speed +8%                                     |
+
+Spend a point in Spark to open the path to [[z=1|Tier 2: Conduction]].
+
+> Tip: Static Field pairs with kiting. Stop, soak a charge, then move.
+
+@plane z=1 label="Tier 2 - Conduction" x=2 y=0
+# Tier 2: Conduction
+
+Requires 3 SP spent in [[z=0|Tier 1]] and character level 8.
+
+| Skill        | Cost | Prerequisite | Effect                                  |
+|--------------|------|--------------|-----------------------------------------|
+| Chain Bolt   | 2 SP | Spark        | Lightning arcs to 2 nearby enemies      |
+| Grounding    | 2 SP | Static Field | -20% damage taken while channeling      |
+| Overload     | 3 SP | Quick Hands  | Crits refund 1 charge of Static Field   |
+
+Chain Bolt is the backbone of every later build. Take it before anything else
+here, then descend to [[z=2|Tier 3: Tempest]].
+
+@plane z=2 label="Tier 3 - Tempest" x=4 y=0
+# Tier 3: Tempest
+
+Requires 7 SP spent across Tiers 1 and 2, plus Chain Bolt, and level 16.
+
+| Skill         | Cost | Prerequisite | Effect                                       |
+|---------------|------|--------------|----------------------------------------------|
+| Thunderhead   | 4 SP | Chain Bolt   | Summon a cloud that strikes every 2 seconds  |
+| Insulation    | 3 SP | Grounding    | Immune to chain damage from your own bolts   |
+| Resonance     | 4 SP | Overload     | Each chain jump adds +15% damage to the next |
+
+Two viable splits from here:
+
+- **Burst:** Thunderhead plus Resonance for stacking arc damage.
+- **Sustain:** Thunderhead plus Insulation for safer crowd clears.
+
+The capstone at [[z=3|Tier 4: Apex]] unlocks once Thunderhead is maxed.
+
+@plane z=3 label="Tier 4 - Apex" x=6 y=0
+# Tier 4: Apex (Capstone)
+
+Requires Thunderhead maxed, 14 SP spent in the tree, and level 24. Pick exactly
+one of the two capstones below. The choice is permanent until a respec.
+
+## Stormlord (offense)
+
+- Cost: 6 SP
+- Thunderhead becomes mobile and follows you.
+- Resonance stacks no longer reset between targets.
+- Builds on [[z=2|Resonance]] for runaway scaling against packs.
+
+## Tempest Warden (defense)
+
+- Cost: 6 SP
+- Grounding and Insulation now apply to your whole party within 8m.
+- Killing a shocked enemy grants the party a 3-second damage shield.
+- Builds on [[z=2|Insulation]] for raid survivability.
+
+Either capstone closes the tree. Respec at any shrine for 500 gold to walk back
+up to [[z=0|Tier 1]] and rebuild.

@@ -1,0 +1,169 @@
+---
+3md: 1.0
+axis: status
+title: The Lifecycle of a Bug
+tracker: Jira-compatible
+issue: PAY-4821
+summary: Checkout total ignores promo code on second apply
+---
+A single defect, issue PAY-4821, walks the board from the moment a user files it
+to the moment the fix ships. Each plane is one status column. The x offset moves
+the card left to right across the board so the progression reads like a Kanban
+swimlane; the y offset nudges side-paths (reopened, won't fix) off the main row.
+
+Start at [[z=0|New]] and follow the happy path to [[z=5|Closed]].
+
+@plane z=0 x=0 y=0 label="New"
+# New
+
+A user reported PAY-4821 through the in-app feedback widget at 09:14.
+
+**What we know**
+
+- Applying a promo code twice doubles the discount instead of rejecting the
+  second apply.
+- Reported on web checkout, Chrome 124, guest cart.
+- Severity unset, no owner, no reproduction confirmed.
+
+**Entry criteria**
+
+- The report has a title and a description.
+- It is not an obvious duplicate of an open issue.
+
+A triager picks this up next. If it cannot be reproduced it bounces back here;
+otherwise it advances to [[z=1|Triaged]].
+
+@plane z=1 x=1 y=0 label="Triaged"
+# Triaged
+
+Reproduced on staging in two attempts. Now it is a real, prioritized bug.
+
+**Assessment**
+
+- Severity: **High** (revenue impact, customer can underpay).
+- Priority: P1, target this sprint.
+- Component: `checkout/promo-engine`.
+- Assigned to: the Payments squad.
+
+**Reproduction (confirmed)**
+
+1. Add any item to the cart.
+2. Apply promo `SAVE10`. Total drops 10 percent. Correct.
+3. Apply `SAVE10` a second time. Total drops another 10 percent. Wrong.
+
+With a confirmed repro and an owner, the card moves to [[z=2|In Progress]].
+If priority gets bumped down below the cut line it can land in [[z=4.5|Won't Fix]].
+
+@plane z=2 x=2 y=0 label="In Progress"
+# In Progress
+
+An engineer has the branch `fix/PAY-4821-double-promo` open and is writing code.
+
+**Root cause**
+
+The promo engine keys applied discounts by `code` but never checks whether that
+code is already present in `appliedPromos` before pushing a new entry. The guard
+exists for gift cards and was simply never added for percentage promos.
+
+```swift
+guard !appliedPromos.contains(where: { $0.code == promo.code }) else {
+    throw PromoError.alreadyApplied(promo.code)
+}
+appliedPromos.append(promo)
+```
+
+**Plan**
+
+- Add the duplicate guard above.
+- Add a regression test for the double-apply path.
+
+When the branch compiles and the test is written, it goes up for [[z=3|In Review]].
+
+@plane z=3 x=3 y=0 label="In Review"
+# In Review
+
+Pull request #1190 is open and waiting on a second pair of eyes.
+
+**Checklist**
+
+- [x] Duplicate guard added to `PromoEngine.apply`.
+- [x] Regression test `testDoublePromoRejected` passes.
+- [x] CI green on macOS and Linux.
+- [ ] One approving review.
+
+**Reviewer note (open)**
+
+> Good catch on the guard. Can we also surface a friendly message in the UI
+> instead of a raw error toast? Not a blocker, file a follow-up.
+
+A follow-up ticket PAY-4830 was filed for the UI copy. Once approved and merged,
+the fix is deployed and the card lands in [[z=4|Resolved]]. If review uncovers a
+deeper problem, it drops back to [[z=2|In Progress]].
+
+@plane z=4 x=4 y=0 label="Resolved"
+# Resolved
+
+Merged to `main` and deployed to production at 16:42. The engineer marks the bug
+fixed and hands it to QA for verification.
+
+**Deployed change**
+
+- Second apply of any promo code now returns a 409 with `alreadyApplied`.
+- The cart total reflects exactly one discount per unique code.
+
+**Awaiting verification**
+
+QA will re-run the original reproduction steps against production. Two outcomes:
+
+- Verified fixed, advance to [[z=5|Closed]].
+- Still broken, send it to [[z=2.5|Reopened]].
+
+@plane z=2.5 x=2 y=-1 label="Reopened"
+# Reopened
+
+QA found that the fix works for `SAVE10` but stacking two *different* codes
+(`SAVE10` then `FREESHIP`) still double-discounts. The original guard only
+matched identical codes.
+
+**Why it came back**
+
+The duplicate check compared `code` equality, but the real rule is "at most one
+percentage promo at a time," which is a category check, not a string check.
+
+This card returns to [[z=2|In Progress]] with the sharpened requirement. The
+loop from build to review to verify runs again until QA signs off.
+
+@plane z=4.5 x=4 y=-1 label="Won't Fix"
+# Won't Fix
+
+Not every bug ships a fix. This terminal state records a deliberate decision.
+
+**When a card lands here**
+
+- The behavior is working as intended once requirements are clarified.
+- The cost to fix outweighs the impact (rare edge, tiny audience).
+- It is a duplicate of another tracked issue.
+
+For PAY-4821 this lane stays empty: the revenue impact made the fix mandatory.
+It is shown here to complete the board. A resolved-as-wontfix card is closed with
+a rationale and is not reopened without new evidence.
+
+@plane z=5 x=5 y=0 label="Closed"
+# Closed
+
+QA verified the broadened fix against production. PAY-4821 is closed.
+
+**Final state**
+
+- Status: Closed, resolution Fixed.
+- Cycle time: 3 days, 7 hours from [[z=0|New]] to here.
+- Follow-up PAY-4830 (friendly UI message) remains open in its own lane.
+
+**Lessons captured**
+
+- Model business rules as categories, not string matches, when "only one of a
+  kind is allowed."
+- The first fix passed its test but not the real-world case; the regression
+  suite gained a cross-code stacking test so [[z=2.5|Reopened]] does not recur.
+
+The card rests here. A closed bug is the quiet end of the line.

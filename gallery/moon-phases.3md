@@ -1,0 +1,107 @@
+---
+3md: 1.0
+axis: time
+title: The Lunar Cycle, Phase by Phase
+synodic_period: 29.53 days
+hemisphere: northern
+illumination_note: percentages are approximate mid-phase values
+---
+The Moon does not make its own light. Every phase you see is sunlight reflected
+off the half of the Moon that faces the Sun, viewed from a slowly shifting angle
+as the Moon orbits Earth. One full trip through the named phases is a synodic
+month of about 29.53 days, measured from one New Moon to the next.
+
+Read the planes below in Z order: time runs from day 0 (New Moon) forward through
+one complete cycle. The waxing half (growing light) sits to the left of center,
+the waning half (shrinking light) to the right, so the stack mirrors the way the
+terminator sweeps across the disc.
+
+@plane z=0 x=0 y=0 label="New Moon"
+# New Moon (day 0)
+
+The Moon sits between Earth and the Sun, so its lit face points away from us and
+the disc is effectively invisible. Illumination near 0 percent.
+
+- **Rises:** around sunrise
+- **Sets:** around sunset
+- **Visible:** essentially not; lost in the Sun's glare
+- **Tides:** spring tides (Sun and Moon pull in line)
+
+This is the only moment a solar eclipse can happen, and only when the alignment
+is exact enough for the Moon's shadow to touch Earth. From here the lit edge
+begins to creep into view. Continue to [[z=3.7|the Waxing Crescent]].
+
+@plane z=3.7 x=-2 y=1 label="Waxing Crescent"
+# Waxing Crescent (about day 3 to 4)
+
+A slim, curved sliver of light appears on the **right** side of the disc as seen
+from the northern hemisphere. Illumination roughly 1 to 49 percent and climbing.
+
+- **Best seen:** in the western sky just after sunset
+- **Earthshine:** the dark portion often glows faintly, sunlight bounced off
+  Earth and back onto the Moon (sometimes called "the old Moon in the new Moon's
+  arms")
+
+The lit fraction grows a little each evening. When the disc reaches exactly half
+lit, we call it First Quarter: jump ahead to [[z=7.4|First Quarter]].
+
+@plane z=7.4 x=-1 y=0 label="First Quarter"
+# First Quarter (about day 7 to 8)
+
+Half the disc is lit, the right half from the northern view. Despite looking like
+a "half moon," it is called First Quarter because the Moon has completed one
+quarter of its orbit. Illumination near 50 percent.
+
+- **Rises:** around noon
+- **Sets:** around midnight
+- **Visible:** high in the southern sky in the evening, a great time for binocular
+  viewing along the **terminator** (the day/night line) where crater shadows are
+  longest
+
+Light keeps spilling across the disc, swelling into the bulging Waxing Gibbous
+over the next several nights until the whole near side blazes at
+[[z=14.8|Full Moon]].
+
+@plane z=14.8 x=0 y=2 label="Full Moon"
+# Full Moon (about day 14 to 15)
+
+Earth now sits between the Sun and the Moon, so the full near side is lit and the
+disc is a complete bright circle. Illumination near 100 percent.
+
+- **Rises:** around sunset
+- **Sets:** around sunrise
+- **Visible:** all night, the brightest natural object in the night sky
+- **Tides:** spring tides again (Sun and Moon aligned, opposite sides)
+
+A lunar eclipse can occur only at Full Moon, when Earth's shadow falls across the
+disc. After tonight the light begins to retreat from the right edge, thinning
+through the Waning Gibbous toward [[z=22.1|Last Quarter]].
+
+@plane z=22.1 x=2 y=0 label="Last Quarter"
+# Last Quarter (about day 22 to 23)
+
+Half lit again, but now the **left** half glows (northern view), the opposite
+side from First Quarter. The Moon has completed three quarters of its orbit.
+Illumination near 50 percent.
+
+- **Rises:** around midnight
+- **Sets:** around noon
+- **Visible:** high in the sky before dawn and into the morning
+
+The terminator once more throws dramatic shadows for observers, this time across
+the opposite landscape. From here only a fading curve remains: finish with
+[[z=29.53|the Waning Crescent]].
+
+@plane z=29.53 x=2 y=1 label="Waning Crescent"
+# Waning Crescent (about day 25 to 28)
+
+A thin curve of light clings to the **left** edge and thins night by night.
+Illumination roughly 49 down toward 0 percent. Earthshine often returns, softly
+lighting the dark portion just before dawn.
+
+- **Best seen:** in the eastern sky just before sunrise
+- **Sometimes called:** the "old Moon"
+
+When the last sliver dissolves into the Sun's glare, the Moon returns to the
+alignment it started from and the synodic month closes. The next New Moon begins
+the cycle anew: loop back to [[z=0|New Moon]].

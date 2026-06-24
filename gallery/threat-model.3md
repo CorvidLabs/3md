@@ -1,0 +1,220 @@
+---
+3md: 1.0
+axis: depth
+title: Threat Model by Depth - Customer Records API
+system: orders-api
+methodology: STRIDE + attack-surface layering
+reviewed: 2026-06-23
+owner: platform-security
+---
+This threat model stacks the same system along a depth axis, from the
+outermost attacker-facing surface down to the data at rest. Each plane
+holds the assets, trust boundaries, and mitigations that live at that
+depth. Read it front to back to follow an attacker's path inward, or jump
+straight to the layer you own.
+
+Depth convention: z=0 is the public edge (closest to the attacker), and
+larger z values sit deeper inside the trust perimeter. The deepest plane
+(the database) is the asset everything else exists to protect.
+
+@plane z=0 label="Public edge" x=0 y=0
+# Depth 0 - Public Edge
+
+The internet-facing surface: DNS, the CDN, and the TLS-terminating load
+balancer. Everything here is reachable by anonymous, unauthenticated
+clients, so it is the broadest and least-trusted layer.
+
+## Assets
+- Public hostname `api.example.com` and its DNS records
+- TLS certificate and private key (terminated at the load balancer)
+- Edge WAF rules and rate-limit counters
+
+## Trust boundary
+Anonymous internet -> edge. Treat every byte as hostile.
+
+## STRIDE highlights
+- **Spoofing**: domain takeover via a dangling CNAME pointing at a
+  decommissioned bucket.
+- **Tampering**: request smuggling through inconsistent header parsing
+  between the CDN and the origin.
+- **Denial of service**: volumetric floods and slow-loris connections
+  exhausting the listener pool.
+
+## Mitigations
+- HSTS with preload, TLS 1.2 minimum, and OCSP stapling.
+- Monitored DNS with CAA records; alert on any record change.
+- Anycast scrubbing plus per-IP and per-token rate limits at the WAF.
+
+Once a request survives the edge it reaches the gateway, where it must
+prove who it is: see [[z=1|the authentication layer]].
+
+@plane z=1 label="Authentication and gateway" x=0 y=1
+# Depth 1 - Authentication and Gateway
+
+The API gateway authenticates callers and applies coarse authorization
+before any business logic runs. This is the first layer that distinguishes
+one principal from another.
+
+## Assets
+- OAuth2 / OIDC token validation keys (JWKS)
+- Session and refresh tokens
+- API keys issued to partner integrations
+
+## Trust boundary
+Unauthenticated request -> authenticated principal. Crossing it grants an
+identity, so the integrity of token validation is critical.
+
+## STRIDE highlights
+- **Spoofing**: forged JWTs from an `alg: none` downgrade or a leaked
+  signing key.
+- **Elevation of privilege**: a token minted for a low-tier partner being
+  accepted for admin scopes because audience and scope claims are not
+  checked.
+- **Repudiation**: missing correlation IDs make it impossible to tie an
+  action back to a specific token.
+
+## Mitigations
+- Validate `alg`, `iss`, `aud`, and `exp` on every token; pin the JWKS and
+  reject unknown key IDs.
+- Short token lifetimes with rotating refresh tokens; revocation list
+  checked at the gateway.
+- Stamp every authenticated request with an immutable correlation ID that
+  flows down to [[z=4|the audit log]].
+
+The attacker who got past the edge ([[z=0|public edge]]) now needs a valid
+identity. With one in hand, they reach the application logic at
+[[z=2|the service layer]].
+
+@plane z=2 label="Application service" x=0 y=2
+# Depth 2 - Application Service
+
+The order and customer microservices: where authenticated requests turn
+into business actions. Authorization decisions and input handling live
+here.
+
+## Assets
+- Business logic for reading and mutating customer and order records
+- Per-resource authorization rules (who may see which customer)
+- Internal service-to-service credentials
+
+## Trust boundary
+Authenticated principal -> authorized action on a specific resource. A
+valid token does not imply access to a given record.
+
+## STRIDE highlights
+- **Information disclosure**: insecure direct object reference, where
+  `GET /customers/{id}` returns any id the caller names.
+- **Tampering**: mass-assignment letting a client set `role` or
+  `account_balance` through an unfiltered request body.
+- **Elevation of privilege**: server-side request forgery from an
+  order-import feature reaching the internal metadata service.
+
+## Mitigations
+- Enforce object-level authorization on every record access, not just at
+  the route. Default deny.
+- Allowlist writable fields per endpoint; reject unknown keys.
+- Egress allowlist for outbound calls; block link-local and metadata IP
+  ranges.
+
+Validated, authorized requests now read and write through the persistence
+layer at [[z=3|the data access layer]].
+
+@plane z=3 label="Data access" x=0 y=3
+# Depth 3 - Data Access Layer
+
+The ORM, query builders, and the cache that sit between the service and the
+database. This layer shapes how data is fetched and is a classic injection
+chokepoint.
+
+## Assets
+- Parameterized query templates and the ORM mapping
+- Connection pool credentials to the database
+- The read-through cache (may hold sensitive rows in memory)
+
+## Trust boundary
+Application intent -> concrete database operations. A flaw here can turn a
+benign request into an arbitrary query.
+
+## STRIDE highlights
+- **Tampering / disclosure**: SQL injection through string-concatenated
+  filters or unsafe `ORDER BY` clauses.
+- **Information disclosure**: cache poisoning or cross-tenant cache key
+  collisions returning another tenant's rows.
+- **Denial of service**: unbounded queries (no `LIMIT`) that scan and load
+  entire tables.
+
+## Mitigations
+- Parameterized queries everywhere; allowlist sortable columns rather than
+  interpolating them.
+- Tenant ID baked into every cache key and every query predicate.
+- Mandatory pagination caps and statement timeouts on the connection.
+
+Every operation that reaches this layer is mirrored into [[z=4|the audit
+log]], and the data itself lives one layer deeper at [[z=5|the data store]].
+
+@plane z=4 label="Audit and detection" x=1 y=3
+# Depth 4 - Audit and Detection
+
+A cross-cutting layer (offset on x to show it spans the stack) that
+records what happened and surfaces anomalies. It does not block requests;
+it makes attacks visible and recoverable.
+
+## Assets
+- Append-only audit log of authenticated, authorized mutations
+- Security event stream feeding detection rules
+- Alerting and on-call routing configuration
+
+## Trust boundary
+System behavior -> durable, tamper-evident record. The value of this layer
+collapses if the log can be edited or silenced.
+
+## STRIDE highlights
+- **Repudiation**: an actor denies a deletion because the log lacks the
+  correlation ID minted at [[z=1|the gateway]].
+- **Tampering**: an attacker with database access edits or truncates the
+  log to cover tracks.
+- **Information disclosure**: logs capturing full request bodies leak
+  tokens or personal data.
+
+## Mitigations
+- Write audit records to append-only, write-once storage shipped off-host
+  in near real time.
+- Redact secrets and personal fields before they ever reach the log.
+- Detection rules on bulk reads, off-hours admin actions, and repeated
+  authorization denials.
+
+@plane z=5 label="Data store" x=0 y=4
+# Depth 5 - Data Store
+
+The deepest layer: the customer database and its backups. This is the
+crown-jewel asset that every layer above exists to protect. Reaching it is
+the attacker's goal and the last line of defense.
+
+## Assets
+- Customer PII and order history (the primary database)
+- Encryption keys and the key management service
+- Automated backups and their restore path
+
+## Trust boundary
+Internal service network -> persistent storage. By the time an action
+arrives here it is assumed authorized, so defenses focus on containment and
+limiting blast radius.
+
+## STRIDE highlights
+- **Information disclosure**: a stolen backup or snapshot exposing the full
+  dataset at once.
+- **Elevation of privilege**: a single overprivileged database account that
+  can read every table and drop schemas.
+- **Denial of service**: ransomware encrypting both the live store and its
+  backups.
+
+## Mitigations
+- Encryption at rest with keys held in a separate KMS; rotate keys and
+  scope grants per service.
+- Least-privilege database roles: the order service cannot read the
+  credentials table.
+- Immutable, access-controlled backups with periodic restore drills.
+
+An attacker who reaches this depth has traversed every layer above, from
+[[z=0|the public edge]] inward. Defense in depth means no single layer is
+trusted to be the only thing standing between them and these rows.

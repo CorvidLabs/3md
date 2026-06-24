@@ -1,0 +1,124 @@
+---
+3md: 1.0
+axis: step
+title: Measuring the Vitamin C Content of Orange Juice by Iodometric Titration
+discipline: Analytical Chemistry
+duration: 90 minutes
+hazard-level: moderate
+---
+This procedure determines the ascorbic acid (vitamin C) concentration of a
+juice sample by titrating it against a standardized iodine solution. Ascorbic
+acid reduces iodine to iodide; once all the ascorbic acid is consumed, the next
+drop of iodine reacts with a starch indicator to produce a blue-black color
+that marks the endpoint.
+
+Read every step before starting. Wear splash goggles and nitrile gloves for the
+duration. The Z axis is the procedure step, in order.
+
+@plane z=0 x=0 y=0 label="Safety and Materials"
+# Step 0: Safety, Materials, and Reagents
+
+## Hazards
+- Iodine solution stains skin and clothing and is an irritant. Avoid contact.
+- Glassware is fragile. Inspect the burette for chips before use.
+- No open flames are required; this is a room-temperature procedure.
+
+## Equipment
+- 50 mL burette with stand and clamp
+- 250 mL Erlenmeyer flask (x3, one per trial)
+- 25 mL volumetric pipette and pipette filler
+- 100 mL beaker, wash bottle of distilled water
+- White tile or sheet of paper (to read the color change against)
+
+## Reagents
+| Reagent | Concentration | Volume needed |
+|---------|---------------|---------------|
+| Standardized iodine (I2) | 0.005 mol/L | ~120 mL |
+| Starch indicator | 1% w/v | a few drops |
+| Orange juice sample | as supplied | 75 mL total |
+
+Once everything above is laid out and checked, continue to
+[[z=1|preparing the burette]].
+
+@plane z=1 x=2 y=0 label="Prepare the Burette"
+# Step 1: Rinse and Fill the Burette
+
+1. Rinse the clean burette with about 5 mL of the standardized iodine
+   solution. Tilt and rotate so the liquid coats the inner wall, then drain
+   through the stopcock to waste. This removes residual water that would dilute
+   the titrant.
+2. Close the stopcock. Using a funnel, fill the burette above the zero mark
+   with iodine solution.
+3. Open the stopcock briefly to fill the tip below the stopcock and expel any
+   air bubble. An air bubble that leaves during titration adds false volume.
+4. Drain to bring the meniscus to the 0.00 mL line. Read the bottom of the
+   meniscus at eye level to avoid parallax error.
+
+Record the exact starting reading; do not assume it is precisely zero. With the
+burette ready, move on to [[z=2|preparing the sample]].
+
+@plane z=2 x=4 y=0 label="Prepare the Sample"
+# Step 2: Measure the Juice Sample
+
+1. Swirl the juice container gently to suspend any pulp evenly. Do not shake
+   hard, which introduces air bubbles and makes pipetting inaccurate.
+2. Pipette exactly 25.00 mL of juice into a clean 250 mL Erlenmeyer flask using
+   the volumetric pipette and filler. Never pipette by mouth.
+3. Add roughly 50 mL of distilled water to the flask. This dilution does not
+   change the amount of ascorbic acid present; it only gives a larger, lighter
+   volume so the endpoint color is easier to see.
+4. Add 5 to 8 drops of 1% starch indicator and swirl to mix.
+
+The flask now contains a known volume of sample ready for titration. Proceed to
+[[z=3|the titration]].
+
+@plane z=3 x=6 y=0 label="Titrate to Endpoint"
+# Step 3: Titrate Against Iodine
+
+Place the flask on the white tile beneath the burette tip.
+
+1. Add iodine solution from the burette in roughly 1 mL increments at first,
+   swirling the flask continuously after each addition. The blue-black color
+   that forms on contact should fade as it mixes.
+2. As the color begins to fade more slowly, slow down to dropwise addition.
+   This is the approach to the endpoint.
+3. The endpoint is the first faint blue-black color that persists for at least
+   30 seconds of swirling. Stop immediately and close the stopcock.
+4. Read and record the final burette volume to the nearest 0.05 mL.
+
+> Tip: if you overshoot (a strong, lasting blue), discard the trial and repeat.
+> A perceptibly dark result is past the endpoint and will overstate the titre.
+
+Repeat Steps 1 through 3 with fresh 25.00 mL juice aliquots until you have at
+least three concordant trials (titres agreeing within 0.10 mL). Then continue to
+[[z=4|the calculation]].
+
+@plane z=4 x=8 y=0 label="Calculate and Report"
+# Step 4: Calculate the Vitamin C Concentration
+
+For each trial, the titre is the final reading minus the starting reading.
+Average the concordant titres.
+
+## Stoichiometry
+Ascorbic acid reacts with iodine in a 1:1 mole ratio:
+
+```
+C6H8O6 + I2 -> C6H6O6 + 2 H+ + 2 I-
+```
+
+## Worked example
+Suppose the mean titre is 18.40 mL of 0.005 mol/L iodine for a 25.00 mL sample.
+
+1. Moles of I2 = 0.01840 L x 0.005 mol/L = 9.20 x 10^-5 mol
+2. Moles of ascorbic acid = 9.20 x 10^-5 mol (1:1 ratio)
+3. Mass = 9.20 x 10^-5 mol x 176.12 g/mol = 0.01620 g = 16.20 mg
+4. Concentration = 16.20 mg / 25.00 mL = 0.648 mg/mL = 64.8 mg per 100 mL
+
+## Reporting
+- Quote the result as mg of vitamin C per 100 mL, with the mean and the range
+  of the concordant titres.
+- Compare against the label value, if printed, and comment on any difference
+  (oxidation during storage typically lowers the measured value).
+
+If your trials were not concordant, return to [[z=3|the titration]] and run
+additional aliquots before averaging.

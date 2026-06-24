@@ -1,0 +1,87 @@
+---
+3md: 1.0
+axis: frame
+title: ASCII Loading Spinner
+fps: 10
+loop: true
+glyphs: "| / - \\"
+artist: CorvidLabs
+---
+A four-frame braille-free spinner built from the classic terminal glyph set
+`| / - \`. Each plane is one cel. Play them in order (0, 1, 2, 3) and loop back
+to [[z=0|frame 0]] to keep the bar spinning. Render in place by emitting a
+carriage return (`\r`) before each frame so every cel overwrites the last on the
+same line, which is what turns four static characters into one rotating spoke.
+
+At 10 fps the spoke makes a full half-turn every 200 ms and reads as smooth
+motion. Drop to 4 fps for a deliberate, chunky "still working" feel; push to 20
+fps and it blurs into a near-solid wheel.
+
+@plane z=0 x=0 y=0 label="Vertical"
+# Frame 0 - Vertical (|)
+
+The spoke stands straight up, the rest pose every loop returns to. Print a
+prompt prefix, then this glyph, then hold for one frame interval.
+
+```
+Loading |
+```
+
+- Glyph: `|` (pipe, U+007C)
+- Angle: 90 degrees, pointing straight up and down
+- Role: the anchor frame; comparison frames are read against this one
+
+Rotate one eighth of a turn clockwise to reach [[z=1|frame 1, the forward
+slash]].
+
+@plane z=1 x=2 y=0 label="Forward slash"
+# Frame 1 - Forward slash (/)
+
+The spoke tips clockwise off vertical. To the eye the top has swung to the right
+and the bottom to the left, the first hint of rotation after the rest pose.
+
+```
+Loading /
+```
+
+- Glyph: `/` (solidus, U+002F)
+- Angle: 45 degrees
+- Role: the "it moved" frame; without it frame 0 to frame 2 looks like a jump
+
+Keep turning clockwise to lay the spoke flat at [[z=2|frame 2, the dash]].
+
+@plane z=2 x=4 y=0 label="Horizontal"
+# Frame 2 - Horizontal (-)
+
+The spoke lies flat, a quarter turn from the start. This is the visual opposite
+of [[z=0|frame 0]], and alternating only these two already reads as a crude
+blink-style spinner if you ever need a two-frame fallback.
+
+```
+Loading -
+```
+
+- Glyph: `-` (hyphen-minus, U+002D)
+- Angle: 0 degrees, pointing left and right
+- Role: the halfway mark of the loop
+
+Continue clockwise into the final lean at [[z=3|frame 3, the back slash]].
+
+@plane z=3 x=6 y=0 label="Back slash"
+# Frame 3 - Back slash (\)
+
+The spoke leans the other way, top swung left and bottom swung right. One more
+eighth-turn and it would stand vertical again, which is exactly why the loop
+closes cleanly here.
+
+```
+Loading \
+```
+
+- Glyph: `\` (reverse solidus, U+005C)
+- Angle: 135 degrees
+- Role: the closing frame; it sets up the seamless wrap
+
+The spoke completes its turn and the loop restarts at [[z=0|frame 0, Vertical]].
+Emit a final `\r` and overwrite the whole line with `Done` when the work
+finishes so no half-drawn spoke is left on screen.

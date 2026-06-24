@@ -1,0 +1,116 @@
+---
+3md: 1.0
+axis: slide
+title: Q2 2026 Quarterly Business Review
+company: Northwind Analytics
+presenter: Dana Okafor, VP Operations
+period: Apr 1 - Jun 30, 2026
+deck-version: final
+---
+Northwind Analytics quarterly business review for Q2 2026. Each plane is one slide; advance along the slide axis from the title through results, finances, risks, and the Q3 plan.
+
+@plane z=0 label="Title"
+# Q2 2026 Business Review
+
+**Northwind Analytics**
+
+Prepared by Dana Okafor, VP Operations
+Reviewed with the executive team on July 9, 2026
+
+Agenda for today:
+
+1. [[z=1|Where we landed against plan]]
+2. [[z=2|The financial picture]]
+3. [[z=3|Risks we are watching]]
+4. [[z=4|What we are committing to in Q3]]
+
+> One-line summary: we beat the revenue target by 6 percent, missed on net new logos, and enter Q3 with a tighter pipeline and one staffing gap to close.
+
+@plane z=1 x=0 y=0 label="Results vs Plan"
+# Results vs Plan
+
+| Metric | Q2 Target | Q2 Actual | Delta |
+| --- | --- | --- | --- |
+| Net new ARR | $1.80M | $1.91M | +6.1% |
+| Net new logos | 42 | 35 | -16.7% |
+| Gross retention | 90% | 92.4% | +2.4 pts |
+| Net revenue retention | 108% | 114% | +6 pts |
+
+What went well:
+
+- **Expansion carried the quarter.** Existing accounts upgraded faster than modeled, pushing net revenue retention to 114 percent.
+- The mid-market segment renewed at 96 percent, our best result in eight quarters.
+
+What missed:
+
+- New logo acquisition came in at 35 against a target of 42. Two enterprise deals slipped to July rather than being lost.
+- See the pipeline detail under [[z=3|Risks]] for the slipped-deal exposure.
+
+@plane z=1.5 x=2 y=0 label="Segment Detail"
+# Segment Detail
+
+A breakout of the same quarter by customer segment, sitting beside the headline results.
+
+| Segment | ARR added | Logos | Avg deal size |
+| --- | --- | --- | --- |
+| Enterprise | $0.94M | 6 | $156K |
+| Mid-market | $0.71M | 14 | $51K |
+| SMB | $0.26M | 15 | $17K |
+
+Reading the table:
+
+- Enterprise drove half of new ARR from a quarter of the deal count, confirming the move upmarket is working.
+- SMB volume held, but average deal size keeps drifting down. We should revisit packaging before Q4.
+
+Back to the [[z=1|headline numbers]].
+
+@plane z=2 x=0 y=0 label="Financials"
+# Financials
+
+| Line item | Q1 2026 | Q2 2026 | QoQ |
+| --- | --- | --- | --- |
+| Revenue | $7.4M | $7.9M | +6.8% |
+| Gross margin | 71% | 73% | +2 pts |
+| Operating expense | $5.1M | $5.0M | -2.0% |
+| Cash runway | 19 mo | 22 mo | +3 mo |
+
+Highlights:
+
+- Gross margin improved two points as we retired the legacy hosting contract in May.
+- Runway extended to 22 months on stronger collections and the expense discipline noted last quarter.
+- Burn multiple fell to 0.8, down from 1.1 in Q1.
+
+The runway gain assumes we hold hiring to the plan described in [[z=4|the Q3 plan]].
+
+@plane z=3 x=0 y=0 label="Risks"
+# Risks We Are Watching
+
+1. **Slipped enterprise deals.** Two deals worth a combined $310K in ARR moved to July. Both have verbal commitment; legal review is the gating step. Owner: Sales.
+2. **Support staffing gap.** We are one senior engineer short on the support rotation, pushing median first response from 4 to 7 hours. Owner: Support, with a backfill req already open.
+3. **Concentration.** Our top five accounts now represent 28 percent of ARR. No single renewal is at risk this quarter, but we are tracking it.
+
+Mitigation status:
+
+- Deal slippage: high confidence both close in Q3, reflected in [[z=4|the Q3 commitments]].
+- Staffing: offer out to a candidate, expected start mid-August.
+
+@plane z=4 x=0 y=0 label="Q3 Plan"
+# Q3 2026 Plan
+
+Three commitments, each with an owner and a number.
+
+| Commitment | Owner | Target |
+| --- | --- | --- |
+| Close the two slipped deals | Sales | $310K ARR by Aug 15 |
+| Fill the support engineer role | People Ops | Start by Aug 18 |
+| Launch usage-based SMB tier | Product | GA by Sep 30 |
+
+Quarter goals:
+
+- Net new ARR of $2.05M, weighted toward the recovered enterprise pipeline.
+- Hold gross retention at or above 92 percent.
+- Bring support median first response back under 5 hours once the role is filled.
+
+Closing note: the fundamentals (retention, margin, runway) are strong. Q3 is about converting [[z=3|the deals we already know about]] and closing [[z=3|the staffing gap]] so delivery quality does not slip.
+
+Return to the [[z=0|agenda]].

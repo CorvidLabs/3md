@@ -1,0 +1,75 @@
+---
+3md: 1.0
+axis: layer
+title: The Old Pond, Three Ways
+poet: Matsuo Basho
+written: c. 1686
+form: haiku (5-7-5)
+note: One source plane plus two English renderings, stacked as toggleable layers.
+---
+A single haiku by Matsuo Basho, kept in three layers: the Japanese source on the
+base plane, a literal gloss above it, and a free verse rendering on top. Toggle the
+layers to compare how each translator handled the same five-seven-five.
+
+@plane z=0 label="Original (Japanese)" x=0 y=0
+# Layer 0: Source
+
+## furuike ya
+
+```
+古池や          furuike ya
+蛙飛びこむ      kawazu tobikomu
+水の音          mizu no oto
+```
+
+Romaji, line by line:
+
+1. furu-ike ya (old pond, plus the cutting word *ya*)
+2. kawazu tobikomu (a frog leaps in)
+3. mizu no oto (the sound of water)
+
+The pivot is *ya*, a *kireji* (cutting word) that holds the old pond in silence
+before the frog disturbs it. There is no verb tense and no subject pronoun, so the
+scene stays open. See the word-by-word gloss in [[z=1|the literal layer]], or skip
+straight to [[z=2|the free rendering]].
+
+@plane z=1 label="Literal gloss (English)" x=2 y=0
+# Layer 1: Literal Gloss
+
+A close, almost mechanical reading that preserves word order and the 5-7-5 count
+where English allows it.
+
+> Old pond, ah,
+> a frog jumps in,
+> the sound of water.
+
+Notes on the choices:
+
+- *furuike* becomes "old pond" (two words for one compound).
+- *ya* is rendered as "ah," a small breath standing in for the cut.
+- *tobikomu* is "jumps in," present tense, no named actor.
+- *mizu no oto* is left as plain "the sound of water," resisting the urge to add
+  "splash."
+
+This layer sits directly over [[z=0|the source]]. For a version that breaks the
+literal grid in favor of music, lift up to [[z=2|the free rendering]].
+
+@plane z=2 label="Free rendering (English)" x=4 y=0
+# Layer 2: Free Rendering
+
+A looser translation that trades the strict syllable count for rhythm and a single
+sharp image. (After Robert Hass, adapted.)
+
+> The old pond,
+> a frog jumps in:
+> the splash of silence.
+
+What this layer gives up, and what it keeps:
+
+- It drops the 5-7-5 count entirely, choosing three short breaths instead.
+- It adds the paradox "splash of silence," which is not in [[z=1|the gloss]] but
+  honors the way the *ya* in [[z=0|the source]] frames quiet against sound.
+- The colon does the work of the cutting word, pausing the eye before the splash.
+
+Read top to bottom (z=2, z=1, z=0) and the poem grows more spare; read bottom to
+top and it grows more interpreted. Same eleven syllables underneath all three.

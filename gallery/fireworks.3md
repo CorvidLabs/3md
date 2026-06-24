@@ -1,0 +1,119 @@
+---
+3md: 1.0
+axis: frame
+title: Fireworks Burst
+fps: 24
+loop: false
+palette: gold-on-navy
+---
+A single aerial shell, drawn frame by frame. Read the planes in `z` order to
+watch one chrysanthemum break: the shell climbs, the charge ignites, a sphere of
+gold stars expands, gravity bends the trails into a willow, and the embers fade
+to smoke. Each plane is one keyframe; the `x`/`y` offsets track the burst center
+as it drifts on the wind.
+
+@plane z=0 label="Launch" x=0 y=-40
+# Frame 0 - Launch
+
+The mortar fires. A single comet of packed black powder leaves the tube and
+rises on a thin orange tail. Nothing has broken yet.
+
+- **Altitude:** climbing, roughly 1/3 of apex
+- **Visible:** one bright point, a faint smoke trail below it
+- **Sound:** the dull *thump* of the lift charge
+- **Color:** warm orange, almost white at the head
+
+The fuse is timed to reach the burst charge near the top of the arc. Hold this
+point of light steady; everything after this is the break.
+
+Next: the shell coasts to its peak in [[z=1|the apex]].
+
+@plane z=1 label="Apex" x=2 y=10
+# Frame 1 - Apex
+
+The comet slows at the top of its climb. For a fraction of a second it hangs,
+nearly motionless, the tail thinning to almost nothing. Wind has nudged the
+center about two units to the right.
+
+This is the quiet beat before the burst. The timing fuse has just reached the
+internal charge.
+
+- **Velocity:** near zero (the still moment)
+- **Visible:** a single dim ember, no trail
+- **Tension:** maximum, the audience holds its breath
+
+> A good shell breaks at apex, where it is slowest, so the sphere stays round
+> instead of smearing into a teardrop.
+
+Jump back to [[z=0|the launch]], or forward to [[z=2|ignition]].
+
+@plane z=2 label="Ignition" x=2 y=12
+# Frame 2 - Ignition
+
+The burst charge detonates. The shell's casing splits and the packed stars are
+thrown outward in every direction at once. This is the brightest single frame of
+the whole sequence.
+
+- **Flash:** a hard white core, blown-out for one frame
+- **Stars:** dozens of points launching radially outward
+- **Radius:** small but growing fast
+- **Sound:** arrives late, the *crack* the crowd feels in the chest
+
+Render this frame with a short, intense highlight. The next frame is all about
+the symmetric spread.
+
+On to [[z=3|the full bloom]].
+
+@plane z=3 label="Bloom" x=3 y=12
+# Frame 3 - Full Bloom
+
+The chrysanthemum opens. Every star traces a straight radial line from the
+center, forming a near-perfect sphere of gold. This is the iconic shape, the
+frame you would put on a poster.
+
+| Property   | Value                        |
+|------------|------------------------------|
+| Shape      | sphere (chrysanthemum break) |
+| Star count | ~64 visible trails           |
+| Color      | saturated gold, even falloff |
+| Radius     | maximum extent               |
+
+Each trail is the same length, which is what makes the burst read as round. The
+core has already gone dark; only the expanding shell of stars remains.
+
+From here gravity takes over. See [[z=4|the willow droop]].
+
+@plane z=4 label="Willow" x=4 y=4
+# Frame 4 - Willow Droop
+
+Expansion stops. The stars have spent their outward energy, and now gravity
+curves every trail downward. The crisp sphere softens into the drooping
+"willow" form, golden strands raining toward the ground.
+
+- **Motion:** outward speed gone, downward speed building
+- **Shape:** sphere relaxing into a hanging dome
+- **Color:** gold cooling toward amber at the trail tips
+- **Trails:** longer now, with visible fade from head to tail
+
+This is the lingering, graceful part of the effect, the part that earns the
+*ooh* a beat after the *crack*.
+
+Compare with [[z=3|the bloom]], or watch it die in [[z=5|the fade]].
+
+@plane z=5 label="Fade" x=5 y=-6
+# Frame 5 - Fade to Smoke
+
+The stars burn out one by one. The bright amber tips wink off, leaving only
+faint glowing embers and a drifting cloud of smoke lit from below by the next
+shell on the ground.
+
+- **Brightness:** near zero, a few stray sparks
+- **Visible:** gray-blue smoke, a couple of dying embers
+- **Color:** desaturated, mostly the navy of the night sky again
+- **Sound:** silence, then the lift *thump* of the next shell
+
+The frame returns almost to where it began: a dark sky with one small point of
+light. If `loop` were true, this is where it would cut back to
+[[z=0|the launch]] and start over.
+
+*End of burst.*

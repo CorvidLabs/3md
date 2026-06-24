@@ -1,0 +1,131 @@
+---
+3md: 1.0
+axis: slide
+title: Why Does the Moon Change Shape?
+subject: Grade 5 Earth Science
+duration: 50 minutes
+standard: NGSS 5-ESS1-2
+teacher: Ms. Okafor
+---
+Lesson plan for a single 50-minute class period. Each plane is one slide in the deck,
+projected in order. The Hook ([[z=0|slide 1]]) sets up a question the Wrap-Up
+([[z=5|slide 6]]) answers, and the model on [[z=2]] is the anchor for the whole lesson.
+
+@plane z=0 x=0 y=0 label="Hook"
+# Why Does the Moon Change Shape?
+
+**Bell-ringer (5 min).** Slide shows four photos of the Moon taken on different nights:
+a thin crescent, a half Moon, a gibbous Moon, and a full Moon.
+
+Prompt on the board:
+> "These are all the same Moon, photographed in one month. What is going on? Write one
+> guess in your notebook before we talk."
+
+Teacher moves: stay quiet for the first 60 seconds, then take three hands. Do not
+correct wrong guesses yet, just record them on chart paper. Common ones to expect:
+- "Clouds cover part of it."
+- "The Earth's shadow eats it."
+- "It actually shrinks and grows."
+
+We will come back to these exact guesses in the [[z=5|Wrap-Up]].
+
+@plane z=1 x=1 y=0 label="Prior Knowledge"
+# What We Already Know
+
+**Quick review (5 min).** Anchor today's lesson on what students locked in last week.
+
+Cold-call review questions:
+1. Where does the Moon's light come from? (The Sun. The Moon does not glow on its own.)
+2. How long does the Moon take to orbit the Earth once? (About one month.)
+3. Does the Moon spin? (Yes, once per orbit, so we always see the same face.)
+
+Write the key sentence on the board and have the class read it aloud:
+
+> "The Moon does not make light. It reflects sunlight, and we only see the lit part
+> that faces us."
+
+That single idea is the lever for the [[z=2|model demo]]. Half the Moon is always lit;
+the question is how much of the lit half points toward Earth.
+
+@plane z=2 x=2 y=0 label="Model Demo"
+# Modeling the Phases
+
+**Hands-on demonstration (15 min).** This is the heart of the lesson.
+
+Materials per group of four:
+- 1 polystyrene ball on a pencil (the Moon)
+- 1 desk lamp with the shade removed (the Sun)
+- The student's own head (the Earth)
+
+Procedure:
+1. One student holds the ball at arm's length and slowly turns in a full circle while
+   the lamp stays fixed.
+2. The rest of the group watches how much of the lit side of the ball they can see as
+   it travels around.
+3. Each student records the shape they see at four stations: lamp behind them, ball to
+   the left, lamp behind the ball, ball to the right.
+
+Safety note: lamps get hot, no touching the bulb, cords taped to the floor.
+
+What they should notice: the lit half never changes, but our *view* of it does. When
+the ball is between the student and the lamp, we see the dark side (new Moon). Connect
+this straight back to the [[z=1|key sentence]] from review.
+
+@plane z=3 x=3 y=0 label="Guided Practice"
+# Naming the Phases
+
+**Guided practice (10 min).** Now attach vocabulary to what they just observed.
+
+Project a phase diagram and fill it in together. Students label a printed handout as
+the class goes:
+
+| Position of Moon | What we see | Name |
+| --- | --- | --- |
+| Between Sun and Earth | Dark face | New Moon |
+| Quarter way around | Right half lit | First Quarter |
+| Opposite the Sun | Full face lit | Full Moon |
+| Three-quarters around | Left half lit | Third Quarter |
+
+Teach "waxing" (getting bigger, right side lit) versus "waning" (getting smaller,
+left side lit) with a hand gesture: right hand cups a growing Moon, left hand cups a
+shrinking one.
+
+Check for understanding: hold up the foam ball at a new position and ask the class to
+name the phase with a thumbs signal before anyone speaks.
+
+@plane z=4 x=4 y=0 label="Independent Work"
+# Your Turn: Moon Journal
+
+**Independent practice (8 min in class, then homework).**
+
+In class: each student sketches the four main phases in order and writes one sentence
+explaining why the new Moon looks dark, using the words "lit" and "facing."
+
+Homework (the Moon Journal):
+- [ ] Look for the Moon at the same time each night for the next week.
+- [ ] Draw what you see, even if it is hidden by clouds (write "cloudy").
+- [ ] Note whether it is waxing or waning.
+
+Differentiation:
+- **Support:** sentence starter provided ("The new Moon looks dark because...").
+- **Stretch:** predict the phase exactly seven nights from tonight and explain.
+
+Rubric lives on the back of the handout: 2 points for ordered phases, 2 for the
+explanation, 1 for correct waxing/waning labels.
+
+@plane z=5 x=5 y=0 label="Wrap-Up"
+# So, Why Does the Moon Change Shape?
+
+**Closure (2 min).** Return to the chart paper from the [[z=0|Hook]].
+
+Read each original guess aloud and have the class vote thumbs-up or thumbs-down now
+that they have the model:
+- "Clouds cover part of it." (No, the shape is sharp and curved, not patchy.)
+- "The Earth's shadow eats it." (No, that is a lunar eclipse, which is rare.)
+- "It shrinks and grows." (No, only our view of the lit half changes.)
+
+Exit ticket (one index card):
+> "In one sentence, tell me why the Moon looks different shapes during the month."
+
+Collect cards at the door. Tomorrow's lesson on eclipses builds directly on the model
+from [[z=2|the demo]], so flag any exit tickets that still mention Earth's shadow.

@@ -1,0 +1,131 @@
+---
+3md: 1.0
+axis: frame
+title: Swinging Pendulum
+fps: 12
+loop: ping-pong
+length: 0.95 m
+amplitude: 18 deg
+---
+A six-frame loop of a simple gravity pendulum released from the left.
+Frames advance left to right, then play back in reverse to complete the swing.
+The bob accelerates toward the bottom and decelerates at each turning point,
+so the spacing between extreme frames is wide and the spacing near the
+bottom is tight.
+
+Pivot sits at the top center of every frame. Read the loop in order:
+[[z=0|far left]] to [[z=2|bottom]] to [[z=4|far right]], then the viewer
+reverses back through [[z=2|bottom]] again.
+
+@plane z=0 x=-18 y=0 label="Frame 0: left extreme"
+# Frame 0 - Left turning point
+
+The bob hangs at its leftmost angle, +18 degrees from vertical.
+
+- Velocity: 0 (instantaneous rest)
+- Acceleration: maximum, pointing back toward center
+- String drawn taut up and to the left of the pivot
+
+```
+   o      <- pivot
+  /
+ /
+(@)       <- bob, far left
+```
+
+This is the start of the cycle. The next sampled position is
+[[z=1|frame 1]], where the bob has begun to fall.
+
+@plane z=1 x=-10 y=-6 label="Frame 1: falling left"
+# Frame 1 - Descending from the left
+
+Angle is now about +10 degrees. The bob has dropped and picked up speed.
+
+- Velocity: rising (roughly half of peak)
+- Acceleration: still inward, but smaller than at the extreme
+- Notice the bob has moved closer to the bottom than frame 0 moved from rest
+
+```
+   o
+   |\
+   | \
+   (@)
+```
+
+Gravity is doing positive work here. Continue to [[z=2|frame 2]] for the
+fastest point of the swing.
+
+@plane z=2 x=0 y=-9 label="Frame 2: bottom (max speed)"
+# Frame 2 - Bottom of the arc
+
+Angle is 0 degrees, the bob is directly below the pivot.
+
+- Velocity: maximum of the whole swing
+- Acceleration (tangential): 0, the string is vertical
+- All of the height lost since [[z=0|frame 0]] is now kinetic energy
+
+```
+   o
+   |
+   |
+   |
+  (@)      <- straight down, moving fast
+```
+
+From here the bob climbs the right side and starts to slow. See
+[[z=3|frame 3]].
+
+@plane z=3 x=10 y=-6 label="Frame 3: rising right"
+# Frame 3 - Climbing the right side
+
+Angle is about -10 degrees. Mirror image of [[z=1|frame 1]], but moving
+the other way.
+
+- Velocity: falling (decelerating)
+- Acceleration: inward again, now pointing back toward center from the right
+- Kinetic energy is converting back into height
+
+```
+   o
+  /|
+ / |
+   (@)
+```
+
+One more frame to the right extreme: [[z=4|frame 4]].
+
+@plane z=4 x=18 y=0 label="Frame 4: right extreme"
+# Frame 4 - Right turning point
+
+Angle is -18 degrees, the mirror of [[z=0|frame 0]].
+
+- Velocity: 0 (instantaneous rest)
+- Acceleration: maximum, pointing back toward center
+- Height matches the left extreme (energy conserved in the ideal case)
+
+```
+   o
+    \
+     \
+     (@)   <- bob, far right
+```
+
+In a perfect pendulum this is the end of the forward pass. The loop
+setting `ping-pong` now replays [[z=3|frame 3]], [[z=2|frame 2]],
+[[z=1|frame 1]], and back to [[z=0|frame 0]].
+
+@plane z=5 label="Notes: timing and damping"
+# Animation notes
+
+Not a drawn frame. This plane documents how to play the stack.
+
+- **Order:** play z=0 through z=4, then reverse to z=0 for one full period.
+- **Easing:** do not space frames evenly in time. The bob is slow at the
+  extremes ([[z=0|frame 0]], [[z=4|frame 4]]) and fast at the bottom
+  ([[z=2|frame 2]]), so ease-in-out on the angle reads as natural.
+- **Damping:** for a decaying swing, shrink the x offsets a few percent
+  each period so the extremes creep inward toward the pivot.
+- **Frame rate:** at 12 fps a single pass takes under half a second; hold
+  one extra tick on each turning point to sell the pause.
+
+Jump back to the start at [[z=0|frame 0]].

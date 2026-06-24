@@ -1,0 +1,123 @@
+---
+3md: 1.0
+axis: time
+title: Helmsman Product Roadmap (FY2026)
+team: Platform & Growth
+owner: VP Product
+status: approved
+---
+This roadmap stacks four quarters along the time axis. Each plane is a quarter,
+ordered front to back from Q1 to Q4. Themes carry forward, so later quarters
+link back to the foundations they depend on.
+
+Reading guide: `z` is the quarter index (0 = Q1). The `x`/`y` offsets group
+planes left to right by calendar so a spatial viewer lays them out as a timeline.
+
+@plane z=0 x=0 y=0 label="Q1 - Foundations"
+# Q1 2026: Foundations
+
+Theme: pay down platform debt so later features ship faster and safer.
+
+## Committed
+- **Auth rewrite (OIDC)**: replace the legacy session service with standard
+  OIDC. Unblocks SSO and the customer-facing API keys planned for [[z=1|Q2]].
+- **Event pipeline v2**: move from cron-batched ingestion to a streaming
+  consumer. Target end-to-end latency under 5 seconds (was 9 minutes).
+- **Design system 1.0**: ship 24 reviewed components, freeze the token set,
+  and migrate the billing screens as the first consumer.
+
+## Metrics we are moving
+| Metric | Baseline | Q1 target |
+| --- | ---: | ---: |
+| p95 API latency | 740 ms | 400 ms |
+| Failed logins / day | 1,120 | < 200 |
+| CI pipeline time | 22 min | 12 min |
+
+## Explicitly out of scope
+- Mobile app (starts in [[z=2|Q3]]).
+- Self-serve billing (depends on the API keys landing in Q2).
+
+> Exit criteria: auth rewrite in production for 100 percent of traffic, and the
+> event pipeline running with zero manual replays for two consecutive weeks.
+
+@plane z=1 x=2 y=0 label="Q2 - Self-Serve"
+# Q2 2026: Self-Serve Growth
+
+Theme: turn the Q1 platform work into revenue by removing humans from onboarding.
+
+## Committed
+- **Public API and API keys**: built directly on the [[z=0|OIDC rewrite]]. Scoped
+  keys, rotation, and per-key rate limits.
+- **Self-serve billing**: Stripe-backed plans, in-app upgrades, and dunning.
+  No sales call required for the first three tiers.
+- **Onboarding wizard**: a five-step setup that gets a new workspace to first
+  value in under ten minutes.
+
+## Dependencies
+- Requires the streaming pipeline from Q1 for live usage metering.
+- Requires design system components (forms, tables, empty states).
+
+## Bets and risks
+1. We assume 40 percent of new signups convert without sales touch. If it lands
+   below 20 percent, we pull a teammate from the [[z=2|mobile]] effort to add
+   guided setup.
+2. Billing edge cases (proration, refunds) are the long pole. We freeze scope on
+   April 15 to protect the launch date.
+
+Launch gate: 50 beta workspaces self-onboarded end to end, with a measured
+activation rate at or above 35 percent.
+
+@plane z=2 x=4 y=0 label="Q3 - Mobile & Scale"
+# Q3 2026: Mobile and Scale
+
+Theme: meet customers where they are and prove the platform holds at 10x load.
+
+## Committed
+- **Mobile app (iOS first)**: read, approve, and comment flows. Reuses the
+  [[z=1|public API]] shipped in Q2; no new backend endpoints required.
+- **Horizontal scale**: shard the primary datastore and add read replicas.
+  Validated against a 10x synthetic load test before GA.
+- **Audit log**: a tamper-evident, exportable trail. Top request from
+  enterprise prospects in the Q2 sales pipeline.
+
+## Sequencing
+```
+Weeks 1-4   Mobile read-only beta + sharding migration (dual-write)
+Weeks 5-8   Mobile approvals; cut reads over to replicas
+Weeks 9-12  Audit log GA; mobile public TestFlight
+```
+
+## Guardrails
+- Sharding migration runs dual-write for two weeks before any cutover.
+- Mobile ships behind a feature flag; we hold GA until crash-free sessions
+  exceed 99.5 percent.
+
+This quarter is the bridge from self-serve SMB (Q2) to the enterprise motion
+in [[z=3|Q4]].
+
+@plane z=3 x=6 y=0 label="Q4 - Enterprise"
+# Q4 2026: Enterprise Readiness
+
+Theme: close larger deals by clearing security, compliance, and admin blockers.
+
+## Committed
+- **SSO and SCIM**: enterprise SSO on top of the [[z=0|OIDC foundation]], plus
+  SCIM user provisioning and deprovisioning.
+- **Roles and permissions (RBAC)**: custom roles, scoped to workspaces and
+  projects, with the [[z=2|audit log]] recording every change.
+- **SOC 2 Type II**: complete the observation window and pass the audit.
+
+## Why this order
+Enterprise asks were deferred all year on purpose. Each item here depends on
+work that had to land first:
+- SSO needs OIDC ([[z=0|Q1]]).
+- SCIM needs the public API ([[z=1|Q2]]).
+- RBAC needs the audit log ([[z=2|Q3]]).
+
+## Definition of done
+- [ ] Two reference customers live on SSO + SCIM.
+- [ ] RBAC covers 100 percent of privileged actions.
+- [ ] SOC 2 Type II report issued with no exceptions.
+
+> Year-end goal: move enterprise win rate from 18 percent to 30 percent, and
+> retire the top five security questionnaire blockers permanently.

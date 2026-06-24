@@ -1,0 +1,150 @@
+---
+3md: 1.0
+axis: time
+title: Helios Sync - Build Timeline
+project: Helios Sync (cross-device note sync)
+team: 4 engineers, 1 designer
+quarter: Q1 2026
+---
+A six-month delivery plan for Helios Sync, our offline-first note synchronization
+service. Each plane is one calendar month. Read top to bottom for the narrative,
+or jump straight to the [[z=5|GA launch]] if you want the finish line first.
+
+@plane z=0 label="January - Foundations" x=0 y=0
+# January: Foundations
+
+The month we turn a one-page proposal into a running skeleton.
+
+## Goals
+- Stand up the monorepo, CI, and a deployable "hello world" sync server.
+- Lock the conflict model: last-writer-wins per field, vector clocks for ordering.
+- Hire the second backend engineer (offer out by the 15th).
+
+## Milestones
+- **Jan 10** - CI green on an empty service (build, lint, unit harness).
+- **Jan 17** - Architecture decision record approved for the CRDT layer.
+- **Jan 31** - First end-to-end write replicated between two test clients.
+
+## Risks
+- The CRDT choice blocks everything downstream. If the ADR slips, so does
+  [[z=1|February]]. We time-box the spike to two weeks.
+
+## Exit criteria
+A document can be created on client A and observed on client B within 5 seconds
+on a LAN. No auth, no encryption yet - that is fine for this month.
+
+@plane z=1 label="February - Sync Core" x=0 y=1
+# February: Sync Core
+
+Foundations exist (see [[z=0|January]]). Now we make sync correct under conflict.
+
+## Goals
+- Implement vector-clock merge with deterministic tie-breaking.
+- Add a replay log so a client offline for days can catch up cleanly.
+- 200 property-based tests covering concurrent edits.
+
+## Milestones
+- **Feb 7** - Merge function passes the concurrent-edit fuzz suite (10k cases).
+- **Feb 14** - Catch-up replay handles a 30-day offline gap in under 2 seconds.
+- **Feb 28** - Soak test: 50 simulated clients editing for 6 hours, zero divergence.
+
+## Dependencies
+- Needs the CRDT ADR from January. Locked on Jan 17, so we are clear.
+
+## Notes
+We deliberately defer encryption to [[z=2|March]] to keep the merge logic
+readable while it is still changing daily.
+
+@plane z=2 label="March - Security and Auth" x=1 y=1
+# March: Security and Auth
+
+The sync core is correct. Before anyone outside the team touches it, we make it safe.
+
+## Goals
+- End-to-end encryption: per-note keys, wrapped by a device keychain.
+- OAuth device flow for sign-in, refresh-token rotation on every use.
+- Threat model review with an outside reviewer.
+
+## Milestones
+- **Mar 6** - Notes encrypted at rest and in transit; server stores ciphertext only.
+- **Mar 13** - Device-flow login working on desktop and mobile reference clients.
+- **Mar 27** - External security review complete, findings triaged.
+
+## Risks
+- Key rotation interacts with the offline replay from [[z=1|February]]. A client
+  that wakes up after a key change must re-derive note keys. We add a migration
+  step and test it explicitly.
+
+## Exit criteria
+A new device can enroll, decrypt existing notes, and sync, with the server never
+seeing plaintext.
+
+@plane z=3 label="April - Closed Beta" x=2 y=1
+# April: Closed Beta
+
+First real users. The goal shifts from "is it correct" to "is it usable".
+
+## Goals
+- Onboard 50 internal beta users across desktop and mobile.
+- Ship a crash and metrics pipeline (opt-in, privacy-reviewed).
+- Cut p99 sync latency from 5s to under 1.5s on cellular.
+
+## Milestones
+- **Apr 4** - Beta build live behind a feature flag, 10 users.
+- **Apr 18** - 50 users, daily-active above 60 percent.
+- **Apr 30** - Top 5 reported bugs fixed; latency target met.
+
+## Feedback loop
+Every Friday we triage beta reports. Anything touching the merge path goes back
+through the [[z=1|February]] property suite before it ships.
+
+## Exit criteria
+A non-engineer can install, sign in, and sync three devices without help.
+
+@plane z=4 label="May - Scale and Hardening" x=2 y=0
+# May: Scale and Hardening
+
+Beta proved it works for 50. May proves it works for 50,000.
+
+## Goals
+- Load test to 50k concurrent clients; shard the replay log by account.
+- Add rate limiting and abuse protection on the sync endpoint.
+- Write the runbook: on-call rotation, alerts, rollback procedure.
+
+## Milestones
+- **May 9** - Sustained 50k concurrent clients in staging, p99 under 1.5s.
+- **May 16** - Automated rollback verified (deploy a bad build, recover in <5 min).
+- **May 30** - Runbook reviewed, on-call schedule published.
+
+## Risks
+- Sharding the replay log can reorder catch-up under failover. We re-run the
+  March migration tests against the sharded layout to be sure.
+
+## Gate to launch
+Everything here must be green before [[z=5|June]] opens the gates to the public.
+
+@plane z=5 label="June - General Availability" x=3 y=0
+# June: General Availability
+
+The finish line. Helios Sync ships to everyone.
+
+## Goals
+- Public launch with a staged rollout: 1 percent, then 10, then 100.
+- Publish docs, pricing, and the data-export tool (no lock-in).
+- Hand off day-2 ownership to the standing on-call rotation.
+
+## Milestones
+- **Jun 6** - 1 percent rollout, dashboards watched live for 48 hours.
+- **Jun 13** - 10 percent, support queue staffed.
+- **Jun 20** - 100 percent. Launch announcement goes out.
+- **Jun 27** - Retrospective; backlog groomed for Q3.
+
+## Definition of done
+- Five months of work, from the [[z=0|January]] skeleton to GA, with no open
+  P0 or P1 issues.
+- p99 sync latency under 1.5s at full production load.
+- A user can export every note as plaintext and Markdown in one click.
+
+## After GA
+Q3 planning starts the following week. Candidate themes: shared notebooks,
+selective sync, and a web client.

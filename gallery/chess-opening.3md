@@ -1,0 +1,144 @@
+---
+3md: 1.0
+axis: space
+title: The Ruy Lopez, Move by Move
+opening: Ruy Lopez (Spanish Opening)
+eco: C60-C99
+viewpoint: White's side of the board
+---
+The Z axis is space: each plane is a snapshot of the same 64 squares, photographed
+from above after another pair of moves. Stack them in order and you watch the
+Ruy Lopez (the Spanish Opening) take shape, one move deeper into the board on each
+plane. Files run a through h left to right; ranks run 1 (White) to 8 (Black).
+
+Notation: uppercase letters are White pieces, lowercase are Black, a dot is an
+empty square. Move pairs are written in algebraic notation.
+
+@plane z=0 label="Starting position" x=0 y=0
+# Move 0: the board before a shot is fired
+
+```
+8  r n b q k b n r
+7  p p p p p p p p
+6  . . . . . . . .
+5  . . . . . . . .
+4  . . . . . . . .
+3  . . . . . . . .
+2  P P P P P P P P
+1  R N B Q K B N R
+   a b c d e f g h
+```
+
+Both armies are home. The Ruy Lopez is a fight for the center and for the e5
+pawn, so keep your eyes on the e-file and the long light-squared diagonal that
+the f1 bishop is about to claim.
+
+Push forward to [[z=1|1. e4 e5]] to open the lines.
+
+@plane z=1 label="1. e4 e5" x=1 y=0
+# Move 1: e4 e5, the open game
+
+```
+8  r n b q k b n r
+7  p p p p . p p p
+6  . . . . . . . .
+5  . . . . p . . .
+4  . . . . P . . .
+3  . . . . . . . .
+2  P P P P . P P P
+1  R N B Q K B N R
+   a b c d e f g h
+```
+
+White stakes a claim with the king's pawn and Black answers symmetrically. The
+two pawns on e4 and e5 face off but cannot capture each other. This is the
+"open game," the doorway to the Italian, the Scotch, and the Ruy Lopez.
+
+White's plan now is to attack e5. On to [[z=2|2. Nf3 Nc6]].
+
+@plane z=2 label="2. Nf3 Nc6" x=2 y=0
+# Move 2: Nf3 Nc6, pressure and defense
+
+```
+8  r . b q k b n r
+7  p p p p . p p p
+6  . . n . . . . .
+5  . . . . p . . .
+4  . . . . P . . .
+3  . . . . . N . .
+2  P P P P . P P P
+1  R N B Q K B . R
+   a b c d e f g h
+```
+
+The knight on f3 attacks the e5 pawn; the knight on c6 defends it. This is the
+most natural developing duel in all of chess. Note the empty f3 and c6 home
+squares behind each knight.
+
+White is ready for the move that names the whole opening: [[z=3|3. Bb5]].
+
+@plane z=3 label="3. Bb5, the Spanish bishop" x=3 y=0
+# Move 3: Bb5, the pin that defines the Ruy Lopez
+
+```
+8  r . b q k b n r
+7  p p p p . p p p
+6  . . n . . . . .
+5  . B . . p . . .
+4  . . . . P . . .
+3  . . . . . N . .
+2  P P P P . P P P
+1  R N B Q K . . R
+   a b c d e f g h
+```
+
+Here it is: the bishop lands on b5 and eyes the c6 knight. The idea is indirect.
+By threatening to trade off the defender of e5, White puts a long-term question
+to Black's center. This bishop, the "Spanish bishop," is the soul of the opening.
+
+Black usually nudges it with a pawn. Continue to [[z=4|3...a6 4. Ba4]].
+
+@plane z=4 label="3...a6 4. Ba4" x=4 y=0
+# Move 4: a6 Ba4, the Morphy Defense
+
+```
+8  r . b q k b n r
+7  . p p p . p p p
+6  p . n . . . . .
+5  . . . . p . . .
+4  B . . . P . . .
+3  . . . . . N . .
+2  P P P P . P P P
+1  R N B Q K . . R
+   a b c d e f g h
+```
+
+Black plays a6 to ask the bishop its intentions; White retreats along the
+diagonal to a4, keeping the pin alive but holding the tension. This is the
+Morphy Defense, by far the main road. The bishop on a4 still gazes at c6.
+
+One more pair brings us to the most popular setup in the world.
+See [[z=5|4...Nf6 5. O-O]].
+
+@plane z=5 label="4...Nf6 5. O-O" x=5 y=0
+# Move 5: Nf6 O-O, castled and ready
+
+```
+8  r . b q k b . r
+7  . p p p . p p p
+6  p . n . . n . .
+5  . . . . p . . .
+4  B . . . P . . .
+3  . . . . . N . .
+2  P P P P . P P P
+1  R N B Q . R K .
+   a b c d e f g h
+```
+
+Black develops the king's knight to f6, attacking e4, and White calmly castles
+kingside: the king slides to g1 and the rook to f1. White is unworried about the
+e4 pawn because the b5-a4 bishop keeps Black's position pinned and awkward.
+
+From here the great main lines branch out (the Closed, the Marshall, the
+Berlin endgame), but the Spanish character is already set. Rewind to the
+[[z=0|starting position]] and trace the whole sequence again.

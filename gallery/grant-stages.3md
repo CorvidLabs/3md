@@ -1,0 +1,144 @@
+---
+3md: 1.0
+axis: status
+title: Grant Application Pipeline
+program: Community Resilience Fund 2026
+cycle: Spring
+total_budget: 1,200,000 USD
+owner: Programs Team
+---
+The Community Resilience Fund moves every application left to right through five
+status lanes, the way a Kanban board does. Each plane below is one lane. An
+application enters at [[z=0|Intake]] and exits either as a funded award or a
+declined record. Use the cross-plane links to follow the path a single
+application takes.
+
+@plane z=0 x=0 y=0 label="Intake"
+# Intake
+
+New applications land here the moment an applicant clicks Submit in the portal.
+
+## What lives in this lane
+
+- Organization profile (legal name, EIN, fiscal sponsor if any)
+- Requested amount and a one-paragraph project summary
+- Two attachments: a budget workbook and a board roster
+
+## Entry checklist (automated)
+
+- [x] EIN resolves to an active 501(c)(3) or fiscal sponsor on file
+- [x] Requested amount is between 5,000 and 75,000 USD
+- [x] No duplicate submission from the same EIN this cycle
+
+## Owner and SLA
+
+- Owner: intake coordinator (Priya)
+- SLA: an application sits here no longer than 2 business days
+
+If the checklist passes, the coordinator advances the record to
+[[z=1|Eligibility Review]]. If the EIN fails, the record is declined here with a
+templated note and never reaches review.
+
+@plane z=1 x=2 y=0 label="Eligibility Review"
+# Eligibility Review
+
+A staff reviewer confirms the applicant and project fit the fund's published
+rules. This is a yes or no gate, not a scoring step.
+
+## Eligibility rules
+
+1. The lead organization operates in one of the three target counties.
+2. The project addresses flooding, heat, or wildfire resilience.
+3. The organization has not received a Resilience Fund award in the prior
+   12 months.
+4. The budget shows no more than 15 percent allocated to indirect costs.
+
+## Decision outcomes
+
+| Outcome   | Next status                  |
+|-----------|------------------------------|
+| Eligible  | [[z=2|Scoring]]              |
+| Ineligible| Declined (reason recorded)   |
+| Needs info| Returned to [[z=0|Intake]]  |
+
+## Notes
+
+Reviewers attach a short eligibility memo so the scoring panel does not redo this
+work. Roughly 40 percent of applications are filtered out at this lane, which is
+expected and healthy.
+
+@plane z=2 x=4 y=0 label="Scoring"
+# Scoring
+
+Two independent panelists score each eligible application against a published
+rubric, then a lead reconciles the scores.
+
+## Rubric (100 points)
+
+- Impact on at-risk residents: 40 points
+- Feasibility and team capacity: 25 points
+- Budget clarity and cost per beneficiary: 20 points
+- Sustainability beyond the grant period: 15 points
+
+## Reconciliation
+
+- If the two scores differ by 15 points or more, a third panelist breaks the tie.
+- The reconciled score, not the raw average, is what advances.
+
+## Thresholds
+
+- Score of 75 or above moves to [[z=3|Award Decision]].
+- Score below 60 is declined with written feedback.
+- Scores from 60 to 74 sit on a waitlist and are revisited only if funds remain
+  after the first award round.
+
+@plane z=3 x=6 y=0 label="Award Decision"
+# Award Decision
+
+The funding committee meets, ranks the high-scoring applications, and allocates
+the cycle budget until it is exhausted.
+
+## How the budget is allocated
+
+1. Sort qualified applications by reconciled score, highest first.
+2. Fund each in order, subtracting its requested amount from the remaining pool.
+3. Stop when the next request would exceed the remaining balance.
+4. Offer partial awards (down to 80 percent of the request) to the first two
+   applications that fall just past the line.
+
+## This cycle
+
+- Pool: 1,200,000 USD
+- Expected awards: 18 to 24 organizations
+- Committee vote recorded in the minutes; ties go to the higher impact subscore
+
+Approved applications move to [[z=4|Disbursement]]. Applications that scored well
+but ran out of budget are parked on the waitlist noted in [[z=2|Scoring]].
+
+@plane z=4 x=8 y=0 label="Disbursement"
+# Disbursement
+
+The award is now a signed agreement and money is on its way. This lane is about
+contracts, payments, and the reporting that keeps the award compliant.
+
+## Steps to first payment
+
+- [x] Grant agreement countersigned by both parties
+- [x] W-9 and ACH details verified by finance
+- [ ] First tranche released (60 percent on signing)
+- [ ] Mid-project report due at month 4
+- [ ] Final tranche released (40 percent on accepted final report)
+
+## Reporting cadence
+
+| Milestone        | Due            | Triggers          |
+|------------------|----------------|-------------------|
+| Kickoff call     | Within 2 weeks | Tranche 1         |
+| Mid-project memo | Month 4        | Compliance review |
+| Final report     | Month 9        | Tranche 2         |
+
+## Closeout
+
+Once the final report is accepted, the record is archived as a completed award.
+The full journey from [[z=0|Intake]] through every lane stays attached to the
+record for audit.

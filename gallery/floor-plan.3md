@@ -1,0 +1,97 @@
+---
+3md: 1.0
+axis: space
+title: Maple Cottage - Floor Plan
+architect: Wren & Holloway
+units: feet
+lot: 28ft x 40ft
+---
+A two-bedroom cottage on a compact lot. Each plane below is a horizontal slice
+of the building, stacked along the Z (space) axis from the ground up: the
+foundation at the bottom, then the main living floor, then the upper floor, and
+finally the roof. Dimensions are in feet. Use the cross-plane links to follow
+the stair and the plumbing stack between levels.
+
+@plane z=0 x=0 y=0 label="Foundation & Crawlspace"
+# Level 0 - Foundation (slab + crawlspace)
+
+A poured concrete perimeter footing carries the load of both floors. The
+crawlspace under the kitchen and bath gives access to the plumbing trunk.
+
+| Feature | Size | Notes |
+|---|---|---|
+| Footing | 16in wide | Below the 36in frost line |
+| Crawlspace | 12ft x 14ft | 30in clearance, gravel bed |
+| Sump pit | 24in dia. | NW corner, near the downspout |
+| Utility pad | 4ft x 4ft | Water heater and electrical panel |
+
+The vertical plumbing stack rises from the crawlspace through the kitchen wall
+and continues all the way to the roof vent. Trace it up to the
+[[z=1|main floor kitchen]] and on to the [[z=3|roof vent boot]].
+
+Access hatch is in the hallway closet on the [[z=1|main floor]].
+
+@plane z=1 x=0 y=0 label="Main Floor (Ground Level)"
+# Level 1 - Main Floor
+
+Total 720 sq ft. Open-plan living and kitchen face south for light; the entry,
+bath, and stair are tucked along the north wall.
+
+```
+  N
+  +----------------+----------+
+  |  Kitchen 10x12 | Bath 5x8 |
+  |                +----+-----+
+  |                | Stair UP |
+  +-------+--------+----------+
+  | Entry |  Living Room      |
+  | 6x6   |  14x16            |
+  +-------+-------------------+
+              S (porch)
+```
+
+- **Entry**: 6 x 6, coat closet plus the crawlspace access hatch.
+- **Living room**: 14 x 16, south windows, wood stove on the east wall.
+- **Kitchen**: 10 x 12, galley layout; the sink and range share the wet wall
+  above the [[z=0|plumbing stack]].
+- **Half bath**: 5 x 8, toilet and vanity.
+- **Stair**: 3ft run against the north wall, climbing to the
+  [[z=2|two bedrooms above]].
+
+Ceiling height is 9ft here, 1ft taller than upstairs.
+
+@plane z=2 x=0 y=0 label="Upper Floor (Bedrooms)"
+# Level 2 - Upper Floor
+
+Total 640 sq ft under a sloped ceiling. The stair from the
+[[z=1|main floor]] lands in a small landing that doubles as a reading nook.
+
+| Room | Size | Notes |
+|---|---|---|
+| Primary bedroom | 12 x 14 | South dormer, walk-in closet 4x6 |
+| Second bedroom | 10 x 11 | North window, built-in desk |
+| Full bath | 8 x 8 | Stacked over the kitchen wet wall |
+| Landing nook | 5 x 6 | Bookshelf, skylight above |
+
+The full bath sits directly above the kitchen so both share the single
+[[z=0|plumbing stack]]. The skylight over the landing is framed into the
+[[z=3|roof]] between the two dormers.
+
+Knee walls (4ft tall) run along the east and west eaves, giving low storage.
+
+@plane z=3 x=0 y=0 label="Roof"
+# Level 3 - Roof
+
+A 9/12 gable roof with two front dormers over the
+[[z=2|primary bedroom and landing]].
+
+- **Pitch**: 9/12 gable, ridge running east to west.
+- **Dormers**: two shed dormers on the south face, each 4ft wide.
+- **Skylight**: 2ft x 4ft over the landing nook below.
+- **Vent boot**: the plumbing stack from the [[z=0|foundation]] terminates
+  here, 12in above the shingles, on the north slope.
+- **Overhang**: 18in eaves all around, shading the south windows in summer.
+- **Material**: architectural asphalt shingles, charcoal; copper drip edge.
+
+Gutters drain to the NW downspout, which feeds the
+[[z=0|sump and gravel bed]] below.

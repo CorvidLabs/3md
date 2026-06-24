@@ -1,0 +1,211 @@
+---
+3md: 1.0
+axis: layer
+title: Mutual Non-Disclosure Agreement - Annotated
+agreement: Mutual Non-Disclosure Agreement
+parties: Northwind Analytics, Inc. and Cedar Grove Software LLC
+effective_date: 2026-04-01
+governing_law: Delaware
+status: Draft v3 - in review
+---
+The same Non-Disclosure Agreement, viewed through three stacked layers. The
+operative legal text sits at `z=0`. Above it, `z=1` restates each clause in
+plain English for the business owners who have to live by it. Above that, `z=2`
+holds the redline notes and open questions from counsel. Toggle the layers
+independently: a deal lead reads [[z=1|the plain-English layer]], while counsel
+works the [[z=2|review layer]] against the same clause numbers.
+
+@plane z=0 label="Operative Text" x=0 y=0
+# Mutual Non-Disclosure Agreement (Operative Text)
+
+This Mutual Non-Disclosure Agreement (the "Agreement") is entered into as of
+April 1, 2026 (the "Effective Date") by and between Northwind Analytics, Inc.,
+a Delaware corporation ("Northwind"), and Cedar Grove Software LLC, a California
+limited liability company ("Cedar Grove"). Northwind and Cedar Grove are each a
+"Party" and together the "Parties."
+
+## 1. Definition of Confidential Information
+
+"Confidential Information" means any non-public information disclosed by one
+Party (the "Discloser") to the other (the "Recipient"), whether orally, in
+writing, or by inspection of tangible objects, that is designated as
+confidential at the time of disclosure or that a reasonable person would
+understand to be confidential given the nature of the information and the
+circumstances of disclosure. Confidential Information includes, without
+limitation, source code, product roadmaps, customer lists, pricing, and
+unpublished financial results.
+
+## 2. Exclusions
+
+Confidential Information does not include information that: (a) is or becomes
+publicly available through no fault of the Recipient; (b) was rightfully known
+to the Recipient before disclosure; (c) is rightfully obtained by the Recipient
+from a third party without a duty of confidentiality; or (d) is independently
+developed by the Recipient without use of or reference to the Discloser's
+Confidential Information.
+
+## 3. Obligations of the Recipient
+
+The Recipient shall (a) use the Confidential Information solely to evaluate and
+pursue a potential business relationship between the Parties (the "Purpose"),
+(b) protect it using at least the same degree of care it uses for its own
+information of like importance, and in no event less than a reasonable degree
+of care, and (c) limit access to its employees, contractors, and advisors who
+have a need to know and are bound by confidentiality obligations no less
+protective than those in this Agreement.
+
+## 4. Compelled Disclosure
+
+If the Recipient is compelled by law, regulation, or valid court order to
+disclose Confidential Information, it may do so only to the extent required,
+provided that, where legally permitted, it gives the Discloser prompt prior
+written notice and reasonable cooperation so the Discloser may seek a
+protective order or other remedy.
+
+## 5. Term and Survival
+
+This Agreement remains in effect for two (2) years from the Effective Date.
+The Recipient's confidentiality obligations survive termination and continue
+for three (3) years after the date of each disclosure, except that obligations
+with respect to trade secrets continue for as long as the information remains a
+trade secret under applicable law.
+
+## 6. Return or Destruction
+
+Upon the Discloser's written request or upon termination, the Recipient shall
+promptly return or destroy all Confidential Information and certify its
+destruction in writing, except that the Recipient may retain one archival copy
+solely for legal-compliance purposes and copies created by routine automated
+backup, subject to continuing confidentiality.
+
+## 7. No License; No Warranty
+
+Nothing in this Agreement grants any license or other right under any patent,
+copyright, trademark, or trade secret. All Confidential Information is provided
+"AS IS," without warranty of any kind.
+
+## 8. Governing Law
+
+This Agreement is governed by the laws of the State of Delaware, without regard
+to its conflict-of-laws rules.
+
+@plane z=1 label="Plain English" x=0 y=2
+# What This Actually Means (Plain English)
+
+This layer mirrors [[z=0|the operative text]] clause by clause, in language a
+non-lawyer can act on. It is a reading aid, not a substitute for the contract.
+
+## 1. What counts as a secret
+
+If either side shares something private (code, plans, customer lists, prices,
+numbers that are not public) and it is marked confidential or obviously should
+be treated that way, it is covered. The protection runs both ways: whoever
+receives the information has to guard it.
+
+## 2. What does not count
+
+You are off the hook for information that is already public, that you already
+knew, that someone else gave you fairly, or that you came up with on your own
+without peeking at theirs. Keep a paper trail if you ever rely on one of these,
+because the burden is on you to show it.
+
+## 3. What you have to do with it
+
+Three rules: use it only to explore working together, guard it at least as
+carefully as you guard your own important secrets, and only let people see it
+who genuinely need to and who are themselves under a confidentiality duty. See
+the open question counsel raised in [[z=2|the review layer]] about contractors.
+
+## 4. If a court asks for it
+
+You can hand it over if the law truly forces you to, but only the part you must
+disclose, and you have to give the other side a heads-up first (when you are
+allowed to) so they can try to limit it.
+
+## 5. How long it lasts
+
+The deal itself runs two years. The duty to keep things quiet outlasts that:
+three years from whenever each secret was shared, and effectively forever for
+true trade secrets. Practical takeaway: do not assume the obligation ends when
+the project does.
+
+## 6. Cleaning up afterward
+
+When asked, or when this ends, give the materials back or destroy them and put
+the destruction in writing. You may keep exactly one locked-away copy for
+legal reasons, and you do not have to scrub automatic backups, but those copies
+stay confidential.
+
+## 7. You get no ownership and no guarantees
+
+Seeing someone's confidential material does not give you any rights to use
+their inventions or brand, and they are not promising the information is
+accurate or complete.
+
+## 8. Which state's law applies
+
+Delaware law governs any dispute.
+
+@plane z=2 label="Legal Review" x=0 y=4
+# Counsel Review Notes (Redline Layer)
+
+Reviewer: M. Okonkwo, outside counsel. These notes attach to the matching
+clause numbers in [[z=0|the operative text]]. Status markers: OPEN (needs a
+decision), FIX (drafting change required), OK (acceptable as written).
+
+## 1. Definition - OK
+
+Definition is appropriately broad and includes the "reasonable person" catch-all,
+which protects against the common failure of relying only on explicit marking.
+No change needed.
+
+## 2. Exclusions - FIX
+
+The four standard carve-outs are present. Add an express statement that the
+Recipient bears the burden of proving an exclusion applies. The plain-English
+note at [[z=1|clause 2]] already tells the client to keep records, so aligning
+the contract text with that expectation removes a future fight.
+
+## 3. Obligations - OPEN
+
+Two items:
+
+1. **Contractors.** Subsection (c) lets contractors and advisors receive the
+   information. Confirm with the business team that this matches reality. If
+   subcontracting is not expected, narrow to "employees and advisors" to reduce
+   exposure.
+2. **Standard of care.** "Reasonable degree of care" is the right floor. No
+   change, but flag for the client that this is an objective standard a court
+   will second-guess after the fact.
+
+## 4. Compelled Disclosure - FIX
+
+Strong as drafted, but add a sentence clarifying that any compelled disclosure
+does not strip the information of its confidential status for any other purpose.
+Without it, a single subpoena response can be argued to waive protection
+broadly.
+
+## 5. Term and Survival - OPEN
+
+The split structure (2-year deal term, 3-year survival per disclosure, indefinite
+for trade secrets) is defensible. Decision needed: California courts disfavor
+indefinite confidentiality for non-trade-secret material, and we have selected
+Delaware law in [[z=0|clause 8]]. Confirm Delaware is enforceable against a
+California LLC counterparty, or the survival period may be read down.
+
+## 6. Return or Destruction - OK
+
+The archival-copy and backup carve-outs are realistic and avoid an obligation
+the client cannot actually perform. The plain-English framing at
+[[z=1|clause 6]] correctly tells the client backups need not be scrubbed.
+
+## 7. No License; No Warranty - OK
+
+Standard and sufficient.
+
+## 8. Governing Law - OPEN
+
+See the cross-reference from [[z=2|clause 5]]. Delaware choice of law is fine
+for Northwind (a Delaware corporation), but pair it with a forum-selection
+clause; choice of law without choice of forum invites a fight over where any
+dispute is heard. Recommend adding before signature.

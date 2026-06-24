@@ -1,0 +1,122 @@
+---
+3md: 1.0
+axis: layer
+title: Coastal Sunset - Adjustment Layer Stack
+photo: DSC_4471.RAW
+base: ProPhoto RGB, 16-bit
+editor: Leif Albrecht
+---
+A non-destructive edit of a single coastal sunset frame. Each plane below is one
+adjustment layer in the stack, ordered from the raw capture at the bottom
+(z=0) up to the final output sharpening at the top (z=5). Higher z sits closer
+to the viewer and is composited last. Toggle any plane to see its contribution
+in isolation; nothing here bakes into the pixels until export.
+
+@plane z=0 label="Base capture" x=0 y=0
+# Base Capture (RAW)
+
+The untouched starting point. Everything above this plane is non-destructive.
+
+- **File:** `DSC_4471.RAW`, 6048 x 4024, 14-bit sensor data
+- **Exposure as shot:** 1/200 s, f/8, ISO 100
+- **White balance:** as-shot, 5200 K / +3 tint
+- **Histogram:** highlights clipped in the sun disc, shadows lifted off the floor
+
+The sky is roughly two stops brighter than the foreground rocks, so the
+foreground reads almost as a silhouette. We fix the dynamic range in
+[[z=1|the exposure layer]] and recover the warmth in [[z=2|color grading]].
+
+> Keep this layer locked. If a later edit looks wrong, hide everything above
+> and compare against this plane to find where the stack drifted.
+
+@plane z=1 label="Exposure + tone" x=0 y=0
+# Exposure and Tone Curve
+
+Blend mode: **Normal**, opacity 100%. This is the workhorse layer.
+
+| Control          | Value   | Why                                  |
+|------------------|---------|--------------------------------------|
+| Exposure         | +0.35   | Lift overall midtones                |
+| Highlights       | -62     | Recover detail in the cloud edges    |
+| Shadows          | +48     | Open the foreground rocks            |
+| Whites           | -15     | Pull the sun disc back from clipping |
+| Blacks           | -8      | Restore contrast lost from lifting   |
+
+The tone curve adds a gentle S: a control point at (64, 56) to deepen the
+low midtones and one at (192, 205) to brighten the upper midtones. Net result
+is a recovered foreground that no longer reads as a silhouette.
+
+Masked with a linear gradient (top dark, bottom clear) so the highlight pull
+only touches the sky. The foreground inherits the shadow lift but not the
+highlight crush. Color work continues in [[z=2|the grade]].
+
+@plane z=2 label="Color grade" x=0 y=0
+# Color Grade
+
+Blend mode: **Color**, opacity 85%. Affects hue and saturation only, leaving
+the luminance from [[z=1|the exposure layer]] intact.
+
+Split-toning the sunset:
+
+- **Shadows:** hue 215 (cool blue), saturation 18 - the rocks and wet sand
+- **Midtones:** hue 28 (amber), saturation 12 - the haze band over the water
+- **Highlights:** hue 42 (gold), saturation 25 - the sun and its reflection
+
+HSL targeted tweaks:
+
+1. Orange luminance +10 so the sky glow separates from the clouds
+2. Blue saturation -20 to stop the upper sky going electric
+3. Aqua hue shifted +8 toward teal for the shallow water
+
+The warm/cool contrast does most of the emotional lifting here. Local dodging
+that depends on these colors happens in [[z=3|the local adjustments]].
+
+@plane z=3 label="Local adjustments" x=120 y=-40
+# Local Adjustments (Dodge and Burn)
+
+Blend mode: **Soft Light**, opacity 70%. A 50% gray layer painted with low-flow
+white (dodge) and black (burn). The x/y offset marks the centroid of the edits,
+which cluster around the sun and the foreground tide pool.
+
+- **Dodge:** the sun's reflection trail on the water, two passes at 8% flow
+- **Dodge:** the rim light on the largest foreground rock
+- **Burn:** the top corners of the frame to keep the eye centered
+- **Burn:** a distracting bright pebble at lower right, painted to match
+
+A radial mask centered on the sun (feather 600 px) adds a subtle +0.2 stop
+glow, sold as atmosphere rather than a vignette. Compare with the global
+exposure in [[z=1|tone]] to confirm the local moves do not double up.
+
+@plane z=4 label="Cleanup + heal" x=-200 y=80
+# Cleanup and Healing
+
+Blend mode: **Normal**, opacity 100%. Spot-level retouching on its own layer
+so it can be audited or removed wholesale.
+
+- Removed 3 sensor dust spots in the upper sky (visible only at f/8)
+- Healed a stray footprint in the wet sand, lower left (the x/y offset points here)
+- Cloned out a distant boat on the horizon that pulled focus
+- Patched a lens flare ghost just left of the sun
+
+Each fix samples from clean neighboring texture, and the healing layer is
+clipped so it never reaches past the frame edges. Nothing structural changes;
+this plane only subtracts distractions before the final pass in
+[[z=5|output sharpening]].
+
+@plane z=5 label="Output sharpen + grain" x=0 y=0
+# Output Sharpening and Grain
+
+The top of the stack, applied last so it reads on the final composite of every
+layer below.
+
+- **Capture sharpening:** already applied at import (radius 0.8, amount 40)
+- **Output sharpening:** Unsharp Mask, radius 1.2, amount 80, threshold 3,
+  tuned for a 24-inch print at 300 ppi
+- **Grain:** monochromatic, size 25, roughness 50, amount 12 - hides any
+  banding in the sky gradient from [[z=2|the grade]]
+- **Edge mask:** sharpening restricted to detected edges so the smooth sky
+  stays clean
+
+Export targets: 16-bit TIFF for print, plus a 2048 px sRGB JPEG for web. To
+revisit the look from scratch, hide this plane and the four above
+[[z=0|the base capture]], then re-enable them one at a time.

@@ -1,0 +1,82 @@
+---
+3md: 1.0
+axis: layer
+title: The Sunken Foundry - Difficulty Layers
+level_id: foundry-03
+checkpoint: forge-entrance
+author: Level Design
+---
+The same level geometry across three difficulty layers. Each layer toggles a
+different set of hazards, enemies, and pickups laid over the identical room. The
+spatial offsets keep the three views side by side so designers can diff a single
+encounter between modes at a glance.
+
+@plane z=0 x=0 y=0 label="Easy"
+# Easy: The Sunken Foundry
+
+A guided first run. The conveyor belts move slowly and the molten channels are
+capped, so a misstep costs health but rarely a life.
+
+## Encounters
+- 2 Rust Beetles patrol the entry catwalk (slow, telegraph 1.2s before lunging).
+- 1 Furnace Drone hovers near the central pit, fires single bolts every 3s.
+- No enemies past the second checkpoint.
+
+## Hazards
+- Conveyor speed: 1.5 m/s, reversible by the wall lever.
+- Molten channel is shielded by a permanent grate. You can stand on it.
+
+## Pickups
+- 3 Health Cells along the main path (one before each jump).
+- Forge Key sits in the open on the central platform.
+
+## Designer notes
+- Teaches the lever-then-jump rhythm with zero time pressure.
+- Compare the same room with live lava in [[z=1|Normal]].
+
+@plane z=1 x=12 y=0 label="Normal"
+# Normal: The Sunken Foundry
+
+The intended experience. The grate retracts on a timer, the conveyors run at
+combat speed, and enemies coordinate to push you toward the pit.
+
+## Encounters
+- 4 Rust Beetles, two flanking from the upper catwalk (telegraph 0.7s).
+- 2 Furnace Drones fire 3-bolt bursts and reposition between volleys.
+- 1 Slag Brute guards the Forge Key, staggered only by the conveyor crush.
+
+## Hazards
+- Conveyor speed: 3 m/s. The wall lever now has a 5s cooldown.
+- Molten channel grate retracts for 4s every 10s. Watch the amber warning light.
+
+## Pickups
+- 2 Health Cells, both off the main path (one behind the Slag Brute).
+- Forge Key is carried by the Slag Brute and drops on defeat.
+
+## Designer notes
+- The grate timer forces a commit: cross during the closed window or wait.
+- Drop down a notch for a calmer pass in [[z=0|Easy]], or raise the stakes in [[z=2|Hard]].
+
+@plane z=2 x=24 y=0 label="Hard"
+# Hard: The Sunken Foundry
+
+For players who have the rhythm memorized. The grate is gone, the conveyors
+reverse without warning, and the room reads your position to spawn pressure.
+
+## Encounters
+- 6 Rust Beetles in two waves, the second wave triggered by reaching the pit.
+- 3 Furnace Drones with homing bolts and a shared shield that drops only when one is destroyed.
+- 1 Slag Brute (enraged variant) plus a Cinder Wraith that revives a fallen Beetle every 15s.
+
+## Hazards
+- Conveyor speed: 4.5 m/s and direction flips on a hidden 7s cycle.
+- No grate. The molten channel is open the entire fight. Falling is instant death.
+
+## Pickups
+- 1 Health Cell only, suspended over the lava (grapple to reach it).
+- Forge Key drops from the Slag Brute but lands on the active conveyor.
+
+## Designer notes
+- Removing the grate turns the central pit into the real boss of the room.
+- The Cinder Wraith punishes ignoring adds, so kill priority matters here.
+- This is the same geometry as [[z=1|Normal]]; only the overlay changed.

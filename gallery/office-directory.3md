@@ -1,0 +1,133 @@
+---
+3md: 1.0
+axis: floor
+title: Meridian Tower - Building Directory
+building: Meridian Tower, 410 Harbor Street
+hours: Lobby staffed 6:00 AM to 9:00 PM, Mon-Fri
+emergency: Dial 0 from any house phone, or 911
+---
+Welcome to Meridian Tower. This directory is organized by floor, from the
+ground-level lobby up to the rooftop terrace. Take Elevator Bank A (floors 1-6)
+or Bank B (floors 5 and up). Visitors must check in at the lobby desk on
+[[z=1|floor 1]] before proceeding.
+
+@plane z=1 label="Lobby & Reception" x=0 y=0
+# Floor 1 - Lobby & Reception
+
+The main entrance, security desk, and visitor check-in.
+
+| Suite | Tenant | Notes |
+|-------|--------|-------|
+| 100 | Concierge & Security | Staffed 6:00 AM - 9:00 PM |
+| 105 | Harbor Cafe | Coffee, pastries, grab-and-go lunch |
+| 110 | Package Room | FedEx, UPS, USPS drop and pickup |
+| 115 | Bike Storage | Key-fob access only |
+
+**Getting around**
+- Elevator Bank A is straight ahead past the security desk.
+- Elevator Bank B is to the left, behind the cafe.
+- Restrooms are off the corridor to the right of reception.
+
+All visitors receive a day badge here. For tenant amenities and the fitness
+center, continue to [[z=2|floor 2]]. Building management is on [[z=6|floor 6]].
+
+@plane z=2 label="Shared Amenities" x=0 y=0
+# Floor 2 - Shared Amenities
+
+Tenant-only spaces shared across the building. Badge access required.
+
+| Suite | Space | Hours |
+|-------|-------|-------|
+| 200 | Fitness Center | 5:00 AM - 11:00 PM, 7 days |
+| 210 | Locker Rooms & Showers | Same as fitness center |
+| 220 | Wellness / Mothers' Room | Reserve via the tenant app |
+| 230 | Town Hall (200 seats) | Book through management |
+
+**Conference rooms (half-day blocks)**
+- Cypress (seats 12, video wall)
+- Alder (seats 8, whiteboard walls)
+- Birch (seats 4, phone booth style)
+
+Need to reserve the Town Hall or a conference room? Contact building management
+on [[z=6|floor 6]]. Tenant offices begin on [[z=3|floor 3]].
+
+@plane z=3 label="Northwind Analytics" x=0 y=0
+# Floor 3 - Northwind Analytics
+
+Single-tenant floor. Data and research firm.
+
+| Area | Team | Contact |
+|------|------|---------|
+| North wing | Reception & visitor lounge | x3100 |
+| East wing | Data Engineering | x3120 |
+| West wing | Research & Modeling | x3140 |
+| South wing | Sales & Client Success | x3160 |
+
+**Visitor notes**
+- Check in at the floor 3 reception desk (turn left off the elevator).
+- Guest Wi-Fi password is printed on the lounge placards.
+- The pantry and quiet phone booths are along the east corridor.
+
+Shipping and deliveries route through the [[z=1|floor 1 package room]]. The
+shared Town Hall for all-hands meetings is on [[z=2|floor 2]].
+
+@plane z=4 label="Lumen Design Co." x=0 y=0
+# Floor 4 - Lumen Design Co.
+
+Single-tenant floor. Product and brand design studio.
+
+| Area | Team | Contact |
+|------|------|---------|
+| Studio floor | Open design bays | x4100 |
+| Gallery | Client presentations | x4110 |
+| Lab | Prototyping & 3D printing | x4130 |
+| Library | Materials & samples | x4150 |
+
+**Visitor notes**
+- The gallery entrance is directly across from the elevators.
+- Prototyping lab access is restricted; ask a host to escort you.
+- Coffee bar is open to guests in the studio's front lounge.
+
+For larger client events, Lumen books the [[z=2|floor 2 Town Hall]]. Catering
+deliveries should be staged at the [[z=1|lobby package room]].
+
+@plane z=5 label="Coworking - The Loft" x=0 y=0
+# Floor 5 - The Loft (Coworking)
+
+Flexible memberships, hot desks, and private suites. Both elevator banks stop
+here.
+
+| Zone | Use | Booking |
+|------|-----|---------|
+| Open commons | Hot desks (first come) | Drop-in |
+| Suites 501-512 | Private offices (1-6 people) | Monthly |
+| Focus pods | Solo deep-work booths | Hourly, in app |
+| Kitchen | Shared, stocked weekday mornings | Members |
+
+**Day-pass guests**
+- Sign in at the Loft front desk, suite 500.
+- Printing is in the alcove behind the kitchen.
+- Rooftop access for members is one floor up.
+
+Day passes are issued after lobby check-in on [[z=1|floor 1]]. Members head up to
+the [[z=6|rooftop terrace on floor 6]] for events.
+
+@plane z=6 label="Management & Rooftop" x=0 y=0
+# Floor 6 - Management & Rooftop Terrace
+
+Building operations and the shared rooftop.
+
+| Suite | Office | Contact |
+|-------|--------|---------|
+| 600 | Building Management | x6000, mgmt@meridiantower.com |
+| 605 | Facilities & Engineering | x6010 |
+| 610 | Leasing Office | x6020 |
+| Terrace | Rooftop event space & garden | Reserve via management |
+
+**Rooftop terrace**
+- Open to all tenants 8:00 AM - 8:00 PM (weather permitting).
+- Private event bookings handled by management in suite 600.
+- Grills and the covered pavilion require an advance reservation.
+
+This is the top of the directory. To return to the entrance and visitor desk,
+go back to [[z=1|floor 1]].

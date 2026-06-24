@@ -1,0 +1,145 @@
+---
+3md: 1.0
+axis: layer
+title: Account Settings Screen, Theme Variants
+component: SettingsCard
+viewport: 375x812
+tokens: design-tokens/v3
+---
+One screen, the account settings card, described three times. Each plane is the
+same layout and the same copy; only the resolved design tokens change. The light
+layer is the default, the dark layer remaps surfaces and text, and the
+high-contrast layer pushes ratios past WCAG AAA for accessibility audits.
+
+Read the planes as overlays of one another: identical geometry, different
+treatment. Cross-plane links point at the matching region in a sibling layer so
+you can diff a single control across themes.
+
+@plane z=0 label="Light" x=0 y=0
+# Settings Card, Light
+
+The baseline theme. Warm neutral surfaces on white, ink-dark text, a single
+brand accent for the primary action.
+
+## Resolved tokens
+
+| Token              | Value     | Role                          |
+| ------------------ | --------- | ----------------------------- |
+| `--bg-canvas`      | `#FFFFFF` | Page behind the card          |
+| `--bg-surface`     | `#F6F5F2` | Card fill                     |
+| `--text-primary`   | `#1A1A1E` | Headings, labels              |
+| `--text-muted`     | `#5C5C66` | Helper text, captions         |
+| `--accent`         | `#2F6BFF` | Primary button, focus ring    |
+| `--border-hair`    | `#E2E0DB` | Dividers, input outlines      |
+
+## Layout
+
+```
++--------------------------------------+
+|  Account                             |
+|  jamie@corvidlabs.dev                |
+|  --------------------------------    |
+|  [ Email notifications      (on) ]   |
+|  [ Two-factor auth         (off) ]   |
+|                                      |
+|         ( Save changes )             |
++--------------------------------------+
+```
+
+- Surface to text contrast: `#F6F5F2` on `#1A1A1E` is about 14.8:1.
+- The accent (`#2F6BFF`) carries the only saturated color, so the eye lands on
+  Save changes first.
+- Toggle "on" state uses the accent fill; "off" uses `--border-hair`.
+
+Compare this exact card in [[z=1|the dark layer]] or push it to
+[[z=2|high contrast]].
+
+@plane z=1 label="Dark" x=0 y=0
+# Settings Card, Dark
+
+Same card, remapped for low-light. We do not simply invert: surfaces sit a step
+above pure black so the card reads as an elevated panel, and the accent is
+lightened so it still pops against a dark field.
+
+## Resolved tokens
+
+| Token              | Value     | Role                          |
+| ------------------ | --------- | ----------------------------- |
+| `--bg-canvas`      | `#0B0B0F` | Page behind the card          |
+| `--bg-surface`     | `#17171C` | Card fill (elevation 1)       |
+| `--text-primary`   | `#F2F2F5` | Headings, labels              |
+| `--text-muted`     | `#9A9AA4` | Helper text, captions         |
+| `--accent`         | `#6E9BFF` | Primary button, focus ring    |
+| `--border-hair`    | `#2A2A31` | Dividers, input outlines      |
+
+## What changed from the light layer
+
+- Canvas drops to near-black (`#0B0B0F`), the card lifts to `#17171C` so the
+  edge is visible without a hard border.
+- Accent shifts from `#2F6BFF` to `#6E9BFF`. The darker blue would muddy against
+  the dark surface, so we raise lightness to keep a 5.1:1 ratio on the button.
+- Muted text is recomputed (`#9A9AA4`) to hold above 4.5:1 on the card fill,
+  matching the muted role in [[z=0|the light layer]].
+
+## Layout
+
+```
++--------------------------------------+
+|  Account                             |
+|  jamie@corvidlabs.dev                |
+|  --------------------------------    |
+|  [ Email notifications      (on) ]   |
+|  [ Two-factor auth         (off) ]   |
+|                                      |
+|         ( Save changes )             |
++--------------------------------------+
+```
+
+Geometry is byte-for-byte identical to light; only fills and strokes resolve
+differently. For the audited version, see [[z=2|high contrast]].
+
+@plane z=2 label="High Contrast" x=0 y=0
+# Settings Card, High Contrast
+
+The accessibility layer, tuned for low-vision users and forced-colors mode. Every
+foreground-on-background pair clears WCAG AAA (7:1 for body text), borders become
+explicit rather than hairline, and the focus ring is doubled in weight.
+
+## Resolved tokens
+
+| Token              | Value     | Role                              |
+| ------------------ | --------- | --------------------------------- |
+| `--bg-canvas`      | `#000000` | Page behind the card              |
+| `--bg-surface`     | `#000000` | Card fill (flat, no elevation)    |
+| `--text-primary`   | `#FFFFFF` | Headings, labels                  |
+| `--text-muted`     | `#E8E8E8` | Helper text (still about 17:1)    |
+| `--accent`         | `#FFD400` | Primary button, focus ring        |
+| `--border-strong`  | `#FFFFFF` | 2px solid outline on every edge   |
+
+## What changed from the dark layer
+
+- Surfaces collapse to pure black and text to pure white, the maximum 21:1 pair,
+  versus roughly 13:1 in [[z=1|the dark layer]].
+- Hairline dividers are replaced by `--border-strong`, a solid 2px white outline,
+  so card edges, inputs, and toggles never rely on subtle fills.
+- The accent moves to amber (`#FFD400`) because blue cannot reach 7:1 against
+  black at a comfortable size. Amber on black is about 15.9:1.
+- Toggle states no longer lean on color alone: "on" shows a filled box with a
+  checkmark, "off" shows an empty box.
+
+## Layout
+
+```
++======================================+
+|  Account                             |
+|  jamie@corvidlabs.dev                |
+|  ==============================      |
+|  [ Email notifications     [x]on ]   |
+|  [ Two-factor auth         [ ]off ]  |
+|                                      |
+|        [[ Save changes ]]            |
++======================================+
+```
+
+Back to the default treatment: [[z=0|light layer]]. Same card, three honest
+renderings of the same screen.

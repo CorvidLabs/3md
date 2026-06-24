@@ -1,0 +1,113 @@
+---
+3md: 1.0
+axis: space
+title: Hale & Okonkwo Wedding Seating Chart
+venue: The Glasshouse at Marrow Hill
+date: 2026-09-19
+guests: 96
+planes: 4
+---
+The reception room is a long rectangle with the head table on the garden side
+(near the windows) and the bar on the entrance side. Each plane below is one
+band of the room as you walk in from the doors toward the garden. The `x`/`y`
+offsets place each band roughly where it sits on the floor: `y` grows toward the
+garden, `x` runs left (dance floor) to right (bar wall).
+
+Start at the doors on [[z=0|the entrance band]] and walk forward to the
+[[z=3|head table]] by the windows.
+
+@plane z=0 x=0 y=0 label="Entrance Band (Tables 1-3)"
+# Entrance Band
+
+You come in through the double doors here. Coat rack on the left, guest book and
+the framed engagement photo on the small console to the right.
+
+## Table 1 - left of the doors
+- Priya Hale (bride's aunt)
+- Devon Hale (bride's uncle)
+- Marcus Whitlock (college roommate, no nut allergy note needed, ignore the old card)
+- Sofia Whitlock
+- Reverend Allen Pace (officiant) - seat nearest the aisle so he can slip out early
+
+## Table 2 - center
+- The Okonkwo cousins: Ada, Chidi, Ngozi, Emeka
+- Hannah Pereira (plus one of Emeka)
+- Open seat held for late RSVP (Tobias) - confirm by Sept 12
+
+## Table 3 - right, by the bar queue
+- Work friends of Nia: Raymond Foss, Lena Foss, Kasper Lund, Dell Moreno
+- Note: Dell is vegetarian, kitchen flagged
+
+Kids' activity table is tucked behind Table 1. The crayons live in the basket
+under the gift table. The next band forward is [[z=1|the middle, Tables 4-6]].
+
+@plane z=1 x=0 y=4 label="Middle Band (Tables 4-6)"
+# Middle Band
+
+The cake table sits against the right wall in this band, wheeled in after the
+toasts. Keep a clear lane between Table 5 and the wall for the cake cart.
+
+## Table 4 - left
+- Grandma Eunice Hale (closest to the dance floor edge, she likes to watch)
+- Walter Hale
+- The Bassey family: Ime, Grace, and their daughter Zara (booster seat needed)
+
+## Table 5 - center
+- High school crew: Jamie Ortega, Bex Ortega, Sam Idowu, Priscilla Quist
+- Two open seats for the photographer and videographer between courses
+
+## Table 6 - right, near the cake
+- Nia's running club: Coach Bert, Marisol Vega, Tunde Bakare, Hollis Crane
+- Marisol is gluten free, the kitchen has a separate plated dessert for her
+
+Sightline check: from Table 4 the head table at [[z=3|the garden windows]] is
+fully visible. The bar at [[z=2|the rear band]] is directly behind you.
+
+@plane z=2 x=2 y=4 label="Bar & Lounge Wall (right side)"
+# Bar and Lounge Wall
+
+This is not a seated band so much as the right edge that runs the length of the
+room. No assigned seats here; it is standing and lounge space.
+
+## The bar
+- Two bartenders from 5:30 PM
+- Signature drinks: "The Marrow Hill" (bourbon, fig, lemon) and a zero-proof
+  hibiscus spritz
+- Last call 11:15 PM
+
+## Lounge corner (rear right)
+- Two low sofas and a coffee table for grandparents and anyone stepping away from
+  the music
+- This is where Grandma Eunice will end up around 9 PM, save her a sofa spot
+
+## Logistics
+- Gift table and card box at the rear, between the bar and the doors
+- Accessible restroom is through the door past the lounge corner
+
+Walk back to [[z=0|the doors]] or forward along the windows to
+[[z=3|the head table]].
+
+@plane z=3 x=0 y=8 label="Head Table (garden windows)"
+# Head Table
+
+Against the garden windows, facing the room. Long single table, everyone on one
+side so the room sees the couple. Seating left to right as the guests see it.
+
+## Order along the table
+1. Best man: Femi Okonkwo
+2. Groomsman: Lucas Hale (bride's brother)
+3. Maid of honor: Tessa Okonkwo
+4. **Adaeze Okonkwo** (one of the two of honor)
+5. **Nia Hale** (one of the two of honor)
+6. Bridesmaid: Camille Dubois
+7. Groomsman: Oba Adeyemi
+8. Bridesmaid: Iris Lin
+
+## Notes
+- Champagne pre-poured at these seats only before the toasts
+- Femi (seat 1) gives the first toast, mic is on the stand at the left end
+- The couple (seats 4-5) face the dance floor for the first dance hand-off
+
+The reception flow runs from [[z=0|the doors]] through
+[[z=1|the middle tables]] to here. Photographers stage at the
+[[z=2|lounge wall]] for the toast wide shots.

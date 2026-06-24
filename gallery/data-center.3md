@@ -1,0 +1,108 @@
+---
+3md: 1.0
+axis: floor
+title: Halcyon DC-2 - Rack Layout by Row
+facility: Halcyon DC-2, Hall B
+operator: Corvid Infrastructure
+units: rack-U (1U = 44.45mm)
+hot_aisle: A/B between rows, B/C between rows
+power: 2N, A-feed and B-feed per rack
+---
+Cold-aisle/hot-aisle layout for Hall B, drawn one row at a time along the Z
+(floor) axis. Walk the hall from the door inward: Row A (network and core),
+Row B (compute), then Row C (storage and backup). Each plane is a single row
+of 42U racks viewed from the front (the cold aisle). The x/y offsets place each
+row on the raised floor grid in 600mm tiles, measured from the SE door corner.
+
+Power is 2N throughout: every rack has an A-feed (Row PDU left) and a B-feed
+(Row PDU right) on separate UPS strings. Follow the cross-plane links to trace
+uplinks from compute up to the spine, and replication from storage back to
+compute.
+
+@plane z=0 x=0 y=0 label="Row A - Network & Core"
+# Row A - Network Spine and Edge
+
+The first row past the man-trap door. Carries all north-south and east-west
+fabric for the hall, so it sits closest to the meet-me room cross-connects.
+
+| Rack | Contents | Front-U used | Notes |
+|---|---|---|---|
+| A1 | Spine switch pair (32x400G) | 2U + 2U | MLAG peer-link across A1/A2 |
+| A2 | Spine switch pair (32x400G) | 2U + 2U | Second spine, B-feed primary |
+| A3 | Border/edge routers | 4U | Two upstreams, BGP to transit |
+| A4 | Out-of-band + console servers | 6U | Separate mgmt VRF, 1G OOB |
+| A5 | Fiber patch + MPO cassettes | 12U | Trunk break-out to Rows B and C |
+
+- **Cold aisle** faces z-positive (toward Row B). Intakes pull from the 18C
+  supply under the perforated tiles on this side.
+- **Cabling**: overhead ladder rack at 2.6m carries the spine-to-leaf trunks
+  down to the [[z=1|compute leaf switches in Row B]] and the
+  [[z=2|storage leaf in Row C]].
+- **Power draw**: ~6.2 kW per rack, well under the 8 kW/rack budget, because the
+  switching gear is light compared to compute.
+
+Console reachability for every device in the hall terminates in A4; if a leaf in
+Row B goes dark, recover it from the [[z=0|OOB servers here]].
+
+@plane z=1 x=0 y=4 label="Row B - Compute"
+# Row B - Compute Fleet
+
+The densest row. Twelve compute racks plus a leaf pair at each end of the row
+for a leaf-spine fabric. Hot air exhausts into the B/C hot aisle and returns to
+the CRAH units at the row ends.
+
+```
+  cold aisle (faces Row A)
+  +----+----+----+----+----+----+
+  | B0 | B1 | B2 | B3 | B4 | B5 |   B0 = leaf-1 (top), compute below
+  +----+----+----+----+----+----+
+  | B6 | B7 | B8 | B9 | B10| B11|   B11 = leaf-2 (top), compute below
+  +----+----+----+----+----+----+
+  hot aisle (faces Row C, contained)
+```
+
+| Item | Per rack | Notes |
+|---|---|---|
+| Compute nodes | 20x 1U dual-socket | 40 racks total of headroom in hall |
+| Leaf switches | 2x 48x25G + 8x100G | One pair per 12-rack pod |
+| In-rack PDU | 2x 32A 3-phase | A-feed left, B-feed right |
+| Blanking panels | all empty U | Mandatory, prevents recirculation |
+
+- **Uplinks**: each leaf pair takes 8x 100G north to the
+  [[z=0|spine switches in Row A]] (4 to each spine, ECMP).
+- **Storage path**: NVMe-over-TCP mounts come from the
+  [[z=2|all-flash arrays in Row C]] across the leaf fabric, never through Row A.
+- **Thermal**: hot-aisle containment with chimney returns. Target dT is 12C
+  across the node; if intake at B exceeds 27C, the CRAH at the row end ramps
+  before any throttling.
+
+Power is the binding constraint here: at 7.4 kW/rack the pod draws ~89 kW, so
+the 100 kW A-string and 100 kW B-string each carry the full row alone under 2N.
+
+@plane z=2 x=0 y=8 label="Row C - Storage & Backup"
+# Row C - Storage and Backup
+
+The back row, against the hall's rear wall. All-flash primary arrays up front,
+high-density spinning disk for backups and cold tiers behind the storage leaf.
+
+| Rack | Contents | Front-U used | Notes |
+|---|---|---|---|
+| C1 | All-flash array head + 2 shelves | 8U | NVMe, serves Row B over TCP |
+| C2 | All-flash expansion shelves | 24U | Same pool as C1 |
+| C3 | Storage leaf pair (48x25G) | 2U + 2U | Uplinks to Row A spine |
+| C4 | Backup target (dedup appliance) | 4U | Nightly snapshots land here |
+| C5 | Cold archive JBODs (90-bay) | 36U | 4U head + JBOD chain |
+
+- **Replication**: primary volumes in C1/C2 serve the
+  [[z=1|compute nodes in Row B]] and snapshot every 15 minutes to the C4 dedup
+  appliance; weekly fulls spool to the C5 archive.
+- **Fabric**: the C3 leaf pair uplinks to the
+  [[z=0|spine in Row A]] just like the compute leaves, keeping storage traffic
+  one hop from any node.
+- **Weight**: C5's loaded JBOD racks hit ~1,360 kg, so they sit over the
+  reinforced floor tiles on the rear two grid columns (rated 1,500 kg/tile).
+
+Power here is bimodal: the flash racks (C1-C3) run cool at ~4 kW, while the
+archive racks (C4-C5) spin up to ~9 kW during backup windows. Backups are
+scheduled 01:00-04:00 to stay off the compute power peak in
+[[z=1|Row B]].

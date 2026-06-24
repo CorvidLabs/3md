@@ -1,0 +1,119 @@
+---
+3md: 1.0
+axis: floor
+title: Riverbend Galleria - Store Directory
+mall: Riverbend Galleria
+address: 1200 Confluence Parkway
+hours: Mon-Sat 10am-9pm, Sun 11am-6pm
+levels: 4
+---
+Welcome to the Riverbend Galleria directory. Use the floor axis to move
+between levels, from the parking concourse at the bottom to the rooftop
+dining terrace on top. Each level lists stores with their suite numbers and
+the nearest entrance. Elevators and escalators run through the central
+atrium on every floor.
+
+Quick jumps: [[z=0|Parking Concourse]], [[z=1|Street Level]],
+[[z=2|Fashion Level]], [[z=3|Rooftop Dining]].
+
+@plane z=0 x=0 y=0 label="P - Parking Concourse"
+# Parking Concourse (Level P)
+
+Covered parking with direct elevator access to the atrium. Pay stations
+accept tap-to-pay and validate the first two hours free with any same-day
+receipt.
+
+| Zone | Spaces | Nearest entrance |
+|------|--------|------------------|
+| Blue (A1-A6) | 240 | North atrium elevators |
+| Green (B1-B4) | 180 | South escalator bank |
+| Accessible | 32 | Adjacent to both elevator cores |
+| EV charging | 12 (Level 2 + 2 fast) | Blue zone, bays A3-A4 |
+
+## Services on this level
+- Guest services kiosk and lost-and-found, just inside the North entrance
+- Stroller and wheelchair loan, free with a refundable deposit
+- Bike racks and a repair stand outside the South doors
+
+Take the central elevator up one floor to reach [[z=1|Street Level]] for
+guest services, the food hall, and the transit lobby.
+
+@plane z=1 x=0 y=0 label="1 - Street Level"
+# Street Level (Level 1)
+
+The main entrance level, anchored by the grocery hall and the transit lobby.
+This is where most visitors arrive on foot or by bus.
+
+## Anchor and grocery
+- **Confluence Market** (Suite 110) - full grocery, deli, and pharmacy
+- **Riverbend Pharmacy** (Suite 112) - inside the market, north counter
+
+## Food hall (east wing)
+| Suite | Vendor | Cuisine |
+|-------|--------|---------|
+| 120 | Ember & Oak | wood-fired pizza |
+| 122 | Pho Confluence | Vietnamese noodles |
+| 124 | The Green Bowl | salads and grain bowls |
+| 126 | Sweetwater Creamery | gelato and shakes |
+
+## Services and transit
+- Bus and light-rail lobby at the west doors, sheltered waiting area
+- ATM cluster and currency exchange near the central atrium
+- Free Wi-Fi: network "Galleria-Guest", no password required
+
+Head down to [[z=0|Parking Concourse]] for your car, or ride the escalator
+up to [[z=2|Fashion Level]] for apparel and electronics.
+
+@plane z=2 x=0 y=0 label="2 - Fashion Level"
+# Fashion Level (Level 2)
+
+Apparel, footwear, beauty, and electronics ring the atrium balcony. The
+north wing holds the department-store anchor; the south wing is electronics
+and home.
+
+## North wing - apparel and beauty
+- **Larkspur & Co.** (Suite 210) - department store anchor, two floors
+- **Northwind Outfitters** (Suite 214) - outdoor and activewear
+- **Lumen Beauty** (Suite 218) - cosmetics and fragrance
+- **Tidewater Shoes** (Suite 222) - footwear for the whole family
+
+## South wing - electronics and home
+- **Circuit Confluence** (Suite 240) - phones, laptops, repairs
+- **Hearth & Loom** (Suite 244) - kitchen, bedding, and decor
+- **Pageturner Books** (Suite 248) - books, stationery, and a small cafe
+
+## Good to know
+- Personal styling by appointment at Larkspur, third-floor balcony desk
+- Phone and tablet screen repair at Circuit Confluence, same-day on most models
+- Family restroom and nursing room near the central atrium
+
+When you are ready to eat, ride the glass elevator one more level to the
+[[z=3|Rooftop Dining]] terrace, or return to [[z=1|Street Level]] for the
+grocery hall.
+
+@plane z=3 x=0 y=0 label="3 - Rooftop Dining"
+# Rooftop Dining Terrace (Level 3)
+
+An open-air terrace with full-service restaurants, a covered bar, and seasonal
+events. The terrace wraps the atrium skylight and looks out over the river.
+
+## Restaurants
+| Suite | Restaurant | Notes |
+|-------|------------|-------|
+| 310 | The Confluence Grill | steaks and seafood, reservations advised |
+| 314 | Saffron Terrace | Indian, large vegetarian menu |
+| 318 | La Marea | coastal Spanish, tapas and paella |
+| 322 | Cloudline Bar | covered cocktail bar, opens at 4pm |
+
+## On the terrace
+- Outdoor seating with heaters, open year-round under the awnings
+- Live music on Friday and Saturday evenings, 7pm to 9pm
+- Seasonal market stalls in summer, near the river-view railing
+
+## Getting here
+- Express glass elevator from [[z=1|Street Level]], stops only at the terrace
+- Escalator from [[z=2|Fashion Level]], north wing
+- Last seating is 30 minutes before mall close; the bar stays open later
+
+Heading home? Take the express elevator straight down to the
+[[z=0|Parking Concourse]].

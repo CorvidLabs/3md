@@ -1,0 +1,106 @@
+---
+3md: 1.0
+axis: layer
+title: Code Review - RateLimiter.swift (PR #482)
+pr: "482"
+reviewer: "@leif"
+author: "@dana"
+file: Sources/Networking/RateLimiter.swift
+---
+A layered review of a single source snippet. The base layer is the code under
+review. Stacked above it are the reviewer comment overlays, a suggested patch,
+and the resolution thread. Toggle layers independently to read the code clean,
+or pull the annotations forward to see what changed and why.
+
+@plane z=0 label="Source"
+# `RateLimiter.swift` (lines 18-39)
+
+```swift
+public actor RateLimiter {
+    private let limit: Int
+    private let window: Duration
+    private var hits: [ContinuousClock.Instant] = []
+
+    public init(limit: Int, per window: Duration) {
+        self.limit = limit
+        self.window = window
+    }
+
+    public func allow() -> Bool {
+        let now = ContinuousClock.now
+        hits = hits.filter { now - $0 < window }   // L30
+        if hits.count >= limit {                   // L31
+            return false
+        }
+        hits.append(now)                           // L33
+        return true
+    }
+}
+```
+
+Three annotated lines carry overlays: [[z=1|comment on L30]],
+[[z=1|comment on L31]], and the [[z=2|suggested rewrite]] for the whole method.
+
+@plane z=1 label="Comments" x=12 y=0
+# Reviewer comments
+
+These overlays pin to the gutter of the source layer. Each anchors to a line in
+[[z=0|the source]].
+
+> **L30 - `@leif`** (blocking)
+> Filtering the whole array on every call is O(n) per request, and `hits` grows
+> without bound between prunes under a burst. Use a ring buffer or a deque and
+> pop from the front while the oldest entry is outside the window.
+
+> **L31 - `@leif`** (question)
+> Off-by-one check: with `limit = 5` this allows the 6th call to fail, so we
+> permit exactly 5 in the window. That matches the doc comment, but please add a
+> test that asserts the boundary (5 pass, 6th denied within the window).
+
+> **L33 - `@dana`** (note)
+> `append` after the count check means a denied call does not record a hit. That
+> is intentional - denied requests should not extend the window.
+
+See the [[z=2|suggested patch]] that resolves the L30 thread.
+
+@plane z=2 label="Suggested patch" x=12 y=6
+# Suggested rewrite for `allow()`
+
+Addresses [[z=1|the L30 comment]]. Prune from the front of a deque instead of
+rebuilding the array, so the steady-state cost is amortized O(1).
+
+```swift
+private var hits = Deque<ContinuousClock.Instant>()
+
+public func allow() -> Bool {
+    let now = ContinuousClock.now
+    while let oldest = hits.first, now - oldest >= window {
+        hits.removeFirst()
+    }
+    guard hits.count < limit else { return false }
+    hits.append(now)
+    return true
+}
+```
+
+Notes for the author:
+- `Deque` comes from `swift-collections`; we already vendor it in `Networking`.
+- Behavior is identical to [[z=0|the original]] at the boundary, so the test
+  requested in the L31 comment still applies unchanged.
+
+@plane z=3 label="Resolution" x=12 y=12
+# Thread resolution
+
+Tracks the outcome of each overlay against [[z=1|the comments]].
+
+| Line | Comment | Status | Resolution |
+| ---- | ------- | ------ | ---------- |
+| L30  | O(n) prune, unbounded growth | resolved | Took the [[z=2|deque rewrite]]; benchmark dropped p99 from 410us to 9us |
+| L31  | boundary off-by-one | resolved | Added `testAllowsExactlyLimitPerWindow` (5 pass, 6th denied) |
+| L33  | denied calls do not record | acknowledged | No change; documented in the method header |
+
+**Decision:** approved with the patch applied. Squash-merge once CI is green.
+
+- [x] L30 blocking comment cleared
+- [x] Boundary test added
+- [ ] Backport to `release/2.3` (tracked in #489)

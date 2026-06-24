@@ -1,0 +1,203 @@
+---
+3md: 1.0
+axis: slide
+title: Build a URL Shortener in Python
+subtitle: A five-step tutorial from empty file to working service
+level: beginner
+duration: 25 minutes
+stack: Python 3.11, Flask, SQLite
+---
+A hands-on, copy-along tutorial. Each slide is one step. Run the code at the end
+of every slide before advancing, and the next slide will build directly on it.
+
+Start at [[z=0|Setup]] and move right through the deck. If a step breaks, jump
+back to [[z=2|the storage step]] where most beginners hit a snag.
+
+@plane z=0 x=0 y=0 label="Step 1: Setup"
+# Step 1: Project setup
+
+Create a folder and a virtual environment so the dependencies stay isolated.
+
+```bash
+mkdir shortly && cd shortly
+python3 -m venv .venv
+source .venv/bin/activate        # Windows: .venv\Scripts\activate
+pip install flask
+```
+
+Verify the install before moving on:
+
+```bash
+python -c "import flask; print(flask.__version__)"
+```
+
+You should see a version like `3.0.0` printed. If you get
+`ModuleNotFoundError`, the virtual environment is not active (re-run the
+`source` line).
+
+When that prints cleanly, continue to [[z=1|Step 2: the routes]].
+
+@plane z=1 x=1 y=0 label="Step 2: Routes"
+# Step 2: A minimal Flask app
+
+Create `app.py` with two routes: one to accept a long URL, one to redirect a
+short code back to it. We will use an in-memory dictionary for now and swap in
+real storage on the next slide.
+
+```python
+from flask import Flask, request, redirect, jsonify
+
+app = Flask(__name__)
+links = {}          # code -> url  (temporary, lost on restart)
+counter = 0
+
+@app.route("/shorten", methods=["POST"])
+def shorten():
+    global counter
+    url = request.json["url"]
+    code = format(counter, "x")   # 0, 1, 2 -> "0", "1", "2"
+    links[code] = url
+    counter += 1
+    return jsonify(short=f"/{code}")
+
+@app.route("/<code>")
+def follow(code):
+    url = links.get(code)
+    return redirect(url) if url else ("Not found", 404)
+```
+
+Run it with `flask --app app run --debug`. The dictionary resets every restart,
+which is exactly the problem we fix in [[z=2|Step 3]].
+
+@plane z=2 x=2 y=0 label="Step 3: Storage"
+# Step 3: Persist with SQLite
+
+Swap the dictionary for a SQLite table so links survive a restart. SQLite ships
+with Python (`import sqlite3`), so there is nothing new to install.
+
+```python
+import sqlite3
+
+def db():
+    conn = sqlite3.connect("links.db")
+    conn.row_factory = sqlite3.Row
+    return conn
+
+def init_db():
+    with db() as conn:
+        conn.execute(
+            "CREATE TABLE IF NOT EXISTS links ("
+            "  id INTEGER PRIMARY KEY AUTOINCREMENT,"
+            "  url TEXT NOT NULL)"
+        )
+
+init_db()
+```
+
+Now rewrite the two routes to read and write the table:
+
+```python
+@app.route("/shorten", methods=["POST"])
+def shorten():
+    url = request.json["url"]
+    with db() as conn:
+        cur = conn.execute("INSERT INTO links (url) VALUES (?)", (url,))
+        code = format(cur.lastrowid, "x")
+    return jsonify(short=f"/{code}")
+
+@app.route("/<code>")
+def follow(code):
+    row_id = int(code, 16)
+    with db() as conn:
+        row = conn.execute(
+            "SELECT url FROM links WHERE id = ?", (row_id,)
+        ).fetchone()
+    return redirect(row["url"]) if row else ("Not found", 404)
+```
+
+Notice we use a parameterized query (the `?` placeholder), never string
+formatting, which keeps the input safe from SQL injection. Restart the server,
+shorten a URL, restart again, and the link still resolves.
+
+Next we make sure people cannot submit garbage: [[z=3|Step 4]].
+
+@plane z=3 x=3 y=0 label="Step 4: Validation"
+# Step 4: Validate the input
+
+Right now `/shorten` trusts whatever JSON arrives. Reject anything that is not a
+real `http`/`https` URL and return a clear error.
+
+```python
+from urllib.parse import urlparse
+
+def is_valid(url):
+    parsed = urlparse(url or "")
+    return parsed.scheme in ("http", "https") and bool(parsed.netloc)
+
+@app.route("/shorten", methods=["POST"])
+def shorten():
+    data = request.get_json(silent=True) or {}
+    url = data.get("url", "").strip()
+    if not is_valid(url):
+        return jsonify(error="Provide a valid http(s) URL"), 400
+    with db() as conn:
+        cur = conn.execute("INSERT INTO links (url) VALUES (?)", (url,))
+        code = format(cur.lastrowid, "x")
+    return jsonify(short=f"/{code}")
+```
+
+Three things changed:
+
+1. `get_json(silent=True)` avoids a crash when the body is not JSON.
+2. We `strip()` whitespace before checking.
+3. A bad URL returns HTTP 400 with a helpful message, not a 500.
+
+With the input guarded, it is time to prove the whole thing works in
+[[z=4|Step 5]].
+
+@plane z=4 x=4 y=0 label="Step 5: Test it"
+# Step 5: Test end to end
+
+Write one quick test so you can refactor later without fear. Save this as
+`test_app.py` and install the test client (it comes with Flask).
+
+```python
+import app as shortly
+
+def test_shorten_and_follow():
+    client = shortly.app.test_client()
+
+    # Shorten a real URL
+    resp = client.post("/shorten", json={"url": "https://example.com"})
+    assert resp.status_code == 200
+    code = resp.get_json()["short"].lstrip("/")
+
+    # Following it redirects to the original
+    follow = client.get(f"/{code}")
+    assert follow.status_code == 302
+    assert follow.headers["Location"] == "https://example.com"
+
+def test_rejects_garbage():
+    client = shortly.app.test_client()
+    resp = client.post("/shorten", json={"url": "not-a-url"})
+    assert resp.status_code == 400
+```
+
+Run the suite:
+
+```bash
+pip install pytest
+pytest -q
+```
+
+Two passing tests means the service works: it stores links, redirects, and
+rejects bad input.
+
+## Where to go next
+
+- Add a custom alias so users pick their own code instead of a hex id.
+- Track click counts with a second column on the table.
+- Deploy behind a real WSGI server such as gunicorn.
+
+Want to revisit a step? Jump back to [[z=0|the setup]] or
+[[z=2|the storage layer]].

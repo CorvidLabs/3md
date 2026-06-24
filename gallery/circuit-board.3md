@@ -1,0 +1,78 @@
+---
+3md: 1.0
+axis: space
+title: Simple Circuit Board Component Layout
+board: 50mm x 35mm 2-layer FR-4
+designer: CorvidLabs Hardware
+revision: A2
+---
+A small 5V regulated power supply and status-LED board. The Z axis is physical
+space: each plane is a height above the board surface, from the copper traces
+underneath to the silkscreen reference labels on top. Stack the planes to see
+how the parts sit over the routing.
+
+@plane z=0 label="Copper (bottom traces)"
+# z=0: Copper layer
+
+The single-sided routing that connects every part. Net names follow the
+schematic.
+
+| Net    | From            | To                | Width  |
+|--------|-----------------|-------------------|--------|
+| VIN    | J1 pin 1        | U1 IN, C1 +       | 0.6 mm |
+| +5V    | U1 OUT          | C2 +, R1, J2 pin 1| 0.6 mm |
+| GND    | J1 pin 2        | U1 GND, C1-, C2-  | 0.8 mm |
+| LED_A  | R1              | D1 anode          | 0.3 mm |
+
+Keep the GND pour solid under U1 for heat spreading. The high-current VIN and
+GND nets are widened to 0.6-0.8 mm to limit voltage drop.
+
+The parts that land on these pads live one plane up at [[z=1|the component layer]].
+
+@plane z=1 x=0 y=0 label="Through-hole components"
+# z=1: Component bodies
+
+Parts seated on the top side, populated in this order to keep soldering easy
+(shortest first).
+
+- **J1** (x=2, y=18) - 2-pin screw terminal, 7-12V DC input.
+- **C1** (x=12, y=12) - 100 uF electrolytic, input smoothing. Watch polarity.
+- **U1** (x=24, y=16) - LM7805 in TO-220, tab faces the board edge.
+- **C2** (x=36, y=12) - 10 uF electrolytic, output stability.
+- **R1** (x=40, y=22) - 330 ohm, sets D1 current to about 11 mA.
+- **D1** (x=44, y=22) - 3 mm green LED, flat side is the cathode.
+- **J2** (x=47, y=18) - 2-pin header, regulated +5V out.
+
+Every pad here sits directly over a trace on [[z=0|the copper layer]]. The U1
+tab couples to the GND pour for cooling, covered next at [[z=2|the thermal note]].
+
+@plane z=2 x=24 y=16 label="Thermal zone (U1)"
+# z=2: Heat above the regulator
+
+A keep-clear region centered on U1 so the LM7805 can shed heat.
+
+At 9V in and 5V out drawing 100 mA, U1 dissipates about (9 - 5) * 0.1 = 0.4 W.
+The TO-220 alone handles this, but leave a 5 mm clearance around the tab and
+expand the bottom GND copper to roughly 200 mm-squared as a heat spreader.
+
+Rules for this zone:
+
+1. No tall parts within 5 mm of the U1 tab.
+2. If input rises above 12V, add a clip-on heatsink (extends to about z=3).
+3. Silkscreen must not cross the tab footprint; the labels stay at
+   [[z=3|the silkscreen layer]].
+
+@plane z=3 x=0 y=0 label="Silkscreen (top labels)"
+# z=3: Silkscreen and polarity marks
+
+White reference designators and orientation marks printed on top, the last thing
+you read while populating the board.
+
+- Reference text: **J1, C1, U1, C2, R1, D1, J2**, 1.0 mm height.
+- **+** mark next to C1 and C2 positive pads (electrolytic polarity).
+- Flat-edge stripe by D1 marks the cathode.
+- A **"5V OUT"** caption sits beside J2.
+- Board title block, bottom-right: `CorvidLabs PSU rev A2`.
+
+Cross-check each label against its body on [[z=1|the component layer]] before
+sending the design out for fabrication.

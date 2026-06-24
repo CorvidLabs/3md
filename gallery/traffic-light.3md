@@ -1,0 +1,98 @@
+---
+3md: 1.0
+axis: frame
+title: Traffic Light State Animation
+fps: 1
+loop: "true"
+cycle_seconds: "12"
+description: One full signal cycle for a four-way intersection, frame by frame.
+---
+A single playable cycle of a standard three-aspect traffic signal. Each plane is
+one animation frame. Played in `z` order it loops forever: green holds, yellow
+warns, red stops, and the red-plus-amber "get ready" beat (used in UK and German
+signals) leads back into green.
+
+The `x`/`y` offsets place each lamp where it sits on the physical housing: the
+red lamp on top (`y=0`), amber in the middle (`y=1`), green at the bottom
+(`y=2`). A spatial viewer can stack the lit lamp at the correct height.
+
+Legend: a filled circle is lit, an empty circle is dark.
+
+@plane z=0 x=0 y=2 label="Green - GO"
+# Frame 0: GREEN
+
+```
+( )   red    off
+( )   amber  off
+(O)   green  ON
+```
+
+**State:** `GO`
+**Hold:** 6 seconds (the long phase)
+**Meaning:** Traffic may proceed if the way is clear.
+
+Vehicles flow through the intersection. The crossing pedestrian signal shows a
+steady "Don't Walk" because the conflicting approach is stopped.
+
+Next beat: the green lamp drops out and amber lights up. Continue to
+[[z=1|Frame 1: Yellow]].
+
+@plane z=1 x=0 y=1 label="Yellow - CAUTION"
+# Frame 1: YELLOW
+
+```
+( )   red    off
+(O)   amber  ON
+( )   green  off
+```
+
+**State:** `CAUTION`
+**Hold:** 3 seconds
+**Meaning:** The signal is about to turn red. Stop if it is safe to do so.
+
+This is the shortest of the holding frames on purpose. The amber interval is
+timed to the approach speed so a driver at the stop line can either clear the
+intersection or come to a controlled stop.
+
+Came from [[z=0|Frame 0: Green]]. Next up is the all-red moment in
+[[z=2|Frame 2: Red]].
+
+@plane z=2 x=0 y=0 label="Red - STOP"
+# Frame 2: RED
+
+```
+(O)   red    ON
+( )   amber  off
+( )   green  off
+```
+
+**State:** `STOP`
+**Hold:** 6 seconds (includes the all-red clearance interval)
+**Meaning:** Do not proceed past the stop line.
+
+While this approach is held at red, the cross street gets its own green. The
+pedestrian "Walk" symbol lights for the parallel crosswalk. A short all-red
+overlap at the start of this frame lets the intersection clear before any
+conflicting movement begins.
+
+Hold here, then advance to the priming beat in [[z=3|Frame 3: Red + Amber]].
+
+@plane z=3 x=0 y=0 label="Red + Amber - GET READY"
+# Frame 3: RED + AMBER
+
+```
+(O)   red    ON
+(O)   amber  ON
+( )   green  off
+```
+
+**State:** `PREPARE`
+**Hold:** 2 seconds
+**Meaning:** Stay stopped, but green is imminent. Release the brake, do not move.
+
+This combined aspect is the British and German "get ready" phase. It gives
+drivers a predictable cue to prepare without rolling forward early, which smooths
+the launch when green returns.
+
+This is the last frame of the cycle. Loop back to [[z=0|Frame 0: Green]] and
+the animation repeats.

@@ -1,0 +1,100 @@
+---
+3md: 1.0
+axis: step
+title: The 21 Card Trick
+effect: Spectator's card revealed on a chosen count
+deck: 21 cards, three columns of seven
+deals: three
+difficulty: beginner
+---
+A self-working card trick. No sleight of hand, no palming, no false shuffles.
+You deal 21 cards into three columns and ask the spectator which column holds
+their card. After three rounds of dealing, the chosen card always lands in the
+exact center of the packet, at position eleven. Follow the steps in order; each
+plane is one stage of the performance.
+
+@plane z=0 label="Setup" x=0 y=0
+# Step 0: Count out 21 cards
+
+Take any shuffled deck and count off exactly **21 cards** face down. Set the
+rest of the deck aside; you will not need it. Let the spectator shuffle the 21
+if they like, because the trick does not depend on the order.
+
+- Hold the packet face down in your dealing hand.
+- Tell the spectator: "Think of one card and remember it. Do not tell me."
+
+The math only needs three columns of seven, so any 21 cards will do. When you
+are ready, move on to [[z=1|the first deal]].
+
+@plane z=1 label="First deal" x=-1 y=1
+# Step 1: Deal three columns, ask once
+
+Deal the cards face up into **three columns of seven**, one card at a time,
+left to right, like dealing to three players:
+
+```
+Col A   Col B   Col C
+  1       2       3
+  4       5       6
+  7       8       9
+ 10      11      12
+ 13      14      15
+ 16      17      18
+ 19      20      21
+```
+
+Ask: "Which column is your card in?" Remember their answer.
+
+**The key move:** gather the columns so the chosen column is picked up
+**in the middle**, sandwiched between the other two. Square the packet and go to
+[[z=2|the second deal]].
+
+@plane z=2 label="Second deal" x=0 y=1
+# Step 2: Deal again, sandwich again
+
+Deal all 21 cards into three fresh columns the same way (left to right, one at a
+time). The previous gather has already pulled the chosen card toward the center.
+
+Ask again: "Which column now?"
+
+Pick the columns up once more with the **named column in the middle**. This is
+the whole secret: each time you sandwich the chosen column between the others,
+the card is squeezed toward the exact center of the 21.
+
+> Performance tip: deal briskly and chat while you do it. The repetition feels
+> like shuffling to the audience, but every gather tightens the trap.
+
+One more round and the card is locked. Continue to [[z=3|the final deal]].
+
+@plane z=3 label="Final deal" x=1 y=1
+# Step 3: Last deal, last question
+
+Deal the three columns one final time, then ask the question for the last time:
+"Which column?"
+
+Gather with the chosen column **in the middle** exactly as before. The card is
+now guaranteed to be the **11th card** from either end, the dead center of the
+packet of 21 (positions 1 through 21, middle is 11).
+
+You no longer need to ask anything. The work is done; only the reveal remains.
+Move to [[z=4|the reveal]].
+
+@plane z=4 label="Reveal" x=2 y=0
+# Step 4: Count to the center and reveal
+
+Hold the squared packet face down. Count cards off the top one at a time into a
+pile, counting out loud, and stop on **eleven**.
+
+- Cards 1 through 10: deal them off, building suspense.
+- Card 11: pause. This is their card.
+
+Flourish options for the climax (pick one):
+
+1. **Snap turnover.** Flip card 11 face up: "Is this your card?"
+2. **Spell it out.** Spell "M-A-G-I-C" onto the table, landing the final letter
+   on the eleventh card, then reveal.
+3. **Name it first.** Peek the 11th card during the last gather, then name the
+   card aloud before turning it over.
+
+Reset is instant: the packet is already 21 cards, so you can loop straight back
+to [[z=0|the setup]] for the next spectator.

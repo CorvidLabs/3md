@@ -1,0 +1,93 @@
+---
+3md: 1.0
+axis: depth
+title: The Hollis Family Tree
+surname: Hollis
+maintained-by: Margaret Hollis-Reyes
+last-updated: 2026-06-20
+note: Depth counts generations back from the present. z=0 is the living children; deeper planes are older ancestors.
+---
+A working genealogy of the Hollis line, organized by generation. Each plane is one
+generation. The deepest plane (z=3) holds the earliest known couple; the shallowest
+(z=0) holds the youngest living descendants. Read top to bottom within a plane for
+siblings; follow the cross-plane links to trace a line of descent.
+
+@plane z=3 label="Great-grandparents (born 1890s-1900s)" x=0 y=0
+# Generation IV - The Founders
+
+The earliest couple we have records for. Both emigrated through Ellis Island and
+settled in Lowell, Massachusetts.
+
+## Samuel Hollis (1894-1971)
+- Born in County Cork, Ireland; arrived 1911 aboard the SS Caledonia.
+- Worked as a loom mechanic in the Lowell textile mills.
+- Married Anna in 1919 at St. Patrick's Church.
+
+## Anna Hollis, nee Kowalski (1898-1983)
+- Born in Krakow; arrived 1913.
+- Kept the family's first ledger, which is the source for most of these dates.
+
+Together they had three children. The line we follow runs through their son
+Thomas: see [[z=2|Generation III]].
+
+@plane z=2 label="Grandparents (born 1920s)" x=2 y=0
+# Generation III - The Builders
+
+Samuel and Anna's children, born between the wars.
+
+## Thomas Hollis (1921-1999)  *(our line)*
+- Eldest son of [[z=3|Samuel and Anna]].
+- Served in the Pacific, 1942-1945; returned to study civil engineering.
+- Married Eleanor Vance in 1948.
+
+## Eleanor Hollis, nee Vance (1926-2011)
+- Schoolteacher in Concord for thirty-one years.
+- Her diaries fill the gap in records for the 1950s.
+
+## Siblings of Thomas (collateral lines, not expanded here)
+- Mary Hollis (1923-2004), married into the Doyle family.
+- Patrick Hollis (1925-1990), moved to Chicago; descendants out of contact.
+
+Thomas and Eleanor raised two children, listed in [[z=1|Generation II]].
+
+@plane z=1 label="Parents and their siblings (born 1950s)" x=4 y=0
+# Generation II - The Parents
+
+The children of [[z=2|Thomas and Eleanor]]. This is the generation most people
+in the family still remember firsthand.
+
+## Robert Hollis (b. 1952)  *(our line)*
+- Architect, now retired, living in Portland, Maine.
+- Married Diane Okafor in 1979.
+
+## Diane Hollis, nee Okafor (b. 1955)
+- Pediatric nurse; first non-European ancestor in the direct line.
+- Brought the Okafor branch (Lagos, Nigeria) into the tree.
+
+## Susan Hollis (b. 1956)
+- Younger sister of Robert; never married, godmother to all of his children.
+- Keeps the physical photo archive that these notes draw from.
+
+Robert and Diane are the parents of the youngest generation in [[z=0|Generation I]].
+
+@plane z=0 label="Living children (born 1980s-1990s)" x=6 y=0
+# Generation I - The Present
+
+The current youngest generation: children of [[z=1|Robert and Diane]].
+This plane is updated as new births and marriages occur.
+
+## Margaret Hollis-Reyes (b. 1983)
+- Eldest. Maintainer of this family tree.
+- Married Carlos Reyes in 2012; two children (Generation Zero, pending a new plane).
+
+## James Hollis (b. 1986)
+- Marine biologist in Monterey, California.
+- Unmarried as of this revision.
+
+## Aunt Susan's note
+Per [[z=1|Susan Hollis]], a third sibling, Grace, was stillborn in 1989 and is
+recorded here so she is not forgotten.
+
+---
+
+*To extend the tree forward, add a plane at z=-1 for the grandchildren.*

@@ -1,0 +1,77 @@
+---
+3md: 1.0
+axis: depth
+title: Self-Hosting Backups FAQ
+subject: backup strategy for a home server
+audience: people running a NAS or home server who want their data to survive a disk failure
+convention: z=0 is the headline answer; higher z drills deeper into mechanics and edge cases
+---
+This FAQ is stacked by depth. Plane `z=0` is the one-line answer you can act on
+today. Each deeper plane (z=1, z=2, z=3) peels back a layer: the rule of thumb,
+then how it actually works, then the failure modes nobody warns you about.
+
+Read straight through, or stop as soon as you have what you need.
+
+@plane z=0 label="Quick answers" x=0 y=0
+# Backups, in one breath
+
+**Q: How many copies of my data do I need?**
+Three. Keep the **3-2-1 rule**: 3 copies, on 2 different kinds of media, with 1 copy off-site.
+
+**Q: Is RAID a backup?**
+No. RAID protects against a *disk* dying, not against you deleting the wrong folder, ransomware, or the whole machine being stolen.
+
+**Q: How often should backups run?**
+Nightly for anything you would hate to re-create. Hourly snapshots for active projects.
+
+**Q: How do I know a backup is good?**
+Restore from it. A backup you have never restored is a hope, not a backup.
+
+Want the reasoning? Drill into [[z=1|the rules of thumb]].
+
+@plane z=1 label="Rules of thumb" x=2 y=0
+# Why three copies, and what counts
+
+The 3-2-1 rule maps to three independent ways your data dies:
+
+- **3 copies** survive a single accident (one corrupt file is still good in two places).
+- **2 media types** survive a media-class failure. An SSD and a spinning disk fail for different reasons; two SSDs from the same batch can fail the same week.
+- **1 off-site copy** survives fire, flood, theft, and "the power supply took the whole rack with it."
+
+**On RAID specifically:** RAID 1 mirrors and RAID 5/6 add parity, so a drive can fail and you stay online. That is *availability*, not *recoverability*. Every write, including a mistaken `rm -rf`, hits all members instantly. RAID buys uptime; backups buy a time machine.
+
+**On frequency:** match the interval to how much work you can afford to lose (your RPO, recovery point objective). Lose at most an hour of edits? Snapshot hourly. Lose at most a day of family photos? Nightly is plenty.
+
+Curious how the off-site and snapshot pieces actually work? See [[z=2|the mechanics]].
+
+@plane z=2 label="How it works" x=4 y=0
+# The mechanics underneath
+
+**Snapshots vs copies.** A filesystem snapshot (ZFS, Btrfs, LVM) is not a second copy of your bytes. It is a frozen view: the filesystem keeps the old blocks alive instead of freeing them when data changes. That makes snapshots near-instant and cheap, but they live on the *same pool*. A snapshot rescues you from a bad edit; it does nothing if the pool itself dies. That is why a snapshot is step one, and `zfs send` (or `restic`/`borg`) to another machine is step two.
+
+**Incremental backups.** Tools like restic and Borg deduplicate at the chunk level. The first run copies everything; later runs copy only changed chunks and record a new "snapshot" that points at the shared chunk store. A nightly job over 2 TB might move only a few hundred MB once the baseline exists.
+
+**Off-site, in practice.** Three common shapes:
+
+1. A second box at a relative's house, fed over a VPN (cheapest long-term).
+2. An object-storage bucket (Backblaze B2, S3) with client-side encryption.
+3. A rotated external drive you physically carry off-site weekly (low-tech, very robust).
+
+**Verification.** Both Borg and restic have a `check` command that reads the repository and re-hashes chunks. Schedule it. Pair it with an occasional real restore of a random file (see [[z=1|the rules of thumb]] on "restore from it").
+
+The traps live one plane deeper: [[z=3|the failure modes]].
+
+@plane z=3 label="Failure modes" x=6 y=0
+# What actually bites people
+
+**1. Silent corruption (bit rot).** A flipped bit on disk can be backed up faithfully for months before you notice. Defense: a checksumming filesystem (ZFS, Btrfs) that scrubs on a schedule and reports errors, plus keeping enough snapshots to reach back *before* the corruption.
+
+**2. Backing up the encryption, not the data.** If ransomware encrypts your files and your nightly job dutifully copies the encrypted versions, your backups are now useless too. Defense: keep a deep retention ladder (for example 7 daily, 4 weekly, 12 monthly) and make the backup target append-only or immutable so an attacker on the source host cannot rewrite history.
+
+**3. Untested restores.** The classic. The backup ran green for two years; the day you need it, the archive is truncated, the passphrase is lost, or the tool version that wrote it no longer exists. Defense: a quarterly fire drill that restores to a scratch directory and diffs against the source.
+
+**4. One credential, one blast radius.** If the source server holds the only key to the off-site bucket *and* has write access to delete old versions, a single compromise can wipe everything. Defense: application keys scoped to write-and-list only, with lifecycle/immutability rules enforced on the bucket side.
+
+**5. The 3-2-1 that is secretly 1-1-1.** Two "copies" on the same pool, plus a sync job that propagates deletions instantly to the "off-site" copy, is one copy wearing a costume. Defense: confirm each copy is independent and that at least one is *not* a live mirror.
+
+Back to the [[z=0|one-breath answers]] when you just need the checklist.

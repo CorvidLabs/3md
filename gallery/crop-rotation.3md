@@ -1,0 +1,130 @@
+---
+3md: 1.0
+axis: time
+title: Four-Season Crop Rotation Plan
+plot: North Field, Bed A (30 ft x 4 ft raised bed)
+zone: USDA 6b
+goal: build soil fertility while breaking pest and disease cycles
+---
+This plan rotates a single raised bed through four families over one year so that
+no family returns to the same soil until the cycle closes. The Z axis is time:
+each plane is one season. Heavy feeders follow soil builders, light feeders follow
+heavy feeders, and a legume green manure resets nitrogen before the cycle repeats.
+
+The `x` and `y` offsets sketch the bed footprint as seen from above, so a spatial
+viewer can stack the seasons in place over the same ground.
+
+@plane z=0 x=0 y=0 label="Spring: Legumes (soil builders)"
+# Spring: Peas and Fava Beans
+
+**Family:** Fabaceae (legumes)
+**Role:** nitrogen fixation, soil structure
+
+Legumes open the rotation because they partner with rhizobia bacteria to pull
+nitrogen from the air and fix it into the soil, leaving the bed richer for the
+hungry crop that follows.
+
+## Planting
+
+- Direct sow shelling peas as soon as the soil can be worked (late March here).
+- Sow fava beans 1 inch deep, 4 inches apart, in a double row.
+- Inoculate seed with garden pea/bean rhizobia for a stronger nitrogen boost.
+
+## Bed map
+
+| Row | Crop          | Spacing |
+|-----|---------------|---------|
+| 1-2 | Shelling peas | 2 in    |
+| 3   | Fava beans    | 4 in    |
+
+## Hand-off
+
+Cut spent plants at the soil line and leave the roots in place: the nitrogen
+nodules break down right where the next crop needs them. That nitrogen feeds the
+[[z=1|summer heavy feeders]] directly.
+
+@plane z=1 x=0 y=0 label="Summer: Heavy feeders"
+# Summer: Tomatoes and Squash
+
+**Family:** Solanaceae and Cucurbitaceae
+**Role:** heavy feeders cashing in stored nitrogen
+
+The bed is now nitrogen-rich from [[z=0|the spring legumes]], so it can carry the
+hungriest crops of the year without a heavy compost dump.
+
+## Planting
+
+- Transplant tomato starts after the last frost (around May 15 in zone 6b).
+- Cage or stake every tomato at planting time, before the roots fill in.
+- Direct sow summer squash in two hills at the sunny end of the bed.
+
+## Feeding and care
+
+1. Side-dress tomatoes with compost when the first fruits set.
+2. Water deeply twice a week, at the base, to keep blossom-end rot away.
+3. Pinch tomato suckers weekly to keep airflow high and disease low.
+
+> Note: do NOT follow this season with more Solanaceae. Tomatoes, peppers, and
+> potatoes share soilborne diseases (early blight, verticillium), which is the
+> whole reason we rotate families instead of repeating a favorite.
+
+The next season pulls these tall plants out and switches to crops that live in
+the soil rather than above it: see [[z=2|the fall root crops]].
+
+@plane z=2 x=0 y=0 label="Fall: Root crops (light feeders)"
+# Fall: Carrots and Beets
+
+**Family:** Apiaceae and Amaranthaceae
+**Role:** light feeders that loosen and mine the lower soil
+
+After the [[z=1|summer heavy feeders]] are pulled, the bed has moderate fertility
+left. Root crops thrive here: too much fresh nitrogen would give forked carrots
+and leafy beets instead of clean roots.
+
+## Planting
+
+- Sow carrots and beets in mid-August for a fall harvest.
+- Carrots need a fine, stone-free top 8 inches, so rake the bed smooth first.
+- Thin carrots to 2 inches and beets to 3 inches once seedlings establish.
+
+## Why roots come third
+
+- They scavenge phosphorus and potassium from deeper soil layers.
+- Their taproots break up compaction the shallow summer crops left behind.
+- Light feeding means we skip extra amendments and let the bed coast down.
+
+## Hand-off
+
+Harvest through the first light frosts (frost sweetens carrots and beets). Then
+prepare the bed for a cover crop that will rebuild what this year drew down: see
+[[z=3|the winter green manure]].
+
+@plane z=3 x=0 y=0 label="Winter: Green manure (reset)"
+# Winter: Crimson Clover Cover Crop
+
+**Family:** Fabaceae (legume cover crop)
+**Role:** living mulch and nitrogen reset over winter
+
+A bare bed in winter erodes, leaches nutrients, and grows weeds. A legume cover
+crop fixes nitrogen again, protects the soil surface, and feeds soil microbes
+through the cold months.
+
+## Planting
+
+- Broadcast crimson clover at 0.5 oz per 100 sq ft after the fall harvest.
+- Rake in lightly and water; aim for 4 to 6 weeks of growth before hard frost.
+- The clover overwinters as a low mat and surges again in early spring.
+
+## Termination
+
+1. About 3 weeks before spring planting, cut the clover at flowering.
+2. Leave the cut tops as mulch, or turn them in shallowly as green manure.
+3. Wait 2 to 3 weeks for the residue to begin breaking down.
+
+## Closing the loop
+
+The bed is now rebuilt and ready. Because winter ends on a legume, the cycle does
+NOT simply repeat: next spring, shift the rotation forward so this bed starts with
+heavy feeders while a neighboring bed takes the legumes. Over four years every bed
+sees every family once. To restart the sequence, jump back to
+[[z=0|the spring legumes]].

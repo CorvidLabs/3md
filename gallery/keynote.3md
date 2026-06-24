@@ -1,0 +1,132 @@
+---
+3md: 1.0
+axis: slide
+title: Building for the Edge - Conference Keynote Outline
+event: DevSummit 2026
+speaker: Mara Voss, VP Platform Engineering
+duration: 40 minutes plus 10 for Q and A
+---
+Speaker outline for the closing keynote. Each plane is one slide. The `z` value
+is the slide number, and the small `x`/`y` offsets group the three-slide demo arc
+(slides 3, 4, 5) slightly to the right so a spatial viewer can see them as a set.
+Read top to bottom, or jump straight to [[z=5|the live demo]].
+
+@plane z=1 x=0 y=0 label="Title and Hook"
+# Building for the Edge
+
+**Why your next bottleneck is 3,000 miles away**
+
+Mara Voss, VP Platform Engineering
+
+Opening hook (90 seconds, no slides advance):
+
+> "Last month a single config change cut our checkout latency by 280ms. We did
+> not buy faster servers. We moved the work closer to the people doing it."
+
+- Land the promise: by the end, you will know when edge compute pays off and when
+  it quietly burns money.
+- Set the frame: three numbers - latency, cost, and operational blast radius.
+- Promise a live demo at the end (see [[z=5|the demo]]); ask folks to hold
+  questions until then.
+
+@plane z=2 x=0 y=0 label="The Problem"
+# The distance tax
+
+Every request to a central region pays for the speed of light. You cannot
+optimize your way out of physics.
+
+- A round trip from Sydney to us-east-1 is ~200ms before your code runs a line.
+- Users feel anything above 100ms; above 300ms they start abandoning carts.
+- We measured it: 41% of our p99 latency was pure network transit, not compute.
+
+Three forces pushing work outward:
+
+1. **Regulation** - data residency rules now cover 70+ jurisdictions.
+2. **Cost** - egress bandwidth is the line item nobody forecasts correctly.
+3. **Experience** - real-time features (typing indicators, live cursors) die at
+   distance.
+
+This is the gap the rest of the talk closes. Next we look at [[z=3|the shift]]
+that makes edge practical today.
+
+@plane z=3 x=2 y=0 label="The Shift / Demo Setup"
+# What changed: the platform caught up
+
+Edge used to mean a CDN that could only cache static files. That is no longer
+true.
+
+- Compute runtimes now boot in under 5ms at hundreds of locations.
+- State is the hard part, and it finally has answers: regional read replicas,
+  CRDT-backed stores, and durable per-object coordinators.
+- The mental model shifts from "one big region" to "many small ones that agree
+  eventually, and sometimes immediately."
+
+**Demo setup (what you are about to see):**
+
+- A toy order service deployed two ways - one central, one edge-first.
+- Same code, two configs.
+- We will watch p50 and p99 side by side from three continents.
+
+Continue to [[z=4|the architecture]] before we run it.
+
+@plane z=4 x=2 y=0 label="Reference Architecture"
+# A pattern that actually ships
+
+Not "rewrite everything." A seam you can adopt incrementally.
+
+```
+client -> edge function (auth, read, render)
+            |
+            +-- regional cache (hot reads)
+            |
+            +-- central core (writes, billing, audit)
+```
+
+Rules of thumb that keep teams out of trouble:
+
+- **Reads at the edge, writes to the core.** Most traffic is reads; route them
+  close.
+- **Keep the source of truth singular.** Eventual consistency is a feature, not
+  an accident, but money and audit logs stay central.
+- **Make failure boring.** If the edge cannot reach the core, degrade to
+  read-only, do not error.
+
+Now the part you came for: [[z=5|the live demo]].
+
+@plane z=5 x=2 y=0 label="Live Demo"
+# Live demo: same code, two worlds
+
+Switching to the terminal. If the wifi cooperates, this is the whole talk in 4
+minutes.
+
+- **Run 1 (central):** order placed from a Singapore client.
+  - p50: 312ms, p99: 740ms. Audible "oof" expected from the room.
+- **Run 2 (edge-first):** identical request, edge read path enabled.
+  - p50: 38ms, p99: 96ms.
+- **The kill switch:** I pull the core connection mid-demo. Reads keep serving
+  from the regional cache; writes queue and drain when it returns.
+
+Fallback if the demo fails: I have a recording, and I will own the irony of a
+latency talk being blocked by conference wifi.
+
+This sets up the takeaways on [[z=6|the closing slide]].
+
+@plane z=6 x=0 y=0 label="Takeaways and Close"
+# Three things to do Monday
+
+Bring it home (2 minutes, slow down here):
+
+1. **Measure your distance tax.** Pull p99 by region this week. You cannot fix
+   what you have not split out.
+2. **Find one read-heavy path.** Move just that to the edge. One seam, not a
+   rewrite. Revisit [[z=4|the architecture]] for the seam.
+3. **Plan the failure mode first.** Decide what "degraded" means before you ship,
+   not during the incident.
+
+Closing line:
+
+> "The fastest request is the one that never had to cross an ocean. Go find yours."
+
+- Thank the team and the conference organizers.
+- Slides, demo source, and benchmarks: github.com/maravoss/edge-keynote.
+- Open the floor for Q and A (10 minutes).

@@ -1,0 +1,82 @@
+---
+3md: 1.0
+axis: frame
+title: Blinking Typing Cursor
+fps: 2
+loop: true
+glyph: U+2588 (full block)
+duration_ms: 1000
+---
+A four-frame loop for a text caret that blinks on and off at the end of a
+prompt. Played back at 2 frames per second, the cursor is solid for half a
+second, then hidden for half a second, giving the classic 500 ms blink that
+terminals and text editors use.
+
+Read the frames in order: [[z=0|on]], [[z=1|dim]], [[z=2|off]], then
+[[z=3|dim again]], and the player wraps back to [[z=0|on]] to repeat.
+
+@plane z=0 x=0 y=0 label="On (solid)"
+# Frame 0 - cursor fully on
+
+The caret is drawn at full opacity right after the prompt text.
+
+```
+> hello world█
+```
+
+- Opacity: 100%
+- Glyph: full block (`█`)
+- Hold: 250 ms
+
+This is the resting state when you stop typing. Next comes the
+[[z=1|fade out]].
+
+@plane z=1 x=0 y=0 label="Dim (fading out)"
+# Frame 1 - cursor fading out
+
+Halfway through the off-stroke the caret is rendered at reduced opacity so the
+transition does not snap. On hardware that cannot fade, this frame is simply
+skipped and the cursor jumps straight from [[z=0|on]] to [[z=2|off]].
+
+```
+> hello world▓
+```
+
+- Opacity: 40%
+- Glyph: medium shade (`▓`)
+- Hold: 250 ms
+
+@plane z=2 x=0 y=0 label="Off (hidden)"
+# Frame 2 - cursor fully off
+
+The caret is not drawn at all. Only the prompt and the typed text remain, so
+the underlying character (or trailing space) shows through cleanly.
+
+```
+> hello world
+```
+
+- Opacity: 0%
+- Glyph: none
+- Hold: 250 ms
+
+This is the darkest point of the blink. The loop now climbs back toward
+visibility via [[z=3|the fade in]].
+
+@plane z=3 x=0 y=0 label="Dim (fading in)"
+# Frame 3 - cursor fading in
+
+The mirror of [[z=1|frame 1]]. The caret returns at partial opacity before
+snapping back to solid, which softens the on-stroke the same way frame 1
+softened the off-stroke.
+
+```
+> hello world▓
+```
+
+- Opacity: 40%
+- Glyph: medium shade (`▓`)
+- Hold: 250 ms
+
+After this frame the player wraps to [[z=0|frame 0]] and the one-second cycle
+starts over.

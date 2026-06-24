@@ -1,0 +1,112 @@
+---
+3md: 1.0
+axis: version
+title: Corvid Coffee Logo, v1 through v5
+client: Corvid Coffee Roasters
+designer: studio raven
+brief: A wordmark plus a raven glyph for a small-batch coffee roaster
+---
+This stack records how the Corvid Coffee mark evolved across five rounds,
+from the first concept sketch to the locked production artwork. Each plane is
+one delivered version. Read them in order, or jump straight to the final at
+[[z=4|the locked mark]].
+
+@plane z=0 label="v1 concept" x=0 y=0
+# v1: First concept
+
+The opening sketch. Goal was to find a silhouette, not to refine type.
+
+- **Glyph:** a full raven, side profile, wings folded
+- **Type:** Times New Roman placeholder, all caps
+- **Color:** flat black on white only
+- **Layout:** glyph stacked above the wordmark
+
+## What worked
+The bird reads instantly as a corvid even at thumbnail size.
+
+## What did not
+- The placeholder serif feels corporate and dated for a roaster
+- The full-body bird carries too much detail to survive small sizes
+- No accent color, so it dies next to colorful packaging
+
+Next round tightens the bird and picks a real typeface. See [[z=1|v2]].
+
+@plane z=1 label="v2 typeface" x=2 y=0
+# v2: Real typeface, simpler bird
+
+We dropped the placeholder serif and cropped the bird to a head-and-beak mark.
+
+- **Glyph:** raven head in profile, sharp beak, one visible eye
+- **Type:** Fraunces (a warm contemporary serif), small caps
+- **Color:** ink black plus a single warm cream (#F2E8D5)
+- **Layout:** glyph to the left of the wordmark, baseline aligned
+
+## What worked
+- Cropping to the head fixed the small-size problem from [[z=0|v1]]
+- Fraunces gives the warmth the old serif lacked
+
+## What did not
+- The eye detail still clogs at favicon scale
+- Cream-on-white has almost no contrast; the accent is invisible on light packaging
+
+Round three commits to a bolder palette and flattens the eye. See [[z=2|v3]].
+
+@plane z=2 label="v3 color" x=4 y=0
+# v3: Palette and contrast
+
+This round is about color confidence. The bird gets a knockout eye instead of a drawn one.
+
+- **Glyph:** same head, eye now a negative-space notch (no thin line to clog)
+- **Type:** Fraunces, small caps, tracking opened by 4 percent
+- **Color:** espresso brown (#3B2417) plus burnt orange (#D8682B)
+- **Layout:** unchanged from [[z=1|v2]], glyph left of wordmark
+
+## What worked
+- Burnt orange finally gives the mark a memorable accent on the bag
+- The negative-space eye holds up at 16px
+
+## What did not
+- Brown plus orange tested as "autumn", not "coffee", in client review
+- The wordmark and glyph optical sizes drifted apart after the tracking change
+
+Next we fix the metrics and cool the palette toward roasted-bean tones. See [[z=3|v4]].
+
+@plane z=3 label="v4 refinement" x=6 y=0
+# v4: Metric and weight refinement
+
+A precision pass. No big swings, just making every part agree with every other part.
+
+- **Glyph:** beak angle steepened 6 degrees so it points into the wordmark
+- **Type:** Fraunces optical size 72 for the wordmark to match the glyph weight
+- **Color:** dark roast brown (#2A1A12) plus a muted terracotta (#C25B3A)
+- **Layout:** glyph and cap-height of the wordmark now share one baseline grid
+
+## What worked
+- Terracotta reads as coffee, not pumpkin; the client review concern from [[z=2|v3]] is resolved
+- Optical-size matching removed the weight mismatch
+
+## What did not
+- One tiny issue remains: the beak notch is a hair too deep for embroidery
+
+Round five is the production lock with the embroidery fix. See [[z=4|the final lock]].
+
+@plane z=4 label="v5 locked" x=8 y=0
+# v5: Production lock
+
+The approved, shipping artwork. This is the version in the brand kit.
+
+- **Glyph:** beak notch widened 0.3mm for clean embroidery and foil stamping
+- **Type:** Fraunces optical 72, locked tracking, hinted for screen
+- **Color:** dark roast brown (#2A1A12), terracotta (#C25B3A), plus pure white for knockout use
+- **Layout:** final lockup, plus a stacked variant for square avatars
+
+## Delivered assets
+- Horizontal lockup (SVG, PDF, PNG at 1x/2x/3x)
+- Stacked lockup for social avatars
+- Single-color brown and single-color white versions
+- Favicon and 16px monochrome glyph
+
+## Lineage
+Every change traces back through the rounds: silhouette from [[z=0|v1]],
+typeface from [[z=1|v2]], accent color from [[z=2|v3]], and metrics from
+[[z=3|v4]]. This plane locks all four decisions together.

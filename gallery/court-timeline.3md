@@ -1,0 +1,129 @@
+---
+3md: 1.0
+axis: time
+title: Holloway v. Meridian Freight - Case Timeline
+case_number: CV-2024-08817
+court: Superior Court of California, County of Alameda
+parties: Daniel Holloway (Plaintiff) v. Meridian Freight LLC (Defendant)
+claim: Negligence; wrongful termination in violation of public policy
+---
+A chronological record of the matter **Holloway v. Meridian Freight LLC**, from
+the underlying incident through trial. Each plane is a milestone on the time
+axis. Read forward (increasing `z`) for the procedural history, or jump straight
+to [[z=6|the trial]].
+
+@plane z=0 label="Incident" x=0 y=0
+# March 14, 2023 - The Incident
+
+Daniel Holloway, a dock supervisor at Meridian Freight's Oakland terminal,
+reported that a loading ramp's hydraulic brace had failed inspection twice in
+February but was never repaired. On the morning of March 14 the brace gave way,
+dropping a 1,900 lb pallet and crushing Holloway's left foot.
+
+**Documented at the scene:**
+
+- OSHA Form 301 injury report filed by the site safety officer at 09:42.
+- Two coworker witness statements (R. Vega, T. Okafor) taken the same day.
+- Photographs of the failed brace and the February maintenance log.
+
+Holloway was placed on medical leave the following week. The repair invoices
+that should have existed for the February inspections were never produced,
+a gap that becomes central later in [[z=4|discovery]].
+
+@plane z=1 label="Termination" x=2 y=0
+# May 2, 2023 - Termination
+
+Seven weeks after the injury, while still on approved medical leave, Holloway
+received a termination letter citing "restructuring of dock operations."
+
+Notable facts that frame the wrongful-termination claim:
+
+1. No other dock supervisor was let go in the cited "restructuring."
+2. The termination came eleven days after Holloway emailed HR asking why the
+   February inspection failures had not been addressed.
+3. His position was re-posted, under a new title, six weeks later.
+
+These three facts form the causal chain the plaintiff will argue establishes
+retaliation in violation of public policy.
+
+@plane z=2 label="Complaint Filed" x=4 y=0
+# September 18, 2023 - Complaint Filed
+
+Plaintiff's counsel filed the original Complaint in Alameda Superior Court,
+assigned case number **CV-2024-08817**. The pleading states two causes of
+action:
+
+- **First Cause:** Negligence (failure to maintain a safe workplace).
+- **Second Cause:** Wrongful termination in violation of public policy
+  (Labor Code section 1102.5 whistleblower retaliation).
+
+Personal service on Meridian Freight's registered agent was completed on
+September 22, starting the 30-day clock for a responsive pleading.
+
+@plane z=3 label="Answer and Motion" x=6 y=0
+# October 20, 2023 - Answer and Demurrer
+
+Defendant timely filed an Answer with a general denial and fourteen affirmative
+defenses, alongside a **demurrer** to the second cause of action arguing the
+retaliation claim was not pled with sufficient particularity.
+
+- **Nov 30, 2023 hearing:** The court **overruled** the demurrer, finding the
+  termination timeline (see [[z=1|the termination plane]]) adequately pled
+  causation. Defendant was given 20 days to answer the second cause, which it
+  did on December 14.
+
+With the pleadings settled, the case moved into [[z=4|discovery]].
+
+@plane z=4 label="Discovery" x=8 y=0
+# January - July 2024 - Discovery
+
+The longest phase of the case. Key events:
+
+| Date | Event |
+| --- | --- |
+| Jan 11 | Plaintiff served Form Interrogatories and Requests for Production |
+| Feb 28 | Defendant's responses omitted the February 2023 maintenance records |
+| Apr 03 | Plaintiff filed a Motion to Compel further production |
+| Apr 25 | Court granted the motion; ordered records produced within 15 days |
+| May 09 | Defendant produced records confirming **two failed inspections** |
+| Jun 17 | Deposition of Meridian's maintenance lead, J. Castellano |
+| Jul 30 | Discovery cutoff |
+
+The compelled records corroborated the witness statements gathered back at
+[[z=0|the incident]] and became the spine of the plaintiff's negligence case.
+
+@plane z=5 label="Summary Judgment" x=10 y=0
+# September 5, 2024 - Motion for Summary Judgment
+
+Defendant moved for summary judgment, or in the alternative summary
+adjudication, on both causes of action.
+
+**Ruling (October 1, 2024):**
+
+- **Negligence:** Motion **denied.** Triable issues of fact existed as to
+  whether Meridian had notice of the brace defect, given the produced
+  inspection records from [[z=4|discovery]].
+- **Wrongful termination:** Motion **denied.** The eleven-day gap between
+  Holloway's HR email and his termination raised a triable issue of pretext.
+
+Both claims survived and were set for trial.
+
+@plane z=6 label="Trial" x=12 y=0
+# February 10-21, 2025 - Jury Trial
+
+A nine-day jury trial before Judge Patricia Lindqvist.
+
+**Plaintiff's case-in-chief:** Holloway, both eyewitnesses from
+[[z=0|the incident]], the maintenance lead's [[z=4|deposition]] read into the
+record, and a vocational economist on lost earnings.
+
+**Verdict (February 21, 2025):** The jury found for the plaintiff on both
+causes of action.
+
+- Past and future medical: $312,000
+- Lost earnings: $448,500
+- Noneconomic damages: $400,000
+- **Total award: $1,160,500**
+
+Comparative fault was assigned at 0% to the plaintiff. Defendant filed a notice
+of intent to move for a new trial; post-trial motions remain pending.

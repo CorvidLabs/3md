@@ -1,0 +1,183 @@
+---
+3md: 1.0
+axis: floor
+title: The Larkspur Hotel - Amenities by Floor
+property: The Larkspur, 144 rooms
+front_desk: ext. 0, open 24 hours
+checkin: 3:00 PM
+checkout: 11:00 AM
+---
+A guide to amenities at The Larkspur, sliced floor by floor along the Z (floor)
+axis. The lobby sits at ground level (z=0), guest floors stack above it, and the
+rooftop bar caps the building. Each slice lists what you will find on that level,
+how to reach it, and where to go next. Use the cross-plane links to ride the
+elevator between floors without hunting through a binder.
+
+Two elevator banks serve the building: the main glass cabs run from the
+[[z=0|lobby]] to the [[z=8|rooftop]], and a single service elevator (key-card
+only) reaches the [[z=-1|parking and back-of-house]] level.
+
+@plane z=-1 x=0 y=0 label="Parking & Back-of-House (P1)"
+# Level P1 - Parking and Back-of-House
+
+One level below the street. Self-parking and valet drop, plus the staff areas
+guests rarely see but often need.
+
+| Amenity | Location | Hours |
+|---|---|---|
+| Self-parking | Bays 1-60, ramp off Cedar St | 24 hours |
+| Valet stand | By the elevator landing | 6:00 AM - 1:00 AM |
+| EV charging | Bays 55-60, Level 2 chargers | 24 hours |
+| Luggage storage | Bell closet near valet | Staffed 7:00 AM - 11:00 PM |
+| Laundry & housekeeping | Locked corridor, staff only | - |
+
+- **Parking rates**: $28 self-park, $42 valet, both per night with in/out
+  privileges. Charge it to your room at the [[z=0|front desk]].
+- **EV charging**: free for hotel guests; ask the valet to plug in if the bay
+  is taken.
+- **Accessibility**: two van-accessible bays by the elevator; the cab reaches
+  every guest floor up to the [[z=8|rooftop bar]].
+
+Take the elevator up one level to reach the [[z=0|lobby and check-in]].
+
+@plane z=0 x=0 y=0 label="Lobby & Restaurant (Ground)"
+# Level 0 - Lobby, Front Desk, and Restaurant
+
+Street level. This is where you arrive, check in, eat, and get help at any hour.
+
+```
+  Cedar St entrance
+  +---------------------------+
+  | Front Desk | Concierge    |
+  +------------+--------------+
+  | Lobby Lounge (fireplace)  |
+  +------------+--------------+
+  | Cafe Marlo | Elevators    |
+  +------------+--------------+
+       Garden patio (rear)
+```
+
+- **Front desk & concierge**: staffed 24 hours, dial ext. 0. Theater tickets,
+  dinner reservations, and luggage runs to [[z=-1|the bell closet]].
+- **Cafe Marlo**: breakfast 6:30 - 10:30 AM, dinner 5:30 - 10:00 PM. Coffee and
+  pastries all day in the lobby lounge.
+- **Lobby lounge**: gas fireplace, free seating, fast Wi-Fi (network "Larkspur
+  Guest", password on your key sleeve).
+- **Garden patio**: heated in cool months, open until 10:00 PM.
+
+For a workout or a swim, ride up to the [[z=3|fitness and pool floor]]. Meeting
+planners should continue to the [[z=2|conference level]].
+
+@plane z=1 x=0 y=0 label="Standard Guest Rooms (Floors 1-2)"
+# Level 1 - Standard Guest Rooms
+
+Floors 1 and 2 hold the standard king and double-queen rooms. Quiet, simple, and
+close to the elevators.
+
+| In-room amenity | Detail |
+|---|---|
+| Bed | King or two queens, premium linens |
+| Coffee | Pour-over kit and electric kettle |
+| Minibar | Stocked; honor pricing on the card by the tray |
+| Wi-Fi | Free, same "Larkspur Guest" network as the [[z=0|lobby]] |
+| Climate | In-room thermostat, blackout curtains |
+
+- **Ice and vending**: alcove by the service elevator, each floor.
+- **Housekeeping**: daily by 2:00 PM; hang the card or dial ext. 0.
+- **Connecting rooms**: rooms 112/114 and 210/212 connect for families.
+
+Need more space or a soaking tub? The [[z=4|suites]] are four floors up. For a
+workout first, stop at the [[z=3|pool and fitness floor]].
+
+@plane z=2 x=0 y=0 label="Conference & Events (Floor 3)"
+# Level 2 - Conference and Event Space
+
+A full floor of flexible meeting space, named for local rivers.
+
+| Room | Capacity (theater) | Notes |
+|---|---|---|
+| Willamette Ballroom | 200 | Divisible into three sections |
+| Rogue Room | 40 | Built-in 4K display, video conferencing |
+| Deschutes Room | 24 | Boardroom table, natural light |
+| Pre-function foyer | - | Coffee service, registration desks |
+
+- **A/V**: house sound, wireless mics, and a dedicated tech on call; arrange
+  through the [[z=0|concierge]].
+- **Catering**: menus from Cafe Marlo on the [[z=0|ground floor]]; plated or
+  buffet, dietary options on request.
+- **Business center**: printing and a private phone booth off the foyer, open
+  24 hours with a room key.
+
+After the meeting, unwind at the [[z=8|rooftop bar]] or take a lap in the
+[[z=3|pool]].
+
+@plane z=3 x=0 y=0 label="Pool, Spa & Fitness (Floor 4)"
+# Level 3 - Pool, Spa, and Fitness
+
+The wellness floor, with windows on the city.
+
+- **Lap pool**: heated saltwater, 4 lanes, open 6:00 AM - 10:00 PM. Towels at
+  the deck stand.
+- **Hot tub**: poolside, seats eight, same hours as the pool.
+- **Fitness center**: 24 hours with a room key; Peloton bikes, free weights to
+  50 lb, two treadmills, and a stretching area.
+- **Spa Larkspur**: massage and facials, 9:00 AM - 8:00 PM by appointment;
+  book through the [[z=0|front desk]].
+- **Sauna and steam**: in each locker room, off by 10:00 PM.
+
+| Service | Hours | How to book |
+|---|---|---|
+| Lap pool & hot tub | 6:00 AM - 10:00 PM | Walk-in, room key |
+| Fitness center | 24 hours | Walk-in, room key |
+| Spa treatments | 9:00 AM - 8:00 PM | Ext. 0 or the spa desk |
+
+Guests in the [[z=4|suites]] get robes and slippers delivered; everyone else can
+borrow a robe at the towel stand. Finish the day with a drink on the
+[[z=8|rooftop]].
+
+@plane z=4 x=0 y=0 label="Suites & Club Lounge (Floors 5-7)"
+# Level 4 - Suites and Club Lounge
+
+The top guest floors, floors 5 through 7, hold the corner suites and the members'
+Club Lounge.
+
+| Suite type | Size | Highlights |
+|---|---|---|
+| Junior Suite | 480 sq ft | Sitting area, rain shower |
+| Corner Suite | 720 sq ft | Soaking tub, city-and-river view |
+| Larkspur Suite | 1,050 sq ft | Two rooms, dining table for six |
+
+- **Club Lounge** (Floor 7): continental breakfast 6:30 - 10:00 AM, evening
+  hors d'oeuvres 5:00 - 7:00 PM, all-day coffee and soft drinks. Suite and Club
+  guests only; ask the [[z=0|front desk]] to activate your key.
+- **Turndown service**: nightly, with sparkling water and a forecast card.
+- **Pillow menu**: six options; dial ext. 0 by 8:00 PM.
+- **Robes and slippers**: provided, plus priority booking at the
+  [[z=3|spa]].
+
+Suites include two passes to the [[z=8|rooftop bar]] each night, no reservation
+needed. Standard rooms are down on [[z=1|floors 1 and 2]].
+
+@plane z=8 x=0 y=0 label="Rooftop Bar & Terrace (Floor 8)"
+# Level 8 - Rooftop Bar and Terrace
+
+The top of the building: a glass-walled bar that opens onto an open-air terrace.
+
+- **Aerie Bar**: cocktails, local wine and beer, small plates from Cafe Marlo's
+  kitchen. Open 4:00 PM - midnight (until 1:00 AM Fri/Sat).
+- **Terrace**: fire pits, heaters, and lounge seating; last call follows the
+  bar.
+- **Sunset hour**: half-price oysters and a featured spritz, 4:00 - 6:00 PM
+  daily.
+- **Live music**: acoustic sets Thursday through Saturday, 8:00 PM.
+
+| Detail | Note |
+|---|---|
+| Dress code | Smart casual after 6:00 PM |
+| Reservations | Walk-in for hotel guests; others via [[z=0|concierge]] |
+| Age policy | 21+ after 9:00 PM |
+| Weather | Terrace closes in high wind; bar stays open |
+
+Suite guests, your two nightly passes come from the [[z=4|Club Lounge]]. When you
+are done, the glass elevator drops straight back to the [[z=0|lobby]] or down to
+[[z=-1|parking]].

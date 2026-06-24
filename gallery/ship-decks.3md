@@ -1,0 +1,104 @@
+---
+3md: 1.0
+axis: floor
+title: MS Corvid Aurora - Deck Plan
+vessel: MS Corvid Aurora
+gross_tonnage: "142,000 GT"
+guest_capacity: "3,560"
+length_overall: 330 m
+---
+Deck plan for the **MS Corvid Aurora**, read from the keel upward. Each plane is one
+deck; the `z` value is the deck number. Public spaces sit low and amidships, cabins
+stack in the middle, and the open recreation decks crown the ship.
+
+Muster stations are on Deck 4 (see [[z=4|the Promenade muster map]]). For dining,
+jump to [[z=5|Deck 5]].
+
+@plane z=1 label="Deck 1 - Crew and Machinery" x=0 y=0
+# Deck 1 - Crew and Machinery
+
+The lowest guest-adjacent deck. Most of this level is off-limits to passengers.
+
+- **Engine control room** (frames 40-72): twin medium-speed diesel-electric plants.
+- **Crew mess and galley** (amidships): three sittings, 0600 to 2200.
+- **Provision stores**: refrigerated and dry holds, restocked at every turnaround port.
+- **Laundry**: 14,000 kg of linen processed per sea day.
+
+Guest access is limited to the **medical center** forward (frames 12-20), staffed
+around the clock with two physicians and four nurses. The infirmary connects by a
+dedicated lift to the gangway on [[z=4|Deck 4]] for shoreside transfers.
+
+@plane z=4 label="Deck 4 - Promenade and Muster" x=0 y=0
+# Deck 4 - Promenade and Muster
+
+The teak **Promenade** wraps the full hull at this level, a continuous 0.4 km loop
+(three laps to the mile). This is the ship's safety hub.
+
+## Muster stations
+
+| Station | Location | Assembly area |
+|---------|----------|---------------|
+| A | Forward, port | Aurora Theater stalls |
+| B | Forward, starboard | Aurora Theater balcony |
+| C | Amidships | Atrium, decks 4-6 |
+| D | Aft, port | Horizon Lounge |
+| E | Aft, starboard | Card Room and Library |
+
+Lifeboats hang from davits along both sides at this deck. The **gangway** is here
+at frame 16, port side, used for tendering and port calls.
+
+Take the central stair up one level to reach the restaurants on [[z=5|Deck 5]],
+or continue to the cabins beginning on [[z=7|Deck 7]].
+
+@plane z=5 label="Deck 5 - Dining and Atrium" x=0 y=0
+# Deck 5 - Dining and Atrium
+
+The social spine of the ship. A three-story **Atrium** rises through decks 4 to 6,
+crowned by a sculptural glass chandelier.
+
+## Where to eat
+
+- **The Meridian** (aft, frames 64-88): main dining room, two seatings plus open
+  flexible dining. Floor-to-ceiling stern windows.
+- **Saffron** (port, midship): pan-Asian a la carte, reservations suggested.
+- **Helm & Anchor** (starboard, midship): grill and raw bar.
+- **The Pantry** (forward): casual marketplace buffet, open 24 hours.
+
+The **Guest Services** and **Shore Excursions** desks ring the Atrium base. For the
+show after dinner, the Aurora Theater spans down to the muster level on
+[[z=4|Deck 4]]; head up to the cabins on [[z=7|Deck 7]] to turn in.
+
+@plane z=7 label="Deck 7 - Staterooms" x=0 y=0
+# Deck 7 - Staterooms
+
+The first of the accommodation decks. Cabin numbers run **7001-7088** port and
+**7501-7588** starboard, lowest forward.
+
+## Cabin categories on this deck
+
+- **Interior** (no window): frames 8-28, forward.
+- **Oceanview** (picture window): along the hull, amidships.
+- **Balcony** (private veranda): aft two-thirds of the deck.
+
+Odd numbers are port, even numbers are starboard. A self-service **launderette**
+sits at the midship lift lobby, along with ice and a vending alcove.
+
+Three banks of guest lifts connect every passenger deck. From the lobby you can
+drop to dining on [[z=5|Deck 5]] or ride up to the pools on [[z=14|Deck 14]].
+
+@plane z=14 label="Deck 14 - Pool and Lido" x=0 y=0
+# Deck 14 - Pool and Lido
+
+The open-air recreation deck, wind shadowed by the superstructure forward.
+
+## Layout, bow to stern
+
+1. **Sanctuary** (forward, adults only): shaded loungers and a quiet bar.
+2. **Main pool and two whirlpools** (amidships): retractable glass roof for cool weather.
+3. **The Galley Grill** and **Scoops** ice cream (poolside).
+4. **Wave Stage** (aft): live music and the evening movie screen.
+
+A jogging track and the **Vista Spa** sun terrace sit one half-level up at the
+forward mast house. Loungers fill fast on sea days, so claim one early. To return
+to your room, the aft lifts run straight down to [[z=7|Deck 7]]; for a late bite,
+The Pantry on [[z=5|Deck 5]] stays open all night.

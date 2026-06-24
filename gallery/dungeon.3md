@@ -1,0 +1,91 @@
+---
+3md: 1.0
+axis: space
+title: The Hollow Crypt of Vellmoor
+author: Dungeon Architect
+party_level: 3-4
+legend: "Each plane is a room. Numbers in brackets are exits. Bring a torch."
+---
+A choose-your-path crawl through five linked rooms beneath the ruined chapel of
+Vellmoor. Start at the Antechamber (z=0) and pick a door. Some passages loop
+back, one descends into water, and only one path reaches the vault. Read a room,
+choose an exit, and jump to the linked plane.
+
+@plane z=0 x=0 y=0 label="Antechamber"
+# Room 0 - The Antechamber
+
+Cold stone, a snuffed brazier, and three iron doors. Your boots echo too far,
+as if the room behind the north door is larger than the chapel above.
+
+- **North door** (heavy, hinges greased recently): leads to [[z=1|the Pillar Hall]].
+- **East door** (warped, swollen with damp): leads to [[z=2|the Flooded Cellar]].
+- **West door** (sealed with a rusted chain): you need the **brass key** to open
+  it. If you have the key, slip through to [[z=4|the Reliquary]].
+
+> A scratched message near the brazier reads: "The water lies. Count the pillars,
+> not the doors."
+
+@plane z=1 x=0 y=-10 label="Pillar Hall"
+# Room 1 - The Pillar Hall
+
+Twelve basalt pillars hold up a ceiling lost in the dark. Eleven are plain. The
+twelfth, third from the left, is carved with a grasping hand.
+
+**Puzzle.** Press the carved hand and a panel grinds open in the floor.
+
+- Take the **floor panel** down a slick stair to [[z=3|the Bone Gallery]].
+- Turn back through the south arch to the [[z=0|Antechamber]].
+- A loose pillar (the seventh) hides a niche holding the **brass key**. Pocket it,
+  then the [[z=4|Reliquary]] is yours to open later.
+
+Watch your footing: every fourth flagstone tilts, and a misstep rings a bell
+that wakes whatever sleeps in [[z=3|the Bone Gallery]].
+
+@plane z=2 x=10 y=0 label="Flooded Cellar"
+# Room 2 - The Flooded Cellar
+
+Black water to the knee, then to the waist. Barrels float in slow circles. The
+"east wall" the message warned about is a painted board hiding a current.
+
+- Wade across to the far ledge and climb back toward the [[z=0|Antechamber]].
+- Duck under the painted board and let the current pull you to
+  [[z=3|the Bone Gallery]] (you arrive soaked and at a disadvantage).
+- Search a floating barrel: roll for a waterlogged **silver dagger** (it ignores
+  the gallery guardian's bone armor).
+
+> The water lies, remember. There is no treasure down here, only a faster, more
+> dangerous way forward.
+
+@plane z=3 x=5 y=-15 label="Bone Gallery"
+# Room 3 - The Bone Gallery
+
+A long vault lined with skulls in niches. At the end, a seated skeleton in
+rotted vestments cradles a lantern that burns with no flame.
+
+**Encounter.** The Lantern-Keeper rises if you take the light. It hits hard but
+is brittle; the [[z=2|silver dagger]] from the cellar shatters its ribs in one
+strike.
+
+- Defeat the Keeper and take the **cold lantern** (it reveals invisible script).
+- A trapdoor behind the throne drops to [[z=4|the Reliquary]], but it is barred
+  from the far side. You can only reach the Reliquary from the [[z=0|Antechamber]]
+  with the brass key, or by reading the script the lantern reveals here first.
+- Retreat up the slick stair to [[z=1|the Pillar Hall]].
+
+@plane z=4 x=0 y=-25 label="Reliquary"
+# Room 4 - The Reliquary
+
+The vault at the heart of Vellmoor. Gold leaf, dust, and a single reliquary box
+on a marble plinth. The cold lantern's light shows a ward script glowing across
+the lid.
+
+**Finale.** Read the ward aloud (only possible if you carry the [[z=3|cold lantern]])
+and the box opens to reveal the **Heart of Vellmoor**. Take it without the lantern
+and the ward triggers, collapsing the stair back to the [[z=0|Antechamber]].
+
+- **Win.** Lantern in hand, ward read: you leave with the Heart. End of crawl.
+- **Loss path.** No lantern: grab and run, taking damage, back to
+  [[z=0|the Antechamber]] empty-handed as the crypt seals.
+
+> Two ways in (the brass key from [[z=1|the Pillar Hall]], or the script read in
+> [[z=3|the Bone Gallery]]), but only one way out with the prize.

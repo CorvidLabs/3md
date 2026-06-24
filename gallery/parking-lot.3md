@@ -1,0 +1,130 @@
+---
+3md: 1.0
+axis: space
+title: Cedar Ridge Garage - Section Map
+facility: Cedar Ridge Parking Structure
+levels: "5"
+total_spaces: "612"
+clearance_m: "2.1"
+units: metric
+---
+A walk-through of the Cedar Ridge garage, one plane per level along the Z (space)
+axis. Z increases as you go up: P1 is the ground entrance, P5 is the rooftop. The
+in-plane x and y offsets track roughly where each level's elevator core and ramp
+sit, since the ramp shifts north as it climbs.
+
+Start at the [[z=1|ground level]] entrance, follow the spiral ramp up, and exit
+from the [[z=5|rooftop]] or back down past the [[z=1|exit gate]].
+
+@plane z=1 x=0 y=0 label="P1 - Ground / Entry"
+# P1 - Ground Level (Entry)
+
+The street-level deck. Both the entry and exit gates live here, so every trip
+begins and ends on this plane.
+
+## Section breakdown
+
+| Section | Spaces | Type                 | Notes                          |
+|---------|--------|----------------------|--------------------------------|
+| 1A      | 18     | Accessible + Family  | Nearest the lobby, van-width   |
+| 1B      | 44     | Standard             | Faces the entry lane           |
+| 1C      | 30     | EV charging (Level 2)| 6 stalls metered, 24 standard  |
+| 1D      | 22     | Compact only         | Tight bay near the exit gate   |
+
+- **Entry gate:** northwest corner, ticket dispenser and license-plate camera
+- **Exit gate:** southwest corner, pay-on-foot kiosk 10 m before the arm
+- **Clearance:** 2.1 m at the entry beam (oversized vehicles use the surface lot)
+- **Elevator core:** centered, doors face section 1A
+
+The ramp to the next level rises along the east wall. Follow it up to
+[[z=2|P2 - Blue]]. Returning drivers come down the same spiral and queue at the
+exit gate here.
+
+@plane z=2 x=0 y=8 label="P2 - Blue"
+# P2 - Blue Level
+
+First level above grade. Painted columns are blue end to end, so a lost driver
+only has to remember a color. This is the busiest commuter level because it is one
+short ramp from the [[z=1|exit gate]].
+
+## Section breakdown
+
+| Section | Spaces | Type        | Reserved?                    |
+|---------|--------|-------------|------------------------------|
+| 2A      | 52     | Standard    | No                           |
+| 2B      | 48     | Standard    | Monthly permit, columns 5-12 |
+| 2C      | 26     | Compact     | No                           |
+
+- **Fill pattern:** typically full by 08:30 on weekdays
+- **Color cue:** blue columns, blue floor numerals at each elevator door
+- **Pillar count:** 24 numbered columns, odd on the north run, even on the south
+
+> Wayfinding: if the blue level is full, the overhead counter at the ramp mouth
+> sends you straight up to [[z=3|P3 - Green]] without stopping.
+
+The spiral ramp continues up the east wall to [[z=3|P3 - Green]].
+
+@plane z=3 x=0 y=16 label="P3 - Green"
+# P3 - Green Level
+
+Mid-stack level, green columns. This is the overflow level for the blue commuters
+and the default for visitor parking validated at the lobby desk.
+
+## Section breakdown
+
+| Section | Spaces | Type             | Notes                       |
+|---------|--------|------------------|-----------------------------|
+| 3A      | 50     | Standard         | Visitor validation accepted |
+| 3B      | 50     | Standard         | Visitor validation accepted |
+| 3C      | 14     | Motorcycle bays  | Half-width, no SUV          |
+
+- **Color cue:** green columns, green arrows on the deck
+- **Visitor desk link:** validated tickets get the first 2 hours free here
+- **Restroom:** elevator lobby, north side (only level with one besides P1)
+
+Headed for the long-stay deck or the roof? Keep climbing past
+[[z=4|P4 - Amber]]. Visitors leaving within 2 hours should drop straight to the
+[[z=1|exit gate]] before validation expires.
+
+@plane z=4 x=0 y=24 label="P4 - Amber"
+# P4 - Amber Level
+
+Long-stay level, amber columns. Quietest deck during the day, which makes it the
+reservation and airport-park-and-fly tier. Rates here are flat per 24 hours.
+
+## Section breakdown
+
+| Section | Spaces | Type                  | Notes                       |
+|---------|--------|-----------------------|-----------------------------|
+| 4A      | 60     | Reserved (app booking)| QR scan at the bay entrance |
+| 4B      | 34     | Standard long-stay    | Flat daily rate             |
+| 4C      | 6      | Oversize / van        | 2.4 m clearance, north wall |
+
+- **Color cue:** amber columns, amber floor numerals
+- **Booking:** sections 4A bays open only to a scanned reservation QR code
+- **Security:** extra camera coverage, call point at each elevator door
+
+One more turn of the ramp reaches the open-air [[z=5|rooftop]]. To leave, the
+spiral runs all the way back down to the [[z=1|exit gate]].
+
+@plane z=5 x=0 y=32 label="P5 - Rooftop"
+# P5 - Rooftop (Open Air)
+
+The top deck, open to the sky. No clearance limit, so this is where trucks,
+roof-box vehicles, and trailers go. Spaces are wider and the surface is graded for
+drainage.
+
+## Section breakdown
+
+| Section | Spaces | Type                   | Notes                        |
+|---------|--------|------------------------|------------------------------|
+| 5A      | 28     | Oversize / truck       | Pull-through bays            |
+| 5B      | 6      | EV fast charge (DC)    | Solar canopy, 150 kW         |
+
+- **Surface:** weather-exposed, sealed concrete, painted in high-visibility white
+- **Solar canopy:** covers section 5B and feeds the DC fast chargers
+- **Wind note:** roof box and bike-rack vehicles should park nose-in along 5A
+
+> Sunset view aside, remember the only way down is the spiral ramp. Allow an extra
+> few minutes at peak; the queue forms back at the [[z=1|exit gate]] on the ground
+> level.

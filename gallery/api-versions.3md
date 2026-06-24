@@ -1,0 +1,175 @@
+---
+3md: 1.0
+axis: version
+title: Payments API across v1, v2, and v3
+service: payments.example.com
+base_path: /api
+maintainer: Platform Team
+---
+The Payments API has shipped three major versions. Each plane below is one
+version of the same resource, the charge, so you can read the surface side by
+side: the request shape, the auth model, and the breaking changes. Newer planes
+sit deeper on the Z axis. Start at [[z=1|v1]] and walk forward to
+[[z=3|v3]].
+
+@plane z=1 x=0 y=0 label="v1 (legacy)"
+# v1: `POST /api/v1/charges`
+
+Status: deprecated, sunset 2026-12-31. New integrations must not use v1.
+
+v1 was the first public release. Auth is a single API key sent as a query
+parameter, amounts are floating-point dollars, and every error returns HTTP 200
+with a `success: false` body.
+
+## Request
+
+```http
+POST /api/v1/charges?api_key=sk_live_8f3a HTTP/1.1
+Content-Type: application/json
+
+{
+  "amount": 19.99,
+  "currency": "usd",
+  "card_number": "4242424242424242",
+  "exp": "12/27",
+  "cvc": "123"
+}
+```
+
+## Response
+
+```json
+{
+  "success": true,
+  "charge_id": "ch_1029",
+  "amount": 19.99,
+  "paid": true
+}
+```
+
+## Known problems
+
+- API key in the URL leaks into access logs and browser history.
+- Raw card numbers cross your servers, so every caller is in PCI scope.
+- Floating-point `amount` causes rounding drift (`0.1 + 0.2`).
+- Errors return `200 OK`, so clients cannot rely on status codes.
+
+These are exactly the issues fixed in [[z=2|v2]].
+
+@plane z=2 x=1 y=0 label="v2 (current)"
+# v2: `POST /api/v2/charges`
+
+Status: current, recommended for all production traffic.
+
+v2 moves the key into an `Authorization` header, switches amounts to integer
+minor units (cents), and tokenizes cards through a separate endpoint so raw PANs
+never touch your backend. Errors now use real HTTP status codes plus a stable
+machine-readable `code`.
+
+## Request
+
+```http
+POST /api/v2/charges HTTP/1.1
+Authorization: Bearer sk_live_8f3a
+Content-Type: application/json
+Idempotency-Key: 7c1e-44ab
+
+{
+  "amount": 1999,
+  "currency": "usd",
+  "source": "tok_visa_4242",
+  "capture": true
+}
+```
+
+## Response
+
+```json
+{
+  "id": "ch_2f9c",
+  "object": "charge",
+  "amount": 1999,
+  "currency": "usd",
+  "status": "succeeded",
+  "captured": true
+}
+```
+
+## What changed from v1
+
+| Concern    | v1                       | v2                          |
+| ---------- | ------------------------ | --------------------------- |
+| Auth       | `?api_key=` query param  | `Authorization: Bearer`     |
+| Amount     | float dollars (`19.99`)  | integer cents (`1999`)      |
+| Card data  | raw PAN in request       | `source` token (`tok_...`)  |
+| Errors     | `200` + `success: false` | real status + error `code`  |
+| Retries    | unsafe                   | `Idempotency-Key` header    |
+
+## Error shape
+
+```json
+{
+  "error": {
+    "type": "card_error",
+    "code": "card_declined",
+    "message": "Your card was declined."
+  }
+}
+```
+
+See the migration notes that carried into [[z=3|v3]].
+
+@plane z=3 x=2 y=0 label="v3 (preview)"
+# v3: `POST /api/v3/payment_intents`
+
+Status: preview, generally available 2026-Q4. Stable enough for staging.
+
+v3 renames the core resource from `charge` to `payment_intent` to support
+multi-step flows (authorize now, capture later, handle 3-D Secure). Money is now
+a structured object instead of two loose fields, and confirmation is explicit.
+
+## Request
+
+```http
+POST /api/v3/payment_intents HTTP/1.1
+Authorization: Bearer sk_live_8f3a
+Content-Type: application/json
+Idempotency-Key: 9d2f-77be
+
+{
+  "money": { "amount": 1999, "currency": "usd" },
+  "payment_method": "pm_card_visa",
+  "confirm": true,
+  "capture_method": "automatic"
+}
+```
+
+## Response
+
+```json
+{
+  "id": "pi_3kL8",
+  "object": "payment_intent",
+  "money": { "amount": 1999, "currency": "usd" },
+  "status": "requires_capture",
+  "next_action": null
+}
+```
+
+## Breaking changes from v2
+
+1. Endpoint and resource renamed: `charge` becomes `payment_intent`.
+2. `amount` plus `currency` collapse into one nested `money` object.
+3. `source` is renamed `payment_method` and now requires a `pm_` token.
+4. A new lifecycle replaces the boolean `captured`: statuses are
+   `requires_confirmation`, `requires_capture`, `processing`, and `succeeded`.
+5. Strong Customer Authentication can return `next_action` with a redirect URL.
+
+## Migration path
+
+- v2 stays supported through 2027, so migrate incrementally.
+- Map your v2 `source` tokens to v3 `payment_method` ids during checkout.
+- Treat any non-`succeeded` status as not-yet-paid rather than a hard failure.
+
+Coming from the original design? Compare against [[z=1|v1]] to see how far the
+auth and money models have moved.

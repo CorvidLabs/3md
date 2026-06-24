@@ -1,0 +1,135 @@
+---
+3md: 1.0
+axis: space
+title: Raised Bed Garden Layout (4 ft x 8 ft)
+bed_size: 4ft x 8ft
+orientation: long axis runs north-south
+sun: full sun, 8+ hours
+zone: USDA 6b
+---
+A single 4 ft by 8 ft cedar raised bed, viewed as a stack of horizontal slices
+from the soil up. Each `z` plane is a layer in space: the lower planes are the
+soil and root zone, the middle planes are the planting grid at ground level, and
+the upper planes are the trellis and canopy that the tall crops grow into.
+
+North is at the top of every plane. The `x` offset runs west (0) to east (4 ft);
+the `y` offset runs south (0) to north (8 ft). Squares are 1 ft on a side, so the
+ground-level grid is 4 columns by 8 rows = 32 square-foot cells.
+
+@plane z=-12 x=0 y=0 label="Sub-soil and drainage (-12 in)"
+# Foundation layer: 12 inches below the rim
+
+The bed sits on native soil that was forked over and loosened to break the hardpan.
+Drainage matters most here, because soggy roots are what kill a raised bed in its
+first season.
+
+- **Base:** 2 inches of coarse gravel along the lowest 8 inches of the south end,
+  where water naturally pools after heavy rain.
+- **Barrier:** 1/4 inch galvanized hardware cloth stapled across the bottom frame
+  to stop voles and gophers from tunneling up into the carrots.
+- **Fill (lower half):** a hugelkultur core of small branches and twigs that will
+  break down over two to three seasons, holding moisture in the root zone.
+
+Everything planted in [[z=0|the ground-level grid]] depends on water moving down
+through this layer instead of standing around the crowns.
+
+@plane z=-6 x=0 y=0 label="Root zone and amendments (-6 in)"
+# Active root zone: top 6 inches of soil
+
+This is where most feeder roots live, so it gets the richest mix and the season's
+fertility plan.
+
+| Component        | Proportion | Purpose                              |
+|------------------|-----------:|--------------------------------------|
+| Compost          |        40% | nitrogen, biology, moisture holding  |
+| Topsoil          |        30% | structure and mineral body           |
+| Coarse sand      |        20% | drainage, prevents compaction        |
+| Worm castings    |        10% | slow-release feeding for heavy crops  |
+
+**Soil targets**
+
+- pH held between 6.2 and 6.8 (tested in early spring with a probe at 3 spots).
+- 2 inches of shredded-leaf mulch on top once seedlings are 4 inches tall.
+- Drip line buried 1 inch deep, one emitter per square foot.
+
+Heavy feeders in [[z=0|the planting grid]] (tomatoes, squash, brassicas) draw down
+this layer fast, so a handful of castings goes into each of their holes at planting.
+
+@plane z=0 x=0 y=0 label="Ground-level planting grid (0 in)"
+# The planting grid, looking straight down
+
+Square-foot layout, west on the left, north at the top. Tall crops sit on the
+north end so they do not shade the shorter rows to their south.
+
+```
+        W ----------------- E
+  N  +------+------+------+------+
+ 8ft | TOM  | TOM  | TOM  | TOM  |   <- tomatoes, caged, north wall
+     +------+------+------+------+
+ 7ft | BASIL| BASIL| PEPR | PEPR |
+     +------+------+------+------+
+ 6ft | CHARD| CHARD| KALE | KALE |
+     +------+------+------+------+
+ 5ft | BUSH | BUSH | BUSH | BUSH |   <- bush beans
+     +------+------+------+------+
+ 4ft | CARROT(16) | BEET (9)     |
+     +------+------+------+------+
+ 3ft | LETT | LETT | SPIN | SPIN |
+     +------+------+------+------+
+ 2ft | RAD  | RAD  | SCAL | SCAL |   <- radish + scallion, quick turnover
+     +------+------+------+------+
+ 1ft | MARI | MARI | NAST | NAST |   <- marigold + nasturtium, pest border
+  S  +------+------+------+------+
+        W ----------------- E
+```
+
+**Spacing per square (square-foot method)**
+
+- Tomatoes, peppers: 1 per square.
+- Chard, kale, basil, lettuce, spinach: 4 per square.
+- Bush beans, scallions: 9 per square.
+- Carrots, radishes: 16 per square.
+
+The tomato row anchors against [[z=24|the trellis canopy]] above it; the marigold
+and nasturtium border on the south edge pulls aphids away from the beans and draws
+in pollinators for [[z=24|the flowering vines overhead]].
+
+@plane z=12 x=0 y=7 label="Mid-canopy support (12 in)"
+# One foot up: cages, stakes, and the low trellis
+
+At knee-to-waist height the bed stops being flat and starts being vertical. This
+layer is all about holding plants upright and keeping airflow moving to prevent
+mildew.
+
+- **Tomato cages** (north row, y = 7 to 8 ft): 5 ft galvanized cages, set the day
+  of transplant so roots are never disturbed later.
+- **Pepper stakes** (y = 7 ft, east half): single 3 ft bamboo stakes, tied loosely
+  with garden twine in a figure-eight so stems do not chafe.
+- **Bean A-frame** (y = 5 ft): a short 18 inch A-frame for the bush beans to lean
+  into when they get top-heavy with pods.
+
+Pinch tomato suckers below the first flower cluster here to push energy up toward
+[[z=24|the fruiting canopy]] instead of into leafy side shoots.
+
+@plane z=24 x=0 y=8 label="Trellis canopy (24 in and up)"
+# Two feet up and beyond: the vertical harvest
+
+The north wall of the bed carries a 6 ft cattle-panel trellis arched slightly to
+the south. This is the airspace the climbers and the tallest tomatoes fill by
+midsummer.
+
+**What lives up here**
+
+1. **Indeterminate tomato tops**, trained to a single leader up the panel, fruit
+   trusses hanging at picking height (3 to 5 ft).
+2. **Pole companions**, a few cucumber vines threaded through the panel from the
+   north side so their fruit hangs free and stays straight.
+3. **Nasturtium runners** that climbed up from [[z=0|the south border]], spilling
+   color across the panel and feeding pollinators.
+
+**Maintenance notes**
+
+- Harvest from the outside in, every 2 to 3 days at peak, to keep vines productive.
+- Remove any leaf touching a neighbor to keep the canopy open and dry.
+- Come fall, this whole layer comes down and the spent vines go into the hugel core
+  of [[z=-12|the foundation layer]] to start the cycle over.

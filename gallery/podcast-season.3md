@@ -1,0 +1,151 @@
+---
+3md: 1.0
+axis: time
+title: "Signal Drift - Season 2 Episode Guide"
+show: Signal Drift
+season: "2"
+host: Mara Okonkwo
+producer: Devin Reyes
+network: Tidewater Audio
+release_cadence: weekly (Thursdays)
+---
+**Signal Drift** is a six-part documentary podcast tracing how a single mislabeled
+weather buoy off the Oregon coast quietly broke a decade of climate models. Season 2
+follows the people who noticed, the institution that ignored them, and the fix that
+almost did not happen.
+
+Each plane below is one episode, ordered along the **time** axis by release week.
+Jump straight to the finale at [[z=5|Episode 6]], or start at the top.
+
+@plane z=0 label="Ep 1 - The Buoy That Lied"
+# Episode 1 - The Buoy That Lied
+
+**Released:** September 5, 2024 | **Runtime:** 38 min
+
+A retired oceanographer in Newport notices that Buoy 46050 has been reporting sea
+surface temperatures a steady 1.4 degrees too cold since 2013. Nobody downstream
+ever checked. We open on the morning she pulls the raw logs.
+
+## Guests
+- **Dr. Helen Vasquez**, retired oceanographer, NOAA (1988-2019)
+- **Toby Lin**, buoy maintenance technician, Pacific Marine
+
+## Key moments
+- (04:12) Helen describes the "too clean" data that first bothered her
+- (19:30) The 1.4 degree offset, and why a cold bias hides in plain sight
+- (33:05) A voicemail to the regional office that is never returned
+
+> "A sensor does not lie on purpose. It just keeps saying the wrong thing politely,
+> forever." - Dr. Helen Vasquez
+
+Continue to [[z=1|Episode 2]] to follow the data trail upstream.
+
+@plane z=1 label="Ep 2 - Garbage In"
+# Episode 2 - Garbage In
+
+**Released:** September 12, 2024 | **Runtime:** 41 min
+
+Helen's offset was not just wrong, it was load-bearing. We trace how one buoy fed a
+regional average, which fed a national reanalysis, which fed three published models.
+Producer Devin Reyes maps the pipeline on a whiteboard that grows alarming.
+
+## Guests
+- **Dr. Priya Anand**, climate modeler, University of Washington
+- **Anonymous**, data engineer, federal reanalysis project (voice altered)
+
+## Key moments
+- (07:45) How a single station can skew a 200-mile grid cell
+- (22:18) The reanalysis team explains why nobody re-validates old inputs
+- (36:50) Priya runs the model both ways, on air, and the coastline shifts
+
+The cold bias quietly cooled a stretch of ocean that was, in reality, warming.
+See where this started in [[z=0|Episode 1]], or where it lands in [[z=4|Episode 5]].
+
+@plane z=2 label="Ep 3 - The Paper Trail"
+# Episode 3 - The Paper Trail
+
+**Released:** September 19, 2024 | **Runtime:** 44 min
+
+If the data was off for eleven years, somebody should have caught it. This episode is
+about the three times somebody did, and what happened to their reports. The answer
+involves a reorganization, a departed manager, and a shared drive nobody owned.
+
+## Guests
+- **Marcus Bell**, former QA contractor (filed the 2016 ticket)
+- **Dr. Helen Vasquez** (returning)
+
+## Key moments
+- (06:00) Marcus reads his own 2016 bug report aloud, eight years later
+- (24:40) The ticket's status: "Won't Fix - low priority"
+- (39:12) Who actually owned data quality? Nobody could name a person.
+
+> "It was not a cover-up. It was worse. It was nobody's job." - Marcus Bell
+
+@plane z=3 label="Ep 4 - On the Record"
+# Episode 4 - On the Record
+
+**Released:** September 26, 2024 | **Runtime:** 47 min
+
+Mara sits down with the agency. For the first time, an official responds on tape. It
+is tense, careful, and more honest than expected. We also hear from a policy aide who
+used the flawed coastal estimates to argue against a fishery protection rule.
+
+## Guests
+- **Director Joanne Pratt**, regional data office
+- **Eli Sandoval**, former legislative aide
+
+## Key moments
+- (11:20) Pratt acknowledges the offset and the missed tickets
+- (28:55) Eli on building policy atop a number he assumed was solid
+- (43:10) The question Pratt would not answer
+
+This connects the quiet error in [[z=2|Episode 3]] to real consequences. The repair
+effort begins in [[z=4|Episode 5]].
+
+@plane z=4 label="Ep 5 - The Fix"
+# Episode 5 - The Fix
+
+**Released:** October 3, 2024 | **Runtime:** 42 min
+
+Correcting one buoy is easy. Re-running eleven years of dependent models, re-issuing
+corrected datasets, and telling everyone downstream is not. We embed with the small
+team that volunteers to do it, on nights and weekends, with no mandate.
+
+## Guests
+- **Dr. Priya Anand** (returning)
+- **Sam Whitfield**, open-data volunteer, Coastwatch collective
+
+## Key moments
+- (09:30) Building a corrected dataset from a borrowed laptop
+- (25:15) The first downstream user to actually update their model
+- (38:40) What "fixed" really means when the old numbers are already published
+
+The corrected coastline finally matches reality from [[z=1|Episode 2]]. We close the
+season in [[z=5|Episode 6]].
+
+@plane z=5 label="Ep 6 - What the Buoy Knew"
+# Episode 6 - What the Buoy Knew
+
+**Released:** October 10, 2024 | **Runtime:** 51 min
+
+The finale. Buoy 46050 is recalibrated, the datasets are corrected, and Helen returns
+to Newport to watch the new readings come in live. We ask the larger question: how
+many other quiet errors are still out there, politely saying the wrong thing?
+
+## Guests
+- **Dr. Helen Vasquez** (final interview)
+- **Director Joanne Pratt** (follow-up)
+- The full team, together for the first time
+
+## Key moments
+- (08:00) The recalibration, recorded dockside in real time
+- (31:25) Helen reads the first correct temperature in eleven years
+- (47:50) The new audit rule named, unofficially, after the buoy
+
+> "It took one retired woman with a spreadsheet. Imagine what we are still
+> missing." - Mara Okonkwo, host
+
+## Season wrap
+- Full corrected dataset and show notes at the season page
+- Where to start over: [[z=0|Episode 1]]
+- Season 3 announcement coming in November 2024

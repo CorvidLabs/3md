@@ -1,0 +1,110 @@
+---
+3md: 1.0
+axis: step
+title: Salsa Basic Step (On1, Cross-Body Lead Foundation)
+style: LA / cross-body
+count: 8 beats over 6 weighted steps
+timing: quick-quick-slow
+tempo: 160-180 BPM
+---
+The salsa basic is danced over eight beats of music, but you only take six
+weighted steps: beats 4 and 8 are held (the "slow"). This document walks the
+Leader's footwork through one full basic, one step (one beat) per plane.
+
+Each plane is one beat. The `x` offset tracks where your weight sits left to
+right (negative is your left side, positive is your right); the `y` offset tracks
+forward and back from your home position (positive is forward, negative is back).
+Jump to [[z=1|beat 1]] to begin, or skip ahead to [[z=5|the back-break on 5]].
+
+Counting reminder: say it out loud as "one-two-three, (hold), five-six-seven,
+(hold)". The held beats are where most beginners rush, so the holds matter as
+much as the steps.
+
+@plane z=1 x=0 y=0.6 label="Beat 1 - Left foot forward (break)"
+# Beat 1: Forward break, left foot
+
+This is the "1" of "one-two-three". From a neutral standing start, feet under
+your hips, you step your **left foot forward** and shift your weight onto it.
+This is a break step: you commit the weight forward, then immediately reverse it.
+
+- Weight: now on the LEFT foot, forward of home.
+- Right foot: stays planted where it started, heel may lift slightly.
+- Frame: keep your chest lifted and shoulders level. Do not lunge.
+- Common fault: stepping too far forward. A salsa basic is small, roughly one
+  shoe length, not a stride.
+
+Your partner mirrors this by breaking **back** on their right foot. Continue to
+[[z=2|beat 2]].
+
+@plane z=2 x=0 y=0 label="Beat 2 - Replace onto right foot"
+# Beat 2: Replace, right foot
+
+This is the "2". You **replace** your weight back onto the right foot, which
+never actually moved, it just receives the weight again. Think of beats 1 and 2
+as a tiny rock: forward, then back.
+
+- Weight: back on the RIGHT foot, at home position.
+- Left foot: now light, ready to close.
+- Feel: the hips settle to the right as the weight returns. Let the knee soften.
+
+Nothing travels here. You are still standing over your home spot. The motion is
+all in the weight transfer, not in covering ground. Next is [[z=3|beat 3]].
+
+@plane z=3 x=-0.5 y=0 label="Beat 3 - Left foot closes (step in place)"
+# Beat 3: Close, left foot
+
+This is the "3", the end of the first "quick-quick-slow". You bring the **left
+foot back beside the right** and step onto it in place. The weight finishes on
+the left.
+
+- Weight: on the LEFT foot, feet roughly together.
+- This is the "slow" landing: step on 3, then **hold beat 4**.
+- Hip action: a clear Cuban-motion hip settle to the left as you take the step.
+
+Do not take a step on beat 4. Hold it. New dancers almost always sneak an extra
+step here and lose the timing for the whole song. Halfway done: head to
+[[z=5|beat 5]] for the back half.
+
+@plane z=5 x=0 y=-0.6 label="Beat 5 - Right foot back (break)"
+# Beat 5: Back break, right foot
+
+We skip a plane number on purpose: there is no step on beat 4, it is the hold.
+On the "5" you mirror beat 1 in reverse, stepping your **right foot back** and
+breaking your weight onto it.
+
+- Weight: now on the RIGHT foot, behind home.
+- Left foot: stays planted at home, ready to receive weight back.
+- Posture: resist leaning your upper body back. Keep the torso stacked over your
+  hips even as the foot goes back.
+
+Your partner breaks **forward** on their left foot here, mirroring you exactly.
+This is the same rock motion as [[z=1|beat 1]], just pointed the other way.
+
+@plane z=6 x=0 y=0 label="Beat 6 - Replace onto left foot"
+# Beat 6: Replace, left foot
+
+This is the "6". **Replace** your weight forward onto the left foot, which stayed
+at home. The little back-and-forward rock of beats 5 and 6 mirrors the
+forward-and-back of beats 1 and 2.
+
+- Weight: back on the LEFT foot, at home position.
+- Right foot: now light, ready to close.
+- Keep it small. Like beat 2, nothing travels; the body stays over home.
+
+One step left in the basic. Finish on [[z=7|beat 7]].
+
+@plane z=7 x=0.5 y=0 label="Beat 7 - Right foot closes (step in place)"
+# Beat 7: Close, right foot
+
+This is the "7", the final weighted step of the basic. Bring the **right foot
+back beside the left** and step onto it in place. The weight finishes on the
+right.
+
+- Weight: on the RIGHT foot, feet together.
+- This is the second "slow": step on 7, then **hold beat 8**.
+- On the hold, you are perfectly reset: weight right, ready to break left forward
+  again.
+
+That hold on beat 8 hands you straight back into [[z=1|beat 1]], and the basic
+loops. Once this feels automatic, the same six-step skeleton underpins the
+cross-body lead, the right turn, and almost every pattern that follows.

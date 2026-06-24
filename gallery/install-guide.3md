@@ -1,0 +1,135 @@
+---
+3md: 1.0
+axis: step
+title: Installing Sparrow CLI
+product: Sparrow CLI
+version: 2.4.0
+platforms: macOS, Linux, Windows
+---
+This guide walks through installing the Sparrow CLI from a clean machine to a
+verified, working setup. Each plane is one step on the `step` axis. Follow them
+in order; if a step fails, the troubleshooting links point you to the right
+place to recover. Estimated time: about ten minutes.
+
+@plane z=0 label="Check prerequisites"
+# Step 0: Check prerequisites
+
+Before you install anything, confirm your machine meets the minimum bar.
+
+- **Operating system:** macOS 12+, a glibc-based Linux (Ubuntu 20.04+, Fedora 36+), or Windows 10 21H2+.
+- **Architecture:** x86_64 or arm64. Run `uname -m` (macOS/Linux) to check.
+- **Disk:** at least 250 MB free for the binary and its cache.
+- **Network:** outbound HTTPS to `dl.sparrowcli.dev` on port 443.
+
+Verify your shell knows where user binaries live:
+
+```bash
+echo "$PATH" | tr ':' '\n' | grep -q "$HOME/.local/bin" && echo "ok" || echo "missing"
+```
+
+If it prints `missing`, you will add that directory in [[z=1|Step 1]] before
+installing. Once the checks above pass, continue to [[z=1|the installer]].
+
+@plane z=1 x=0 y=1 label="Run the installer"
+# Step 1: Run the installer
+
+The fastest path is the official install script, which detects your OS and
+architecture and drops the binary into `~/.local/bin`.
+
+```bash
+curl -fsSL https://dl.sparrowcli.dev/install.sh | sh
+```
+
+Prefer a package manager? Pick your platform:
+
+- **macOS (Homebrew):** `brew install sparrow-cli`
+- **Debian/Ubuntu:** `sudo apt-get install ./sparrow_2.4.0_amd64.deb`
+- **Windows (winget):** `winget install Sparrow.CLI`
+
+If `~/.local/bin` was reported as missing back in [[z=0|the prerequisites]],
+add it to your shell profile now:
+
+```bash
+echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.profile
+```
+
+Open a new terminal so the updated `PATH` takes effect, then move on to
+[[z=2|configuring authentication]].
+
+@plane z=2 x=0 y=2 label="Configure credentials"
+# Step 2: Configure credentials
+
+Sparrow talks to your account over an API token. Generate one in the web
+dashboard under **Settings > Access Tokens**, then store it locally:
+
+```bash
+sparrow auth login --token sk_live_xxxxxxxxxxxxxxxx
+```
+
+This writes a config file to `~/.config/sparrow/config.toml` with permissions
+`0600` (readable only by you). To confirm the token was saved:
+
+```bash
+sparrow auth whoami
+```
+
+You should see your account email and the active workspace. If you manage
+several environments, set a default workspace so later commands do not need a
+flag:
+
+```bash
+sparrow config set workspace prod-eu
+```
+
+With credentials in place, run the [[z=3|verification check]] to make sure
+everything works end to end.
+
+@plane z=3 x=0 y=3 label="Verify the install"
+# Step 3: Verify the install
+
+Confirm the binary is on your path and reports the expected version:
+
+```bash
+sparrow --version
+# sparrow 2.4.0 (build 2026-05-18, arm64-apple-darwin)
+```
+
+Run the built-in self-check, which pings the API, validates your token, and
+exercises the local cache:
+
+```bash
+sparrow doctor
+```
+
+A healthy run ends with `All checks passed`. The most common warnings are:
+
+| Symptom | Likely cause | Fix |
+| --- | --- | --- |
+| `command not found` | `PATH` not updated | revisit [[z=1|Step 1]] |
+| `401 unauthorized` | bad or expired token | redo [[z=2|Step 2]] |
+| `timeout reaching api` | firewall blocks 443 | recheck [[z=0|prerequisites]] |
+
+Once `sparrow doctor` is clean, you are ready for [[z=4|your first command]].
+
+@plane z=4 x=0 y=4 label="First run and next steps"
+# Step 4: First run and next steps
+
+Kick the tires with a harmless read-only command:
+
+```bash
+sparrow projects list
+```
+
+You should see a table of projects in your default workspace. From here:
+
+- **Create your first project:** `sparrow projects create demo`
+- **Enable shell completion:** `sparrow completion zsh > ~/.sparrow-completion.zsh`
+- **Read the handbook:** `sparrow help` or visit the docs site.
+
+To upgrade later, rerun the installer from [[z=1|Step 1]] or use your package
+manager; Sparrow keeps your config in `~/.config/sparrow`, so credentials from
+[[z=2|Step 2]] survive upgrades. To remove it entirely, run `sparrow uninstall`
+and delete the config directory.
+
+That is the full path from a bare machine to a verified, working Sparrow CLI.
+Welcome aboard.

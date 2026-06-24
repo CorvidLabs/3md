@@ -1,0 +1,102 @@
+---
+3md: 1.0
+axis: layer
+title: "Midnight Driver - Stem Breakdown"
+artist: The Sodium Lamps
+bpm: 102
+key: A minor
+time_signature: 4/4
+sample_rate: 48 kHz
+session_length: 3:48
+mix_engineer: R. Okafor
+---
+"Midnight Driver" is a 102 BPM track in A minor, printed here as separate
+instrument stems instead of a single flat mix. Each plane is one stem: solo it
+to study a part, stack several to rebuild the arrangement. The planes are ordered
+bottom to top the way an engineer thinks about a mix, from the low-end foundation
+up to the vocal that sits on top.
+
+A few shared facts hold across every stem: the tempo is steady at 102 BPM (no
+click drift), the song stays in A minor throughout, and all stems are exported
+at 48 kHz, 24-bit, peak-normalized to -1 dBFS with no master-bus processing so
+they sum cleanly. To hear the rhythmic core on its own, start with the
+[[z=0|Drums]]; to hear what everything is built to support, jump to the
+[[z=4|Lead Vocal]].
+
+@plane z=0 x=0 y=0 label="Drums"
+# Drums (the floor)
+
+The rhythmic foundation. Recorded as a full kit, then bounced to one stem with
+the room mics folded in so the groove keeps its natural ambience.
+
+- **Pattern:** straight backbeat, kick on 1 and 3, snare on 2 and 4
+- **Hi-hats:** eighth notes in the verse, opening to quarters in the chorus
+- **Fills:** two-bar crash fill into each chorus, a longer tom run into the bridge
+- **Processing baked in:** light bus compression (4:1, slow attack) for glue
+
+The kick is tuned low and short so it leaves room underneath. Everything else in
+the song is timed against this stem, so it is the natural reference when lining up
+parts. The next thing to lock to the kick is the [[z=1|Bass]].
+
+@plane z=1 x=0 y=-1 label="Bass"
+# Bass (locks to the kick)
+
+A fingered electric bass that doubles the kick pattern and outlines the chord
+roots. This is the bridge between rhythm and harmony.
+
+- **Tone:** rounded, slight high-mid bump so it reads on small speakers
+- **Note choice:** roots on the downbeats, walking eighths into chord changes
+- **Root motion (verse):** Am - F - C - G, two bars each
+- **Performance note:** muted ghost notes on the "and" of beat 2 to push the groove
+
+Solo the drums and bass together and you already have the whole rhythm section.
+On top of that foundation we stack the harmony, played by the
+[[z=2|Rhythm Guitars and Keys]].
+
+@plane z=2 x=-1 y=1 label="Harmony"
+# Rhythm Guitars and Keys (the harmonic bed)
+
+The chord layer that fills the middle of the spectrum. Two parts share this stem:
+a clean electric guitar panned left and an electric piano panned right, so the
+harmony spreads across the stereo field.
+
+- **Guitar:** muted eighth-note strums, capo at the 2nd fret, panned 40 left
+- **Electric piano:** sustained chords with a slow tremolo, panned 35 right
+- **Chords (chorus):** F - C - G - Am, brighter voicings than the verse
+- **Arrangement trick:** the piano drops out in verse 2 to make space, then
+  returns for the final chorus to lift the energy
+
+This bed is deliberately quiet under the vocal and louder in the instrumental
+sections. It leans on the [[z=1|Bass]] for its low notes and clears the high end
+for the [[z=4|Lead Vocal]]. The hooks on top of it come from the
+[[z=3|Lead Instruments]].
+
+@plane z=3 x=1 y=1 label="Leads"
+# Lead Instruments (the hooks)
+
+The melodic counter-lines that answer the vocal: a saturated lead guitar and a
+short synth motif. They mostly play in the gaps between vocal phrases.
+
+- **Lead guitar:** the chorus riff, a four-note hook on the high E and B strings
+- **Synth:** a plucky arpeggio in the intro and outro, doubled an octave up
+- **Solo:** sixteen bars over the bridge, lead guitar with a long delay tail
+- **Mix placement:** centered but pushed back with reverb so it sits behind vocals
+
+When the [[z=4|Lead Vocal]] rests, this stem steps forward; when the vocal sings,
+it tucks back. Mute it and the song still works but loses its signature riff.
+
+@plane z=4 x=0 y=2 label="Lead Vocal"
+# Lead Vocal (the top)
+
+The focal point. A single performer, double-tracked only in the choruses for
+width, sitting on top of everything else in the mix.
+
+- **Range:** roughly A3 to E5, comfortable chest voice with a few falsetto lifts
+- **Verses:** single take, dry and close, intimate
+- **Choruses:** double-tracked and panned slightly wide, with a harmony a third up
+- **Effects baked in:** plate reverb and a slap delay on phrase endings only
+
+This is the part every other stem is arranged to support: the [[z=0|Drums]] set
+the pace, the [[z=1|Bass]] and [[z=2|Rhythm Guitars and Keys]] hold the harmony,
+and the [[z=3|Lead Instruments]] fill the spaces around the words. Solo this stem
+to study phrasing; unmute the rest to hear it back in context.

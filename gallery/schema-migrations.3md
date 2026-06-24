@@ -1,0 +1,167 @@
+---
+3md: 1.0
+axis: version
+title: Orders Database Schema Migrations
+database: orders_prod
+engine: PostgreSQL 15
+tool: golang-migrate
+---
+The Z axis is the schema version. Each plane is one applied migration in the
+`orders` service database. Read bottom-up (z=0 is the baseline) to see how the
+schema evolves. Every plane shows the forward (`up`) migration, the rollback
+(`down`), and the reasoning behind the change.
+
+Rollouts are gated: a migration only ships once the plane below it is fully
+deployed and the application code that depends on it is live.
+
+@plane z=0 label="0001 baseline" x=0 y=0
+# Version 0001: Baseline schema
+
+The initial schema captured from the existing monolith before extraction. Two
+tables, no foreign keys yet, integer surrogate keys.
+
+```sql
+-- up
+CREATE TABLE customers (
+    id          SERIAL PRIMARY KEY,
+    email       TEXT NOT NULL,
+    created_at  TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+
+CREATE TABLE orders (
+    id          SERIAL PRIMARY KEY,
+    customer_id INTEGER NOT NULL,
+    total_cents INTEGER NOT NULL,
+    created_at  TIMESTAMPTZ NOT NULL DEFAULT now()
+);
+```
+
+```sql
+-- down
+DROP TABLE orders;
+DROP TABLE customers;
+```
+
+Known gaps fixed later: no unique constraint on `email` (see [[z=1|0002]]) and
+no referential integrity between `orders` and `customers` (see [[z=2|0003]]).
+
+@plane z=1 label="0002 unique email" x=1 y=0
+# Version 0002: Enforce unique customer email
+
+Duplicate accounts were slipping in during signup retries. We add a unique
+constraint, but the table already has duplicates, so the migration de-dupes
+first, keeping the lowest `id` per email.
+
+```sql
+-- up
+DELETE FROM customers a
+USING customers b
+WHERE a.email = b.email
+  AND a.id > b.id;
+
+CREATE UNIQUE INDEX CONCURRENTLY idx_customers_email_unique
+    ON customers (lower(email));
+```
+
+Note the `CONCURRENTLY` build so writes are not blocked on the live table. This
+means the migration cannot run inside a transaction, so the runner is configured
+with `--no-tx` for this version only.
+
+```sql
+-- down
+DROP INDEX CONCURRENTLY idx_customers_email_unique;
+```
+
+Builds on [[z=0|the baseline]]. The next step adds the foreign key that the
+baseline deliberately omitted: [[z=2|0003]].
+
+@plane z=2 label="0003 FK + cascade" x=2 y=0
+# Version 0003: Add foreign key to orders
+
+With duplicates gone, we link `orders.customer_id` to `customers.id`. We first
+validate there are no orphan rows, then add the constraint as `NOT VALID` and
+validate it separately to avoid a long table lock.
+
+```sql
+-- up
+ALTER TABLE orders
+    ADD CONSTRAINT fk_orders_customer
+    FOREIGN KEY (customer_id) REFERENCES customers (id)
+    ON DELETE RESTRICT
+    NOT VALID;
+
+ALTER TABLE orders VALIDATE CONSTRAINT fk_orders_customer;
+
+CREATE INDEX CONCURRENTLY idx_orders_customer_id
+    ON orders (customer_id);
+```
+
+`ON DELETE RESTRICT` is intentional: deleting a customer with live orders should
+fail loudly rather than silently removing order history.
+
+```sql
+-- down
+DROP INDEX CONCURRENTLY idx_orders_customer_id;
+ALTER TABLE orders DROP CONSTRAINT fk_orders_customer;
+```
+
+Depends on [[z=1|0002]] having removed duplicate customers. The status column
+arrives in [[z=3|0004]].
+
+@plane z=3 label="0004 order status" x=3 y=0
+# Version 0004: Order status enum
+
+Orders need a lifecycle. We introduce a native enum type and a column defaulting
+to `pending`. Backfilling existing rows is implicit through the default.
+
+```sql
+-- up
+CREATE TYPE order_status AS ENUM ('pending', 'paid', 'shipped', 'cancelled');
+
+ALTER TABLE orders
+    ADD COLUMN status order_status NOT NULL DEFAULT 'pending';
+```
+
+Adding a column with a constant default is metadata-only in PostgreSQL 11+, so
+this does not rewrite the table and runs in milliseconds even on large tables.
+
+```sql
+-- down
+ALTER TABLE orders DROP COLUMN status;
+DROP TYPE order_status;
+```
+
+Caution for rollback: dropping the enum type fails if any other object still
+references it, so the column drop must come first (as written above).
+
+@plane z=4 label="0005 soft delete" x=4 y=0
+# Version 0005: Soft-delete customers
+
+`ON DELETE RESTRICT` from [[z=2|0003]] blocks hard deletes, which is what we
+want, but support still needs to deactivate accounts. We switch to soft deletes
+with a partial index so active lookups stay fast.
+
+```sql
+-- up
+ALTER TABLE customers
+    ADD COLUMN deleted_at TIMESTAMPTZ;
+
+-- active-customer lookups only scan non-deleted rows
+CREATE INDEX CONCURRENTLY idx_customers_active
+    ON customers (id)
+    WHERE deleted_at IS NULL;
+```
+
+Application reads now filter `WHERE deleted_at IS NULL`. This migration ships
+only after that filter is live in production, so the index matches real query
+shapes.
+
+```sql
+-- down
+DROP INDEX CONCURRENTLY idx_customers_active;
+ALTER TABLE customers DROP COLUMN deleted_at;
+```
+
+This is the current head of the migration stack. The unique email index from
+[[z=1|0002]] still applies to soft-deleted rows, which is acceptable because a
+freed email can be reclaimed by a future hard-purge job.

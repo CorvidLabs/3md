@@ -1,0 +1,135 @@
+---
+3md: 1.0
+axis: space
+title: The Solar System by Distance
+subtitle: Eight planets, ordered outward from the Sun
+units: astronomical units (1 AU is the Earth-Sun distance)
+author: CorvidLabs Gallery
+---
+A walk outward from the Sun. Each plane sits at the planet's mean orbital
+distance, mapped so that `z` equals the distance in astronomical units (AU).
+The inner rocky worlds are packed close together near `z=1`, while the outer
+gas and ice giants spread out across tens of AU. Start at [[z=0.39|Mercury]]
+and travel to the edge at [[z=30.07|Neptune]].
+
+@plane z=0.39 x=0 y=0 label="Mercury"
+# Mercury (0.39 AU)
+
+The smallest planet and the closest to the Sun. Mercury races around its orbit
+in just 88 Earth days, the fastest year in the system.
+
+- **Type:** rocky (terrestrial)
+- **Day length:** 59 Earth days (a single rotation)
+- **Surface:** scorched by day, frozen by night, swinging from +430 C to -180 C
+- **Moons:** none
+
+No atmosphere worth the name means no blanket to trap heat, so the temperature
+swing between the sunlit and shadowed sides is the most extreme of any planet.
+
+Next stop outward: [[z=0.72|Venus]].
+
+@plane z=0.72 x=0.33 y=0 label="Venus"
+# Venus (0.72 AU)
+
+Earth's near-twin in size, and the hottest planet in the system. A thick
+carbon-dioxide atmosphere traps heat so efficiently that the surface sits at
+about 465 C, hotter than Mercury despite being farther from the Sun.
+
+- **Type:** rocky (terrestrial)
+- **Atmosphere:** 96 percent CO2, surface pressure about 92 times Earth's
+- **Spin:** retrograde (the Sun rises in the west) and very slow
+- **Moons:** none
+
+A day on Venus (243 Earth days) is longer than its year (225 Earth days).
+
+Inward to [[z=0.39|Mercury]], or onward to [[z=1.0|Earth]].
+
+@plane z=1.0 x=0.66 y=0 label="Earth"
+# Earth (1.00 AU)
+
+The reference point. One AU is defined by Earth's average distance from the Sun,
+about 150 million kilometers, which is why this plane sits at exactly `z=1`.
+
+- **Type:** rocky (terrestrial)
+- **Atmosphere:** 78 percent nitrogen, 21 percent oxygen
+- **Surface:** the only known world with stable liquid water and life
+- **Moons:** 1 (the Moon, at roughly 384,000 km)
+
+Sunlight takes about 8 minutes and 20 seconds to reach here.
+
+The next world out is the red one: [[z=1.52|Mars]].
+
+@plane z=1.52 x=1.0 y=0 label="Mars"
+# Mars (1.52 AU)
+
+The red planet, colored by iron oxide dust. Mars is half Earth's diameter and
+hosts the tallest volcano in the system, Olympus Mons, rising about 22 km.
+
+- **Type:** rocky (terrestrial)
+- **Day length:** 24 hours 37 minutes (close to Earth's)
+- **Atmosphere:** thin CO2, about 0.6 percent of Earth's surface pressure
+- **Moons:** 2 (Phobos and Deimos, both small and lumpy)
+
+Beyond Mars lies the asteroid belt, the boundary between the rocky inner system
+and the giants. Cross it to reach [[z=5.2|Jupiter]].
+
+@plane z=5.2 x=2.5 y=0 label="Jupiter"
+# Jupiter (5.20 AU)
+
+The giant. Jupiter holds more than twice the mass of every other planet
+combined, and its Great Red Spot is a storm wide enough to swallow Earth.
+
+- **Type:** gas giant
+- **Day length:** under 10 hours (the fastest spin in the system)
+- **Composition:** mostly hydrogen and helium, no solid surface
+- **Moons:** 95 confirmed, including the four large Galilean moons (Io, Europa,
+  Ganymede, Callisto)
+
+Note the jump in scale: Jupiter sits more than three times farther out than
+Mars, and the spacing only grows from here.
+
+Onward to the ringed world: [[z=9.58|Saturn]].
+
+@plane z=9.58 x=4.5 y=0 label="Saturn"
+# Saturn (9.58 AU)
+
+Famous for its rings, a vast disk of ice and rock chunks only tens of meters
+thick but spanning hundreds of thousands of kilometers. Saturn is the least
+dense planet, lighter than water on average.
+
+- **Type:** gas giant
+- **Day length:** about 10.7 hours
+- **Rings:** seven main groups, mostly water ice
+- **Moons:** 146 confirmed, including Titan (thicker atmosphere than Earth's)
+
+From here the system turns cold and blue. Continue to [[z=19.22|Uranus]].
+
+@plane z=19.22 x=8 y=0 label="Uranus"
+# Uranus (19.22 AU)
+
+The tilted ice giant. Uranus rotates almost on its side, tipped about 98
+degrees, so each pole spends roughly 42 years in sunlight and 42 in darkness.
+
+- **Type:** ice giant
+- **Color:** pale cyan from methane in the upper atmosphere
+- **Day length:** about 17 hours, retrograde
+- **Moons:** 28 confirmed, named for characters from Shakespeare and Pope
+
+Nearly twice as far out as Saturn. One step remains to the edge: [[z=30.07|Neptune]].
+
+@plane z=30.07 x=12 y=0 label="Neptune"
+# Neptune (30.07 AU)
+
+The outermost planet, a deep-blue ice giant with the fastest winds in the
+system, reaching about 2,000 km/h. Sunlight here is roughly 900 times fainter
+than on Earth, and a single Neptune year lasts about 165 Earth years.
+
+- **Type:** ice giant
+- **Discovery:** found in 1846 by mathematical prediction before it was seen
+- **Day length:** about 16 hours
+- **Moons:** 16 confirmed, including Triton, which orbits backward
+
+This is the end of the planetary road. Beyond lies the Kuiper Belt, home to
+Pluto and other dwarf planets.
+
+Jump back to the start at [[z=1.0|Earth]] or all the way in to [[z=0.39|Mercury]].

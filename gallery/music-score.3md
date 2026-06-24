@@ -1,0 +1,143 @@
+---
+3md: 1.0
+axis: frame
+title: Ode to Joy - First Phrase by Measure
+key: D major
+tempo: 120 BPM
+meter: 4/4
+clef: treble
+composer: Ludwig van Beethoven (Symphony No. 9, 4th movement)
+arrangement: single-line melody, public domain
+---
+This is the opening eight-bar phrase of the "Ode to Joy" theme, sliced one
+measure per frame. Play the frames in order at 120 beats per minute and you get
+the full antecedent-consequent period. Each plane carries the notes of one bar
+(note name, scale degree, and beat), plus the lyric syllable that lands on it.
+
+Frame timing: at 120 BPM a quarter note is 0.5 seconds, so each 4/4 measure
+lasts 2.0 seconds. Frames 1 through 4 are the question (it ends unresolved on
+the dominant); frames 5 through 8 are the answer (it lands home on the tonic).
+
+@plane z=1 x=0 y=0 label="m.1 - Freu-de, schö-ner"
+# Measure 1
+
+```
+beat:   1     2     3     4
+note:   F#    F#    G     A
+degree: 3     3     4     5
+lyric:  Freu- de,  schö- ner
+```
+
+Four steady quarter notes. The tune does not start on the tonic D; it opens on
+the third (F#) and walks up by step to A. That gentle rise is the whole hook.
+
+Dynamics: **mf**, legato. Keep the quarters even, no rush into [[z=2|measure 2]].
+
+@plane z=2 x=1 y=0 label="m.2 - Göt-ter-fun-ken"
+# Measure 2
+
+```
+beat:   1     2     3     4
+note:   A     G     F#    E
+degree: 5     4     3     2
+lyric:  Göt-  ter-  fun-  ken
+```
+
+A mirror of [[z=1|measure 1]]: it reaches the peak on A, then steps back down
+through G and F# to E. Up four notes, down four notes - a tidy arch.
+
+Watch the E on beat 4; it is the leading tension that leans toward the cadence
+shape coming in [[z=3|measure 3]].
+
+@plane z=3 x=2 y=0 label="m.3 - Toch-ter aus E-ly-"
+# Measure 3
+
+```
+beat:   1     2     3     4
+note:   E     E     F#    D
+degree: 2     2     3     1
+lyric:  Toch- ter   aus   E-
+```
+
+Here is the one rhythmic wrinkle most singers trip on. Beats 3 and 4 are NOT
+two plain quarters: F# is a dotted quarter (1.5 beats) and D is an eighth note
+(0.5 beats). Count it "one, two, three, four-and" with D landing on the "and".
+
+The line finally touches the tonic D, but only in passing - the phrase is not
+done. It pushes on to [[z=4|measure 4]].
+
+@plane z=4 x=3 y=0 label="m.4 - si-um (half cadence)"
+# Measure 4
+
+```
+beat:   1     2     3     4
+note:   D     E     (E    -)
+degree: 1     2      2
+lyric:  ly-   si-    um
+```
+
+The antecedent closes. D rises to E, and the E is held for two beats (a half
+note) on "-um". Ending on the second degree over a dominant chord is a **half
+cadence**: it sounds like a comma, not a period.
+
+Frames 1 through 4 asked the musical question. The answer begins at
+[[z=5|measure 5]], which is an exact repeat of bar 1.
+
+@plane z=5 x=0 y=1 label="m.5 - Wir be-tre-ten"
+# Measure 5
+
+```
+beat:   1     2     3     4
+note:   F#    F#    G     A
+degree: 3     3     4     5
+lyric:  Wir   be-   tre-  ten
+```
+
+The consequent phrase reuses the opening note-for-note. Compare it side by side
+with [[z=1|measure 1]]: identical pitches and rhythm, new lyric. Beethoven gets
+a whole second sentence almost for free by repeating the first.
+
+@plane z=6 x=1 y=1 label="m.6 - feu-er-trun-ken"
+# Measure 6
+
+```
+beat:   1     2     3     4
+note:   A     G     F#    E
+degree: 5     4     3     2
+lyric:  feu-  er-   trun- ken
+```
+
+Again an exact echo, this time of [[z=2|measure 2]]: up to A, then the stepwise
+descent back to E. The arch returns, setting up the only real difference, which
+lands in [[z=7|measure 7]].
+
+@plane z=7 x=2 y=1 label="m.7 - Him-mli-sche, dein"
+# Measure 7
+
+```
+beat:   1     2     3     4
+note:   E     E     F#    D
+degree: 2     2     3     1
+lyric:  Him-  mli-  sche, dein
+```
+
+Same dotted-quarter-then-eighth rhythm as [[z=3|measure 3]] (F# dotted, D as the
+eighth on the "and" of 3). But now the melody is aiming for a real ending in
+[[z=8|measure 8]] rather than the half cadence it took before.
+
+@plane z=8 x=3 y=1 label="m.8 - Hei-lig-tum! (full cadence)"
+# Measure 8
+
+```
+beat:   1     2     3     4
+note:   D     C#    (D    -)
+degree: 1     7      1
+lyric:  Hei-  lig-  tum!
+```
+
+Home at last. C# (the leading tone, degree 7) resolves up to D held for two
+beats - a **perfect authentic cadence** over the tonic chord. That is the period
+finished: the open comma of [[z=4|measure 4]] is answered with a full stop here.
+
+Loop back to [[z=1|measure 1]] to play the eight-bar theme again, or hand it to
+the cellos an octave down the way the symphony does.

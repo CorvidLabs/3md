@@ -1,0 +1,102 @@
+---
+3md: 1.0
+axis: layer
+title: Operation Northwind - Progressive Redaction
+classification: declassified-with-redactions
+case_number: NW-1998-0447
+review_authority: Office of Historical Records
+---
+This memorandum is published in four review layers. Each plane is the same
+document at a different declassification stage, from the fully sealed copy that
+left the archive to the unredacted text approved for public release in 2026.
+
+Start at the most restricted copy in [[z=0|the sealed layer]] and peel back one
+layer at a time to watch the black bars disappear.
+
+@plane z=0 label="Sealed (FOIA denied)"
+# MEMORANDUM - SEALED COPY
+
+**To:** [REDACTED]
+**From:** [REDACTED]
+**Date:** [REDACTED]
+**Re:** [REDACTED]
+
+1. On [REDACTED] this office authorized [REDACTED] to proceed with
+   [REDACTED] under the budget line described in [REDACTED].
+
+2. The estimated cost was [REDACTED] and the responsible vendor was
+   [REDACTED], operating out of [REDACTED].
+
+3. [REDACTED]
+
+> Release status: DENIED IN FULL. Exemptions (b)(1), (b)(3), (b)(6).
+
+Peel forward to [[z=1|the partial release]] to see what the first review let through.
+
+@plane z=1 label="Partial release (2009)" x=2
+# MEMORANDUM - PARTIAL RELEASE
+
+**To:** Director, [REDACTED]
+**From:** [REDACTED], Program Office
+**Date:** March [REDACTED], 1998
+**Re:** Renewal of the [REDACTED] maintenance contract
+
+1. On March 4, 1998 this office authorized the Program Office to proceed with
+   renewal of the [REDACTED] under the budget line described in Appendix C.
+
+2. The estimated cost was [REDACTED] and the responsible vendor was
+   [REDACTED], operating out of Reston, Virginia.
+
+3. The renewal carries a one year option that may be exercised by [REDACTED].
+
+> Release status: GRANTED IN PART. Names and dollar figures withheld under
+> (b)(6) personal privacy and (b)(4) trade secrets.
+
+Names and amounts return in [[z=2|the appeal release]].
+
+@plane z=2 label="Appeal release (2017)" x=4
+# MEMORANDUM - APPEAL RELEASE
+
+**To:** Director, Office of Facilities Management
+**From:** Karen Albright, Program Office
+**Date:** March 4, 1998
+**Re:** Renewal of the Building 7 HVAC maintenance contract
+
+1. On March 4, 1998 this office authorized the Program Office to proceed with
+   renewal of the Building 7 HVAC maintenance contract under the budget line
+   described in Appendix C.
+
+2. The estimated cost was $214,500 and the responsible vendor was
+   Tidewater Mechanical Services, operating out of Reston, Virginia.
+
+3. The renewal carries a one year option that may be exercised by [REDACTED].
+
+> Release status: GRANTED IN PART after appeal. One sentence remains withheld
+> under (b)(5) deliberative process.
+
+The last black bar comes off in [[z=3|the full release]].
+
+@plane z=3 label="Full release (2026)" x=6
+# MEMORANDUM - FULL RELEASE
+
+**To:** Director, Office of Facilities Management
+**From:** Karen Albright, Program Office
+**Date:** March 4, 1998
+**Re:** Renewal of the Building 7 HVAC maintenance contract
+
+1. On March 4, 1998 this office authorized the Program Office to proceed with
+   renewal of the Building 7 HVAC maintenance contract under the budget line
+   described in Appendix C.
+
+2. The estimated cost was $214,500 and the responsible vendor was
+   Tidewater Mechanical Services, operating out of Reston, Virginia.
+
+3. The renewal carries a one year option that may be exercised by the Deputy
+   Director without further board review, a delegation we recommend revisiting
+   given the cost growth on the prior contract.
+
+> Release status: GRANTED IN FULL. All exemptions lifted on the 25 year
+> automatic declassification review.
+
+Compare against [[z=0|the sealed copy]] to see how much of an ordinary
+facilities memo stayed hidden for nearly three decades.

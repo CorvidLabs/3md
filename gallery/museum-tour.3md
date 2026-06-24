@@ -1,0 +1,116 @@
+---
+3md: 1.0
+axis: space
+title: The Meridian Museum - Self-Guided Walking Tour
+docent: Recorded narration available at each numbered stop
+duration: about 55 minutes
+accessibility: step-free route via the west elevator
+---
+Welcome to the Meridian Museum. This self-guided tour moves you through five
+connected galleries on the second floor, west to east. Each plane below is one
+room. Follow the numbered floor markers, and use the cross-references to double
+back when a later room rewards a second look at an earlier one.
+
+Start at the top of the grand stair and turn left into the Atrium.
+
+@plane z=0 x=0 y=0 label="Atrium and Orientation"
+# Stop 1 - The Atrium
+
+You are standing under the glass oculus. The terrazzo compass inlaid in the
+floor points true north, which is the direction you are now facing.
+
+- **Look up.** The oculus is 14 meters above you. On a clear morning a bright
+  disc of light tracks across the north wall like a slow sundial.
+- **Look down.** The brass meridian line crossing the compass is the museum's
+  namesake. It was surveyed in 1911 and is accurate to within a few centimeters.
+
+**Where to go next:** the wide doorway on your right leads east into the Hall of
+Antiquities. If you only have twenty minutes, skip ahead to
+[[z=3|the Impressionist Room]], which is the collection's centerpiece.
+
+> Tip: benches line the north wall. The coat check is behind you, under the
+> stair.
+
+@plane z=1 x=12 y=0 label="Hall of Antiquities"
+# Stop 2 - The Hall of Antiquities
+
+Twelve meters east of the atrium, the light drops and the ceilings lower. This
+is deliberate: the basalt and limestone pieces here were made for dim interiors.
+
+## Don't miss
+
+1. **The Sailor's Stele (case 4).** A carved limestone slab listing a merchant
+   ship's crew, names and all, from a Mediterranean port around 300 BCE.
+2. **The Banquet Fresco fragment (north wall).** Pull the small light switch
+   beside it. Raking light reveals brush marks invisible under flat lighting.
+3. **The bronze hand mirror (case 9).** Still faintly reflective after two
+   thousand years of burial.
+
+The fresco's palette - ochre, charcoal, a costly Egyptian blue - reappears
+upstairs in a surprising place. Hold that thought until
+[[z=3|the Impressionists]], who chased the very same blue.
+
+**Where to go next:** continue east through the low archway into the Cloister.
+
+@plane z=2 x=24 y=0 label="The Cloister Garden"
+# Stop 3 - The Cloister Garden
+
+You have stepped outside. This reconstructed cloister was shipped, stone by
+numbered stone, from a dissolved abbey and rebuilt around a working herb garden.
+
+- The covered walk on all four sides is original twelfth-century stonework.
+- The herbs are planted by use: **culinary** along the south walk, **medicinal**
+  along the north, **dye plants** (woad, madder, weld) in the east beds.
+- Listen. The fountain at the center is fed by the same cistern that served the
+  abbey kitchen.
+
+This is the quietest stop on the tour and the best place to rest. The madder
+beds, by the way, are the source of the red lake pigment you will see squeezed
+straight from the tube [[z=3|in the next room]].
+
+**Where to go next:** the glass doors on the east side return you indoors and
+deliver you, blinking, into full daylight again.
+
+@plane z=3 x=36 y=0 label="The Impressionist Room"
+# Stop 4 - The Impressionist Room
+
+The centerpiece of the museum. After the cloister's hush, this room is loud with
+light. The north-facing skylights were rebuilt in 2019 to match the diffuse
+studio light these painters prized.
+
+## The three to study
+
+| Work | Artist | Why it matters |
+| --- | --- | --- |
+| *Harbor at Dawn* | Berthe Vasseur | Note the unmixed strokes of orange and violet that blend only at viewing distance. Step back six paces. |
+| *The Glasshouse* | Henri Lacombe | The Egyptian blue from [[z=1|the Antiquities fresco]] returns here as cobalt, two thousand years later. |
+| *Madder Field* | Clara Reyes | Painted with the same madder-root red grown in [[z=2|the cloister beds]]. |
+
+**A trick worth trying:** stand close enough to see the brushwork as raw paint,
+then walk slowly backward. There is a distance, usually around six paces, where
+the marks snap into a coherent scene. Each visitor's distance is slightly
+different.
+
+**Where to go next:** the final room, the Reading Terrace, is through the
+curtained doorway on the east wall.
+
+@plane z=4 x=48 y=0 label="The Reading Terrace"
+# Stop 5 - The Reading Terrace
+
+The tour ends where it is meant to: somewhere to sit and let it settle. This
+glazed terrace overlooks the cloister garden you walked through earlier.
+
+- **The reading wall** holds open-access folios. Handle them with the cotton
+  gloves provided in the basket.
+- **The view** frames [[z=2|the cloister]] from above. You can pick out the
+  three herb zones by color from up here.
+- **The guest book** is on the lectern by the exit. We read every entry.
+
+## Before you leave
+
+- The cafe is one floor down, reached by the west elevator near
+  [[z=0|the atrium]] where you began.
+- Members get a second-visit pass at the desk. The Impressionist Room rewards a
+  return trip in different weather, when the skylights tell a different story.
+
+Thank you for walking with us. Mind the step on your way out.

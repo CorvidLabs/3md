@@ -1,0 +1,147 @@
+---
+3md: 1.0
+axis: status
+title: Senior Backend Engineer - Hiring Funnel
+role: Senior Backend Engineer (Platform)
+req: REQ-2026-0418
+hiring_manager: Priya Nadkarni
+recruiter: Tom Ellison
+opened: 2026-05-04
+target_start: 2026-08-03
+---
+A single open requisition tracked as a funnel. Each plane is one status in the
+pipeline, ordered from first contact (z=0) to signed offer (z=5). The `x` offset
+nudges later stages rightward so a spatial viewer reads the funnel left to right;
+the `y` offset keeps the row aligned. Counts reflect the state as of 2026-06-23.
+
+Conversion target for this req: 120 sourced to 1 hire (roughly 0.8 percent).
+
+@plane z=0 x=0 y=0 label="Applied"
+# Applied (124 candidates)
+
+Top of funnel. Inbound applications plus sourced leads that replied. No human
+screen yet; this stage is automated resume parsing and a knockout questionnaire.
+
+## Sources
+- Inbound (careers page): 71
+- Sourced (LinkedIn, recruiter outreach): 38
+- Referrals (employee): 15
+
+## Knockout filters (auto)
+- Work authorization for the listed region: required
+- 4+ years production backend experience: required
+- One of Go, Rust, or Java at scale: required
+
+## Outcome
+- 87 passed knockout and moved to [[z=1|Phone Screen]]
+- 37 auto-rejected (sent the standard 48-hour decline note)
+
+Referrals convert far better here, so Tom is asking the team for 5 more intros
+this week. See the offer math at [[z=5|Offer]].
+
+@plane z=1 x=2 y=0 label="Phone Screen"
+# Phone Screen (29 scheduled)
+
+A 30-minute recruiter call: motivation, compensation range, location and notice
+period, and a quick sanity check on the resume claims.
+
+## What we screen for
+- Comp expectation inside band (185k to 215k base, plus equity)
+- Notice period of 8 weeks or less
+- Genuine interest in platform/infra work (not just "any backend role")
+
+## Status
+- Completed: 22
+- Scheduled, not yet held: 7
+- Passed to [[z=2|Technical Screen]]: 16
+- Declined or dropped: 6 (3 comp mismatch, 2 ghosted, 1 took another offer)
+
+Recruiter note: two strong candidates are over band. Priya is deciding whether to
+flex the range or let them go.
+
+@plane z=2 x=4 y=0 label="Technical Screen"
+# Technical Screen (16 candidates)
+
+A 60-minute live coding session over a shared editor. One data-structures problem
+and one "debug this failing service" problem. Graded on a rubric, not vibes.
+
+## Rubric (1 to 4 each)
+- Problem decomposition
+- Code correctness and edge cases
+- Communication while working
+- Testing instinct
+
+A passing bar is an average of 3.0 with no dimension below 2.
+
+## Status
+- Completed: 13
+- Booked: 3
+- Advanced to [[z=3|Onsite Loop]]: 8
+- Did not pass: 5
+
+The "debug this service" problem is doing real work this cycle; 4 of the 5
+rejections stumbled on reading an unfamiliar stack trace under time pressure.
+
+@plane z=3 x=6 y=0 label="Onsite Loop"
+# Onsite Loop (8 candidates)
+
+A half-day virtual loop of four interviews. This is the most expensive stage in
+engineer-hours, so we protect it: only confident technical-screen passes get here.
+
+## The loop
+1. System design (design a rate limiter for a multi-tenant API)
+2. Coding deep-dive (extend the candidate's own take-home)
+3. Architecture and tradeoffs (past project teardown)
+4. Values and collaboration (with a partner team lead)
+
+## Status
+- Completed all four: 5
+- Loop in progress: 3
+- Recommended for offer: 3
+- No-hire after debrief: 2
+
+Debrief rule: any single "strong no-hire" blocks the candidate unless two
+"strong hires" outvote it. Both rejections here had a split panel.
+
+Three candidates now sit in [[z=4|Debrief / Decision]].
+
+@plane z=4 x=8 y=0 label="Debrief / Decision"
+# Debrief / Decision (3 candidates)
+
+The hiring committee reviews packets: scorecards, code samples, and interviewer
+notes. The goal is a calibrated yes/no, not an average of stars.
+
+## Live packets
+| Candidate | System Design | Coding | Architecture | Values | Decision |
+|-----------|---------------|--------|--------------|--------|----------|
+| C-041 (Dana R.)   | Strong hire | Hire        | Strong hire | Hire | Offer |
+| C-052 (Marcus L.) | Hire        | Strong hire | Hire        | Hire | Offer |
+| C-039 (Wei C.)    | Hire        | Hire        | Lean hire   | Hire | Hold for level |
+
+## Decisions
+- 2 approved for offer, moving to [[z=5|Offer]]
+- 1 (Wei C.) held: strong, but committee thinks the title should be mid, not
+  senior. Priya is checking whether a second req can absorb the level.
+
+We came in through [[z=3|Onsite Loop]] with three recommendations and kept all
+three alive, which is a healthier ratio than last quarter.
+
+@plane z=5 x=10 y=0 label="Offer"
+# Offer (2 extended, 1 verbal yes)
+
+Final stage. Compensation approved by finance, offer letter generated, and the
+closing conversation handled by the hiring manager, not the recruiter.
+
+## Live offers
+- **Dana R. (C-041):** offer sent 2026-06-20. 200k base, 0.18 percent equity,
+  15k sign-on. Verbal yes on 2026-06-23, awaiting signature.
+- **Marcus L. (C-052):** offer being drafted, competing with one other company.
+  Closing call scheduled for 2026-06-25.
+
+## Funnel math (this req)
+- 124 applied to 2 offers is a 1.6 percent applied-to-offer rate
+- Expecting 1 to 2 signatures, which meets the single-hire target
+- Time from open (2026-05-04) to first offer: 47 days
+
+If both sign, the second headcount rolls into the platform team's Q3 plan rather
+than closing the req. Start the whole story again at [[z=0|Applied]].

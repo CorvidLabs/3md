@@ -1,0 +1,114 @@
+---
+3md: 1.0
+axis: floor
+title: Mercy General Hospital - Floor Guide
+building: Tower A (Main Pavilion)
+elevators: Bank 1 (west lobby), Bank 2 (east garage link)
+emergency: Dial 4444 from any house phone for a Code Blue
+updated: 2026-06-23
+---
+Welcome to Tower A. Each plane below is one floor, stacked from the ground-level
+Lobby (z=0) up to the Surgical floor (z=4). Use the west elevator bank for
+visitor floors and the east bank for the parking garage link. Wayfinding tiles
+in the floor follow the same color you see on each floor's header below.
+
+@plane z=0 label="Ground - Lobby & Emergency" x=0 y=0
+# Ground Floor - Lobby & Emergency (Blue Zone)
+
+You are here. Information desk is straight ahead past the revolving doors.
+
+## Key destinations
+- **Emergency Department (ED)** - follow the red line on the floor, south corridor
+- **Admitting / Registration** - desks 1 through 6, immediately right of the lobby
+- **Gift shop & cafe** - open 6:00 AM to 9:00 PM, left of the fountain
+- **Pharmacy (outpatient pickup)** - window 3, behind the information desk
+- **Chapel & quiet room** - north alcove, open 24 hours
+
+## Getting around
+- Visitor elevators: take **Bank 1 (west)** for floors 1-4
+- Need surgery check-in? Go up to [[z=4|Surgical Services on Floor 4]]
+- Garage link and valet: head to the east doors near Admitting
+
+> After 9:00 PM all visitors enter through the **Emergency entrance** and sign in
+> at the security desk. Day passes are not valid overnight.
+
+@plane z=1 label="Floor 1 - Imaging & Labs" x=0 y=0
+# Floor 1 - Imaging & Diagnostics (Green Zone)
+
+Outpatient testing lives here. Check in at the green kiosk when you arrive.
+
+## Departments
+- **Radiology** - X-ray, CT, ultrasound (rooms 110-118)
+- **MRI suite** - room 120, ring the bell; remove all metal before entering
+- **Phlebotomy / Blood draw** - rooms 101-104, walk-ins 7:00 AM to 5:00 PM
+- **Cardiac testing** - EKG and stress lab, room 130
+
+## Before your scan
+- Fasting bloodwork: nothing but water for 8 hours prior
+- Contrast CT: arrive 30 minutes early to drink the prep
+- Bring your photo ID and the order from your referring physician
+
+Heading to inpatient care afterward? The wards begin on
+[[z=2|Floor 2 - Medical & Surgical Units]]. Pre-op patients should continue to
+[[z=4|Floor 4 - Surgical Services]].
+
+@plane z=2 label="Floor 2 - Inpatient Wards" x=0 y=0
+# Floor 2 - Medical & Surgical Units (Amber Zone)
+
+General inpatient rooms. Quiet hours are 10:00 PM to 6:00 AM.
+
+## Unit map
+- **2 West (rooms 201-224)** - General medicine
+- **2 East (rooms 225-248)** - Post-surgical recovery
+- **Nurses' station** - center hub, staffed 24/7, call button reaches here
+
+## Visitor notes
+- Two visitors per patient at a time
+- Wash or sanitize hands at every doorway dispenser
+- Flowers are welcome; latex balloons are not (allergy safety)
+- Meal service runs 7:30 AM, 12:00 PM, and 5:30 PM
+
+For higher-acuity patients, the intensive care unit is one floor up on
+[[z=3|Floor 3 - Critical Care]]. Discharge paperwork is processed back down at
+[[z=0|Ground Floor Admitting]].
+
+@plane z=3 label="Floor 3 - Critical Care" x=0 y=0
+# Floor 3 - Critical Care & Maternity (Purple Zone)
+
+Restricted access. Press the intercom at the double doors and wait to be buzzed in.
+
+## Units
+- **Intensive Care Unit (ICU)** - 12 beds, rooms 301-312
+- **Cardiac Care Unit (CCU)** - rooms 313-320
+- **Labor & Delivery / Maternity** - secured wing, rooms 330-345
+- **Neonatal step-down nursery** - room 348
+
+## Access rules
+- ICU and CCU: immediate family only, please check with the charge nurse
+- Maternity badge required; partners receive a wristband at check-in
+- No children under 12 in the ICU corridors
+- Phones on silent, calls taken in the family lounge near room 305
+
+Need a procedure or operation? The operating rooms are directly above on
+[[z=4|Floor 4 - Surgical Services]]. Imaging orders are filled down on
+[[z=1|Floor 1 - Imaging & Diagnostics]].
+
+@plane z=4 label="Floor 4 - Surgical Services" x=0 y=0
+# Floor 4 - Surgical Services (Red Zone)
+
+The top floor of Tower A. Surgical check-in, operating rooms, and recovery.
+
+## Areas
+- **Pre-op / Surgical check-in** - desk 4A, arrive 2 hours before your scheduled time
+- **Operating rooms** - OR 1 through OR 8 (staff only past the red doors)
+- **Post-Anesthesia Care Unit (PACU)** - recovery bays, family is paged here
+- **Surgical waiting lounge** - room 410, live status board updates by case number
+
+## On the day of surgery
+- Nothing to eat or drink after midnight unless your surgeon says otherwise
+- Leave jewelry, contacts, and valuables at home
+- A family member should stay reachable in the [[z=4|surgical waiting lounge]]
+- After recovery, most patients move to [[z=2|Floor 2 - Post-surgical Recovery]]
+
+> Surgeons update families through the status board and in person after each case.
+> If you step away, leave a phone number with the lounge volunteer.

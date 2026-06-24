@@ -1,0 +1,187 @@
+---
+3md: 1.0
+axis: depth
+title: Progressive Product Onboarding
+product: Cadence (team scheduling app)
+audience: new workspace owner
+goal: first scheduled event within 10 minutes
+strategy: surface one decision per depth layer, defer the rest
+---
+Onboarding stacked by depth. The front plane is what the new user sees the
+instant they sign in: one screen, one action, nothing else competing for
+attention. Each plane behind it holds the next thing we reveal, but only after
+the user is ready for it. Nothing in the back planes is shown up front; depth is
+how we defer complexity instead of dumping it.
+
+Read front to back. The closest plane (z=0) is the empty workspace. The deepest
+plane (z=4) is full power-user territory most people never need on day one.
+
+Start at the [[z=0|first screen]] and only descend when the user earns the next
+layer by completing the one in front of it.
+
+@plane z=0 x=0 y=0 label="First screen (empty workspace)"
+# Layer 0: The First Screen
+
+The user just confirmed their email and landed in an empty workspace. This is
+the highest-stakes moment, so the screen does exactly one thing.
+
+## What is visible
+
+- A single headline: "Let's schedule your first event."
+- One primary button: **Create event**
+- One muted skip link: "I'll explore on my own"
+
+That is the entire screen. No sidebar, no settings, no team invites, no billing.
+
+## Why only one action
+
+The empty state is where people bounce. A workspace with zero events has nothing
+to look at, so an empty dashboard reads as "broken" rather than "new." Replacing
+the dashboard with a single call to action turns confusion into momentum.
+
+## The one rule for this layer
+
+> Do not show a feature until the user has a reason to care about it. On an empty
+> workspace, the only thing they can care about is creating something.
+
+When they click **Create event**, we reveal the next layer of depth: the
+[[z=1|guided event builder]]. If they skip, we still drop them at
+[[z=1|the builder]] but with a dismissable tip instead of a forced flow.
+
+@plane z=1 x=0 y=0 label="Guided first event"
+# Layer 1: Guided First Event
+
+The user committed to creating something. Now we walk them through it with
+smart defaults so the first event takes seconds, not minutes.
+
+## Pre-filled so nothing is blank
+
+| Field    | Default we provide          | Why                                  |
+|----------|-----------------------------|--------------------------------------|
+| Title    | "Team sync"                 | Most common first event             |
+| Duration | 30 minutes                  | Safe, editable, one tap to change   |
+| When     | Tomorrow, 10:00 local time  | Avoids "right now" scheduling panic |
+| Invitees | Empty, with a hint to add   | The only field we ask them to touch |
+
+The user can accept every default and ship a real event with a single tap on
+**Schedule**, or edit any field inline.
+
+## The teaching moment
+
+As they hover the **When** field, a small inline note appears:
+
+- "Cadence reads your working hours and never books outside them."
+
+This is the first time we mention working hours, and we mention it exactly when
+it becomes relevant, not in a settings tour up front.
+
+## After they schedule
+
+The event lands on a real calendar and we surface a single follow-up:
+
+> Nice. Want Cadence to find times automatically next time? Turn on
+> [[z=2|availability rules]].
+
+That link is the doorway to the next depth layer. Most users tap it within their
+first session because they just felt the pain of picking a time by hand.
+
+@plane z=2 x=0 y=0 label="Availability rules"
+# Layer 2: Availability Rules
+
+This layer appears only after the first event exists. Now the user has felt the
+manual flow and is ready to automate it. We introduce one new concept: rules
+that describe when they are bookable.
+
+## What we ask for, in order
+
+1. **Working hours.** "When are you usually available?" Pre-set to 9:00 to 17:00,
+   Monday through Friday. Two taps to adjust.
+2. **Buffer time.** "How long between meetings?" Default 10 minutes. One slider.
+3. **Daily limit.** "Most meetings per day?" Default unlimited, optional cap.
+
+Each question is its own card. The user answers one, it slides away, the next
+appears. We never show all three at once.
+
+## Connecting back
+
+These rules quietly upgrade the experience the user already knows. The next time
+they open the [[z=1|event builder]], the **When** field stops suggesting a fixed
+slot and starts suggesting only times that fit these rules.
+
+## The payoff line
+
+> You set this up once. From now on, Cadence only offers times that work for you.
+
+When availability rules are saved, and only then, we unlock sharing: the user can
+hand out a [[z=3|booking link]] so other people schedule against these rules.
+
+@plane z=3 x=0 y=0 label="Shareable booking link"
+# Layer 3: Shareable Booking Link
+
+Depth here means power that depends on everything in front of it. A booking link
+is useless without availability rules, so we gated it behind
+[[z=2|Layer 2]] on purpose.
+
+## The reveal
+
+A new panel slides in with a ready-to-copy link:
+
+```
+cadence.app/u/your-handle
+```
+
+Below it, a one-line explanation:
+
+- "Send this to anyone. They pick a time, Cadence books it inside your rules,
+  and it never double-books you."
+
+## One optional refinement
+
+We offer a single advanced toggle, collapsed by default:
+
+- **Event types.** Split the link into "15 min intro," "30 min review," and
+  "60 min deep dive," each with its own duration and rules.
+
+Most users leave this collapsed. Power users expand it. That choice is theirs to
+make later, which is exactly why it lives this deep.
+
+## Where it leads
+
+Once a real person books through the link, the user has completed the core loop:
+create, automate, share, receive. At that point we stop teaching and step back,
+surfacing the rest of the product only through the [[z=4|reference layer]] when
+they go looking for it.
+
+@plane z=4 x=0 y=0 label="Reference and power features"
+# Layer 4: Reference Layer (Pull, Not Push)
+
+The deepest plane is everything we deliberately did not teach. It exists, it is
+searchable, but it is never pushed into the new user's face. They reach it by
+pulling: opening the command bar, searching help, or clicking into settings on
+their own schedule.
+
+## What lives back here
+
+- **Team scheduling.** Round-robin assignment, shared team links, load
+  balancing across colleagues.
+- **Integrations.** Two-way sync with external calendars, video links auto
+  attached, CRM and payment hooks.
+- **Workflows.** Reminder sequences, follow-up emails, no-show handling, custom
+  intake questions.
+- **Analytics.** Booking rates, busiest hours, time reclaimed per week.
+
+## The principle that put these here
+
+> Discoverable on demand, invisible by default. A feature in the reference layer
+> earns its way forward only when the user's behavior signals they need it.
+
+For example, if Cadence notices a user manually copying the same
+[[z=3|booking link]] to five teammates, it can offer to promote team scheduling
+from this layer up to the surface. The depth never collapses on its own; the
+product just raises a feature when the data says it is finally relevant.
+
+## Closing the loop
+
+A user who never descends past [[z=1|the first event]] still has a working
+product. A user who reaches this layer has grown into it one decision at a time.
+That gradient, front to back, is the whole point of progressive onboarding.

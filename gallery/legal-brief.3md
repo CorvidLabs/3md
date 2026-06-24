@@ -1,0 +1,112 @@
+---
+3md: 1.0
+axis: depth
+title: Brief in Opposition to Summary Judgment
+court: United States District Court, Northern District of California
+case: Vela v. Meridian Logistics, Inc., No. 3:24-cv-01187-WHA
+party: Plaintiff Daniela Vela
+counsel: Okafor & Reyes LLP
+---
+Read top down: the foreground plane (z=0) is the bare holding a busy judge
+needs first. Each plane behind it adds depth, ending at the full doctrinal
+reasoning at z=4. Drill from any layer using the cross-plane links.
+
+@plane z=0 label="Holding" x=0 y=0
+# Conclusion
+
+Summary judgment must be DENIED. A reasonable jury could find that Meridian
+classified Ms. Vela as an independent contractor while exercising the control
+of an employer, so the central factual question (control over the manner and
+means of her work) is genuinely disputed and cannot be resolved on the papers.
+
+Drill down for the supporting structure: [[z=1|standard of review]],
+[[z=2|the disputed facts]], [[z=3|the controlling test]], and the
+[[z=4|full doctrinal analysis]].
+
+@plane z=1 label="Standard" x=0 y=-1
+# Standard of Review
+
+Summary judgment is proper only where there is no genuine dispute as to any
+material fact. Fed. R. Civ. P. 56(a). The court views the evidence in the light
+most favorable to the non-moving party and draws all reasonable inferences in
+her favor. Tolan v. Cotton, 572 U.S. 650, 657 (2014).
+
+The moving party bears the initial burden. Credibility determinations and the
+weighing of evidence are jury functions, not those of a judge on a Rule 56
+motion. Anderson v. Liberty Lobby, Inc., 477 U.S. 242, 255 (1986).
+
+Because the [[z=2|record facts]] are disputed on the question that
+[[z=3|the governing test]] makes dispositive, the [[z=0|denial]] follows.
+
+@plane z=2 label="Disputed Facts" x=1 y=-2
+# The Material Facts Are Disputed
+
+Drawing all inferences for Ms. Vela, the record shows:
+
+- **Scheduling.** Meridian assigned her routes through its dispatch app and
+  penalized drivers who declined more than two assignments per week (Vela Decl.
+  paragraph 7; Dispatch Policy 4.2).
+- **Supervision.** A route manager tracked her in real time and sent corrective
+  messages about speed and rest stops (Ex. 12, message logs).
+- **Equipment.** She was required to lease a Meridian-branded van and run
+  company software; she could not substitute her own vehicle (Lease Agr. 1-3).
+- **Integration.** Last-mile delivery is Meridian's core business, not a
+  peripheral service.
+
+Meridian's contrary evidence (a signed contractor agreement and her separate
+LLC) goes to weight, not to the absence of a dispute. That conflict is exactly
+what [[z=1|Rule 56]] reserves for trial, and it is the conflict the
+[[z=3|Borello factors]] turn on.
+
+@plane z=3 label="Governing Test" x=1 y=-3
+# The Controlling Legal Test
+
+California applies the Borello multi-factor test to common-law employment
+status, with the right to control the manner and means of work as the
+principal factor. S. G. Borello & Sons, Inc. v. Dept. of Industrial Relations,
+48 Cal. 3d 341, 350 (1989).
+
+Secondary factors include:
+
+1. Whether the worker is engaged in a distinct occupation or business.
+2. Whether the work is part of the principal's regular business.
+3. Who supplies the instrumentalities and place of work.
+4. The method of payment (by time versus by the job).
+5. Whether the parties believe they are creating an employment relationship.
+
+No single secondary factor is decisive; they are weighed together against the
+control inquiry. Applying them to the [[z=2|disputed record]] is a jury task.
+The detailed weighing appears in the [[z=4|full analysis]].
+
+@plane z=4 label="Full Analysis" x=2 y=-4
+# Full Doctrinal Analysis
+
+**Control is the heart of the dispute.** The Borello court framed control over
+the manner and means of work as the most significant consideration. 48 Cal. 3d
+at 350. Meridian's real-time tracking, route assignment, and corrective
+messaging (see [[z=2|the supervision facts]]) are classic indicia of an
+employer's control. A jury could reasonably find Meridian directed not just the
+result but the method.
+
+**The secondary factors do not rescue the motion.** Three of the five point
+toward employment on this record:
+
+- *Regular business.* Delivery is Meridian's regular business, weighing toward
+  employee status (factor 2).
+- *Instrumentalities.* Meridian supplied the branded van and software (factor
+  3), again favoring employment.
+- *Method of payment.* Per-route pay is consistent with either status and is
+  therefore neutral (factor 4).
+
+The contractor agreement and the LLC (factor 5, the parties' belief) cut the
+other way, but Borello is explicit that a label the parties adopt does not
+control where the economic reality differs. Where the factors point in
+different directions, the weighing belongs to the jury.
+
+**Meridian's authorities are distinguishable.** Each granted summary judgment
+on an *undisputed* record where the hiring party exercised no day-to-day
+control. Here the [[z=1|Rule 56 standard]] forbids resolving the live control
+dispute on the papers.
+
+**Disposition.** For these reasons the motion should be denied. This is the
+reasoning that supports the [[z=0|holding]] stated at the foreground.

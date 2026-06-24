@@ -1,0 +1,109 @@
+---
+3md: 1.0
+axis: layer
+title: Downtown Mobility Map
+city: Riverbend
+projection: Web Mercator
+center: 41.8781,-87.6298
+zoom: "14"
+units: metric
+---
+A single downtown viewport rendered as a stack of toggleable overlays. The base
+street grid sits at the bottom; transit, bike, and live traffic stack on top of
+it. Each overlay aligns to the same bounding box, so a point at one (x, y) offset
+refers to the same corner across every plane.
+
+Start at the [[z=0|base map]], then turn layers on from there.
+
+@plane z=0 x=0 y=0 label="Base map"
+# Base Map (Street Grid)
+
+The foundation layer. Streets, blocks, water, and parks. Everything above is
+registered to this grid.
+
+## Reference corners
+
+| Marker | Cross streets        | Notes                          |
+|--------|----------------------|--------------------------------|
+| A      | Main St & 1st Ave    | City Hall, fountain plaza      |
+| B      | Harbor Blvd & 9th    | Ferry terminal, taxi rank      |
+| C      | Elm St & Park Way    | Riverbend Park north entrance  |
+
+- **Scale:** 1 grid square = 100 m
+- **One-way streets:** drawn with a single chevron at each intersection
+- **Water:** the Riverbend channel runs diagonally across the southwest quadrant
+
+Turn on overlays to read movement across this grid: [[z=1|transit]],
+[[z=2|bike network]], and [[z=3|live traffic]].
+
+@plane z=1 x=0 y=0 label="Transit"
+# Transit Overlay
+
+Rail and high-frequency bus lines drawn over the [[z=0|street grid]]. Stops snap
+to the nearest corner.
+
+## Lines in view
+
+- **Blue Line (rail):** runs north-south through Main St, stops at City Hall (A)
+  and the ferry terminal (B). Every 6 minutes at peak.
+- **Route 22 (bus):** east-west along Park Way, connects Riverbend Park (C) to
+  the Blue Line transfer at Main St. Every 10 minutes.
+- **Harbor Shuttle:** loops Harbor Blvd to the ferry, timed to boat departures.
+
+## Reading the overlay
+
+1. Solid thick line = rail, right of way is grade separated.
+2. Dashed line = bus, shares lanes with [[z=3|traffic]].
+3. Filled circle = accessible stop with elevator or ramp.
+
+> Transfer tip: the City Hall (A) stop links rail, the Route 22 bus, and the bike
+> dock shown on the [[z=2|bike network]].
+
+@plane z=2 x=0 y=20 label="Bike network"
+# Bike Network Overlay
+
+Protected lanes, painted lanes, and dock-based bikeshare, registered to the same
+grid as the [[z=0|base map]].
+
+## Lane types
+
+- **Protected (green):** Park Way, full length. Physical curb separation.
+- **Painted (yellow):** 1st Ave and 9th St. Lane marking only, shared with cars.
+- **Shared street (dotted):** Elm St, posted 20 km/h, no dedicated lane.
+
+## Bikeshare docks
+
+| Dock   | Location                | Bikes (typical) |
+|--------|-------------------------|-----------------|
+| D-01   | City Hall plaza (A)     | 12 of 20        |
+| D-02   | Ferry terminal (B)      | 4 of 16         |
+| D-03   | Park north entrance (C) | 18 of 24        |
+
+Dock D-02 runs low most mornings because of ferry commuters; rebalancing vans
+restock it around 09:30. Riders heading north can connect to the Route 22 bus on
+the [[z=1|transit overlay]] at the Park Way corner.
+
+@plane z=3 x=0 y=0 label="Live traffic"
+# Live Traffic Overlay
+
+Real-time roadway speeds colored over the [[z=0|street grid]]. Snapshot taken at
+17:42, weekday evening peak.
+
+## Current conditions
+
+- **Harbor Blvd (B):** red, stop and go. Ferry offload plus a stalled vehicle
+  near 9th. Average 8 km/h.
+- **Main St (A to B):** amber, heavy but moving. 18 km/h, signal-limited.
+- **Park Way:** green, free flowing. 34 km/h. The protected bike lane on the
+  [[z=2|bike network]] keeps turning conflicts low here.
+
+## Color key
+
+| Color | Meaning              | Speed vs free flow |
+|-------|----------------------|--------------------|
+| Green | Free flowing         | over 80 percent    |
+| Amber | Slow                 | 40 to 80 percent   |
+| Red   | Congested            | under 40 percent   |
+
+> Routing note: avoid Harbor Blvd southbound until the stall clears. The Blue
+> Line on the [[z=1|transit overlay]] bypasses this corridor entirely.

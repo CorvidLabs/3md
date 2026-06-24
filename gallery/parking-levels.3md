@@ -1,0 +1,108 @@
+---
+3md: 1.0
+axis: floor
+title: Cedar Street Garage - Levels P1 to P5
+structure: Cedar Street Municipal Parking
+spaces: 612
+clearance: 6 ft 8 in
+operator: City Mobility Authority
+---
+Five-level municipal garage on Cedar Street. The Z axis is the floor: P1 (street
+level) at the bottom, the roof deck at the top. Cross-plane links follow the
+natural flow a driver takes hunting for an open space, from the full lower decks
+up toward the open roof.
+
+@plane z=1 x=0 y=0 label="P1 - Street Level"
+# P1 - Street Level (Entry)
+
+**Spaces:** 96 | **Typical fill by 8:30 AM:** 100%
+
+Entry gate and ticket spitter are at the southeast corner off Cedar Street.
+Exit gate and the cashier booth are at the southwest corner onto 4th Avenue.
+
+## Reserved zones
+- Bays 1 to 12: monthly permit holders only (license plate enforced)
+- Bays 13 to 18: 15-minute loading, validated for the pharmacy
+- Bays 19 to 22: ADA accessible, nearest the street elevator
+
+## Notes
+P1 fills first and stays full. If the gate sign reads LOT FULL P1-P2, keep the
+ramp and head straight to [[z=3|P3]], which is where mid-morning arrivals
+usually find their first real opening. Bike racks are mounted on the north wall
+past the stairwell.
+
+@plane z=2 x=0 y=0 label="P2 - Compact and EV"
+# P2 - Compact Cars and EV Charging
+
+**Spaces:** 128 | **Typical fill by 9:00 AM:** 95%
+
+Reached by the helical ramp at the northeast corner. The whole east row is
+sized for compacts, so full-size pickups should continue up to [[z=4|P4]] where
+the bays run wider.
+
+## EV charging
+- 8 Level 2 chargers (J1772) along the west wall, bays 40 to 47
+- 2 DC fast chargers (CCS) at bays 48 and 49, 30-minute session cap
+- Idle fee of $0.40 per minute starts 10 minutes after a full charge
+
+## Wayfinding
+Color code on this level is **amber**. The pedestrian door at the south end
+connects to the skybridge over Cedar Street. Stairwell B is the fastest path
+down to the [[z=1|street exit]].
+
+@plane z=3 x=0 y=0 label="P3 - General Parking"
+# P3 - General Parking (Best Odds Midday)
+
+**Spaces:** 132 | **Typical fill by 9:00 AM:** 70%
+
+The sweet spot. P3 is the first level where a driver arriving after the morning
+rush reliably finds a space without circling. Color code is **green**.
+
+## Layout
+- Two-way central aisle, head-in 90-degree bays both sides
+- North end: cart corral and a covered waiting bench
+- South end: restrooms and the parking-payment kiosk (card and mobile only)
+
+## If P3 is full
+It rarely is before noon. When it is, the open spaces are one ramp up on
+[[z=4|P4]], and the roof deck on [[z=5|P5]] is almost always wide open. Heading
+out instead? Take Stairwell A straight down to the [[z=1|cashier and exit gate]].
+
+@plane z=4 x=0 y=0 label="P4 - Oversize and Vans"
+# P4 - Oversize Vehicles, Vans, and Trucks
+
+**Spaces:** 104 | **Typical fill by noon:** 55%
+
+Wider bays (9 ft 6 in) and a taller posted clearance of 7 ft 2 in on this
+level, so vehicles too tall for the lower decks belong here. Color code is
+**blue**.
+
+## Made for big vehicles
+- Bays 70 to 79: extended-length, fit full-size pickups with a bed cap
+- Bays 80 to 83: van-accessible ADA spots with 8 ft access aisles
+- No overhead pipes across the center two rows (the tallest clear span)
+
+## Heads up
+Cargo vans over 7 ft 2 in must use the surface lot on 4th Avenue, not this
+garage. Need a charger instead? They are two levels down on [[z=2|P2]]. The
+nearest open standard spaces are usually right above on [[z=5|the roof deck]].
+
+@plane z=5 x=0 y=0 label="P5 - Roof Deck"
+# P5 - Roof Deck (Open Air)
+
+**Spaces:** 152 | **Typical fill:** rarely above 60%
+
+Open-air top level with no height limit, the only deck that fits anything tall.
+Plenty of space almost any time of day, with a clear view of the river to the
+east. Color code is **white**.
+
+## Roof-specific notes
+- Surface is uncovered: expect snow and ice clearing delays after storms
+- Solar canopy over rows 1 and 2 gives the only shaded spots
+- Drainage runs to the southwest scupper; avoid the low corner in heavy rain
+
+## Getting back down
+Both elevators and all three stairwells serve the roof. For the fastest exit,
+the express elevator at the core drops straight to the [[z=1|street-level
+cashier]]. Looking for a charger before you leave? Stop on [[z=2|P2]] on the
+way down.

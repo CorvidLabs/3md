@@ -1,0 +1,101 @@
+---
+3md: 1.0
+axis: time
+title: Major Events in the Evolution of Life
+author: CorvidLabs Gallery
+span: ~3.8 billion years
+---
+A walk along deep time. Each plane is one milestone on the Z axis, ordered by
+how long ago it happened (z is millions of years before present, so larger z is
+further back). Read from the deepest plane forward, or jump straight to
+[[z=0.3|the rise of humans]].
+
+@plane z=3800 x=0 y=0 label="First Life (~3.8 Ga)"
+# First Life
+
+The oldest chemical and fossil traces of life appear in rocks roughly 3.5 to 3.8
+billion years old. The earliest cells were single, membrane-bound prokaryotes
+with no nucleus, living in the oceans.
+
+- **Form:** simple anaerobic cells (no oxygen required)
+- **Energy:** chemosynthesis near hydrothermal vents and shallow seas
+- **Legacy:** the universal genetic code, shared by every organism since
+
+Everything that follows, from a redwood to a blue whale, descends from this
+single-celled starting point. The next great leap was learning to eat sunlight:
+see [[z=2400|the Great Oxidation]].
+
+@plane z=2400 x=2 y=0 label="Great Oxidation (~2.4 Ga)"
+# The Great Oxidation Event
+
+Cyanobacteria evolved oxygen-producing photosynthesis and, over hundreds of
+millions of years, flooded the atmosphere with free oxygen. For most existing
+microbes this was a poison, triggering one of Earth's earliest mass extinctions.
+
+| Before | After |
+| --- | --- |
+| Trace atmospheric oxygen | Oxygen-rich atmosphere |
+| Anaerobic life dominant | Aerobic respiration possible |
+
+Oxygen was the fuel that later powered large, active animals. The first complex
+cells came next: continue to [[z=1800|the eukaryotic cell]].
+
+@plane z=1800 x=4 y=0 label="Eukaryotes (~1.8 Ga)"
+# The Eukaryotic Cell
+
+A larger, more complex cell type arose, defined by a nucleus and internal
+organelles. The leading explanation is **endosymbiosis**: one cell engulfed
+another, and the captive became a permanent partner.
+
+1. An ancestral host cell absorbed an oxygen-using bacterium.
+2. The partner became the **mitochondrion**, the cell's power plant.
+3. A separate event gave plant ancestors the **chloroplast**.
+
+This partnership is why your cells still carry mitochondrial DNA distinct from
+the DNA in your nucleus. With efficient energy in hand, life eventually went
+multicellular and big: jump to [[z=540|the Cambrian Explosion]].
+
+@plane z=540 x=6 y=0 label="Cambrian Explosion (~540 Ma)"
+# The Cambrian Explosion
+
+In a geologically brief window, most major animal body plans appeared in the
+fossil record. Hard shells, jointed limbs, compound eyes, and active predators
+all show up together, preserved beautifully in sites like the Burgess Shale.
+
+- First arthropods, mollusks, and early chordates (our distant relatives)
+- The arms race between predator and prey drove rapid innovation
+- Vision and mineralized skeletons became widespread
+
+Life had been microscopic for over three billion years; in the Cambrian it got
+complicated fast. From these chordates came backbones, and eventually limbs for
+land: move forward to [[z=375|life moves ashore]].
+
+@plane z=375 x=8 y=0 label="Life on Land (~375 Ma)"
+# Vertebrates Move Ashore
+
+Lobe-finned fishes such as *Tiktaalik* show the transition from water to land:
+sturdy, weight-bearing fins, a flexible neck, and lungs alongside gills. Their
+descendants, the tetrapods, gave rise to amphibians, reptiles, birds, and
+mammals.
+
+> Tiktaalik is often called a "fishapod," part fish and part four-legged animal,
+> a clear snapshot of an evolutionary transition in progress.
+
+Plants and arthropods had greened the land first, building the food web these
+pioneers walked into. The last stop on this timeline is the youngest branch:
+arrive at [[z=0.3|the human lineage]].
+
+@plane z=0.3 x=10 y=0 label="Humans (~300 Ka)"
+# The Human Lineage
+
+Anatomically modern *Homo sapiens* appears in Africa around 300,000 years ago,
+the latest twig on an ancient tree. On the scale of this document, all of
+recorded human history is a thin sliver at the very surface.
+
+- **Brain and language:** complex cognition, symbolic thought, culture
+- **Tools and fire:** technology that reshaped diet and environment
+- **Migration:** out of Africa and across every continent
+
+Stand here at the present and look back: every step, from [[z=3800|the first
+cell]] through oxygen, complex cells, and limbs on land, was a prerequisite for
+this plane existing at all.

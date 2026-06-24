@@ -1,0 +1,107 @@
+---
+3md: 1.0
+axis: time
+title: Q3 Platform Sync - Weekly Engineering Meeting
+date: 2026-06-23
+location: Room 4B / Zoom (link in calendar invite)
+facilitator: Priya Nadakumar
+notetaker: Dani Osei
+duration: 60 minutes
+---
+Weekly cross-team sync for the Platform group. Each plane below is a single time
+slot. Keep updates tight; park deep dives for the listed follow-ups. Times are in
+US Pacific. If you cannot attend, leave async notes in the shared doc before 09:00.
+
+@plane z=0 x=0 y=0 label="09:00 - Roll call and agenda review"
+# 09:00 - 09:05 - Roll call and agenda review (5 min)
+
+**Owner:** Priya Nadakumar
+
+- Confirm attendance and quorum (need at least one rep from API, Infra, and Mobile).
+- Read out the three goals for today:
+  1. Land a go / no-go on the caching rollout.
+  2. Unblock the Mobile team on rate limits.
+  3. Agree on owners for the on-call rotation gap.
+- Approve last week's minutes (linked in the invite).
+
+> Reminder: hard stop at 10:00. Jump ahead to [[z=4|the wrap-up]] if we finish early.
+
+@plane z=1 x=0 y=1 label="09:05 - Caching rollout decision"
+# 09:05 - 09:25 - Caching rollout: go / no-go (20 min)
+
+**Owner:** Marcus Lin (Infra)
+
+## Context
+The read-through cache shipped to 10 percent of traffic on Monday. We need a
+decision on widening to 100 percent before the Friday freeze.
+
+## Data so far
+- p99 latency down 38 percent on cached endpoints.
+- Cache hit rate steady at 91 percent after warm-up.
+- One incident: stale user-profile reads for ~4 minutes during a deploy
+  (root cause: missing invalidation hook, now patched).
+
+## Decision needed
+- [ ] Approve ramp to 50 percent today, 100 percent Thursday, OR
+- [ ] Hold at 10 percent pending a second week of data.
+
+Open risk on rate limits feeds directly into [[z=2|the next slot]], so keep
+Mobile in the room for this vote.
+
+@plane z=2 x=1 y=1 label="09:25 - Mobile rate-limit unblock"
+# 09:25 - 09:40 - Mobile rate-limit unblock (15 min)
+
+**Owner:** Aisha Rahman (Mobile)
+
+## The blocker
+The mobile sync client is hitting 429s during the morning login spike. Current
+limit is 60 requests/minute/user; the cold-start sync needs a burst of ~90.
+
+## Options on the table
+| Option | Effort | Risk |
+| --- | --- | --- |
+| Raise burst ceiling to 120/min | Low (config) | Abuse surface grows |
+| Add a dedicated batch-sync endpoint | Medium | Two weeks of work |
+| Client-side request coalescing | Medium | Ships in next app release |
+
+## Ask
+Pick one option and name an owner before we leave this slot. The caching numbers
+from [[z=1|the rollout discussion]] suggest the batch endpoint would cache well.
+
+@plane z=3 x=1 y=2 label="09:40 - On-call rotation gap"
+# 09:40 - 09:55 - On-call rotation gap (15 min)
+
+**Owner:** Dani Osei
+
+## Problem
+Two engineers rotate off next month and we have a coverage hole for weeks 31-33.
+
+## Proposal
+- Pull in two volunteers from the API team for secondary coverage.
+- Shorten the primary shift from 7 days to 4 during the gap to spread load.
+- Buy out the holiday week (week 33) with comp time.
+
+## Action items
+- [ ] Marcus to confirm Infra can cover week 32 primary.
+- [ ] Priya to update PagerDuty schedule by EOD Wednesday.
+- [ ] HR to approve comp-time arrangement (Dani to file ticket).
+
+@plane z=4 x=0 y=3 label="09:55 - Wrap-up and action review"
+# 09:55 - 10:00 - Wrap-up and action review (5 min)
+
+**Owner:** Priya Nadakumar
+
+## Decisions logged
+- Caching: see the vote from [[z=1|the rollout slot]].
+- Rate limits: option chosen in [[z=2|the Mobile slot]].
+- On-call: owners assigned in [[z=3|the rotation slot]].
+
+## Consolidated action items
+1. Update PagerDuty schedule (Priya, Wed).
+2. File comp-time ticket (Dani, Wed).
+3. Spike the batch-sync endpoint if selected (Aisha, next sprint).
+4. Post caching ramp plan to #platform (Marcus, today).
+
+## Next meeting
+Same time next week. Send agenda topics to Priya by Monday 17:00.
+Back to [[z=0|the top]] for the goals we set out to hit.

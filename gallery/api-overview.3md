@@ -1,0 +1,176 @@
+---
+3md: 1.0
+axis: depth
+title: Pigeon Payments API
+service: api.pigeonpay.dev
+version: v2
+baseUrl: https://api.pigeonpay.dev/v2
+---
+The Pigeon Payments API moves money between accounts with idempotent,
+signed requests. This document stacks from the surface (what the API is
+and why) down to the wire-level reference (exact fields, errors, and
+rate limits). Read top to bottom, or drop straight to the depth you need.
+
+@plane z=0 label="Overview" x=0 y=0
+# Pigeon Payments API
+
+A small REST API for creating charges, refunds, and payouts. Every
+write is idempotent, every response is JSON, and every error carries a
+machine-readable `code`.
+
+- **Base URL:** `https://api.pigeonpay.dev/v2`
+- **Format:** JSON over HTTPS only (plain HTTP is refused)
+- **Auth:** bearer secret key, see [[z=1|Authentication]]
+- **Stability:** additive changes only within `v2`
+
+A first request, end to end:
+
+```bash
+curl https://api.pigeonpay.dev/v2/charges \
+  -H "Authorization: Bearer sk_live_4f2a..." \
+  -H "Idempotency-Key: chg_2026_06_23_001" \
+  -d amount=4200 \
+  -d currency=usd \
+  -d source=card_9xQ
+```
+
+That returns a `charge` object. To understand the pieces, go down one
+layer to [[z=1|Concepts]], or jump to the [[z=3|Endpoint reference]] if
+you already know the shape.
+
+@plane z=1 label="Concepts" x=0 y=0
+# Core concepts
+
+Three ideas carry the whole API.
+
+**Authentication.** Send your secret key as a bearer token on every
+request. Keys are environment-scoped: `sk_test_...` hits the sandbox,
+`sk_live_...` moves real money. Never put a secret key in client code.
+
+**Idempotency.** Any POST may carry an `Idempotency-Key` header. The
+first request with a given key executes; replays return the original
+result instead of charging twice. Keys are retained for 24 hours.
+
+**Resources.** Everything is one of four objects:
+
+| Resource | Created by      | Represents                     |
+|----------|----------------|--------------------------------|
+| charge   | `POST /charges`| money pulled from a source     |
+| refund   | `POST /refunds`| money returned for a charge    |
+| payout   | `POST /payouts`| money sent to a bank account   |
+| event    | (system)       | a webhook-delivered state change|
+
+Once these click, the [[z=2|request lifecycle]] explains how a call
+actually flows through the system.
+
+@plane z=2 label="Lifecycle" x=1 y=0
+# Request lifecycle
+
+A write travels through five stages. Each stage can short-circuit with
+an error, documented at [[z=4|Errors]].
+
+1. **TLS + parse.** The request must be HTTPS and a valid form or JSON
+   body. Malformed bodies fail fast with `400 invalid_request`.
+2. **Authenticate.** The bearer key is resolved to an account. A bad or
+   revoked key returns `401 unauthorized`.
+3. **Idempotency check.** If the `Idempotency-Key` was seen before, the
+   stored response is replayed and no work happens.
+4. **Validate + execute.** Field rules run (see [[z=3|Endpoints]]), then
+   the charge, refund, or payout is attempted against the processor.
+5. **Persist + emit.** The result is saved and a webhook `event` is
+   queued for delivery.
+
+Latency budget, p50 to p99:
+
+```text
+parse      ~2ms
+auth       ~5ms
+execute    40ms - 900ms   (processor-bound)
+persist    ~8ms
+```
+
+@plane z=3 label="Endpoints" x=1 y=0
+# Endpoint reference
+
+## POST /charges
+
+Create a charge against a saved source.
+
+Request fields:
+
+- `amount` (integer, required): smallest currency unit, for example
+  cents. Must be `>= 50`.
+- `currency` (string, required): ISO 4217 lowercase, for example `usd`.
+- `source` (string, required): a `card_` or `bank_` token.
+- `capture` (boolean, optional): default `true`. When `false`, the
+  charge is authorized only and must be captured within 7 days.
+
+Response: a `charge` object.
+
+```json
+{
+  "id": "chg_9xQ7",
+  "object": "charge",
+  "amount": 4200,
+  "currency": "usd",
+  "status": "succeeded",
+  "captured": true,
+  "created": 1750636800
+}
+```
+
+## POST /refunds
+
+Refund all or part of a captured charge.
+
+- `charge` (string, required): the `chg_` id to refund.
+- `amount` (integer, optional): defaults to the full remaining amount.
+
+## GET /charges/{id}
+
+Fetch one charge by id. Returns the same `charge` object, or
+`404 not_found`. For the full failure list, descend to [[z=4|Errors]].
+
+@plane z=4 label="Errors and limits" x=2 y=0
+# Errors and rate limits
+
+## Error shape
+
+Every error is HTTP status plus a JSON body with a stable `code`.
+
+```json
+{
+  "error": {
+    "code": "card_declined",
+    "message": "The card was declined.",
+    "param": "source",
+    "type": "card_error"
+  }
+}
+```
+
+## Error codes
+
+| Status | code             | Meaning                              |
+|--------|------------------|--------------------------------------|
+| 400    | invalid_request  | missing or malformed field           |
+| 401    | unauthorized     | bad, missing, or revoked key         |
+| 402    | card_declined    | processor refused the charge         |
+| 404    | not_found        | no resource with that id             |
+| 409    | idempotency_conflict | key reused with a different body |
+| 429    | rate_limited     | too many requests, back off          |
+
+## Rate limits
+
+- 100 requests per second per live key, burst to 200.
+- Limit state is returned on every response:
+
+```text
+RateLimit-Limit: 100
+RateLimit-Remaining: 87
+RateLimit-Reset: 1750636860
+```
+
+On `429`, wait until `RateLimit-Reset` then retry with the same
+`Idempotency-Key` so the retry is safe. To revisit how that header is
+honored, climb back to [[z=2|the lifecycle]] or the [[z=0|overview]].

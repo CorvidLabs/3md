@@ -1,0 +1,98 @@
+---
+3md: 1.0
+axis: status
+title: Sprint 47 Kanban Board
+team: Payments Platform
+sprint_goal: Ship idempotent refunds to 100 percent of merchants
+wip_limit_in_progress: "3"
+updated: 2026-06-23
+---
+Sprint 47 (June 16 to June 27). Columns flow along the Z axis by status, from
+Backlog at the back to Done at the front. WIP limit on In Progress is 3 cards.
+Pull from the right: finish what is started before starting something new.
+
+@plane z=0 label="Backlog" x=0
+# Backlog
+
+Refined and estimated. Ordered top to bottom by priority. Anything below the
+line is a stretch and will not be pulled this sprint unless the team finishes
+early.
+
+| Card | Owner | Points | Notes |
+| --- | --- | --- | --- |
+| PAY-512 Idempotency keys for refund API | unassigned | 5 | sprint goal |
+| PAY-518 Backfill missing refund receipts | unassigned | 3 | depends on 512 |
+| PAY-521 Merchant dashboard refund filter | unassigned | 2 | UI only |
+| PAY-525 Rate-limit refund endpoint | unassigned | 3 | stretch |
+
+- PAY-512 is the keystone for the sprint goal. Pull it first.
+- PAY-518 cannot start until the idempotency schema lands, so it waits behind
+  [[z=1|whatever is in progress]].
+
+@plane z=1 label="In Progress" x=2
+# In Progress (limit 3)
+
+Currently 2 of 3 cards. One slot is open, so the next pull comes from
+[[z=0|the top of the backlog]].
+
+### PAY-512 Idempotency keys for refund API (Priya, 5 pts)
+
+- [x] Add `idempotency_key` column and unique index
+- [x] Reject duplicate keys with HTTP 409 plus the original response
+- [ ] Wire the key through the gateway client SDK
+- [ ] Load test at 500 requests per second
+
+### PAY-521 Merchant dashboard refund filter (Marco, 2 pts)
+
+- [x] Add status dropdown (pending, settled, refunded)
+- [ ] Persist filter in the URL query string
+
+Blocked items move to [[z=2|the blocked column]] and stop counting against
+this WIP limit.
+
+@plane z=2 label="Blocked" x=4 y=1
+# Blocked
+
+Cards parked here are waiting on something outside the team. Each one names the
+blocker and the person chasing it down.
+
+| Card | Blocked on | Chaser | Since |
+| --- | --- | --- | --- |
+| PAY-507 PCI scope review | Security sign-off on the new vault | Dana | Jun 18 |
+
+- PAY-507 has a meeting booked with Security for Jun 24. If it clears, it goes
+  straight back to [[z=1|In Progress]] without re-estimating.
+- Nothing else is blocked, which is the goal: keep this column empty.
+
+@plane z=3 label="In Review" x=6
+# In Review
+
+Code complete and open as a pull request. A card leaves review only when one
+approval lands and CI is green.
+
+### PAY-498 Webhook retry with exponential backoff (Sam, 3 pts)
+
+- PR #2841, 2 approvals needed, 1 received (Priya)
+- CI: green
+- Outstanding comment: cap the backoff at 5 minutes so retries do not stall
+  the queue
+
+Once merged this drops into [[z=4|Done]]. If review turns up a real defect, it
+goes back to [[z=1|In Progress]] rather than sitting half-reviewed.
+
+@plane z=4 label="Done" x=8
+# Done
+
+Merged, deployed to staging, and verified against acceptance criteria this
+sprint. These count toward the burndown.
+
+| Card | Owner | Points | Shipped |
+| --- | --- | --- | --- |
+| PAY-490 Audit log for refund events | Marco | 3 | Jun 17 |
+| PAY-495 Currency rounding fix (JPY) | Priya | 2 | Jun 19 |
+| PAY-501 Retire legacy refund cron | Sam | 5 | Jun 20 |
+
+- 10 of 23 committed points complete at the midpoint, on pace for the goal.
+- Definition of done: merged, staging-verified, dashboards updated, and the
+  on-call runbook touched if behavior changed.
+- The next card to land here is most likely [[z=3|the webhook retry PR]].

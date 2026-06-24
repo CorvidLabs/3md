@@ -1,0 +1,121 @@
+---
+3md: 1.0
+axis: time
+title: Daily Medication Schedule
+patient: Margaret Holloway
+prescriber: Dr. A. Okafor, Internal Medicine
+updated: 2026-06-23
+note: Take all doses with a full glass of water unless told otherwise.
+---
+This schedule stacks the day along the time axis. Each plane is one dosing
+window. Read it top to bottom within a window, and move forward through the
+windows as the day goes on. Pillbox compartments are labeled to match the
+window names below.
+
+Allergy: penicillin (hives). Keep this card with the pillbox.
+
+@plane z=0 x=0 y=0 label="Morning (with breakfast)"
+# Morning, 7:30 AM
+
+Take these together with food. Do not skip breakfast on this window, two of
+these are hard on an empty stomach.
+
+| Medication | Dose | Purpose |
+|------------|------|---------|
+| Metformin ER | 500 mg, 1 tablet | Blood sugar |
+| Lisinopril | 10 mg, 1 tablet | Blood pressure |
+| Atorvastatin | 20 mg, 1 tablet | Cholesterol |
+| Vitamin D3 | 2000 IU, 1 softgel | Bone health |
+
+Checklist:
+
+- [ ] Check blood pressure first, log the reading in the notebook
+- [ ] Swallow tablets with water, stay upright for a few minutes
+- [ ] Tick the Morning compartment as empty
+
+Next dose is [[z=1|Midday with lunch]]. If you feel dizzy after the
+Lisinopril, note it and tell Dr. Okafor.
+
+@plane z=1 x=2 y=0 label="Midday (with lunch)"
+# Midday, 12:30 PM
+
+A light window. Only one scheduled tablet here, plus any as-needed relief.
+
+| Medication | Dose | Purpose |
+|------------|------|---------|
+| Metformin ER | 500 mg, 1 tablet | Blood sugar (second dose) |
+
+As needed (not daily):
+
+- Acetaminophen 500 mg, 1 to 2 tablets for joint pain, no more than 6 in 24 hours
+- Do NOT add ibuprofen, it interacts with the Lisinopril from [[z=0|the morning]]
+
+Checklist:
+
+- [ ] Take Metformin with the largest bite of lunch to avoid stomach upset
+- [ ] Tick the Midday compartment as empty
+
+Carry forward to [[z=2|Evening with dinner]].
+
+@plane z=2 x=4 y=0 label="Evening (with dinner)"
+# Evening, 6:00 PM
+
+The fullest window of the day. Sertraline goes here, not at bedtime, because it
+can disturb sleep for some people.
+
+| Medication | Dose | Purpose |
+|------------|------|---------|
+| Metformin ER | 500 mg, 1 tablet | Blood sugar (third dose) |
+| Sertraline | 50 mg, 1 tablet | Mood |
+| Calcium + magnesium | 1 tablet | Bone health |
+
+Checklist:
+
+- [ ] Take with the main meal, calcium absorbs better with food
+- [ ] Keep calcium at least 2 hours apart from any thyroid medication
+- [ ] Tick the Evening compartment as empty
+
+One window left, see [[z=3|Bedtime]].
+
+@plane z=3 x=6 y=0 label="Bedtime (before sleep)"
+# Bedtime, 10:00 PM
+
+Wind-down dose. Warfarin lives here on its own so the timing stays consistent
+day to day, consistency matters more than the exact hour.
+
+| Medication | Dose | Purpose |
+|------------|------|---------|
+| Warfarin | 5 mg, 1 tablet | Blood thinner |
+| Melatonin | 3 mg, 1 tablet | Sleep |
+
+Checklist:
+
+- [ ] Take Warfarin at the same time every night
+- [ ] No grapefruit juice with this dose, it raises drug levels
+- [ ] Tick the Bedtime compartment as empty
+- [ ] Set out tomorrow morning's pillbox so [[z=0|the morning window]] is ready
+
+If a Warfarin dose is missed and it is still the same evening, take it. If it is
+already the next morning, skip it and resume the normal schedule, do not double
+up. Call the clinic if two doses in a row are missed.
+
+@plane z=4 x=8 y=0 label="Weekly review (Sunday)"
+# Weekly review, Sunday morning
+
+Once a week, before refilling the box.
+
+- [ ] Refill all four daily windows for the coming week
+- [ ] Count remaining tablets, request refills when under 7 days on hand
+- [ ] Confirm the next INR blood test date for the Warfarin
+- [ ] Note any side effects to raise at the next appointment
+
+Current refills on file:
+
+| Medication | Days remaining | Refill by |
+|------------|----------------|-----------|
+| Metformin ER | 11 | 2026-06-30 |
+| Warfarin | 6 | 2026-06-25 |
+| Sertraline | 18 | 2026-07-07 |
+
+Warfarin is the most urgent. Start the day at [[z=0|the morning window]] again
+once the box is filled.

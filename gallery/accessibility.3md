@@ -1,0 +1,84 @@
+---
+3md: 1.0
+axis: layer
+title: Accessible Figure - Tidal Marsh at Dawn
+description: One photograph rendered as four toggleable accessibility layers
+image: marsh-dawn.jpg
+wcag: 1.1.1, 1.4.5
+---
+This figure is a single photograph carried by four independent layers. Turn on
+only what a given reader needs: the rendered image, the short alt text that a
+screen reader announces, the visible caption shown to everyone, and the long
+description for readers who want the full scene. Each layer below is the same
+content described at a different depth.
+
+@plane z=0 label="Rendered image" x=0 y=0
+# Layer 0 - The image
+
+![A tidal marsh at dawn, mist over still water with a wooden boardwalk leading toward distant pines](marsh-dawn.jpg)
+
+The visual layer. It carries the `src` and a working `alt` attribute so the
+picture is never silent for assistive tech. If images are turned off or fail to
+load, the browser falls back to the alt string defined in [[z=1|the alt-text layer]].
+
+- Format: JPEG, 2400 x 1600, sRGB
+- Decorative? No. This image conveys information, so it needs real alt text.
+- Fallback order: rendered pixels, then alt text, then caption.
+
+@plane z=1 label="Alt text (announced)" x=0 y=-1
+# Layer 1 - Alt text
+
+> A tidal marsh at dawn, mist over still water with a wooden boardwalk leading toward distant pines.
+
+This is the short text a screen reader speaks in place of the image. It is one
+sentence, under about 150 characters, and it states what matters: the subject
+(a tidal marsh), the time of day (dawn), and the one navigational element (the
+boardwalk).
+
+Rules this layer follows:
+
+1. Describe function and content, not the word "image" (the reader already knows it is a graphic).
+2. No "photo of" or "picture showing" filler.
+3. End with a period so the speech synthesizer pauses naturally.
+
+Need more than a sentence? That belongs in [[z=3|the long description]], not here.
+
+@plane z=2 label="Visible caption" x=0 y=1
+# Layer 2 - Caption
+
+*Figure 1. Low tide at Salt Meadow Reserve, 5:42 AM, shot from the north boardwalk in late September.*
+
+The caption is shown to every reader, sighted or not. Unlike the alt text, it
+adds facts the picture alone cannot give: the place, the exact time, the season,
+and the vantage point. Alt text and caption should not be identical, or screen
+reader users hear the same sentence twice.
+
+| Layer | Audience | Repeats the image? |
+|-------|----------|--------------------|
+| Alt text | Screen reader users | Substitutes for it |
+| Caption | Everyone | Adds context |
+
+For the camera settings and the full scene inventory, see [[z=3|the long description]].
+
+@plane z=3 label="Long description (extended)" x=0 y=2
+# Layer 3 - Long description
+
+A wide, low-angle view across a coastal salt marsh just after sunrise. The water
+in the foreground is glass-still and holds a faint orange reflection of the sky.
+A weathered cedar boardwalk enters from the lower right and runs diagonally to
+the left, disappearing into a low bank of ground mist. Beyond the mist, a ragged
+line of pitch pines marks the far edge of the marsh, and a single great egret
+stands motionless in the shallows at center-left.
+
+This layer exists for readers who want the whole scene: data tables rendered as
+prose, complex diagrams, or photographs where detail carries meaning. It is
+linked from the figure rather than forced on everyone, so it does not bloat the
+spoken [[z=1|alt text]] or the printed [[z=2|caption]].
+
+Capture notes:
+
+- Camera: 35mm, f/8, 1/125s, ISO 200
+- Light: natural, golden hour, no flash
+- Color: warm highlights, cool shadows, contrast ratio of text overlays kept at or above 4.5:1 per WCAG 1.4.5
+
+Back to [[z=0|the image itself]].

@@ -1,0 +1,97 @@
+---
+3md: 1.0
+axis: space
+title: A Doll's House, Act III - Stage Set Design
+production: Henrik Ibsen, revival
+venue: Proscenium house, 38-foot opening
+designer: scenic department
+scale: 1/2 inch = 1 foot
+---
+A depth-staged scenic plan for the Helmer drawing room. Each plane is a slice of the
+set measured upstage from the plaster line (the front edge of the playing space).
+The `z` value is feet of depth: z=0 sits at the apron, larger `z` recedes away from
+the audience. Read it front to back to walk the eye from the orchestra rail to the
+painted backing behind the rear window.
+
+@plane z=0 label="Apron and Footlights" y=-2
+# Apron (z = 0 ft, plaster line)
+
+The thrust of bare stage between the audience and the proscenium arch. Nothing is
+built here; it is the actor's closest approach to the house.
+
+- **Floor:** scrubbed pine planking, stained warm honey, raked 1:24 toward the seats
+- **Footlight trough:** a row of shielded warm-white LEDs, dimmed to 15 percent for
+  the final confrontation
+- **Sightline note:** anyone standing forward of this line is lit hard from below;
+  keep blocking upstage of the arch except for Nora's exit
+
+The whole room beyond reads as a box framed by the arch. The set proper begins at
+[[z=4|the parlor furniture]] one stride upstage.
+
+@plane z=4 label="Parlor Furniture" x=-3
+# Downstage parlor (z = 4 ft)
+
+The intimate playing area, where most of Act III is staged. Furniture is real and
+load-bearing because actors sit, lean, and slam things.
+
+| Piece | Position | Note |
+| --- | --- | --- |
+| Round table | stage left of center | the letter is read here |
+| Two armchairs | flanking the table | upholstered horsehair, period-correct |
+| Small sofa | stage right | Nora's "doll" corner |
+
+- The stove is practical: a flicker-bulb behind mica glass throws orange onto the
+  rug when the room dims.
+- A porcelain lamp on the table is the warm key light for the tarantella aftermath.
+
+Sightlines from the side seats are tight here; nothing taller than 30 inches lives
+between the sofa and [[z=8|the rear wall]].
+
+@plane z=8 label="Rear Wall and Doors" x=0 y=1
+# Rear wall (z = 8 ft)
+
+The architectural backbone of the box set: a papered flat wall pierced by two
+doorways. This is the "fourth side" of the room turned away from us.
+
+1. **Hall door, stage right.** The famous door Nora walks through. Built heavy,
+   hung on a real mortise lock so the closing slam carries to the back row.
+2. **Study door, stage left.** Torvald's room; backed with a warm amber glow so it
+   reads as occupied even when shut.
+
+Wall treatment:
+
+- Wallpaper: muted teal damask, knocked back with a grey wash so costumes pop
+- A framed engraving and a wall clock (set to 11:00) dress the stage-right panel
+- Crown molding returns 18 inches onto the side walls to fake the corner
+
+Through the gap between the doors you glimpse [[z=12|the window and its backing]].
+
+@plane z=12 label="Window and Snow Backing" y=2
+# Upstage window (z = 12 ft)
+
+The deepest built element: a tall casement window centered between the two doors,
+opening onto the painted exterior.
+
+- **Window:** double casement, real muntins, gauze sheers that catch a cold blue
+  side-light from offstage left
+- **Practical snow:** a slow drift of paper flakes tumbles behind the gauze on a
+  loop, lit cold so winter presses against the warm room
+- The contrast of the cold window against [[z=4|the warm lamp downstage]] is the
+  visual spine of the act: home versus the world Nora is about to enter
+
+@plane z=16 label="Painted Drop and Cyclorama"
+# Far backing (z = 16 ft)
+
+The last plane, hung behind the window opening. The audience never sees it whole,
+only the slice framed by the casement, which is exactly why it can be cheap and
+broad.
+
+- **Backdrop:** a soft-focus painted street of Norwegian townhouses under snow,
+  values kept low so it never competes with the actors
+- **Cyclorama:** a plain muslin cyc behind the drop, washed in deep indigo to
+  suggest a winter night sky
+- **Glow:** a faint gaslamp warm spot painted into the drop, the only point of
+  exterior light, sitting dead center in [[z=12|the window frame]]
+
+Striking order at the end of the run: this drop flies out first, then the rear
+wall breaks apart, then the parlor clears toward [[z=0|the apron]].

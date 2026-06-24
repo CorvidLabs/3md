@@ -1,0 +1,118 @@
+---
+3md: 1.0
+axis: floor
+title: Maplewood Central Library - Floor Guide
+building: Maplewood Central Library
+address: 412 Birchwood Avenue
+hours: Mon-Thu 9am-9pm, Fri-Sat 9am-6pm, Sun 12pm-5pm
+elevators: 2 (north lobby, south stair core)
+---
+Welcome to Maplewood Central Library. This guide stacks the building floor by
+floor, lowest to highest. Each floor lists its collections, service desks, and
+quiet ratings. Use the elevators in the north lobby or take the south stair
+core. Restrooms are on every floor near the elevators.
+
+@plane z=-1 x=0 y=0 label="Lower Level - Archives and Parking"
+# Lower Level (B1)
+
+The lower level holds the climate-controlled archives and the staff workroom.
+Patron access is by appointment at the [[z=0|Welcome Desk]] on the ground floor.
+
+## Collections
+- Local history archives (1851 to present)
+- Microfilm: regional newspapers, census records
+- Map and atlas vault (oversized, flat storage)
+
+## Services
+- Archivist office, room B1-04 (request items 24 hours ahead)
+- Two microfilm reader stations
+- Underground parking entrance (40 spaces, accessible bays nearest the elevator)
+
+## Quiet rating
+Silent. No phone calls. Gloves provided for handling original materials.
+
+@plane z=0 x=0 y=0 label="Ground Floor - Welcome and Popular Reads"
+# Ground Floor
+
+The front entrance, the busiest service point, and the popular collections. Start
+here, then ride up to [[z=1|Adult Nonfiction]] or down to [[z=-1|the Archives]].
+
+## Service desks
+- Welcome Desk (left of the main doors): library cards, directions, lost and found
+- Holds pickup shelves (self-service, alphabetized by last name)
+- Self-checkout kiosks (four units, card or app)
+
+## Collections
+- New and popular fiction
+- Large print and audiobooks
+- DVDs, board games, and the Library of Things (tools, kits, ukuleles)
+- Daily newspapers and current magazines
+
+## Amenities
+- Cafe cart (coffee, tea, pastries) open until 4pm
+- Friends of the Library used-book nook
+
+## Quiet rating
+Lively. Conversation welcome. Phone calls fine near the entrance.
+
+@plane z=1 x=0 y=0 label="Second Floor - Adult Nonfiction and Reference"
+# Second Floor
+
+Nonfiction, reference, and the reading room. Quieter than [[z=0|the ground floor]];
+for group work head up to [[z=2|the Learning Commons]].
+
+## Collections
+- Nonfiction (Dewey 000 to 999), shelved north to south
+- Reference (in-library use only)
+- Genealogy and government documents
+
+## Services
+- Reference Desk (center of the floor): research help, interlibrary loan
+- Two scan-to-email stations and a black-and-white printer
+- The Reading Room: 30 individual carrels with task lighting
+
+## Quiet rating
+Quiet study. Headphones required for audio. Calls only in the stair landing.
+
+@plane z=2 x=0 y=0 label="Third Floor - Youth and Learning Commons"
+# Third Floor
+
+The children's and teen wings, plus collaborative spaces. The noisiest upper
+floor by design. For silence, return to [[z=1|the Reading Room]].
+
+## Children's wing (west)
+- Picture books and early readers
+- Story-time alcove (sessions Tue and Thu, 10:30am)
+- Play-and-learn area with low shelving and bean bags
+
+## Teen wing (east)
+- Young adult fiction and graphic novels
+- Gaming consoles (booking required at the desk)
+- Homework help table (volunteer tutors, weekday afternoons)
+
+## Learning Commons (center)
+- Six bookable group study rooms (seats 4 to 8, reserve online)
+- Maker bench: 3D printer, vinyl cutter, sewing machine
+- Open laptop bar with 20 charging seats
+
+## Quiet rating
+Active. Talking and collaboration encouraged. Maker tools run during open hours.
+
+@plane z=3 x=0 y=0 label="Fourth Floor - Rooftop Reading Terrace"
+# Fourth Floor
+
+The top floor opens onto the rooftop terrace, the calmest spot for reading with
+a view. Bring a book up from any floor; food from the [[z=0|ground-floor cafe]] is
+welcome on the terrace.
+
+## Spaces
+- Glass-walled quiet lounge with armchairs
+- Covered outdoor terrace (open Apr through Oct, weather permitting)
+- Community meeting room (seats 60, booked through the Welcome Desk)
+
+## Amenities
+- Water bottle filling station
+- Accessible terrace ramp and shaded seating
+
+## Quiet rating
+Restful. Low conversation indoors, quiet enjoyment on the terrace.

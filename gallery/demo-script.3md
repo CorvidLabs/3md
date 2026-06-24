@@ -1,0 +1,135 @@
+---
+3md: 1.0
+axis: slide
+title: Helios Analytics - Live Product Demo
+presenter: Dana Okafor
+duration: 12 minutes
+audience: prospect evaluation call
+---
+Speaker script for the Helios Analytics product walkthrough. Each plane is one
+slide. Stage directions are in italics; the spoken line is the body text. Keep
+the laptop on the staging workspace (data is pre-seeded) and share the browser
+tab, not the whole screen.
+
+@plane z=0 x=0 y=0 label="Open: the problem"
+# Why teams lose a day every week to dashboards
+
+*Stage: title slide up, camera on. Do not screen-share yet.*
+
+"Before I show you anything, here is the number that matters. Teams we talk to
+spend roughly one full working day every week stitching exports together in
+spreadsheets just to answer a question a stakeholder asked that morning."
+
+Talking points (say two, not all three):
+
+- The data already exists; it is just trapped in five separate tools.
+- By the time the report is ready, the question has moved on.
+- Nobody trusts a number they cannot trace back to its source.
+
+"For the next ten minutes I want to show you how Helios collapses that day into
+about ninety seconds. Let's start where your morning starts."
+
+Next: jump to [[z=1|the live workspace]].
+
+@plane z=1 x=4 y=0 label="Workspace tour"
+# The workspace, in thirty seconds
+
+*Stage: share the browser tab now. Land on the "Revenue" workspace.*
+
+"This is a workspace. Think of it as one question, fully answered, that stays
+fresh on its own. On the left is the source list, in the middle is the canvas,
+and on the right is the trace panel we will come back to."
+
+Point to each region as you name it:
+
+1. **Sources** - the three connectors already linked (Stripe, Postgres, Sheets).
+2. **Canvas** - the charts the team actually looks at every morning.
+3. **Trace** - collapsed for now; it explains where every number came from.
+
+"Notice the timestamp at the top: synced four minutes ago. Nobody pressed a
+button. That sync is the whole point, and it is what makes the next part work."
+
+We pull on that thread in [[z=2|the live query]].
+
+@plane z=2 x=8 y=0 label="Live query"
+# Ask a question in plain English
+
+*Stage: click the ask bar. Type the query live; do not paste.*
+
+"Here is the moment that usually gets the 'wait, do that again' reaction. I'll
+ask for something nobody pre-built."
+
+Type exactly this into the ask bar:
+
+```
+revenue by plan tier, last 8 weeks, weekly
+```
+
+"Two seconds. No SQL, no waiting on the data team. And this is not a static
+picture - it is a real query against the live warehouse, so it will be just as
+current tomorrow morning."
+
+If someone asks "can it handle our messy data?", say:
+
+> "Good question, and the honest answer is that it depends on the join keys.
+> Let me show you exactly how we make that auditable."
+
+That is the perfect setup for [[z=3|the trace panel]].
+
+@plane z=3 x=12 y=0 label="Trust and trace"
+# Every number, traced to its source
+
+*Stage: expand the trace panel on the right. Click the $48,200 cell.*
+
+"This is the slide that wins the security and finance folks. Click any number
+and Helios shows you the lineage: the exact rows, the transformation, and the
+source connector, down to the query it ran."
+
+What the panel reveals for the selected cell:
+
+- Source: Stripe charges table, 312 rows.
+- Transform: summed `amount`, grouped by `plan_tier`, filtered to paid status.
+- Freshness: pulled in this morning's sync at 06:14.
+
+"So when your CFO asks 'where did this come from', the answer is one click, not
+a Slack thread. Nothing here is a black box."
+
+Now the part that makes it stick: [[z=4|sharing and alerts]].
+
+@plane z=4 x=16 y=0 label="Share and automate"
+# Make it work while you sleep
+
+*Stage: open the share dialog, then the alert composer.*
+
+"The last piece is what turns a demo into a habit. Two clicks to share this
+workspace read-only with your team, and viewers always see the live version,
+never a stale screenshot."
+
+Then set one alert in front of them:
+
+- **Trigger:** weekly revenue drops more than 10 percent week over week.
+- **Channel:** the team's #revenue Slack channel.
+- **Payload:** the chart plus the traced breakdown from the last slide.
+
+"Now the dashboard watches itself and pings you only when something actually
+needs a human. That day a week you were spending? It just disappeared."
+
+Recap if anyone joined late: revisit [[z=0|the original problem]].
+
+@plane z=5 x=20 y=0 label="Close and next steps"
+# What happens after this call
+
+*Stage: stop screen-share, camera back on, slow down the pace.*
+
+"That is the full loop: connect, ask, trust, automate. I want to be respectful
+of your time, so here is what I would suggest as a next step."
+
+Concrete asks (pick based on the room):
+
+1. A two-week trial on one of your real workspaces (we connect Stripe together).
+2. A thirty-minute session with whoever owns your data warehouse.
+3. Pricing tailored to your seat count, sent by end of day.
+
+"What resonated most, and what did I not show you that you were hoping to see?"
+
+*Stage: stop talking here. Let them answer first.*

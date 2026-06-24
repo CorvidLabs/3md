@@ -1,0 +1,111 @@
+---
+3md: 1.0
+axis: time
+title: swift-retry Changelog
+project: swift-retry
+repository: github.com/CorvidLabs/swift-retry
+maintainer: CorvidLabs
+license: MIT
+---
+Release history for **swift-retry**, a Sendable-first retry and backoff library
+for Swift 6. Each plane below is one published release, ordered along the time
+axis from oldest (lower `z`) to newest (higher `z`). Versions follow Semantic
+Versioning: a bump in MAJOR signals a breaking change, MINOR adds features, and
+PATCH ships fixes only.
+
+Jump straight to the newest release at [[z=4|0.4.0]], or read the migration note
+for the breaking change in [[z=3|0.3.0]].
+
+@plane z=0 x=0 label="0.1.0 (2025-09-12)"
+# 0.1.0 - 2025-09-12
+
+First public release. The smallest thing that could possibly retry.
+
+### Added
+- `RetryPolicy` value type describing attempt count and a delay strategy.
+- `retry(_:operation:)` free function that runs an `async throws` closure under
+  a policy and rethrows the last error once attempts are exhausted.
+- Two built-in strategies: `.fixed(seconds:)` and `.immediate`.
+- `RetryError.exhausted(attempts:lastError:)` carrying the final failure.
+
+### Notes
+- Requires Swift 5.9. macOS 11, iOS 15, and Linux are tested in CI.
+- The whole surface is one file. No dependencies beyond Foundation.
+
+@plane z=1 x=1 label="0.1.1 (2025-09-30)"
+# 0.1.1 - 2025-09-30
+
+A patch release. No new API, no source changes for callers.
+
+### Fixed
+- `retry` no longer swallows `CancellationError`. Cancellation now propagates
+  immediately instead of counting as a failed attempt and sleeping again.
+- Corrected an off-by-one bug where `.fixed` slept once after the final attempt,
+  adding a needless delay before throwing `.exhausted`.
+
+### Internal
+- Added cancellation tests that spawn a `Task`, cancel it mid-sleep, and assert
+  the thrown error is `CancellationError`.
+
+@plane z=2 x=2 label="0.2.0 (2025-11-04)"
+# 0.2.0 - 2025-11-04
+
+Backoff arrives. This is the release most projects actually adopt.
+
+### Added
+- `.exponential(base:multiplier:maxDelay:)` strategy with an optional ceiling.
+- Full jitter via `RetryPolicy.jittered(using:)`, taking a `RandomNumberGenerator`
+  so tests can inject a deterministic seed.
+- `shouldRetry` predicate on `RetryPolicy`: a `@Sendable (Error) -> Bool` that
+  decides per-error whether another attempt is worthwhile.
+
+### Changed
+- `RetryPolicy` is now `Sendable`. Delay strategies are modeled as an enum rather
+  than stored closures so the type stays trivially `Sendable`.
+
+### Deprecated
+- `.immediate` is deprecated in favor of `.fixed(seconds: 0)`. It still works and
+  will be removed in 0.4.0. See the removal in [[z=4|0.4.0]].
+
+@plane z=3 x=3 label="0.3.0 (2026-01-20)"
+# 0.3.0 - 2026-01-20
+
+A focused breaking change to make the core API safe under strict concurrency.
+
+### Changed (BREAKING)
+- `retry(_:operation:)` now takes a `@Sendable` operation closure. Closures that
+  captured non-Sendable state must be reworked or wrapped in an actor.
+- The package enables `StrictConcurrency` as an experimental feature, so building
+  against 0.3.0 surfaces data-race warnings that earlier versions hid.
+
+### Migration
+- If your operation captured a class instance, move that state behind an `actor`
+  and call its methods with `await` from inside the closure.
+- Predicates passed to `shouldRetry` must also be `@Sendable`; most already are.
+
+### Added
+- `RetryClock` abstraction so callers can swap the sleeping mechanism. The
+  default uses `ContinuousClock`; tests can supply a fake clock and advance time
+  by hand instead of waiting in real time.
+
+@plane z=4 x=4 label="0.4.0 (2026-05-18)"
+# 0.4.0 - 2026-05-18
+
+The current release. Cleans up deprecations and adds observability.
+
+### Added
+- `RetryPolicy.onRetry` hook: a `@Sendable (Int, Error) async -> Void` invoked
+  before each delay with the upcoming attempt index and the error that triggered
+  it. Useful for structured logging and metrics.
+- `decorrelatedJitter` strategy, the AWS-style algorithm that grows the delay
+  window from the previous sleep rather than from the attempt number.
+
+### Removed
+- `.immediate`, deprecated back in [[z=2|0.2.0]], is gone. Use `.fixed(seconds: 0)`.
+
+### Fixed
+- `maxDelay` on `.exponential` is now also honored by the jittered variants; the
+  jitter could previously exceed the configured ceiling.
+
+### Compatibility
+- Minimum toolchain raised to Swift 6.0. Platforms unchanged from [[z=0|0.1.0]].

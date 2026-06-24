@@ -1,0 +1,125 @@
+---
+3md: 1.0
+axis: slide
+title: Outbound Sales Call Script - Acme Analytics
+product: Pulse (revenue analytics platform)
+persona: VP of Sales at a 200-500 seat B2B SaaS company
+call_length: 18 minutes
+---
+A discovery-led cold call script for Pulse. Each slide is one phase of the call.
+Move forward only when the prospect engages; if they push back, jump to
+[[z=4|the objection slide]] and come back.
+
+@plane z=0 label="Open" x=0 y=0
+# Slide 0: The Opener (first 20 seconds)
+
+Goal: earn the next 30 seconds. Be human, be quick, ask permission.
+
+> "Hi Dana, this is Sam from Acme. I know I'm calling out of the blue, so I'll be
+> brief. Can I take 30 seconds to tell you why I called, and you can decide if it's
+> worth continuing?"
+
+- Smile before you dial. It changes your tone.
+- If they say "I'm busy": "Totally fair, are mornings or afternoons better for a
+  quick 10 minutes this week?"
+- Do NOT pitch yet. Permission first.
+
+Once you get the yes, go to [[z=1|the reason for the call]].
+
+@plane z=1 label="Reason" x=1 y=0
+# Slide 1: Reason for the Call (the hook)
+
+Anchor to a specific, recognizable pain. Reference something real about their world.
+
+> "I work with VPs of Sales at SaaS companies around your size, and the pattern I
+> keep hearing is that forecast numbers and what actually closes are two different
+> stories. Reps update the CRM on Friday, the forecast is stale by Tuesday, and the
+> board meeting becomes a guessing game. Does any of that sound familiar, or is your
+> forecasting already airtight?"
+
+The last clause matters: give them an easy, honest out. If it lands, move to
+[[z=2|discovery questions]]. If they say "we're fine," that is still data, dig
+into it.
+
+@plane z=2 label="Discover" x=2 y=0
+# Slide 2: Discovery (the heart of the call)
+
+Spend most of your time here. Ask, listen, follow the thread. Take notes on their
+exact words; you will quote them back later.
+
+1. "Walk me through how you build the forecast today. Who touches it before it
+   gets to the CFO?"
+2. "When the number is wrong, when do you usually find out, and how far off is it?"
+3. "What does a missed quarter actually cost the team, beyond the dollars?"
+4. "If you could see deal risk two weeks earlier, what would you do differently?"
+
+Listening rules:
+
+- Talk less than 30 percent of this slide.
+- After they answer, count to two before you respond.
+- Mirror their last few words to keep them going ("two weeks earlier?").
+
+When you have a quantified pain, advance to [[z=3|the value bridge]].
+
+@plane z=3 label="Value" x=3 y=0
+# Slide 3: Connect Pulse to Their Pain
+
+Now, and only now, tie the product to what they told you. Use their numbers.
+
+> "You said reps update late and you find out the forecast is off about ten days
+> into the quarter. Pulse pulls activity and pipeline signals automatically, so the
+> forecast updates itself daily instead of waiting on Friday entries. Teams your
+> size usually cut forecast error from around 20 percent down to single digits in
+> the first quarter."
+
+- Lead with the outcome, not the feature list.
+- One proof point, not five: "Northstar Software went from a 22 percent miss to 6
+  percent in 90 days."
+- Then check in: "Is that the kind of shift that would matter to you?"
+
+If they lean in, head to [[z=5|the close]]. If they hesitate, expect an objection
+and go to [[z=4|the objection slide]].
+
+@plane z=4 label="Objection" x=2 y=1
+# Slide 4: Handle the Objection
+
+Most calls stall here. Acknowledge, ask, then respond. Never argue.
+
+"We already use Salesforce."
+
+> "Makes sense, most of our customers do too. Pulse sits on top of Salesforce, it
+> doesn't replace it. Think of it as the layer that reads your CRM so your reps
+> don't have to babysit it. Worth seeing how that looks with your own data?"
+
+"We don't have budget right now."
+
+> "Understood. Help me size it: if the forecast were off by even half this quarter,
+> what does that gap look like? I'd rather show you the math than push a price."
+
+"Send me some info."
+
+> "Happy to. So I send the right thing and not a generic deck, what is the one
+> question you'd want answered? I'll tailor it and we can grab 15 minutes after."
+
+Once the objection clears, return to [[z=5|the close]].
+
+@plane z=5 label="Close" x=4 y=0
+# Slide 5: Close for the Next Step
+
+Do not close for the sale on a cold call. Close for a concrete, calendared step.
+
+> "Based on what you've shared, the logical next step is a 25-minute working
+> session where I plug Pulse into a slice of your real pipeline and show you the
+> forecast it produces. Worst case, you get a free second opinion on your number.
+> How's Thursday at 10, or does Friday morning work better?"
+
+Closing checklist:
+
+- Offer two specific times, not "when are you free."
+- Confirm the calendar invite goes out before you hang up.
+- Restate the value in one line: "I'll show you your real forecast risk, live."
+- Send the recap email within 10 minutes, quoting their words from
+  [[z=2|the discovery slide]].
+
+If they decline entirely: "No problem. Can I check back next quarter?" A soft yes
+is still a pipeline entry.

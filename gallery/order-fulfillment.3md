@@ -1,0 +1,151 @@
+---
+3md: 1.0
+axis: status
+title: Order Fulfillment Pipeline
+order: "#48217"
+sla: "ship within 24h of payment capture"
+warehouse: BUF-1 (Buffalo, NY)
+---
+Lifecycle of a single customer order as it moves through the fulfillment
+pipeline. Each plane is one status; an order advances along the Z axis from
+left (intake) to right (delivered). The `x` offset spaces the stages out for a
+left-to-right board view, and the `y` offset nudges exception states below the
+happy path.
+
+Start at [[z=0|Placed]] and follow the line to [[z=4|Delivered]].
+
+@plane z=0 x=0 y=0 label="Placed"
+# Placed
+
+Order **#48217** created by customer at 2026-06-23 09:14 ET.
+
+| Field | Value |
+|-------|-------|
+| Items | 3 SKUs, 5 units |
+| Subtotal | $142.00 |
+| Shipping | Standard ground (3-5 day) |
+| Destination | Austin, TX 78701 |
+
+## What happens here
+
+- Cart is converted to an order record and an idempotency key is minted.
+- Inventory is **soft-reserved** for 30 minutes so two carts cannot claim the
+  last unit.
+- A fraud pre-score runs; anything above 0.80 is flagged for manual review.
+
+Payment has not been captured yet. If the authorization fails, the order never
+leaves this state and the soft reservation expires on its own.
+
+Next stop: [[z=1|Paid]].
+
+@plane z=1 x=3 y=0 label="Paid"
+# Paid
+
+Authorization captured at 2026-06-23 09:14:48 ET. The 24h ship SLA clock
+starts now.
+
+## Ledger entry
+
+```
+charge   txn_9f2a   $142.00   captured
+tax      TX state   $11.72    collected
+total                $153.72
+```
+
+## Gate checks before release
+
+- [x] Payment captured (not just authorized)
+- [x] Fraud score 0.31 (under the 0.80 threshold)
+- [x] Address validated against USPS, deliverable
+- [ ] Stock confirmed at a single warehouse
+
+The soft reservation from [[z=0|Placed]] is now converted to a **hard
+allocation**. If any line cannot be allocated, the order branches to the
+backorder handler instead of advancing.
+
+@plane z=2 x=6 y=0 label="Picked & Packed"
+# Picked and Packed
+
+Work released to warehouse **BUF-1** as pick task `PT-55129`.
+
+## Pick list
+
+1. `SKU-204` Ceramic pour-over dripper - bin A12 - qty 1
+2. `SKU-118` Burr grinder, hand crank - bin C07 - qty 1
+3. `SKU-061` House blend, 12oz bag - bin D33 - qty 3
+
+Picker scans each bin and unit; a mismatch halts the task rather than shipping
+the wrong item. Packed into a single 12x9x6 box, 4.3 lb gross.
+
+## Carton contents
+
+- Packing slip (no prices, per gift-order flag)
+- Items above, void-fill on top
+- Return QR label tucked inside the flap
+
+Ready for carrier handoff. See [[z=3|Shipped]].
+
+@plane z=3 x=9 y=0 label="Shipped"
+# Shipped
+
+Carrier manifested the parcel and the tracking number went live.
+
+| Field | Value |
+|-------|-------|
+| Carrier | UPS Ground |
+| Tracking | 1Z999AA10123456784 |
+| Picked up | 2026-06-23 17:40 ET |
+| Est. delivery | 2026-06-26 by 9:00 PM |
+
+## Customer-facing events
+
+- Shipment confirmation email sent with the tracking link.
+- Webhook `order.shipped` fired to the storefront and the reviews service.
+- SLA met: shipped 8h 25m after payment, well under the 24h target.
+
+If the carrier reports a lost or damaged scan, the order drops to the
+exception lane at [[z=2.5|Exception: Reship]] for a replacement.
+
+@plane z=4 x=12 y=0 label="Delivered"
+# Delivered
+
+Marked delivered at 2026-06-26 14:02 ET, left at front door, photo on file.
+
+## Post-delivery automation
+
+- `order.delivered` webhook closes the SLA case as **on time**.
+- A review request is scheduled for 3 days out (2026-06-29).
+- The return window opens: 30 days, until 2026-07-26.
+
+## Final ledger
+
+```
+revenue recognized   $142.00
+shipping recognized   included
+status                CLOSED
+```
+
+Nothing further is required unless the customer opens a return, which would
+re-open a reverse-logistics flow outside this pipeline.
+
+@plane z=2.5 x=9 y=-3 label="Exception: Reship"
+# Exception: Reship
+
+The off-path lane for parcels that are lost, damaged, or refused after
+[[z=3|Shipped]].
+
+## Trigger conditions
+
+- No carrier scan for 4 days after pickup, **or**
+- Carrier event `damaged` / `returned_to_sender`, **or**
+- Customer reports non-delivery within the SLA window.
+
+## Resolution playbook
+
+1. Open a claim with the carrier (does not block the customer).
+2. Re-allocate stock and create a **zero-charge** replacement order.
+3. The replacement re-enters the happy path at [[z=2|Picked & Packed]].
+4. Notify the customer with the new tracking number once it is live.
+
+Only after the replacement is delivered does the original order reach
+[[z=4|Delivered]] and close.

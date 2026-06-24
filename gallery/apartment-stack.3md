@@ -1,0 +1,93 @@
+---
+3md: 1.0
+axis: floor
+title: Maplewood Court - Unit Stack (Line 04)
+building: Maplewood Court
+address: 412 Maplewood Avenue
+line: "04"
+units_per_floor: 4
+elevator: central core
+---
+This stack documents the "04" line of units at Maplewood Court, one unit per
+floor sharing the same plumbing and electrical riser. Each plane is a floor;
+moving up the Z axis moves up the building. The `04` units sit on the
+northwest corner, so every unit gets morning light from the east bedroom and
+sunset light over the kitchen sink.
+
+The `x`/`y` offsets below mark each unit's position on its floor plate relative
+to the central elevator core (x grows east, y grows north, in feet).
+
+@plane z=1 x=-22 y=14 label="101 - Garden"
+# Unit 101 - Garden Level
+
+**Type:** 1 bed / 1 bath, 690 sq ft
+**Rent:** $1,650 / mo
+**Status:** Occupied (lease ends 2026-09-30)
+
+The only unit with private outdoor access: a 9 by 12 patio off the living room
+opening onto the shared courtyard. Sits half a flight below the lobby, so it
+stays cool in summer and is the easiest unit for moving furniture in.
+
+- Floor: stained concrete, radiant heat loop
+- Quirk: the riser shutoff for the whole `04` stack lives in this unit's
+  utility closet, so plumbing work on any floor starts here
+- Window line: north and east, partly shaded by the courtyard maple
+
+Directly above is [[z=2|Unit 201]], which shares the kitchen drain stack.
+Building-wide water shutoff requests route through here first.
+
+@plane z=2 x=-22 y=14 label="201 - Standard"
+# Unit 201 - Second Floor
+
+**Type:** 1 bed / 1 bath, 705 sq ft
+**Rent:** $1,725 / mo
+**Status:** Occupied (lease ends 2027-01-31)
+
+The baseline layout that floors 2 through 4 all repeat. Galley kitchen along
+the west wall, bedroom on the northeast corner, living room facing the
+courtyard. First floor with a real balcony (4 by 8, steel grate).
+
+- Noise note: sits above the lobby vestibule, so the entry buzzer is faintly
+  audible in the front hall
+- HVAC: shared with the units above through the same vertical chase
+
+The drain from this kitchen ties into the stack at [[z=1|Unit 101]]. The
+identical unit one floor up is [[z=3|Unit 301]].
+
+@plane z=3 x=-22 y=14 label="301 - Standard"
+# Unit 301 - Third Floor
+
+**Type:** 1 bed / 1 bath, 705 sq ft
+**Rent:** $1,775 / mo
+**Status:** Vacant - available 2026-07-15
+
+Same plate as the floor below, one notch quieter and brighter. Far enough from
+the street that traffic noise drops off, low enough that the elevator is still
+faster than the stairs on a bad day.
+
+- Recently repainted (warm white, 2026-05)
+- New range and dishwasher installed during turnover
+- Balcony gets direct sun from roughly 7am to 11am
+
+This is the current showing unit. The penthouse one floor up is
+[[z=4|Unit 401]]; prospective tenants often tour both in one visit.
+
+@plane z=4 x=-22 y=14 label="401 - Penthouse"
+# Unit 401 - Top Floor
+
+**Type:** 2 bed / 2 bath, 1,040 sq ft
+**Rent:** $2,650 / mo
+**Status:** Occupied (lease ends 2026-12-31)
+
+The penthouse breaks the stack pattern: it absorbs the smaller `03` unit's
+footprint to gain a second bedroom and an en-suite bath. Vaulted ceiling in
+the living room (10.5 ft at the ridge) and a private roof-deck stair.
+
+- Roof access: a locked hatch in the hall ceiling serves building maintenance;
+  HVAC condensers for the whole `04` stack sit on the roof above this unit
+- Light: dual exposure, east and north, plus a south-facing skylight over the
+  stairwell
+- Premium for top-floor quiet and no upstairs neighbor
+
+Everything below repeats the [[z=2|standard layout]]. The mechanical roof
+serving this unit also serves [[z=1|the garden unit's]] water heater.

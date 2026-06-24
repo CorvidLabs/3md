@@ -1,0 +1,120 @@
+---
+3md: 1.0
+axis: time
+title: Infant Developmental Milestones by Month
+source: CDC "Learn the Signs. Act Early." and AAP Bright Futures guidance
+note: Ranges are typical. Every baby develops on their own timeline.
+---
+A month-by-month walk through what most babies are doing across four domains:
+motor, social/emotional, language, and cognitive. Each plane is one age window.
+Use these as gentle checkpoints, not a scorecard. If a milestone is missing well
+past its window, that is worth a conversation with your pediatrician.
+
+@plane z=2 x=0 y=0 label="2 months"
+# 2 Months: The Social Smile Arrives
+
+The fog of the newborn weeks starts to lift. Reflexes still dominate, but the
+first real two-way moments appear.
+
+- **Motor:** Holds head up briefly during tummy time; movements become smoother
+  and less jerky than the newborn flailing.
+- **Social/emotional:** The first genuine social smile, in response to your face
+  and voice (not just gas). Begins to self-soothe by bringing hands to mouth.
+- **Language:** Coos and makes gurgling "ooh" and "aah" sounds. Turns toward
+  familiar voices.
+- **Cognitive:** Watches faces intently and follows a moving object with the eyes
+  for a few seconds.
+
+> Pediatrician checkpoint: the 2-month well visit usually includes the first
+> round of vaccines and a weight/length/head-circumference plot.
+
+Next up, the hands take over: see [[z=4|4 months]].
+
+@plane z=4 x=2 y=0 label="4 months"
+# 4 Months: Reaching and Belly Laughs
+
+Babies become active explorers. The world is now something to grab.
+
+- **Motor:** Holds head steady without support; pushes up on elbows during tummy
+  time; may roll from tummy to back. Brings hands together and reaches for toys.
+- **Social/emotional:** Laughs out loud and enjoys playing with people; may cry
+  or fuss when play stops.
+- **Language:** Babbles with expression and copies some sounds back to you in a
+  back-and-forth "conversation."
+- **Cognitive:** Reaches for a toy with one hand, follows objects across the full
+  arc of vision, and watches faces closely.
+
+Hands that can grab (from [[z=2|2 months]]) now feed straight into sitting and
+the pincer grasp ahead at [[z=6|6 months]].
+
+@plane z=6 x=4 y=0 label="6 months"
+# 6 Months: Sitting Up to the World
+
+The midpoint of the first year. Babies sit, mouth everything, and start solid
+foods around now.
+
+- **Motor:** Sits with little or no support; rolls in both directions; rocks on
+  hands and knees as a pre-crawl rehearsal. Rakes small objects toward self.
+- **Social/emotional:** Knows familiar faces and begins to recognize strangers.
+  Loves looking at self in a mirror.
+- **Language:** Strings vowels together when babbling ("ah," "eh," "oh") and
+  responds to own name. Makes sounds to show joy and displeasure.
+- **Cognitive:** Looks for partially hidden objects; brings things to the mouth
+  to investigate; shows curiosity and tries to reach for out-of-reach toys.
+
+> Feeding note: most babies are ready for first solids around 6 months, signaled
+> by good head control and sitting with support.
+
+@plane z=9 x=6 y=0 label="9 months"
+# 9 Months: Stranger Danger and Object Permanence
+
+Mobility and memory click into place. Out of sight is no longer out of mind.
+
+- **Motor:** Sits without support, gets into a sitting position alone, crawls,
+  and pulls to stand at furniture. Develops the pincer grasp (thumb and
+  forefinger) to pick up tiny bits of food.
+- **Social/emotional:** Clingy with familiar adults and wary of strangers; may
+  show separation anxiety when you leave the room.
+- **Language:** Understands "no," copies sounds and gestures, and points at
+  things. Babbles strings like "mamama" and "babababa."
+- **Cognitive:** Looks for objects you hide (object permanence) and plays
+  peekaboo with real anticipation.
+
+The clinginess that starts here (a leap from [[z=6|6 months]]) eases as
+confidence grows by [[z=12|12 months]].
+
+@plane z=12 x=8 y=0 label="12 months"
+# 12 Months: First Words, First Steps
+
+The first birthday. Many babies stand alone, take first steps, and say their
+first true words.
+
+- **Motor:** Pulls up to stand and cruises along furniture; may stand alone and
+  take a few independent steps. Puts objects into a container and takes them out.
+- **Social/emotional:** Has favorite people and toys; shows affection; plays
+  games like pat-a-cake. May test reactions during a meal or at bedtime.
+- **Language:** Says "mama" and "dada" with meaning plus one or two other words;
+  uses simple gestures like waving "bye-bye" and shaking the head for "no."
+- **Cognitive:** Explores objects by shaking, banging, and throwing; finds hidden
+  objects easily; follows a simple one-step request ("give it to me").
+
+> First-birthday checkpoint: the 12-month visit often includes a developmental
+> review of the whole first year, from the [[z=2|social smile]] to first steps.
+
+@plane z=18 x=10 y=0 label="18 months"
+# 18 Months: The Determined Toddler
+
+Now firmly a toddler. Walking is steady, words multiply, and the will is strong.
+
+- **Motor:** Walks alone and may run stiffly; pulls toys while walking; helps
+  undress; drinks from a cup and eats with a spoon (messily).
+- **Social/emotional:** Shows affection openly, plays simple pretend (feeding a
+  doll), and may have temper tantrums and stranger fear. Points to show you
+  something interesting.
+- **Language:** Says several single words and points to one body part when asked.
+  Understands far more than they can say.
+- **Cognitive:** Knows what ordinary objects are for (phone, brush, spoon),
+  scribbles, and follows one-step verbal commands without gestures.
+
+Compared with the [[z=12|first steps]] at a year, movement is now purposeful and
+the vocabulary explosion is just beginning.

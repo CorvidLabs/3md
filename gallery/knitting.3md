@@ -1,0 +1,101 @@
+---
+3md: 1.0
+axis: step
+title: Simple Ribbed Beanie (Knit Flat, Seamed)
+designer: Corvid Knitworks
+yarn: Worsted weight, approx 110 yards
+needles: US 8 (5.0 mm) straight
+gauge: 18 sts and 24 rows to 4 inches in stockinette
+size: Adult medium, 20 inch finished circumference
+---
+A beginner-friendly beanie worked flat in rows, then seamed up the back. Read
+each step in order: every plane below is one block of rows. Abbreviations used
+throughout: `k` = knit, `p` = purl, `k2tog` = knit two together, `st(s)` =
+stitch(es), `RS` = right side, `WS` = wrong side.
+
+Cast on 90 stitches loosely. Jump to [[z=1|the ribbed brim]] when ready.
+
+@plane z=0 label="Cast On" x=0 y=0
+# Step 0: Cast On
+
+Using the long-tail cast-on, cast 90 stitches onto a single US 8 needle. Leave a
+tail of about 18 inches; you will use it later to [[z=5|sew the back seam]].
+
+- Total stitches: 90
+- Tip: cast on over two needles held together if your cast-on tends to be tight.
+  A loose edge keeps the brim stretchy.
+
+This is row 0. Every odd row below is a wrong-side (WS) row and every even row is
+a right-side (RS) row.
+
+@plane z=1 label="Ribbed Brim" x=0 y=1
+# Step 1: 2x2 Ribbed Brim (Rows 1 to 16)
+
+The brim is a stretchy 2x2 rib worked over all 90 stitches for 16 rows (about 2.5
+inches).
+
+- **RS rows (1, 3, 5 ... 15):** `*k2, p2*` repeat from `*` to last 2 sts, k2.
+- **WS rows (2, 4, 6 ... 16):** `*p2, k2*` repeat from `*` to last 2 sts, p2.
+
+Knitting the knits and purling the purls as they face you keeps the columns
+aligned. After row 16 the brim will fold nothing; it sits flat. Continue to
+[[z=2|the stockinette body]].
+
+@plane z=2 label="Stockinette Body" x=0 y=2
+# Step 2: Stockinette Body (Rows 17 to 44)
+
+Switch to stockinette and work straight until the piece measures about 7 inches
+from the cast-on edge.
+
+- **RS rows (odd):** knit all 90 sts.
+- **WS rows (even):** purl all 90 sts.
+
+That is 28 rows of stockinette. The fabric will want to curl at the edges; this
+is normal and disappears once seamed. When the piece reaches 7 inches, stop on a
+completed WS row and move to [[z=3|the crown decreases]].
+
+@plane z=3 label="Crown Decreases" x=0 y=3
+# Step 3: Crown Shaping (Rows 45 to 58)
+
+Decrease evenly to draw the top of the hat closed. Work these on RS rows only;
+purl all WS rows in between.
+
+| Decrease row | Instruction | Sts remaining |
+|---|---|---|
+| Row 45 | `*k8, k2tog*` to end | 81 |
+| Row 47 | `*k7, k2tog*` to end | 72 |
+| Row 49 | `*k6, k2tog*` to end | 63 |
+| Row 51 | `*k5, k2tog*` to end | 54 |
+| Row 53 | `*k4, k2tog*` to end | 45 |
+| Row 55 | `*k3, k2tog*` to end | 36 |
+| Row 57 | `*k2, k2tog*` to end | 27 |
+
+Each listed row removes 9 stitches. Purl rows 46, 48, 50, 52, 54, and 56 plain.
+After row 57 you have 27 sts on the needle. Proceed to [[z=4|closing the crown]].
+
+@plane z=4 label="Close The Crown" x=0 y=4
+# Step 4: Final Decrease and Gather (Rows 58 to 59)
+
+- **Row 58 (WS):** purl all 27 sts.
+- **Row 59 (RS):** `*k1, k2tog*` to end, leaving 18 sts.
+
+Cut the working yarn, leaving a 10 inch tail. Thread the tail through a tapestry
+needle, then pass it through all 18 live stitches and slip them off the knitting
+needle. Pull the tail snug to gather the crown into a tight circle, and secure it
+with a small stitch on the inside. Finish at [[z=5|the seam]].
+
+@plane z=5 label="Seam and Finish" x=0 y=5
+# Step 5: Seam and Finish
+
+You now have a flat trapezoid gathered at the top. Fold it right sides together so
+the two side edges meet.
+
+1. Using the long cast-on tail from [[z=0|the cast on]] and a tapestry needle,
+   sew the back seam with mattress stitch from the brim up to the crown.
+2. Weave in all remaining ends on the wrong side, working each end through at
+   least 2 inches of fabric so it does not pop out.
+3. Turn the hat right side out. Block lightly by misting with water and laying
+   flat to dry.
+
+Optional: fold the [[z=1|ribbed brim]] up for a double-thick cuff. Your beanie is
+finished.

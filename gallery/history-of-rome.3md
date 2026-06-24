@@ -1,0 +1,133 @@
+---
+3md: 1.0
+axis: time
+title: Key Eras of Ancient Rome
+subtitle: A walk down the Z axis of Roman history
+span: 753 BCE to 476 CE
+author: CorvidLabs Gallery
+---
+Ancient Rome did not arrive fully formed. It grew from a cluster of hilltop
+villages into a Mediterranean empire, then fractured under its own weight.
+
+Each plane below is one era. The Z axis is time: read from the front of the
+stack (the legendary founding) toward the back (the fall of the West). Where one
+era plants a seed that another harvests, the planes link to each other.
+
+@plane z=0 label="Founding & Kingdom" x=0 y=0
+# The Roman Kingdom (753 - 509 BCE)
+
+Tradition dates the founding of Rome to **753 BCE**, with the legend of Romulus
+and Remus, twins raised by a she-wolf. Romulus is remembered as the first of
+**seven kings**.
+
+## What actually mattered
+
+- **A defensible site.** Rome sat on hills above a ford of the Tiber, on the
+  trade road between Etruria and the Greek colonies of the south.
+- **Etruscan influence.** The later kings (the Tarquins) were Etruscan. Rome
+  inherited the arch, the toga, gladiatorial games, and the drainage of the
+  Forum via the Cloaca Maxima.
+- **Early institutions.** A Senate of clan elders and an assembly of citizen
+  soldiers already existed. These outlived the monarchy.
+
+## The break
+
+In **509 BCE**, the rape of Lucretia and the tyranny of Tarquinius Superbus
+triggered a revolt led by Lucius Junius Brutus. The Romans expelled the king and
+swore never to be ruled by one again. That oath shaped the next 500 years.
+
+> See how that anti-monarchy oath plays out under the Republic in
+> [[z=1|the Republic]], and how it is quietly undone in
+> [[z=2|the age of Augustus]].
+
+@plane z=1 label="The Republic" x=2 y=0
+# The Roman Republic (509 - 27 BCE)
+
+After expelling the kings (see [[z=0|the Kingdom]]), Rome built a constitution
+designed to stop any one man from holding too much power.
+
+## The machinery
+
+- **Two consuls**, elected annually, each able to veto the other.
+- **The Senate**, an advisory body of ex-magistrates that controlled finance
+  and foreign policy in practice.
+- **Tribunes of the plebs**, won during the Conflict of the Orders, who could
+  veto acts against the common citizens.
+
+## Expansion
+
+| Conflict | Dates | Result |
+|---|---|---|
+| Samnite Wars | 343 - 290 BCE | Control of central Italy |
+| Punic Wars | 264 - 146 BCE | Carthage destroyed, Rome rules the sea |
+| Macedonian Wars | 214 - 148 BCE | Greece absorbed |
+
+Hannibal crossed the Alps and won at Cannae in 216 BCE, yet Rome refused terms
+and ground him down. Victory made Rome rich and, fatally, unequal.
+
+## The collapse of consensus
+
+Conquest flooded Italy with slaves and wealth, hollowing out the small farmer.
+The reforms of the Gracchi (133 - 121 BCE) ended in murder. Then came the
+generals: Marius, Sulla, Pompey, and finally Julius Caesar, who crossed the
+Rubicon in 49 BCE.
+
+Caesar's assassination in **44 BCE** did not restore the Republic. It opened the
+door to [[z=2|one-man rule]].
+
+@plane z=2 label="The Principate" x=4 y=0
+# The Early Empire / Principate (27 BCE - 284 CE)
+
+Octavian, Caesar's heir, won the civil wars and in **27 BCE** took the name
+**Augustus**. He kept the forms of [[z=1|the Republic]], the Senate, the
+consuls, the elections, while holding the real power himself. The oath against
+kings from [[z=0|the founding]] was honored in name and broken in fact.
+
+## The Pax Romana
+
+For roughly two centuries the Mediterranean world enjoyed relative peace and
+booming trade.
+
+- **Roads and ports** knit three continents together.
+- **Roman law** and Latin spread west; Greek remained the language of the east.
+- The **Five Good Emperors** (Nerva to Marcus Aurelius, 96 - 180 CE) marked the
+  high-water mark of stable, adoptive succession.
+
+## Cracks appear
+
+Marcus Aurelius left the throne to his son Commodus, ending the adoptive system.
+The third century brought the **Crisis of 235 - 284 CE**: barracks emperors,
+plague, debased coinage, and invasion. The empire nearly came apart.
+
+It was saved, but only by being remade. That remaking is
+[[z=3|the Dominate]].
+
+@plane z=3 label="The Dominate" x=6 y=0
+# The Late Empire / Dominate (284 - 476 CE)
+
+**Diocletian** (reigned 284 - 305 CE) pulled the empire back from the brink that
+ended [[z=2|the Principate]]. He stopped pretending to be merely the first
+citizen and ruled openly as **dominus** (lord and master).
+
+## The reinvention
+
+- **The Tetrarchy.** Power split among four rulers, two senior (Augusti) and two
+  junior (Caesares), to defend the long frontiers at once.
+- **Constantine** reunited the empire, legalized Christianity with the Edict of
+  Milan (313 CE), and founded **Constantinople** in 330 CE, shifting the center
+  of gravity east.
+- **Theodosius I** made Christianity the state religion in 380 CE and, at his
+  death in 395 CE, split the empire permanently into East and West.
+
+## The fall in the West
+
+The Western half could no longer hold its frontiers. Rome itself was sacked by
+the Visigoths in 410 CE and the Vandals in 455 CE. In **476 CE** the Germanic
+commander Odoacer deposed the boy emperor Romulus Augustulus, whose name eerily
+echoed [[z=0|Rome's first king and founder]].
+
+## The thread that did not break
+
+The Eastern empire, centered on Constantinople, lived on as the **Byzantine
+Empire** for another thousand years, carrying Roman law and Greek learning into
+the medieval world.

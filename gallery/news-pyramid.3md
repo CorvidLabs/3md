@@ -1,0 +1,99 @@
+---
+3md: 1.0
+axis: depth
+title: City Council Approves Riverside Flood Barrier
+byline: Maya Okonkwo, Staff Reporter
+dateline: HARLOW BEND, June 23, 2026
+section: Local Government
+---
+An inverted pyramid stacks a news story by importance. The shallowest plane
+(`z=0`) holds the lede, the single sentence a reader skims first. Each deeper
+plane carries detail that fewer readers will reach: context, supporting quotes,
+and finally the dry procedural background that only the most committed reader
+wants. Drop off at any depth and you still have the story.
+
+@plane z=0 label="Lede" y=0
+# Council approves $48M flood barrier
+
+The Harlow Bend City Council voted 6-1 on Monday night to fund a $48 million
+flood barrier along the Riverside district, ending a decade of stalled proposals
+and clearing the way for construction to begin next spring.
+
+For who needs more, the [[z=1|key facts]] follow. The full vote breakdown sits
+[[z=4|at the bottom]].
+
+@plane z=1 label="Key facts" y=1
+## What was decided
+
+- **The project:** A 2.3-mile concrete-and-earthen levee plus three pumping
+  stations, designed to hold back a "hundred-year" flood crest of 31 feet.
+- **The cost:** $48 million, split between a $30 million state grant and $18
+  million in municipal bonds.
+- **The timeline:** Design finalizes by October, groundbreaking in March 2027,
+  completion targeted for late 2029.
+- **The vote:** 6 in favor, 1 opposed (Council member Reyes), no abstentions.
+
+The decision reverses years of inaction. See [[z=2|why it matters]] for the
+flooding history that forced the council's hand.
+
+@plane z=2 label="Why it matters" y=2
+## Why it matters
+
+Riverside has flooded four times since 2014, most severely in 2021 when the
+river crested at 29.4 feet and forced the evacuation of roughly 1,200 residents.
+That flood caused an estimated $62 million in property damage and left two of the
+district's three schools closed for a full semester.
+
+Insurers have since classified much of Riverside as high-risk, pushing annual
+premiums up by as much as 40 percent and depressing home values across the
+neighborhood. City planners argue the barrier will pay for itself within fifteen
+years through avoided damage and recovered property-tax revenue.
+
+The human stakes drew sharp testimony at the meeting, captured [[z=3|in the
+voices below]].
+
+@plane z=3 label="Reaction and quotes" y=3
+## What people said
+
+More than forty residents signed up to speak during the two-hour public comment
+period.
+
+> "I have rebuilt my kitchen twice. I am sixty-eight years old. I do not have a
+> third rebuild in me," said Carla Mendes, a Riverside homeowner since 1989.
+
+Mayor Tomás Whitfield framed the vote as overdue:
+
+> "We have studied this river to death. Tonight we finally do something about
+> it."
+
+The lone dissenter, Council member Daniel Reyes, objected to the bond financing
+rather than the barrier itself:
+
+> "I support protecting Riverside. I cannot support putting $18 million on the
+> city's credit card without a clearer plan to pay it back."
+
+The mechanics of that financing, and what happens next, are detailed
+[[z=4|in the procedural record]].
+
+@plane z=4 label="Background and next steps" y=4
+## The fine print
+
+The $18 million municipal bond will be repaid over 20 years through a dedicated
+stormwater fee added to Riverside-area water bills, averaging an estimated $7.50
+per household per month. The state grant, awarded in April under the Coastal and
+Riverine Resilience Program, requires the city to break ground within 24 months
+or forfeit the funds, a deadline that shaped Monday's urgency.
+
+**Next steps:**
+
+1. The city engineer submits final designs to the state by October 15.
+2. A public works contract goes out to bid in December.
+3. The council must ratify the winning bid in a second vote, expected in
+   February 2027.
+
+The full text of Resolution 2026-114 is available on the city clerk's website.
+A previous version of this barrier, proposed in 2016 at $22 million, died in
+committee after a dispute over easements with the Harlow Bend Rail Authority,
+which the current plan resolves by routing the levee behind the rail yard.
+
+Return to [[z=0|the top]] for the summary.

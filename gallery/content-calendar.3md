@@ -1,0 +1,146 @@
+---
+3md: 1.0
+axis: status
+title: Content Production Pipeline
+team: Editorial & Brand
+board: Q3 Blog + Newsletter
+wip_limit: per-column, see each plane
+---
+A kanban-style content board. Each plane is one stage in the production
+pipeline, ordered from intake to published. Cards move forward along the Z
+axis as work is completed. Work-in-progress (WIP) limits keep any one stage
+from clogging. Use the cross-plane links to trace a single piece, like the
+"State of RSS" feature, as it travels from idea to live.
+
+@plane z=0 label="Backlog" x=0 y=0
+# Backlog (Ideas)
+
+WIP limit: none. Pull from here only when [[z=1|Drafting]] has open capacity.
+
+Raw pitches, reader questions, and SEO gaps live here until an editor
+champions them. A card needs a one-line angle and a target audience before it
+can be pulled forward.
+
+| Card | Angle | Audience | Source |
+| --- | --- | --- | --- |
+| State of RSS in 2026 | RSS is quietly thriving in the AI era | Power readers | Editor pitch |
+| Migrating off Webpack | Real config diffs, not theory | Frontend devs | Reader question |
+| Cold-brew at scale | Batch ratios for a 12-cup carafe | Newsletter | Slack thread |
+| Accessible color tokens | Contrast math without the jargon | Designers | SEO gap |
+
+Definition of ready:
+
+- [x] One-sentence angle written
+- [x] Target audience named
+- [ ] Rough keyword or distribution channel noted
+
+Champion this card and it becomes a draft assignment. Follow "State of RSS"
+into [[z=1|Drafting]].
+
+@plane z=1 label="Drafting" x=2 y=0
+# Drafting (Writing)
+
+WIP limit: 3 cards. We are at 2 of 3, so one more can be pulled from
+[[z=0|Backlog]].
+
+The writer owns the card here. The goal is a complete first draft, structure
+and all, not a polished one. Editors do not touch prose at this stage.
+
+In progress:
+
+1. **State of RSS in 2026** - Maya, draft due Thu. 1,400 of ~1,800 words.
+   Outline locked: history, the decline myth, three modern readers, a build
+   guide. Pulled from the backlog on Monday.
+2. **Migrating off Webpack** - Devin, draft due Fri. Code samples compiling,
+   intro still rough.
+
+Open slot: 1 (eligible to pull the cold-brew newsletter piece).
+
+Writer checklist before handoff:
+
+- [ ] Working title and subtitle
+- [ ] Every section has at least a topic sentence
+- [ ] Sources and links collected inline
+- [ ] Alt text drafted for any planned images
+
+When the draft is structurally complete, move the card to [[z=2|Editing]].
+
+@plane z=2 label="Editing" x=4 y=0
+# Editing (Review)
+
+WIP limit: 2 cards. Currently 1 of 2.
+
+Two passes happen here, in order: a structural edit (does the argument hold,
+is anything missing) and a line edit (clarity, voice, grammar). The writer
+addresses comments in the same doc; no card leaves with open threads.
+
+Under review:
+
+- **State of RSS in 2026** - structural pass done by Sam, line edit in
+  progress. One open note: the "decline myth" section needs a 2025 usage
+  stat with a citation. Sent back to Maya for that single fact, then it
+  returns here, not to [[z=1|Drafting]].
+
+Editor checklist:
+
+- [x] Structural edit complete
+- [ ] Line edit complete
+- [ ] Headline tested against two alternates
+- [ ] Links verified (no 404s)
+- [ ] Reading level appropriate for audience
+
+Cleared cards advance to [[z=3|Scheduled]]. Anything needing a rewrite drops
+back to [[z=1|Drafting]] with a note explaining why.
+
+@plane z=3 label="Scheduled" x=6 y=0
+# Scheduled (Ready to Ship)
+
+WIP limit: none, but nothing sits here longer than 10 days.
+
+Approved, formatted, and slotted into the calendar. The card is frozen:
+copy is final, art is attached, and metadata is filled. Only the publish
+date can change now.
+
+Queue:
+
+| Piece | Slot | Channel | Owner |
+| --- | --- | --- | --- |
+| State of RSS in 2026 | Mon Jul 7, 9:00 | Blog + Newsletter | Maya |
+| Accessible color tokens | Wed Jul 9, 9:00 | Blog | Priya |
+
+Pre-flight for each card:
+
+- [x] Final copy approved in [[z=2|Editing]]
+- [x] Hero image and social card exported (1200x630)
+- [x] Meta title and description under limits
+- [x] Canonical URL and slug set
+- [ ] Scheduled in the CMS (auto-publish armed)
+
+Once the CMS confirms the post is live, archive the card in
+[[z=4|Published]].
+
+@plane z=4 label="Published" x=8 y=0
+# Published (Live)
+
+WIP limit: none. This is the archive and the scoreboard.
+
+Live work, with a 14-day performance check booked for each piece. We review
+what shipped to feed new ideas back into [[z=0|Backlog]].
+
+Recently live:
+
+- **Cold-brew at scale** - shipped Jun 30. 3,100 opens, 11.2% click rate on
+  the newsletter. Strong; a "hot-brew comparison" follow-up went to the
+  backlog.
+- **Migrating off Webpack** - shipped Jun 25. 4,800 reads, ranking page 1 for
+  "webpack to vite config". Spawned a backlog idea: a Rollup deep-dive.
+
+Retro questions for each card:
+
+1. Did it hit its audience and channel goal?
+2. What was the biggest time sink, and which stage caused it?
+3. Does it suggest a sequel worth adding to [[z=0|Backlog]]?
+
+Cycle-time note: "Cold-brew" took 6 days backlog to live; "Webpack" took 12
+because of a rewrite loop between editing and drafting. Tightening the
+[[z=2|Editing]] checklist is the next process fix.

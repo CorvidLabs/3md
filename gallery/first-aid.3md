@@ -1,0 +1,133 @@
+---
+3md: 1.0
+axis: step
+title: Adult CPR First Aid
+audience: bystander responder, no equipment
+standard: 2020 AHA / ERC guidelines (compression rate 100-120/min)
+disclaimer: Reference only. Take a hands-on certified course.
+---
+Hands-only and standard CPR for an unresponsive adult who is not breathing
+normally. Move through the planes in order. If you are alone with a phone,
+put it on speaker so the dispatcher can coach you while your hands stay free.
+
+@plane z=0 x=0 y=0 label="Check the scene and the person"
+# Step 0: Make sure it is safe, then check responsiveness
+
+Before you touch anyone, look for danger to yourself: traffic, fire, live
+wires, water, fumes. You cannot help if you become the second casualty.
+
+Once the scene is safe:
+
+1. Tap the person firmly on both shoulders.
+2. Shout, "Are you okay? Can you hear me?"
+3. Look at the chest for 5 to 10 seconds. Are they breathing normally?
+
+A single gasp every few seconds is **agonal breathing**. It is not normal
+breathing, and it means you should treat the person as not breathing.
+
+- Responsive and breathing: do not start CPR. Keep them comfortable and
+  monitor.
+- No response and no normal breathing: continue to [[z=1|call for help]].
+
+@plane z=1 x=2 y=0 label="Call 911 and get an AED"
+# Step 1: Call emergency services and send for an AED
+
+Time is the enemy. Brain cells start dying within minutes once blood flow
+stops, so the call and the AED request happen right now, not later.
+
+- **If others are present:** point at one specific person and say, "You, in
+  the red jacket, call 911. You, find an AED and bring it here." Naming
+  people prevents the bystander freeze where everyone assumes someone else
+  will act.
+- **If you are alone:** call 911 yourself, put the phone on speaker, and
+  start compressions while you talk. Do not leave an adult to search for an
+  AED unless the dispatcher tells you one is very close.
+
+Tell the dispatcher: the exact location, that the person is unresponsive and
+not breathing, and that you are starting CPR. Then go straight to
+[[z=2|chest compressions]].
+
+@plane z=2 x=4 y=0 label="Chest compressions"
+# Step 2: Push hard and fast in the center of the chest
+
+This is the single most important step. Good compressions keep oxygenated
+blood moving to the brain and heart.
+
+**Hand placement**
+
+1. Kneel beside the person on a firm, flat surface.
+2. Put the heel of one hand on the center of the chest, on the lower half of
+   the breastbone (between the nipples).
+3. Place your other hand on top and interlace your fingers. Keep fingers off
+   the ribs.
+
+**Technique**
+
+- **Depth:** at least 2 inches (5 cm), no more than 2.4 inches (6 cm).
+- **Rate:** 100 to 120 compressions per minute. The beat of "Stayin' Alive"
+  or "Baby Shark" lands in this range.
+- **Recoil:** let the chest rise fully between pushes. Do not lean on the
+  chest, or you starve the heart of refill time.
+- **Lock your elbows** and drive from your hips and shoulders, not your arms.
+
+Cracking sounds can happen and are not a reason to stop. Minimize pauses:
+every break in compressions drops the blood pressure you just built up.
+
+Trained and willing? Add [[z=3|rescue breaths]]. Otherwise keep doing
+hands-only compressions without stopping.
+
+@plane z=3 x=6 y=0 label="Rescue breaths (optional)"
+# Step 3: Two rescue breaths after every 30 compressions
+
+Rescue breaths are optional. If you are untrained, unwilling, or there is no
+barrier device, skip this plane and keep doing continuous compressions from
+[[z=2|step 2]]. Hands-only CPR saves lives.
+
+If you choose to give breaths, use a **30:2** cycle:
+
+1. After 30 compressions, open the airway with a head-tilt, chin-lift: one
+   hand on the forehead, two fingers lifting the bony part of the chin.
+2. Pinch the nose shut, make a seal over the mouth (ideally through a
+   pocket mask or face shield), and give 1 breath over about 1 second.
+3. Watch for the chest to rise. Give a second breath, then return
+   immediately to compressions.
+
+Keep each breath gentle. Two breaths should take less than 10 seconds total
+so compressions barely pause. If the first breath does not make the chest
+rise, reposition the head and try once more, then continue regardless.
+
+@plane z=4 x=8 y=0 label="Use the AED"
+# Step 4: Apply the AED the moment it arrives
+
+An AED (automated external defibrillator) can restart a chaotic heart
+rhythm. Modern units talk you through every step out loud.
+
+1. Turn it on and follow the voice prompts.
+2. Expose and dry the bare chest. Peel the pads and place them as shown on
+   the pad pictures: one upper right, one lower left side.
+3. **Stand clear** while it analyzes. Make sure no one is touching the
+   person.
+4. If a shock is advised, shout "Clear!", confirm no contact, and press the
+   flashing shock button.
+5. **Immediately resume** compressions from [[z=2|step 2]] for 2 minutes,
+   then let the AED reanalyze.
+
+Do not remove the pads. Leave the AED on and attached.
+
+@plane z=5 x=10 y=0 label="Keep going until handoff"
+# Step 5: Continue until help takes over
+
+Do not stop. Survival depends on continuous effort until one of these
+happens:
+
+- The person starts breathing normally, moves, or wakes up. If they recover
+  but stay unconscious, roll them into the **recovery position** (on their
+  side, head tilted to keep the airway open) and monitor breathing.
+- Trained responders (EMS, paramedics) arrive and take over.
+- An AED instructs you to stand clear for analysis or a shock.
+- You are too exhausted to continue. **Swap rescuers every 2 minutes** to
+  keep compressions strong; trade off during the AED rhythm checks so you
+  lose almost no time.
+
+If the person is still down, you go back to [[z=2|compressions]] and repeat
+the cycle. The worst CPR is no CPR, so keep your hands on the chest.

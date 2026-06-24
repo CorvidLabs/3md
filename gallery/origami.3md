@@ -1,0 +1,77 @@
+---
+3md: 1.0
+axis: step
+title: Folding the Orizuru (Paper Crane)
+paper: 15cm x 15cm kami, color side down
+difficulty: intermediate
+folds: 22
+---
+The orizuru is the classic Japanese paper crane. Start with a square sheet,
+color side facing down on the table. Each plane below is one stage in the
+sequence; crease every fold sharply with a fingernail or bone folder before
+moving on. Begin at [[z=0|the bird base]] and work upward to the finished crane.
+
+@plane z=0 label="Bird base" x=0 y=0
+# Step 1 - The bird base
+
+Everything starts from the bird base, the most reused base in origami.
+
+1. Fold the square in half along both diagonals, then unfold. You now have an X.
+2. Flip the paper over. Fold in half left-to-right and top-to-bottom, then unfold.
+   These are valley folds on one side, mountain folds on the other.
+3. Using the existing creases, collapse the sheet into a **preliminary base**: a
+   small square with four free flaps, opening downward.
+4. Lift one lower edge of the top layer to the center crease and squash it into a
+   narrow kite, forming a petal fold. Repeat on all four flaps, front and back.
+
+The result is a slim base with two long points (the future neck and tail) and
+two shorter points (the future wings). Next, narrow the body in
+[[z=1|the diamond fold]].
+
+@plane z=1 label="Diamond fold" x=1 y=0
+# Step 2 - Narrow to a diamond
+
+The bird base is still wide at the bottom. Tuck those edges in.
+
+- Orient the base so the two long open points face down toward you.
+- On the top layer, fold the lower-left and lower-right raw edges in to meet the
+  vertical center line. The shape tightens into a kite, then a slim diamond.
+- Flip the model over and repeat the same two folds on the back.
+
+Crease hard. These four folds set the body width, so keep the edges flush with
+the center line. The two skinny bottom points are what you will shape in
+[[z=2|the neck and tail]].
+
+@plane z=2 label="Neck and tail" x=2 y=0
+# Step 3 - Inside reverse folds
+
+Now define which point is the neck and which is the tail.
+
+1. Take the two long, narrow points at the bottom and fold them up as high as you
+   like, then unfold. This crease is the pivot for the reverse fold.
+2. Perform an **inside reverse fold** on each point: open the point slightly,
+   invert the crease so the paper swings up between the two body layers, and
+   flatten. Both points now stand upright.
+
+Set them at a gentle angle, one leaning forward for the neck and one back for the
+tail. A reverse fold hides the raw end inside the body, which is why the crane
+looks clean from every side. The head comes next in
+[[z=3|the head and wings]].
+
+@plane z=3 label="Head and wings" x=3 y=0
+# Step 4 - The head and the spread
+
+Time to finish the bird.
+
+- **Head:** near the tip of the neck point, make one more small inside reverse
+  fold to bend it forward into a beak. Aim the beak slightly downward so it reads
+  as a crane and not a swan.
+- **Wings:** find the two wide flaps on the sides of the body. Fold each one down
+  so it lies flat and horizontal, creasing along the top edge of the body.
+
+The folding is done. To bring the crane to life, hold the base of both wings and
+gently pull them apart while the body puffs open from underneath. The back
+inflates into a rounded body and the wings spread wide.
+
+Stuck on a point? Jump back to [[z=2|the neck and tail step]] and recheck the
+reverse folds before re-spreading the wings.

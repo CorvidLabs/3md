@@ -1,0 +1,97 @@
+---
+3md: 1.0
+axis: frame
+title: ASCII Walk Cycle
+fps: 8
+loop: true
+direction: rightward
+artist: CorvidLabs
+---
+A four-frame walking loop drawn in monospace ASCII. Play the frames in order
+(0, 1, 2, 3) and then jump back to [[z=0|frame 0]] to repeat. The figure keeps
+its head and torso fixed while the legs and arms swing through a contact, a
+recoil, a passing pose, and a high point, the four poses every classic walk
+cycle is built from.
+
+Read each plane as a single drawn cel. Render at 8 fps for a natural stroll;
+drop to 4 fps for a slow, heavy trudge.
+
+@plane z=0 x=0 y=0 label="Contact"
+# Frame 0 - Contact
+
+The lead foot has just landed and the trailing foot is still pushing off. This
+is the widest stride of the cycle and the pose viewers read as "a step."
+
+```
+  O
+ /|\
+ / \
+/   \
+```
+
+- Lead leg: forward and straight, heel striking down
+- Trail leg: extended back, toe still grounded
+- Arms: opposed to legs (the wide `/|\` swing)
+
+Next pose absorbs the impact: see [[z=1|frame 1, Recoil]].
+
+@plane z=1 x=2 y=1 label="Recoil"
+# Frame 1 - Recoil
+
+The body sinks to its lowest point as the front leg takes the full weight. Knees
+bend, the torso dips by one row, and momentum is briefly soaked up before the
+push forward.
+
+```
+  O
+ /|\
+  |
+ / \
+```
+
+- Lead leg: bent, bearing weight directly under the hips
+- Trail leg: lifting, beginning to swing through
+- Body height: lowest in the cycle (the dip sells the weight)
+
+Coming up out of the dip leads to [[z=2|frame 2, Passing]].
+
+@plane z=2 x=4 y=0 label="Passing"
+# Frame 2 - Passing
+
+The trailing leg passes underneath the body and the two legs cross. The torso is
+balanced over a single support leg, rising back toward neutral height. Arms are
+nearly straight down at the midpoint of their swing.
+
+```
+  O
+ /|\
+  |
+  |
+```
+
+- Support leg: vertical, directly under the head
+- Free leg: passing forward, knee high
+- Arms: hanging near center, about to reverse direction
+
+This is the balance point between [[z=1|the recoil]] and the next high step,
+[[z=3|frame 3, High Point]].
+
+@plane z=3 x=6 y=-1 label="High Point"
+# Frame 3 - High Point
+
+The body lifts to its highest point as the passing leg reaches forward and the
+support leg straightens onto its toe. One more frame and the reaching foot will
+land, returning the figure to the contact pose.
+
+```
+  O
+ /|\
+ / \
+ \
+```
+
+- Reaching leg: swinging forward, heel about to drop
+- Support leg: pushing up onto the toe (tallest pose)
+- Arms: opposed swing widening again, mirroring frame 0
+
+The reaching foot lands and the loop restarts at [[z=0|frame 0, Contact]].

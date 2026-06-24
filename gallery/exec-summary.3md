@@ -1,0 +1,114 @@
+---
+3md: 1.0
+axis: depth
+title: Q2 FY2026 Business Review - Northwind Cloud
+period: Q2 FY2026 (Apr 1 - Jun 30)
+author: Office of the CFO
+status: Board draft
+---
+Read this report at the depth you need. The surface plane (z=0) is the one-paragraph
+executive summary. Each deeper plane peels back a layer: the KPI scorecard, the
+segment-by-segment breakdown, and finally the line-level financial detail and
+assumptions. Drill down by following the cross-plane links.
+
+@plane z=0 label="Executive Summary"
+# Executive Summary
+
+Northwind Cloud closed Q2 FY2026 with **$48.2M in revenue**, up 19% year over year and
+ahead of our $46.5M plan. Growth was led by the Enterprise segment and a strong rebound
+in net revenue retention (now 114%). Operating margin improved 4 points to 12% as we held
+headcount flat while revenue grew. The one risk worth the board's attention is rising cloud
+infrastructure cost, which grew faster than revenue this quarter.
+
+**Recommendation:** approve the FY2026 reforecast to $198M and fund the two hires in the
+Reliability team needed to bend the infrastructure cost curve.
+
+Go deeper: [[z=1|the KPI scorecard]], then [[z=2|segment performance]], then the
+[[z=3|financial detail and assumptions]].
+
+@plane z=1 x=0 y=0 label="KPI Scorecard"
+# KPI Scorecard
+
+Headline metrics versus plan and versus the prior-year quarter.
+
+| Metric | Q2 FY2026 | Plan | YoY |
+| --- | --- | --- | --- |
+| Revenue | $48.2M | $46.5M | +19% |
+| Net revenue retention | 114% | 110% | +6 pts |
+| Gross margin | 71% | 72% | -1 pt |
+| Operating margin | 12% | 9% | +4 pts |
+| Cash from operations | $7.1M | $5.4M | +31% |
+| Logo churn (annualized) | 5.8% | 7.0% | -1.5 pts |
+
+**What moved:** revenue and retention both beat plan, driven by Enterprise expansions.
+Gross margin slipped one point because infrastructure cost outpaced revenue (see the
+[[z=3|cost detail]]). Operating margin still rose because we delivered the beat with flat
+headcount.
+
+For the story behind these numbers, open [[z=2|segment performance]].
+
+@plane z=2 x=0 y=0 label="Segment Performance"
+# Segment Performance
+
+Revenue by segment, with the drivers behind each line.
+
+### Enterprise - $26.4M (+28% YoY)
+
+The growth engine this quarter. We signed three seven-figure renewals (Meridian Bank,
+Cascade Health, Atlas Logistics), each expanding seat count by 30% or more on multi-year
+terms. Net revenue retention in this segment hit 122%. Sales cycle shortened from 91 to
+74 days as the new solutions-engineering pod removed late-stage technical blockers.
+
+### Mid-Market - $15.1M (+11% YoY)
+
+Steady. New-logo acquisition was on plan (47 new accounts), but expansion lagged because
+the self-serve upgrade flow shipped late. The flow is now live and early data shows a
+2.3x lift in in-product upgrades.
+
+### SMB / Self-Serve - $6.7M (-4% YoY)
+
+The soft spot. Logo churn here remains elevated at 11% annualized, concentrated in
+accounts that never completed onboarding. The Customer Success team launched a guided
+14-day activation program in May; cohorts since then show 38% better 90-day retention,
+but the full revenue effect is still a quarter or two out.
+
+Numbers tie back to the [[z=1|scorecard]]. For the full P&L and the assumptions behind
+the reforecast, go to [[z=3|financial detail]].
+
+@plane z=3 x=0 y=0 label="Financial Detail and Assumptions"
+# Financial Detail and Assumptions
+
+## Condensed P&L (Q2 FY2026, $000s)
+
+| Line | Q2 FY2026 | Q2 FY2025 |
+| --- | --- | --- |
+| Revenue | 48,200 | 40,500 |
+| Cost of revenue | 13,980 | 11,340 |
+| **Gross profit** | **34,220** | **29,160** |
+| Sales and marketing | 16,100 | 14,800 |
+| Research and development | 9,200 | 8,600 |
+| General and administrative | 3,140 | 3,010 |
+| **Operating income** | **5,780** | **2,750** |
+
+## The infrastructure cost watch item
+
+Cost of revenue grew 23% YoY against 19% revenue growth. The gap is almost entirely
+compute and egress in our two largest regions:
+
+- Compute (managed Kubernetes): +31% YoY, driven by Enterprise workloads that run hotter
+  than the SMB profile our capacity model assumed.
+- Network egress: +44% YoY, concentrated in the new data-export feature shipped in April.
+
+**Mitigation:** the two Reliability hires in the recommendation would own a right-sizing
+and commitment-purchase program estimated to recover 1.5 to 2.0 gross-margin points by
+Q4. This is the funding ask referenced in the [[z=0|executive summary]].
+
+## FY2026 reforecast assumptions
+
+1. Enterprise net revenue retention holds at 118% to 122% (Q2 actual: 122%).
+2. SMB churn improves to 9% annualized as the activation program matures.
+3. No price increases modeled; the reforecast is volume-driven.
+4. Infrastructure mitigation lands by Q4, recovering ~1.5 margin points.
+
+Under these assumptions the full-year lands at **$198M revenue** and **13% operating
+margin**. Back up to the [[z=2|segment view]] or the [[z=1|scorecard]].

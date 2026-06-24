@@ -1,0 +1,90 @@
+---
+3md: 1.0
+axis: slide
+title: "Ship It Before You Read It: Trust Your Test Suite"
+event: "DevConf Lightning Talks"
+duration: "5 minutes"
+speaker: "Robin Vasquez"
+---
+A five-slide, five-minute lightning talk. Budget roughly one minute per slide.
+Read the room, not the notes. If you only have time for one slide, make it
+[[z=3|the demo]].
+
+@plane z=0 x=0 y=0 label="Title"
+# Ship It Before You Read It
+
+### Trust Your Test Suite
+
+Robin Vasquez, Platform Team
+
+A 5-minute story about how we went from "merge on a Friday and pray" to
+"deploy 40 times a day and forget we did."
+
+> Timer starts now. Five slides, one minute each. No live coding, I promise.
+
+Next up: [[z=1|why we were scared to ship]].
+
+@plane z=1 x=2 y=0 label="The Problem"
+# The 4 PM Friday Problem
+
+Every deploy used to mean a human reading the diff line by line, then crossing
+fingers. The numbers told the story:
+
+- **22 minutes** average code review, most of it re-reading the same files
+- **1 in 6** deploys rolled back within the hour
+- **0** people willing to ship after lunch on a Friday
+
+The bottleneck was not the code. It was our **lack of trust** in the code.
+
+Reading harder did not help. We needed to read less and verify more. See
+[[z=2|the one change we made]].
+
+@plane z=2 x=4 y=0 label="The Idea"
+# One Rule: The Suite Is the Reviewer
+
+We made a single bet: if a change passes the suite, it is safe to ship. No
+human gate. That forced three habits:
+
+1. **Every bug fix ships with the test that would have caught it.** No test,
+   no merge.
+2. **Tests run in under 90 seconds** or they get split. Slow suites get
+   skipped, and a skipped suite is a lie.
+3. **Flaky tests are deleted, not muted.** A test you cannot trust is worse
+   than no test.
+
+The pitch to the team: stop reading every line, start trusting the line that
+already failed once. Now watch it work in [[z=3|the demo]].
+
+@plane z=3 x=6 y=0 label="The Demo"
+# 40 Seconds, Start to Production
+
+Here is the actual pipeline from a real Tuesday:
+
+```
+$ git commit -m "Fix: refund rounds half-cent down"
+$ git push
+  -> 312 tests, 38s, green
+  -> deploy to prod: 9s
+  -> live
+```
+
+The refund bug had bitten us twice before. This time the **failing test came
+first**, the fix made it pass, and nobody read the diff. It shipped in under a
+minute and stayed shipped.
+
+That is the whole trick. The takeaways are on [[z=4|the last slide]].
+
+@plane z=4 x=8 y=0 label="Takeaways"
+# Three Things to Steal
+
+1. **Write the failing test before the fix.** It proves the bug and guards the
+   future in one move.
+2. **Keep the suite fast and honest.** Under 90 seconds, zero flakes, or people
+   stop believing it.
+3. **Let green mean go.** Trust is a feature you build, then ship on.
+
+We went from 6 deploys a week to 40 a day, and Friday afternoons are boring
+again. Boring is the goal.
+
+Thanks. Find the runbook at example.com/ship-it, and jump back to
+[[z=0|the start]] if you want the one-line version.

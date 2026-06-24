@@ -1,0 +1,143 @@
+---
+3md: 1.0
+axis: floor
+title: Anatomy of a Three-Stage Launch Vehicle
+vehicle: Generic LEO heavy lifter
+height: 70 m
+liftoff_mass: 549 t
+flight_profile: ascending stage separation
+---
+Read this stack from the bottom up, the way the rocket actually flies. Each
+plane is one physical section of the vehicle, ordered along the `floor` axis
+from the pad (z=0) to the spacecraft riding on top (z=4). The numbers are
+representative of a modern kerosene-and-oxygen first stage with a cryogenic
+upper stage, not any one real vehicle.
+
+Start at the engines on [[z=0|the launch table]] and climb to the
+[[z=4|payload]] at the nose.
+
+@plane z=0 label="Stage 1 - Engine Section" y=0
+# Stage 1: Engine Section (the base)
+
+This is what sits on the launch table and does the heavy work of getting off
+the ground. Nine sea-level engines are clustered in an octaweb: eight in a
+ring, one in the center.
+
+| Property | Value |
+| --- | --- |
+| Engines | 9 (gas-generator, kerosene/LOX) |
+| Sea-level thrust | 7,600 kN total |
+| Burn time | ~162 s |
+| Gimbal range | +/- 5 deg (outer engines) |
+
+**What happens here, in order:**
+
+1. T-3 s: ignition sequence start, engines spin up to ~60% thrust.
+2. T-0: hold-down clamps release once all nine confirm nominal.
+3. Thrust vectoring steers the whole stack by tilting the outer engines.
+4. After the boostback and entry burns, three center engines relight for
+   landing.
+
+The thrust structure transfers all of that force into the tank wall directly
+[[z=1|above this section]]. If the load path here fails, nothing else matters.
+
+> Design note: the center engine carries the landing burn alone, so it is rated
+> for more relights than its eight siblings.
+
+@plane z=1 label="Stage 1 - Propellant Tanks" y=14
+# Stage 1: Propellant Tanks
+
+The tall silver body of the booster is almost entirely propellant. Two tanks
+share a common bulkhead to save mass and length.
+
+- **Lower tank: kerosene (RP-1)**, roughly 123 t, kept at ambient temperature.
+- **Upper tank: liquid oxygen (LOX)**, roughly 287 t, chilled to -207 C
+  (sub-cooled to pack more mass into the same volume).
+
+Pressurization keeps the thin walls from buckling under their own weight before
+flight. The tanks are part of the structure, not just containers: this is a
+**balloon-style stage-frame** where internal pressure provides stiffness.
+
+```
+[ LOX  ]  <- denser, sits on top, feeds the turbopumps
+[=======]  common bulkhead
+[ RP-1 ]  <- fuel, drained slightly slower
+```
+
+Fuel and oxidizer fall to the [[z=0|engine section]] below; the empty mass that
+remains is what makes the booster light enough to fly back and land.
+
+@plane z=2 label="Stage Separation - Interstage" y=42
+# Interstage and Stage Separation
+
+The interstage is a hollow composite cylinder that connects the booster to the
+upper stage and houses the second-stage engine bell until it is needed.
+
+**Separation sequence (MECO + a few seconds):**
+
+1. **MECO**: main engine cutoff on [[z=0|stage one]].
+2. Pneumatic pushers release the clamp band joining the two stages.
+3. Cold-gas nitrogen thrusters shove the booster backward and clear.
+4. The upper stage ignites once it is a safe distance away.
+
+This is the single most dramatic moment of the flight: the rocket splits in
+two. Everything below this plane comes home. Everything [[z=3|above it]]
+continues to orbit.
+
+| Component | Role |
+| --- | --- |
+| Clamp band | Holds the stages together under thrust |
+| Pusher rods | Provide clean separation impulse |
+| Grid fins | Stow here; deploy for booster reentry steering |
+
+@plane z=3 label="Stage 2 - Upper Stage" y=50
+# Stage 2: Upper Stage
+
+A single vacuum-optimized engine with a large expansion nozzle finishes the job
+of reaching orbital velocity. In near-vacuum it can run a much wider bell than
+anything on [[z=0|the first stage]].
+
+| Property | Value |
+| --- | --- |
+| Engine | 1 (vacuum-optimized, kerosene/LOX) |
+| Vacuum thrust | 980 kN |
+| Burn time | ~397 s (can relight) |
+| Job | Circularize and place the payload precisely |
+
+The upper stage is where the mission is actually won or lost. It can:
+
+- **Relight** to raise, lower, or circularize the orbit.
+- Perform a **coast phase** between burns for a target injection point.
+- Deorbit itself afterward so it does not become debris.
+
+Its tanks are smaller cryogenic versions of the ones [[z=1|in the booster]],
+sized for the much lower mass it has to push once the heavy first stage is gone.
+
+@plane z=4 label="Payload - Fairing and Spacecraft" y=62
+# Payload: Fairing and Spacecraft (the top)
+
+At the very top sits the reason the whole stack exists. The payload fairing is a
+two-piece aerodynamic shell that protects the spacecraft through the dense lower
+atmosphere.
+
+**Fairing jettison** happens early in the [[z=3|second-stage burn]], once the
+air is thin enough that the shell is just dead weight. The two halves split
+along a vertical seam and fall away.
+
+Inside, the payload can be:
+
+- A communications or imaging **satellite** on a payload adapter.
+- A **crew or cargo capsule** (in which case there is no fairing, and an abort
+  system caps the stack instead).
+- A **rideshare stack** of many small satellites on a dispenser.
+
+```
+        /\        <- nose cap
+       /  \
+      | SAT |     <- spacecraft
+       \  /
+   ----====----   <- payload adapter
+```
+
+This is the payload's only ride. Every plane below, from the
+[[z=0|engines on the pad]] upward, exists to put this one section into orbit.

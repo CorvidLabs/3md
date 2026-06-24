@@ -1,0 +1,129 @@
+---
+3md: 1.0
+axis: status
+title: Checkout Service Deployment Pipeline
+service: checkout-api
+trigger: push to main
+runner: github-actions
+---
+This 3md document walks a single commit (`a1b9f3c`) through the deployment
+pipeline for the `checkout-api` service. Each plane is one status the build
+moves through, from a freshly pushed commit to a fully promoted production
+release (or a rollback). The `x`/`y` offsets place the stages left to right
+with the failure branch dropped below the main row.
+
+@plane z=0 x=0 y=0 label="Queued"
+# Queued
+
+Commit `a1b9f3c` landed on `main` and a pipeline run was enqueued.
+
+- **Author:** dana@checkout.dev
+- **Message:** Fix coupon stacking when cart has mixed tax rates
+- **Files changed:** 4 (+118 / -37)
+- **Concurrency group:** `deploy-checkout-api` (one run at a time)
+
+The runner waits for a free `ubuntu-latest` slot, restores the cached
+`~/.cache/pnpm` store keyed on `pnpm-lock.yaml`, and checks out the repo at
+full depth so the changelog generator can see prior tags.
+
+```yaml
+on:
+  push:
+    branches: [main]
+concurrency:
+  group: deploy-checkout-api
+  cancel-in-progress: false
+```
+
+Next stop: [[z=1|Building]].
+
+@plane z=1 x=1 y=0 label="Building"
+# Building
+
+The image is compiled and tests run against the candidate artifact.
+
+1. `pnpm install --frozen-lockfile`
+2. `pnpm run build` (TypeScript to `dist/`, tree-shaken)
+3. `pnpm run test:unit` and `pnpm run test:contract`
+4. `docker buildx build --platform linux/amd64 -t checkout-api:a1b9f3c .`
+
+Quality gates that must all pass before the artifact is published:
+
+| Gate | Threshold | This run |
+| --- | --- | --- |
+| Unit coverage | >= 80% | 84.2% |
+| Contract tests | 0 failures | 0 failures |
+| Lint | 0 errors | 0 errors |
+| Image size | <= 250 MB | 211 MB |
+
+The image is pushed to the registry as
+`ghcr.io/checkout/checkout-api:a1b9f3c` and also tagged `:build-1492`.
+
+From here the pipeline forks: success flows to [[z=2|Staging]], any failed
+gate jumps to [[z=-1|Failed]].
+
+@plane z=2 x=2 y=0 label="Staging"
+# Staging
+
+The built image is rolled out to the `staging` namespace and smoke tested.
+
+```bash
+kubectl -n staging set image deploy/checkout-api \
+  app=ghcr.io/checkout/checkout-api:a1b9f3c
+kubectl -n staging rollout status deploy/checkout-api --timeout=120s
+```
+
+Post-deploy smoke checks (run by the `verify-staging` job):
+
+- `GET /healthz` returns `200` within 2s
+- `POST /v1/cart/price` with the coupon-stacking fixture returns the
+  corrected total of `$42.10` (regression for this exact bug)
+- p95 latency over a 60s synthetic load stays under 180ms
+
+A human approval is required to leave staging. The pipeline pauses on a
+GitHub Environment protection rule (`production` reviewers: 1 of the on-call
+group). Approve to advance to [[z=3|Production]]; if smoke checks fail the
+run lands in [[z=-1|Failed]].
+
+@plane z=3 x=3 y=0 label="Production"
+# Production
+
+A canary rollout shifts live traffic onto `a1b9f3c` in stages.
+
+| Step | Traffic on new version | Hold | Auto-abort if |
+| --- | --- | --- | --- |
+| 1 | 5% | 5 min | 5xx rate > 1% |
+| 2 | 25% | 10 min | p95 > 250ms |
+| 3 | 100% | - | - |
+
+The progressive rollout is driven by Argo Rollouts; the analysis template
+queries Prometheus for `http_requests_total` and `request_duration_seconds`.
+If any metric breaches its guardrail, Argo automatically reverts to the
+previous ReplicaSet and the run is marked [[z=-1|Failed]].
+
+On full promotion the pipeline tags the commit `prod-2026.06.23` and posts a
+release note to `#deploys`. Done. See [[z=0|Queued]] for where this began.
+
+@plane z=-1 x=1.5 y=-1 label="Failed / Rollback"
+# Failed / Rollback
+
+Any gate, smoke check, or canary guardrail that trips routes here.
+
+Automatic actions taken:
+
+- Roll the active Deployment back to the last known-good revision:
+  `kubectl -n <ns> rollout undo deploy/checkout-api`
+- Mark the GitHub Deployment status `failure` so the commit shows a red check
+- Open (or update) an incident in PagerDuty tagged `checkout-api/deploy`
+- Drop a threaded message in `#deploys` with the failing job's log link
+
+Triage checklist for the on-call engineer:
+
+- [ ] Identify which stage failed: [[z=1|Building]], [[z=2|Staging]], or
+      [[z=3|Production]] canary
+- [ ] Confirm prior revision is serving traffic and healthy
+- [ ] Decide: forward-fix on a new commit, or hold `main` for a revert
+- [ ] Once a fix is pushed, a fresh run starts back at [[z=0|Queued]]
+
+No artifact from a failed run is ever promoted; the `prod` tag stays on the
+last successful commit.

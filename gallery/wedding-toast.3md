@@ -1,0 +1,90 @@
+---
+3md: 1.0
+axis: slide
+title: A Toast to Mara and Devin
+speaker: Best Man (Theo)
+occasion: Wedding Reception, The Old Mill
+duration: about 3 minutes
+---
+A five-beat toast. Each plane is one slide, advanced as the words land. Hold a
+beat of silence between slides; let the room catch up before you move on.
+
+@plane z=0 x=0 y=0 label="The hook"
+# Beat 1: Stand up, get the room
+
+*(Raise glass. Wait for the clink to settle. Smile.)*
+
+Good evening, everyone. For those who do not know me, I am Theo, and I have had
+the questionable honor of being Devin's best friend since we were eleven, when he
+traded me his entire lunch for a single, slightly melted chocolate bar.
+
+I tell you that because I want you to understand the kind of negotiator Mara
+married.
+
+*(Pause for laugh.)*
+
+Next: [[z=1|how these two actually met]].
+
+@plane z=1 x=1 y=0 label="The story"
+# Beat 2: The how-they-met
+
+Mara and Devin met in line for terrible coffee at a conference neither of them
+wanted to be at. Devin says he opened with a brilliant line. Mara says he spilled
+half his cup on her notes and apologized for ninety straight seconds.
+
+Both versions are true, which is the first thing you should know about this
+marriage: there will always be two accounts, and somehow both of them are real.
+
+What I noticed, the first time I met Mara, was simple. Devin laughs at his own
+jokes. Around her, he started waiting to see if she laughed first.
+
+Back to [[z=0|the beginning]], or on to [[z=2|the turn]].
+
+@plane z=2 x=2 y=0 label="The turn"
+# Beat 3: The turn (get a little real)
+
+*(Slow down here. Quieter.)*
+
+There was a hard winter a couple of years ago. Devin's dad was sick, and Devin
+was not himself, and I watched Mara do the unglamorous work of love: showing up,
+making soup nobody asked for, sitting in waiting rooms with a deck of cards.
+
+She did not fix anything. You cannot fix some things. She just refused to let him
+go through it alone.
+
+That is when I stopped thinking of them as two people who were dating and started
+thinking of them as a team.
+
+@plane z=3 x=3 y=0 label="The line about them"
+# Beat 4: The thing that is just *them*
+
+Here is what I want you both to remember, on the nights that are easy and the
+nights that are not.
+
+- Mara, you make Devin braver than he believes he is.
+- Devin, you make Mara laugh in the exact places she forgets to.
+- Together, you are kinder than either of you is alone.
+
+Marriage is not one big decision. It is ten thousand small ones, made at the
+kitchen counter, in the dark, half-asleep. Keep choosing each other in the small
+ones, and the big ones take care of themselves.
+
+The last slide is [[z=4|the toast itself]].
+
+@plane z=4 x=4 y=0 label="The toast"
+# Beat 5: Glasses up
+
+*(Raise glass. Look at the couple, then the room.)*
+
+So please, everyone, on your feet.
+
+To Mara and Devin. May your coffee always be better than the cup that started
+this, may your two versions of every story always agree on the ending, and may
+you keep choosing each other for all the small, ordinary, extraordinary days
+ahead.
+
+To the happy couple.
+
+*(Drink. Sit down before the applause finishes.)*
+
+Return to [[z=0|the top]] if the room asks for an encore.

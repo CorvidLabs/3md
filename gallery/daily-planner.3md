@@ -1,0 +1,93 @@
+---
+3md: 1.0
+axis: time
+title: One-Week Daily Planner
+week: 2026-W26
+owner: Leif
+timezone: America/Denver
+---
+A single week, one plane per day, stacked along the time axis. Each plane sits at
+its weekday index (Monday is z=0). Top-priority work lives at the top-left
+(x=0, y=0); the lighter, end-of-day blocks drift down and to the right. Use the
+cross-plane links to follow a thread from one day to the next.
+
+@plane z=0 x=0 y=0 label="Monday"
+# Monday, June 22
+
+## Focus: ship the planner draft
+- [ ] 09:00 Standup, then block calendar through noon
+- [ ] 09:15 Outline the planner gallery doc (this file)
+- [ ] 10:30 Write Mon-Wed plane content
+- [ ] 13:00 Review PR #214 (cross-plane link extraction)
+
+## Errands
+- [ ] Refill coffee beans
+- [ ] Schedule dentist for July
+
+> Carry-over: the link-validation note continues on [[z=1|Tuesday]].
+
+@plane z=1 x=0.5 y=0.5 label="Tuesday"
+# Tuesday, June 23
+
+## Focus: finish link validation
+- [ ] 09:00 Standup
+- [ ] 09:30 Implement dangling-reference check
+- [ ] 11:00 Add conformance vectors for `[[z=N]]`
+- [ ] 14:00 Pair with Mara on the renderer anchors
+
+## Notes
+Picked this up from [[z=0|Monday]]. Once the check lands, the Thursday demo
+is unblocked.
+
+## Personal
+- [ ] 18:00 Climbing gym
+
+@plane z=2 x=1 y=1 label="Wednesday"
+# Wednesday, June 24
+
+## Focus: docs and cleanup
+- [ ] 09:00 Standup
+- [ ] 09:30 Write the SPEC cross-plane-links examples
+- [ ] 11:00 Triage the `invalidPlaneDirective` edge cases
+- [ ] 15:00 1:1 with manager (mid-week check-in)
+
+## Waiting on
+- Review feedback from [[z=1|Tuesday]]'s PR
+- Design assets for the gallery preview
+
+@plane z=3 x=1.5 y=1.5 label="Thursday"
+# Thursday, June 25
+
+## Focus: demo day
+- [ ] 09:00 Dry run of the planner demo (30 min)
+- [ ] 10:00 Team demo: stack, planes, and links
+- [ ] 13:00 Capture feedback into the backlog
+- [ ] 16:00 Cut the v1.0 gallery tag
+
+## Reminder
+Everything since [[z=0|Monday]] funnels into this demo. Keep it to five minutes.
+
+@plane z=4 x=2 y=2 label="Friday"
+# Friday, June 26
+
+## Focus: wrap and plan
+- [ ] 09:00 Standup, last of the week
+- [ ] 09:30 Address demo feedback from [[z=3|Thursday]]
+- [ ] 11:00 Write the weekly summary
+- [ ] 14:00 Plan next week, draft the new planner doc
+
+## Wind down
+- [ ] 16:30 Inbox to zero
+- [ ] 17:00 Close laptop
+
+@plane z=5 x=2.5 y=2.5 label="Weekend"
+# Weekend, June 27 to 28
+
+## Saturday
+- Long trail run, then groceries
+- Read, no screens before noon
+
+## Sunday
+- Meal prep for the week
+- Light review of [[z=4|Friday]]'s plan so Monday starts clean
+- Early night

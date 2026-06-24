@@ -1,0 +1,89 @@
+---
+3md: 1.0
+axis: time
+title: Earth's Geological Eras
+subtitle: A deep-time stack from the Precambrian to today
+scale: Ma (millions of years before present)
+source: International Commission on Stratigraphy (2023 chart)
+---
+The Z axis here is geologic time. Each plane is one chunk of the standard
+timescale, ordered from oldest (deepest) to youngest (nearest the present).
+Higher `z` means closer to today. The `x`/`y` offsets nudge each plane slightly
+so a spatial viewer fans the stack out like sediment beds in an outcrop.
+
+Read it bottom-up, the way you read rock: start at [[z=0|the Precambrian]] and
+climb toward the surface.
+
+@plane z=0 x=0 y=0 label="Precambrian Supereon"
+# Precambrian (4,600 - 539 Ma)
+
+Roughly the first **88 percent** of Earth's history, lumped together because the
+rock record is sparse and fossils are mostly microscopic.
+
+- **Hadean** (4,600 - 4,031 Ma): molten surface, heavy bombardment, the
+  Moon-forming impact, first oceans condensing.
+- **Archean** (4,031 - 2,500 Ma): first life. Single-celled prokaryotes and the
+  earliest stromatolites built by cyanobacteria.
+- **Proterozoic** (2,500 - 539 Ma): the **Great Oxidation Event** poisons the
+  anaerobic world with free O2, then "Snowball Earth" glaciations, and finally
+  the soft-bodied **Ediacaran** biota.
+
+> Banded iron formations from this interval are why we mine iron ore at all:
+> dissolved iron met new oxygen and rained out onto the seafloor.
+
+Next comes the explosion of hard-bodied life in [[z=1|the Paleozoic]].
+
+@plane z=1 x=2 y=1 label="Paleozoic Era"
+# Paleozoic (539 - 252 Ma)
+
+"Ancient life." Opens with the **Cambrian Explosion**, the rapid arrival of most
+major animal body plans, and closes with the largest mass extinction known.
+
+| Period | Span (Ma) | Signature |
+| --- | --- | --- |
+| Cambrian | 539 - 485 | trilobites, the Burgess Shale fauna |
+| Ordovician | 485 - 444 | first jawless fish, end-Ordovician glaciation |
+| Silurian | 444 - 419 | first vascular land plants |
+| Devonian | 419 - 359 | "Age of Fishes," first forests and tetrapods |
+| Carboniferous | 359 - 299 | vast coal swamps, giant insects |
+| Permian | 299 - 252 | reptiles diversify, supercontinent Pangaea |
+
+The era ends at the **end-Permian extinction** ("the Great Dying"), which erased
+around 90 percent of marine species. Survivors seeded [[z=2|the Mesozoic]].
+
+@plane z=2 x=4 y=2 label="Mesozoic Era"
+# Mesozoic (252 - 66 Ma)
+
+"Middle life," the age of dinosaurs, split into three periods.
+
+1. **Triassic** (252 - 201 Ma): recovery from the Great Dying; first dinosaurs,
+   first mammals, first true crocodylomorphs. Pangaea begins to rift apart.
+2. **Jurassic** (201 - 145 Ma): giant sauropods, the first birds
+   (*Archaeopteryx*), and the spread of conifer and cycad forests.
+3. **Cretaceous** (145 - 66 Ma): flowering plants (angiosperms) appear and
+   diversify; *Tyrannosaurus* and *Triceratops* live at the very end.
+
+The curtain falls with the **Chicxulub impact** off the Yucatan, the
+end-Cretaceous extinction that ended the non-avian dinosaurs and opened the
+ground floor for [[z=3|the Cenozoic]].
+
+@plane z=3 x=6 y=3 label="Cenozoic Era"
+# Cenozoic (66 Ma - present)
+
+"Recent life," the age of mammals, birds, and flowering plants, and the era we
+live in now.
+
+- **Paleogene** (66 - 23 Ma): mammals radiate into vacated niches; grasses
+  spread; early primates and whales.
+- **Neogene** (23 - 2.58 Ma): grasslands dominate; hominins appear in Africa.
+- **Quaternary** (2.58 Ma - now): repeated **ice ages**, the rise of *Homo
+  sapiens*, and the proposed **Anthropocene**, in which one species reshapes the
+  climate and rock record itself.
+
+That last point closes the loop: the oxygen we breathe was first banked in the
+banded iron of [[z=0|the Precambrian]], more than four billion years ago.
+
+## How to read this stack
+
+- Deepest plane = oldest rock = bottom of the column.
+- Each step up the Z axis is one era closer to the surface, and to now.

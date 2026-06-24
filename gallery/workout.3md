@@ -1,0 +1,92 @@
+---
+3md: 1.0
+axis: step
+title: 20-Minute HIIT Circuit
+duration: 20 min
+rounds: 3
+equipment: none (bodyweight only)
+---
+A no-equipment HIIT circuit you move through one step at a time. Each work
+interval is 40 seconds on, 20 seconds rest, then you cycle the whole circuit
+three times. Start at the warm-up and follow the steps in order.
+
+@plane z=0 x=0 y=0 label="Warm-up"
+# Step 0: Warm-up (3 minutes)
+
+Wake the joints and raise the heart rate before the hard work begins. Do not
+skip this, cold muscles are how ankles roll.
+
+| Drill | Time |
+| --- | --- |
+| March in place, arms swinging | 45 sec |
+| Bodyweight squats, slow tempo | 45 sec |
+| Arm circles forward then back | 30 sec |
+| Leg swings, 10 each side | 30 sec |
+| Jumping jacks, easy pace | 30 sec |
+
+Aim for a 6 out of 10 effort here. You should be breathing harder but still
+able to talk. When you feel loose, advance to [[z=1|the first work block]].
+
+@plane z=1 x=1 y=0 label="Block A: Lower Body"
+# Step 1: Block A, Lower Body
+
+Two movements, 40 seconds work and 20 seconds rest each. Push the pace but keep
+the form clean.
+
+1. **Jump squats** - drop to a parallel squat, explode up, land soft through
+   the midfoot. Scale down to regular squats if the knees complain.
+2. **Reverse lunges** - alternate legs, keep the front knee stacked over the
+   ankle, torso tall.
+
+> Coaching cue: drive through the heels on every squat and lunge. If your knees
+> cave inward, slow down and reset.
+
+Recover for 30 seconds, then move to [[z=2|Block B]].
+
+@plane z=2 x=2 y=0 label="Block B: Upper Body"
+# Step 2: Block B, Upper Body
+
+Push and pull patterns to balance the legs you just torched.
+
+1. **Push-ups** - hands under the shoulders, body in one line, chest to a fist
+   off the floor. Drop to the knees when reps get sloppy.
+2. **Plank shoulder taps** - hold a high plank, tap each hand to the opposite
+   shoulder, keep the hips still and square.
+
+Same 40 on, 20 off rhythm. If your hips are sagging on the plank, that is the
+sign to take the optional knee variation.
+
+When both moves are done, push into [[z=3|the core finisher]].
+
+@plane z=3 x=3 y=0 label="Block C: Core"
+# Step 3: Block C, Core
+
+The grindy part. Brace your abs as if bracing for a punch on every rep.
+
+1. **Mountain climbers** - drive the knees fast, hips low and level, do not let
+   the shoulders creep forward past the wrists.
+2. **Bicycle crunches** - slow and controlled, opposite elbow toward opposite
+   knee, fully extend the straight leg.
+
+After this block you have finished one full round. Catch your breath for 45
+seconds.
+
+- Rounds remaining 2 or more: loop back to [[z=1|Block A]] and run it again.
+- Final round complete: continue to [[z=4|the cooldown]].
+
+@plane z=4 x=4 y=0 label="Cooldown"
+# Step 4: Cooldown (3 minutes)
+
+Bring the heart rate down gradually and stretch the muscles you worked.
+
+| Stretch | Hold |
+| --- | --- |
+| Standing quad stretch, each side | 30 sec |
+| Forward fold for hamstrings | 30 sec |
+| Chest and shoulder opener in a doorway | 30 sec |
+| Child's pose for the lower back | 45 sec |
+| Slow nasal breathing, eyes closed | 45 sec |
+
+Hydrate, log how many rounds you actually finished, and note which block was the
+limiter. Next session, try to add one round or shave the rest down to 15
+seconds. Jump back to [[z=0|the warm-up]] whenever you are ready to go again.

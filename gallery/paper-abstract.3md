@@ -1,0 +1,127 @@
+---
+3md: 1.0
+axis: depth
+title: Sparse Attention Routing for Long-Context Transformers
+authors: A. Okonkwo, R. Mehta, L. Bjornsdottir
+venue: Preprint, under review
+keywords: long-context, sparse attention, routing, transformers
+---
+Read this paper by depth. The surface plane is the abstract: the one-paragraph
+claim a busy reader skims. Each deeper plane unpacks that claim into more
+detail, ending at the reproducible methods a reviewer needs. Drill down with the
+cross-plane links, or surface back up to the abstract at any time.
+
+@plane z=0 label="Abstract"
+# Abstract
+
+Transformers degrade on long inputs because full self-attention costs grow
+quadratically with sequence length, forcing a hard cap on context. We present
+**Sparse Attention Routing (SAR)**, a learned router that selects, per query, a
+small set of key blocks to attend to, reducing attention cost from O(n^2) to
+roughly O(n * sqrt(n)) while keeping the model end-to-end differentiable. On
+the PG-19 and arXiv-Long benchmarks, SAR matches dense attention within 0.3
+perplexity at 16k tokens and extends usable context to 128k tokens on a single
+80 GB GPU. The router adds 1.8% parameters and is trained jointly with the base
+model, with no separate retrieval index.
+
+Skim deeper for the framing in [[z=1|the introduction]], the precise mechanism
+in [[z=2|the method]], or jump straight to [[z=4|reproducible methods]].
+
+@plane z=1 label="Introduction" x="0" y="-1"
+# 1. Introduction
+
+Long-context modeling is bottlenecked by attention, not by parameters. A
+12-layer model attending over 64k tokens spends more compute moving keys and
+values than it spends in its feed-forward blocks. Existing remedies fall into
+three camps, each with a cost:
+
+- **Fixed sparsity** (strided, block-local, dilated windows) is cheap but blind:
+  the pattern is chosen before training and cannot adapt to the input.
+- **Retrieval augmentation** sidesteps attention with an external index, but the
+  index is trained separately and is hard to keep consistent with the model.
+- **Linear-attention approximations** lower the asymptotic cost but trail dense
+  attention in quality on tasks that need sharp, content-based lookups.
+
+Our claim, stated plainly in [[z=0|the abstract]], is that the selection of what
+to attend to can itself be learned cheaply and trained jointly with the model.
+The next plane defines exactly how. See [[z=2|the method]].
+
+@plane z=2 label="Method: Sparse Attention Routing"
+# 2. Method
+
+Let a sequence of n tokens be partitioned into b contiguous **blocks** of size
+s, so b = ceil(n / s). For each query position i, instead of attending to all n
+keys, SAR attends to the keys in a chosen subset of blocks.
+
+## 2.1 The router
+
+Each block j produces a summary vector m_j, the mean of its key projections. A
+lightweight router scores query i against every block summary:
+
+```
+score(i, j) = (q_i . W_r m_j) / sqrt(d)
+```
+
+The router keeps the top-k blocks per query (we use k = 8). Attention then runs
+densely, but only over the k * s keys in those blocks, so cost scales with
+k * s rather than n. Choosing s ~ sqrt(n) gives the O(n * sqrt(n)) figure quoted
+in [[z=0|the abstract]].
+
+## 2.2 Keeping it differentiable
+
+Hard top-k is not differentiable, so during training we relax it: we attend over
+the top-k blocks but weight each by a softmax over its router score, and we add a
+small load-balancing loss so no block is starved. At inference the relaxation is
+dropped and hard top-k is used. The deeper plane covers why this matters
+empirically. See [[z=3|design rationale]].
+
+@plane z=3 label="Design rationale" x="1" y="0"
+# 3. Why these choices
+
+**Why block-level, not token-level, routing?** Token-level selection multiplies
+the router cost by n and produces a noisier signal. Block summaries are 64x
+cheaper to score (at s = 64) and, because nearby tokens are correlated, lose
+little recall.
+
+**Why a load-balancing loss?** Without it, the router collapses early in
+training, sending every query to the same two or three high-norm blocks. The
+auxiliary loss (the squared coefficient of variation of block-selection
+frequency, weighted at 0.01) keeps utilization even and recovers 0.4 perplexity.
+
+**Why train jointly rather than distill?** A router trained against a frozen
+teacher inherits the teacher's attention habits and cannot exploit the sparsity
+budget. Joint training lets the base model adapt its representations so that the
+information a query needs is concentrated in few blocks. The exact recipe is in
+[[z=4|reproducible methods]].
+
+@plane z=4 label="Reproducible methods" x="0" y="1"
+# 4. Reproducible methods
+
+Everything needed to reproduce the headline numbers in [[z=0|the abstract]].
+
+## 4.1 Data
+
+- **PG-19**: Project Gutenberg books pre-1919, official train/validation split,
+  documents concatenated and chunked to the target context length.
+- **arXiv-Long**: full-text arXiv papers (LaTeX source stripped to plain text),
+  filtered to documents of at least 12k tokens, 90/5/5 split by paper id.
+
+## 4.2 Model and training
+
+- Base: 1.3B-parameter decoder, 24 layers, hidden size 2048, 16 heads.
+- Block size s = 64, top-k blocks per query k = 8, router rank d_r = 128.
+- Optimizer: AdamW, peak learning rate 3e-4, cosine decay, 2000 warmup steps,
+  weight decay 0.1, gradient clip 1.0.
+- Schedule: 100k steps at 16k context, then 20k steps at 64k context.
+- Hardware: 8x A100 80 GB, bf16, activation checkpointing on attention blocks.
+- Load-balancing loss weight 0.01; router relaxation temperature annealed from
+  1.0 to 0.1 over the first 10k steps.
+
+## 4.3 Evaluation
+
+Perplexity is computed on held-out documents at each context length with a
+sliding window of stride 512. The 128k-token result uses hard top-k inference
+with KV-cache eviction of unselected blocks. Code, configs, and the exact
+evaluation harness are released under Apache-2.0.
+
+Surface back to [[z=0|the abstract]] or revisit [[z=2|the method]].

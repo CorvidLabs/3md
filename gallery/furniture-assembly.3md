@@ -1,0 +1,151 @@
+---
+3md: 1.0
+axis: step
+title: Assembling the BJORKLUND 3-Drawer Dresser
+product: BJORKLUND
+sku: 204.118.77
+est_time: 35-45 minutes
+people_required: 2 (recommended for step 5)
+---
+Read every step before you start. Lay out all parts on a clean, carpeted
+floor or a blanket so panel faces do not get scratched. Tools you supply:
+one Phillips screwdriver and a rubber mallet. Everything else is in the bag.
+
+Each plane below is one assembly step on the Z axis. Move forward only when
+the current step is fully seated and square.
+
+@plane z=0 x=0 y=0 label="Step 0 - Inventory and tools"
+# Step 0: Check the bag before you build
+
+Open the hardware bag over a bowl so nothing rolls away. Confirm you have
+every fastener before driving a single screw, because the count is exact
+with no spares.
+
+| Part | Code | Qty |
+| --- | --- | ---: |
+| Cam lock (silver disc) | 100347 | 12 |
+| Cam bolt (double-ended) | 101350 | 12 |
+| Wood dowel (38 mm) | 101339 | 16 |
+| Drawer screw (black, 25 mm) | 118331 | 24 |
+| Back-panel nail | 100001 | 20 |
+| Plastic glide foot | 109526 | 4 |
+
+Panels are labelled A through H on a sticker on the inside face. Keep that
+face pointing up so you never read it upside down.
+
+- A, B: left and right side panels
+- C: top panel
+- D: bottom panel
+- E: back panel (thin hardboard)
+- F, G, H: drawer fronts
+
+If anything is missing, stop here and do not proceed to
+[[z=1|the frame assembly]] with an incomplete kit.
+
+@plane z=1 x=0 y=2 label="Step 1 - Build the carcass frame"
+# Step 1: Join the sides to the top and bottom
+
+Work on the floor with the back of the unit facing you. This is the box
+that everything else hangs off, so take the time to get it square.
+
+1. Tap one wood dowel (101339) into each of the two top holes on side
+   panel A. They should sit halfway, by hand, no mallet yet.
+2. Press cam bolts (101350) into the threaded holes on the top panel C,
+   turning clockwise two full turns with the screwdriver.
+3. Stand panel A and lower top panel C onto it so the cam bolts drop into
+   panel A. Insert a cam lock (100347) into each round face hole and turn
+   it clockwise to about 90 degrees. You will feel it grab.
+4. Repeat for side panel B and the bottom panel D.
+
+> Square check: measure both diagonals of the open box. If they match
+> within 3 mm, the carcass is square. If not, push the long corner inward
+> before the cam locks are fully tight.
+
+Hold off on the back panel. That waits until after
+[[z=2|the drawer runners go on]], because you need access from behind.
+
+@plane z=2 x=2 y=2 label="Step 2 - Mount the drawer runners"
+# Step 2: Fit the three pairs of runners
+
+The runners decide whether the drawers glide or stick, so alignment here
+matters more than torque. Each side panel has three rows of pilot holes.
+
+- Orient every runner with the roller wheel toward the FRONT of the
+  carcass and the screw flange toward the back.
+- Drive two drawer screws (118331) per runner, snug but not stripped.
+- Left and right runners in a pair must sit at the same height. Eyeball
+  across the box at each row before moving down.
+
+Row map, top to bottom:
+
+| Row | Holds | Roller faces |
+| --- | --- | --- |
+| Top | Drawer F | Front |
+| Middle | Drawer G | Front |
+| Bottom | Drawer H | Front |
+
+That uses 12 of the 24 drawer screws. The other 12 attach the drawer
+fronts back in [[z=4|the drawer build]].
+
+@plane z=3 x=2 y=0 label="Step 3 - Close the back and stand it up"
+# Step 3: Nail on the back, then tip upright
+
+With the runners mounted, you can finally close the box.
+
+1. Lay back panel E into the rabbet groove around the rear edge. The
+   smooth (printed) side faces OUT, into the room.
+2. Starting at one corner, drive back-panel nails (100001) every 15 cm or
+   so. The nails are short, so angle the hammer flat and tap lightly.
+3. The back panel is what keeps the unit square under load. Do not skip
+   nails to save time.
+4. With a helper, tip the dresser upright onto its base.
+5. Thread the four plastic glide feet (109526) into the bottom corners and
+   adjust them so the unit does not rock on your floor.
+
+Give the carcass a gentle shove from the top corner. If it racks side to
+side, a back-panel nail is missing or a cam lock from
+[[z=1|Step 1]] needs another quarter turn.
+
+@plane z=4 x=4 y=0 label="Step 4 - Build the three drawers"
+# Step 4: Assemble each drawer box
+
+All three drawers build the same way, so set up a small production line and
+do the same operation on all three before moving on.
+
+For each drawer:
+
+1. Cam-lock the two drawer sides to the drawer back, same disc-and-bolt
+   method from [[z=1|the carcass step]].
+2. Slide the thin drawer bottom into its groove. Do not nail or glue it;
+   it floats so the box can flex.
+3. Attach the drawer front (F, G, or H) from the inside using four drawer
+   screws (118331) through the pre-drilled front rail. Leave them slightly
+   loose for now.
+4. With the front held square, hand-tighten the four screws in a cross
+   pattern.
+
+Match each front to its row: F is the shallowest front and goes on top,
+H is the deepest and goes on the bottom.
+
+@plane z=5 x=4 y=2 label="Step 5 - Fit drawers and final tune"
+# Step 5: Hang the drawers and align the gaps
+
+This is the two-person step. One person steadies the carcass while the
+other seats each drawer.
+
+1. Tilt a drawer up slightly, set its runners onto the carcass rollers,
+   and push until it clicks past the stop. Pull it out once to confirm it
+   glides freely.
+2. Load top to bottom: F, then G, then H.
+3. Look at the three gaps between the fronts. They should be even, around
+   3 mm each. If a front sits crooked, loosen its four screws from
+   [[z=4|Step 4]], nudge it level, and retighten.
+
+Final safety:
+
+- Use the supplied wall anchor and strap to fix the dresser to a stud.
+  A loaded dresser can tip, and this single strap is the difference.
+- Go back and give every cam lock a final snug, working from
+  [[z=1|the frame]] outward.
+
+Done. Wipe the panels with a dry cloth and recycle the flat-pack carton.

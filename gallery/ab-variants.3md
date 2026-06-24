@@ -1,0 +1,84 @@
+---
+3md: 1.0
+axis: version
+title: Landing Headline A/B/C Test
+experiment: hero-headline-q3
+hypothesis: A benefit-led, specific headline lifts demo signups over a feature-led control.
+metric: demo request click-through rate (CTR)
+audience: paid-search visitors, US, desktop and mobile
+sample-size: 9000 sessions per arm
+duration: 14 days
+significance: 95 percent (alpha 0.05)
+---
+This experiment tests three landing-page hero headlines for our scheduling product. Each plane is one variant arm. Start with the [[z=0|control]], compare the [[z=1|benefit]] and [[z=2|social-proof]] challengers, then read the [[z=3|result]].
+
+@plane z=0 x=0 y=0 label="Variant A - Control (feature-led)"
+# Variant A: Control
+
+> ## Scheduling software for teams
+> Calendars, reminders, and reports in one place.
+>
+> `[ Start free trial ]`
+
+**Why it is the control:** This is the live headline we have shipped for the past nine months, so it sets the baseline CTR.
+
+**Copy notes**
+- Feature-led: names the product category, not the outcome.
+- Generic verb ("Start free trial") with no urgency.
+- Tested as-is, no design changes, so the headline is the only variable.
+
+**Baseline (trailing 30 days):** 4.1 percent demo-request CTR.
+
+Compare against the [[z=1|benefit-led challenger]].
+
+@plane z=1 x=12 y=0 label="Variant B - Benefit-led"
+# Variant B: Benefit-led
+
+> ## Stop chasing people to book meetings
+> Share one link. They pick a slot. It lands on your calendar, time zones handled.
+>
+> `[ Get my booking link ]`
+
+**Hypothesis for this arm:** Leading with the pain ("chasing people") and a concrete outcome beats naming the category.
+
+**Copy notes**
+- Pain-first hook, then the mechanism in plain language.
+- Specific objection killed inline ("time zones handled").
+- CTA names the artifact the visitor gets ("my booking link"), not a generic trial.
+
+This is the primary challenger against the [[z=0|control]]. Its sibling tests trust instead of benefit: see [[z=2|Variant C]].
+
+@plane z=2 x=24 y=0 label="Variant C - Social proof"
+# Variant C: Social-proof-led
+
+> ## Join 12,000 teams who never double-book
+> Pick the times you are free. We do the back-and-forth for you.
+>
+> `[ See how it works ]`
+
+**Hypothesis for this arm:** A credible number plus a vivid avoided-outcome ("never double-book") borrows trust and lowers risk.
+
+**Copy notes**
+- Quantified proof up front (12,000 teams) sourced from the active-account count.
+- Softer, lower-commitment CTA ("See how it works") to widen the funnel.
+- Risk: the claim must be defensible, so legal signed off on the count.
+
+Measured head-to-head with the [[z=0|control]] and the [[z=1|benefit variant]]. Outcome on the next plane: [[z=3|results]].
+
+@plane z=3 x=36 y=0 label="Result - Winner and rollout"
+# Result: Variant B wins
+
+| Arm | Headline | Sessions | CTR | Lift vs control | p-value |
+|-----|----------|----------|-----|-----------------|---------|
+| [[z=0\|A]] | Feature-led | 9,042 | 4.0% | baseline | - |
+| [[z=1\|B]] | Benefit-led | 8,988 | 5.6% | +40% | 0.002 |
+| [[z=2\|C]] | Social proof | 9,011 | 4.7% | +18% | 0.061 |
+
+**Decision:** Ship Variant B. The benefit-led headline beat control by 40 percent (relative) at p = 0.002, clearing our 95 percent bar.
+
+**On Variant C:** Encouraging (+18 percent) but not significant (p = 0.061), so it stays a candidate for a follow-up test, not a rollout.
+
+**Next steps**
+- [x] Promote [[z=1|Variant B]] to 100 percent of traffic.
+- [ ] Re-run [[z=2|Variant C]] copy with a stronger CTA against the new control.
+- [ ] Repeat the test on mobile-only traffic, where CTR ran 0.6 points lower across all arms.
