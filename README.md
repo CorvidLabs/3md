@@ -69,16 +69,24 @@ Then depend on the `ThreeMD` library product:
 
 ### JavaScript / TypeScript
 
-A faithful TypeScript port of the Swift parser is published to GitHub Packages.
+A faithful TypeScript port of the Swift parser is published to GitHub Packages,
+alongside the [`<three-md>` web component](element/) (`@corvidlabs/three-md-element`).
 All three implementations (Swift, TypeScript, and the Rust crate in [`rust/`](rust))
-are kept in sync by the shared conformance suite
-([conformance/](conformance)). Point the `@corvidlabs` scope at the GitHub
-registry once (in a project or user `.npmrc`), then install:
+are kept in sync by the shared conformance suite ([conformance/](conformance)).
+
+GitHub Packages requires a GitHub token to install (even for public packages),
+so point the `@corvidlabs` scope at the registry and add a token in a project or
+user `.npmrc`, then install:
 
 ```bash
 echo "@corvidlabs:registry=https://npm.pkg.github.com" >> .npmrc
+echo "//npm.pkg.github.com/:_authToken=YOUR_GITHUB_TOKEN" >> .npmrc
 bun add @corvidlabs/threemd
 ```
+
+No install needed just to use it: try the hosted [editor and
+viewer](https://corvidlabs.github.io/3md/viewer.html), or load the self-contained
+component bundle directly with `<script type="module" src=".../three-md.js">`.
 
 ```ts
 import { parse, serialize } from "@corvidlabs/threemd";
