@@ -60,6 +60,12 @@
 
   /* lab */
   .lab{margin:40px 0 24px}
+  /* Theme the canonical <three-md> stage with the page's brand tokens, and hide
+     its built-in axis label since the page already shows AXIS = ... above it. */
+  three-md{--three-md-accent:var(--sheen);--three-md-bg:var(--surface-strong);--three-md-surface:var(--surface);
+    --three-md-text:var(--ink);--three-md-muted:var(--text-muted);--three-md-faint:var(--text-faint);
+    --three-md-hairline:var(--hairline);--three-md-height:480px;--three-md-display:var(--font-display)}
+  three-md::part(axis){display:none}
   .tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
   .tab{font-family:var(--font-mono);font-size:12px;letter-spacing:.06em;color:var(--text-faint);background:var(--surface);border:1px solid var(--hairline);padding:9px 14px;border-radius:3px;cursor:pointer;transition:.16s}
   .tab:hover{color:var(--sheen);border-color:var(--sheen)}
@@ -175,22 +181,10 @@
       <div class="left">
         <div class="axis-name" id="axisName">AXIS</div>
         <div class="axis-desc" id="axisDesc"></div>
-        <div class="stage" id="stage">
-          <div class="axis-arrow" id="axisArrow">Z &uarr;</div>
-          <div class="scene" id="scene"></div>
-          <div class="stage-hint">drag to orbit · scrub below · arrow keys step Z</div>
-        </div>
-        <div class="controls">
-          <div class="scrub-row">
-            <button class="navbtn" id="prev" aria-label="previous plane">&#8592;</button>
-            <input type="range" id="scrub" min="0" max="0" step="0.001" value="0" />
-            <button class="navbtn" id="next" aria-label="next plane">&#8594;</button>
-          </div>
-          <div class="scrub-row">
-            <div class="readout" id="readout"></div>
-            <div class="extra" id="extra"></div>
-          </div>
-        </div>
+        <!-- The interactive stage is the canonical <three-md> web component
+             (assets/three-md.js), so the demo and the shipped component are the
+             same code and cannot drift. -->
+        <three-md id="lab"></three-md>
       </div>
       <div class="right">
         <div class="panel">
@@ -440,28 +434,14 @@ garden, antenna
 `}
 ];
 
-const DCOL=["--chart-1","--chart-2","--chart-3","--chart-4","--chart-5"];
-const scene=document.getElementById("scene"), stage=document.getElementById("stage");
-const scrub=document.getElementById("scrub"), readout=document.getElementById("readout"), extra=document.getElementById("extra");
-let cur=EX[0], doc=null, els=[], focus=0, target=0, playing=false, playTimer=null, hidden=new Set();
-let mx=0,my=0,tmx=0,tmy=0,t=0,dragRY=0,dragRX=0,dragging=false,lastX=0,lastY=0;
+const lab=document.getElementById("lab");
+const axisName=document.getElementById("axisName"), axisDesc=document.getElementById("axisDesc");
+const srcName=document.getElementById("srcName"), srcEl=document.getElementById("src");
+const parsedEl=document.getElementById("parsed"), parsedMeta=document.getElementById("parsedMeta");
 
-function mdRender(body){
-  const lines=body.split("\n");
-  if(lines[0]&&lines[0].startsWith("```")){
-    const rows=lines.filter(l=>!l.startsWith("```"));
-    return `<div class="grid">`+rows.map(r=>esc(r).replace(/o/g,'<span class="dot">●</span>')).join("<br>")+`</div>`;
-  }
-  const out=[];
-  for(const l of lines){
-    if(l.startsWith("# "))out.push(`<h4>${esc(l.slice(2))}</h4>`);
-    else if(l.startsWith("- [x] "))out.push(`<div class="li"><span class="box">▣</span><span class="done">${esc(l.slice(6))}</span></div>`);
-    else if(l.startsWith("- [ ] "))out.push(`<div class="li"><span class="box">▢</span><span>${esc(l.slice(6))}</span></div>`);
-    else if(l.startsWith("- "))out.push(`<div class="li"><span class="box">•</span><span>${esc(l.slice(2))}</span></div>`);
-    else if(l.trim()!=="")out.push(`<div>${esc(l)}</div>`);
-  }
-  return `<div class="md">${out.join("")}</div>`;
-}
+// Plane rendering (Markdown, 3D stack, scrub, drag) lives in the <three-md>
+// component (assets/three-md.js). This page only drives it and renders the
+// synced source + parsed panels below.
 function renderSource(src){
   const lines=src.replace(/\r\n/g,"\n").split("\n");let html="",pidx=-1,open=false;
   const close=()=>{if(open){html+="</span>";open=false;}};
@@ -487,114 +467,37 @@ function hlLine(raw){
 function colorJSON(o){return esc(JSON.stringify(o,null,2)).replace(/"([^"]+)":/g,'<span class="k">"$1":</span>').replace(/: "([^"]*)"/g,': <span class="v">"$1"</span>').replace(/: (-?\d+(?:\.\d+)?)/g,': <span class="v">$1</span>');}
 
 function load(ex){
-  cur=ex; doc=parse3md(ex.src); hidden.clear(); focus=0; target=0;
-  if(playTimer){clearInterval(playTimer);playTimer=null;} playing=false;
-  document.getElementById("axisName").textContent="AXIS = "+doc.axis.toUpperCase();
-  document.getElementById("axisDesc").textContent=doc.preamble||doc.title||"";
-  document.getElementById("srcName").textContent=ex.key+".3md";
-  document.getElementById("src").innerHTML=renderSource(ex.src);
+  const doc=parse3md(ex.src);
+  axisName.textContent="AXIS = "+doc.axis.toUpperCase();
+  axisDesc.textContent=doc.preamble||doc.title||"";
+  srcName.textContent=ex.key+".3md";
+  srcEl.innerHTML=renderSource(ex.src);
   const meta={version:doc.version,axis:doc.axis,title:doc.title,planes:doc.planes.map(p=>{const o={z:p.z,label:p.label};if(p.x!=null)o.x=p.x;if(p.y!=null)o.y=p.y;if(Object.keys(p.attributes).length)o.attributes=p.attributes;return o;})};
-  document.getElementById("parsed").innerHTML=colorJSON(meta);
-  document.getElementById("parsedMeta").textContent=doc.planes.length+" planes";
-
-  scene.innerHTML=""; els=[];
-  doc.planes.forEach((p,idx)=>{
-    const el=document.createElement("div");el.className="plane";
-    el.style.setProperty("--pc",`var(${DCOL[idx%DCOL.length]})`);
-    el.innerHTML=`<div class="ptag"><span>z = ${p.z}</span><b>${p.label?esc(p.label):""}</b></div>`+mdRender(p.body);
-    el.addEventListener("mouseenter",()=>setTarget(idx));
-    el.addEventListener("click",()=>setTarget(idx));
-    scene.appendChild(el);els.push(el);
-  });
-  scrub.max=String(doc.planes.length-1);scrub.value="0";
-  buildExtra();updateReadout();highlightSource();
+  parsedEl.innerHTML=colorJSON(meta);
+  parsedMeta.textContent=doc.planes.length+" planes";
+  lab.setAttribute("mode",ex.mode);
+  lab.setSource(ex.src);
+  highlightSource(0);
 }
 
-function buildExtra(){
-  extra.innerHTML="";
-  if(cur.mode==="play"){
-    const b=document.createElement("button");b.className="pbtn";b.textContent="▶ play";b.onclick=togglePlay;extra.appendChild(b);
-    const g=document.createElement("span");g.className="ghost";g.textContent="auto-steps through frames";extra.appendChild(g);
-    togglePlay();
-  }else if(cur.mode==="layers"){
-    const g=document.createElement("span");g.className="ghost";g.textContent="toggle:";extra.appendChild(g);
-    doc.planes.forEach((p,idx)=>{const c=document.createElement("span");c.className="chip";c.dataset.on="true";c.textContent=p.label||("z"+p.z);
-      c.style.setProperty("--cc",`var(${DCOL[idx%DCOL.length]})`);
-      c.onclick=()=>{const on=c.dataset.on==="true";c.dataset.on=on?"false":"true";if(on)hidden.add(idx);else hidden.delete(idx);};extra.appendChild(c);});
-  }else if(cur.mode==="present"){
-    const d=document.createElement("div");d.className="dots";d.id="dots";
-    doc.planes.forEach(()=>{const p=document.createElement("span");p.className="dotpip";d.appendChild(p);});extra.appendChild(d);
-    const g=document.createElement("span");g.className="ghost";g.textContent="present mode";extra.appendChild(g);
-  }else if(cur.mode==="scene"){
-    const g=document.createElement("span");g.className="ghost";g.textContent="props placed by x / y / z - drag to orbit";extra.appendChild(g);
-  }else if(cur.mode==="parallax"){
-    const g=document.createElement("span");g.className="ghost";g.textContent="move the mouse for parallax";extra.appendChild(g);
-  }else if(cur.mode==="elevator"){
-    const g=document.createElement("span");g.className="ghost";g.textContent="scrub to ride floors";extra.appendChild(g);
-  }
-}
-function togglePlay(){const b=extra.querySelector(".pbtn");
-  if(playing){playing=false;clearInterval(playTimer);playTimer=null;if(b)b.textContent="▶ play";}
-  else{playing=true;if(b)b.textContent="⏸ pause";
-    const fps=parseInt(doc.metadata.fps,10);
-    const delay=fps>0?Math.min(1000,Math.max(90,1000/fps)):460;
-    playTimer=setInterval(()=>{target=(Math.round(target)+1)%doc.planes.length;updateReadout();highlightSource();},delay);}
-}
-function setTarget(i){target=Math.max(0,Math.min(doc.planes.length-1,i));scrub.value=String(target);updateReadout();highlightSource();}
-function updateReadout(){const i=Math.round(target);const p=doc.planes[i];if(!p)return;
-  readout.innerHTML=`Z = <b>${p.z}</b> &nbsp; ${p.label?esc(p.label):""} <span class="d">(${i+1}/${doc.planes.length})</span>`;}
-function highlightSource(){const i=Math.round(target);
+function highlightSource(i){
   document.querySelectorAll(".srcblock").forEach(b=>b.classList.toggle("active",+b.dataset.p===i));
-  if(cur.mode==="present"){const dots=document.querySelectorAll("#dots .dotpip");dots.forEach((d,k)=>d.classList.toggle("on",k===i));}}
-
-scrub.addEventListener("input",()=>{target=parseFloat(scrub.value);updateReadout();highlightSource();});
-document.getElementById("prev").onclick=()=>setTarget(Math.round(target)-1);
-document.getElementById("next").onclick=()=>setTarget(Math.round(target)+1);
-window.addEventListener("keydown",e=>{
-  if(e.key==="ArrowRight"){setTarget(Math.round(target)+1);e.preventDefault();}
-  if(e.key==="ArrowLeft"){setTarget(Math.round(target)-1);e.preventDefault();}
-});
-
-stage.addEventListener("mousemove",e=>{const r=stage.getBoundingClientRect();tmx=((e.clientX-r.left)/r.width-.5);tmy=((e.clientY-r.top)/r.height-.5);
-  if(dragging){dragRY+=(e.clientX-lastX)*0.4;dragRX-=(e.clientY-lastY)*0.3;lastX=e.clientX;lastY=e.clientY;}});
-stage.addEventListener("mouseleave",()=>{tmx=0;tmy=0;dragging=false;});
-stage.addEventListener("mousedown",e=>{dragging=true;lastX=e.clientX;lastY=e.clientY;});
-window.addEventListener("mouseup",()=>{dragging=false;});
-stage.addEventListener("touchstart",e=>{const t=e.touches[0];dragging=true;lastX=t.clientX;lastY=t.clientY;},{passive:true});
-stage.addEventListener("touchmove",e=>{const t=e.touches[0];const r=stage.getBoundingClientRect();tmx=((t.clientX-r.left)/r.width-.5);tmy=((t.clientY-r.top)/r.height-.5);if(dragging){dragRY+=(t.clientX-lastX)*0.4;dragRX-=(t.clientY-lastY)*0.3;lastX=t.clientX;lastY=t.clientY;}},{passive:true});
-stage.addEventListener("touchend",()=>{dragging=false;tmx=0;tmy=0;});
-
-function loop(){
-  t+=0.006; mx+=(tmx-mx)*.06; my+=(tmy-my)*.06; focus+=(target-focus)*.16;
-  const n=els.length, fr=Math.round(focus), m=cur.mode;
-  els.forEach((el,idx)=>{
-    let x=0,y=0,z=0,s=1,o=1,hot=false,dim=false;
-    if(m==="stack"){const d=idx-focus;z=-Math.abs(d)*150;y=d*24;x=d*32;if(Math.abs(d)<.5){s=1.05;hot=true;}}
-    else if(m==="play"){const d=idx-focus;z=-Math.abs(d)*150;y=d*24;x=d*32;if(Math.abs(d)<.5){s=1.06;hot=true;}else dim=true;}
-    else if(m==="layers"){const d=idx-focus;z=-Math.abs(d)*120;y=d*28;x=d*32;if(hidden.has(idx))dim=true;else if(Math.abs(d)<.5){s=1.04;hot=true;}}
-    else if(m==="scene"){const p=doc.planes[idx];x=(p.x||0)*4.2;y=-(p.y||0)*4.2;z=-p.z*150;if(idx===fr){hot=true;s=1.05;}}
-    else if(m==="parallax"){z=-idx*175;const near=n-idx;x=-mx*near*48;y=-my*near*26;s=1+(n-1-idx)*.07;if(idx===fr)hot=true;}
-    else if(m==="present"){const d=idx-focus;if(Math.abs(d)<.5){x=0;y=0;z=120;s=1.18;o=1;hot=true;}else{x=d*70;z=-180-Math.abs(d)*50;s=.6;o=.22;dim=true;}}
-    else if(m==="elevator"){const d=idx-focus;y=d*150;z=-Math.abs(d)*120;s=Math.abs(d)<.5?1.06:.82;o=Math.max(.12,1-Math.abs(d)*.45);if(Math.abs(d)<.5)hot=true;else dim=true;}
-    el.style.transform=`translate3d(${x}px,${y}px,${z}px) scale(${s.toFixed(3)})`;
-    el.style.opacity=o; el.style.zIndex=idx===fr?"300":String(120-Math.abs(fr-idx));
-    el.classList.toggle("hot",hot); el.classList.toggle("dim",dim);
-  });
-  let st;
-  if(m==="parallax"||m==="present"){st=`translateZ(-110px)`;}
-  else if(m==="elevator"){st=`translateZ(-150px) rotateY(${(-6+mx*8+dragRY).toFixed(2)}deg)`;}
-  else{const ry=-22+mx*24+Math.sin(t)*4+dragRY;const rx=8-my*15+dragRX;st=`translateZ(-160px) rotateX(${rx.toFixed(2)}deg) rotateY(${ry.toFixed(2)}deg)`;}
-  scene.style.transform=st;
-  requestAnimationFrame(loop);
 }
 
 const tabsEl=document.getElementById("tabs");
-EX.forEach((ex,idx)=>{const b=document.createElement("button");b.className="tab";b.textContent=ex.tab;b.setAttribute("role","tab");
-  b.setAttribute("aria-selected",idx===0?"true":"false");
-  b.onclick=()=>{tabsEl.querySelectorAll(".tab").forEach(t=>t.setAttribute("aria-selected","false"));b.setAttribute("aria-selected","true");dragRY=0;dragRX=0;load(ex);};
-  tabsEl.appendChild(b);});
-
-load(EX[0]); loop();
+function init(){
+  EX.forEach((ex,idx)=>{const b=document.createElement("button");b.className="tab";b.textContent=ex.tab;b.setAttribute("role","tab");
+    b.setAttribute("aria-selected",idx===0?"true":"false");
+    b.onclick=()=>{tabsEl.querySelectorAll(".tab").forEach(t=>t.setAttribute("aria-selected","false"));b.setAttribute("aria-selected","true");load(ex);};
+    tabsEl.appendChild(b);});
+  lab.addEventListener("planechange",e=>highlightSource(e.detail.index));
+  load(EX[0]);
+}
+// The <three-md> stage upgrades from a module script; wait for it before driving it.
+if(window.customElements&&customElements.get("three-md")) init();
+else if(window.customElements) customElements.whenDefined("three-md").then(init);
+else init();
 </script>
+<script type="module" src="assets/three-md.js"></script>
 </body>
 </html>

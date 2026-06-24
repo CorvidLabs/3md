@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Embedding &lt;three-md&gt;</title>
+<link rel="icon" href="assets/favicon.svg" />
+<link rel="stylesheet" href="assets/tokens.css" />
+<style>
+  body { margin: 0; padding: 32px 18px 80px; background: var(--paper, #131619); color: var(--text, #f4f3ef);
+    font-family: ui-monospace, "Spline Sans Mono", monospace; max-width: 820px; margin-inline: auto; }
+  h1 { font-size: 26px; margin: 0 0 6px; }
+  p { color: var(--text-faint, #9aa3a8); font-size: 14px; line-height: 1.6; }
+  h2 { font-size: 14px; letter-spacing: .1em; text-transform: uppercase; color: var(--accent, #45d0bc); margin: 36px 0 12px; }
+  three-md { margin: 8px 0 4px; }
+  /* Theme the component via its CSS custom properties */
+  three-md { --three-md-accent: var(--accent, #45d0bc); --three-md-height: 420px; }
+  #log { font-size: 12px; color: var(--text-faint, #9aa3a8); min-height: 18px; }
+</style>
+</head>
+<body>
+  <h1>Embedding &lt;three-md&gt;</h1>
+  <p>The canonical 3md renderer as a web component. One tested artifact, usable in any framework or plain HTML. This page is also a test fixture for the cross-browser suite.</p>
+
+  <h2>Inline source (time axis)</h2>
+  <three-md id="inline">---
+3md: 1.0
+axis: time
+title: Launch week
+---
+@plane z=0 label="Monday"
+# Monday
+- [ ] Cut the release branch
+- [ ] Write the changelog
+
+@plane z=1 label="Tuesday"
+# Tuesday
+- [ ] Tag v1.1
+- [x] Brief the team
+
+@plane z=2 label="Wednesday"
+# Wednesday
+- [ ] Publish the blog post
+- [ ] Watch the dashboards
+</three-md>
+  <div id="log">plane: -</div>
+
+  <h2>Loaded from a file (depth axis)</h2>
+  <three-md id="remote" src="sample.3md"></three-md>
+
+  <script type="module" src="assets/three-md.js"></script>
+  <script type="module">
+    // Demonstrate the planechange event.
+    const log = document.getElementById("log");
+    document.getElementById("inline").addEventListener("planechange", (e) => {
+      log.textContent = `plane: ${e.detail.index} (z=${e.detail.z}) ${e.detail.label ?? ""}`;
+    });
+  </script>
+</body>
+</html>

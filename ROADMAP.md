@@ -28,6 +28,24 @@ State confidence: 93.
   console stays clean. Guards the Safari-only 3D depth regression that z-index
   masks in Chromium.
 
+## 1.1 - additive tooling (the format stays frozen at 1.0)
+
+Version 1.1 is tooling only. It does not touch the 1.0 grammar or the
+conformance contract; it makes 3md easier to embed and extend.
+
+- The canonical `<three-md>` web component (`element/`, published as
+  `@corvidlabs/three-md-element`): one framework-agnostic, tested interactive
+  renderer backed by `@corvidlabs/threemd`. Replaces the bespoke renderer that
+  was duplicated between the demo and the site and drifted (the Safari and
+  Low-Power "focused plane never comes forward" bug had to be fixed twice).
+  `web/index.html` now consumes the component, so the demo and the shipped
+  renderer are the same code. Tested in CI (Chromium + WebKit): focused plane
+  frontmost while scrubbing, works with requestAnimationFrame paused (Low Power
+  Mode), no horizontal overflow from 320px to 1440px, clean console. Closes #1.
+- Format-feature proposals for a future minor version live in
+  [docs/PROPOSALS.md](docs/PROPOSALS.md) (per-plane timing hints, `@asset`,
+  `@include`, a container), each designed to be additive.
+
 ## Next
 
 | Step | Confidence | Notes |

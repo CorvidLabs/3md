@@ -1,0 +1,30 @@
+{
+  "name": "@corvidlabs/three-md-element",
+  "version": "1.1.0",
+  "description": "The canonical <three-md> web component: a framework-agnostic interactive renderer for the 3md format, backed by @corvidlabs/threemd.",
+  "type": "module",
+  "license": "MIT",
+  "repository": { "type": "git", "url": "git+https://github.com/CorvidLabs/3md.git", "directory": "element" },
+  "main": "./dist/three-md.js",
+  "module": "./dist/three-md.js",
+  "types": "./dist/three-md.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/three-md.d.ts",
+      "import": "./dist/three-md.js"
+    }
+  },
+  "files": ["dist"],
+  "sideEffects": ["./dist/three-md.js"],
+  "scripts": {
+    "build": "bun build ./src/three-md.ts --outfile ./dist/three-md.js --format esm --target browser --minify && bun run build:types && bun run build:web",
+    "build:types": "tsc --emitDeclarationOnly --declaration --outDir dist src/three-md.ts || true",
+    "build:web": "cp ./dist/three-md.js ../web/assets/three-md.js"
+  },
+  "dependencies": {
+    "@corvidlabs/threemd": "file:../js"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.0"
+  }
+}

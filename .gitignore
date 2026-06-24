@@ -33,3 +33,8 @@ uitests/node_modules/
 uitests/test-results/
 uitests/playwright-report/
 uitests/.last-run.json
+
+# Web component package (element/) - build output; the deployed copy lives at
+# web/assets/three-md.js and IS committed.
+element/node_modules/
+element/dist/
