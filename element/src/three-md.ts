@@ -56,11 +56,12 @@ function esc(value: string): string {
 
 /** Inline Markdown on already-escaped text: code, bold, italic. */
 function inline(escaped: string): string {
+  // Note: no `_italic_` rule - underscores are left alone so snake_case
+  // identifiers (ship_to, acct_8821) render literally.
   return escaped
-    .replace(/`([^`]+)`/g, '<code>$1</code>')
+    .replace(/`([^`]+)`/g, "<code>$1</code>")
     .replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>")
-    .replace(/\*([^*]+)\*/g, "<em>$1</em>")
-    .replace(/_([^_]+)_/g, "<em>$1</em>");
+    .replace(/\*([^*]+)\*/g, "<em>$1</em>");
 }
 
 function fmt(text: string): string {
@@ -77,9 +78,18 @@ function renderMarkdown(body: string): string {
       `</div>`;
   }
   const out: string[] = [];
+  let code: string[] | null = null; // collecting a fenced code block
   for (const l of lines) {
-    if (l.startsWith("# ")) out.push(`<h4 part="plane-title">${fmt(l.slice(2))}</h4>`);
-    else if (l.startsWith("## ")) out.push(`<h5 part="plane-title">${fmt(l.slice(3))}</h5>`);
+    if (l.startsWith("```")) {
+      if (code === null) { code = []; }
+      else { out.push(`<pre class="code" part="code">${code.map(esc).join("\n")}</pre>`); code = null; }
+      continue;
+    }
+    if (code !== null) { code.push(l); continue; }
+    // Plane titles render as styled divs, not <h4>/<h5>, so the component never
+    // injects headings that would break the host page's heading order (a11y).
+    if (l.startsWith("# ")) out.push(`<div class="ph" part="plane-title">${fmt(l.slice(2))}</div>`);
+    else if (l.startsWith("## ")) out.push(`<div class="ph2" part="plane-subtitle">${fmt(l.slice(3))}</div>`);
     else if (l.startsWith("- [x] ")) out.push(`<div class="li"><span class="box">▣</span><span class="done">${fmt(l.slice(6))}</span></div>`);
     else if (l.startsWith("- [ ] ")) out.push(`<div class="li"><span class="box">▢</span><span>${fmt(l.slice(6))}</span></div>`);
     else if (l.startsWith("- ")) out.push(`<div class="li"><span class="box">•</span><span>${fmt(l.slice(2))}</span></div>`);
@@ -87,6 +97,7 @@ function renderMarkdown(body: string): string {
     else if (l.startsWith("> ")) out.push(`<div class="quote">${fmt(l.slice(2))}</div>`);
     else if (l.trim() !== "") out.push(`<div>${fmt(l)}</div>`);
   }
+  if (code !== null) out.push(`<pre class="code" part="code">${code.map(esc).join("\n")}</pre>`);
   return `<div class="md" part="plane-body">${out.join("")}</div>`;
 }
 
@@ -134,8 +145,9 @@ const STYLES = `
 .ptag { font-size: 10.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--three-md-accent); display: flex; justify-content: space-between; margin-bottom: 8px; }
 .ptag b { color: var(--three-md-text); font-weight: 700; }
 .md, .grid { font-size: 12.5px; line-height: 1.65; color: var(--three-md-muted); }
-.md h4 { font-family: var(--three-md-display, inherit); font-size: 16px; margin: 2px 0 8px; color: var(--three-md-text); }
-.md h5 { font-size: 13px; margin: 6px 0 6px; color: var(--three-md-text); }
+.md .ph { font-family: var(--three-md-display, inherit); font-weight: 700; font-size: 16px; margin: 2px 0 8px; color: var(--three-md-text); }
+.md .ph2 { font-weight: 700; font-size: 13px; margin: 6px 0 6px; color: var(--three-md-text); }
+.md .code { margin: 6px 0; padding: 8px 10px; background: var(--three-md-hairline); border-radius: 4px; font-size: 11.5px; line-height: 1.5; white-space: pre; overflow-x: auto; color: var(--three-md-text); }
 .md .li { display: flex; gap: 8px; }
 .md .box { color: var(--three-md-accent); }
 .md .done { color: var(--three-md-faint); text-decoration: line-through; }
