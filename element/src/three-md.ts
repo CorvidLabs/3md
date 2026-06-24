@@ -28,37 +28,39 @@ import { parse, type Document, type Plane } from "../../js/src/index.ts";
 // The renderer offers a small set of strong views. (Earlier builds had layers,
 // parallax, elevator, and scene; those were weak or redundant and are folded in:
 // see MODE_ALIAS, which keeps old documents and ?mode= values working.)
-type Mode = "stack" | "play" | "single" | "present" | "blend" | "map";
+type Mode = "stack" | "play" | "single" | "present" | "blend" | "map" | "layers" | "elevator";
 
-const VALID_MODES = ["stack", "play", "single", "present", "blend", "map"] as const;
+const VALID_MODES = ["stack", "play", "single", "present", "blend", "map", "layers", "elevator"] as const;
 
 // Retired mode names map to their surviving equivalent so nothing breaks.
 const MODE_ALIAS: Record<string, Mode> = {
-  layers: "stack", parallax: "stack", elevator: "stack", scene: "map", deck: "present",
+  parallax: "stack", scene: "map", deck: "present",
 };
 
 const AXIS_MODE: Record<string, Mode> = {
   time: "stack",
   frame: "play",
   frames: "play",
-  layer: "stack",
-  layers: "stack",
+  layer: "layers",
+  layers: "layers",
   depth: "stack",
   space: "map",
   scene: "map",
   slide: "present",
   slides: "present",
   deck: "present",
-  floor: "stack",
-  floors: "stack",
+  floor: "elevator",
+  floors: "elevator",
 };
 
 // Modes driven by the orbit/pan/zoom camera (vs. flat reader/slides/flipbook).
-const CAMERA_MODES: ReadonlySet<Mode> = new Set(["stack", "blend", "map"]);
+const CAMERA_MODES: ReadonlySet<Mode> = new Set(["stack", "blend", "map", "layers", "elevator"]);
 
 // The under-stage hint, tailored to how each view is driven.
 const HINTS: Record<Mode, string> = {
   stack: "drag to orbit · WASD / arrows move · scroll to zoom · slider scrubs Z",
+  layers: "aligned overlays — drag to orbit the stack · slider brings a layer to front",
+  elevator: "floors stacked vertically — drag to orbit · slider rides the floors",
   map: "drag to orbit · WASD / arrows pan · scroll to zoom · click a card to focus",
   blend: "drag to orbit the object · scroll to zoom",
   play: "animation — play / pause and loop in the controls",
@@ -230,12 +232,20 @@ const STYLES = `
   margin: 0; height: auto; max-height: 100%; overflow-y: auto; overscroll-behavior: contain;
   touch-action: pan-y; -webkit-overflow-scrolling: touch; cursor: auto;
 }
-/* Flipbook frame (animations): centered, fit to the stage, instant swap. */
+/* Flipbook frame (animations): a FIXED-size centered card (not content-sized, so
+   it never grows/shrinks between frames; not full-bleed, so small animations are
+   not lost in a huge box). Content is centered; swaps are instant (no ghosting). */
 .plane.frame {
-  top: 50%; left: 50%; transform: translate(-50%, -50%);
-  width: auto; max-width: min(var(--three-md-plane-width, 560px), 100%);
-  margin: 0; max-height: 100%; overflow: auto; transition: none;
+  top: 50%; left: 50%; transform: translate(-50%, -50%) !important;
+  width: min(var(--three-md-plane-width, 360px), 88%);
+  height: min(72%, 340px); margin: 0;
+  display: flex; flex-direction: column; justify-content: center;
+  overflow: auto; transition: none;
 }
+:host([data-mode="play"]) .plane { transition: none; } /* instant frame swaps */
+/* No accidental text selection while orbiting/flying; the reader stays selectable. */
+.scene, .plane { -webkit-user-select: none; user-select: none; }
+.plane.reader { -webkit-user-select: text; user-select: text; }
 .ptag { font-size: 10.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--three-md-accent); display: flex; justify-content: space-between; margin-bottom: 8px; }
 .ptag b { color: var(--three-md-text); font-weight: 700; }
 .md, .grid { font-size: 12.5px; line-height: 1.65; color: var(--three-md-muted); }
@@ -311,6 +321,9 @@ export class ThreeMDElement extends HTMLElement {
   private _dragStartTarget = 0;
   private _dragAxis: "x" | "y" | null = null;
   private _pointerId: number | null = null;
+  private _pendingDrag = false;
+  private _keys = new Set<string>();
+  private _camRaf: number | null = null;
   private _lastEmitted = -1;
   private _error: string | null = null;
   private _loadToken = 0;
@@ -452,8 +465,11 @@ export class ThreeMDElement extends HTMLElement {
     this._focus = 0;
     this._target = 0;
     this._resetCamera();
+    this._keys.clear();
+    if (this._camRaf != null) { cancelAnimationFrame(this._camRaf); this._camRaf = null; }
     this._dragAxis = null;
     this._dragging = false;
+    this._pendingDrag = false;
     this._lastEmitted = -1;
     this._buildPlanes();
     this.render();
@@ -549,6 +565,8 @@ export class ThreeMDElement extends HTMLElement {
     }, true);
     this.tabIndex = this.tabIndex < 0 ? 0 : this.tabIndex;
     this.addEventListener("keydown", (e) => this._onKey(e));
+    this.addEventListener("keyup", (e) => this._onKeyUp(e));
+    this.addEventListener("blur", () => this._keys.clear()); // no stuck keys
 
     // Unified pointer handling: one path for mouse, touch, and pen.
     this._stage.addEventListener("pointerdown", (e) => this._onPointerDown(e));
@@ -683,7 +701,10 @@ export class ThreeMDElement extends HTMLElement {
     this._panX = 0; this._panY = 0; this._zoom = 0;
     if (this._mode === "blend") { this._yaw = -28; this._pitch = 14; }
     else if (this._mode === "stack") { this._yaw = -18; this._pitch = 8; }
-    else { this._yaw = 0; this._pitch = 0; } // map and flat modes look head-on
+    else if (this._mode === "layers") { this._yaw = -22; this._pitch = 12; } // angle to see the stacked sheets
+    else if (this._mode === "elevator") { this._yaw = -10; this._pitch = 6; } // mostly front, slight angle
+    else if (this._mode === "map") { this._yaw = 0; this._pitch = 32; this._zoom = -300; } // tilt + pull back to see the whole board
+    else { this._yaw = 0; this._pitch = 0; } // flat modes look head-on
   }
 
   /** The scene transform from the current camera, around a base distance. */
@@ -698,8 +719,10 @@ export class ThreeMDElement extends HTMLElement {
     if (this._playBtn) { this._playBtn.textContent = "⏸"; this._playBtn.setAttribute("aria-label", "pause"); }
     // Honor the document's fps metadata; clamp so playback stays watchable.
     // setInterval (not rAF) keeps animations running under iOS Low Power Mode.
+    // Clamp playback to a calm, watchable range (about 1.5-7.5 fps) so animations
+    // never feel frantic; default to ~600ms when no fps is given.
     const fps = this._doc ? parseInt(this._doc.metadata?.fps ?? "", 10) : NaN;
-    const delay = fps > 0 ? Math.min(1000, Math.max(80, 1000 / fps)) : 600;
+    const delay = fps > 0 ? Math.min(1400, Math.max(135, 1000 / fps)) : 600;
     this._playTimer = setInterval(() => this._step(), delay);
   }
 
@@ -729,22 +752,18 @@ export class ThreeMDElement extends HTMLElement {
     // scroll zoom, PageUp/Down step the focused plane. Flat modes (reader, slides,
     // animation): arrows/space/PageDn navigate planes.
     if (CAMERA_MODES.has(this._mode)) {
-      const step = 30;
-      switch (e.key) {
-        case "w": case "W": case "ArrowUp": this._panY += step; break;
-        case "s": case "S": case "ArrowDown": this._panY -= step; break;
-        case "a": case "A": case "ArrowLeft": this._panX += step; break;
-        case "d": case "D": case "ArrowRight": this._panX -= step; break;
-        case "q": case "Q": this._yaw -= 8; break;
-        case "e": case "E": this._yaw += 8; break;
-        case "+": case "=": this._zoom = Math.min(600, this._zoom + 40); break;
-        case "-": case "_": this._zoom = Math.max(-400, this._zoom - 40); break;
-        case "PageDown": this._setTarget(Math.round(this._target) + 1); e.preventDefault(); return;
-        case "PageUp": this._setTarget(Math.round(this._target) - 1); e.preventDefault(); return;
-        default: return;
+      const k = e.key.length === 1 ? e.key.toLowerCase() : e.key;
+      // Discrete keys: zoom and stepping the focused plane.
+      if (k === "+" || k === "=") { this._zoom = Math.min(600, this._zoom + 40); this.render(); e.preventDefault(); return; }
+      if (k === "-" || k === "_") { this._zoom = Math.max(-400, this._zoom - 40); this.render(); e.preventDefault(); return; }
+      if (k === "PageDown") { this._setTarget(Math.round(this._target) + 1); e.preventDefault(); return; }
+      if (k === "PageUp") { this._setTarget(Math.round(this._target) - 1); e.preventDefault(); return; }
+      // Held movement keys drive a smooth loop while down (no multi-press).
+      if ("wasdqe".includes(k) || k === "ArrowUp" || k === "ArrowDown" || k === "ArrowLeft" || k === "ArrowRight") {
+        this._keys.add(k);
+        this._startCamLoop();
+        e.preventDefault();
       }
-      e.preventDefault();
-      this.render();
       return;
     }
     const spaceAdvances = e.key === " " && this._mode !== "single";
@@ -754,18 +773,28 @@ export class ThreeMDElement extends HTMLElement {
 
   private _onPointerDown(e: PointerEvent): void {
     // Only the camera modes drag-to-orbit. Reader scrolls natively; slides and
-    // animation navigate via the chrome. (Plane cards still handle tap-to-select.)
+    // animation navigate via the chrome. We do NOT capture the pointer yet: a tap
+    // must stay a click so cross-plane links and plane cards still work. Orbit
+    // only engages once the pointer moves past a small threshold (see move).
     if (!CAMERA_MODES.has(this._mode)) return;
-    this._stopPlay();
-    this._dragging = true;
+    this._pendingDrag = true;
+    this._dragging = false;
     this._pointerId = e.pointerId;
     this._lastX = e.clientX;
     this._lastY = e.clientY;
-    try { this._stage.setPointerCapture(e.pointerId); } catch { /* not all envs support capture */ }
+    this._dragStartX = e.clientX;
+    this._dragStartY = e.clientY;
   }
 
   private _onPointerMove(e: PointerEvent): void {
-    if (!this._dragging || (this._pointerId !== null && e.pointerId !== this._pointerId)) return;
+    if (this._pointerId !== null && e.pointerId !== this._pointerId) return;
+    if (this._pendingDrag && !this._dragging) {
+      if (Math.hypot(e.clientX - this._dragStartX, e.clientY - this._dragStartY) < 5) return;
+      this._dragging = true; // crossed the threshold: this is an orbit, not a tap
+      this._stopPlay();
+      try { this._stage.setPointerCapture(e.pointerId); } catch { /* ignore */ }
+    }
+    if (!this._dragging) return;
     this._yaw += (e.clientX - this._lastX) * 0.4;
     this._pitch = Math.max(-85, Math.min(85, this._pitch - (e.clientY - this._lastY) * 0.3));
     this._lastX = e.clientX;
@@ -774,6 +803,7 @@ export class ThreeMDElement extends HTMLElement {
   }
 
   private _onPointerUp(e: PointerEvent): void {
+    this._pendingDrag = false;
     this._dragging = false;
     this._pointerId = null;
     try { this._stage.releasePointerCapture(e.pointerId); } catch { /* ignore */ }
@@ -785,6 +815,31 @@ export class ThreeMDElement extends HTMLElement {
     e.preventDefault();
     this._zoom = Math.max(-400, Math.min(600, this._zoom - e.deltaY * 0.5));
     this.render();
+  }
+
+  // Smooth, continuous camera movement while WASD/arrow/Q-E keys are held. The
+  // rAF loop runs ONLY while keys are down (it stops itself when none remain), so
+  // the element stays event-driven at rest.
+  private _startCamLoop(): void {
+    if (this._camRaf != null) return;
+    const tick = () => {
+      if (!this._keys.size) { this._camRaf = null; return; }
+      const pan = 7, orbit = 1.6;
+      const has = (k: string) => this._keys.has(k);
+      if (has("w") || has("ArrowUp")) this._panY += pan;
+      if (has("s") || has("ArrowDown")) this._panY -= pan;
+      if (has("a") || has("ArrowLeft")) this._panX += pan;
+      if (has("d") || has("ArrowRight")) this._panX -= pan;
+      if (has("q")) this._yaw -= orbit;
+      if (has("e")) this._yaw += orbit;
+      this.render();
+      this._camRaf = requestAnimationFrame(tick);
+    };
+    this._camRaf = requestAnimationFrame(tick);
+  }
+
+  private _onKeyUp(e: KeyboardEvent): void {
+    this._keys.delete(e.key.length === 1 ? e.key.toLowerCase() : e.key);
   }
 
   // MARK: - Rendering
@@ -849,15 +904,72 @@ export class ThreeMDElement extends HTMLElement {
       return;
     }
 
-    // Map: a flat top-down board. Cards are placed by their x/y; the focused one
-    // lifts and highlights. Orbit/pan/zoom with the camera to explore.
-    if (m === "map") {
+    // Layers: aligned overlays (NOT a fanned deck). Planes share x/y and stack in
+    // depth; the focused one is opaque up front, the rest are translucent sheets
+    // behind it. Orbit to see the layering. For annotations and overlays.
+    if (m === "layers") {
       this._els.forEach((el, idx) => {
-        const p = this._planes[idx];
+        const d = idx - focus;
         const on = idx === fr;
-        const x = (p.x || 0) * 18;
-        const y = -(p.y || 0) * 18;
-        el.style.transform = `translate3d(${x}px, ${y}px, ${on ? 28 : 0}px) scale(${on ? 1.06 : 0.9})`;
+        el.style.transform = `translate3d(0px, ${(d * 10).toFixed(1)}px, ${(-Math.abs(d) * 80).toFixed(1)}px) scale(${on ? 1.02 : 0.97})`;
+        el.style.opacity = on ? "1" : Math.max(0.3, 1 - Math.abs(d) * 0.34).toFixed(2);
+        el.style.zIndex = on ? "300" : String(120 - Math.abs(fr - idx));
+        el.classList.toggle("hot", on);
+        el.classList.toggle("dim", false);
+        el.classList.toggle("reader", false);
+        el.classList.toggle("frame", false);
+      });
+      this._scene.style.transform = this._cameraTransform(-160);
+      this._updateReadout();
+      this._maybeEmit(fr);
+      return;
+    }
+
+    // Elevator: floors stacked vertically; the focused floor is centered, the
+    // others above and below it, receding. Ride the slider up and down.
+    if (m === "elevator") {
+      this._els.forEach((el, idx) => {
+        const d = idx - focus;
+        const on = idx === fr;
+        el.style.transform = `translate3d(0px, ${(d * 150).toFixed(1)}px, ${(-Math.abs(d) * 70).toFixed(1)}px) scale(${on ? 1.04 : 0.84})`;
+        el.style.opacity = Math.max(0.14, 1 - Math.abs(d) * 0.42).toFixed(2);
+        el.style.zIndex = on ? "300" : String(120 - Math.abs(fr - idx));
+        el.classList.toggle("hot", on);
+        el.classList.toggle("dim", false);
+        el.classList.toggle("reader", false);
+        el.classList.toggle("frame", false);
+      });
+      this._scene.style.transform = this._cameraTransform(-160);
+      this._updateReadout();
+      this._maybeEmit(fr);
+      return;
+    }
+
+    // Map: a board you orbit. Cards are placed by their x/y, NORMALIZED to fit the
+    // board (so any coordinate range works); a doc without x/y is auto-gridded.
+    if (m === "map") {
+      const hasXY = this._planes.some((p) => p.x != null || p.y != null);
+      let posOf: (idx: number) => [number, number];
+      if (hasXY) {
+        const xs = this._planes.map((p) => p.x || 0), ys = this._planes.map((p) => p.y || 0);
+        const minX = Math.min(...xs), maxX = Math.max(...xs), minY = Math.min(...ys), maxY = Math.max(...ys);
+        const rx = Math.max(maxX - minX, 1), ry = Math.max(maxY - minY, 1);
+        posOf = (idx) => [
+          ((this._planes[idx].x || 0) - (minX + maxX) / 2) / rx * 420,
+          -((this._planes[idx].y || 0) - (minY + maxY) / 2) / ry * 300,
+        ];
+      } else {
+        const cols = Math.max(1, Math.ceil(Math.sqrt(this._els.length)));
+        const rows = Math.ceil(this._els.length / cols);
+        posOf = (idx) => [
+          (idx % cols - (cols - 1) / 2) * 230,
+          (Math.floor(idx / cols) - (rows - 1) / 2) * 200,
+        ];
+      }
+      this._els.forEach((el, idx) => {
+        const on = idx === fr;
+        const [x, y] = posOf(idx);
+        el.style.transform = `translate3d(${x.toFixed(1)}px, ${y.toFixed(1)}px, ${on ? 30 : 0}px) scale(${on ? 1.04 : 0.86})`;
         el.style.opacity = "1";
         el.style.zIndex = on ? "300" : String(100 + idx);
         el.classList.toggle("hot", on);

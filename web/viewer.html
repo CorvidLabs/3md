@@ -99,6 +99,8 @@
       <select id="modeSel" class="btn" aria-label="override render mode">
         <option value="">auto (from axis)</option>
         <option value="stack">deck</option>
+        <option value="layers">layers</option>
+        <option value="elevator">elevator (floors)</option>
         <option value="play">animation</option>
         <option value="single">reader</option>
         <option value="present">slides</option>
@@ -128,7 +130,7 @@
   </div>
 
   <script defer src="assets/theme.js"></script>
-  <script type="module" src="assets/three-md.js?v=1.7.0"></script>
+  <script type="module" src="assets/three-md.js?v=1.7.2"></script>
   <script type="module">
     const STARTER = `---
 3md: 1.0
