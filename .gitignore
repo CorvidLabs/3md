@@ -1,0 +1,15 @@
+# Swift / SwiftPM
+.build/
+.swiftpm/
+*.xcodeproj
+DerivedData/
+
+# CorvidLabs trust toolchain
+augur.json
+.augur/cache.json
+
+# macOS
+.DS_Store
+
+# Local agent/harness state
+.claude/

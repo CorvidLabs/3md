@@ -1,0 +1,5 @@
+[registry]
+name = "3md"
+
+[specs]
+ThreeMD = "specs/ThreeMD/ThreeMD.spec.md"

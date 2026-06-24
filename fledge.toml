@@ -1,0 +1,21 @@
+# fledge.toml - project task definitions and lanes
+# Detected project type: swift
+#
+# The single CI gate is the `verify` lane (see AGENTS.md). Run it with:
+#   fledge lanes run verify
+
+[tasks]
+# swift format unifies formatting and linting. `fmt` fixes in place; `lint`
+# is the non-mutating check that the verify lane and CI run.
+fmt = "swift-format format --in-place --recursive Sources Tests Package.swift"
+lint = "swift-format lint --strict --recursive Sources Tests Package.swift"
+build = "swift build"
+test = "swift test"
+
+[lanes.verify]
+description = "The single CI gate: format check, build, and test."
+steps = ["lint", "build", "test"]
+
+[lanes.ci]
+description = "Alias for the verify gate."
+steps = ["lint", "build", "test"]

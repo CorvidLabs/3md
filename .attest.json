@@ -1,0 +1,6 @@
+{
+  "_comment": "Advisory trust policy. attest runs as a soft (CI-only, non-blocking) gate until a signing key and a richer policy land. Each commit in a merge range should carry an attestation; prefer signed attestations via 'attest keygen' followed by 'attest sign --sign'.",
+  "require": {
+    "attestation": true
+  }
+}

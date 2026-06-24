@@ -1,0 +1,57 @@
+name: trust
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  trust:
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0                 # augur/attest need full history
+
+      - name: Install fledge (prebuilt release binary)
+        run: |
+          mkdir -p "$HOME/.local/bin"
+          curl -fsSL -o "$HOME/.local/bin/fledge" \
+            https://github.com/CorvidLabs/fledge/releases/latest/download/fledge-macos-aarch64
+          chmod +x "$HOME/.local/bin/fledge"
+          echo "$HOME/.local/bin" >> "$GITHUB_PATH"
+          "$HOME/.local/bin/fledge" --version
+
+      - name: Install swift-format
+        run: brew install swift-format
+
+      # Lifecycle: the single gate runs format check, build, and test.
+      - name: Verify lane
+        run: fledge lanes run verify
+
+      # Contracts: specs must stay in sync with source.
+      - name: Spec sync
+        uses: CorvidLabs/spec-sync@v4.5.0
+        with:
+          strict: "true"
+
+      # Risk: enforced, deterministic, low false-positive.
+      - name: Augur risk gate
+        uses: CorvidLabs/augur@v0.4.0
+        with:
+          range: origin/main..HEAD
+          threshold: block
+
+      # Trust: soft until a signing key and richer policy land.
+      - name: Attest verify
+        uses: CorvidLabs/attest@v0.4.0
+        with:
+          range: origin/main..HEAD
+          policy: .attest.json
+        continue-on-error: true
+
+      # Durability: fail if the standing rules block was removed.
+      - name: Trust block present
+        run: |
+          grep -q "CorvidLabs trust toolchain: BEGIN" AGENTS.md
