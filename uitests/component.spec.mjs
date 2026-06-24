@@ -165,11 +165,15 @@ test.describe("<three-md> component", () => {
       const t1 = scene.style.transform;
       // Retired mode names still resolve to a surviving view.
       const aliases = {};
-      for (const m of ["layers", "parallax", "elevator", "scene"]) { lab.setAttribute("mode", m); aliases[m] = lab._mode; }
-      return { changed: t0 !== t1, aliases };
+      for (const m of ["parallax", "scene", "deck"]) { lab.setAttribute("mode", m); aliases[m] = lab._mode; }
+      // layers and elevator are real modes again, not aliases.
+      const real = {};
+      for (const m of ["layers", "elevator", "map"]) { lab.setAttribute("mode", m); real[m] = lab._mode; }
+      return { changed: t0 !== t1, aliases, real };
     });
     expect(r.changed).toBe(true);
-    expect(r.aliases).toEqual({ layers: "stack", parallax: "stack", elevator: "stack", scene: "map" });
+    expect(r.aliases).toEqual({ parallax: "stack", scene: "map", deck: "present" });
+    expect(r.real).toEqual({ layers: "layers", elevator: "elevator", map: "map" });
   });
 
   test("map mode lays planes out by x/y", async ({ page }) => {
@@ -297,6 +301,43 @@ test.describe("<three-md> component", () => {
     expect(r.hasLink).toBe(true);
     expect(r.text).toBe("the vault");
     expect(r.indexAfter).toBe(2);
+  });
+
+  test("a tap (pointer, no drag) on a cross-plane link navigates", async ({ page }) => {
+    await page.goto("/embed-example.html");
+    await page.waitForFunction(() => document.getElementById("inline")?.shadowRoot?.querySelectorAll(".plane").length === 3);
+    const idx = await page.evaluate(() => {
+      const lab = document.getElementById("inline");
+      lab.setAttribute("mode", "stack"); // a camera mode: orbit must not eat the tap
+      lab.setSource('---\n3md: 1.0\naxis: space\n---\n@plane z=0\n[[z=2|the vault]]\n@plane z=1\nmid\n@plane z=2\nvault\n');
+      const link = lab.shadowRoot.querySelector(".xlink");
+      const r = link.getBoundingClientRect();
+      const o = { bubbles: true, clientX: r.x + 2, clientY: r.y + 2, pointerId: 1 };
+      // A real tap: down then up at the same spot (no movement), then click.
+      link.dispatchEvent(new PointerEvent("pointerdown", o));
+      link.dispatchEvent(new PointerEvent("pointerup", o));
+      link.dispatchEvent(new MouseEvent("click", o));
+      return lab.currentIndex;
+    });
+    expect(idx).toBe(2);
+  });
+
+  test("flipbook frames are a fixed size (no resize between frames)", async ({ page }) => {
+    await page.goto("/embed-example.html");
+    await page.waitForFunction(() => document.getElementById("inline")?.shadowRoot?.querySelectorAll(".plane").length === 3);
+    const r = await page.evaluate(() => {
+      const lab = document.getElementById("inline");
+      lab.setAttribute("mode", "play");
+      // Two frames of very different content length.
+      lab.setSource('---\n3md: 1.0\naxis: frame\n---\n@plane z=0\nx\n@plane z=1\n# Big\n\nlots and lots of text here that is much longer than the first frame body\n');
+      lab.pause();
+      const box = () => { const f = lab.shadowRoot.querySelector(".plane.frame").getBoundingClientRect(); return [Math.round(f.width), Math.round(f.height)]; };
+      const a = box();
+      const s = lab.shadowRoot.querySelector("input[type=range]"); s.value = "1"; s.dispatchEvent(new Event("input", { bubbles: true }));
+      const b = box();
+      return { a, b };
+    });
+    expect(r.a).toEqual(r.b);
   });
 
   test("loop toggle controls whether playback wraps", async ({ page }) => {
