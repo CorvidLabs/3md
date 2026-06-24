@@ -446,14 +446,22 @@ export class ThreeMDElement extends HTMLElement {
     this._updateReadout();
   }
 
-  // Parse a plane body that is a single fenced grid into a boolean cell matrix.
-  // A cell is "lit" when it is not a space and not a dot. Returns null for
-  // non-grid bodies.
+  // Extract the first fenced block in a plane body as a grid (boolean cell
+  // matrix), wherever it appears - text before the fence is fine. A cell is
+  // "lit" when it is not a space and not a dot. Returns null when there is no
+  // fence, or when the block looks like code rather than ASCII art (a code
+  // block such as JSON uses many distinct characters; art/games use a few), so
+  // code never gets voxelized in blend view.
   private _gridOf(body: string): { w: number; h: number; cells: boolean[][] } | null {
     const lines = body.split("\n");
-    if (!lines[0] || !lines[0].startsWith("```")) return null;
-    const rows = lines.filter((l) => !l.startsWith("```"));
+    const start = lines.findIndex((l) => l.startsWith("```"));
+    if (start < 0) return null;
+    const rows: string[] = [];
+    for (let i = start + 1; i < lines.length && !lines[i].startsWith("```"); i++) rows.push(lines[i]);
     if (!rows.length) return null;
+    const chars = new Set<string>();
+    for (const r of rows) for (const ch of r) if (ch !== " ") chars.add(ch);
+    if (chars.size > 12) return null; // code-like, not a grid
     const w = Math.max(...rows.map((r) => r.length));
     const cells = rows.map((r) => {
       const out: boolean[] = [];
