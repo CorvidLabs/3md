@@ -20,3 +20,6 @@ js/dist/
 
 # Stray swiftc byproducts
 *.dia
+
+# Rust crate (rust/)
+rust/target/

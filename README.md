@@ -23,9 +23,10 @@ title: My Week
 ```
 
 This repository holds the format specification ([SPEC.md](SPEC.md)), example
-documents ([Examples/](Examples)), `ThreeMD` (a cross-platform Swift parser), a
-TypeScript port, and a shared cross-implementation conformance suite
-([conformance/](conformance)).
+documents ([Examples/](Examples)), three parsers kept in lockstep (`ThreeMD`, a
+cross-platform Swift parser; a TypeScript port in [`js/`](js); and a Rust crate
+in [`rust/`](rust)), and a shared cross-implementation conformance suite
+([conformance/](conformance)) that all three pass.
 
 ## Why
 
@@ -55,7 +56,8 @@ Then depend on the `ThreeMD` library product:
 ### JavaScript / TypeScript
 
 A faithful TypeScript port of the Swift parser is published to GitHub Packages.
-The two implementations are kept in sync by the shared conformance suite
+All three implementations (Swift, TypeScript, and the Rust crate in [`rust/`](rust))
+are kept in sync by the shared conformance suite
 ([conformance/](conformance)). Point the `@corvidlabs` scope at the GitHub
 registry once (in a project or user `.npmrc`), then install:
 

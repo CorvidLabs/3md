@@ -29,6 +29,11 @@ jobs:
           registry-url: "https://npm.pkg.github.com"
           scope: "@corvidlabs"
       - run: bun install --frozen-lockfile
+      - name: Sync package version to the release tag
+        if: github.event_name == 'release'
+        run: npm version "${TAG#v}" --no-git-tag-version --allow-same-version
+        env:
+          TAG: ${{ github.event.release.tag_name }}
       - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

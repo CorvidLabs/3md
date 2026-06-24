@@ -2,7 +2,8 @@
 
 This directory holds language-agnostic test vectors for the 3md format. Every
 3md implementation (the canonical Swift parser, the TypeScript package under
-`js/`, and any future implementation) MUST pass all of these vectors. They are
+`js/`, the Rust crate under `rust/`, and any future implementation) MUST pass
+all of these vectors. They are
 the shared contract that keeps implementations behaving identically.
 
 The vectors are derived directly from `SPEC.md` and the canonical Swift parser
