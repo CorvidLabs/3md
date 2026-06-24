@@ -113,8 +113,12 @@ construction.
 Two optional keys are conventional metadata that renderers MAY honor (the parser
 treats them as ordinary string metadata, so they never affect parsing):
 
-- `view`: a preferred default view for a renderer to open in (for example
-  `single`, `present`, or `blend`). A viewer SHOULD let the reader override it.
+- `view`: a preferred default view for a renderer to open in. The canonical
+  views are `stack` (a 3D deck), `play` (a flipbook for animations), `single` (a
+  scrollable reader), `present` (slides), `blend` (a 3D voxel object), and `map`
+  (a flat x/y board). A viewer SHOULD let the reader override it, and SHOULD
+  accept the older names `layers`, `parallax`, `elevator`, and `scene` as
+  aliases of the views that replaced them.
 - `legend`: an optional, per-document character map applied only inside fenced
   blocks, given as whitespace- or comma-separated `char=replacement` pairs, e.g.
   `legend: g=🟩 w=🟦 .=·`. Each key is a single source character; the value is
