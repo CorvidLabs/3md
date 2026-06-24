@@ -152,7 +152,7 @@
     <div class="eyebrow">the .3md format</div>
     <h1 class="wordmark">3md<span class="z">.</span></h1>
     <p class="tagline">Markdown, but with a <em>third axis</em> you name yourself.</p>
-    <p class="sub">time · frames · layers · depth · space · slides · floors — same file, you choose what Z means</p>
+    <p class="sub">time · frames · layers · depth · space · slides · floors - same file, you choose what Z means</p>
   </header>
   <hr class="irid" />
 
@@ -513,7 +513,7 @@ function buildExtra(){
     doc.planes.forEach(()=>{const p=document.createElement("span");p.className="dotpip";d.appendChild(p);});extra.appendChild(d);
     const g=document.createElement("span");g.className="ghost";g.textContent="present mode";extra.appendChild(g);
   }else if(cur.mode==="scene"){
-    const g=document.createElement("span");g.className="ghost";g.textContent="props placed by x / y / z — drag to orbit";extra.appendChild(g);
+    const g=document.createElement("span");g.className="ghost";g.textContent="props placed by x / y / z - drag to orbit";extra.appendChild(g);
   }else if(cur.mode==="parallax"){
     const g=document.createElement("span");g.className="ghost";g.textContent="move the mouse for parallax";extra.appendChild(g);
   }else if(cur.mode==="elevator"){

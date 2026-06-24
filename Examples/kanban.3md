@@ -17,11 +17,11 @@ the columns left to right so a 2D viewer can lay the board out flat. Move a card
 
 @plane z=1 x=1 label="Doing"
 # Doing
-- **PLAT-212** Migrate auth to short-lived tokens — _@ada_
-- **PLAT-219** Split the monolith's billing module — _@grace_
+- **PLAT-212** Migrate auth to short-lived tokens - _@ada_
+- **PLAT-219** Split the monolith's billing module - _@grace_
 
 @plane z=2 x=2 label="Done"
 # Done
-- **PLAT-201** Upgrade Postgres to 16 — _@ada_
-- **PLAT-205** Kill the legacy cron worker — _@grace_
-- **PLAT-209** Add `validate` to CI — _@leif_
+- **PLAT-201** Upgrade Postgres to 16 - _@ada_
+- **PLAT-205** Kill the legacy cron worker - _@grace_
+- **PLAT-209** Add `validate` to CI - _@leif_

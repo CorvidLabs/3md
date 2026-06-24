@@ -8,7 +8,7 @@ on how sure we are a step is the right next move and will land cleanly.
 Shipped and verified: a defined format (SPEC.md); three parsers in lockstep
 (Swift `ThreeMD`, TypeScript `@corvidlabs/threemd`, and the Rust `threemd` crate)
 proven equivalent by a 42-vector conformance suite; a `threemd` CLI; an HTML
-renderer with Markdown rendering; cross-plane links; ten examples; two live demos
+renderer with Markdown rendering; cross-plane links; nine examples; two live demos
 (GitHub Pages and corvidlabs.xyz); MIT license; and enforcing signed
 attestations. State confidence: 92.
 

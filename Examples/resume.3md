@@ -1,7 +1,7 @@
 ---
 3md: 0.1
 axis: depth
-title: Ada Byron — Resume
+title: Ada Byron - Resume
 subject: "Senior Backend Engineer"
 ---
 A layered resume. z=0 is the at-a-glance summary recruiters read first; deeper
@@ -20,20 +20,20 @@ infrastructure. I like correctness proofs, boring deploys, and small APIs.
 @plane z=1 label="experience"
 ## Experience
 
-### Staff Engineer — Difference Engine Ltd (2021–present)
+### Staff Engineer - Difference Engine Ltd (2021–present)
 - Led the rewrite of the ledger service; cut p99 settlement latency 240ms → 31ms.
 - Owned the move from a monolith to 6 services without a single customer-visible outage.
 
-### Senior Engineer — Analytical Co (2017–2021)
+### Senior Engineer - Analytical Co (2017–2021)
 - Built the streaming aggregation pipeline processing 4B events/day.
 - Mentored 5 engineers; two are now tech leads.
 
 @plane z=2 label="projects"
 ## Selected Projects
 
-- **looms** — open-source Raft implementation in Rust, 2.1k stars.
-- **note-engine** — append-only event store with point-in-time recovery.
-- **3md tooling** — contributor to the layered-document format and CLI.
+- **looms** - open-source Raft implementation in Rust, 2.1k stars.
+- **note-engine** - append-only event store with point-in-time recovery.
+- **3md tooling** - contributor to the layered-document format and CLI.
 
 @plane z=3 label="detail"
 ## Full Detail
@@ -42,8 +42,8 @@ infrastructure. I like correctness proofs, boring deploys, and small APIs.
 - B.Sc. Mathematics, University of London, 1st class.
 
 ### Speaking
-- "Proving Your Ledger Balances" — RustConf 2023.
-- "Boring Deploys on Purpose" — SREcon EMEA 2022.
+- "Proving Your Ledger Balances" - RustConf 2023.
+- "Boring Deploys on Purpose" - SREcon EMEA 2022.
 
 ### References
 Available on request.

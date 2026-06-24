@@ -1,5 +1,10 @@
 # 3md
 
+[![CI](https://github.com/CorvidLabs/3md/actions/workflows/trust.yml/badge.svg)](https://github.com/CorvidLabs/3md/actions/workflows/trust.yml)
+[![Release](https://img.shields.io/github/v/release/CorvidLabs/3md?sort=semver)](https://github.com/CorvidLabs/3md/releases)
+[![License: MIT](https://img.shields.io/github/license/CorvidLabs/3md)](LICENSE)
+[![Live demo](https://img.shields.io/badge/demo-live-0E6F66)](https://corvidlabs.github.io/3md/)
+
 **Markdown with a Z axis.** A `.3md` file is ordinary Markdown extended along
 one free axis: stack your content into **planes** and tell the reader what the
 depth means. Time for a daily planner. Frames for an animation. Layers for
@@ -7,6 +12,10 @@ annotations. Space for a scene.
 
 **[Try the interactive demo](https://corvidlabs.github.io/3md/)** (also on
 [corvidlabs.xyz/3md](https://corvidlabs.xyz/3md/)).
+
+<p align="center">
+  <a href="https://corvidlabs.github.io/3md/"><img src="docs/demo.png" alt="The 3md interactive demo: planes stacked along the Z axis with a synced source view" width="760"></a>
+</p>
 
 ```
 ---
@@ -44,7 +53,7 @@ text a depth dimension of its own.
 Add the package to your `Package.swift`:
 
 ```swift
-.package(url: "https://github.com/CorvidLabs/3md", from: "0.3.0")
+.package(url: "https://github.com/CorvidLabs/3md", from: "0.6.0")
 ```
 
 Then depend on the `ThreeMD` library product:
@@ -115,11 +124,14 @@ See [SPEC.md](SPEC.md) for the full grammar and conformance rules.
 
 ## Examples
 
-The [Examples/](Examples) directory has one document per axis:
+The [Examples/](Examples) directory has nine documents spanning many axis types:
 
 - [`daily-planner.3md`](Examples/daily-planner.3md) - `axis: time`, one plane per day.
 - [`animation.3md`](Examples/animation.3md) - `axis: frame`, one plane per frame.
 - [`layered-notes.3md`](Examples/layered-notes.3md) - `axis: layer`, stacked overlay layers.
+- [`dungeon.3md`](Examples/dungeon.3md) - `axis: space`, rooms wired with `[[z=N]]` cross-plane links.
+- [`3md-in-3md.3md`](Examples/3md-in-3md.3md) - 3md explained in 3md, with a `@plane` inside a code fence.
+- Plus `recipe`, `changelog`, `resume`, and `kanban`.
 
 ## Development
 
@@ -129,15 +141,19 @@ This repo uses the CorvidLabs trust toolchain. The single gate is:
 fledge lanes run verify
 ```
 
-which runs format, lint, and build. See [AGENTS.md](AGENTS.md) for the standing
-rules every contributor and agent follows.
+which runs the Swift format check, build, and tests plus the Rust crate. See
+[AGENTS.md](AGENTS.md) for the standing rules every contributor and agent follows.
 
-Each implementation has its own tests (the Swift suite has 53 tests, the
-TypeScript suite 58), and both run the shared 36-vector conformance suite in
-[conformance/](conformance), which is the cross-implementation contract that
-keeps the parsers behaving identically.
+Each implementation has its own tests (the Swift suite has 122 tests, the
+TypeScript suite 74), and all three implementations run the shared 42-vector
+conformance suite in [conformance/](conformance), which is the
+cross-implementation contract that keeps the parsers behaving identically.
 
 ## Status
 
 The format and spec are at version 0.1 (experimental), and the grammar may still
-change before 1.0. The packages are at v0.3.0.
+change before 1.0. The latest release is v0.6.0.
+
+## License
+
+MIT (c) CorvidLabs. See [LICENSE](LICENSE).
