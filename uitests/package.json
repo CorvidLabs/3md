@@ -1,0 +1,14 @@
+{
+  "name": "threemd-ui-tests",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Cross-browser tests for the 3md interactive lab demos (web/index.html, web/gallery.html).",
+  "type": "module",
+  "scripts": {
+    "test": "playwright test",
+    "test:install": "playwright install --with-deps chromium webkit"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.49.0"
+  }
+}

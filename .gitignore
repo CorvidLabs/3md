@@ -28,7 +28,8 @@ rust/target/
 editor/vscode/node_modules/
 *.vsix
 
-# UI tests (tests/ui/)
-tests/ui/test-results/
-tests/ui/playwright-report/
-tests/ui/.last-run.json
+# UI tests (uitests/)
+uitests/node_modules/
+uitests/test-results/
+uitests/playwright-report/
+uitests/.last-run.json

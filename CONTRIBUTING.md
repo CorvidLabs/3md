@@ -39,7 +39,7 @@ on Chromium and WebKit, the engine behind Safari). Run them if you touch the
 lab:
 
 ```bash
-cd tests/ui
+cd uitests
 npm ci
 npx playwright install chromium webkit       # once
 npx playwright test
