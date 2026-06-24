@@ -89,6 +89,16 @@ test.describe("lab demo (index.html, backed by <three-md>)", () => {
     expect(errors, errors.join("\n")).toEqual([]);
   });
 
+  test("no horizontal overflow from 320px to 1440px", async ({ page }) => {
+    for (const width of [320, 390, 768, 1280, 1440]) {
+      await page.setViewportSize({ width, height: 900 });
+      await page.goto("/index.html");
+      await labReady(page);
+      const overflow = await page.evaluate(() => ({ doc: document.documentElement.scrollWidth, win: window.innerWidth }));
+      expect(overflow.doc, `no horizontal overflow at ${width}px (doc=${overflow.doc} win=${overflow.win})`).toBeLessThanOrEqual(overflow.win + 1);
+    }
+  });
+
   test("stepping the component highlights the synced source", async ({ page }) => {
     await page.goto("/index.html");
     await labReady(page);

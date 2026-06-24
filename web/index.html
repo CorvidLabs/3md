@@ -72,6 +72,10 @@
   .tab[aria-selected="true"]{color:var(--paper);background:var(--sheen);border-color:var(--sheen);font-weight:500}
 
   .lab-grid{display:grid;grid-template-columns:1.25fr .95fr;gap:18px;align-items:start}
+  /* Let grid children shrink past their content's intrinsic width so the
+     long-lined source <pre> panels scroll internally instead of forcing the
+     whole page wider than a phone screen. */
+  .lab-grid>*{min-width:0}
   @media(max-width:980px){.lab-grid{grid-template-columns:1fr}}
   @media(max-width:560px){
     .stage{height:400px}
