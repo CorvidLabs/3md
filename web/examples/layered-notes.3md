@@ -1,0 +1,17 @@
+---
+3md: 1.0
+axis: layer
+title: Annotated contract
+---
+The base layer is the source text. Higher layers are overlays a reader can
+toggle independently: plain English, then legal review notes.
+
+@plane z=0 label="source"
+Section 4. The Provider shall deliver the Work Product no later than thirty (30)
+days following the Effective Date.
+
+@plane z=1 label="plain-english" x=0 y=0
+You have 30 days from signing to deliver.
+
+@plane z=2 label="review" x=0 y=0 author="counsel"
+Define "deliver": on acceptance, or on submission? Flag before signing.

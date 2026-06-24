@@ -1,0 +1,23 @@
+---
+3md: 1.0
+axis: time
+title: Week of June 22
+author: leif
+---
+Plan for the week. Each plane is a day; scrub the Z axis to move through time.
+
+@plane z=0 label="Monday"
+# Monday
+- [ ] Standup at 9
+- [ ] Review the 3md parser PR
+- [x] Coffee
+
+@plane z=1 label="Tuesday"
+# Tuesday
+- [ ] Draft the spec-sync companion
+- [ ] Lunch with design
+
+@plane z=2 label="Wednesday"
+# Wednesday
+- [ ] Ship 0.1 tag
+- [ ] Write release notes

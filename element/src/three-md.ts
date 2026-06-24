@@ -186,6 +186,7 @@ export class ThreeMDElement extends HTMLElement {
   private _dragAxis: "x" | "y" | null = null;
   private _pointerId: number | null = null;
   private _lastEmitted = -1;
+  private _error: string | null = null;
   private _loadToken = 0;
   private _playBtn!: HTMLButtonElement;
   private _playing = false;
@@ -239,6 +240,11 @@ export class ThreeMDElement extends HTMLElement {
     return this._mode;
   }
 
+  /** The parse error from the most recent load, or null if it parsed cleanly. */
+  get error(): string | null {
+    return this._error;
+  }
+
   /** Focus a plane by index, clamped to range. */
   goTo(index: number): void {
     this._setTarget(index);
@@ -284,16 +290,19 @@ export class ThreeMDElement extends HTMLElement {
   private _loadFromText(source: string): void {
     const trimmed = source.trim();
     if (!trimmed) {
-      this._showError("No 3md source provided.");
+      this._error = "No 3md source provided.";
+      this._showError(this._error);
       return;
     }
     let doc: Document;
     try {
       doc = parse(trimmed);
     } catch (error) {
-      this._showError(`Invalid 3md: ${(error as Error).message}`);
+      this._error = (error as Error).message;
+      this._showError(`Invalid 3md: ${this._error}`);
       return;
     }
+    this._error = null;
     this._doc = doc;
     this._planes = doc.planes;
     this._applyMode();

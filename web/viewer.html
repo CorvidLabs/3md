@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>3md viewer &amp; editor</title>
+<meta name="description" content="A free, official viewer and editor for the 3md format. Paste or edit any .3md and see it render live, then share it with a link." />
+<link rel="icon" href="assets/favicon.svg" />
+<meta property="og:title" content="3md viewer &amp; editor" />
+<meta property="og:description" content="Paste or edit any .3md and see it render live. Free, official, shareable." />
+<meta property="og:image" content="https://corvidlabs.github.io/3md/social-preview.png" />
+<meta name="twitter:card" content="summary_large_image" />
+
+<script>
+  (() => { try {
+    const q = new URLSearchParams(location.search).get("theme");
+    const t = q || localStorage.getItem("corvid-theme");
+    if (t === "light" || t === "dark") document.documentElement.dataset.theme = t;
+  } catch (_) {} })();
+</script>
+<link rel="stylesheet" href="assets/tokens.css" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;700;900&family=Spline+Sans+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);
+    font-family:var(--font-mono,ui-monospace,"Spline Sans Mono",monospace);
+    background-image:linear-gradient(var(--ink-06) 1px,transparent 1px),linear-gradient(90deg,var(--ink-06) 1px,transparent 1px);
+    background-size:40px 40px;min-height:100vh}
+  a{color:var(--sheen);text-decoration:none} a:hover{text-decoration:underline}
+  .wrap{max-width:1280px;margin:0 auto;padding:18px 18px 64px}
+  .topbar{display:flex;align-items:center;justify-content:space-between;padding:6px 0 18px}
+  .brand{display:flex;align-items:center;gap:10px;font-size:13px;letter-spacing:.04em;color:var(--ink)}
+  .brand svg{width:24px;height:24px;color:var(--ink)}
+  .brand b{font-weight:700}
+  .head{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin-bottom:6px}
+  h1{font-family:var(--font-display);font-weight:900;font-size:clamp(30px,5vw,46px);letter-spacing:-.03em;margin:0;color:var(--ink)}
+  h1 .z{color:var(--sheen)}
+  .lead{color:var(--text-faint);font-size:13.5px;margin:0 0 16px}
+  .toolbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:14px}
+  .btn{font:inherit;font-size:12px;letter-spacing:.04em;color:var(--ink);background:var(--surface);border:1px solid var(--hairline);
+    padding:8px 12px;border-radius:4px;cursor:pointer;transition:.15s}
+  .btn:hover{border-color:var(--sheen);color:var(--sheen)}
+  .btn.primary{background:var(--sheen);color:var(--paper);border-color:var(--sheen);font-weight:500}
+  select.btn{padding-right:8px}
+  .toolbar label{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--text-faint)}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start}
+  .grid>*{min-width:0}
+  @media(max-width:880px){.grid{grid-template-columns:1fr}}
+  .pane{border:1px solid var(--hairline);border-radius:8px;background:var(--surface);overflow:hidden;display:flex;flex-direction:column}
+  .pane .bar{display:flex;justify-content:space-between;align-items:center;padding:9px 13px;border-bottom:1px solid var(--hairline);
+    font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--text-faint)}
+  #editor{width:100%;min-height:520px;resize:vertical;border:0;outline:none;background:transparent;color:var(--ink);
+    font-family:var(--font-mono,monospace);font-size:13px;line-height:1.65;padding:14px;tab-size:2}
+  .viewer{padding:14px}
+  three-md{--three-md-accent:var(--sheen);--three-md-bg:var(--surface-strong);--three-md-surface:var(--surface);
+    --three-md-text:var(--ink);--three-md-muted:var(--text-muted);--three-md-faint:var(--text-faint);
+    --three-md-hairline:var(--hairline);--three-md-height:480px;--three-md-display:var(--font-display)}
+  .status{font-size:12px;color:var(--text-faint);margin-top:8px;min-height:16px}
+  .status.err{color:#ff8f8f}
+  .status.ok{color:var(--sheen-strong,var(--sheen))}
+  .foot{margin-top:22px;font-size:12px;color:var(--text-faint)}
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="topbar">
+      <a class="brand" href="index.html">
+        <svg viewBox="0 0 64 64" aria-label="CorvidLabs"><circle cx="24" cy="32" r="18" fill="currentColor"/><path d="M33 21.5 L58.5 29.5 L33 39.5 Z" fill="currentColor"/><circle cx="27.5" cy="26" r="3" fill="var(--paper)"/></svg>
+        <span>Corvid<b>Labs</b></span>
+      </a>
+      <button type="button" class="corvid-theme-toggle" data-corvid-theme-toggle aria-pressed="false" aria-label="Switch theme" title="Switch theme">
+        <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.6v2.4M12 19v2.4M4.2 4.2l1.7 1.7M18.1 18.1l1.7 1.7M2.6 12h2.4M19 12h2.4M4.2 19.8l1.7-1.7M18.1 5.9l1.7-1.7"/></svg>
+        <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A8.6 8.6 0 1 1 11.2 3a6.7 6.7 0 0 0 9.8 9.8z"/></svg>
+      </button>
+    </div>
+
+    <div class="head">
+      <h1>3md viewer<span class="z">.</span></h1>
+      <p class="lead">Paste or edit any <code>.3md</code> on the left, see it live on the right. Free and official. <a href="docs.html">docs</a> &middot; <a href="gallery.html">gallery</a></p>
+    </div>
+
+    <div class="toolbar">
+      <label for="example">load</label>
+      <select id="example" class="btn" aria-label="load an example"></select>
+      <label for="modeSel">mode</label>
+      <select id="modeSel" class="btn" aria-label="override render mode">
+        <option value="">auto (from axis)</option>
+        <option value="stack">stack</option>
+        <option value="play">play</option>
+        <option value="layers">layers</option>
+        <option value="scene">scene</option>
+        <option value="parallax">parallax</option>
+        <option value="present">present</option>
+        <option value="elevator">elevator</option>
+      </select>
+      <button id="playBtn" class="btn" type="button">play</button>
+      <button id="openBtn" class="btn" type="button">open file</button>
+      <input id="fileInput" type="file" accept=".3md,.md,.txt,text/plain" hidden />
+      <button id="dlBtn" class="btn" type="button">download</button>
+      <button id="shareBtn" class="btn primary" type="button">copy share link</button>
+    </div>
+
+    <div class="grid">
+      <div class="pane">
+        <div class="bar"><span>source.3md</span><span id="counts"></span></div>
+        <textarea id="editor" spellcheck="false" aria-label="3md source editor"></textarea>
+      </div>
+      <div class="pane">
+        <div class="bar"><span>live viewer</span><span class="d">&lt;three-md&gt;</span></div>
+        <div class="viewer"><three-md id="lab"></three-md></div>
+      </div>
+    </div>
+    <div class="status" id="status"></div>
+
+    <p class="foot">Powered by the open-source <a href="https://github.com/CorvidLabs/3md">3md</a> format and the <code>&lt;three-md&gt;</code> web component. MIT.</p>
+  </div>
+
+  <script defer src="assets/theme.js"></script>
+  <script type="module" src="assets/three-md.js"></script>
+  <script type="module">
+    const STARTER = `---
+3md: 1.0
+axis: time
+title: My first 3md
+---
+Paste your own .3md here, or pick an example above. It renders live on the right.
+
+@plane z=0 label="Monday"
+# Monday
+- [ ] Try the 3md viewer
+- [x] Learn the format in one screen
+
+@plane z=1 label="Tuesday"
+# Tuesday
+- [ ] Share a link to this document
+`;
+
+    const EXAMPLES = {
+      "Daily planner (time)": "examples/daily-planner.3md",
+      "Game of Life (frame)": "examples/game-of-life.3md",
+      "Layered notes (layer)": "examples/layered-notes.3md",
+      "Dungeon map (space)": "examples/dungeon.3md",
+      "Tide pool (depth)": "examples/tide-pool.3md",
+    };
+
+    const ed = document.getElementById("editor");
+    const lab = document.getElementById("lab");
+    const status = document.getElementById("status");
+    const counts = document.getElementById("counts");
+    const modeSel = document.getElementById("modeSel");
+    const exampleSel = document.getElementById("example");
+    const playBtn = document.getElementById("playBtn");
+
+    // base64url <-> UTF-8 text, for sharing a whole document in the URL hash.
+    const enc = (s) => btoa(unescape(encodeURIComponent(s))).replace(/\+/g,"-").replace(/\//g,"_").replace(/=+$/,"");
+    const dec = (s) => { try { return decodeURIComponent(escape(atob(s.replace(/-/g,"+").replace(/_/g,"/")))); } catch { return null; } };
+
+    function render() {
+      const src = ed.value;
+      counts.textContent = src.split("\n").length + " lines";
+      lab.setSource(src);
+      if (lab.error) {
+        status.className = "status err";
+        status.textContent = "Invalid 3md: " + lab.error;
+      } else {
+        const doc = lab.document;
+        status.className = "status ok";
+        status.textContent = doc ? `valid - axis "${doc.axis}", ${doc.planes.length} plane${doc.planes.length === 1 ? "" : "s"}` : "";
+      }
+    }
+
+    let timer = null;
+    ed.addEventListener("input", () => { clearTimeout(timer); timer = setTimeout(render, 200); });
+
+    modeSel.addEventListener("change", () => {
+      if (modeSel.value) lab.setAttribute("mode", modeSel.value); else lab.removeAttribute("mode");
+      render();
+    });
+
+    playBtn.addEventListener("click", () => {
+      if (lab.playing) { lab.pause(); playBtn.textContent = "play"; }
+      else { lab.play(); playBtn.textContent = "pause"; }
+    });
+    lab.addEventListener("planechange", () => { playBtn.textContent = lab.playing ? "pause" : "play"; });
+
+    // Examples dropdown
+    exampleSel.appendChild(new Option("load an example...", ""));
+    for (const name of Object.keys(EXAMPLES)) exampleSel.appendChild(new Option(name, EXAMPLES[name]));
+    exampleSel.addEventListener("change", async () => {
+      const path = exampleSel.value;
+      if (!path) return;
+      try {
+        const res = await fetch(path);
+        ed.value = await res.text();
+        render();
+        history.replaceState(null, "", "#" + enc(ed.value));
+      } catch (e) { status.className = "status err"; status.textContent = "Could not load example: " + e.message; }
+      exampleSel.value = "";
+    });
+
+    // Open a local file
+    const fileInput = document.getElementById("fileInput");
+    document.getElementById("openBtn").addEventListener("click", () => fileInput.click());
+    fileInput.addEventListener("change", () => {
+      const f = fileInput.files && fileInput.files[0];
+      if (!f) return;
+      const r = new FileReader();
+      r.onload = () => { ed.value = String(r.result); render(); };
+      r.readAsText(f);
+    });
+
+    // Download the current source
+    document.getElementById("dlBtn").addEventListener("click", () => {
+      const blob = new Blob([ed.value], { type: "text/plain" });
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      const title = (ed.value.match(/^title:\s*(.+)$/m) || [])[1];
+      a.download = (title ? title.trim().replace(/[^a-z0-9]+/gi, "-").toLowerCase() : "document") + ".3md";
+      a.click();
+      URL.revokeObjectURL(a.href);
+    });
+
+    // Share: put the whole document in the URL hash and copy the link
+    document.getElementById("shareBtn").addEventListener("click", async () => {
+      const url = location.origin + location.pathname + "#" + enc(ed.value);
+      history.replaceState(null, "", url);
+      try { await navigator.clipboard.writeText(url); status.className = "status ok"; status.textContent = "Share link copied to clipboard."; }
+      catch { status.className = "status ok"; status.textContent = "Share link is in the address bar."; }
+    });
+
+    // Initial content: ?src=URL, then #<encoded>, then starter.
+    async function init() {
+      const srcParam = new URLSearchParams(location.search).get("src");
+      const hash = location.hash.slice(1);
+      if (srcParam) {
+        try { const res = await fetch(srcParam); ed.value = await res.text(); }
+        catch { ed.value = STARTER; status.className = "status err"; status.textContent = "Could not fetch ?src; showing the starter."; }
+      } else if (hash) {
+        const decoded = dec(hash);
+        ed.value = decoded != null ? decoded : STARTER;
+      } else {
+        ed.value = STARTER;
+      }
+      render();
+    }
+    if (window.customElements) customElements.whenDefined("three-md").then(init);
+    else init();
+  </script>
+</body>
+</html>
