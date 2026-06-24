@@ -68,21 +68,46 @@ function fmt(text: string): string {
   return inline(esc(text));
 }
 
-/** A deliberately small Markdown subset, matching the reference lab renderer. */
-function renderMarkdown(body: string): string {
-  const lines = body.split("\n");
-  if (lines[0] && lines[0].startsWith("```")) {
-    const rows = lines.filter((l) => !l.startsWith("```"));
-    return `<div class="grid" part="grid">` +
-      rows.map((r) => esc(r).replace(/o/g, '<span class="dot">●</span>')).join("<br>") +
-      `</div>`;
+/**
+ * Parse the optional `legend:` frontmatter into a single-character substitution
+ * map. Syntax: whitespace- or comma-separated `char=replacement` pairs, e.g.
+ *   legend: g=🟫 w=🟦 .=·
+ * The key is one source character; the value is what it renders as inside fenced
+ * blocks (an emoji, symbol, or short string). Legends are entirely optional; with
+ * no legend, fenced content renders exactly as written.
+ */
+function parseLegend(raw: string | null | undefined): Record<string, string> {
+  const map: Record<string, string> = {};
+  if (!raw) return map;
+  for (const tok of raw.trim().split(/[\s,]+/)) {
+    const eq = tok.indexOf("=");
+    if (eq <= 0) continue;
+    const key = [...tok.slice(0, eq)][0]; // one source character
+    const val = tok.slice(eq + 1);
+    if (key && val) map[key] = val;
   }
+  return map;
+}
+
+/** Apply a legend to a single line of (already HTML-escaped) fenced content. */
+function applyLegend(escaped: string, legend: Record<string, string>): string {
+  const keys = Object.keys(legend);
+  if (!keys.length) return escaped;
+  const cls = keys.map((k) => k.replace(/[.*+?^${}()|[\]\\\-]/g, "\\$&")).join("");
+  return escaped.replace(new RegExp(`[${cls}]`, "g"), (c) => legend[c] ?? c);
+}
+
+/** A deliberately small Markdown subset, matching the reference lab renderer. */
+function renderMarkdown(body: string, legend: Record<string, string> = {}): string {
+  const lines = body.split("\n");
+  const fence = (rows: string[]) =>
+    `<pre class="code" part="code">${rows.map((r) => applyLegend(esc(r), legend)).join("\n")}</pre>`;
   const out: string[] = [];
   let code: string[] | null = null; // collecting a fenced code block
   for (const l of lines) {
     if (l.startsWith("```")) {
       if (code === null) { code = []; }
-      else { out.push(`<pre class="code" part="code">${code.map(esc).join("\n")}</pre>`); code = null; }
+      else { out.push(fence(code)); code = null; }
       continue;
     }
     if (code !== null) { code.push(l); continue; }
@@ -105,7 +130,7 @@ function renderMarkdown(body: string): string {
     }
     else if (l.trim() !== "") out.push(`<div>${fmt(l)}</div>`);
   }
-  if (code !== null) out.push(`<pre class="code" part="code">${code.map(esc).join("\n")}</pre>`);
+  if (code !== null) out.push(fence(code));
   return `<div class="md" part="plane-body">${out.join("")}</div>`;
 }
 
@@ -234,6 +259,7 @@ export class ThreeMDElement extends HTMLElement {
   private _els: HTMLDivElement[] = [];
   private _voxels: HTMLDivElement[] = [];
   private _mode: Mode = "stack";
+  private _legend: Record<string, string> = {};
 
   private _focus = 0;
   private _target = 0;
@@ -379,6 +405,7 @@ export class ThreeMDElement extends HTMLElement {
     this._error = null;
     this._doc = doc;
     this._planes = doc.planes;
+    this._legend = parseLegend(doc.metadata?.legend);
     this._applyMode();
     this._stopPlay();
     // Reset all accumulated view state so each document starts fresh. Without
@@ -498,7 +525,7 @@ export class ThreeMDElement extends HTMLElement {
         el.className = "plane";
         el.setAttribute("part", "plane");
         const tag = plane.label ? plane.label : `z ${plane.z}`;
-        el.innerHTML = `<div class="ptag"><span>z = ${plane.z}</span><b>${esc(tag)}</b></div>${renderMarkdown(plane.body)}`;
+        el.innerHTML = `<div class="ptag"><span>z = ${plane.z}</span><b>${esc(tag)}</b></div>${renderMarkdown(plane.body, this._legend)}`;
         el.addEventListener("click", () => this._setTarget(idx));
         this._scene.appendChild(el);
         this._els.push(el);
@@ -567,7 +594,7 @@ export class ThreeMDElement extends HTMLElement {
         t.setAttribute("part", "floattext");
         t.dataset.z = String(idx);
         t.style.transform = `translate3d(${(-W * CELL) / 2}px,0,${z.toFixed(1)}px)`;
-        t.innerHTML = renderMarkdown(plane.body);
+        t.innerHTML = renderMarkdown(plane.body, this._legend);
         this._scene.appendChild(t);
         this._voxels.push(t);
       }

@@ -1,6 +1,7 @@
 ---
 3md: 1.0
 axis: depth
+legend: o=●
 title: Voxel Heart - 3D Sculpture
 sculptor: CorvidLabs
 shape: heart

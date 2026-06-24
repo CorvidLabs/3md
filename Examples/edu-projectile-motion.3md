@@ -1,6 +1,7 @@
 ---
 3md: 1.0
 axis: frame
+legend: o=●
 title: Projectile Motion Frame by Frame
 subject: Physics
 topic: kinematics under gravity

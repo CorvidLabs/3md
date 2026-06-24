@@ -15,7 +15,7 @@ export const CATEGORIES = [
 
 // Ordered keyword rules: first match wins, so put specific before general.
 const RULES = [
-  ["Entertainment", /\b(comedy|joke|stand-?up|magic|card-?trick|trick|game-?show|trivia|karaoke|movie|film|cinema|reality|circus|escape-?room|improv|fireworks|concert|festival|quiz|meme|talk-?show|monologue|set-?list)\b/],
+  ["Entertainment", /\b(comedy|joke|stand-?up|magic|card-?trick|trick|game-?show|trivia|karaoke|movie|cinema|reality-?tv|circus|escape-?room|improv|fireworks|concert|festival|quiz|meme|talk-?show|monologue|set-?list)\b/],
   ["Games", /\b(game|chess|dungeon|quest|puzzle|catan|bracket|rpg|arcade|snake|maze|tournament|playbook|play-?by-?play|soccer|leaderboard|boss|dice)\b/],
   ["Health", /\b(med|ecg|vitals?|workout|yoga|breath|triage|patient|heart|symptom|nutrition|recovery|therapy|fitness|marathon|wellness|sleep|pulse|dose|clinical|diagnos)\b/],
   ["Maps", /\b(map|itinerary|route|road-?trip|transit|seating|parking|topo|trail|metro|coast|directions|floor-?plan|dive)\b/],

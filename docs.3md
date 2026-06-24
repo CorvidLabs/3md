@@ -327,6 +327,18 @@ construction.
 - `title` (OPTIONAL): a human-readable title.
 - Any other key is preserved as string metadata, per section 3.1.
 
+Two optional keys are conventional metadata that renderers MAY honor (the parser
+treats them as ordinary string metadata, so they never affect parsing):
+
+- `view`: a preferred default view for a renderer to open in (for example
+  `single`, `present`, or `blend`). A viewer SHOULD let the reader override it.
+- `legend`: an optional, per-document character map applied only inside fenced
+  blocks, given as whitespace- or comma-separated `char=replacement` pairs, e.g.
+  `legend: g=🟩 w=🟦 .=·`. Each key is a single source character; the value is
+  what it renders as (an emoji, symbol, or short string). With no legend, fenced
+  content renders exactly as written; renderers MUST NOT substitute characters
+  on their own.
+
 ## 4. Planes
 
 A plane begins with a directive line whose first whitespace-delimited token is

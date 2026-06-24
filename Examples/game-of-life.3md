@@ -1,6 +1,7 @@
 ---
 3md: 1.0
 axis: frame
+legend: o=●
 title: Conway's Game of Life
 fps: "6"
 rule: "B3/S23"
