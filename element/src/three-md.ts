@@ -95,6 +95,14 @@ function renderMarkdown(body: string): string {
     else if (l.startsWith("- ")) out.push(`<div class="li"><span class="box">•</span><span>${fmt(l.slice(2))}</span></div>`);
     else if (/^\d+\. /.test(l)) out.push(`<div class="li"><span class="box">${esc(l.slice(0, l.indexOf(".")))}</span><span>${fmt(l.slice(l.indexOf(".") + 2))}</span></div>`);
     else if (l.startsWith("> ")) out.push(`<div class="quote">${fmt(l.slice(2))}</div>`);
+    else if (/^!\[[^\]]*\]\([^)\s]+\)\s*$/.test(l.trim())) {
+      // A Markdown image on its own line: ![alt](url). Renders images and GIFs.
+      const m = l.trim().match(/^!\[([^\]]*)\]\(([^)\s]+)\)/);
+      const alt = m ? esc(m[1]) : "";
+      const url = m ? m[2] : "";
+      const safe = /^(https?:\/\/|\/|\.{0,2}\/|data:image\/)/i.test(url) ? esc(url).replace(/"/g, "&quot;") : "";
+      if (safe) out.push(`<img class="img" part="image" src="${safe}" alt="${alt}" loading="lazy">`);
+    }
     else if (l.trim() !== "") out.push(`<div>${fmt(l)}</div>`);
   }
   if (code !== null) out.push(`<pre class="code" part="code">${code.map(esc).join("\n")}</pre>`);
@@ -129,8 +137,13 @@ const STYLES = `
 }
 .stage:active { cursor: grabbing; }
 .scene { position: absolute; inset: 0; transform-style: preserve-3d; }
-.arrow { position: absolute; right: 14px; top: 12px; font-size: 11px; letter-spacing: .16em; color: var(--three-md-faint); z-index: 6; }
-.hint { position: absolute; left: 14px; bottom: 10px; font-size: 11px; color: var(--three-md-faint); z-index: 6; }
+/* The hint sits BELOW the stage, never over the plane content. */
+.hint { margin: 8px 2px 0; font-size: 11px; color: var(--three-md-faint); }
+.fs { margin-left: auto; }
+.md .img, [part="image"] { display: block; max-width: 100%; height: auto; border-radius: 6px; margin: 8px 0; }
+:host(:fullscreen) { background: var(--three-md-bg); padding: 2.5vh 3vw; box-sizing: border-box; }
+:host(:fullscreen) .wrap { height: 100%; display: flex; flex-direction: column; }
+:host(:fullscreen) .stage { flex: 1 1 auto; height: auto; }
 .plane {
   position: absolute; left: 50%; top: 50%;
   width: min(var(--three-md-plane-width, 320px), 84%);
@@ -271,6 +284,15 @@ export class ThreeMDElement extends HTMLElement {
     this._setTarget(index);
   }
 
+  /** Toggle fullscreen for the element (the whole component fills the screen). */
+  toggleFullscreen(): void {
+    const d = document as Document & { webkitFullscreenElement?: Element; webkitExitFullscreen?: () => void };
+    const el = this as HTMLElement & { webkitRequestFullscreen?: () => void };
+    const active = d.fullscreenElement || d.webkitFullscreenElement;
+    if (active) { (d.exitFullscreen || d.webkitExitFullscreen)?.call(d); }
+    else { (el.requestFullscreen || el.webkitRequestFullscreen)?.call(el); }
+  }
+
   /** Replace the rendered document with new 3md source text. */
   setSource(source: string): void {
     if (!this._scene) this._build();
@@ -345,17 +367,22 @@ export class ThreeMDElement extends HTMLElement {
     if (this.hasAttribute("autoplay")) this._startPlay();
   }
 
+  // Mode precedence: the `mode` attribute (an explicit override the viewer sets)
+  // wins; then the document's own preference (`view:` or `display:` in
+  // frontmatter) so an author can suggest a default; then a mode derived from
+  // the axis; else stack. Either way the viewer can always switch.
   private _applyMode(): void {
-    const override = (this.getAttribute("mode") || "").toLowerCase() as Mode;
-    if (override && AXIS_MODE[override]) {
-      this._mode = AXIS_MODE[override];
-    } else if (override && VALID_MODES.includes(override as Mode)) {
-      this._mode = override as Mode;
-    } else if (this._doc) {
-      this._mode = AXIS_MODE[this._doc.axis] || "stack";
-    } else {
-      this._mode = "stack";
-    }
+    const pick = (v: string | null | undefined): Mode | null => {
+      const k = (v || "").toLowerCase();
+      if (!k) return null;
+      if (AXIS_MODE[k]) return AXIS_MODE[k];
+      return VALID_MODES.includes(k as Mode) ? (k as Mode) : null;
+    };
+    const docView = this._doc ? (this._doc.metadata.view ?? this._doc.metadata.display) : null;
+    this._mode =
+      pick(this.getAttribute("mode")) ||
+      pick(docView) ||
+      (this._doc ? (AXIS_MODE[this._doc.axis] || "stack") : "stack");
   }
 
   // MARK: - DOM
@@ -372,16 +399,16 @@ export class ThreeMDElement extends HTMLElement {
     this._wrap.innerHTML = `
       <div class="axis" part="axis"></div>
       <div class="stage" part="stage">
-        <div class="arrow" part="arrow">Z ↑</div>
         <div class="scene" part="scene"></div>
-        <div class="hint" part="hint">drag ↕ to move through Z, ↔ to orbit</div>
       </div>
+      <div class="hint" part="hint">drag to move through Z, or use the slider</div>
       <div class="controls" part="controls">
         <button class="navbtn" part="prev" type="button" aria-label="previous plane">←</button>
         <input type="range" part="scrubber" min="0" max="0" step="0.001" value="0" aria-label="scrub the Z axis" />
         <button class="navbtn" part="next" type="button" aria-label="next plane">→</button>
         <button class="navbtn" part="play" type="button" aria-label="play">▶</button>
         <div class="readout" part="readout"></div>
+        <button class="navbtn fs" part="fullscreen" type="button" aria-label="fullscreen" title="Fullscreen">⛶</button>
       </div>`;
     this._root.appendChild(this._wrap);
 
@@ -401,6 +428,7 @@ export class ThreeMDElement extends HTMLElement {
     this._playBtn.addEventListener("click", () => this._togglePlay());
     this._wrap.querySelector('[part="prev"]')!.addEventListener("click", () => this._setTarget(Math.round(this._target) - 1));
     this._wrap.querySelector('[part="next"]')!.addEventListener("click", () => this._setTarget(Math.round(this._target) + 1));
+    this._wrap.querySelector('[part="fullscreen"]')!.addEventListener("click", () => this.toggleFullscreen());
     this.tabIndex = this.tabIndex < 0 ? 0 : this.tabIndex;
     this.addEventListener("keydown", (e) => this._onKey(e));
 

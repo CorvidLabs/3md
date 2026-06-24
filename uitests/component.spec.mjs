@@ -128,13 +128,14 @@ test.describe("<three-md> component", () => {
   test("single-card mode shows only the focused plane", async ({ page }) => {
     await page.goto("/embed-example.html");
     await page.waitForFunction(() => document.getElementById("inline")?.shadowRoot?.querySelectorAll(".plane").length === 3);
-    const op = await page.evaluate(() => {
+    await page.evaluate(() => {
       const lab = document.getElementById("inline");
       lab.setAttribute("mode", "single");
-      const sr = lab.shadowRoot;
-      const s = sr.querySelector("input[type=range]"); s.value = "1"; s.dispatchEvent(new Event("input", { bubbles: true }));
-      return [...sr.querySelectorAll(".plane")].map((p) => Number(getComputedStyle(p).opacity));
+      const s = lab.shadowRoot.querySelector("input[type=range]"); s.value = "1"; s.dispatchEvent(new Event("input", { bubbles: true }));
     });
+    await page.waitForTimeout(450); // let the opacity transition settle
+    const op = await page.evaluate(() =>
+      [...document.getElementById("inline").shadowRoot.querySelectorAll(".plane")].map((p) => Number(getComputedStyle(p).opacity)));
     // Only plane index 1 is visible; the others are faded out.
     expect(op[1]).toBe(1);
     expect(op[0]).toBe(0);
