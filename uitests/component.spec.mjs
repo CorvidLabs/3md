@@ -105,6 +105,26 @@ test.describe("<three-md> component", () => {
     expect(after, "index frozen after pause").toBe(at);
   });
 
+  test("blend mode renders content as 3D voxels", async ({ page }) => {
+    const errors = [];
+    page.on("pageerror", (e) => errors.push(String(e)));
+    await page.goto("/embed-example.html");
+    await page.waitForFunction(() => document.getElementById("inline")?.shadowRoot?.querySelectorAll(".plane").length === 3);
+    const result = await page.evaluate(() => {
+      const lab = document.getElementById("inline");
+      lab.setAttribute("mode", "blend");
+      lab.setSource("---\n3md: 1.0\naxis: frame\n---\n@plane z=0\n```\noo\n.o\n```\n@plane z=1\n```\no.\noo\n```\n");
+      return {
+        voxels: lab.shadowRoot.querySelectorAll(".voxel").length,
+        cards: lab.shadowRoot.querySelectorAll(".plane").length,
+      };
+    });
+    // 3 lit cells per plane (oo/.o and o./oo) = 6 voxels, and no plane cards.
+    expect(result.voxels).toBe(6);
+    expect(result.cards).toBe(0);
+    expect(errors).toEqual([]);
+  });
+
   test("emits planechange when stepping", async ({ page }) => {
     await page.goto("/embed-example.html");
     await page.waitForFunction(() => document.getElementById("inline")?.shadowRoot?.querySelectorAll(".plane").length === 3);

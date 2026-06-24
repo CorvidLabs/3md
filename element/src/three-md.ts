@@ -25,7 +25,9 @@
 // is the same code published as @corvidlabs/threemd.
 import { parse, type Document, type Plane } from "../../js/src/index.ts";
 
-type Mode = "stack" | "play" | "layers" | "scene" | "parallax" | "present" | "elevator";
+type Mode = "stack" | "play" | "layers" | "scene" | "parallax" | "present" | "elevator" | "blend";
+
+const VALID_MODES = ["stack", "play", "layers", "scene", "parallax", "present", "elevator", "blend"] as const;
 
 const AXIS_MODE: Record<string, Mode> = {
   time: "stack",
@@ -143,6 +145,12 @@ const STYLES = `
 .md code { font-family: inherit; background: var(--three-md-hairline); padding: 1px 5px; border-radius: 3px; color: var(--three-md-text); }
 .grid { font-size: 16px; line-height: 1.25; letter-spacing: 3px; color: var(--three-md-faint); white-space: pre; }
 .grid .dot { color: var(--three-md-accent); }
+.voxel { position: absolute; left: 50%; top: 50%; width: 8px; height: 8px; margin: -4px 0 0 -4px;
+  border-radius: 50%; background: var(--three-md-accent); opacity: .45;
+  box-shadow: 0 0 6px var(--three-md-accent); transition: opacity .2s; }
+.voxel.near { opacity: 1; width: 11px; height: 11px; margin: -5.5px 0 0 -5.5px; }
+.floattext { position: absolute; left: 50%; top: 50%; font-size: 11px; line-height: 1.5;
+  color: var(--three-md-faint); opacity: .5; white-space: pre; pointer-events: none; }
 .controls { display: flex; align-items: center; gap: 10px; margin-top: 12px; flex-wrap: wrap; }
 .navbtn { font: inherit; font-size: 14px; color: var(--three-md-text); background: var(--three-md-surface); border: 1px solid var(--three-md-hairline); width: 38px; height: 34px; border-radius: 4px; cursor: pointer; }
 .navbtn:hover { border-color: var(--three-md-accent); color: var(--three-md-accent); }
@@ -168,6 +176,7 @@ export class ThreeMDElement extends HTMLElement {
   private _doc: Document | null = null;
   private _planes: readonly Plane[] = [];
   private _els: HTMLDivElement[] = [];
+  private _voxels: HTMLDivElement[] = [];
   private _mode: Mode = "stack";
 
   private _focus = 0;
@@ -328,7 +337,7 @@ export class ThreeMDElement extends HTMLElement {
     const override = (this.getAttribute("mode") || "").toLowerCase() as Mode;
     if (override && AXIS_MODE[override]) {
       this._mode = AXIS_MODE[override];
-    } else if (override && (["stack", "play", "layers", "scene", "parallax", "present", "elevator"] as const).includes(override as Mode)) {
+    } else if (override && VALID_MODES.includes(override as Mode)) {
       this._mode = override as Mode;
     } else if (this._doc) {
       this._mode = AXIS_MODE[this._doc.axis] || "stack";
@@ -404,20 +413,82 @@ export class ThreeMDElement extends HTMLElement {
   private _buildPlanes(): void {
     this._scene.innerHTML = "";
     this._els = [];
+    this._voxels = [];
     this._axisEl.textContent = this._doc ? `axis = ${this._doc.axis}` : "";
-    this._planes.forEach((plane, idx) => {
-      const el = document.createElement("div");
-      el.className = "plane";
-      el.setAttribute("part", "plane");
-      const tag = plane.label ? plane.label : `z ${plane.z}`;
-      el.innerHTML = `<div class="ptag"><span>z = ${plane.z}</span><b>${esc(tag)}</b></div>${renderMarkdown(plane.body)}`;
-      el.addEventListener("click", () => this._setTarget(idx));
-      this._scene.appendChild(el);
-      this._els.push(el);
-    });
+    if (this._mode === "blend") {
+      this._buildBlend();
+    } else {
+      this._planes.forEach((plane, idx) => {
+        const el = document.createElement("div");
+        el.className = "plane";
+        el.setAttribute("part", "plane");
+        const tag = plane.label ? plane.label : `z ${plane.z}`;
+        el.innerHTML = `<div class="ptag"><span>z = ${plane.z}</span><b>${esc(tag)}</b></div>${renderMarkdown(plane.body)}`;
+        el.addEventListener("click", () => this._setTarget(idx));
+        this._scene.appendChild(el);
+        this._els.push(el);
+      });
+    }
     this._scrub.max = String(Math.max(0, this._planes.length - 1));
     this._scrub.value = "0";
     this._updateReadout();
+  }
+
+  // Parse a plane body that is a single fenced grid into a boolean cell matrix.
+  // A cell is "lit" when it is not a space and not a dot. Returns null for
+  // non-grid bodies.
+  private _gridOf(body: string): { w: number; h: number; cells: boolean[][] } | null {
+    const lines = body.split("\n");
+    if (!lines[0] || !lines[0].startsWith("```")) return null;
+    const rows = lines.filter((l) => !l.startsWith("```"));
+    if (!rows.length) return null;
+    const w = Math.max(...rows.map((r) => r.length));
+    const cells = rows.map((r) => {
+      const out: boolean[] = [];
+      for (let c = 0; c < w; c++) { const ch = r[c] ?? " "; out.push(ch !== " " && ch !== "."); }
+      return out;
+    });
+    return { w, h: rows.length, cells };
+  }
+
+  // Blended "object" view: drop the plane cards and place each plane's content
+  // in true 3D space. Grid planes become a layer of voxels (so a stack of grids
+  // is a rotatable 3D object, e.g. a cube); text planes float at their depth.
+  private _buildBlend(): void {
+    const CELL = 13;
+    const grids = this._planes.map((p) => this._gridOf(p.body));
+    const W = Math.max(1, ...grids.map((g) => (g ? g.w : 0)));
+    const H = Math.max(1, ...grids.map((g) => (g ? g.h : 0)));
+    const N = this._planes.length;
+    this._planes.forEach((plane, idx) => {
+      const g = grids[idx];
+      const z = (idx - (N - 1) / 2) * CELL;
+      if (g) {
+        for (let r = 0; r < g.h; r++) {
+          for (let c = 0; c < g.w; c++) {
+            if (!g.cells[r][c]) continue;
+            const v = document.createElement("div");
+            v.className = "voxel";
+            v.setAttribute("part", "voxel");
+            v.dataset.z = String(idx);
+            const x = (c - (W - 1) / 2) * CELL;
+            const y = (r - (H - 1) / 2) * CELL;
+            v.style.transform = `translate3d(${x.toFixed(1)}px,${y.toFixed(1)}px,${z.toFixed(1)}px)`;
+            this._scene.appendChild(v);
+            this._voxels.push(v);
+          }
+        }
+      } else {
+        const t = document.createElement("div");
+        t.className = "floattext";
+        t.setAttribute("part", "floattext");
+        t.dataset.z = String(idx);
+        t.style.transform = `translate3d(${(-W * CELL) / 2}px,0,${z.toFixed(1)}px)`;
+        t.innerHTML = renderMarkdown(plane.body);
+        this._scene.appendChild(t);
+        this._voxels.push(t);
+      }
+    });
   }
 
   // MARK: - Playback
@@ -499,11 +570,15 @@ export class ThreeMDElement extends HTMLElement {
     if (this._dragAxis === "x") {
       this._dragRY += (e.clientX - this._lastX) * 0.4;
     } else if (this._dragAxis === "y") {
-      const max = this._planes.length - 1;
-      // Drag up = forward into the stack (higher Z).
-      this._target = Math.max(0, Math.min(max, this._dragStartTarget + (this._dragStartY - e.clientY) / 64));
-      this._focus = this._target;
-      this._scrub.value = String(this._target);
+      if (this._mode === "blend") {
+        this._dragRX -= (e.clientY - this._lastY) * 0.4; // free-orbit the object
+      } else {
+        const max = this._planes.length - 1;
+        // Drag up = forward into the stack (higher Z).
+        this._target = Math.max(0, Math.min(max, this._dragStartTarget + (this._dragStartY - e.clientY) / 64));
+        this._focus = this._target;
+        this._scrub.value = String(this._target);
+      }
     }
     this._lastX = e.clientX;
     this._lastY = e.clientY;
@@ -512,7 +587,8 @@ export class ThreeMDElement extends HTMLElement {
 
   private _onPointerUp(e: PointerEvent): void {
     // If the drag travelled the Z axis, snap to the nearest plane on release.
-    if (this._dragging && this._dragAxis === "y") this._setTarget(Math.round(this._target));
+    // (In blend mode a vertical drag orbits the object, so there is no snap.)
+    if (this._dragging && this._dragAxis === "y" && this._mode !== "blend") this._setTarget(Math.round(this._target));
     this._dragging = false;
     this._dragAxis = null;
     this._pointerId = null;
@@ -528,11 +604,24 @@ export class ThreeMDElement extends HTMLElement {
    * truth for what the stage looks like.
    */
   render(): void {
-    if (!this._els.length) return;
-    const n = this._els.length;
+    const m = this._mode;
     const focus = this._focus;
     const fr = Math.round(focus);
-    const m = this._mode;
+
+    // Blended object view: a static voxel/text cloud the user orbits freely.
+    if (m === "blend") {
+      if (!this._voxels.length) return;
+      for (const v of this._voxels) v.classList.toggle("near", Number(v.dataset.z) === fr);
+      const ry = -30 + this._mx * 8 + this._dragRY;
+      const rx = 16 - this._my * 8 + this._dragRX;
+      this._scene.style.transform = `translateZ(-30px) rotateX(${rx.toFixed(2)}deg) rotateY(${ry.toFixed(2)}deg)`;
+      this._updateReadout();
+      this._maybeEmit(fr);
+      return;
+    }
+
+    if (!this._els.length) return;
+    const n = this._els.length;
 
     this._els.forEach((el, idx) => {
       let x = 0, y = 0, z = 0, s = 1, o = 1, hot = false, dim = false;
