@@ -1,5 +1,12 @@
 # Changelog
 
+## [v1.0.0] - 2026-06-23
+
+### Other
+
+- Freeze the format at 1.0 (ff8e202)
+- Fix doc drift from the verification sweep; add flagship polish (9863b7f)
+
 ## [v0.6.0] - 2026-06-23
 
 ### Other
