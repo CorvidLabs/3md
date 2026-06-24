@@ -126,6 +126,30 @@ test.describe("<three-md> component", () => {
     await page.evaluate(() => document.getElementById("inline").pause());
   });
 
+  test("does not auto-convert characters; an optional legend maps them", async ({ page }) => {
+    await page.goto("/embed-example.html");
+    await page.waitForFunction(() => document.getElementById("inline")?.shadowRoot?.querySelectorAll(".plane").length === 3);
+    const r = await page.evaluate(() => {
+      const lab = document.getElementById("inline");
+      const read = () => lab.shadowRoot.querySelector(".md").textContent;
+      // No legend: the letter o must stay an o everywhere (prose and grid).
+      lab.removeAttribute("mode");
+      lab.setSource('---\n3md: 1.0\naxis: time\n---\n@plane z=0\nFroggy boots\n```\noo.\n.oo\n```\n');
+      const plain = read();
+      // With a legend, only fenced content is remapped; prose is untouched.
+      lab.setSource('---\n3md: 1.0\naxis: time\nlegend: o=#\n---\n@plane z=0\nFroggy boots\n```\noo.\n.oo\n```\n');
+      const mapped = read();
+      return { plain, mapped };
+    });
+    // The old renderer force-replaced every o with a dot glyph; it must not now.
+    expect(r.plain).toContain("Froggy boots");
+    expect(r.plain).toContain("oo.");
+    expect(r.plain).not.toContain("●");
+    // Legend remaps only the grid: prose "Froggy boots" stays literal.
+    expect(r.mapped).toContain("Froggy boots");
+    expect(r.mapped).toContain("##.");
+  });
+
   test("blend mode renders content as 3D voxels", async ({ page }) => {
     const errors = [];
     page.on("pageerror", (e) => errors.push(String(e)));

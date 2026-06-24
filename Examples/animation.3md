@@ -1,6 +1,7 @@
 ---
 3md: 1.0
 axis: frame
+legend: o=●
 title: Bouncing dot
 fps: "12"
 ---

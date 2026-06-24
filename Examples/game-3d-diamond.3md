@@ -3,7 +3,8 @@
 axis: depth
 title: Octahedron Slices
 shape: "octahedron (square bipyramid)"
-view: "stack the planes in blend view to see the 3D solid"
+view: blend
+note: stack the planes in blend view to see the 3D solid
 ---
 A solid octahedron sliced into 9 layers from top point to bottom point. Each
 plane is one horizontal cross-section; `#` is solid material, `.` is empty. View
