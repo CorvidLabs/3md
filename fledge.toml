@@ -17,10 +17,19 @@ cmd = "cargo fmt --check && cargo clippy --all-targets -- -D warnings && cargo t
 dir = "rust"
 description = "Rust crate: format check, clippy, and tests (runs the shared conformance vectors)."
 
+[tasks.js]
+cmd = "bun install --frozen-lockfile && bun test"
+dir = "js"
+description = "TypeScript port: install and run the test suite (the shared conformance vectors)."
+
+[tasks.spec]
+cmd = "fledge spec check"
+description = "spec-sync: every module spec matches its tracked source files."
+
 [lanes.verify]
-description = "The single CI gate: Swift format/build/test plus the Rust crate."
-steps = ["lint", "build", "test", "rust"]
+description = "The single CI gate: all three parser implementations (Swift, TypeScript, Rust) plus spec-sync."
+steps = ["lint", "build", "test", "js", "rust", "spec"]
 
 [lanes.ci]
 description = "Alias for the verify gate."
-steps = ["lint", "build", "test", "rust"]
+steps = ["lint", "build", "test", "js", "rust", "spec"]

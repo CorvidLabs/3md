@@ -177,6 +177,10 @@ export class ThreeMDElement extends HTMLElement {
   private _dragging = false;
   private _lastX = 0;
   private _lastY = 0;
+  private _dragStartX = 0;
+  private _dragStartY = 0;
+  private _dragStartTarget = 0;
+  private _dragAxis: "x" | "y" | null = null;
   private _pointerId: number | null = null;
   private _raf = 0;
   private _lastEmitted = -1;
@@ -392,6 +396,10 @@ export class ThreeMDElement extends HTMLElement {
     this._pointerId = e.pointerId;
     this._lastX = e.clientX;
     this._lastY = e.clientY;
+    this._dragStartX = e.clientX;
+    this._dragStartY = e.clientY;
+    this._dragStartTarget = this._target;
+    this._dragAxis = null;
     try { this._stage.setPointerCapture(e.pointerId); } catch { /* not all envs support capture */ }
   }
 
@@ -400,21 +408,34 @@ export class ThreeMDElement extends HTMLElement {
     this._mx = (e.clientX - rect.left) / rect.width - 0.5;
     this._my = (e.clientY - rect.top) / rect.height - 0.5;
     if (!this._dragging || (this._pointerId !== null && e.pointerId !== this._pointerId)) return;
-    const dx = e.clientX - this._lastX;
-    const dy = e.clientY - this._lastY;
+    // Lock to the dominant axis once the finger clearly moves (>8px) so a drag is
+    // EITHER orbit OR Z-travel, never a jittery mix. Sideways orbits; up/down
+    // travels along Z (about 64px per plane). Movement under the threshold stays
+    // a tap, so clicking a plane still selects it.
+    const totX = e.clientX - this._dragStartX;
+    const totY = e.clientY - this._dragStartY;
+    if (!this._dragAxis && Math.hypot(totX, totY) > 8) {
+      this._dragAxis = Math.abs(totX) > Math.abs(totY) ? "x" : "y";
+    }
+    if (this._dragAxis === "x") {
+      this._dragRY += (e.clientX - this._lastX) * 0.4;
+    } else if (this._dragAxis === "y") {
+      const max = this._planes.length - 1;
+      // Drag up = forward into the stack (higher Z).
+      this._target = Math.max(0, Math.min(max, this._dragStartTarget + (this._dragStartY - e.clientY) / 64));
+      this._focus = this._target;
+      this._scrub.value = String(this._target);
+    }
     this._lastX = e.clientX;
     this._lastY = e.clientY;
-    // Horizontal drag orbits; vertical drag moves along Z.
-    this._dragRY += dx * 0.4;
-    const max = this._planes.length - 1;
-    this._target = Math.max(0, Math.min(max, this._target + dy * 0.012));
-    this._focus = this._target;
-    this._scrub.value = String(this._target);
     this.render(); // synchronous: works while rAF is paused
   }
 
   private _onPointerUp(e: PointerEvent): void {
+    // If the drag travelled the Z axis, snap to the nearest plane on release.
+    if (this._dragging && this._dragAxis === "y") this._setTarget(Math.round(this._target));
     this._dragging = false;
+    this._dragAxis = null;
     this._pointerId = null;
     try { this._stage.releasePointerCapture(e.pointerId); } catch { /* ignore */ }
     this.render(); // hold the correct final frame without relying on rAF

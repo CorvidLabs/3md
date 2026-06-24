@@ -26,7 +26,13 @@ jobs:
       - name: Install swift-format
         run: brew install swift-format
 
-      # Lifecycle: the single gate runs format check, build, and test.
+      # The verify lane also runs the TypeScript suite via bun.
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      # Lifecycle: the single gate runs format/build/test for all three parser
+      # implementations (Swift, TypeScript, Rust) plus spec-sync.
       - name: Verify lane
         run: fledge lanes run verify
 

@@ -31,23 +31,39 @@ State confidence: 93.
   (v1.0.0, zero runtime deps), so all three implementations are installable from
   their native registries. A `cargo-publish` workflow keeps it in sync on release.
 
-## 1.1 - additive tooling (the format stays frozen at 1.0)
+## Versioning
 
-Version 1.1 is tooling only. It does not touch the 1.0 grammar or the
-conformance contract; it makes 3md easier to embed and extend.
+Two independent numbers, kept distinct on purpose:
 
-- The canonical `<three-md>` web component (`element/`, published as
-  `@corvidlabs/three-md-element`): one framework-agnostic, tested interactive
-  renderer backed by `@corvidlabs/threemd`. Replaces the bespoke renderer that
-  was duplicated between the demo and the site and drifted (the Safari and
-  Low-Power "focused plane never comes forward" bug had to be fixed twice).
-  `web/index.html` now consumes the component, so the demo and the shipped
-  renderer are the same code. Tested in CI (Chromium + WebKit): focused plane
-  frontmost while scrubbing, works with requestAnimationFrame paused (Low Power
-  Mode), no horizontal overflow from 320px to 1440px, clean console. Closes #1.
-- Format-feature proposals for a future minor version live in
-  [docs/PROPOSALS.md](docs/PROPOSALS.md) (per-plane timing hints, `@asset`,
-  `@include`, a container), each designed to be additive.
+- The **format version** is **1.0** and frozen. It only changes if the *grammar*
+  changes. A future **format 1.1** would mean new directives or attributes - the
+  additive proposals in [docs/PROPOSALS.md](docs/PROPOSALS.md) (per-plane timing
+  hints, `@asset`, `@include`, a container). None of those are implemented, so
+  the format is 1.0.
+- Each implementation is its own package with its own semver, all currently at
+  **1.0.0** for parity because they all implement format 1.0: the Swift package
+  (git tag v1.0.0), `@corvidlabs/threemd` (npm 1.0.0), the `threemd` crate
+  (crates.io 1.0.0), and the `<three-md>` component (`@corvidlabs/three-md-element`
+  1.0.0). A bug fix bumps a package's patch; new tooling bumps its minor;
+  neither changes the format version.
+
+## Tooling shipped on the 1.0 line
+
+These add capability without touching the frozen 1.0 grammar or the conformance
+contract.
+
+- The canonical `<three-md>` web component (`element/`,
+  `@corvidlabs/three-md-element` 1.0.0): one framework-agnostic, tested
+  interactive renderer backed by `@corvidlabs/threemd`. Replaces the bespoke
+  renderer that was duplicated between the demo and the site and drifted (the
+  Safari and Low-Power "focused plane never comes forward" bug had to be fixed
+  twice). `web/index.html` and the corvidlabs.xyz site both consume it, so the
+  demos and the shipped renderer are the same code. Tested in CI (Chromium +
+  WebKit): focused plane frontmost while scrubbing, works with
+  requestAnimationFrame paused (Low Power Mode), no horizontal overflow from
+  320px to 1440px, clean console. Closes #1.
+- Per-implementation spec-sync modules so every project (Swift, TypeScript,
+  Rust, the web component) is tracked by `fledge spec check`, not just Swift.
 
 ## Next
 

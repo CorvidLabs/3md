@@ -13,6 +13,8 @@ files:
   - Sources/ThreeMD/MarkdownRenderer.swift
   - Sources/ThreeMD/CrossPlaneLink.swift
   - Sources/ThreeMD/Document+Links.swift
+  - js/src/index.ts
+  - rust/src/lib.rs
 
 db_tables: []
 depends_on: []
@@ -22,11 +24,27 @@ depends_on: []
 
 ## Purpose
 
-ThreeMD is a cross-platform Swift parser and serializer for the 3md format:
-Markdown extended along one free Z axis. It turns `.3md` source text into a
-typed `Document` of `Plane` values and renders that document back to text. The
-authoritative format definition lives in `SPEC.md`; this module spec describes
-the implementing API.
+ThreeMD is the parser and serializer for the 3md format: Markdown extended along
+one free Z axis. It turns `.3md` source text into a typed `Document` of `Plane`
+values and renders that document back to text. The authoritative format
+definition lives in `SPEC.md`; this module spec describes the implementing API.
+
+This is one contract with three conformance-equivalent implementations, listed
+together in `files:` because they are kept identical by the shared vector suite
+in `conformance/` (if they ever diverge, a vector fails):
+
+- Swift (`Sources/ThreeMD/`) is the reference implementation and the only one
+  that also ships an HTML renderer (`HTMLRenderer`) and a Markdown subset
+  renderer (`MarkdownRenderer`).
+- TypeScript (`js/src/index.ts`, published as `@corvidlabs/threemd`) is a
+  faithful port: `parse`, `serialize`, `links`, and the same `Document` shape.
+- Rust (`rust/src/lib.rs`, the `threemd` crate on crates.io, zero runtime
+  dependencies) is a faithful port with the same public surface.
+
+The API tables below use the Swift names; the TypeScript and Rust ports mirror
+them idiomatically (`parse(source)`, `serialize(document)`, `links(document)`)
+with the same `Document`, `Plane`, `CrossPlaneLink`, and `ParseError` shapes. The
+interactive renderer is a separate module, `ThreeMDElement`.
 
 ## Public API
 
@@ -95,3 +113,4 @@ Then the result has two planes ordered by source position, each carrying its
 |---------|------|---------|
 | 1 | 2026-06-23 | Initial spec for the 0.1 parser and serializer. |
 | 1 | 2026-06-23 | Add HTMLRenderer: standalone HTML5 output with per-plane sections, HTML escaping, axis and title metadata. |
+| 1 | 2026-06-24 | Broaden to the cross-language parser contract: add the TypeScript (`js/src/index.ts`) and Rust (`rust/src/lib.rs`) implementations, kept equivalent by the shared conformance suite. |
