@@ -22,6 +22,11 @@ State confidence: 93.
 - A third implementation: the Rust crate, conformance-verified.
 - VS Code syntax-highlighting extension (`editor/vscode`, .vsix).
 - 1.0 spec freeze: named frontmatter mini-format, relation to prior art, stability guarantees.
+- Cross-browser demo tests (`tests/ui`, Playwright on Chromium + WebKit): a CI
+  gate asserting the interactive lab renders, the focused plane stays frontmost
+  while scrubbing, every axis tab and sampled gallery entries load, and the
+  console stays clean. Guards the Safari-only 3D depth regression that z-index
+  masks in Chromium.
 
 ## Next
 

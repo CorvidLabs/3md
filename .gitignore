@@ -27,3 +27,8 @@ rust/target/
 # VS Code extension (editor/vscode/)
 editor/vscode/node_modules/
 *.vsix
+
+# UI tests (tests/ui/)
+tests/ui/test-results/
+tests/ui/playwright-report/
+tests/ui/.last-run.json

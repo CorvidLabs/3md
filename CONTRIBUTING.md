@@ -34,6 +34,17 @@ cd js && bun install && bun test             # TypeScript
 cd rust && cargo test                        # Rust
 ```
 
+The interactive demos in `web/` have their own cross-browser tests (Playwright
+on Chromium and WebKit, the engine behind Safari). Run them if you touch the
+lab:
+
+```bash
+cd tests/ui
+npm ci
+npx playwright install chromium webkit       # once
+npx playwright test
+```
+
 ## Changing the format
 
 1. Update `SPEC.md` first: it is the contract.
