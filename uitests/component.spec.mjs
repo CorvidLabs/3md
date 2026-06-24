@@ -167,6 +167,41 @@ test.describe("<three-md> component", () => {
     expect(r.scrolled).toBe(true);
   });
 
+  test("reflects the resolved mode as data-mode (for fullscreen styling)", async ({ page }) => {
+    await page.goto("/embed-example.html");
+    await page.waitForFunction(() => document.getElementById("inline")?.shadowRoot?.querySelectorAll(".plane").length === 3);
+    const modes = await page.evaluate(() => {
+      const el = document.getElementById("inline");
+      const out = {};
+      for (const m of ["present", "single", "stack", "blend"]) { el.setAttribute("mode", m); out[m] = el.getAttribute("data-mode"); }
+      return out;
+    });
+    expect(modes).toEqual({ present: "present", single: "single", stack: "stack", blend: "blend" });
+  });
+
+  test("space and PageDown advance like a slideshow (not in reader)", async ({ page }) => {
+    await page.goto("/embed-example.html");
+    await page.waitForFunction(() => document.getElementById("inline")?.shadowRoot?.querySelectorAll(".plane").length === 3);
+    const r = await page.evaluate(() => {
+      const el = document.getElementById("inline");
+      el.setAttribute("mode", "present");
+      el.focus();
+      const fire = (key) => el.dispatchEvent(new KeyboardEvent("keydown", { key, bubbles: true }));
+      const start = el.currentIndex;
+      fire("PageDown"); const afterPage = el.currentIndex;
+      fire(" "); const afterSpace = el.currentIndex;
+      fire("PageUp"); const afterUp = el.currentIndex;
+      // In reader (single) mode, space must NOT advance (it scrolls the body).
+      el.setAttribute("mode", "single"); el.focus();
+      const sBefore = el.currentIndex; fire(" "); const sAfter = el.currentIndex;
+      return { start, afterPage, afterSpace, afterUp, spaceInReaderMoved: sAfter !== sBefore };
+    });
+    expect(r.afterPage).toBe(r.start + 1);
+    expect(r.afterSpace).toBe(r.start + 2);
+    expect(r.afterUp).toBe(r.start + 1);
+    expect(r.spaceInReaderMoved).toBe(false);
+  });
+
   test("emits planechange when stepping", async ({ page }) => {
     await page.goto("/embed-example.html");
     await page.waitForFunction(() => document.getElementById("inline")?.shadowRoot?.querySelectorAll(".plane").length === 3);

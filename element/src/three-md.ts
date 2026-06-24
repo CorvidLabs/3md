@@ -144,6 +144,22 @@ const STYLES = `
 :host(:fullscreen) { background: var(--three-md-bg); padding: 2.5vh 3vw; box-sizing: border-box; }
 :host(:fullscreen) .wrap { height: 100%; display: flex; flex-direction: column; }
 :host(:fullscreen) .stage { flex: 1 1 auto; height: auto; }
+:host(:fullscreen) .hint { display: none; } /* no instructional text over a presentation */
+/* Fullscreen is a real reading/slideshow experience, not a bigger thumbnail:
+   scale the type up, and turn card views into a wide, centered slide. */
+:host(:fullscreen) .md, :host(:fullscreen) .grid { font-size: clamp(14px, 1.6vw, 21px); line-height: 1.7; }
+:host(:fullscreen) .md .ph { font-size: clamp(20px, 2.6vw, 34px); }
+:host(:fullscreen) .md .ph2 { font-size: clamp(15px, 1.7vw, 22px); }
+:host(:fullscreen) .md .code { font-size: clamp(12px, 1.2vw, 16px); }
+:host(:fullscreen) .ptag { font-size: clamp(11px, 1vw, 14px); }
+:host(:fullscreen) .navbtn { width: 44px; height: 40px; font-size: 16px; }
+/* Reader (single) and present become big centered slides. */
+:host(:fullscreen[data-mode="single"]) .plane.reader {
+  width: min(70vw, 900px); max-width: min(70vw, 900px); padding: clamp(20px, 3vw, 44px);
+}
+:host(:fullscreen[data-mode="present"]) .plane.hot {
+  max-width: min(82vw, 1100px); padding: clamp(20px, 3vw, 44px);
+}
 .plane {
   position: absolute; left: 50%; top: 50%;
   width: min(var(--three-md-plane-width, 320px), 84%);
@@ -392,6 +408,9 @@ export class ThreeMDElement extends HTMLElement {
       pick(this.getAttribute("mode")) ||
       pick(docView) ||
       (this._doc ? (AXIS_MODE[this._doc.axis] || "stack") : "stack");
+    // Reflect the resolved mode so CSS (notably the fullscreen presentation
+    // styles) can adapt to the active view without reading JS state.
+    this.setAttribute("data-mode", this._mode);
   }
 
   // MARK: - DOM
@@ -593,8 +612,11 @@ export class ThreeMDElement extends HTMLElement {
   }
 
   private _onKey(e: KeyboardEvent): void {
-    if (e.key === "ArrowRight" || e.key === "ArrowUp") { this._setTarget(Math.round(this._target) + 1); e.preventDefault(); }
-    else if (e.key === "ArrowLeft" || e.key === "ArrowDown") { this._setTarget(Math.round(this._target) - 1); e.preventDefault(); }
+    // Space advances like a slideshow, except in reader (single) mode where the
+    // body scrolls and space should keep scrolling.
+    const spaceAdvances = e.key === " " && this._mode !== "single";
+    if (e.key === "ArrowRight" || e.key === "ArrowUp" || e.key === "PageDown" || spaceAdvances) { this._setTarget(Math.round(this._target) + 1); e.preventDefault(); }
+    else if (e.key === "ArrowLeft" || e.key === "ArrowDown" || e.key === "PageUp") { this._setTarget(Math.round(this._target) - 1); e.preventDefault(); }
   }
 
   private _onPointerDown(e: PointerEvent): void {
