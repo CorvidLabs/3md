@@ -147,7 +147,7 @@ which runs the Swift format check, build, and tests plus the Rust crate. See
 [AGENTS.md](AGENTS.md) for the standing rules every contributor and agent follows.
 
 Each implementation has its own tests (the Swift suite has 122 tests, the
-TypeScript suite 74), and all three implementations run the shared 42-vector
+TypeScript suite 76), and all three implementations run the shared 43-vector
 conformance suite in [conformance/](conformance), which is the
 cross-implementation contract that keeps the parsers behaving identically.
 
