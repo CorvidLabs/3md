@@ -1,0 +1,23 @@
+{
+  "name": "non z/x/y attributes stay strings, not coerced",
+  "source": "---\n3md: 0.1\n---\n@plane z=0 role=2\nx\n",
+  "expected": {
+    "version": "0.1",
+    "axis": "layer",
+    "title": null,
+    "metadata": {},
+    "preamble": null,
+    "planes": [
+      {
+        "z": 0,
+        "label": null,
+        "x": null,
+        "y": null,
+        "attributes": {
+          "role": "2"
+        },
+        "body": "x"
+      }
+    ]
+  }
+}

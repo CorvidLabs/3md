@@ -98,7 +98,7 @@ final class HTMLRendererTests: XCTestCase {
             """
         let document = try parser.parse(source)
         let html = renderer.render(document)
-        XCTAssertTrue(html.contains("<pre>Hello world</pre>"))
+        XCTAssertTrue(html.contains("<pre><code>Hello world</code></pre>"))
     }
 
     // MARK: - Axis and Title

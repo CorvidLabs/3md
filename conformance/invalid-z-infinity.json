@@ -1,0 +1,5 @@
+{
+  "name": "z=inf is rejected (non-finite)",
+  "source": "---\n3md: 0.1\n---\n@plane z=inf\na\n",
+  "error": "invalidPlaneDirective"
+}

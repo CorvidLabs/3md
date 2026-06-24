@@ -1,0 +1,5 @@
+{
+  "name": "hex z is rejected so Swift and TS agree",
+  "source": "---\n3md: 0.1\n---\n@plane z=0x10\na\n",
+  "error": "invalidPlaneDirective"
+}

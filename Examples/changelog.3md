@@ -1,0 +1,38 @@
+---
+3md: 0.1
+axis: time
+title: threemd Release History
+project: threemd
+---
+A changelog where each plane is a release. The Z axis is time, ordered oldest
+to newest. Scrub forward to watch the project grow; the top plane is the latest.
+
+@plane z=0 label="0.1.0" date="2026-06-23"
+# 0.1.0 — Initial draft
+First public, experimental release.
+
+### Added
+- The 3md format: Markdown extended along a free Z axis.
+- `validate`, `info`, and `html` subcommands.
+- Examples for time, frame, and layer axes.
+
+@plane z=1 label="0.2.0" date="2026-07-04"
+# 0.2.0 — Authoring quality of life
+### Added
+- `fmt` subcommand to normalize spacing and attribute order.
+- Per-plane `hidden` attribute respected by the HTML renderer.
+
+### Fixed
+- Decimal `z` values no longer lose precision on round-trip.
+
+@plane z=2 label="0.3.0" date="2026-08-15"
+# 0.3.0 — Cross-plane links
+### Added
+- `[[z=2]]` link syntax to jump between planes in the viewer.
+- Frontmatter `default_z` to set the initially shown plane.
+
+### Changed
+- `info` now prints `x`/`y` offsets when present.
+
+### Deprecated
+- The undocumented `@layer` alias for `@plane`; use `@plane`.

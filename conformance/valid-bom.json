@@ -1,0 +1,21 @@
+{
+  "name": "a leading UTF-8 BOM is stripped before parsing",
+  "source": "﻿---\n3md: 0.1\n---\n@plane z=0\nhi\n",
+  "expected": {
+    "version": "0.1",
+    "axis": "layer",
+    "title": null,
+    "metadata": {},
+    "preamble": null,
+    "planes": [
+      {
+        "z": 0,
+        "label": null,
+        "x": null,
+        "y": null,
+        "attributes": {},
+        "body": "hi"
+      }
+    ]
+  }
+}

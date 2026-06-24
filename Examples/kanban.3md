@@ -1,0 +1,27 @@
+---
+3md: 0.1
+axis: status
+title: Sprint 14 Board
+team: platform
+---
+A kanban board. The Z axis is workflow status (Todo → Doing → Done); x positions
+the columns left to right so a 2D viewer can lay the board out flat. Move a card
+"forward" by moving it to the next plane.
+
+@plane z=0 x=0 label="Todo"
+# Todo
+- **PLAT-220** Rate-limit the public API
+- **PLAT-224** Document the 3md `html` subcommand
+- **PLAT-231** Add metrics to the ledger service
+- **PLAT-233** Investigate flaky deploy on staging
+
+@plane z=1 x=1 label="Doing"
+# Doing
+- **PLAT-212** Migrate auth to short-lived tokens — _@ada_
+- **PLAT-219** Split the monolith's billing module — _@grace_
+
+@plane z=2 x=2 label="Done"
+# Done
+- **PLAT-201** Upgrade Postgres to 16 — _@ada_
+- **PLAT-205** Kill the legacy cron worker — _@grace_
+- **PLAT-209** Add `validate` to CI — _@leif_

@@ -1,0 +1,21 @@
+{
+  "name": "an indented @plane is body, not a directive",
+  "source": "---\n3md: 0.1\n---\n@plane z=0\ntext\n    @plane z=5\nmore\n",
+  "expected": {
+    "version": "0.1",
+    "axis": "layer",
+    "title": null,
+    "metadata": {},
+    "preamble": null,
+    "planes": [
+      {
+        "z": 0,
+        "label": null,
+        "x": null,
+        "y": null,
+        "attributes": {},
+        "body": "text\n    @plane z=5\nmore"
+      }
+    ]
+  }
+}

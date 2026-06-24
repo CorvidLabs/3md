@@ -1,6 +1,3 @@
-@preconcurrency import Foundation
-
-
 // MARK: - Plane
 
 /// A single slice of a 3md document positioned along the Z axis.

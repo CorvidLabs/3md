@@ -1,0 +1,21 @@
+{
+  "name": "a @plane line inside a fenced code block stays body text",
+  "source": "---\n3md: 0.1\n---\n@plane z=0\n# Doc\n```\n@plane z=99\n```\n",
+  "expected": {
+    "version": "0.1",
+    "axis": "layer",
+    "title": null,
+    "metadata": {},
+    "preamble": null,
+    "planes": [
+      {
+        "z": 0,
+        "label": null,
+        "x": null,
+        "y": null,
+        "attributes": {},
+        "body": "# Doc\n```\n@plane z=99\n```"
+      }
+    ]
+  }
+}

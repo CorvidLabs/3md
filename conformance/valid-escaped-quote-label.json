@@ -1,0 +1,21 @@
+{
+  "name": "escaped quotes inside a quoted label round-trip",
+  "source": "---\n3md: 0.1\n---\n@plane z=0 label=\"say \\\"hi\\\"\"\nbody\n",
+  "expected": {
+    "version": "0.1",
+    "axis": "layer",
+    "title": null,
+    "metadata": {},
+    "preamble": null,
+    "planes": [
+      {
+        "z": 0,
+        "label": "say \"hi\"",
+        "x": null,
+        "y": null,
+        "attributes": {},
+        "body": "body"
+      }
+    ]
+  }
+}

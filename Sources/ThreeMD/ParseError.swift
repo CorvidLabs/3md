@@ -1,6 +1,5 @@
 @preconcurrency import Foundation
 
-
 // MARK: - ParseError
 
 /// Errors thrown while parsing a 3md document.

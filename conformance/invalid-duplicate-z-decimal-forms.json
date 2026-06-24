@@ -1,0 +1,5 @@
+{
+  "name": "z=0 and z=0.0 are the same position",
+  "source": "---\n3md: 0.1\n---\n@plane z=0\na\n\n@plane z=0.0\nb\n",
+  "error": "duplicatePlane"
+}

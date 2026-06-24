@@ -1,6 +1,5 @@
 @preconcurrency import Foundation
 
-
 // MARK: - HTMLRenderer
 
 /// Renders a ``Document`` as a clean, accessible, standalone HTML document.
@@ -77,7 +76,7 @@ public struct HTMLRenderer: Sendable {
     /// - Returns: Lines of HTML for a `<section>` element.
     private func planeSection(for plane: Plane) -> [String] {
         var lines: [String] = []
-        let zFormatted = formatZ(plane.z)
+        let zFormatted = plane.z.formatted3MD()
 
         var openTag = "<section data-z=\"\(escape(zFormatted))\""
         if let label = plane.label {
@@ -93,7 +92,7 @@ public struct HTMLRenderer: Sendable {
         }
 
         if !plane.body.isEmpty {
-            lines.append("<pre>\(escape(plane.body))</pre>")
+            lines.append("<pre><code>\(escape(plane.body))</code></pre>")
         }
 
         lines.append("</section>")
@@ -114,15 +113,5 @@ public struct HTMLRenderer: Sendable {
             .replacingOccurrences(of: ">", with: "&gt;")
             .replacingOccurrences(of: "\"", with: "&quot;")
             .replacingOccurrences(of: "'", with: "&#39;")
-    }
-
-    /// Formats a `Double` z position as a compact string, using integer form
-    /// when the value is whole and within safe range.
-    ///
-    /// - Parameter value: The z position to format.
-    /// - Returns: A string representation.
-    private func formatZ(_ value: Double) -> String {
-        guard value == value.rounded(), abs(value) < 1e15 else { return String(value) }
-        return String(Int(value))
     }
 }

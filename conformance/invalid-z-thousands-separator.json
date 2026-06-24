@@ -1,0 +1,5 @@
+{
+  "name": "thousands separators are rejected",
+  "source": "---\n3md: 0.1\n---\n@plane z=1,000\na\n",
+  "error": "invalidPlaneDirective"
+}

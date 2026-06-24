@@ -1,6 +1,5 @@
 @preconcurrency import Foundation
 
-
 // MARK: - Serializer
 
 /// Renders a ``Document`` back into 3md source text.
@@ -56,16 +55,16 @@ public struct Serializer: Sendable {
     }
 
     private func directiveLine(for plane: Plane) -> String {
-        var parts = ["@plane", "z=\(format(plane.z))"]
+        var parts = ["@plane", "z=\(plane.z.formatted3MD())"]
 
         if let label = plane.label {
             parts.append("label=\(quoteIfNeeded(label, forceQuote: true))")
         }
         if let x = plane.x {
-            parts.append("x=\(format(x))")
+            parts.append("x=\(x.formatted3MD())")
         }
         if let y = plane.y {
-            parts.append("y=\(format(y))")
+            parts.append("y=\(y.formatted3MD())")
         }
 
         let extraParts = plane.attributes.keys.sorted().map { key in
@@ -76,18 +75,18 @@ public struct Serializer: Sendable {
         return parts.joined(separator: " ")
     }
 
-    /// Formats a `Double` as an integer string when the value is whole and in range,
-    /// falling back to the default decimal representation otherwise.
-    private func format(_ value: Double) -> String {
-        guard value == value.rounded(), abs(value) < 1e15 else { return String(value) }
-        return String(Int(value))
-    }
-
-    /// Wraps `value` in double quotes if it contains whitespace, is empty, or
-    /// if `forceQuote` is `true`. Embedded double-quotes are escaped.
+    /// Wraps `value` in double quotes if it contains whitespace, a quote, a
+    /// backslash, or is empty (or if `forceQuote` is `true`). Backslashes and
+    /// double-quotes are escaped so the value round-trips through ``Parser``.
     private func quoteIfNeeded(_ value: String, forceQuote: Bool = false) -> String {
-        let needsQuote = forceQuote || value.contains(" ") || value.contains("\t") || value.isEmpty
+        let needsQuote =
+            forceQuote || value.contains(" ") || value.contains("\t")
+            || value.contains("\"") || value.contains("\\") || value.isEmpty
         guard needsQuote else { return value }
-        return "\"\(value.replacingOccurrences(of: "\"", with: "\\\""))\""
+        let escaped =
+            value
+            .replacingOccurrences(of: "\\", with: "\\\\")
+            .replacingOccurrences(of: "\"", with: "\\\"")
+        return "\"\(escaped)\""
     }
 }

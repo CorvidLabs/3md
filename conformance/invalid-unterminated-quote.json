@@ -1,0 +1,5 @@
+{
+  "name": "an unterminated quote in a directive is rejected",
+  "source": "---\n3md: 0.1\n---\n@plane z=0 label=\"oops\nbody\n",
+  "error": "invalidPlaneDirective"
+}

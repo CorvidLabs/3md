@@ -1,0 +1,46 @@
+---
+3md: 0.1
+axis: step
+title: Weeknight Shakshuka
+servings: "4"
+total_time: "35 min"
+---
+Each plane is one step of the recipe. Scrub the Z axis to walk forward and
+backward through cooking. Step z=0 is mise en place; the last plane plates up.
+
+@plane z=0 label="prep"
+# Mise en place
+Gather and prep before the heat goes on.
+
+- 1 large onion, diced
+- 1 red bell pepper, sliced thin
+- 3 cloves garlic, minced
+- 1 tsp cumin, 1 tsp smoked paprika, pinch chili flakes
+- 1 (28 oz) can crushed tomatoes
+- 4–6 eggs
+- Feta, parsley, crusty bread to serve
+
+@plane z=1 label="aromatics"
+# Soften the aromatics
+Heat 2 tbsp olive oil in a wide skillet over medium.
+
+Add the onion and pepper. Cook 8–10 min until soft and just starting to color.
+Stir in the garlic and spices; cook 1 min until fragrant.
+
+@plane z=2 label="sauce"
+# Build the sauce
+Pour in the crushed tomatoes. Season with salt and a pinch of sugar.
+
+Simmer 10 min, stirring now and then, until thick enough to hold a spoon-track.
+
+@plane z=3 label="eggs"
+# Poach the eggs
+Make wells in the sauce with the back of a spoon. Crack one egg into each well.
+
+Cover and cook 6–8 min, until the whites are set but the yolks still wobble.
+
+@plane z=4 label="serve"
+# Serve
+Off the heat, scatter feta and parsley over the top.
+
+Bring the skillet to the table with bread for dunking. Eat immediately.

@@ -1,0 +1,5 @@
+{
+  "name": "z=nan is rejected (non-finite, also closes the NaN dedup bypass)",
+  "source": "---\n3md: 0.1\n---\n@plane z=nan\na\n",
+  "error": "invalidPlaneDirective"
+}

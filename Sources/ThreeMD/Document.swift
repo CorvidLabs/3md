@@ -1,6 +1,3 @@
-@preconcurrency import Foundation
-
-
 // MARK: - Document
 
 /// A parsed 3md document: Markdown extended along one free Z axis.

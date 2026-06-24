@@ -1,6 +1,5 @@
 @preconcurrency import Foundation
 
-
 // MARK: - Parser
 
 /// Parses 3md source text into a ``Document``.
@@ -38,7 +37,10 @@ public struct Parser: Sendable {
     /// - Returns: The parsed ``Document``.
     /// - Throws: ``ParseError`` if the source is malformed.
     public func parse(_ source: String) throws -> Document {
-        let normalized = source.replacingOccurrences(of: "\r\n", with: "\n")
+        var normalized = source.replacingOccurrences(of: "\r\n", with: "\n")
+        if normalized.hasPrefix("\u{FEFF}") {
+            normalized.removeFirst()
+        }
         var lines = normalized.components(separatedBy: "\n")
 
         let frontmatter = try extractFrontmatter(&lines)
@@ -141,12 +143,25 @@ public struct Parser: Sendable {
         var planes: [Plane] = []
         var pending: PendingPlane?
         var preambleLines: [String] = []
+        var fence: Character?
 
         for (offset, raw) in lines.enumerated() {
             let lineNumber = bodyStartLine + offset
             let trimmed = raw.trimmingCharacters(in: .whitespaces)
 
-            guard firstToken(of: trimmed) == "@plane" else {
+            // A directive must begin at column 0 and sit outside a fenced code
+            // block, so a `@plane` line inside ``` or ~~~ (or indented as a code
+            // block) is treated as body text, not a new plane.
+            var isDirective = false
+            if let open = fence {
+                if trimmed.hasPrefix(String(repeating: open, count: 3)) { fence = nil }
+            } else if let opened = fenceCharacter(of: trimmed) {
+                fence = opened
+            } else if raw.first != " ", raw.first != "\t", firstToken(of: raw) == "@plane" {
+                isDirective = true
+            }
+
+            guard isDirective else {
                 if pending != nil {
                     pending?.bodyLines.append(raw)
                 } else {
@@ -191,8 +206,11 @@ public struct Parser: Sendable {
         guard let zRaw = attributes["z"] else {
             throw ParseError.missingPlanePosition(line: line)
         }
-        guard let z = Double(zRaw) else {
-            throw ParseError.invalidPlaneDirective(line: line, detail: "z must be a number, found '\(zRaw)'")
+        guard let z = parseFiniteDecimal(zRaw) else {
+            throw ParseError.invalidPlaneDirective(
+                line: line,
+                detail: "z must be a finite decimal number, found '\(zRaw)'"
+            )
         }
 
         let x = try optionalDouble(attributes["x"], key: "x", line: line)
@@ -207,15 +225,18 @@ public struct Parser: Sendable {
 
     private func optionalDouble(_ value: String?, key: String, line: Int) throws -> Double? {
         guard let value else { return nil }
-        guard let number = Double(value) else {
-            throw ParseError.invalidPlaneDirective(line: line, detail: "\(key) must be a number, found '\(value)'")
+        guard let number = parseFiniteDecimal(value) else {
+            throw ParseError.invalidPlaneDirective(
+                line: line,
+                detail: "\(key) must be a finite decimal number, found '\(value)'"
+            )
         }
         return number
     }
 
     private func parseDirective(_ trimmed: String, line: Int) throws -> [String: String] {
         let remainder = String(trimmed.dropFirst("@plane".count)).trimmingCharacters(in: .whitespaces)
-        return try tokenize(remainder).reduce(into: [:]) { result, token in
+        return try tokenize(remainder, line: line).reduce(into: [:]) { result, token in
             guard let separator = token.firstIndex(of: "=") else {
                 throw ParseError.invalidPlaneDirective(line: line, detail: "expected key=value, found '\(token)'")
             }
@@ -235,15 +256,24 @@ public struct Parser: Sendable {
     }
 
     /// Splits a directive remainder into tokens, keeping quoted spans intact.
-    private func tokenize(_ input: String) -> [String] {
+    /// A backslash inside a quoted span escapes the next character, so `\"`
+    /// does not close a double-quoted value. Throws on an unterminated quote.
+    private func tokenize(_ input: String, line: Int) throws -> [String] {
         var tokens: [String] = []
         var current = ""
         var activeQuote: Character?
+        var escaped = false
 
         for character in input {
             if let quote = activeQuote {
                 current.append(character)
-                if character == quote { activeQuote = nil }
+                if escaped {
+                    escaped = false
+                } else if character == "\\" {
+                    escaped = true
+                } else if character == quote {
+                    activeQuote = nil
+                }
             } else if character == "\"" || character == "'" {
                 activeQuote = character
                 current.append(character)
@@ -256,16 +286,56 @@ public struct Parser: Sendable {
                 current.append(character)
             }
         }
+        guard activeQuote == nil else {
+            throw ParseError.invalidPlaneDirective(line: line, detail: "unterminated quote in '\(input)'")
+        }
         if !current.isEmpty { tokens.append(current) }
         return tokens
     }
 
     private func unquote(_ value: String) -> String {
-        guard value.count >= 2 else { return value }
-        let first = value[value.startIndex]
-        let last = value[value.index(before: value.endIndex)]
+        guard value.count >= 2, let first = value.first, let last = value.last else { return value }
         guard (first == "\"" && last == "\"") || (first == "'" && last == "'") else { return value }
-        return String(value.dropFirst().dropLast())
+        return unescape(String(value.dropFirst().dropLast()))
+    }
+
+    /// Reverses the serializer's backslash escaping, so `\\` becomes `\` and
+    /// `\"` becomes `"`. Any other escaped character yields the character
+    /// itself. This makes a quoted value round-trip through the serializer.
+    private func unescape(_ value: String) -> String {
+        var result = ""
+        var escaping = false
+        for character in value {
+            if escaping {
+                result.append(character)
+                escaping = false
+            } else if character == "\\" {
+                escaping = true
+            } else {
+                result.append(character)
+            }
+        }
+        if escaping { result.append("\\") }
+        return result
+    }
+
+    /// Parses a finite decimal number for `z`/`x`/`y`: optional sign, digits with
+    /// an optional fraction, and an optional exponent. Hex, `inf`, `nan`, and
+    /// values that overflow to infinity are rejected, so the Swift and
+    /// TypeScript parsers agree on the numeric grammar.
+    private func parseFiniteDecimal(_ raw: String) -> Double? {
+        let pattern = "^[+-]?([0-9]+\\.?[0-9]*|\\.[0-9]+)([eE][+-]?[0-9]+)?$"
+        guard raw.range(of: pattern, options: .regularExpression) != nil else { return nil }
+        guard let value = Double(raw), value.isFinite else { return nil }
+        return value
+    }
+
+    /// Returns the fence character if a trimmed line opens a fenced code block
+    /// (three or more backticks or tildes), otherwise `nil`.
+    private func fenceCharacter(of trimmed: String) -> Character? {
+        if trimmed.hasPrefix("```") { return "`" }
+        if trimmed.hasPrefix("~~~") { return "~" }
+        return nil
     }
 
     /// Joins body lines, dropping leading and trailing blank lines.

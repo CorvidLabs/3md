@@ -127,17 +127,24 @@ function firstToken(line: string): string {
 
 /**
  * Splits a directive remainder into tokens, keeping single- or double-quoted
- * spans intact. Mirrors the Swift `tokenize(_:)` helper.
+ * spans intact. A backslash inside a quoted span escapes the next character, so
+ * `\"` does not close a double-quoted value. Throws on an unterminated quote.
+ * Mirrors the Swift `tokenize(_:line:)` helper.
  */
-function tokenize(input: string): string[] {
+function tokenize(input: string, line: number): string[] {
   const tokens: string[] = [];
   let current = "";
   let activeQuote: string | null = null;
+  let escaped = false;
 
   for (const character of input) {
     if (activeQuote !== null) {
       current += character;
-      if (character === activeQuote) {
+      if (escaped) {
+        escaped = false;
+      } else if (character === "\\") {
+        escaped = true;
+      } else if (character === activeQuote) {
         activeQuote = null;
       }
     } else if (character === '"' || character === "'") {
@@ -152,6 +159,14 @@ function tokenize(input: string): string[] {
       current += character;
     }
   }
+  if (activeQuote !== null) {
+    throw new ParseError(
+      "invalidPlaneDirective",
+      `Invalid @plane directive on line ${line}: unterminated quote in '${input}'`,
+      line,
+      `unterminated quote in '${input}'`,
+    );
+  }
   if (current.length > 0) {
     tokens.push(current);
   }
@@ -159,8 +174,8 @@ function tokenize(input: string): string[] {
 }
 
 /**
- * Strips a single pair of matching surrounding single or double quotes.
- * Mirrors the Swift `unquote(_:)` helper.
+ * Strips a single pair of matching surrounding quotes and reverses backslash
+ * escaping (`\\` and `\"`). Mirrors the Swift `unquote(_:)` helper.
  */
 function unquote(value: string): string {
   if (value.length < 2) {
@@ -169,9 +184,46 @@ function unquote(value: string): string {
   const first = value[0];
   const last = value[value.length - 1];
   if ((first === '"' && last === '"') || (first === "'" && last === "'")) {
-    return value.slice(1, -1);
+    return unescapeValue(value.slice(1, -1));
   }
   return value;
+}
+
+/**
+ * Reverses the serializer's backslash escaping, so `\\` becomes `\` and `\"`
+ * becomes `"`. Any other escaped character yields the character itself.
+ */
+function unescapeValue(value: string): string {
+  let result = "";
+  let escaping = false;
+  for (const character of value) {
+    if (escaping) {
+      result += character;
+      escaping = false;
+    } else if (character === "\\") {
+      escaping = true;
+    } else {
+      result += character;
+    }
+  }
+  if (escaping) {
+    result += "\\";
+  }
+  return result;
+}
+
+/**
+ * Returns the fence character if a trimmed line opens a fenced code block
+ * (three or more backticks or tildes), otherwise `null`.
+ */
+function fenceCharacter(trimmed: string): string | null {
+  if (trimmed.startsWith("```")) {
+    return "`";
+  }
+  if (trimmed.startsWith("~~~")) {
+    return "~";
+  }
+  return null;
 }
 
 /**
@@ -195,46 +247,21 @@ function collapse(lines: readonly string[]): string | null {
 }
 
 /**
- * Parses a string into a number using the same acceptance rules as Swift's
- * `Double(_ text: String)` initializer for the inputs 3md cares about.
- *
- * Swift accepts optional sign, integer and decimal forms, scientific notation,
- * hex floats (for example `0x1p4`), and the literals `inf`/`infinity`/`nan`
- * (case-insensitive). It rejects empty or whitespace-only strings, thousands
- * separators, and trailing garbage. `Number()` alone is too lenient (for
- * example `Number("")` is `0`), so the input is validated first.
+ * Parses a finite decimal number for `z`/`x`/`y`: optional sign, digits with an
+ * optional fraction, and an optional exponent. Hex, `inf`, `nan`, and values
+ * that overflow to infinity are rejected, so the Swift and TypeScript parsers
+ * agree on the numeric grammar.
  *
  * @param text The already trimmed, unquoted attribute value.
- * @returns The parsed number, or `null` when the text is not a valid number.
+ * @returns The parsed number, or `null` when the text is not a finite decimal.
  */
-function parseSwiftDouble(text: string): number | null {
-  if (text.length === 0) {
+function parseFiniteDecimal(text: string): number | null {
+  const pattern = /^[+-]?(\d+\.?\d*|\.\d+)([eE][+-]?\d+)?$/;
+  if (!pattern.test(text)) {
     return null;
   }
-
-  const decimalPattern = /^[+-]?(\d+\.?\d*|\.\d+)([eE][+-]?\d+)?$/;
-  const hexPattern = /^[+-]?0[xX][0-9a-fA-F]*\.?[0-9a-fA-F]*[pP][+-]?\d+$/;
-  const specialPattern = /^[+-]?(inf|infinity|nan)$/i;
-
-  if (specialPattern.test(text)) {
-    const lowered = text.toLowerCase();
-    if (lowered.endsWith("nan")) {
-      return NaN;
-    }
-    return lowered.startsWith("-") ? -Infinity : Infinity;
-  }
-
-  if (hexPattern.test(text)) {
-    const value = Number(text);
-    return Number.isNaN(value) ? null : value;
-  }
-
-  if (!decimalPattern.test(text)) {
-    return null;
-  }
-
   const value = Number(text);
-  return Number.isNaN(value) ? null : value;
+  return Number.isFinite(value) ? value : null;
 }
 
 // MARK: - Parser internals
@@ -348,7 +375,7 @@ function parseDirective(trimmed: string, line: number): Record<string, string> {
   const remainder = trimWhitespace(trimmed.slice("@plane".length));
   const result: Record<string, string> = {};
 
-  for (const token of tokenize(remainder)) {
+  for (const token of tokenize(remainder, line)) {
     const separator = token.indexOf("=");
     if (separator < 0) {
       throw new ParseError(
@@ -382,13 +409,13 @@ function optionalDouble(
   if (value === undefined) {
     return null;
   }
-  const parsed = parseSwiftDouble(value);
+  const parsed = parseFiniteDecimal(value);
   if (parsed === null) {
     throw new ParseError(
       "invalidPlaneDirective",
-      `Invalid @plane directive on line ${line}: ${key} must be a number, found '${value}'`,
+      `Invalid @plane directive on line ${line}: ${key} must be a finite decimal number, found '${value}'`,
       line,
-      `${key} must be a number, found '${value}'`,
+      `${key} must be a finite decimal number, found '${value}'`,
     );
   }
   return parsed;
@@ -406,13 +433,13 @@ function makePlane(pending: PendingPlane): Plane {
       line,
     );
   }
-  const z = parseSwiftDouble(zRaw);
+  const z = parseFiniteDecimal(zRaw);
   if (z === null) {
     throw new ParseError(
       "invalidPlaneDirective",
-      `Invalid @plane directive on line ${line}: z must be a number, found '${zRaw}'`,
+      `Invalid @plane directive on line ${line}: z must be a finite decimal number, found '${zRaw}'`,
       line,
-      `z must be a number, found '${zRaw}'`,
+      `z must be a finite decimal number, found '${zRaw}'`,
     );
   }
 
@@ -445,6 +472,7 @@ function parseBody(lines: readonly string[], bodyStartLine: number): ParsedBody 
   const planes: Plane[] = [];
   let pending: PendingPlane | null = null;
   const preambleLines: string[] = [];
+  let fence: string | null = null;
 
   const flushPending = (): void => {
     if (pending === null) {
@@ -467,7 +495,24 @@ function parseBody(lines: readonly string[], bodyStartLine: number): ParsedBody 
     const lineNumber = bodyStartLine + offset;
     const trimmed = trimWhitespace(raw);
 
-    if (firstToken(trimmed) !== "@plane") {
+    // A directive must begin at column 0 and sit outside a fenced code block,
+    // so a `@plane` line inside ``` or ~~~ (or indented as a code block) is
+    // body text, not a new plane.
+    let isDirective = false;
+    if (fence !== null) {
+      if (trimmed.startsWith(fence.repeat(3))) {
+        fence = null;
+      }
+    } else {
+      const opened = fenceCharacter(trimmed);
+      if (opened !== null) {
+        fence = opened;
+      } else if (raw[0] !== " " && raw[0] !== "\t" && firstToken(raw) === "@plane") {
+        isDirective = true;
+      }
+    }
+
+    if (!isDirective) {
       if (pending !== null) {
         pending.bodyLines.push(raw);
       } else {
@@ -515,7 +560,10 @@ function parseBody(lines: readonly string[], bodyStartLine: number): ParsedBody 
  *   `invalidPlaneDirective`, or `duplicatePlane`).
  */
 export function parse(source: string): Document {
-  const normalized = source.replace(/\r\n/g, "\n");
+  let normalized = source.replace(/\r\n/g, "\n");
+  if (normalized.charCodeAt(0) === 0xfeff) {
+    normalized = normalized.slice(1);
+  }
   const lines = normalized.split("\n");
 
   const frontmatter = extractFrontmatter(lines);
@@ -551,11 +599,17 @@ function formatNumber(value: number): string {
  */
 function quoteIfNeeded(value: string, forceQuote = false): string {
   const needsQuote =
-    forceQuote || value.includes(" ") || value.includes("\t") || value.length === 0;
+    forceQuote ||
+    value.includes(" ") ||
+    value.includes("\t") ||
+    value.includes('"') ||
+    value.includes("\\") ||
+    value.length === 0;
   if (!needsQuote) {
     return value;
   }
-  return `"${value.replace(/"/g, '\\"')}"`;
+  const escaped = value.replace(/\\/g, "\\\\").replace(/"/g, '\\"');
+  return `"${escaped}"`;
 }
 
 function frontmatterLines(document: Document): string[] {

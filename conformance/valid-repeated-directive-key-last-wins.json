@@ -1,0 +1,21 @@
+{
+  "name": "a repeated directive key takes the last value",
+  "source": "---\n3md: 0.1\n---\n@plane z=0 z=5\nx\n",
+  "expected": {
+    "version": "0.1",
+    "axis": "layer",
+    "title": null,
+    "metadata": {},
+    "preamble": null,
+    "planes": [
+      {
+        "z": 5,
+        "label": null,
+        "x": null,
+        "y": null,
+        "attributes": {},
+        "body": "x"
+      }
+    ]
+  }
+}

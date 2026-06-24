@@ -1,6 +1,5 @@
 @preconcurrency import Foundation
 
-
 // MARK: - Axis
 
 /// The meaning assigned to a 3md document's third (Z) axis.

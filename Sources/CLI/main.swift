@@ -1,7 +1,6 @@
 import Foundation
 import ThreeMD
 
-
 // MARK: - Entry Point
 
 let arguments = CommandLine.arguments.dropFirst()
@@ -71,8 +70,14 @@ private func runInfo(arguments: [String]) {
     print("planes:  \(document.planes.count)")
 
     for plane in document.planes {
-        let label = plane.label.map { " label=\($0)" } ?? ""
-        print("  z=\(formatZ(plane.z))\(label)")
+        var parts = ["z=\(formatZ(plane.z))"]
+        if let label = plane.label { parts.append("label=\(label)") }
+        if let x = plane.x { parts.append("x=\(formatZ(x))") }
+        if let y = plane.y { parts.append("y=\(formatZ(y))") }
+        for key in plane.attributes.keys.sorted() {
+            if let value = plane.attributes[key] { parts.append("\(key)=\(value)") }
+        }
+        print("  " + parts.joined(separator: " "))
     }
 }
 
@@ -98,11 +103,19 @@ private func runHTML(arguments: [String]) {
 
 // MARK: - Helpers
 
-/// Reads the file at the given path, exiting on failure.
+/// Reads the file at the given path, exiting on failure. A path of `-` reads
+/// from standard input. Missing files and non-UTF-8 content give distinct errors.
 private func readFile(at path: String) -> String {
-    let url = URL(fileURLWithPath: path)
-    guard let source = try? String(contentsOf: url, encoding: .utf8) else {
-        fputs("threemd: cannot read file '\(path)'\n", stderr)
+    if path == "-" {
+        let data = FileHandle.standardInput.readDataToEndOfFile()
+        return String(decoding: data, as: UTF8.self)
+    }
+    guard FileManager.default.fileExists(atPath: path) else {
+        fputs("threemd: file not found: '\(path)'\n", stderr)
+        exit(1)
+    }
+    guard let source = try? String(contentsOf: URL(fileURLWithPath: path), encoding: .utf8) else {
+        fputs("threemd: cannot read '\(path)' (is it valid UTF-8?)\n", stderr)
         exit(1)
     }
     return source
@@ -120,9 +133,11 @@ private func printUsage() {
         """
         Usage: threemd <subcommand> <file>
 
+        A file of '-' reads from standard input.
+
         Subcommands:
           validate <file>   Parse a .3md file; exit non-zero and print error on failure, else print "ok".
-          info <file>       Print version, axis, title, plane count, and each plane's z and label.
+          info <file>       Print version, axis, title, plane count, and each plane's z, label, x, y, and attributes.
           html <file>       Render the document to HTML and print to stdout.
         """
     )

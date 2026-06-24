@@ -1,0 +1,29 @@
+{
+  "name": "scientific notation in z parses as a decimal",
+  "source": "---\n3md: 0.1\n---\n@plane z=1e3\nbig\n\n@plane z=2.5e-1\nsmall\n",
+  "expected": {
+    "version": "0.1",
+    "axis": "layer",
+    "title": null,
+    "metadata": {},
+    "preamble": null,
+    "planes": [
+      {
+        "z": 1000,
+        "label": null,
+        "x": null,
+        "y": null,
+        "attributes": {},
+        "body": "big"
+      },
+      {
+        "z": 0.25,
+        "label": null,
+        "x": null,
+        "y": null,
+        "attributes": {},
+        "body": "small"
+      }
+    ]
+  }
+}

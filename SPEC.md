@@ -68,16 +68,28 @@ stripped.
 
 A plane begins with a directive line whose first whitespace-delimited token is
 `@plane`, followed by space-separated `key=value` attributes. Every attribute
-token MUST contain an `=`; attribute keys are lowercased. Every line after the
-directive, up to the next `@plane` directive or end of file, is that plane's
-Markdown body. Leading and trailing blank lines of a body are trimmed.
+token MUST contain an `=` (the split is on the first `=`); attribute keys are
+lowercased. A directive MUST begin at column 0 and MUST lie outside a fenced code
+block: a `@plane` line inside a ``` or `~~~` fence, or indented as a code block,
+is body text, not a new plane. Every line after the directive, up to the next
+`@plane` directive or end of file, is that plane's Markdown body. Leading and
+trailing blank lines of a body are trimmed.
 
 ### 4.1 Attributes
 
-- `z` (REQUIRED): a number giving the plane's position on the Z axis.
-- `x`, `y` (OPTIONAL): numbers giving an in-plane offset for spatial viewers.
+- `z` (REQUIRED): a finite decimal number giving the plane's position on the Z
+  axis. The grammar is an optional sign, digits with an optional fraction, and an
+  optional decimal exponent (for example `0`, `-2.5`, `1e3`). Hexadecimal, `inf`,
+  and `nan` are rejected so implementations in different languages agree.
+- `x`, `y` (OPTIONAL): finite decimal numbers (same grammar as `z`) giving an
+  in-plane offset for spatial viewers.
 - `label` (OPTIONAL): a human-readable name for the plane.
-- Any other attribute is preserved as string metadata on the plane.
+- Any other attribute is preserved as a string on the plane; values are never
+  coerced to numbers or booleans.
+
+Inside a quoted value, `\\` and `\"` are escape sequences for a literal
+backslash and a double-quote. An unterminated quote is an error. An unquoted
+value is taken verbatim.
 
 Values may be quoted; quote a value if it contains spaces. Numbers may be
 integers or decimals and may be negative.
@@ -102,14 +114,18 @@ A conforming parser MUST reject:
 - a frontmatter block that is never closed (`invalidFrontmatter`)
 - a missing `3md` version key (`missingVersion`)
 - a `@plane` directive with no `z` (`missingPlanePosition`)
-- a `@plane` directive whose `z`, `x`, or `y` is not a number, or that carries an
-  attribute token with no `=` (`invalidPlaneDirective`)
+- a `@plane` directive whose `z`, `x`, or `y` is not a finite decimal number,
+  that carries an attribute token with no `=`, or that has an unterminated quote
+  (`invalidPlaneDirective`)
 - two planes with the same `z` (`duplicatePlane`)
 
 ## 7. Round tripping
 
 Serializing a parsed document and parsing the result MUST yield an equivalent
-document for content that does not rely on quote escaping.
+document. Quoted values are escaped on the way out and unescaped on the way in,
+so values containing spaces, quotes, or backslashes round-trip exactly.
+
+A leading UTF-8 byte order mark (BOM) is ignored.
 
 ## 8. Open questions for later versions
 

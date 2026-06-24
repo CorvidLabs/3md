@@ -1,0 +1,21 @@
+{
+  "name": "@planex is not a directive; the doc is single-plane shorthand",
+  "source": "---\n3md: 0.1\n---\n@planex z=0\nbody\n",
+  "expected": {
+    "version": "0.1",
+    "axis": "layer",
+    "title": null,
+    "metadata": {},
+    "preamble": null,
+    "planes": [
+      {
+        "z": 0,
+        "label": null,
+        "x": null,
+        "y": null,
+        "attributes": {},
+        "body": "@planex z=0\nbody"
+      }
+    ]
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "name": "non-reserved frontmatter keys keep their case",
+  "source": "---\n3md: 0.1\nAuthor: Leif\n---\n@plane z=0\nx\n",
+  "expected": {
+    "version": "0.1",
+    "axis": "layer",
+    "title": null,
+    "metadata": {
+      "Author": "Leif"
+    },
+    "preamble": null,
+    "planes": [
+      {
+        "z": 0,
+        "label": null,
+        "x": null,
+        "y": null,
+        "attributes": {},
+        "body": "x"
+      }
+    ]
+  }
+}
