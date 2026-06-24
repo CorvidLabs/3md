@@ -1,5 +1,13 @@
 # Changelog
 
+## [v0.3.0] - 2026-06-23
+
+### Other
+
+- Harden parser, docs, and tooling from the multi-agent review (133d14d)
+- Make web demo mobile friendly (responsive planes + touch orbit) (e17652f)
+- Harden attest: signed attestations and an enforcing policy (f2ff2d7)
+
 ## [v0.2.0] - 2026-06-23
 
 ### Other
