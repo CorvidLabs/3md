@@ -1,5 +1,12 @@
 # Changelog
 
+## [v0.4.0] - 2026-06-23
+
+### Other
+
+- Render Markdown in HTML output; wire npm publish to GitHub Packages (4d4e81b)
+- Add self-documenting example: 3md explained in 3md (d72dd0c)
+
 ## [v0.3.0] - 2026-06-23
 
 ### Other
