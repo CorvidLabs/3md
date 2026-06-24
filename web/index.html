@@ -450,12 +450,16 @@ function renderSource(src){
   close();return html;
 }
 function hlLine(raw){
-  let s=esc(raw);
-  if(s.trim()==="---")return `<span class="d">${s}</span>`;
-  s=s.replace(/^(\s*@plane)\b/,'<span class="at">$1</span>');
-  s=s.replace(/\b([a-z0-9_-]+)=/gi,'<span class="k">$1=</span>');
-  if(/^\s*[\w-]+:/.test(raw)&&!raw.includes("@plane"))s=s.replace(/^(\s*[\w-]+):/,'<span class="k">$1:</span>');
-  if(raw.startsWith("#"))s=`<span class="hh">${esc(raw)}</span>`;
+  const s=esc(raw), t=raw.trim();
+  if(t==="---")return `<span class="d">${s}</span>`;
+  if(raw.startsWith("#"))return `<span class="hh">${s}</span>`;
+  if(t.startsWith("@plane")){
+    // key= first (on escaped text), then wrap @plane, so the generic key=
+    // regex never re-matches the class= inside an injected span.
+    let h=s.replace(/([a-z0-9_-]+)=/gi,'<span class="k">$1=</span>');
+    return h.replace(/^(\s*)@plane/,'$1<span class="at">@plane</span>');
+  }
+  if(/^\s*[\w-]+:/.test(raw))return s.replace(/^(\s*[\w-]+):/,'<span class="k">$1:</span>');
   return s;
 }
 function colorJSON(o){return esc(JSON.stringify(o,null,2)).replace(/"([^"]+)":/g,'<span class="k">"$1":</span>').replace(/: "([^"]*)"/g,': <span class="v">"$1"</span>').replace(/: (-?\d+(?:\.\d+)?)/g,': <span class="v">$1</span>');}
