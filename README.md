@@ -5,6 +5,9 @@ one free axis: stack your content into **planes** and tell the reader what the
 depth means. Time for a daily planner. Frames for an animation. Layers for
 annotations. Space for a scene.
 
+**[Try the interactive demo](https://corvidlabs.github.io/3md/)** (also on
+[corvidlabs.xyz/3md](https://corvidlabs.xyz/3md/)).
+
 ```
 ---
 3md: 0.1
