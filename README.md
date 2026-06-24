@@ -16,7 +16,9 @@ annotations. Space for a scene.
 `.3md` and share a link), read the
 **[docs](https://corvidlabs.github.io/3md/docs.html)**, or
 **[browse 171 examples](https://corvidlabs.github.io/3md/gallery.html)** in the
-gallery (all of [`Examples/`](Examples), rendered live).
+gallery (all of [`Examples/`](Examples), rendered live), or flip through the
+**[animated gallery](https://corvidlabs.github.io/3md/viewer.html?src=examples-gallery.3md)**
+where every example is a card showing its motion as a GIF.
 
 This repo eats its own dog food: every doc here is also combined into one
 [`docs.3md`](docs.3md) (each Markdown file is a plane). GitHub can't preview
