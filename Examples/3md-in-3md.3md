@@ -1,0 +1,45 @@
+---
+3md: 0.1
+axis: section
+title: 3md, explained in 3md
+---
+This file is a 3md document that teaches 3md. Scrub the Z axis to read it in
+order. The "anatomy" plane contains a fenced code block with a literal @plane
+line inside it, which the parser treats as body text, not a new plane.
+
+@plane z=0 label="what"
+# What is 3md
+Markdown with a Z axis. A document is ordinary Markdown sliced into planes
+along one axis you name yourself: time, frame, layer, depth, space, anything.
+
+@plane z=1 label="anatomy"
+# Anatomy
+A required frontmatter block declares the version (the magic marker) and the
+axis. Each `@plane` directive starts a plane; the Markdown between directives is
+that plane's body. Here is a whole 3md file shown inside a code block:
+
+```3md
+---
+3md: 0.1
+axis: time
+title: My Week
+---
+@plane z=0 label="Monday"
+# Monday
+- [ ] Standup
+```
+
+The `@plane` line above sits inside a code fence, so this document still has
+four planes, not five.
+
+@plane z=2 label="axis"
+# The axis is yours
+The `axis:` value is free-form metadata. The same parser serves a planner
+(time), an animation (frame), an annotated contract (layer), and a scene
+(space). Tools decide how to lay the planes out.
+
+@plane z=3 label="tooling"
+# Tooling
+Parse it in Swift (ThreeMD) or TypeScript (@corvidlabs/threemd), validate and
+render it with the `threemd` CLI, and trust that both parsers agree, thanks to
+the shared conformance suite.
