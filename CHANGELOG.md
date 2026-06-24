@@ -1,5 +1,13 @@
 # Changelog
 
+## [v0.6.0] - 2026-06-23
+
+### Other
+
+- Add VS Code syntax-highlighting extension (editor/vscode) (9d03371)
+- Add a Rust implementation; run all three impls in the verify lane (8eb9a73)
+- Serve the interactive demo on GitHub Pages (3aed0b3)
+
 ## [v0.5.0] - 2026-06-23
 
 ### Other
