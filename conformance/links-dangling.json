@@ -1,0 +1,12 @@
+{
+  "name": "a reference to a missing plane is reported with targetExists false",
+  "source": "---\n3md: 0.1\n---\n@plane z=0\ngo [[z=99]]\n",
+  "links": [
+    {
+      "sourceZ": 0,
+      "targetZ": 99,
+      "text": null,
+      "targetExists": false
+    }
+  ]
+}

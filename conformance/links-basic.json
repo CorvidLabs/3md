@@ -1,0 +1,12 @@
+{
+  "name": "a [[z=N]] reference resolves to the source z, target z, and existence",
+  "source": "---\n3md: 0.1\n---\n@plane z=0\nsee [[z=1]]\n\n@plane z=1\nthere\n",
+  "links": [
+    {
+      "sourceZ": 0,
+      "targetZ": 1,
+      "text": null,
+      "targetExists": true
+    }
+  ]
+}

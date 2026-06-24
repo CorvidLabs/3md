@@ -82,7 +82,7 @@ public struct HTMLRenderer: Sendable {
         var lines: [String] = []
         let zFormatted = plane.z.formatted3MD()
 
-        var openTag = "<section data-z=\"\(escape(zFormatted))\""
+        var openTag = "<section id=\"plane-z-\(escape(zFormatted))\" data-z=\"\(escape(zFormatted))\""
         if let label = plane.label {
             openTag += " aria-label=\"\(escape(label))\""
         }

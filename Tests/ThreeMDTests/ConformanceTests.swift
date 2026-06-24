@@ -13,6 +13,7 @@ final class ConformanceTests: XCTestCase {
         let source: String
         let expected: ExpectedDocument?
         let error: String?
+        let links: [CrossPlaneLink]?
     }
 
     private struct ExpectedDocument: Decodable {
@@ -41,7 +42,17 @@ final class ConformanceTests: XCTestCase {
         XCTAssertFalse(vectors.isEmpty, "no conformance vectors were found")
 
         for (file, vector) in vectors {
-            if let expected = vector.expected {
+            if let expectedLinks = vector.links {
+                let document: Document
+                do {
+                    document = try parser.parse(vector.source)
+                } catch {
+                    XCTFail("\(file): expected success but threw \(error) [\(vector.name)]")
+                    continue
+                }
+                let actualLinks = document.links()
+                XCTAssertEqual(actualLinks, expectedLinks, "\(file): links mismatch [\(vector.name)]")
+            } else if let expected = vector.expected {
                 let document: Document
                 do {
                     document = try parser.parse(vector.source)
@@ -58,7 +69,7 @@ final class ConformanceTests: XCTestCase {
                     XCTAssertEqual(code(of: parseError), expectedError, "\(file): wrong error [\(vector.name)]")
                 }
             } else {
-                XCTFail("\(file): vector has neither 'expected' nor 'error'")
+                XCTFail("\(file): vector has neither 'expected', 'links', nor 'error'")
             }
         }
     }

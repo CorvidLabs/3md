@@ -22,6 +22,7 @@
 /// - Italic: `*text*` or `_text_`
 /// - Inline code: `` `code` ``
 /// - Links: `[text](url)`
+/// - Cross-plane links: `[[z=N]]` or `[[z=N|text]]` -> `<a href="#plane-z-F">TEXT</a>`
 ///
 /// ## Safety
 /// All text content and link hrefs are HTML-escaped. Fenced code block contents
@@ -439,6 +440,24 @@ public struct MarkdownRenderer: Sendable {
                 }
             }
 
+            // Cross-plane links: [[z=N]] or [[z=N|text]].
+            // Must be checked before the ordinary Markdown link rule because both
+            // start with `[`. A `[[z=N]]` whose target is not a finite decimal is
+            // left as literal body text (the `[[` falls through to plain-char emit).
+            if char == "[" {
+                let afterFirst = text.index(after: index)
+                if afterFirst < text.endIndex, text[afterFirst] == "[" {
+                    let afterSecond = text.index(after: afterFirst)
+                    if afterSecond < text.endIndex, text[afterSecond...].hasPrefix("z=") {
+                        if let (anchor, endIndex) = parseCrossPlaneLink(in: text, from: index) {
+                            result += anchor
+                            index = endIndex
+                            continue
+                        }
+                    }
+                }
+            }
+
             // Links: [text](url).
             if char == "[" {
                 let afterBracket = text.index(after: index)
@@ -464,6 +483,77 @@ public struct MarkdownRenderer: Sendable {
         }
 
         return result
+    }
+
+    /// Attempts to parse a `[[z=N]]` or `[[z=N|text]]` cross-plane link starting
+    /// at `start` in `text`.
+    ///
+    /// Returns the rendered `<a>` anchor and the index just past `]]` on success,
+    /// or `nil` when the sequence is not a valid cross-plane link (invalid decimal
+    /// target, malformed brackets, etc.).
+    ///
+    /// - Parameters:
+    ///   - text: The full inline text being parsed.
+    ///   - start: The index of the opening `[`.
+    /// - Returns: The HTML anchor string and end index, or `nil`.
+    private func parseCrossPlaneLink(in text: String, from start: String.Index) -> (String, String.Index)? {
+        // We already verified text[start] == "[" and text[start+1] == "[".
+        // Move past "[[z=".
+        guard
+            let zEqStart = text.index(start, offsetBy: 4, limitedBy: text.endIndex),
+            zEqStart <= text.endIndex
+        else { return nil }
+
+        // Scan for the first `|` or `]` to delimit the target token.
+        var scanIndex = zEqStart
+        while scanIndex < text.endIndex, text[scanIndex] != "|", text[scanIndex] != "]" {
+            scanIndex = text.index(after: scanIndex)
+        }
+
+        guard scanIndex < text.endIndex else { return nil }
+
+        let targetRaw = String(text[zEqStart..<scanIndex])
+        guard !targetRaw.isEmpty, let targetZ = parseFiniteDecimalInLink(targetRaw) else { return nil }
+
+        let linkText: String?
+        let afterTarget: String.Index
+
+        if text[scanIndex] == "|" {
+            // Optional text after pipe: collect until `]`.
+            afterTarget = text.index(after: scanIndex)
+            var pipeEnd = afterTarget
+            while pipeEnd < text.endIndex, text[pipeEnd] != "]" {
+                pipeEnd = text.index(after: pipeEnd)
+            }
+            guard pipeEnd < text.endIndex else { return nil }
+            linkText = String(text[afterTarget..<pipeEnd])
+            scanIndex = pipeEnd
+        } else {
+            linkText = nil
+        }
+
+        // Expect `]]` closing.
+        guard
+            scanIndex < text.endIndex, text[scanIndex] == "]",
+            let nextIndex = text.index(scanIndex, offsetBy: 1, limitedBy: text.endIndex),
+            nextIndex < text.endIndex, text[nextIndex] == "]"
+        else { return nil }
+
+        let endIndex = text.index(after: nextIndex)
+        let formatted = targetZ.formatted3MD()
+        let displayText = linkText.map { escape($0) } ?? "z=\(escape(formatted))"
+        let anchor = "<a href=\"#plane-z-\(escape(formatted))\">\(displayText)</a>"
+        return (anchor, endIndex)
+    }
+
+    /// Validates and parses a finite decimal from a link target capture group.
+    ///
+    /// Mirrors the grammar used by ``Parser`` for the `z` attribute.
+    private func parseFiniteDecimalInLink(_ raw: String) -> Double? {
+        let pattern = #"^[+-]?([0-9]+\.?[0-9]*|\.[0-9]+)([eE][+-]?[0-9]+)?$"#
+        guard raw.range(of: pattern, options: .regularExpression) != nil else { return nil }
+        guard let value = Double(raw), value.isFinite else { return nil }
+        return value
     }
 
     // MARK: - HTML Escaping

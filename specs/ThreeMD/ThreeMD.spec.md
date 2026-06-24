@@ -10,6 +10,9 @@ files:
   - Sources/ThreeMD/Parser.swift
   - Sources/ThreeMD/Serializer.swift
   - Sources/ThreeMD/HTMLRenderer.swift
+  - Sources/ThreeMD/MarkdownRenderer.swift
+  - Sources/ThreeMD/CrossPlaneLink.swift
+  - Sources/ThreeMD/Document+Links.swift
 
 db_tables: []
 depends_on: []
@@ -38,6 +41,8 @@ the implementing API.
 | `Parser` | Parses 3md source text into a `Document`. |
 | `Serializer` | Renders a `Document` back into 3md source text. |
 | `HTMLRenderer` | Renders a `Document` as a standalone, accessible HTML5 document. |
+| `MarkdownRenderer` | Renders a CommonMark subset (used by `HTMLRenderer` for plane bodies). |
+| `CrossPlaneLink` | A `[[z=N]]` reference from one plane to another: source z, target z, text, existence. |
 
 ### Functions
 
@@ -46,8 +51,10 @@ the implementing API.
 | `Parser.parse` | `func parse(_ source: String) throws -> Document` | Parse 3md source into a document. |
 | `Serializer.render` | `func render(_ document: Document) -> String` | Render a document to 3md text. |
 | `HTMLRenderer.render` | `func render(_ document: Document) -> String` | Render a document to a standalone HTML5 string. |
+| `MarkdownRenderer.render` | `func render(_ markdown: String) -> String` | Render a CommonMark subset to HTML. |
 | `Document.planesByZ` | `var planesByZ: [Plane]` | Planes sorted by ascending z. |
 | `Document.plane(atZ:)` | `func plane(atZ z: Double) -> Plane?` | Look up a plane by z. |
+| `Document.links` | `func links() -> [CrossPlaneLink]` | Extract cross-plane `[[z=N]]` references in document order. |
 
 ## Invariants
 

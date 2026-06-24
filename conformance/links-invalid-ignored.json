@@ -1,0 +1,5 @@
+{
+  "name": "non-finite targets and ordinary Markdown links are not cross-plane links",
+  "source": "---\n3md: 0.1\n---\n@plane z=0\n[[z=abc]] and [text](http://x) and [[notz]]\n",
+  "links": []
+}

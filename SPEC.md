@@ -127,9 +127,37 @@ so values containing spaces, quotes, or backslashes round-trip exactly.
 
 A leading UTF-8 byte order mark (BOM) is ignored.
 
-## 8. Open questions for later versions
+## 8. Cross-plane links
+
+A plane body MAY reference another plane by its `z` position with a double-bracket
+link:
+
+```
+See [[z=2]] for the details, or jump [[z=0|back to the start]].
+```
+
+The grammar is `[[z=` followed by a finite decimal (the same grammar as the `z`
+attribute), an optional `|` and link text, then `]]`. The reference regular
+expression is `\[\[z=([^\]|]+)(?:\|([^\]]*))?\]\]`; if the captured target is not
+a finite decimal, the sequence is not a link and stays literal body text.
+
+Cross-plane links live inside Markdown bodies, so the core parser leaves them in
+the body verbatim. Implementations expose them through a separate step:
+
+- Extraction returns, in document order (planes in source order, then links
+  left to right within a body), one record per link with the source plane's `z`,
+  the target `z`, the optional text (absent is null), and whether a plane with
+  the target `z` exists in the document (`targetExists`, using the same numeric
+  equality as duplicate detection).
+- A renderer SHOULD resolve a link to an anchor whose target is the section for
+  the plane at that `z`.
+
+This makes link validation (find dangling references) and navigation portable
+across implementations, and it is pinned by the shared conformance vectors.
+
+## 9. Open questions for later versions
 
 - Inline 3D model embeds, for example `@model src="scene.glb"`.
-- Cross-plane links and transclusion.
+- Transclusion across documents.
 - Per-plane transition or timing hints for `frame`/`time` axes.
 - A binary or compressed container for large scenes.

@@ -42,7 +42,7 @@ final class HTMLRendererTests: XCTestCase {
             """
         let document = try parser.parse(source)
         let html = renderer.render(document)
-        let sectionCount = html.components(separatedBy: "<section data-z=").count - 1
+        let sectionCount = html.components(separatedBy: "<section id=").count - 1
         XCTAssertEqual(sectionCount, 3)
     }
 

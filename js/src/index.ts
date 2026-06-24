@@ -43,6 +43,25 @@ export interface Plane {
 }
 
 /**
+ * A reference from one plane's Markdown body to another plane by its `z`
+ * position, written `[[z=N]]` or `[[z=N|text]]`.
+ *
+ * Cross-plane links live verbatim inside plane bodies; {@link links} extracts
+ * them in document order. This mirrors the cross-language contract pinned by the
+ * `links-*.json` conformance vectors.
+ */
+export interface CrossPlaneLink {
+  /** The `z` position of the plane whose body contains this link. */
+  readonly sourceZ: number;
+  /** The `z` position the link points at, parsed as a finite decimal. */
+  readonly targetZ: number;
+  /** The optional link text: `null` when absent, `""` when present but empty. */
+  readonly text: string | null;
+  /** Whether a plane with `z === targetZ` exists in the document. */
+  readonly targetExists: boolean;
+}
+
+/**
  * A parsed 3md document: Markdown extended along one free Z axis.
  */
 export interface Document {
@@ -578,6 +597,48 @@ export function parse(source: string): Document {
     preamble,
     planes,
   };
+}
+
+/**
+ * Extracts every cross-plane link from a {@link Document}'s plane bodies.
+ *
+ * A cross-plane link matches the regular expression
+ * `\[\[z=([^\]|]+)(?:\|([^\]]*))?\]\]`. The captured target is validated as a
+ * finite decimal with the same grammar as the `z` attribute (see
+ * `parseFiniteDecimal`); if it is not a finite decimal, the sequence is not a
+ * link and is ignored. The optional second group is the link text: `null` when
+ * absent, the captured value (which may be `""`) when present.
+ *
+ * Links are returned in document order: planes in source order, then links left
+ * to right within each body. `targetExists` reports whether any plane in the
+ * document has a `z` strictly equal to the link's target.
+ *
+ * @param document The document to scan.
+ * @returns The extracted cross-plane links, in document order.
+ */
+export function links(document: Document): CrossPlaneLink[] {
+  const result: CrossPlaneLink[] = [];
+  const targets = new Set<number>(document.planes.map((plane) => plane.z));
+
+  for (const plane of document.planes) {
+    const pattern = /\[\[z=([^\]|]+)(?:\|([^\]]*))?\]\]/g;
+    let match: RegExpExecArray | null = pattern.exec(plane.body);
+    while (match !== null) {
+      const targetZ = parseFiniteDecimal(match[1] ?? "");
+      if (targetZ !== null) {
+        const rawText = match[2];
+        result.push({
+          sourceZ: plane.z,
+          targetZ,
+          text: rawText === undefined ? null : rawText,
+          targetExists: targets.has(targetZ),
+        });
+      }
+      match = pattern.exec(plane.body);
+    }
+  }
+
+  return result;
 }
 
 /**

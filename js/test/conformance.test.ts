@@ -3,7 +3,15 @@ import { readdirSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 
-import { parse, serialize, ParseError, type Document, type ParseErrorCode } from "../src/index.ts";
+import {
+  parse,
+  serialize,
+  links,
+  ParseError,
+  type CrossPlaneLink,
+  type Document,
+  type ParseErrorCode,
+} from "../src/index.ts";
 
 const here = dirname(fileURLToPath(import.meta.url));
 const conformanceDir = join(here, "..", "..", "conformance");
@@ -36,10 +44,20 @@ interface InvalidVector {
   readonly error: ParseErrorCode;
 }
 
-type Vector = ValidVector | InvalidVector;
+interface LinksVector {
+  readonly name: string;
+  readonly source: string;
+  readonly links: readonly CrossPlaneLink[];
+}
+
+type Vector = ValidVector | InvalidVector | LinksVector;
 
 function isInvalid(vector: Vector): vector is InvalidVector {
   return "error" in vector;
+}
+
+function hasLinks(vector: Vector): vector is LinksVector {
+  return "links" in vector;
 }
 
 /** Normalizes a parsed document into the plain shape used by the vectors. */
@@ -96,6 +114,10 @@ describe("conformance vectors", () => {
         }).toThrow(ParseError);
         expect(thrown).toBeInstanceOf(ParseError);
         expect((thrown as ParseError).code).toBe(vector.error);
+      } else if (hasLinks(vector)) {
+        const document = parse(vector.source);
+        const extracted = links(document);
+        expect(extracted).toEqual(vector.links as unknown as CrossPlaneLink[]);
       } else {
         const result = normalize(parse(vector.source));
         expect(result).toEqual(vector.expected as unknown as ValidVector["expected"]);
@@ -106,7 +128,7 @@ describe("conformance vectors", () => {
 
 describe("round trip: parse -> serialize -> parse", () => {
   for (const { file, vector } of vectors) {
-    if (isInvalid(vector)) {
+    if (isInvalid(vector) || hasLinks(vector)) {
       continue;
     }
     test(`${file}: ${vector.name}`, () => {

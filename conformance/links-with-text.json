@@ -1,0 +1,12 @@
+{
+  "name": "a [[z=N|text]] reference captures the link text",
+  "source": "---\n3md: 0.1\n---\n@plane z=0\n[[z=1|go there]]\n\n@plane z=1\nthere\n",
+  "links": [
+    {
+      "sourceZ": 0,
+      "targetZ": 1,
+      "text": "go there",
+      "targetExists": true
+    }
+  ]
+}

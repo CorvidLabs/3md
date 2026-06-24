@@ -1,0 +1,18 @@
+{
+  "name": "multiple links in one body are returned left to right",
+  "source": "---\n3md: 0.1\n---\n@plane z=0\nfirst [[z=1]] then [[z=2|two]]\n\n@plane z=1\na\n\n@plane z=2\nb\n",
+  "links": [
+    {
+      "sourceZ": 0,
+      "targetZ": 1,
+      "text": null,
+      "targetExists": true
+    },
+    {
+      "sourceZ": 0,
+      "targetZ": 2,
+      "text": "two",
+      "targetExists": true
+    }
+  ]
+}

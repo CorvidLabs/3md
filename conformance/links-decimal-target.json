@@ -1,0 +1,12 @@
+{
+  "name": "a decimal target z is matched against a decimal plane z",
+  "source": "---\n3md: 0.1\n---\n@plane z=0\nhalf [[z=1.5]]\n\n@plane z=1.5\nmid\n",
+  "links": [
+    {
+      "sourceZ": 0,
+      "targetZ": 1.5,
+      "text": null,
+      "targetExists": true
+    }
+  ]
+}

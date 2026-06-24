@@ -6,32 +6,32 @@ genre: "choose-your-path"
 start: "z=0"
 ---
 A tiny choose-your-path dungeon. Each plane is a room; x/y give its position on
-an imagined map so a spatial viewer can lay it out. Follow the exits by jumping
-to the named z value. Begin at z=0.
+an imagined map so a spatial viewer can lay it out. Follow the exits, which are
+cross-plane links to other rooms. Begin at [[z=0|the entrance]].
 
 @plane z=0 label="entrance" x=0 y=0
 # The Entrance
 Water drips somewhere ahead. A cold stair descends north into the dark, and a
 rusted door sits to the east.
 
-- Take the stair down → **room z=1**
-- Force the rusted door → **room z=2**
+- Take the stair down to [[z=1|the flooded hall]].
+- Force the rusted door into [[z=2|the old armory]].
 
 @plane z=1 label="flooded-hall" x=0 y=-1
 # The Flooded Hall
 Black water reaches your knees. Something pale drifts just below the surface.
 A passage continues east; the stair behind you climbs back up.
 
-- Wade east → **room z=3**
-- Retreat up the stair → **room z=0**
+- Wade east to [[z=3|the vault]].
+- Retreat up the stair to [[z=0|the entrance]].
 
 @plane z=2 label="armory" x=1 y=0
 # The Old Armory
 Racks of corroded weapons. One spear is still keen. You take it.
 A low arch leads south, deeper in.
 
-- Go through the arch → **room z=3**
-- Back through the door → **room z=0**
+- Go through the arch to [[z=3|the vault]].
+- Back through the door to [[z=0|the entrance]].
 
 @plane z=3 label="vault" x=1 y=-1
 # The Sunken Vault
@@ -39,10 +39,10 @@ The water pools around a stone chest ringed with old wards. A guardian of silt
 and bone rises as you approach.
 
 - If you carry the spear (came via the armory), you strike true and open the
-  chest: **you win**.
-- Unarmed, the guardian drags you under: **you fall**.
+  chest: [[z=4|you win]].
+- Unarmed, the guardian drags you under: [[z=4|you fall]].
 
 @plane z=4 label="ending" x=2 y=-1
 # Ending
-However it went — triumph with the relic in hand, or a quiet drowning in the
-dark — the Sunken Vault keeps its silence again. The End.
+However it went, triumph with the relic in hand or a quiet drowning in the
+dark, the Sunken Vault keeps its silence again. The End.
