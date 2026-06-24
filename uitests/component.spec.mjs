@@ -247,6 +247,41 @@ test.describe("<three-md> component", () => {
     expect(r.spaceInReaderMoved).toBe(false);
   });
 
+  test("cross-plane links [[z=N|text]] are clickable and navigate", async ({ page }) => {
+    await page.goto("/embed-example.html");
+    await page.waitForFunction(() => document.getElementById("inline")?.shadowRoot?.querySelectorAll(".plane").length === 3);
+    const r = await page.evaluate(() => {
+      const lab = document.getElementById("inline");
+      lab.removeAttribute("mode");
+      lab.setSource('---\n3md: 1.0\naxis: space\n---\n@plane z=0\nGo to [[z=2|the vault]].\n@plane z=1\nmid\n@plane z=2\nback to [[z=0|start]]\n');
+      const link = lab.shadowRoot.querySelector(".xlink");
+      const text = link?.textContent;
+      link.click();
+      return { hasLink: !!link, text, indexAfter: lab.currentIndex };
+    });
+    expect(r.hasLink).toBe(true);
+    expect(r.text).toBe("the vault");
+    expect(r.indexAfter).toBe(2);
+  });
+
+  test("loop toggle controls whether playback wraps", async ({ page }) => {
+    await page.goto("/embed-example.html");
+    await page.waitForFunction(() => document.getElementById("inline")?.shadowRoot?.querySelectorAll(".plane").length === 3);
+    const r = await page.evaluate(() => {
+      const lab = document.getElementById("inline");
+      const btn = lab.shadowRoot.querySelector('[part="loop"]');
+      const start = btn.getAttribute("aria-pressed");
+      btn.click();
+      // The button row must not contain the (variable-width) readout, so it never
+      // reflows and shifts the play button under the cursor.
+      const controls = lab.shadowRoot.querySelector(".controls");
+      return { start, toggled: btn.getAttribute("aria-pressed"), readoutInRow: !!controls.querySelector(".readout") };
+    });
+    expect(r.start).toBe("true");
+    expect(r.toggled).toBe("false");
+    expect(r.readoutInRow).toBe(false);
+  });
+
   test("emits planechange when stepping", async ({ page }) => {
     await page.goto("/embed-example.html");
     await page.waitForFunction(() => document.getElementById("inline")?.shadowRoot?.querySelectorAll(".plane").length === 3);

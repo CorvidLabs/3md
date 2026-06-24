@@ -59,6 +59,9 @@ function inline(escaped: string): string {
   // Note: no `_italic_` rule - underscores are left alone so snake_case
   // identifiers (ship_to, acct_8821) render literally.
   return escaped
+    // Cross-plane links: [[z=2|text]] or [[z=2]] become clickable jumps.
+    .replace(/\[\[z=(-?\d+)(?:\|([^\]]*))?\]\]/g,
+      (_m, z, text) => `<a class="xlink" part="link" data-z="${z}">${text || "z=" + z}</a>`)
     .replace(/`([^`]+)`/g, "<code>$1</code>")
     .replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>")
     .replace(/\*([^*]+)\*/g, "<em>$1</em>");
@@ -235,12 +238,18 @@ const STYLES = `
 .voxel.near { opacity: 1; width: 11px; height: 11px; margin: -5.5px 0 0 -5.5px; }
 .floattext { position: absolute; left: 50%; top: 50%; font-size: 11px; line-height: 1.5;
   color: var(--three-md-faint); opacity: .5; white-space: pre; pointer-events: none; }
-.controls { display: flex; align-items: center; gap: 10px; margin-top: 12px; flex-wrap: wrap; }
-.navbtn { font: inherit; font-size: 14px; color: var(--three-md-text); background: var(--three-md-surface); border: 1px solid var(--three-md-hairline); width: 38px; height: 34px; border-radius: 4px; cursor: pointer; }
+/* nowrap so the button row never reflows and shifts under the cursor. */
+.controls { display: flex; align-items: center; gap: 8px; margin-top: 12px; flex-wrap: nowrap; }
+.navbtn { flex: 0 0 auto; font: inherit; font-size: 14px; color: var(--three-md-text); background: var(--three-md-surface); border: 1px solid var(--three-md-hairline); width: 38px; height: 34px; border-radius: 4px; cursor: pointer; }
 .navbtn:hover { border-color: var(--three-md-accent); color: var(--three-md-accent); }
-input[type=range] { flex: 1; min-width: 120px; accent-color: var(--three-md-accent); cursor: pointer; }
-.readout { font-size: 12.5px; color: var(--three-md-muted); }
+.navbtn.loop[aria-pressed="true"] { color: var(--three-md-accent); border-color: var(--three-md-accent); }
+.navbtn.loop[aria-pressed="false"] { opacity: .55; }
+input[type=range] { flex: 1 1 auto; min-width: 48px; accent-color: var(--three-md-accent); cursor: pointer; }
+/* readout on its own line, so its changing width never moves the buttons. */
+.readout { font-size: 12.5px; color: var(--three-md-muted); margin-top: 8px; min-height: 16px; }
 .readout b { color: var(--three-md-accent); }
+.md .xlink, [part="link"] { color: var(--three-md-accent); text-decoration: underline; text-underline-offset: 2px; cursor: pointer; }
+.md .xlink:hover { opacity: .8; }
 .err { padding: 16px; color: #ff8f8f; font-size: 13px; }
 `;
 
@@ -283,6 +292,8 @@ export class ThreeMDElement extends HTMLElement {
   private _error: string | null = null;
   private _loadToken = 0;
   private _playBtn!: HTMLButtonElement;
+  private _loopBtn!: HTMLButtonElement;
+  private _loop = true;
   private _playing = false;
   private _playTimer: ReturnType<typeof setInterval> | null = null;
 
@@ -466,15 +477,16 @@ export class ThreeMDElement extends HTMLElement {
       <div class="stage" part="stage">
         <div class="scene" part="scene"></div>
       </div>
-      <div class="hint" part="hint">drag to move through Z, or use the slider</div>
+      <div class="hint" part="hint">drag to orbit · WASD / arrows move · slider or ↑↓ scrub Z</div>
       <div class="controls" part="controls">
         <button class="navbtn" part="prev" type="button" aria-label="previous plane">←</button>
         <input type="range" part="scrubber" min="0" max="0" step="0.001" value="0" aria-label="scrub the Z axis" />
         <button class="navbtn" part="next" type="button" aria-label="next plane">→</button>
         <button class="navbtn" part="play" type="button" aria-label="play">▶</button>
-        <div class="readout" part="readout"></div>
+        <button class="navbtn loop" part="loop" type="button" aria-label="toggle loop" title="Loop playback" aria-pressed="true">⟲</button>
         <button class="navbtn fs" part="fullscreen" type="button" aria-label="fullscreen" title="Fullscreen">⛶</button>
-      </div>`;
+      </div>
+      <div class="readout" part="readout"></div>`;
     this._root.appendChild(this._wrap);
 
     this._axisEl = this._wrap.querySelector(".axis")!;
@@ -494,6 +506,22 @@ export class ThreeMDElement extends HTMLElement {
     this._wrap.querySelector('[part="prev"]')!.addEventListener("click", () => this._setTarget(Math.round(this._target) - 1));
     this._wrap.querySelector('[part="next"]')!.addEventListener("click", () => this._setTarget(Math.round(this._target) + 1));
     this._wrap.querySelector('[part="fullscreen"]')!.addEventListener("click", () => this.toggleFullscreen());
+    this._loopBtn = this._wrap.querySelector('[part="loop"]')!;
+    this._loopBtn.addEventListener("click", () => {
+      this._loop = !this._loop;
+      this._loopBtn.setAttribute("aria-pressed", String(this._loop));
+    });
+    // Cross-plane links ([[z=N|text]]) jump to that plane. Capture so the click
+    // does not also trigger the plane card's select handler.
+    this._scene.addEventListener("click", (e) => {
+      const link = (e.target as HTMLElement)?.closest?.(".xlink") as HTMLElement | null;
+      if (!link) return;
+      e.preventDefault();
+      e.stopPropagation();
+      const z = Number(link.dataset.z);
+      const idx = this._planes.findIndex((p) => p.z === z);
+      if (idx >= 0) this._setTarget(idx);
+    }, true);
     this.tabIndex = this.tabIndex < 0 ? 0 : this.tabIndex;
     this.addEventListener("keydown", (e) => this._onKey(e));
 
@@ -610,7 +638,13 @@ export class ThreeMDElement extends HTMLElement {
   private _step(): void {
     const n = this._planes.length;
     if (n <= 1) return;
-    this._target = (Math.round(this._target) + 1) % n;
+    const next = Math.round(this._target) + 1;
+    if (next >= n) {
+      if (!this._loop) { this._stopPlay(); return; } // play once and stop
+      this._target = 0;
+    } else {
+      this._target = next;
+    }
     this._focus = this._target;
     this._scrub.value = String(this._target);
     this.render();
