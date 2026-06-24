@@ -557,9 +557,9 @@ function loop(){
   const n=els.length, fr=Math.round(focus), m=cur.mode;
   els.forEach((el,idx)=>{
     let x=0,y=0,z=0,s=1,o=1,hot=false,dim=false;
-    if(m==="stack"){z=-idx*150;y=idx*26-(n-1)*13;x=idx*30-(n-1)*15;if(idx===fr){z+=120;s=1.05;hot=true;}}
-    else if(m==="play"){z=-idx*150;y=idx*26-(n-1)*13;x=idx*30-(n-1)*15;if(idx===fr){z+=130;s=1.06;hot=true;}else dim=true;}
-    else if(m==="layers"){z=-idx*120;y=idx*30-(n-1)*15;x=idx*34-(n-1)*17;if(hidden.has(idx))dim=true;else if(idx===fr){z+=90;s=1.04;hot=true;}}
+    if(m==="stack"){const d=idx-focus;z=-Math.abs(d)*150;y=d*24;x=d*32;if(Math.abs(d)<.5){s=1.05;hot=true;}}
+    else if(m==="play"){const d=idx-focus;z=-Math.abs(d)*150;y=d*24;x=d*32;if(Math.abs(d)<.5){s=1.06;hot=true;}else dim=true;}
+    else if(m==="layers"){const d=idx-focus;z=-Math.abs(d)*120;y=d*28;x=d*32;if(hidden.has(idx))dim=true;else if(Math.abs(d)<.5){s=1.04;hot=true;}}
     else if(m==="scene"){const p=doc.planes[idx];x=(p.x||0)*4.2;y=-(p.y||0)*4.2;z=-p.z*150;if(idx===fr){hot=true;s=1.05;}}
     else if(m==="parallax"){z=-idx*175;const near=n-idx;x=-mx*near*48;y=-my*near*26;s=1+(n-1-idx)*.07;if(idx===fr)hot=true;}
     else if(m==="present"){const d=idx-focus;if(Math.abs(d)<.5){x=0;y=0;z=120;s=1.18;o=1;hot=true;}else{x=d*70;z=-180-Math.abs(d)*50;s=.6;o=.22;dim=true;}}
