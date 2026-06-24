@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>3md docs · the .3md format</title>
+<meta name="description" content="Documentation for 3md - Markdown extended along one free Z axis. Frontmatter, @plane directives, cross-plane links, the threemd CLI, and install instructions for Swift, TypeScript, and Rust." />
+<link rel="icon" href="assets/favicon.svg" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="3md docs · the .3md format" />
+<meta property="og:description" content="Documentation for the 3md format: frontmatter, planes, cross-plane links, and the threemd CLI." />
+<meta property="og:url" content="https://corvidlabs.github.io/3md/docs.html" />
+<meta property="og:image" content="https://corvidlabs.github.io/3md/social-preview.png" />
+<meta property="og:image:width" content="1280" />
+<meta property="og:image:height" content="640" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="3md docs · the .3md format" />
+<meta name="twitter:description" content="Documentation for the 3md format." />
+<meta name="twitter:image" content="https://corvidlabs.github.io/3md/social-preview.png" />
+
+<!-- CorvidLabs theme pre-paint (must run before CSS) -->
+<script>
+  (() => { try {
+    const q = new URLSearchParams(location.search).get("theme");
+    const t = q || localStorage.getItem("corvid-theme");
+    if (t === "light" || t === "dark") document.documentElement.dataset.theme = t;
+  } catch (_) {} })();
+</script>
+
+<link rel="stylesheet" href="assets/tokens.css" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;700;900&family=Spline+Sans+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;background:var(--paper);color:var(--ink);
+    font-family:var(--font-display);font-size:18px;line-height:1.6;-webkit-font-smoothing:antialiased;
+    background-image:linear-gradient(var(--ink-06) 1px,transparent 1px),linear-gradient(90deg,var(--ink-06) 1px,transparent 1px);
+    background-size:48px 48px;
+  }
+  .wrap{max-width:1280px;margin:0 auto;padding:0 28px}
+  a{color:var(--sheen);text-decoration:none} a:hover{text-decoration:underline}
+  .mono{font-family:var(--font-mono)}
+  .irid{height:3px;border:0;background:var(--iridescence);margin:0}
+
+  /* top bar */
+  .topbar{display:flex;align-items:center;justify-content:space-between;padding:18px 0;border-bottom:1px solid var(--hairline)}
+  .brand{display:flex;align-items:center;gap:10px;font-family:var(--font-mono);font-size:13px;letter-spacing:.04em;color:var(--ink)}
+  .brand svg{width:26px;height:26px;color:var(--ink)}
+  .eyebrow{font-family:var(--font-mono);font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--text-faint)}
+
+  /* header */
+  header.hero{padding:52px 0 14px}
+  .pagetitle{font-family:var(--font-display);font-weight:900;font-size:clamp(48px,10vw,104px);line-height:.9;letter-spacing:-.04em;margin:14px 0 0;color:var(--ink)}
+  .pagetitle .z{color:var(--sheen)}
+  .lead{font-size:clamp(19px,2.4vw,26px);max-width:46ch;margin:18px 0 0;font-weight:400;color:var(--ink)}
+  .lead em{color:var(--sheen);font-style:italic}
+
+  /* top nav links */
+  .topnav{display:flex;gap:10px;flex-wrap:wrap;margin:24px 0 0}
+  .navlink{font-family:var(--font-mono);font-size:12.5px;letter-spacing:.04em;color:var(--text-faint);background:var(--surface);border:1px solid var(--hairline);padding:9px 14px;border-radius:3px;transition:.16s}
+  .navlink:hover{color:var(--sheen);border-color:var(--sheen);text-decoration:none}
+
+  /* sections */
+  section{scroll-margin-top:24px}
+  h2.sec{font-family:var(--font-display);font-weight:700;font-size:clamp(24px,3.2vw,36px);letter-spacing:-.02em;margin:54px 0 6px;color:var(--ink)}
+  h3.sub{font-family:var(--font-display);font-weight:700;font-size:clamp(18px,2.2vw,22px);letter-spacing:-.01em;margin:30px 0 6px;color:var(--ink)}
+  .sec-lead{color:var(--text-muted);max-width:64ch;margin:0 0 20px}
+  p{max-width:64ch;color:var(--ink)}
+  p.note{color:var(--text-muted)}
+  ul.feature{max-width:64ch;color:var(--ink);padding-left:20px}
+  ul.feature li{margin:6px 0}
+  code.inline{font-family:var(--font-mono);font-size:.86em;background:var(--ink-06);border:1px solid var(--hairline);border-radius:3px;padding:1px 6px;color:var(--ink)}
+
+  /* code panels - match index.html .panel */
+  .panel{border:1px solid var(--hairline);border-radius:6px;background:var(--surface);overflow:hidden;margin:14px 0 18px;max-width:760px}
+  .panel .bar{font-family:var(--font-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--text-faint);padding:11px 15px;border-bottom:1px solid var(--hairline);display:flex;justify-content:space-between;gap:12px}
+  .panel pre{margin:0;padding:14px;font-family:var(--font-mono);font-size:12.5px;line-height:1.65;overflow:auto;color:var(--ink);white-space:pre}
+  .k{color:var(--code-keyword)} .v{color:var(--code-string)} .d{color:var(--code-comment)} .at{color:var(--code-function);font-weight:500} .hh{color:var(--ink-70)} .n{color:var(--code-number)}
+
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:start}
+  @media(max-width:760px){.grid2{grid-template-columns:1fr}}
+  .grid2 .panel{max-width:none}
+
+  footer{border-top:1px solid var(--hairline);margin-top:60px;padding:28px 0 70px;display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap;align-items:center}
+  .pill{font-family:var(--font-mono);font-size:12px;color:var(--text-faint);display:flex;align-items:center;gap:8px}
+
+  /* theme toggle (from design-system) */
+  .corvid-theme-toggle{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;padding:0;background:none;border:1px solid var(--ink-12);color:var(--ink-70);cursor:pointer;transition:border-color .2s,color .2s;border-radius:3px}
+  .corvid-theme-toggle:hover{border-color:var(--sheen);color:var(--sheen)}
+  .corvid-theme-toggle:focus-visible{outline:2px solid var(--sheen);outline-offset:2px}
+  .corvid-theme-toggle svg{width:17px;height:17px}
+  .corvid-theme-toggle .moon{display:none}
+  :root[data-theme="dark"] .corvid-theme-toggle .sun{display:none}
+  :root[data-theme="dark"] .corvid-theme-toggle .moon{display:inline}
+  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .corvid-theme-toggle .sun{display:none}:root:not([data-theme="light"]) .corvid-theme-toggle .moon{display:inline}}
+  :root[data-theme="light"] .corvid-theme-toggle .sun{display:inline}
+  :root[data-theme="light"] .corvid-theme-toggle .moon{display:none}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="topbar">
+    <div class="brand">
+      <svg viewBox="0 0 64 64" aria-label="CorvidLabs"><circle cx="24" cy="32" r="18" fill="currentColor"/><path d="M33 21.5 L58.5 29.5 L33 39.5 Z" fill="currentColor"/><circle cx="27.5" cy="26" r="3" fill="var(--paper)"/></svg>
+      <span>CorvidLabs</span>
+    </div>
+    <button type="button" class="corvid-theme-toggle" data-corvid-theme-toggle aria-pressed="false" aria-label="Switch to dark theme" title="Switch theme">
+      <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.6v2.4M12 19v2.4M4.2 4.2l1.7 1.7M18.1 18.1l1.7 1.7M2.6 12h2.4M19 12h2.4M4.2 19.8l1.7-1.7M18.1 5.9l1.7-1.7"/></svg>
+      <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A8.6 8.6 0 1 1 11.2 3a6.7 6.7 0 0 0 9.8 9.8z"/></svg>
+    </button>
+  </div>
+
+  <header class="hero">
+    <div class="eyebrow">documentation</div>
+    <h1 class="pagetitle">3md docs<span class="z">.</span></h1>
+    <p class="lead">Everything you need to read and write <em>.3md</em> - Markdown with one free Z axis you name yourself.</p>
+    <nav class="topnav" aria-label="Documentation links">
+      <a class="navlink" href="index.html">&larr; the demo</a>
+      <a class="navlink" href="gallery.html">the gallery</a>
+      <a class="navlink" href="https://github.com/CorvidLabs/3md/blob/main/SPEC.md">the spec</a>
+      <a class="navlink" href="https://github.com/CorvidLabs/3md">GitHub</a>
+    </nav>
+  </header>
+  <hr class="irid" />
+
+  <!-- QUICK START -->
+  <section id="quick-start">
+    <h2 class="sec">Quick start</h2>
+    <p class="sec-lead">A 3md document is plain UTF-8 text with three regions in order: a required frontmatter block, an optional Markdown preamble, then zero or more planes. Here is a complete, minimal document.</p>
+    <div class="panel">
+      <div class="bar"><span>my-week.3md</span><span class="d">minimal document</span></div>
+      <pre><span class="d">---</span>
+<span class="k">3md:</span> <span class="v">1.0</span>
+<span class="k">axis:</span> <span class="v">time</span>
+<span class="k">title:</span> <span class="v">My Week</span>
+<span class="d">---</span>
+Optional preamble Markdown.
+
+<span class="at">@plane</span> <span class="k">z=</span><span class="n">0</span> <span class="k">label=</span><span class="v">"Monday"</span>
+<span class="hh"># Monday</span>
+<span class="hh">- [ ] Standup</span>
+
+<span class="at">@plane</span> <span class="k">z=</span><span class="n">1</span> <span class="k">label=</span><span class="v">"Tuesday"</span>
+<span class="hh"># Tuesday</span></pre>
+    </div>
+    <p class="note">The <code class="inline">3md:</code> line is the magic marker - a document without it is not 3md. The <code class="inline">axis</code> names what depth means (here, time). Each <code class="inline">@plane</code> directive slices the document along Z; everything between directives is ordinary Markdown.</p>
+  </section>
+
+  <!-- THE FORMAT -->
+  <section id="the-format">
+    <h2 class="sec">The format</h2>
+    <p class="sec-lead">3md is Markdown extended along a single free axis, called the Z axis. A document is a stack of planes, and each plane is ordinary Markdown. The grammar is frozen at version 1.0.</p>
+
+    <h3 class="sub">Frontmatter</h3>
+    <p>The document MUST begin with a frontmatter block: a line containing exactly <code class="inline">---</code>, one or more <code class="inline">key: value</code> lines, and a closing line containing exactly <code class="inline">---</code>. It is its own tiny, flat, line-based mini-format - it only looks like YAML. It is NOT YAML: there is no nesting, no lists, no anchors, and no multi-line values. Each line is split on the first colon; blank lines and lines starting with <code class="inline">#</code> are ignored.</p>
+    <ul class="feature">
+      <li><code class="inline">3md</code> (required) - the format version string and the file's magic marker. It is recorded but never validated, so parsers are version-lenient: a <code class="inline">3md: 0.1</code> document stays valid.</li>
+      <li><code class="inline">axis</code> (optional) - the meaning of the Z axis. Defaults to <code class="inline">layer</code>. Trimmed and lowercased; any string is permitted.</li>
+      <li><code class="inline">title</code> (optional) - a human-readable title.</li>
+      <li>Any other key is preserved verbatim as free string metadata - never coerced to a number, boolean, or date. Duplicate keys are last-wins.</li>
+    </ul>
+    <div class="panel">
+      <div class="bar"><span>frontmatter</span><span class="d">reserved keys + free metadata</span></div>
+      <pre><span class="d">---</span>
+<span class="k">3md:</span> <span class="v">1.0</span>          <span class="d"># required - the magic marker</span>
+<span class="k">axis:</span> <span class="v">frame</span>       <span class="d"># optional - defaults to "layer"</span>
+<span class="k">title:</span> <span class="v">Bouncing dot</span>
+<span class="k">author:</span> <span class="v">leif</span>      <span class="d"># free metadata, always a string</span>
+<span class="k">fps:</span> <span class="v">"12"</span>          <span class="d"># quotes are stripped; value stays a string</span>
+<span class="d">---</span></pre>
+    </div>
+
+    <h3 class="sub">The @plane directive</h3>
+    <p>A plane begins with a directive line whose first whitespace-delimited token is <code class="inline">@plane</code>, followed by space-separated <code class="inline">key=value</code> attributes. The directive MUST begin at column 0 and MUST lie outside a fenced code block. Every line after it, up to the next <code class="inline">@plane</code> or end of file, is that plane's Markdown body (leading and trailing blank lines are trimmed).</p>
+    <ul class="feature">
+      <li><code class="inline">z</code> (required) - a finite decimal giving the plane's position on the Z axis. Optional sign, digits with an optional fraction, optional exponent (for example <code class="inline">0</code>, <code class="inline">-2.5</code>, <code class="inline">1e3</code>). Hex, <code class="inline">inf</code>, and <code class="inline">nan</code> are rejected. Two planes MUST NOT share the same <code class="inline">z</code>.</li>
+      <li><code class="inline">x</code>, <code class="inline">y</code> (optional) - finite decimals giving an in-plane offset for spatial viewers.</li>
+      <li><code class="inline">label</code> (optional) - a human-readable name for the plane.</li>
+      <li>Any other attribute is preserved as a string on the plane. Quote a value if it contains spaces; inside quotes, <code class="inline">\\</code> and <code class="inline">\"</code> are escapes.</li>
+    </ul>
+    <div class="panel">
+      <div class="bar"><span>@plane</span><span class="d">attributes</span></div>
+      <pre><span class="at">@plane</span> <span class="k">z=</span><span class="n">2</span> <span class="k">x=</span><span class="n">-16</span> <span class="k">y=</span><span class="n">-26</span> <span class="k">label=</span><span class="v">"backdrop"</span> <span class="k">author=</span><span class="v">"counsel"</span>
+<span class="hh"># Backdrop</span>
+midnight curtain</pre>
+    </div>
+
+    <h3 class="sub">Single-plane shorthand</h3>
+    <p>If a document has frontmatter but no <code class="inline">@plane</code> directives, the entire body is one implicit plane at <code class="inline">z = 0</code>. A normal Markdown file with a 3md header is a valid one-plane document.</p>
+    <div class="panel">
+      <div class="bar"><span>note.3md</span><span class="d">one implicit plane at z = 0</span></div>
+      <pre><span class="d">---</span>
+<span class="k">3md:</span> <span class="v">1.0</span>
+<span class="k">title:</span> <span class="v">A plain note</span>
+<span class="d">---</span>
+<span class="hh"># Just Markdown</span>
+No directives, so this whole body is one plane.</pre>
+    </div>
+
+    <h3 class="sub">Cross-plane links</h3>
+    <p>A plane body MAY reference another plane by its <code class="inline">z</code> position with a double-bracket link. The grammar is <code class="inline">[[z=</code> followed by a finite decimal, an optional <code class="inline">|</code> and link text, then <code class="inline">]]</code>. The matching regular expression is <code class="inline">\[\[z=([^\]|]+)(?:\|([^\]]*))?\]\]</code>. If the captured target is not a finite decimal, the sequence is not a link and stays literal body text.</p>
+    <div class="panel">
+      <div class="bar"><span>links</span><span class="d">[[z=N]] and [[z=N|text]]</span></div>
+      <pre>See <span class="at">[[z=2]]</span> for the details,
+or jump <span class="at">[[z=0|back to the start]]</span>.</pre>
+    </div>
+    <p class="note">The core parser leaves links in the body verbatim. Implementations expose them through a separate extraction step that reports the source <code class="inline">z</code>, target <code class="inline">z</code>, optional text, and whether a plane with that target exists (<code class="inline">targetExists</code>) - which makes dangling-reference validation and navigation portable across implementations.</p>
+  </section>
+
+  <!-- INSTALL -->
+  <section id="install">
+    <h2 class="sec">Install</h2>
+    <p class="sec-lead">Three parsers are kept in lockstep by a shared conformance suite: a cross-platform Swift parser (<code class="inline">ThreeMD</code>), a TypeScript port, and a Rust crate. Pick your stack.</p>
+
+    <div class="grid2">
+      <div class="panel">
+        <div class="bar"><span>Swift</span><span class="d">SwiftPM</span></div>
+        <pre><span class="d">// Package.swift</span>
+.<span class="at">package</span>(
+  url: <span class="v">"https://github.com/CorvidLabs/3md"</span>,
+  from: <span class="v">"1.0.0"</span>
+)
+
+<span class="d">// then depend on the product</span>
+.<span class="at">product</span>(name: <span class="v">"ThreeMD"</span>, package: <span class="v">"3md"</span>)</pre>
+      </div>
+
+      <div class="panel">
+        <div class="bar"><span>TypeScript</span><span class="d">GitHub Packages</span></div>
+        <pre><span class="d"># point the scope at the GitHub registry once</span>
+<span class="hh">echo "@corvidlabs:registry=https://npm.pkg.github.com" &gt;&gt; .npmrc</span>
+
+<span class="hh">bun add @corvidlabs/threemd</span></pre>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="bar"><span>Rust</span><span class="d">the threemd crate</span></div>
+      <pre><span class="hh">cargo add threemd</span></pre>
+    </div>
+
+    <h3 class="sub">The threemd CLI</h3>
+    <p>The <code class="inline">threemd</code> command-line tool ships with the package and self-documents (run <code class="inline">threemd --help</code>). A path of <code class="inline">-</code> reads from standard input.</p>
+    <div class="panel">
+      <div class="bar"><span>threemd CLI</span><span class="d">validate · info · html</span></div>
+      <pre><span class="hh">threemd validate &lt;file&gt;</span>   <span class="d"># parse; print "ok" or exit non-zero</span>
+<span class="hh">threemd info &lt;file&gt;</span>       <span class="d"># version, axis, title, plane positions</span>
+<span class="hh">threemd html &lt;file&gt;</span>       <span class="d"># render the document to HTML on stdout</span></pre>
+    </div>
+    <p class="note">Install the CLI via Homebrew with <code class="inline">brew install CorvidLabs/tap/threemd</code>. With the Swift package you can also run it directly: <code class="inline">swift run threemd validate &lt;file&gt;</code>.</p>
+  </section>
+
+  <!-- EXAMPLES -->
+  <section id="examples">
+    <h2 class="sec">Examples</h2>
+    <p class="sec-lead">Learn by reading real documents that span many axis types - time planners, frame animations, layered annotations, and spatial scenes wired with cross-plane links.</p>
+    <ul class="feature">
+      <li><a href="gallery.html">Browse all 100 examples in the gallery</a> - every one parsed live in the page.</li>
+      <li>The <a href="https://github.com/CorvidLabs/3md/tree/main/Examples">Examples/ directory</a> holds nine curated documents: <code class="inline">daily-planner</code> (time), <code class="inline">animation</code> (frame), <code class="inline">layered-notes</code> (layer), <code class="inline">dungeon</code> (space, with <code class="inline">[[z=N]]</code> links), <code class="inline">3md-in-3md</code> (a <code class="inline">@plane</code> inside a code fence), plus <code class="inline">recipe</code>, <code class="inline">changelog</code>, <code class="inline">resume</code>, and <code class="inline">kanban</code>.</li>
+      <li>See <a href="https://github.com/CorvidLabs/3md/blob/main/SPEC.md">SPEC.md</a> for the full grammar, the error set, and conformance rules.</li>
+    </ul>
+  </section>
+
+  <footer>
+    <div class="pill mono">MIT &copy; CorvidLabs</div>
+    <div class="pill mono"><a href="https://github.com/CorvidLabs/3md">github.com/CorvidLabs/3md</a></div>
+  </footer>
+</div>
+
+<script defer src="assets/theme.js"></script>
+</body>
+</html>
