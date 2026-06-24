@@ -1,5 +1,11 @@
 # Changelog
 
+## [v0.5.0] - 2026-06-23
+
+### Other
+
+- Add cross-plane links ([[z=N]]) in both parsers, rendered as anchors (e40038e)
+
 ## [v0.4.0] - 2026-06-23
 
 ### Other
