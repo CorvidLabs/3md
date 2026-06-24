@@ -24,6 +24,7 @@ let out = `---
 3md: 1.0
 axis: doc
 title: 3md Project Documentation
+view: single
 note: every Markdown doc in the repo, combined into one navigable 3md file
 generated: regenerate with scripts/build-docs-3md.mjs - edit the source docs, not this
 ---

@@ -155,6 +155,15 @@ const STYLES = `
 }
 .plane.dim { opacity: .18; filter: saturate(.5); }
 .plane.hot { box-shadow: 0 0 0 2px var(--three-md-accent), 0 18px 44px rgba(0,0,0,.5); }
+/* Reader: the focused plane in single-card view fills the stage and scrolls its
+   own body, so a plane of any length stays fully readable. Navigation moves to
+   the slider, arrows, and keyboard; the body scrolls with wheel or touch. */
+.plane.reader {
+  top: 50%; left: 50%; transform: translate(-50%, -50%);
+  width: auto; max-width: var(--three-md-plane-width, 560px);
+  margin: 0; height: auto; max-height: 100%; overflow-y: auto; overscroll-behavior: contain;
+  touch-action: pan-y; -webkit-overflow-scrolling: touch; cursor: auto;
+}
 .ptag { font-size: 10.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--three-md-accent); display: flex; justify-content: space-between; margin-bottom: 8px; }
 .ptag b { color: var(--three-md-text); font-weight: 700; }
 .md, .grid { font-size: 12.5px; line-height: 1.65; color: var(--three-md-muted); }
@@ -589,6 +598,10 @@ export class ThreeMDElement extends HTMLElement {
   }
 
   private _onPointerDown(e: PointerEvent): void {
+    // In single-card view the focused plane is a native scroll container, so we
+    // leave the gesture to the browser: wheel and touch pan read the plane, and
+    // Z navigation lives on the slider, arrows, and keyboard instead.
+    if (this._mode === "single") return;
     this._stopPlay(); // dragging takes over from playback
     this._dragging = true;
     this._pointerId = e.pointerId;
@@ -675,11 +688,14 @@ export class ThreeMDElement extends HTMLElement {
     if (m === "single") {
       this._els.forEach((el, idx) => {
         const on = idx === fr;
-        el.style.transform = "translate3d(0px,0px,0px) scale(1)";
+        // The focused card uses the .reader CSS for centering/scrolling, so clear
+        // its inline transform; hidden cards keep a neutral one.
+        el.style.transform = on ? "" : "translate3d(0px,0px,0px) scale(1)";
         el.style.opacity = on ? "1" : "0";
         el.style.zIndex = on ? "10" : "0";
         el.classList.toggle("hot", false);
         el.classList.toggle("dim", false);
+        el.classList.toggle("reader", on); // focused card becomes the scroll container
       });
       this._scene.style.transform = "translateZ(0px)";
       this._updateReadout();
@@ -723,6 +739,7 @@ export class ThreeMDElement extends HTMLElement {
       el.style.zIndex = idx === fr ? "300" : String(120 - Math.abs(fr - idx));
       el.classList.toggle("hot", hot);
       el.classList.toggle("dim", dim);
+      el.classList.toggle("reader", false); // reader layout only applies in single mode
     });
 
     let st: string;

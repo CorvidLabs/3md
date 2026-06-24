@@ -136,10 +136,35 @@ test.describe("<three-md> component", () => {
     await page.waitForTimeout(450); // let the opacity transition settle
     const op = await page.evaluate(() =>
       [...document.getElementById("inline").shadowRoot.querySelectorAll(".plane")].map((p) => Number(getComputedStyle(p).opacity)));
-    // Only plane index 1 is visible; the others are faded out.
-    expect(op[1]).toBe(1);
-    expect(op[0]).toBe(0);
-    expect(op[2]).toBe(0);
+    // Only plane index 1 is visible; the others are faded out. Use a tolerance
+    // because opacity animates via a CSS transition and may not land on an exact
+    // 0 at the moment we sample it.
+    expect(op[1]).toBeGreaterThan(0.95);
+    expect(op[0]).toBeLessThan(0.05);
+    expect(op[2]).toBeLessThan(0.05);
+  });
+
+  test("single-card mode scrolls a long plane (reader)", async ({ page }) => {
+    await page.goto("/embed-example.html");
+    await page.waitForFunction(() => document.getElementById("inline")?.shadowRoot?.querySelectorAll(".plane").length === 3);
+    const long = "---\n3md: 1.0\naxis: doc\nview: single\n---\n@plane z=0 label=\"Long\"\n# Long\n\n" +
+      Array.from({ length: 150 }, (_, i) => `Paragraph ${i + 1}. Lorem ipsum dolor sit amet.`).join("\n\n") +
+      "\n@plane z=1 label=\"Short\"\n# Short\n\nLittle.\n";
+    const r = await page.evaluate((src) => {
+      const el = document.getElementById("inline");
+      el.setSource(src);
+      const reader = el.shadowRoot.querySelector(".plane.reader");
+      const overflowY = getComputedStyle(reader).overflowY;
+      const overflows = reader.scrollHeight > reader.clientHeight + 10;
+      reader.scrollTop = 500;
+      return { hasReader: !!reader, overflowY, overflows, scrolled: reader.scrollTop > 0 };
+    }, long);
+    // The focused plane is a real scroll container, so a 150-paragraph plane is
+    // fully readable instead of being clipped by the stage.
+    expect(r.hasReader).toBe(true);
+    expect(r.overflowY).toBe("auto");
+    expect(r.overflows).toBe(true);
+    expect(r.scrolled).toBe(true);
   });
 
   test("emits planechange when stepping", async ({ page }) => {
