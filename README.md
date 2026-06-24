@@ -57,6 +57,14 @@ let text = Serializer().render(document)
 
 See [SPEC.md](SPEC.md) for the full grammar and conformance rules.
 
+## Examples
+
+The [Examples/](Examples) directory has one document per axis:
+
+- [`daily-planner.3md`](Examples/daily-planner.3md) - `axis: time`, one plane per day.
+- [`animation.3md`](Examples/animation.3md) - `axis: frame`, one plane per frame.
+- [`layered-notes.3md`](Examples/layered-notes.3md) - `axis: layer`, stacked overlay layers.
+
 ## Development
 
 This repo uses the CorvidLabs trust toolchain. The single gate is:
@@ -65,8 +73,8 @@ This repo uses the CorvidLabs trust toolchain. The single gate is:
 fledge lanes run verify
 ```
 
-which runs format, lint, build, and test. See [AGENTS.md](AGENTS.md) for the
-standing rules every contributor and agent follows.
+which runs format, lint, build, and the 32-test suite. See [AGENTS.md](AGENTS.md)
+for the standing rules every contributor and agent follows.
 
 ## Status
 

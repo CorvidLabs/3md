@@ -1,0 +1,568 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>3md · Markdown with a Z axis</title>
+<link rel="icon" href="assets/favicon.svg" />
+
+<!-- CorvidLabs theme pre-paint (must run before CSS) -->
+<script>
+  (() => { try {
+    const q = new URLSearchParams(location.search).get("theme");
+    const t = q || localStorage.getItem("corvid-theme");
+    if (t === "light" || t === "dark") document.documentElement.dataset.theme = t;
+  } catch (_) {} })();
+</script>
+
+<link rel="stylesheet" href="assets/tokens.css" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;700;900&family=Spline+Sans+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;background:var(--paper);color:var(--ink);
+    font-family:var(--font-display);font-size:18px;line-height:1.6;-webkit-font-smoothing:antialiased;
+    background-image:linear-gradient(var(--ink-06) 1px,transparent 1px),linear-gradient(90deg,var(--ink-06) 1px,transparent 1px);
+    background-size:48px 48px;
+  }
+  .wrap{max-width:1280px;margin:0 auto;padding:0 28px}
+  a{color:var(--sheen);text-decoration:none} a:hover{text-decoration:underline}
+  .mono{font-family:var(--font-mono)}
+  .irid{height:3px;border:0;background:var(--iridescence);margin:0}
+
+  /* top bar */
+  .topbar{display:flex;align-items:center;justify-content:space-between;padding:18px 0;border-bottom:1px solid var(--hairline)}
+  .brand{display:flex;align-items:center;gap:10px;font-family:var(--font-mono);font-size:13px;letter-spacing:.04em;color:var(--ink)}
+  .brand svg{width:26px;height:26px;color:var(--ink)}
+  .eyebrow{font-family:var(--font-mono);font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--text-faint)}
+
+  header.hero{padding:58px 0 14px}
+  .wordmark{font-family:var(--font-display);font-weight:900;font-size:clamp(70px,16vw,184px);line-height:.84;letter-spacing:-.04em;margin:14px 0 0;color:var(--ink)}
+  .wordmark .z{color:var(--sheen)}
+  .tagline{font-size:clamp(21px,2.6vw,30px);max-width:30ch;margin:18px 0 0;font-weight:400;color:var(--ink)}
+  .tagline em{color:var(--sheen);font-style:italic}
+  .sub{color:var(--text-faint);margin-top:8px;font-family:var(--font-mono);font-size:13.5px}
+
+  /* lab */
+  .lab{margin:40px 0 24px}
+  .tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+  .tab{font-family:var(--font-mono);font-size:12px;letter-spacing:.06em;color:var(--text-faint);background:var(--surface);border:1px solid var(--hairline);padding:9px 14px;border-radius:3px;cursor:pointer;transition:.16s}
+  .tab:hover{color:var(--sheen);border-color:var(--sheen)}
+  .tab[aria-selected="true"]{color:var(--paper);background:var(--sheen);border-color:var(--sheen);font-weight:500}
+
+  .lab-grid{display:grid;grid-template-columns:1.25fr .95fr;gap:18px;align-items:start}
+  @media(max-width:980px){.lab-grid{grid-template-columns:1fr}}
+
+  .axis-name{font-family:var(--font-mono);font-weight:500;font-size:13px;letter-spacing:.14em;color:var(--sheen-strong);margin-bottom:4px}
+  .axis-desc{color:var(--text-muted);font-size:15px;min-height:44px;margin-bottom:10px}
+
+  .stage{position:relative;height:480px;border:1px solid var(--hairline);border-radius:6px;background:var(--surface-strong);overflow:hidden;perspective:1300px;perspective-origin:50% 42%;cursor:grab}
+  .stage:active{cursor:grabbing}
+  .axis-arrow{position:absolute;right:16px;top:14px;font-family:var(--font-mono);font-size:11px;letter-spacing:.16em;color:var(--text-faint);text-align:right;z-index:6}
+  .stage-hint{position:absolute;left:14px;bottom:10px;font-family:var(--font-mono);font-size:11px;color:var(--text-faint);z-index:6}
+  .scene{position:absolute;inset:0;transform-style:preserve-3d;will-change:transform}
+  .plane{position:absolute;left:50%;top:50%;width:340px;margin-left:-170px;margin-top:-110px;border-radius:8px;padding:15px 17px;transform-style:preserve-3d;cursor:pointer;
+    background:var(--surface);border:1px solid var(--pc,var(--sheen));
+    box-shadow:0 18px 44px var(--ink-12),0 2px 8px var(--ink-06);transition:opacity .35s,box-shadow .35s,filter .35s}
+  .plane .ptag{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--pc,var(--sheen));display:flex;justify-content:space-between;margin-bottom:9px}
+  .plane .ptag b{color:var(--ink);font-weight:700}
+  .plane h4{font-family:var(--font-display);font-weight:700;font-size:16px;margin:2px 0 8px;color:var(--ink)}
+  .plane .md{font-family:var(--font-mono);font-size:12.5px;line-height:1.7;color:var(--text-muted)}
+  .plane .md .li{display:flex;gap:8px}
+  .plane .md .box{color:var(--pc,var(--sheen))}
+  .plane .md .done{color:var(--text-faint);text-decoration:line-through}
+  .plane .grid{font-family:var(--font-mono);font-size:18px;line-height:1.25;color:var(--ink-12);letter-spacing:3px}
+  .plane .grid .dot{color:var(--sheen);font-weight:700}
+  .plane.dim{opacity:.16;filter:saturate(.4)}
+  .plane.hot{box-shadow:0 0 0 2px var(--sheen),0 18px 44px var(--ink-12)}
+
+  .controls{margin-top:14px;display:flex;flex-direction:column;gap:12px}
+  .scrub-row{display:flex;align-items:center;gap:12px}
+  .navbtn{font-family:var(--font-mono);font-size:14px;color:var(--ink);background:var(--surface);border:1px solid var(--hairline);width:38px;height:34px;border-radius:3px;cursor:pointer;transition:.15s}
+  .navbtn:hover{border-color:var(--sheen);color:var(--sheen)}
+  input[type=range]{-webkit-appearance:none;appearance:none;flex:1;height:4px;border-radius:4px;background:var(--surface-strong);outline:none;border:1px solid var(--hairline)}
+  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;background:var(--sheen);cursor:pointer;border:3px solid var(--paper);box-shadow:0 0 0 1px var(--sheen)}
+  input[type=range]::-moz-range-thumb{width:16px;height:16px;border-radius:50%;background:var(--sheen);cursor:pointer;border:3px solid var(--paper)}
+  .readout{font-family:var(--font-mono);font-size:13px;color:var(--text-faint);min-width:170px}
+  .readout b{color:var(--sheen-strong)}
+  .extra{display:flex;gap:8px;flex-wrap:wrap;align-items:center;min-height:30px}
+  .chip{font-family:var(--font-mono);font-size:12px;padding:6px 12px;border-radius:999px;cursor:pointer;border:1px solid var(--hairline);color:var(--text-faint);transition:.15s;user-select:none}
+  .chip[data-on="true"]{color:var(--paper);background:var(--cc,var(--sheen));border-color:var(--cc,var(--sheen));font-weight:500}
+  .ghost{font-family:var(--font-mono);font-size:12px;color:var(--text-faint)}
+  .pbtn{font-family:var(--font-mono);font-size:12px;color:var(--ink);background:var(--surface);border:1px solid var(--hairline);padding:6px 14px;border-radius:3px;cursor:pointer}
+  .pbtn:hover{border-color:var(--sheen);color:var(--sheen)}
+  .dots{display:flex;gap:6px} .dotpip{width:8px;height:8px;border-radius:50%;background:var(--ink-12)} .dotpip.on{background:var(--sheen)}
+
+  .panel{border:1px solid var(--hairline);border-radius:6px;background:var(--surface);overflow:hidden;margin-bottom:18px}
+  .panel .bar{font-family:var(--font-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--text-faint);padding:11px 15px;border-bottom:1px solid var(--hairline);display:flex;justify-content:space-between}
+  .panel pre{margin:0;padding:14px;font-family:var(--font-mono);font-size:12.5px;line-height:1.65;overflow:auto;max-height:430px;color:var(--ink)}
+  .srcblock{display:block;border-left:2px solid transparent;padding-left:9px;margin-left:-11px;transition:.2s}
+  .srcblock.active{border-left-color:var(--sheen);background:color-mix(in srgb,var(--sheen) 10%,transparent)}
+  .k{color:var(--code-keyword)} .v{color:var(--code-string)} .d{color:var(--code-comment)} .at{color:var(--code-function);font-weight:500} .hh{color:var(--ink-70)}
+
+  h2.sec{font-family:var(--font-display);font-weight:700;font-size:clamp(22px,3vw,34px);letter-spacing:-.02em;margin:48px 0 6px;color:var(--ink)}
+  .sec-lead{color:var(--text-muted);max-width:62ch;margin:0 0 22px}
+  .panel.napkin{max-width:680px}
+
+  footer{border-top:1px solid var(--hairline);margin-top:54px;padding:28px 0 70px;display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap;align-items:center}
+  .pill{font-family:var(--font-mono);font-size:12px;color:var(--text-faint);display:flex;align-items:center;gap:8px}
+  .pulse{width:8px;height:8px;border-radius:50%;background:var(--success);box-shadow:0 0 0 0 color-mix(in srgb,var(--success) 60%,transparent);animation:pulse 2s infinite}
+  @keyframes pulse{70%{box-shadow:0 0 0 8px transparent}100%{box-shadow:0 0 0 0 transparent}}
+
+  /* theme toggle (from design-system) */
+  .corvid-theme-toggle{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;padding:0;background:none;border:1px solid var(--ink-12);color:var(--ink-70);cursor:pointer;transition:border-color .2s,color .2s;border-radius:3px}
+  .corvid-theme-toggle:hover{border-color:var(--sheen);color:var(--sheen)}
+  .corvid-theme-toggle:focus-visible{outline:2px solid var(--sheen);outline-offset:2px}
+  .corvid-theme-toggle svg{width:17px;height:17px}
+  .corvid-theme-toggle .moon{display:none}
+  :root[data-theme="dark"] .corvid-theme-toggle .sun{display:none}
+  :root[data-theme="dark"] .corvid-theme-toggle .moon{display:inline}
+  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .corvid-theme-toggle .sun{display:none}:root:not([data-theme="light"]) .corvid-theme-toggle .moon{display:inline}}
+  :root[data-theme="light"] .corvid-theme-toggle .sun{display:inline}
+  :root[data-theme="light"] .corvid-theme-toggle .moon{display:none}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="topbar">
+    <div class="brand">
+      <svg viewBox="0 0 64 64" aria-label="CorvidLabs"><circle cx="24" cy="32" r="18" fill="currentColor"/><path d="M33 21.5 L58.5 29.5 L33 39.5 Z" fill="currentColor"/><circle cx="27.5" cy="26" r="3" fill="var(--paper)"/></svg>
+      <span>CorvidLabs</span>
+    </div>
+    <button type="button" class="corvid-theme-toggle" data-corvid-theme-toggle aria-pressed="false" aria-label="Switch to dark theme" title="Switch theme">
+      <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.6v2.4M12 19v2.4M4.2 4.2l1.7 1.7M18.1 18.1l1.7 1.7M2.6 12h2.4M19 12h2.4M4.2 19.8l1.7-1.7M18.1 5.9l1.7-1.7"/></svg>
+      <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A8.6 8.6 0 1 1 11.2 3a6.7 6.7 0 0 0 9.8 9.8z"/></svg>
+    </button>
+  </div>
+
+  <header class="hero">
+    <div class="eyebrow">the .3md format</div>
+    <h1 class="wordmark">3md<span class="z">.</span></h1>
+    <p class="tagline">Markdown, but with a <em>third axis</em> you name yourself.</p>
+    <p class="sub">time · frames · layers · depth · space · slides · floors — same file, you choose what Z means</p>
+  </header>
+  <hr class="irid" />
+
+  <section class="lab">
+    <div class="tabs" role="tablist" id="tabs"></div>
+    <div class="lab-grid">
+      <div class="left">
+        <div class="axis-name" id="axisName">AXIS</div>
+        <div class="axis-desc" id="axisDesc"></div>
+        <div class="stage" id="stage">
+          <div class="axis-arrow" id="axisArrow">Z &uarr;</div>
+          <div class="scene" id="scene"></div>
+          <div class="stage-hint">drag to orbit · scrub below · arrow keys step Z</div>
+        </div>
+        <div class="controls">
+          <div class="scrub-row">
+            <button class="navbtn" id="prev" aria-label="previous plane">&#8592;</button>
+            <input type="range" id="scrub" min="0" max="0" step="0.001" value="0" />
+            <button class="navbtn" id="next" aria-label="next plane">&#8594;</button>
+          </div>
+          <div class="scrub-row">
+            <div class="readout" id="readout"></div>
+            <div class="extra" id="extra"></div>
+          </div>
+        </div>
+      </div>
+      <div class="right">
+        <div class="panel">
+          <div class="bar"><span id="srcName">source.3md</span><span class="d">raw · synced</span></div>
+          <pre id="src"></pre>
+        </div>
+        <div class="panel">
+          <div class="bar"><span>parsed</span><span class="d" id="parsedMeta">ThreeMD</span></div>
+          <pre id="parsed"></pre>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="sec">The whole spec fits on a napkin.</h2>
+    <p class="sec-lead">Know Markdown? You know 3md. A version line is the magic marker, an <code>axis</code> names what depth means, and <code>@plane</code> directives slice the document along Z. Everything between directives is ordinary Markdown. Every view above is parsed by a faithful JavaScript port of the Swift <code>ThreeMD</code> parser, running in this page.</p>
+    <div class="panel napkin">
+      <div class="bar"><span>anatomy</span><span class="d">.3md</span></div>
+      <pre><span class="d">---</span>
+<span class="k">3md:</span> <span class="v">0.1</span>            <span class="d"># required version, the magic marker</span>
+<span class="k">axis:</span> <span class="v">time</span>         <span class="d"># anything: time, frame, layer, depth, space...</span>
+<span class="k">title:</span> <span class="v">My Week</span>
+<span class="d">---</span>
+<span class="at">@plane</span> <span class="k">z=</span><span class="v">0</span> <span class="k">label=</span><span class="v">"Monday"</span>   <span class="d"># a slice along Z</span>
+<span class="hh"># Monday</span>
+<span class="hh">- [ ] Standup</span></pre>
+    </div>
+  </section>
+
+  <footer>
+    <div class="pill"><span class="pulse"></span> CI green · Swift parser · 32 tests · 7 live examples</div>
+    <div class="pill mono"><a href="https://github.com/CorvidLabs/3md">github.com/CorvidLabs/3md</a></div>
+  </footer>
+</div>
+
+<script defer src="assets/theme.js"></script>
+<script>
+/* ---------- faithful 3md parser (mirrors Sources/ThreeMD) ---------- */
+function parse3md(source){
+  const lines=source.replace(/\r\n/g,"\n").split("\n");let i=0;
+  while(i<lines.length&&lines[i].trim()==="")i++;
+  if(lines[i]===undefined||lines[i].trim()!=="---")throw new Error("missingFrontmatter");
+  i++;const fields=[];let closed=false;
+  for(;i<lines.length;i++){const t=lines[i].trim();
+    if(t==="---"){closed=true;i++;break;}
+    if(t===""||t.startsWith("#"))continue;
+    const c=t.indexOf(":");if(c<0)throw new Error("invalidFrontmatter");
+    fields.push([t.slice(0,c).trim(),unquote(t.slice(c+1).trim())]);}
+  if(!closed)throw new Error("invalidFrontmatter");
+  let version=null,axis="layer",title=null;const metadata={};
+  for(const[k,v]of fields){const lk=k.toLowerCase();
+    if(lk==="3md")version=v;else if(lk==="axis")axis=v.toLowerCase();else if(lk==="title")title=v;else metadata[k]=v;}
+  if(!version)throw new Error("missingVersion");
+  const planes=[],seen=new Set();let preLines=[],pending=null,body=[];
+  const flush=()=>{if(!pending){preLines=body;body=[];return;}
+    const a=pending;if(a.z===undefined)throw new Error("missingPlanePosition");
+    const z=Number(a.z);if(Number.isNaN(z))throw new Error("invalidPlaneDirective");
+    if(seen.has(z))throw new Error("duplicatePlane");seen.add(z);
+    const ex={};for(const k in a)if(!["z","x","y","label"].includes(k))ex[k]=a[k];
+    planes.push({z,label:a.label??null,x:a.x!==undefined?Number(a.x):null,y:a.y!==undefined?Number(a.y):null,attributes:ex,body:collapse(body)});body=[];};
+  for(;i<lines.length;i++){const raw=lines[i],t=raw.trim();
+    if((t.split(/\s+/)[0]||"")==="@plane"){flush();pending=parseDirective(t);}else body.push(raw);}
+  flush();const preamble=collapse(preLines)||null;
+  if(planes.length===0)return{version,axis,title,metadata,preamble:null,planes:preamble?[{z:0,label:null,x:null,y:null,attributes:{},body:preamble}]:[]};
+  return{version,axis,title,metadata,preamble,planes};
+}
+function unquote(v){if(v.length>=2){const a=v[0],b=v[v.length-1];if((a==='"'&&b==='"')||(a==="'"&&b==="'"))return v.slice(1,-1);}return v;}
+function collapse(a){let s=0,e=a.length;while(s<e&&a[s].trim()==="")s++;while(e>s&&a[e-1].trim()==="")e--;return s<e?a.slice(s,e).join("\n"):"";}
+function parseDirective(t){const rem=t.slice("@plane".length).trim();const o={};for(const tok of tokenize(rem)){const c=tok.indexOf("=");if(c<0)continue;o[tok.slice(0,c).trim().toLowerCase()]=unquote(tok.slice(c+1).trim());}return o;}
+function tokenize(s){const o=[];let cur="",q=null;for(const ch of s){if(q){cur+=ch;if(ch===q)q=null;}else if(ch==='"'||ch==="'"){q=ch;cur+=ch;}else if(ch===" "||ch==="\t"){if(cur){o.push(cur);cur="";}}else cur+=ch;}if(cur)o.push(cur);return o;}
+function esc(s){return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+
+/* ---------- example documents ---------- */
+const EX=[
+{key:"time",tab:"Time",mode:"stack",src:
+`---
+3md: 0.1
+axis: time
+title: Week of June 22
+author: leif
+---
+Plan for the week. Each plane is a day; scrub Z to move through time.
+
+@plane z=0 label="Monday"
+# Monday
+- [ ] Standup at 9
+- [ ] Review the 3md parser PR
+- [x] Coffee
+
+@plane z=1 label="Tuesday"
+# Tuesday
+- [ ] Draft spec-sync companion
+- [ ] Lunch with design
+
+@plane z=2 label="Wednesday"
+# Wednesday
+- [ ] Ship 0.1 tag
+- [ ] Write release notes
+`},
+{key:"frame",tab:"Frame",mode:"play",src:
+`---
+3md: 0.1
+axis: frame
+title: Bouncing dot
+fps: "12"
+---
+Each plane is one animation frame. Press play; the bright plane is "now".
+
+@plane z=0 label="frame-0"
+\`\`\`
+o........
+.........
+.........
+\`\`\`
+
+@plane z=1 label="frame-1"
+\`\`\`
+.........
+..o......
+.........
+\`\`\`
+
+@plane z=2 label="frame-2"
+\`\`\`
+.........
+.........
+....o....
+\`\`\`
+
+@plane z=3 label="frame-3"
+\`\`\`
+.........
+..o......
+.........
+\`\`\`
+`},
+{key:"layer",tab:"Layer",mode:"layers",src:
+`---
+3md: 0.1
+axis: layer
+title: Annotated contract
+---
+Toggle overlays independently: source, plain English, legal review.
+
+@plane z=0 label="source"
+Section 4. The Provider shall deliver the Work Product no later than
+thirty (30) days following the Effective Date.
+
+@plane z=1 label="plain-english"
+You have 30 days from signing to deliver.
+
+@plane z=2 label="review" author="counsel"
+Define "deliver": on acceptance, or on submission? Flag before signing.
+`},
+{key:"depth",tab:"Depth",mode:"parallax",src:
+`---
+3md: 0.1
+axis: depth
+title: A quiet morning
+---
+Move your mouse. Near layers shift more than far ones: true parallax.
+
+@plane z=0 label="foreground"
+# Foreground
+tall grass, dew
+
+@plane z=1 label="midground"
+# Midground
+a lone fox
+
+@plane z=2 label="hills"
+# Hills
+rolling, soft
+
+@plane z=3 label="sky"
+# Sky
+pale gold dawn
+`},
+{key:"space",tab:"Space",mode:"scene",src:
+`---
+3md: 0.1
+axis: space
+title: Set design, Scene 2
+---
+x and y position props within a plane; z is their depth on stage.
+
+@plane z=0 x=-34 y=18 label="spotlight"
+# Spotlight
+warm key, stage left
+
+@plane z=1 x=26 y=-8 label="podium"
+# Podium
+center, walnut
+
+@plane z=2 x=-16 y=-26 label="backdrop"
+# Backdrop
+midnight curtain
+`},
+{key:"deck",tab:"Slides",mode:"present",src:
+`---
+3md: 0.1
+axis: slide
+title: Lightning talk
+---
+The axis is whatever you say. Here it is "slide". Step through to present.
+
+@plane z=0 label="title"
+# 3md
+Markdown with a Z axis
+
+@plane z=1 label="problem"
+# The problem
+Docs are flat. Life isn't.
+
+@plane z=2 label="idea"
+# The idea
+One free axis. You name it.
+
+@plane z=3 label="thanks"
+# Thanks
+github.com/CorvidLabs/3md
+`},
+{key:"floors",tab:"Floors",mode:"elevator",src:
+`---
+3md: 0.1
+axis: floor
+title: Corvid Tower
+---
+A building directory. The axis is "floor". Ride the elevator.
+
+@plane z=0 label="Lobby"
+# Lobby
+reception, cafe
+
+@plane z=1 label="Engineering"
+# Floor 1
+swift, rust
+
+@plane z=2 label="Design"
+# Floor 2
+studio, library
+
+@plane z=3 label="Roof"
+# Roof
+garden, antenna
+`}
+];
+
+const DCOL=["--chart-1","--chart-2","--chart-3","--chart-4","--chart-5"];
+const scene=document.getElementById("scene"), stage=document.getElementById("stage");
+const scrub=document.getElementById("scrub"), readout=document.getElementById("readout"), extra=document.getElementById("extra");
+let cur=EX[0], doc=null, els=[], focus=0, target=0, playing=false, playTimer=null, hidden=new Set();
+let mx=0,my=0,tmx=0,tmy=0,t=0,dragRY=0,dragRX=0,dragging=false,lastX=0,lastY=0;
+
+function mdRender(body){
+  const lines=body.split("\n");
+  if(lines[0]&&lines[0].startsWith("```")){
+    const rows=lines.filter(l=>!l.startsWith("```"));
+    return `<div class="grid">`+rows.map(r=>esc(r).replace(/o/g,'<span class="dot">●</span>')).join("<br>")+`</div>`;
+  }
+  const out=[];
+  for(const l of lines){
+    if(l.startsWith("# "))out.push(`<h4>${esc(l.slice(2))}</h4>`);
+    else if(l.startsWith("- [x] "))out.push(`<div class="li"><span class="box">▣</span><span class="done">${esc(l.slice(6))}</span></div>`);
+    else if(l.startsWith("- [ ] "))out.push(`<div class="li"><span class="box">▢</span><span>${esc(l.slice(6))}</span></div>`);
+    else if(l.startsWith("- "))out.push(`<div class="li"><span class="box">•</span><span>${esc(l.slice(2))}</span></div>`);
+    else if(l.trim()!=="")out.push(`<div>${esc(l)}</div>`);
+  }
+  return `<div class="md">${out.join("")}</div>`;
+}
+function renderSource(src){
+  const lines=src.replace(/\r\n/g,"\n").split("\n");let html="",pidx=-1,open=false;
+  const close=()=>{if(open){html+="</span>";open=false;}};
+  for(const raw of lines){
+    if((raw.trim().split(/\s+/)[0]||"")==="@plane"){close();pidx++;html+=`<span class="srcblock" data-p="${pidx}">`;open=true;}
+    html+=hlLine(raw)+"\n";
+  }
+  close();return html;
+}
+function hlLine(raw){
+  let s=esc(raw);
+  if(s.trim()==="---")return `<span class="d">${s}</span>`;
+  s=s.replace(/^(\s*@plane)\b/,'<span class="at">$1</span>');
+  s=s.replace(/\b([a-z0-9_-]+)=/gi,'<span class="k">$1=</span>');
+  if(/^\s*[\w-]+:/.test(raw)&&!raw.includes("@plane"))s=s.replace(/^(\s*[\w-]+):/,'<span class="k">$1:</span>');
+  if(raw.startsWith("#"))s=`<span class="hh">${esc(raw)}</span>`;
+  return s;
+}
+function colorJSON(o){return esc(JSON.stringify(o,null,2)).replace(/"([^"]+)":/g,'<span class="k">"$1":</span>').replace(/: "([^"]*)"/g,': <span class="v">"$1"</span>').replace(/: (-?\d+(?:\.\d+)?)/g,': <span class="v">$1</span>');}
+
+function load(ex){
+  cur=ex; doc=parse3md(ex.src); hidden.clear(); focus=0; target=0;
+  if(playTimer){clearInterval(playTimer);playTimer=null;} playing=false;
+  document.getElementById("axisName").textContent="AXIS = "+doc.axis.toUpperCase();
+  document.getElementById("axisDesc").textContent=doc.preamble||doc.title||"";
+  document.getElementById("srcName").textContent=ex.key+".3md";
+  document.getElementById("src").innerHTML=renderSource(ex.src);
+  const meta={version:doc.version,axis:doc.axis,title:doc.title,planes:doc.planes.map(p=>{const o={z:p.z,label:p.label};if(p.x!=null)o.x=p.x;if(p.y!=null)o.y=p.y;if(Object.keys(p.attributes).length)o.attributes=p.attributes;return o;})};
+  document.getElementById("parsed").innerHTML=colorJSON(meta);
+  document.getElementById("parsedMeta").textContent=doc.planes.length+" planes";
+
+  scene.innerHTML=""; els=[];
+  doc.planes.forEach((p,idx)=>{
+    const el=document.createElement("div");el.className="plane";
+    el.style.setProperty("--pc",`var(${DCOL[idx%DCOL.length]})`);
+    el.innerHTML=`<div class="ptag"><span>z = ${p.z}</span><b>${p.label?esc(p.label):""}</b></div>`+mdRender(p.body);
+    el.addEventListener("mouseenter",()=>setTarget(idx));
+    el.addEventListener("click",()=>setTarget(idx));
+    scene.appendChild(el);els.push(el);
+  });
+  scrub.max=String(doc.planes.length-1);scrub.value="0";
+  buildExtra();updateReadout();highlightSource();
+}
+
+function buildExtra(){
+  extra.innerHTML="";
+  if(cur.mode==="play"){
+    const b=document.createElement("button");b.className="pbtn";b.textContent="▶ play";b.onclick=togglePlay;extra.appendChild(b);
+    const g=document.createElement("span");g.className="ghost";g.textContent="auto-steps through frames";extra.appendChild(g);
+    togglePlay();
+  }else if(cur.mode==="layers"){
+    const g=document.createElement("span");g.className="ghost";g.textContent="toggle:";extra.appendChild(g);
+    doc.planes.forEach((p,idx)=>{const c=document.createElement("span");c.className="chip";c.dataset.on="true";c.textContent=p.label||("z"+p.z);
+      c.style.setProperty("--cc",`var(${DCOL[idx%DCOL.length]})`);
+      c.onclick=()=>{const on=c.dataset.on==="true";c.dataset.on=on?"false":"true";if(on)hidden.add(idx);else hidden.delete(idx);};extra.appendChild(c);});
+  }else if(cur.mode==="present"){
+    const d=document.createElement("div");d.className="dots";d.id="dots";
+    doc.planes.forEach(()=>{const p=document.createElement("span");p.className="dotpip";d.appendChild(p);});extra.appendChild(d);
+    const g=document.createElement("span");g.className="ghost";g.textContent="present mode";extra.appendChild(g);
+  }else if(cur.mode==="scene"){
+    const g=document.createElement("span");g.className="ghost";g.textContent="props placed by x / y / z — drag to orbit";extra.appendChild(g);
+  }else if(cur.mode==="parallax"){
+    const g=document.createElement("span");g.className="ghost";g.textContent="move the mouse for parallax";extra.appendChild(g);
+  }else if(cur.mode==="elevator"){
+    const g=document.createElement("span");g.className="ghost";g.textContent="scrub to ride floors";extra.appendChild(g);
+  }
+}
+function togglePlay(){const b=extra.querySelector(".pbtn");
+  if(playing){playing=false;clearInterval(playTimer);playTimer=null;if(b)b.textContent="▶ play";}
+  else{playing=true;if(b)b.textContent="⏸ pause";playTimer=setInterval(()=>{target=(Math.round(target)+1)%doc.planes.length;updateReadout();highlightSource();},460);}
+}
+function setTarget(i){target=Math.max(0,Math.min(doc.planes.length-1,i));scrub.value=String(target);updateReadout();highlightSource();}
+function updateReadout(){const i=Math.round(target);const p=doc.planes[i];if(!p)return;
+  readout.innerHTML=`Z = <b>${p.z}</b> &nbsp; ${p.label?esc(p.label):""} <span class="d">(${i+1}/${doc.planes.length})</span>`;}
+function highlightSource(){const i=Math.round(target);
+  document.querySelectorAll(".srcblock").forEach(b=>b.classList.toggle("active",+b.dataset.p===i));
+  if(cur.mode==="present"){const dots=document.querySelectorAll("#dots .dotpip");dots.forEach((d,k)=>d.classList.toggle("on",k===i));}}
+
+scrub.addEventListener("input",()=>{target=parseFloat(scrub.value);updateReadout();highlightSource();});
+document.getElementById("prev").onclick=()=>setTarget(Math.round(target)-1);
+document.getElementById("next").onclick=()=>setTarget(Math.round(target)+1);
+window.addEventListener("keydown",e=>{
+  if(e.key==="ArrowRight"||e.key==="ArrowUp"){setTarget(Math.round(target)+1);e.preventDefault();}
+  if(e.key==="ArrowLeft"||e.key==="ArrowDown"){setTarget(Math.round(target)-1);e.preventDefault();}
+});
+
+stage.addEventListener("mousemove",e=>{const r=stage.getBoundingClientRect();tmx=((e.clientX-r.left)/r.width-.5);tmy=((e.clientY-r.top)/r.height-.5);
+  if(dragging){dragRY+=(e.clientX-lastX)*0.4;dragRX-=(e.clientY-lastY)*0.3;lastX=e.clientX;lastY=e.clientY;}});
+stage.addEventListener("mouseleave",()=>{tmx=0;tmy=0;dragging=false;});
+stage.addEventListener("mousedown",e=>{dragging=true;lastX=e.clientX;lastY=e.clientY;});
+window.addEventListener("mouseup",()=>{dragging=false;});
+
+function loop(){
+  t+=0.006; mx+=(tmx-mx)*.06; my+=(tmy-my)*.06; focus+=(target-focus)*.16;
+  const n=els.length, fr=Math.round(focus), m=cur.mode;
+  els.forEach((el,idx)=>{
+    let x=0,y=0,z=0,s=1,o=1,hot=false,dim=false;
+    if(m==="stack"){z=-idx*150;y=idx*26-(n-1)*13;x=idx*30-(n-1)*15;if(idx===fr){z+=120;s=1.05;hot=true;}}
+    else if(m==="play"){z=-idx*150;y=idx*26-(n-1)*13;x=idx*30-(n-1)*15;if(idx===fr){z+=130;s=1.06;hot=true;}else dim=true;}
+    else if(m==="layers"){z=-idx*120;y=idx*30-(n-1)*15;x=idx*34-(n-1)*17;if(hidden.has(idx))dim=true;else if(idx===fr){z+=90;s=1.04;hot=true;}}
+    else if(m==="scene"){const p=doc.planes[idx];x=(p.x||0)*4.2;y=-(p.y||0)*4.2;z=-(p.z||idx)*150;if(idx===fr){hot=true;s=1.05;}}
+    else if(m==="parallax"){z=-idx*175;const near=n-idx;x=-mx*near*48;y=-my*near*26;s=1+(n-1-idx)*.07;if(idx===fr)hot=true;}
+    else if(m==="present"){const d=idx-focus;if(Math.abs(d)<.5){x=0;y=0;z=120;s=1.18;o=1;hot=true;}else{x=d*70;z=-180-Math.abs(d)*50;s=.6;o=.22;dim=true;}}
+    else if(m==="elevator"){const d=idx-focus;y=d*150;z=-Math.abs(d)*120;s=Math.abs(d)<.5?1.06:.82;o=Math.max(.12,1-Math.abs(d)*.45);if(Math.abs(d)<.5)hot=true;else dim=true;}
+    el.style.transform=`translate3d(${x}px,${y}px,${z}px) scale(${s.toFixed(3)})`;
+    el.style.opacity=o; el.style.zIndex=idx===fr?"300":String(120-Math.abs(fr-idx));
+    el.classList.toggle("hot",hot); el.classList.toggle("dim",dim);
+  });
+  let st;
+  if(m==="parallax"||m==="present"){st=`translateZ(-110px)`;}
+  else if(m==="elevator"){st=`translateZ(-150px) rotateY(${(-6+mx*8+dragRY).toFixed(2)}deg)`;}
+  else{const ry=-22+mx*24+Math.sin(t)*4+dragRY;const rx=8-my*15+dragRX;st=`translateZ(-160px) rotateX(${rx.toFixed(2)}deg) rotateY(${ry.toFixed(2)}deg)`;}
+  scene.style.transform=st;
+  requestAnimationFrame(loop);
+}
+
+const tabsEl=document.getElementById("tabs");
+EX.forEach((ex,idx)=>{const b=document.createElement("button");b.className="tab";b.textContent=ex.tab;b.setAttribute("role","tab");
+  b.setAttribute("aria-selected",idx===0?"true":"false");
+  b.onclick=()=>{tabsEl.querySelectorAll(".tab").forEach(t=>t.setAttribute("aria-selected","false"));b.setAttribute("aria-selected","true");dragRY=0;dragRX=0;load(ex);};
+  tabsEl.appendChild(b);});
+
+load(EX[0]); loop();
+</script>
+</body>
+</html>

@@ -67,8 +67,9 @@ stripped.
 ## 4. Planes
 
 A plane begins with a directive line whose first whitespace-delimited token is
-`@plane`, followed by space-separated `key=value` attributes. Every line after
-the directive, up to the next `@plane` directive or end of file, is that plane's
+`@plane`, followed by space-separated `key=value` attributes. Every attribute
+token MUST contain an `=`; attribute keys are lowercased. Every line after the
+directive, up to the next `@plane` directive or end of file, is that plane's
 Markdown body. Leading and trailing blank lines of a body are trimmed.
 
 ### 4.1 Attributes
@@ -101,8 +102,8 @@ A conforming parser MUST reject:
 - a frontmatter block that is never closed (`invalidFrontmatter`)
 - a missing `3md` version key (`missingVersion`)
 - a `@plane` directive with no `z` (`missingPlanePosition`)
-- a `@plane` directive whose `z`, `x`, or `y` is not a number
-  (`invalidPlaneDirective`)
+- a `@plane` directive whose `z`, `x`, or `y` is not a number, or that carries an
+  attribute token with no `=` (`invalidPlaneDirective`)
 - two planes with the same `z` (`duplicatePlane`)
 
 ## 7. Round tripping
