@@ -1,0 +1,144 @@
+---
+3md: 1.0
+axis: floor
+title: Fallingwater: Floor by Floor
+view: elevator
+architect: Frank Lloyd Wright
+completed: 1939
+client: Edgar J. Kaufmann Sr.
+site: Bear Run, Mill Run, Pennsylvania
+style: Organic Architecture
+structure: Reinforced concrete cantilevers over waterfall
+category: Information
+---
+Fallingwater, Bear Run PA — ride the axis from bedrock to roof.
+Each floor is a lesson in how Wright stacked compression and release.
+
+@plane z=0 label="Bedrock & Stream"
+
+# z=0 — The Ground Plane
+
+The building doesn't sit *on* the waterfall. It sits *over* it.
+
+Wright anchored the structure to a single sandstone ledge at elevation **+0.0 ft**, letting Bear Run flow uninterrupted beneath. The original boulder that the Kaufmanns used as a diving board still protrudes through the living room floor — Wright refused to blast it.
+
+**Key moves:**
+- Stone piers carry all vertical load to bedrock
+- Floor slab at stream level is exposed aggregate, continuous with the site
+- The sound of the falls audible from every room above
+- Approach path from the east kept low and compressed to amplify the reveal
+
+> "The visit to the waterfall in the woods stays with you…"
+> — Edgar Kaufmann Jr.
+
+**Structural note:** Three 15-ft cantilevered trays extend west, each balanced by the stone cores behind them. The concrete was under-reinforced at construction; major restoration completed **1997–2002** added post-tensioned rods.
+
+@plane z=1 label="Living Level"
+
+# z=1 — Living Floor (+12 ft)
+
+The **main living room** is the payoff. After a compressed entry stair, the ceiling snaps to **6'4"** above the fireplace and opens to **14'0"** at the glass corners.
+
+**Plan geometry:**
+- 2,400 sq ft total floor plate, 1,500 sq ft living area
+- Four corner glass panes meet with no mullion at the corner — a 1939 miracle of detailing
+- Hatch covers in the floor open to let a ladder down to the stream pool below
+- Built-in seating, bookshelves, and a globe bar make the room self-contained
+
+**Materials palette:**
+| Surface | Material |
+|---|---|
+| Floor | Waxed flagstone (local sandstone) |
+| Walls | Rough-cut sandstone, coursed to match site strata |
+| Ceilings | Ochre-painted concrete soffit |
+| Glazing | Original single-pane, Cherokee red steel frames |
+
+[[z=2|Up to the guest terrace →]]
+
+**Circulation:** The stair to the stream descends from the living room hatch — a gesture of total integration between inside and outside.
+
+@plane z=2 label="First Terrace"
+
+# z=2 — Kaufmann Bedroom & Terrace A (+22 ft)
+
+The master suite occupies the southwest corner, private but never separate. The bedroom ceiling drops to **6'8"** — low enough to feel sheltered, high enough to avoid oppression.
+
+**Terrace A** is the first of the three great horizontal planes:
+- 850 sq ft of reinforced concrete deck
+- No railing on the west edge — just a 2" raised curb
+- Oriented toward the afternoon sun and the rhododendron hillside
+- The tray reads from below as pure sky-plane, hovering over the living room terrace
+
+**Wright's section logic:**
+Each tray shifts slightly east or west of the one below, creating a pinwheel composition. No two floors stack directly — every bedroom looks over the roof of the room below.
+
+```
+Plan offset diagram (schematic):
+  [TERRACE C]  ←shifted east
+     [TERRACE B]  ←shifted west
+  [TERRACE A]  ←shifted east
+[LIVING ROOM]  ←ground anchor
+```
+
+The stone fireplace core, shared with the floor below, is the hinge that makes the pinwheeling possible.
+
+@plane z=3 label="Bridge & Guest Wing"
+
+# z=3 — Covered Bridge & Guest House (+32 ft)
+
+A **136-ft trellis bridge** connects the main house to the guest suite above the hillside. It is simultaneously:
+
+- A covered walkway (roof, no walls)
+- A retaining wall for the hillside garden
+- A datum line that anchors the horizontal composition from across the run
+
+**Guest suite facts:**
+- 600 sq ft, one bedroom, private plunge pool carved into the rock
+- Completed **1939**, same year as main house
+- Staff quarters below the bridge at grade
+- Servant stair concealed in the stone retaining pier
+
+The bridge is where Wright's section becomes undeniable: you walk *through the hill* to reach the house, then step out onto the bridge and the entire composition — three horizontal trays, waterfall, rhododendron, sky — reads as a single simultaneous moment.
+
+> Wright called the horizontal planes "the democracy of the open hand."
+> The verticals are the stone — ancient, fixed, local.
+
+[[z=4|Up to the roof level →]]
+
+@plane z=4 label="Second Terrace"
+
+# z=4 — Second Bedroom Level & Terrace B (+32 ft)
+
+Two secondary bedrooms occupy this level, each with direct access to **Terrace B**, the largest of the three decks at **1,100 sq ft**.
+
+**Spatial lessons:**
+- Ceiling height drops further to **6'4"** — the compression intensifies as you rise
+- Built-in beds, dressers, and window seats eliminate the need for freestanding furniture
+- Each window is a framed view: Wright chose tree canopy, never sky
+
+**Terrace B details:**
+- The east edge terminates in a curved concrete planter — no right angles at the perimeter
+- Cherokee red paint on all steel; the color was mixed to match autumn foliage
+- A single curved step transitions between terrace levels — 4" rise, 24" tread
+
+**Acoustic condition:** Terrace B is directly above the waterfall. On wet years, spray reaches the underside of the slab. The roar of Bear Run is loudest here — a deliberate choice. Wright wanted the falls heard, not merely seen.
+
+@plane z=5 label="Roof Garden"
+
+# z=5 — Roof Terrace C & Loggia (+48 ft)
+
+The **topmost plane** is the most compressed interior in the house — a low loggia under a 6'0" soffit — opening to the largest sky-view on the property.
+
+**Terrace C:**
+- 600 sq ft, oriented north to the hemlock forest
+- A stone-paved outdoor room, not a conventional roof
+- The parapet is a planter, full-width, continuous — no gap between building edge and living soil
+- Drainage channels cut directly into the concrete, stained red-orange by iron mineral runoff
+
+**The view from here:**
+Standing on Terrace C, you can look down through the staggered trays to Bear Run below. All three cantilevers are visible simultaneously. The section — which Wright drew in two hours on a September morning in 1935 — is fully legible for the first and only time.
+
+**Legacy note:** Fallingwater was named the greatest work of American architecture by the AIA in 1991. It receives ~170,000 visitors per year. The structural restoration (post-tensioning, 2002) added an estimated 200 years to its service life.
+
+> "The reality of the building is not the walls and the roof, but the space within."
+> — Wright, paraphrasing Lao Tzu

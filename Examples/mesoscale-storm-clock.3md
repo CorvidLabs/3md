@@ -1,0 +1,151 @@
+---
+3md: 1.0
+axis: time
+title: Mesoscale Storm Clock: June 23 Squall Line
+view: play
+fps: 2
+location: Kansas City MO — KMCI sounding
+date: 2026-06-23
+storm: Prefrontal squall line, SW-NE orientation
+cape: 3,840 J/kg
+cin: -42 J/kg
+shear_0_6km: 52 kt
+category: Data
+---
+Hour-by-hour progression of tonight's squall line passage. Each plane is a 3-hour snapshot. Swipe or let it play.
+
+@plane z=0 label="15Z — Pre-Storm"
+## 15Z (10 AM CDT) — Loaded Gun
+
+```
+╔══════════════════════════════╗
+║  ☀  ☀  ☀  ☀  ☀  ☀  ☀  ☀  ☀ ║  850 mb: 18°C / dewpoint 16°C
+║  ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─  ║  500 mb: -8°C (lapse: 7.2 °C/km)
+║                              ║
+║  · · · · · · · · · · · ·    ║  Surface: 34°C / 24°C dew
+║  · · · · · · · · · · · ·    ║  ← 18 kt S boundary-layer flow
+╚══════════════════════════════╝
+```
+
+**Surface analysis**
+- CAPE: **3,840 J/kg** — exceptional instability
+- CIN: **-42 J/kg** — cap holding, storms not yet firing
+- Lifted index: **-8** (extreme)
+- PW: **1.62 in** — well above June mean (0.98 in)
+
+> Forecaster note: morning soundings confirm a textbook "loaded gun" sounding. Cap erodes after ~18Z as the dry line surges east. First initiation expected along I-35 corridor.
+
+@plane z=1 label="18Z — Initiation"
+## 18Z (1 PM CDT) — Cap Breaks, First Cells
+
+```
+╔══════════════════════════════╗
+║  ☀  ☀  ☀  ☀  ☀  ▲  ▲  ☀  ☀ ║  ▲ = towering cumulus
+║  ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─  ║
+║              ▲▲▲▲            ║  Cells erupting near Emporia KS
+║  · · · · · · ▲▲▲▲ · · · ·  ║  Tops already FL320
+╚══════════════════════════════╝
+```
+
+**Storm mode: discrete supercells**
+- 2–3 isolated supercells, 30–60 mi spacing
+- Hodograph: clockwise curve, **0–3 km SRH: 380 m²/s²**
+- Hail: **golf ball (1.75 in)** likely with first storms
+- QLCS merger expected by 21Z as line organizes
+
+*Watch issued 17:45Z: MDT TORNADO WATCH BOX 219*
+
+@plane z=2 label="21Z — Squall Line"
+## 21Z (4 PM CDT) — Squall Line Consolidates
+
+```
+╔══════════════════════════════╗
+║  ☀  ☀  ░░░░░░░░  ☀  ☀  ☀  ☀ ║  ░ = anvil outflow
+║       ████████████           ║  █ = main convective line
+║       ████████████           ║  ↑ motion: 045° at 48 kt
+║  · · ·░░░░░░░░░░ · · · · ·  ║
+╚══════════════════════════════╝
+```
+
+**Radar signature (KEAX 0.5° tilt)**
+- Reflectivity: **65–70 dBZ** in cores
+- Rotation: 3 mesovortices detected along leading edge
+- Storm-relative inflow: **32 kt** at 850 mb
+- Estimated rain rate: **3.5–4.0 in/hr** in BWER
+
+**Hazards active:**
+- [ ] Confirmed tornado (Harrisonville MO, 20:47Z)
+- [ ] Quarter-size hail reports (Belton, Grandview)
+- [ ] Wind damage 70–80 mph (Raymore)
+
+@plane z=3 label="00Z — Peak Threat"
+## 00Z (7 PM CDT) — Peak Intensity
+
+```
+╔══════════════════════════════╗
+║  ⚡ ████████████████  ⚡     ║  NIGHTTIME. All caps on map = warning
+║    ████████████████          ║
+║  ░░░░░░░░░░░░░░░░░░░░░░░░░░  ║  ← cold pool surge: gust front
+║  ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓    ║  20–30 kt cold outflow
+╚══════════════════════════════╝
+```
+
+**This is the critical window.** Squall line crosses I-70.
+
+| Parameter | Value | Concern |
+|-----------|-------|---------|
+| LLJ at 850 mb | 60 kt | **HIGH** — nocturnal acceleration |
+| QLCS tornado potential | EHI 2.8 | **ELEVATED** |
+| Flash flood guidance | 2.1 in/3 hr | Already exceeded |
+| Lightning density | 14 CG/min | Ground stop KMCI |
+
+> "The squall line will be moving fast — 48 kt. Kansas City proper gets about **22 minutes** of severe weather, then it's through."
+
+@plane z=4 label="03Z — Weakening"
+## 03Z (10 PM CDT) — Post-Frontal, Weakening
+
+```
+╔══════════════════════════════╗
+║       ░░░░░░░░░░░░░░░░░░░░   ║  Stratiform rain expanding east
+║         ░░░░░░░░░░░░░░░░░░   ║
+║   ████░░░░░░░░░░░░░░░░░░░░   ║  Convective cores collapsing
+║  · · · · · · · · · · · · ·  ║  Surface T: 19°C (was 34°C)
+╚══════════════════════════════╝
+```
+
+**Post-frontal conditions**
+- Convective line 60 mi east of KMCI, weakening
+- Surface: 19°C / 17°C dew, NW wind 18 kt
+- Pressure jumped **+8 mb** in 90 minutes
+- Stratiform echo producing 0.3–0.5 in/hr steady rain
+
+Mesovortex activity ended ~02:15Z. No new tornado warnings.
+
+*Significant rainfall totals through 03Z:*
+- Lee's Summit MO: **3.47 in**
+- Olathe KS: **2.89 in**
+- Downtown KC: **1.63 in** (moved through fast)
+
+@plane z=5 label="06Z — Clear"
+## 06Z (1 AM CDT) — Post-Storm Skies
+
+```
+╔══════════════════════════════╗
+║  ★  ★  ★  ★  ★  ★  ★  ★  ★ ║  Clear post-frontal sky
+║                              ║  Radiational cooling underway
+║  · · · · · · · · · · · · ·  ║  Residual MCS far to the east
+║  NW 12 kt  T: 16°C  Dew: 9°C║
+╚══════════════════════════════╝
+```
+
+**Storm summary**
+- Storm duration (KMCI): **5 hr 20 min**
+- Peak gust recorded: **84 mph** (Lee's Summit ASOS)
+- Tornado confirmed: **EF1**, 3.2-mi track, Harrisonville MO
+- Total storm reports (MO/KS): 47 wind, 19 hail, 1 tornado
+
+**Wednesday morning forecast**
+Clear, sunny, and pleasant. High **27°C**. Dew points 9–12°C.
+The air mass behind this system is the best of the summer so far.
+
+> Next system: another shortwave due Friday — but with a much weaker CAPE environment (~1,200 J/kg). Monitoring.

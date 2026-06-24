@@ -1,0 +1,92 @@
+---
+3md: 1.0
+axis: frame
+title: Seed Germination: Frame-by-Frame
+view: play
+fps: 4
+species: Phaseolus vulgaris (common bean)
+days_elapsed: 0–10 DAP (days after planting)
+depth_cm: 5
+category: Animation
+---
+*Phaseolus vulgaris* — watch hypocotyl emergence through soil break, rendered at 4 fps.
+
+@plane z=0 label="Day 0 — Dry Seed"
+```
+  soil surface
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                                
+  [ seed ]                      
+   (  )                         
+   ~~~~                         
+                                
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+```
+**Day 0 — Imbibition begins.**
+Seed coat absorbs ~150% its dry weight in water within 6 h. Metabolic rate: near zero. Axis embryo still compressed. No radicle visible.
+
+@plane z=1 label="Day 2 — Radicle Emerges"
+```
+  soil surface
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                                
+  [ seed ]                      
+   (  )                         
+     |   ← radicle              
+                                
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+```
+**Day 2 — Radicle protrusion.**
+Primary root punches through micropyle end. Gravitropism kicks in; auxin redistributes to lower flank. Root cap secretes mucilage to lubricate soil passage.
+
+@plane z=2 label="Day 3 — Hypocotyl Hook"
+```
+  soil surface
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                                
+   ( )                          
+    |                           
+    |  ← hypocotyl elongating   
+    |                           
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+```
+**Day 3 — Hypocotyl straightens upward.**
+Hook unfolding driven by differential ethylene on concave side. Root hairs begin forming 2–4 mm behind root tip. Stored cotyledon starch mobilising via amylase.
+
+@plane z=3 label="Day 5 — Soil Break"
+```
+  soil surface
+  ┌─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─┐
+  ↑ breaking through           
+   \                           
+    | ← hypocotyl              
+    |                           
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+```
+**Day 5 — Emergence (VE stage).**
+Apical hook breaches surface. Cotyledons still folded, protecting the shoot apical meristem. Chloroplast differentiation begins on light exposure. The seedling is now autotrophic-adjacent.
+
+@plane z=4 label="Day 7 — Cotyledons Open"
+```
+ \\   //  ← cotyledons spread  
+  \\ //                        
+   \\/                         
+    |                          
+    |                          
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+```
+**Day 7 — Cotyledons unfurl.**
+Chlorophyll a/b ratio ~2.8. Stomata open; transpiration begins. First photosynthetic CO₂ fixation detectable. Epicotyl elongating between cotyledon axils toward first true leaves.
+
+@plane z=5 label="Day 10 — First True Leaves"
+```
+   _/ \_   ← true leaf 1 (V1)  
+  /     \                      
+ \\     //  ← cotyledons       
+   \\ //                       
+    ||                         
+    ||                         
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+```
+**Day 10 — V1 stage.**
+Unifoliate primary leaves fully expanded (~4 cm²). Cotyledons yellowing as reserves depleted. Trifoliate leaves initiating in SAM. Root system: taproot 8 cm + lateral network forming. Seedling is fully established.

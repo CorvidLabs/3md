@@ -1,0 +1,126 @@
+---
+3md: 1.0
+axis: slide
+title: Seed Pitch: CorvidLabs Developer Tools
+view: present
+stage: Seed
+target: $1.2M
+deck-date: June 2026
+founder: Leif
+category: Business
+---
+One idea per slide. Raise $1.2M to become the Swift toolchain every indie and studio team installs on day one.
+
+@plane z=0 label="Problem"
+# Developers ship slow because the Swift ecosystem has no opinionated toolkit
+
+Every team reinvents the same 12 wheels:
+
+- **Retry logic** written from scratch in every network layer
+- **Validation** scattered across models with no shared protocol
+- **Caching** duct-taped together from UserDefaults + NSCache
+- **Environment config** loaded differently on every platform
+
+> "We spent two sprints on infra before writing a single feature."
+> — iOS Lead, Series B startup (2025 customer interview)
+
+The gap: Apple ships the language. Nobody ships the **standard library for apps**.
+
+@plane z=1 label="Solution"
+# CorvidLabs: zero-dependency Swift micro-libraries that compose
+
+Eight focused packages, one coherent system:
+
+| Package | One-liner |
+|---|---|
+| `swift-retry` | Exponential backoff with typed throw support |
+| `swift-cache` | Actor-safe, generics-first LRU cache |
+| `swift-valid` | Composable validation pipelines |
+| `swift-env` | Type-safe environment loading, all platforms |
+| `swift-parse` | Lightweight parser combinators |
+| `swift-color` | Cross-platform Color ↔ hex ↔ HSL |
+| `swift-music` | Note, scale, and MIDI primitives |
+| `swift-qr` | Pure-Swift QR generation, no Vision needed |
+
+**Philosophy:** strict concurrency on by default, async/await only, zero force-unwraps.
+
+@plane z=2 label="Traction"
+# 14 months in — real signal
+
+- **2.1M** cumulative Swift Package Index downloads
+- **4,300** GitHub stars across repos (organic, zero ad spend)
+- **38** paying Studio tier subscribers at $49/mo = **$1,862 MRR**
+- `swift-retry` added to 3 YC W25 companies' production stacks
+- Featured in **Swift by Sundell** newsletter (April 2026, 42K readers)
+
+**NPS: 71** — surveyed 110 active users, June 2026
+
+> The funnel: open-source adoption → Studio tier (CI integrations + SLAs) → Enterprise contracts.
+
+@plane z=3 label="Market"
+# $4.1B developer tools TAM, Swift is the wedge
+
+- **6.9M** registered Apple developers (App Store Connect, 2025)
+- **~800K** professional Swift developers shipping production apps
+- Adjacent: Swift on server (Vapor, Hummingbird ecosystems) adding 60K+ devs/yr
+
+**Comparable exits:**
+- Fastlane → Google: $172M (2017) — 1 tool, huge mindshare
+- Sentry → $\$225M ARR (2025) — SDK-led growth same motion
+
+Our beachhead: **iOS indie + small studio** (50K teams), expand to enterprise via `swift-env` + `swift-cache` (audit logs, on-prem builds).
+
+@plane z=4 label="Business Model"
+# Three tiers, SDK-led growth
+
+**Free / Open Source**
+All packages, MIT license. This is the acquisition engine.
+
+**Studio — $49/mo per team**
+- Private Slack channel with Leif
+- SLA: critical bug fix within 48h
+- CI-optimized binary caches (saves ~4 min/build)
+- Early access to unreleased packages
+
+**Enterprise — $1,200/mo**
+- Custom forks, compliance docs, on-prem hosting support
+- Named support engineer
+- Currently: 2 pilots in contract negotiation ($28.8K ARR each)
+
+**12-month target:** 200 Studio + 5 Enterprise = **$189.6K ARR**
+
+@plane z=5 label="Ask"
+# $1.2M Seed — 18-month runway to $500K ARR
+
+**Use of funds:**
+
+```
+Engineering (2 hires)     $540K   45%
+Developer Relations        $240K   20%
+Infrastructure / CI        $144K   12%
+Legal / IP                  $96K    8%
+Founder salary (Leif)      $180K   15%
+```
+
+**Milestones this money buys:**
+- [ ] Ship `swift-pinata` + `swift-weather` (Q3 2026)
+- [ ] 500 Studio subscribers (Q1 2027)
+- [ ] 10 Enterprise contracts (Q2 2027)
+- [ ] Series A raise at $6M ARR (Q3 2027)
+
+**Lead check size:** $400K–$800K. Targeting close: August 29, 2026.
+
+Contact: [[z=6|reach Leif]]
+
+@plane z=6 label="Contact"
+# Let's build the Swift standard library for apps
+
+**Leif** — Founder, CorvidLabs
+`claude.condone765@passmail.net`
+
+**GitHub:** github.com/CorvidLabs
+**Packages live today:** swift-retry · swift-cache · swift-valid · swift-env · swift-parse · swift-color · swift-music · swift-qr
+
+> *"The best infrastructure is the kind you install once and never think about again."*
+
+Deck as of **June 23, 2026** · Built with 3md · [[z=0|back to problem]]

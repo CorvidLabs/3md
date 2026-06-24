@@ -1,0 +1,114 @@
+---
+3md: 1.0
+axis: depth
+title: Blue Hole Descent — Dahab, 2024-11-14
+view: elevator
+site: Blue Hole, Dahab, Egypt (Red Sea)
+diver: L. Morrow
+buddy: Yasmin Okafor
+tank: 12L AL 200bar / EAN32
+water temp: 26°C surface · 22°C @40m
+visibility: 28m
+max depth: 62m
+bottom time: 47 min
+current: negligible
+category: Information
+---
+Surface briefing complete. Dropping down the wall at 09:14.
+
+@plane z=0 label="Surface (0m)"
+# Surface — 09:14
+
+Glassy conditions. Slight haze already burning off. Saddle entry off the platform, negative buoyancy from 0.
+
+Briefed Yasmin on the arch at ~56m — swim-through only if we're on schedule at 50m, no heroics.
+
+**Species logged at entry:**
+- *Acanthurus sohal* (sohal tang) — 3 individuals patrolling the surge zone
+- *Thalassoma klunzingeri* (klunzinger's wrasse) — M/F pair at rubble edge
+- Floating *Halimeda* mat, likely drifted from the lagoon side
+
+> Dissolved O₂ at surface: 7.8 mg/L. Stratification expected below thermocline.
+
+@plane z=1 label="Reef Flat (5–12m)"
+# Reef Flat — 5–12m
+
+The plateau before the wall drops away. Acropora table corals the size of dining tables. Rubble patches between them are deceptively alive.
+
+**Notable observations:**
+- **Bleaching index: 12%** of *Acropora* tables showing partial bleaching (upper surfaces). Consistent with August thermal event data.
+- *Chaetodon fasciatus* (diagonal butterflyfish) pair — territory centred on a *Pocillopora* head at ~9m. Photographed for ongoing corallivory study.
+- *Pterois miles* (devil firefish) tucked under a table overhang. Motionless. Classic ambush posture — ID confirmed by fin ray count (13 dorsal spines vs. *P. volitans* 13–14, but meristic pattern matches *miles*).
+
+Visibility opens up dramatically as the wall appears. That first glimpse of open blue below — still gets me every time.
+
+@plane z=2 label="Upper Wall (15–25m)"
+# Upper Wall — 15–25m
+
+Vertical limestone. Sponge cover dense here: *Xestospongia testudinaria* barrels up to 90cm diameter. The wall is overhanging in places, creating micro-caves.
+
+**Fish assemblage (transect estimate, 10m × 2m belt):**
+| Family | Count | Dominant species |
+|---|---|---|
+| Labridae | 14 | *Thalassoma lunare* |
+| Pomacanthidae | 6 | *Pomacanthus maculosus* |
+| Serranidae | 3 | *Cephalopholis miniata* |
+| Acanthuridae | 9 | *Acanthurus sohal* |
+
+- *Naso unicornis* (bluespine unicornfish) — lone individual grazing film algae off the wall face at 22m. Uncharacteristically solitary; possibly displaced by the *sohal* aggression zone above.
+- First *Chromis dimidiata* (half-and-half chromis) aggregation at 24m, fanning over the wall lip.
+
+@plane z=3 label="Mid Wall (30–42m)"
+# Mid Wall — 30–42m
+
+Colour shift is real. Reds gone. Everything cyan and indigo. The *Chromis* schools thin out; larger, slower animals take over.
+
+**Key sightings:**
+- **Napoleon wrasse (*Cheilinus undulatus*)** — sub-adult, ~70cm. Circled us at 34m for 90 seconds. Scar tissue on left flank, likely spearfishing encounter. Tagged in our regional database as DH-NW-041.
+- *Plectropomus pessuliferus* (roving coral grouper) — 85cm TL, resting on a ledge at 37m. Dominant male coloration.
+- *Gorgonia* fan at 40m, ~1.2m span, oriented perpendicular to the wall. Feeding polyps extended — mild current must be running along the wall face even though we feel nothing.
+
+Nitrox MOD for EAN32: **33m (1.4 bar ppO₂)**. We are past it. Monitoring NDL: 14 min remaining at this depth.
+
+@plane z=4 label="The Arch (52–56m)"
+# The Arch — 52–56m
+
+The reason people come to Blue Hole. A 26m-wide tunnel punched through the reef at 52–56m, exiting the lagoon side to open ocean. On a good day, the far blue frames silhouettes like a cinema screen.
+
+**Arch traverse notes:**
+- Entry at 52m. Arch ceiling ~53m. Exit mouth at 56m. Total swim: ~26m, ~40 sec at moderate fin pace.
+- Light column through exit: classic cathedral effect. Photographed *Lutjanus bohar* (two-spot red snapper) school backlit in exit mouth — 30+ individuals.
+- *Carcharhinus amblyrhynchos* (grey reef shark) — 1 individual, ~1.4m, patrolling exit. Maintained >4m distance; no threat display. Logged as routine transit.
+
+> ppO₂ at 56m on EAN32: **1.74 bar** — well above 1.6 limit. No lingering. Yasmin signalled abort of the deeper excursion. Correct call.
+
+@plane z=5 label="Max Depth (62m)"
+# Max Depth — 62m
+
+Brief excursion off the arch exit, dropping to the sand shelf. 4 minutes max.
+
+**Sediment notes:**
+- Carbonate sand. Bioturbation tracks consistent with *Holothuria* sp. (sea cucumber) grazing.
+- *Gymnothorax javanicus* (giant moray) nose visible from burrow at base of wall. Estimated 180cm. Did not emerge.
+- **Halimeda** meadow extends from the sand shelf into the blue — unbroken to visibility limit (~28m). Significant carbon sequestration sink; flag for next survey.
+
+NDL: 2 min. Ascending.
+
+*Note to self: bring the CTD logger next time. The thermocline between 18–22m felt sharp enough to warrant a proper profile.*
+
+@plane z=6 label="Ascent & Safety Stop (5m)"
+# Ascent & Safety Stop — 5m
+
+Slow ascent: 9 m/min per computer. Mandatory 3-min stop at 5m.
+
+**Stop observations:**
+- *Acanthaster planci* (crown-of-thorns starfish) — 1 individual on the reef flat at 8m. Arm span ~42cm. Active corallivore. Photographed and logged — third individual this season at this site. Threshold for intervention: 5+ per 100m². Not there yet, but trending.
+- Juvenile *Amphiprion bicinctus* (twoband clownfish) — first record on this trip. Hosting in a *Entacmaea quadricolor* that has shifted ~3m shoreward since my last survey in March. Bleaching stress response?
+
+**End of dive:**
+- Tank pressure: 60 bar (ascent reserve maintained ✓)
+- Max depth logged: 62m
+- Bottom time: 47 min
+- Safety stop: 3 min @ 5m ✓
+
+> Post-dive: 1L water, 30-min surface interval before second dive. Complete field notes before evening briefing.

@@ -1,0 +1,81 @@
+---
+3md: 1.0
+axis: depth
+title: Pixel Corvid — Voxel Bird Ship
+view: blend
+artist: leif
+palette: "#1a1a2e #16213e #0f3460 #e94560 #f5a623 #ffffff"
+voxel-size: 1
+category: Creative
+---
+A voxel corvid built slice by slice — beak to tail feathers. Rotate in blend view to see the full bird.
+
+@plane z=0 label="Beak Tip"
+```
+         ##
+        ####
+       ######
+```
+
+@plane z=1 label="Head"
+```
+      ########
+     ##########
+    ############
+     ##########
+      ########
+```
+
+@plane z=2 label="Neck"
+```
+      ######
+     ########
+    ##########
+     ########
+      ######
+```
+
+@plane z=3 label="Chest"
+```
+    ############
+   ##############
+  ################
+   ##############
+    ############
+```
+
+@plane z=4 label="Wing Spread"
+```
+####################
+########################
+############################
+########################
+####################
+```
+
+@plane z=5 label="Body Core"
+```
+    ############
+   ##############
+  ################
+   ##############
+    ############
+```
+
+@plane z=6 label="Tail Base"
+```
+     ##########
+      ########
+       ######
+      ########
+     ##########
+```
+
+@plane z=7 label="Tail Feathers"
+```
+       ####
+      ######
+     ## ## ##
+    ##  ##  ##
+   ##   ##   ##
+```

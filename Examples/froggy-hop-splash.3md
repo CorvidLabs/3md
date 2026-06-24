@@ -1,0 +1,140 @@
+---
+3md: 1.0
+axis: frame
+title: Froggy Hop & Splash!
+view: play
+fps: 5
+author: Leif (kids storyteller)
+description: A little green frog hops across lily pads and makes a big splash — animated in ASCII, frame by frame.
+category: Animation
+---
+Watch Froggy leap from pad to pad! 🌿
+
+@plane z=0 label="Sitting Still"
+```
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  🌿         🌿         🌿
+ ( o_o )
+  (   )      🌿         🌿
+  /   \
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+```
+
+**Ribbit... ribbit...**
+
+Froggy sees a fat fly on the next lily pad.
+
+> *"One hop,"* he thinks. *"Maybe two."*
+
+@plane z=1 label="Getting Ready"
+```
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  🌿         🌿         🌿
+ ( ò_ó )
+  ( | )      🌿         🌿
+   /^\
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+```
+
+**Froggy crouches LOW.**
+
+His back legs push against the squishy lily pad.
+
+> *Squish. Squish. **SQUISH.***
+
+@plane z=2 label="Leaping!"
+```
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  🌿         🌿         🌿
+
+            (^o^)       🌿
+  🌿       ~( )~
+           / | \
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+```
+
+**UP and AWAY!**
+
+Froggy soars through the warm summer air.
+
+The fly sees him coming... but it's too late! 🪰
+
+@plane z=3 label="Midair!"
+```
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  🌿         🌿         🌿
+
+                   (°o°)
+  🌿         🌿   ~( )~
+                   /| \
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+```
+
+**Wheeeeeee!**
+
+Way up here, Froggy can see the whole pond.
+
+He spots three goldfish waving hello. 🐟🐟🐟
+
+@plane z=4 label="Landing!"
+```
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  🌿         🌿         🌿
+
+  🌿         🌿    ( v_v)
+                   (   )
+                    / \
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+```
+
+**Almost there...**
+
+*Plop!*
+
+The lily pad wobbles. Froggy wobbles with it.
+
+The fly is gone. Froggy got it! 😋
+
+@plane z=5 label="SPLASH!"
+```
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  🌿         🌿         🌿
+
+  🌿         🌿    💦🌊💦
+                  ( o_o )
+               💦  ( | )  💦
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+```
+
+# **S P L A S H !**
+
+The whole pond ripples.
+
+The goldfish giggle. The dragonflies zoom away.
+
+**Froggy grins his biggest frog grin.**
+
+> *"One hop,"* he said. *"Just ONE hop."* 🐸
+
+@plane z=6 label="The End"
+```
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  🌿         🌿         🌿
+                   ( ^_^ )
+  🌿         🌿    (  🪰 )   ← yum!
+                    /   \
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+```
+
+## The End! 🌟
+
+**Froggy sat on his new lily pad and felt very pleased.**
+
+The sun was warm. The pond was still. The fly was... delicious.
+
+---
+
+*Can YOU hop like Froggy?*
+*Count to three and JUMP!*
+
+**1... 2... 3... 🐸**

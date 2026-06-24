@@ -1,0 +1,121 @@
+---
+3md: 1.0
+axis: time
+title: Bed 7 — Shift Vitals Timeline
+view: present
+patient: Marcus T., 58M
+mrn: 408-22-771
+chief_complaint: chest tightness, diaphoresis x2h
+admit: 19:04
+nurse: RN Solis
+category: Health
+---
+Bed 7 vitals across the 7p–7a shift. Flip through each check.
+
+@plane z=0 label="19:04 Triage"
+# 19:04 — Arrival / Triage
+
+**BP** 168 / 104 mmHg   |   **HR** 112 bpm   |   **SpO2** 94%   |   **Temp** 37.1 °C   |   **RR** 22
+
+**Pain** 7/10 substernal, radiating L shoulder   |   **GCS** 15
+
+> Diaphoretic on arrival. Skin pale, cool, clammy. 12-lead ordered stat.
+
+- [x] IV access x2 (18g L AC, 20g R AC)
+- [x] O2 via NRB @ 10 L/min
+- [x] ASA 325 mg PO given
+- [ ] Troponin I pending
+- [ ] Cardiology notified
+
+**MD:** Dr. Okafor to bedside @ 19:09
+
+@plane z=1 label="19:45 First Check"
+# 19:45 — Post-Intervention Check
+
+**BP** 154 / 98 mmHg   |   **HR** 101 bpm   |   **SpO2** 97%   |   **Temp** 37.1 °C   |   **RR** 19
+
+**Pain** 5/10 — "a little better"
+
+> Weaned to 4 L NC after SpO2 improved. Pt more comfortable, still anxious.  
+> Troponin I returned: **0.18 ng/mL** (ref < 0.04) — elevated. Repeat ordered x2.
+
+- [x] Nitro SL 0.4 mg x1 given 19:32, BP tolerated
+- [x] Heparin bolus 4000 U IV per protocol
+- [x] Repeat troponin ordered @ 21:45
+- [ ] Echo ordered, pending scheduling
+
+*Trend: BP trending down, HR trending down — going in the right direction.*
+
+@plane z=2 label="21:00 Mid-Shift"
+# 21:00 — Mid-Shift Reassessment
+
+**BP** 142 / 88 mmHg   |   **HR** 88 bpm   |   **SpO2** 98%   |   **Temp** 37.3 °C   |   **RR** 16
+
+**Pain** 3/10 — "dull, not sharp"
+
+> Pt resting, wife at bedside. Anxious re: cath lab possibility.  
+> Echo completed 20:45: **LVEF ~40%**, inferior wall hypokinesis noted. Cards fellow called.
+
+- [x] Metoprolol 25 mg PO given 20:55
+- [x] Repeat troponin drawn 21:45
+- [x] Bedside commode — no BRP per order
+- [ ] Cath lab on standby per Dr. Okafor
+
+*Note: pt reports \"pressure\" not pain — updated in chart.*
+
+@plane z=3 label="23:30 Troponin x2"
+# 23:30 — Troponin Trend / Care Escalation
+
+**BP** 138 / 86 mmHg   |   **HR** 82 bpm   |   **SpO2** 98%   |   **Temp** 37.2 °C   |   **RR** 15
+
+**Pain** 2/10 — "almost gone"
+
+> Troponin I x2 returned: **1.47 ng/mL** — rising. NSTEMI confirmed.  
+> Cardiology attending Dr. Pham at bedside 23:15. Cath lab activated for AM.
+
+- [x] Ticagrelor 180 mg PO loading dose given 23:20
+- [x] Heparin gtt initiated @ 1000 U/hr, per ACS protocol
+- [x] NPO midnight — cath lab AM slot tentative 07:30
+- [x] Consent obtained by Dr. Pham
+- [x] Family updated by RN Solis + Dr. Pham
+
+*Rising troponin + hypokinesis = NSTEMI. Pt stable but monitored continuously.*
+
+@plane z=4 label="02:15 Overnight"
+# 02:15 — Overnight Watch
+
+**BP** 132 / 82 mmHg   |   **HR** 74 bpm   |   **SpO2** 99%   |   **Temp** 37.0 °C   |   **RR** 14
+
+**Pain** 0/10 — sleeping
+
+> Pt asleep, wife sleeping in chair. Telemetry: NSR, no ectopy. Heparin gtt running.  
+> No calls, no complaints. Urine output adequate 40–50 mL/hr.
+
+- [x] Heparin PTT @ 02:00 → 68 sec (therapeutic, no adjustment)
+- [x] Safety checks q1h — all clear
+- [ ] Wake + NPO reminder at 06:00
+- [ ] Pre-cath labs at 06:15
+
+> "Quiet hours are a gift. Trust the monitor, but look at the patient."
+
+*This is the shift where you earn your license — watchful waiting.*
+
+@plane z=5 label="06:00 Pre-Cath"
+# 06:00 — Pre-Cath Prep
+
+**BP** 128 / 80 mmHg   |   **HR** 70 bpm   |   **SpO2** 99%   |   **Temp** 36.9 °C   |   **RR** 14
+
+**Pain** 0/10 — "I feel okay, just nervous"
+
+> Pt awake, alert, appropriate. Confirmed NPO x8h. IV access patent x2.  
+> Final troponin I @ 05:45: **2.31 ng/mL** — peaked and plateauing.
+
+- [x] Pre-cath labs drawn (CBC, BMP, coag, type & screen)
+- [x] Foley placed per cath lab preference
+- [x] Heparin gtt held per cath lab order @ 06:30
+- [x] Allergy band confirmed — NKDA
+- [x] Surgical consent reverified with pt
+- [x] Report given to cath lab RN Chang @ 06:55
+
+**Shift summary:** BP 168→128, HR 112→70, SpO2 94→99%, troponin 0.18→2.31 (peaked).  
+*Pt going to cath lab stable, informed, and in good hands.* [[z=0|Back to arrival]]

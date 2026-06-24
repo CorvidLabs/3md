@@ -1,0 +1,149 @@
+---
+3md: 1.0
+axis: step
+title: APT Kill Chain: Recon to Exfil
+view: present
+incident: CORVID-2026-0041
+actor: UNC4872 (suspected state-sponsored, East Asia)
+target: CorvidLabs internal PKI + code-signing infra
+detection: 2026-06-21T03:17Z
+severity: CRITICAL
+analyst: leif
+tlp: RED
+category: Engineering
+---
+> Incident timeline reconstructed from Zeek logs, EDR telemetry, and Vault audit trails. All timestamps UTC. [[z=6|Jump to containment actions]].
+
+@plane z=0 label="Recon"
+# Step 0 — Passive Recon
+**2026-06-14 through 2026-06-18 | Severity: LOW**
+
+Attacker performed passive OSINT before touching internal networks.
+
+| Source | Artefact | Notes |
+|--------|----------|-------|
+| LinkedIn | 3 engineers with "PKI" in title | Harvested via Sales Navigator scraping |
+| GitHub | `swift-pinata` CI workflow | Leaked `SIGN_CERT_PASS` env var name (no value) |
+| Shodan | `pki.corvid.internal:8200` | Vault UI exposed on AS 14061 (DO) via dev VPN misconfiguration |
+| crt.sh | `*.corvid.internal` certs | Enumerated 14 internal subdomains from CT logs |
+
+**Attacker built a near-complete org chart from public data alone.**
+
+> IOC: `185.220.101.47` (Tor exit) hitting crt.sh and Shodan API with identical UA string across sessions.
+
+@plane z=1 label="Initial Access"
+# Step 1 — Initial Access
+**2026-06-18T22:41Z | Severity: HIGH**
+
+Spearphish targeting `@corvid.dev` engineers. Subject: *"Re: swift-pinata signing key rotation schedule"*
+
+```
+From: leif-security@corvid-labs.net   ← typosquat, registered 2026-06-12
+X-Mailer: Outlook 16.0 (spoofed)
+Attachment: Q2-signing-rotation.pdf.lnk  (Windows LNK, 1.2 MB)
+```
+
+- **2 of 9** recipients clicked (macOS — LNK harmless, but macOS Safari auto-previewed the linked URL)
+- Clicked URL: `https://doc-share.corvid-labs.net/view?token=eyJ...` → harvested OAuth token via open-redirect
+- **One victim** had `vault` CLI session token in browser localStorage from a dev demo
+
+**MITRE:** T1566.001 (Spearphishing Attachment) + T1550.001 (Application Access Token)
+
+@plane z=2 label="Persistence"
+# Step 2 — Credential Theft + Persistence
+**2026-06-19T00:03Z – 01:55Z | Severity: CRITICAL**
+
+Using the stolen Vault token (TTL: 24h, policy: `pki-intermediate-read`):
+
+```sh
+# Attacker commands reconstructed from Vault audit log
+vault read pki_int/cert/ca_chain          # 00:03Z ✓
+vault list pki_int/certs                  # 00:04Z ✓ — 847 cert serials
+vault write pki_int/issue/internal-tls \  # 00:11Z ✓
+  common_name="git.corvid.internal" \
+  ttl=8760h
+# ↑ Issued wildcard-equivalent cert for internal git, valid 1 year
+```
+
+Attacker then:
+1. Enrolled their cert into a **Let's Encrypt ACME account** (durable external anchor)
+2. Dropped a GitHub Actions runner token via a **fork PR** on `swift-pinata` (Actions secret poisoning attempt — **blocked** by branch protection)
+3. Created a cron `~/.zshrc` entry on victim's MBP via the phish re-redirect
+
+**Dwell time before detection: 51 hours, 14 minutes.**
+
+@plane z=3 label="Lateral Movement"
+# Step 3 — Lateral Movement
+**2026-06-20T05:22Z – 14:48Z | Severity: HIGH**
+
+Pivoted from `mbp-leif-dev` → internal build infra using the fraudulently issued cert.
+
+```
+05:22Z  TLS handshake: 185.220.101.47 → build01.corvid.internal:443
+        Subject: CN=git.corvid.internal  ← attacker cert, accepted!
+05:29Z  git clone ssh://build01/signing-keys.git  (empty repo lure)
+06:01Z  SSH brute-force: build01 → vault01 (47 attempts, all failed)
+07:14Z  LDAP bind using cert SAN as identity (Vault PKI auth backend)
+14:48Z  vault read secret/ci/codesign/p12_passphrase  ← FIRST HIT ON CROWN JEWELS
+```
+
+**Blast radius estimate:** 4 internal hosts reachable with issued cert.
+**Stopped short of:** HSM partition — required FIDO2 + IP allowlist. HSM never touched.
+
+> IOC: `build01` → `vault01` LDAP bind with non-human-origin cert SAN at 07:14Z. Should have paged. Didn't. [[z=5|See detection gaps]].
+
+@plane z=4 label="Exfil Attempt"
+# Step 4 — Exfiltration Attempt
+**2026-06-21T02:58Z – 03:17Z | Severity: CRITICAL**
+
+19-minute window before automated detection triggered:
+
+```
+02:58Z  vault read secret/ci/codesign/p12_passphrase   ✓ (value returned, 64-char hex)
+03:01Z  vault read secret/ci/codesign/apple_api_key    ✓
+03:04Z  vault read secret/ci/notarization/asc_provider ✓
+03:09Z  DNS TXT query: p12hex.<attacker-c2>.xyz         ← exfil via DNS
+03:11Z  DNS TXT query: apikey.<attacker-c2>.xyz         ← exfil via DNS
+03:17Z  Vault anomaly rule fires: 3 secret reads in <10min from non-CI IP
+        PagerDuty: P1 → leif@corvid.dev  ← DETECTION
+```
+
+**Exfiltrated (confirmed):** p12 passphrase, Apple API key, ASC provider ID
+**Not exfiltrated:** p12 file itself (stored in separate Vault namespace, token lacked access)
+**Attack surface:** An attacker with these 3 values + the p12 (obtainable from CI artifacts) could sign and notarize malicious macOS binaries as CorvidLabs.
+
+@plane z=5 label="Detection Gaps"
+# Step 5 — Detection Gaps Found
+**Post-incident analysis | Severity: N/A (learning)**
+
+Things that should have fired but didn't:
+
+- [ ] **No alert on Vault PKI issuance outside CI hours** — cert issued at 00:11Z, no human approved
+- [ ] **No mTLS pinning on `build01`** — accepted any cert signed by internal CA
+- [ ] **OAuth token localStorage** — dev demo left active session, no idle timeout
+- [ ] **DNS exfil blind spot** — Zeek had no TXT query anomaly rule; C2 domain `<attacker-c2>.xyz` was 6 days old (would have fired on new-domain rule had it existed)
+- [ ] **No break-glass on intermediate CA** — Vault `pki-intermediate-read` policy too broad; `issue` verb should have required MFA step-up
+- [x] **HSM boundary held** — FIDO2 + IP allowlist prevented HSM access ✓
+- [x] **Branch protection blocked CI poisoning** ✓
+- [x] **Anomaly rule on rapid secret reads did fire** — but 19 minutes too late ✓
+
+> Priority remediation: revoke intermediate CA, rotate all 3 exfiltrated secrets, enforce MFA step-up on `pki_int/issue`.
+
+@plane z=6 label="Containment"
+# Step 6 — Containment + Remediation
+**2026-06-21T03:17Z onward | Owner: leif**
+
+- [x] `03:19Z` — Revoke Vault token `s.XkQ9...` (stolen OAuth session)
+- [x] `03:22Z` — Revoke fraudulent cert serial `2f:ab:9c:...` via CRL push
+- [x] `03:31Z` — Rotate `secret/ci/codesign/p12_passphrase` + `apple_api_key`
+- [x] `03:45Z` — Notify Apple: ASC provider ID potentially compromised
+- [x] `04:10Z` — Rotate intermediate CA (new serial, OCSP stapling enabled)
+- [x] `06:00Z` — Ship emergency 3.2.1 patch: invalidate all tokens issued during dwell window
+- [ ] `2026-06-28` — Deploy DNS TXT anomaly detection in Zeek (owner: infra)
+- [ ] `2026-06-28` — Add MFA step-up policy to `pki_int/issue` verb (owner: security)
+- [ ] `2026-07-05` — mTLS pinning on all internal build hosts (owner: infra)
+- [ ] `2026-07-12` — Red team exercise targeting HSM partition (owner: leif)
+
+**Estimated impact avoided:** Code-signing capability for `CorvidLabs` Apple Developer account — 23 published packages, ~140k weekly downloads. Supply chain attack surface closed.
+
+> Full incident report: `incident/CORVID-2026-0041.md` in the internal wiki.

@@ -1,0 +1,166 @@
+---
+3md: 1.0
+axis: frame
+title: 4-7-8 Breath Cycle
+view: play
+fps: 2
+author: Meditation Guide
+technique: Dr. Andrew Weil's 4-7-8 relaxation breath
+rounds: 4 rounds to activate the parasympathetic nervous system
+category: Health
+---
+
+One full breath cycle. Let the animation pace you — no clock-watching needed.
+
+@plane z=0 label="Neutral"
+```
+          · · · · · · · · ·
+        ·                   ·
+      ·                       ·
+    ·           ○ ○             ·
+    ·          ○   ○            ·
+    ·         ○     ○           ·
+    ·          ○   ○            ·
+    ·           ○ ○             ·
+      ·                       ·
+        ·                   ·
+          · · · · · · · · ·
+```
+
+**Ready.**
+
+Tip of tongue rests gently behind upper front teeth.
+Lips slightly parted.
+
+@plane z=1 label="Inhale 1"
+```
+          · · · · · · · · ·
+        ·                   ·
+      ·       ↑   ↑   ↑       ·
+    ·        ○ ○ ○ ○ ○ ○       ·
+    ·       ○           ○      ·
+    ·      ○             ○     ·
+    ·       ○           ○      ·
+    ·        ○ ○ ○ ○ ○ ○       ·
+      ·                       ·
+        ·                   ·
+          · · · · · · · · ·
+```
+
+**Inhale through nose — 1**
+
+Belly first, then ribs, then chest.
+Quiet, effortless, cool air.
+
+@plane z=2 label="Inhale 2"
+```
+          · · · · · · · · ·
+        ·     ↑   ↑   ↑     ·
+      ·     ○ ○ ○ ○ ○ ○ ○     ·
+    ·      ○               ○   ·
+    ·     ○                 ○  ·
+    ·     ○                 ○  ·
+    ·      ○               ○   ·
+      ·     ○ ○ ○ ○ ○ ○ ○     ·
+        ·                   ·
+          · · · · · · · · ·
+```
+
+**Inhale — 2**
+
+Feel the ribs open sideways like a book.
+Shoulders stay down and soft.
+
+@plane z=3 label="Inhale 3"
+```
+        ↑   ↑   ↑   ↑   ↑
+      ○ ○ ○ ○ ○ ○ ○ ○ ○ ○ ○
+    ○                         ○
+   ○                           ○
+   ○                           ○
+   ○                           ○
+    ○                         ○
+      ○ ○ ○ ○ ○ ○ ○ ○ ○ ○ ○
+        ·   ·   ·   ·   ·
+```
+
+**Inhale — 3, 4**
+
+Lungs full. Chest lifts gently on count 4.
+Pause — breath just arrived.
+
+@plane z=4 label="Hold 1"
+```
+      ● ● ● ● ● ● ● ● ● ● ●
+    ●                         ●
+   ●       · · · · · · ·       ●
+   ●      ·             ·      ●
+   ●     ·               ·     ●
+   ●      ·             ·      ●
+   ●       · · · · · · ·       ●
+    ●                         ●
+      ● ● ● ● ● ● ● ● ● ● ●
+```
+
+**Hold — 1, 2, 3**
+
+Completely still. Oxygen diffusing.
+Mind notices the silence between breaths.
+
+@plane z=5 label="Hold 2"
+```
+      ● ● ● ● ● ● ● ● ● ● ●
+    ●                         ●
+   ●       ● ● ● ● ● ● ●       ●
+   ●      ●             ●      ●
+   ●     ●      ◉        ●     ●
+   ●      ●             ●      ●
+   ●       ● ● ● ● ● ● ●       ●
+    ●                         ●
+      ● ● ● ● ● ● ● ● ● ● ●
+```
+
+**Hold — 4, 5, 6, 7**
+
+Heart rate slowing. Nervous system signaled: *safe*.
+Nothing to do. Nothing to fix.
+
+@plane z=6 label="Exhale"
+```
+          ○ ○ ○ ○ ○ ○ ○ ○ ○
+        ○ ↓               ↓ ○
+      ○   ↓                 ↓  ○
+    ·      ↓               ↓    ·
+    ·       ○ ○ ○ ○ ○ ○ ○       ·
+    ·         ↓       ↓         ·
+    ·           ○ ○ ○           ·
+      ·           ↓           ·
+        ·         ·         ·
+          · · · · · · · · ·
+```
+
+**Exhale through mouth — 1, 2, 3**
+
+Lips make a loose *whoosh* shape.
+Chest falls first, then ribs, then belly draws in.
+
+@plane z=7 label="Exhale end"
+```
+          · · · · · · · · ·
+        ·    ↓         ↓    ·
+      ·        ○     ○        ·
+    ·             ○ ○          ·
+    ·            ↓ ↓           ·
+    ·             · ·          ·
+      ·                       ·
+        ·                   ·
+          · · · · · · · · ·
+```
+
+**Exhale — 4, 5, 6, 7, 8**
+
+Empty. Utterly empty.
+A brief pause before the cycle renews.
+
+> *That was one round. Do 4 rounds total, then breathe naturally.*
+> *After 1 month of daily practice, try 8 rounds.*

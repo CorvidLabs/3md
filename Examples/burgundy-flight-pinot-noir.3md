@@ -1,0 +1,127 @@
+---
+3md: 1.0
+axis: flight
+title: Burgundy Vertical: 5 Villages, One Grape
+view: present
+producer: Domaine Faiveley
+vintage: 2019
+grape: Pinot Noir
+region: Cote de Nuits, Burgundy
+tasted: 2026-06-23
+category: Notes
+---
+A structured north-to-south flight through the Cote de Nuits. Same producer, same vintage, one grape — only the terroir changes. Pour in order. Give each wine 10 minutes in the glass before moving on.
+
+@plane z=0 label="Marsannay"
+# Marsannay AOC — The Opening Act
+
+**Glass 1 of 5** | Northern anchor, lightest soils
+
+**Eye:** Translucent ruby, garnet rim. Pale enough to read newsprint through.
+
+**Nose:** Dried cherry, iron filings, a faint whiff of forest floor after rain. Watery violet. Comes across as a little shy at first — give it 5 minutes.
+
+**Palate:** Light-bodied (12.5% alc), vivid acidity, almost tart red plum and cranberry. The tannins are barely there — fine grain, barely drying. Short finish with a nice bittersweet cherry pip note.
+
+**Soil:** Limestone and clay, thin topsoil. Vines planted on flatter ground below the escarpment.
+
+**The tell:** This is Burgundy with the volume at 4. Everything downstream turns it up.
+
+> Serve at 14°C. Do not decant.
+
+---
+**Price anchor:** ~€22/bottle | [[z=1|Next: Gevrey-Chambertin]]
+
+@plane z=1 label="Gevrey-Chambertin"
+# Gevrey-Chambertin AOC — The Muscle
+
+**Glass 2 of 5** | Most powerful village in the Cote de Nuits
+
+**Eye:** Deep ruby, almost opaque at the center. Purple tinge at the edge — classic youthful Gevrey.
+
+**Nose:** Brooding. Dark cherry, smoked meat, wild herbs (thyme, bay). There is iron here too but now it is *hot* iron, like a blacksmith's forge. Give it the full 10 minutes.
+
+**Palate:** Full-bodied (13.5% alc), grippy tannins that coat the cheeks. Black cherry, a streak of bitter chocolate, fresh black pepper on the finish. High acidity balances the weight beautifully — this is not heavy, just *structured*.
+
+**Soil:** Iron-rich brown limestone ("comblanchien"). The famous hard rock that Gevrey's muscular style is built on.
+
+**The tell:** Compare the tannin grip here to glass 1. That is limestone iron talking.
+
+> Serve at 16°C. 30-minute decant optional.
+
+---
+**Price anchor:** ~€38/bottle | [[z=0|Back]] · [[z=2|Next: Chambolle-Musigny]]
+
+@plane z=2 label="Chambolle-Musigny"
+# Chambolle-Musigny AOC — The Perfume
+
+**Glass 3 of 5** | The feminine heart of Burgundy
+
+**Eye:** Pale ruby, almost translucent again. Lighter than the Gevrey but with more blue-pink at the rim.
+
+**Nose:** This is the one people fall in love with. Rose petal, fresh raspberry, a touch of violet, sandalwood. It smells *expensive* in a way that has nothing to do with extraction. Delicate and precise.
+
+**Palate:** Medium-light body (13% alc). Silky, impossibly smooth texture — "velvet over iron" as the old phrase goes. The iron is there but wrapped in fruit and flowers. Raspberry, red cherry, white pepper. Very long finish.
+
+**Soil:** More clay than Gevrey, with deep deposits of fine limestone. Softer soils make softer wines.
+
+**The tell:** Close your eyes, compare the texture of this vs Glass 2. The difference is the clay-to-limestone ratio in the topsoil.
+
+> Serve at 15°C. No decant needed — it is already open.
+
+---
+**Price anchor:** ~€45/bottle | [[z=1|Back]] · [[z=3|Next: Vosne-Romanee]]
+
+@plane z=3 label="Vosne-Romanee"
+# Vosne-Romanee AOC — The Royalty
+
+**Glass 4 of 5** | Home of the greatest wines on Earth
+
+**Eye:** Deep, saturated ruby. The most intense color in this flight. Garnet core, ruby rim, barely any evolution.
+
+**Nose:** Complex and shifting. First pour: red cherry, dried rose, a little smoke. After 5 min: spice box appears (cinnamon, clove), then something almost animal (leather, forest mushroom). After 10 min: the whole thing lifts into a high, ethereal register that is hard to describe.
+
+**Palate:** Full-bodied but not heavy (13.5% alc). The tannins are ripe and plush, not grippy. Red and dark cherry together, violets, spice, a saline mineral finish that goes on for 30+ seconds. This is the wine that set the benchmark.
+
+**Soil:** Thin, iron-rich topsoil over hard comblanchien limestone. Bedrock very close to the surface — stressed vines, concentrated fruit.
+
+**The tell:** The finish length. Count the seconds. Write it down.
+
+> Serve at 16°C. 20-minute decant.
+
+---
+**Price anchor:** ~€65/bottle | [[z=2|Back]] · [[z=4|Next: Nuits-Saint-Georges]]
+
+@plane z=4 label="Nuits-Saint-Georges"
+# Nuits-Saint-Georges AOC — The Anchor
+
+**Glass 5 of 5** | Southern terminus, earthy and honest
+
+**Eye:** Deep ruby-garnet, similar depth to the Vosne but with more brown at the rim — the most evolved-looking of the flight.
+
+**Nose:** Earthy, savory, rustic in the best possible sense. Black cherry, truffle, tobacco, dried herbs. Less perfumed than Chambolle, less brooding than Gevrey — its own thing entirely. A barnyard note that fades with air (classic Pinot).
+
+**Palate:** Medium-full body (13.5% alc), firm tannins, high acidity. Black cherry, blackcurrant (unusual for Pinot), earthy beet, long savory finish. The most food-driven wine in the flight — it needs a plate.
+
+**Soil:** Deeper clay, more alluvial material washed down from the slope. Warmer growing conditions at the south end of the Cote de Nuits.
+
+**The tell:** That blackcurrant note. It shows up almost nowhere else in the Cote de Nuits. Pure Nuits identity.
+
+> Serve at 16°C. 30-minute decant.
+
+---
+**Price anchor:** ~€42/bottle | [[z=3|Back to Vosne]]
+
+---
+
+## Flight Summary
+
+| # | Village | Body | Key Note | Tannin | Price |
+|---|---------|------|----------|--------|-------|
+| 1 | Marsannay | Light | Dried cherry | Gossamer | €22 |
+| 2 | Gevrey-Chambertin | Full | Smoked meat | Grippy | €38 |
+| 3 | Chambolle-Musigny | Med-light | Rose petal | Silky | €45 |
+| 4 | Vosne-Romanee | Full | Spice box | Plush | €65 |
+| 5 | Nuits-Saint-Georges | Med-full | Truffle | Firm | €42 |
+
+**The lesson this flight teaches:** Pinot Noir is the most terroir-transparent grape in the world. Same producer, same vintage, same winemaking — and yet five completely different wines. The vine did not change. The rock beneath it did.

@@ -26,7 +26,10 @@ test("the component renders every gallery example cleanly", async ({ page }) => 
       lab.removeAttribute("mode");
       lab.setSource(ex.src);
       if (lab.error) { bad.push(`${ex.slug}: parse ${lab.error}`); continue; }
-      if (lab.shadowRoot.querySelectorAll(".plane").length < 1) { bad.push(`${ex.slug}: no planes`); continue; }
+      // A document renders either as plane cards or, when its default view is
+      // blend, as voxels. Accept either as "rendered".
+      const rendered = lab.shadowRoot.querySelectorAll(".plane").length + lab.shadowRoot.querySelectorAll(".voxel").length;
+      if (rendered < 1) { bad.push(`${ex.slug}: no planes or voxels`); continue; }
       // also exercise the blend (voxel) path
       lab.setAttribute("mode", "blend");
       lab.setSource(ex.src);

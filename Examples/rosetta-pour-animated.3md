@@ -1,0 +1,111 @@
+---
+3md: 1.0
+axis: frame
+title: Rosetta Pour: Frame by Frame
+view: play
+fps: 5
+milk: whole, 65°C, 20s stretch then 40s fold
+espresso: 18g in / 36g out, 28s
+cup: 6oz ceramic, pre-warmed
+category: Home
+---
+
+Pour a rosetta in 7 frames. Watch the milk find its shape.
+
+@plane z=0 label="Base Flood"
+```
+        (  espresso  )
+        [____________]
+        |            |
+        |            |
+        |____________|
+```
+**Step 1 — Base flood**
+Hold the pitcher high (~15cm). Pour a thin stream dead center to sink the milk under the crema. Fill to 60% full. The surface stays a dark, clean brown.
+
+> Speed: steady, not too slow.
+
+@plane z=1 label="Drop & Widen"
+```
+        (  espresso  )
+        [____________]
+        |    (  )    |
+        |   /    \   |
+        |____________|
+```
+**Step 2 — Drop and widen**
+Lower the pitcher spout to just above the surface. The milk starts to show — a pale oval appears at center. Begin a slow side-to-side wrist wiggle: 2–3 Hz, ~5mm each direction.
+
+> You'll see the first white bloom. This is the rosetta's spine forming.
+
+@plane z=2 label="First Leaves"
+```
+        [____________]
+        |  ~~~~~~~~~  |
+        | /  leaf 1  \|
+        |/   leaf 2   |
+        |_____________|
+```
+**Step 3 — First leaves**
+Keep the side-to-side going. Move the pitcher *backward* (away from you) very slowly as you wiggle. Each wiggle creates a new petal that frames the last. You should have 3–4 visible arcs now.
+
+> Don't rush the backward pull. Patience = more leaves.
+
+@plane z=3 label="Stack the Leaves"
+```
+        [_____________]
+        |  ~^~^~^~^~  |
+        | ( rosetta ) |
+        |  ~v~v~v~v~  |
+        |_____________|
+```
+**Step 4 — Stack the leaves**
+Continue backward drift + wiggle. The leaves are stacking behind each other. Target: 6–8 leaves total. Milk surface is now 80% covered in the white fern pattern.
+
+> Cup tilt: keep it at ~30° toward you. This gives the leaves depth.
+
+@plane z=4 label="The Stem Pull"
+```
+        [_____________]
+        |  ~^~^~^~^~  |
+        | ( rosetta ) |
+        |    |||||    |
+        |____|||||____|
+```
+**Step 5 — Stem pull-through**
+Bring the pitcher back to center, raise it slightly (8cm), thin the stream. Pull *straight through* the middle of the rosetta toward yourself in one confident motion. This draws the stem and locks the leaves.
+
+> One motion. Do not hesitate here.
+
+@plane z=5 label="Lift & Finish"
+```
+        [_____________]
+        |  ~^~^~^~^~  |
+        |   (     )   |
+        |     |||     |
+        |_____|_|_____|
+```
+**Step 6 — Lift off**
+As the stream crosses the near edge of the rosetta, raise the pitcher and cut the flow cleanly. The stem ends just inside the cup rim — not hitting the edge.
+
+> A clean lift = a pointed stem tip. A dragged finish = a blob.
+
+@plane z=6 label="The Finished Rosetta"
+```
+        [_____________]
+        |  ~^~^~^~^~  |
+        |  ( fern! )  |
+        |     \|/     |
+        |______|______| 
+```
+**Done. Serve within 90 seconds.**
+
+Shoot for:
+- **6–9 leaves** symmetrically stacked
+- **Stem** reaching 2/3 up the cup
+- **Brown crema** visible as a clean border around the white
+
+Common fixes:
+- Leaves too wide? Wiggle faster, pull back slower.
+- No leaves forming? Drop the pitcher closer to the surface.
+- Stem blobs out? Raise the pitcher earlier on the pull-through.
