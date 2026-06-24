@@ -19,16 +19,20 @@ each copy. Shipping the renderer as one component fixes that at the root.
 
 ## Install
 
+Published to GitHub Packages. Point the `@corvidlabs` scope at the GitHub
+registry once (in a project or user `.npmrc`), then install:
+
 ```bash
+echo "@corvidlabs:registry=https://npm.pkg.github.com" >> .npmrc
 bun add @corvidlabs/three-md-element
-# or: npm i @corvidlabs/three-md-element
 ```
 
-Or load the bundled module directly (the parser is bundled in, no other script
-needed):
+The published package is a single self-contained module (the parser is bundled
+in, no other dependency), so you can also vendor `dist/three-md.js` and load it
+directly:
 
 ```html
-<script type="module" src="https://unpkg.com/@corvidlabs/three-md-element"></script>
+<script type="module" src="/three-md.js"></script>
 ```
 
 ## Usage

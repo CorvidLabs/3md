@@ -1,8 +1,10 @@
 name: publish
 
-# Publishes @corvidlabs/threemd to GitHub Packages on each GitHub release,
-# matching the CorvidLabs convention (see CorvidLabs/ts-algochat). The built-in
-# GITHUB_TOKEN authenticates to npm.pkg.github.com, so no npm login is needed.
+# Publishes the two npm packages to GitHub Packages on each GitHub release:
+# @corvidlabs/threemd (the parser) and @corvidlabs/three-md-element (the
+# canonical <three-md> web component, which bundles the parser at build time).
+# The built-in GITHUB_TOKEN authenticates to npm.pkg.github.com, so no npm login
+# is needed.
 
 on:
   release:
@@ -34,6 +36,37 @@ jobs:
         run: npm version "${TAG#v}" --no-git-tag-version --allow-same-version
         env:
           TAG: ${{ github.event.release.tag_name }}
+      - run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  element:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    defaults:
+      run:
+        working-directory: element
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          registry-url: "https://npm.pkg.github.com"
+          scope: "@corvidlabs"
+      # Resolves @corvidlabs/threemd via the local file:../js path so the build
+      # can bundle it into the published, self-contained dist.
+      - run: bun install
+      - name: Sync package version to the release tag
+        if: github.event_name == 'release'
+        run: npm version "${TAG#v}" --no-git-tag-version --allow-same-version
+        env:
+          TAG: ${{ github.event.release.tag_name }}
+      # prepublishOnly builds dist (bundle + types) before publishing.
       - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

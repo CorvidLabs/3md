@@ -4,7 +4,11 @@
   "description": "The canonical <three-md> web component: a framework-agnostic interactive renderer for the 3md format, backed by @corvidlabs/threemd.",
   "type": "module",
   "license": "MIT",
+  "keywords": ["3md", "web-component", "custom-element", "renderer", "markdown", "z-axis", "corvidlabs"],
   "repository": { "type": "git", "url": "git+https://github.com/CorvidLabs/3md.git", "directory": "element" },
+  "homepage": "https://github.com/CorvidLabs/3md#readme",
+  "bugs": { "url": "https://github.com/CorvidLabs/3md/issues" },
+  "publishConfig": { "registry": "https://npm.pkg.github.com" },
   "main": "./dist/three-md.js",
   "module": "./dist/three-md.js",
   "types": "./dist/three-md.d.ts",
@@ -17,14 +21,14 @@
   "files": ["dist"],
   "sideEffects": ["./dist/three-md.js"],
   "scripts": {
-    "build": "bun build ./src/three-md.ts --outfile ./dist/three-md.js --format esm --target browser --minify && bun run build:types && bun run build:web",
+    "build:dist": "bun build ./src/three-md.ts --outfile ./dist/three-md.js --format esm --target browser --minify",
     "build:types": "tsc --emitDeclarationOnly --declaration --outDir dist src/three-md.ts || true",
-    "build:web": "cp ./dist/three-md.js ../web/assets/three-md.js"
-  },
-  "dependencies": {
-    "@corvidlabs/threemd": "file:../js"
+    "build:web": "cp ./dist/three-md.js ../web/assets/three-md.js",
+    "build": "bun run build:dist && bun run build:types && bun run build:web",
+    "prepublishOnly": "bun run build:dist && bun run build:types"
   },
   "devDependencies": {
+    "@corvidlabs/threemd": "file:../js",
     "typescript": "^5.6.0"
   }
 }

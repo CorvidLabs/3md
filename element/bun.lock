@@ -4,10 +4,8 @@
   "workspaces": {
     "": {
       "name": "@corvidlabs/three-md-element",
-      "dependencies": {
-        "@corvidlabs/threemd": "file:../js",
-      },
       "devDependencies": {
+        "@corvidlabs/threemd": "file:../js",
         "typescript": "^5.6.0",
       },
     },
