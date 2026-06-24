@@ -150,6 +150,41 @@ test.describe("<three-md> component", () => {
     expect(r.mapped).toContain("##.");
   });
 
+  test("camera: WASD/wheel/orbit move the scene; retired modes alias", async ({ page }) => {
+    await page.goto("/embed-example.html");
+    await page.waitForFunction(() => document.getElementById("inline")?.shadowRoot?.querySelectorAll(".plane").length === 3);
+    const r = await page.evaluate(() => {
+      const lab = document.getElementById("inline");
+      lab.setAttribute("mode", "stack");
+      lab.setSource('---\n3md: 1.0\naxis: time\n---\n@plane z=0\nA\n@plane z=1\nB\n@plane z=2\nC\n');
+      const scene = lab.shadowRoot.querySelector(".scene");
+      const t0 = scene.style.transform;
+      lab.dispatchEvent(new KeyboardEvent("keydown", { key: "d" }));   // pan
+      lab.dispatchEvent(new KeyboardEvent("keydown", { key: "q" }));   // orbit
+      lab.shadowRoot.querySelector(".stage").dispatchEvent(new WheelEvent("wheel", { deltaY: -120, cancelable: true })); // zoom
+      const t1 = scene.style.transform;
+      // Retired mode names still resolve to a surviving view.
+      const aliases = {};
+      for (const m of ["layers", "parallax", "elevator", "scene"]) { lab.setAttribute("mode", m); aliases[m] = lab._mode; }
+      return { changed: t0 !== t1, aliases };
+    });
+    expect(r.changed).toBe(true);
+    expect(r.aliases).toEqual({ layers: "stack", parallax: "stack", elevator: "stack", scene: "map" });
+  });
+
+  test("map mode lays planes out by x/y", async ({ page }) => {
+    await page.goto("/embed-example.html");
+    await page.waitForFunction(() => document.getElementById("inline")?.shadowRoot?.querySelectorAll(".plane").length === 3);
+    const xs = await page.evaluate(() => {
+      const lab = document.getElementById("inline");
+      lab.setAttribute("mode", "map");
+      lab.setSource('---\n3md: 1.0\naxis: space\n---\n@plane z=0 x=-4 y=0\nleft\n@plane z=1 x=4 y=0\nright\n');
+      return [...lab.shadowRoot.querySelectorAll(".plane")].map((p) => new DOMMatrix(getComputedStyle(p).transform).m41);
+    });
+    // The two planes sit at different x positions (a real spatial layout).
+    expect(xs[0]).not.toBe(xs[1]);
+  });
+
   test("blend mode renders content as 3D voxels", async ({ page }) => {
     const errors = [];
     page.on("pageerror", (e) => errors.push(String(e)));

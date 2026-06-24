@@ -98,15 +98,12 @@
       <label for="modeSel">mode</label>
       <select id="modeSel" class="btn" aria-label="override render mode">
         <option value="">auto (from axis)</option>
-        <option value="stack">stack</option>
-        <option value="play">play</option>
-        <option value="layers">layers</option>
-        <option value="scene">scene</option>
-        <option value="parallax">parallax</option>
-        <option value="present">present</option>
-        <option value="elevator">elevator</option>
-        <option value="blend">blend (3D object)</option>
-        <option value="single">single card</option>
+        <option value="stack">deck</option>
+        <option value="play">animation</option>
+        <option value="single">reader</option>
+        <option value="present">slides</option>
+        <option value="blend">3D object</option>
+        <option value="map">map</option>
       </select>
       <button id="playBtn" class="btn" type="button">play</button>
       <button id="openBtn" class="btn" type="button">open file</button>
@@ -131,7 +128,7 @@
   </div>
 
   <script defer src="assets/theme.js"></script>
-  <script type="module" src="assets/three-md.js?v=1.6.2"></script>
+  <script type="module" src="assets/three-md.js?v=1.7.0"></script>
   <script type="module">
     const STARTER = `---
 3md: 1.0
