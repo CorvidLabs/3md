@@ -10,6 +10,9 @@ export default defineConfig({
   testDir: ".",
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
+  // The tab/gallery loops scrub many examples in sequence; give them headroom
+  // on slower CI machines (the default 30s is exceeded there).
+  timeout: 90_000,
   retries: process.env.CI ? 1 : 0,
   reporter: process.env.CI ? "github" : "list",
   use: {

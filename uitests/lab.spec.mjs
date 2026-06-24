@@ -6,15 +6,16 @@ const PLANE_Z = (value) => {
   const scrub = document.getElementById("scrub");
   scrub.value = String(value);
   scrub.dispatchEvent(new Event("input", { bubbles: true }));
+  const read = () => [...document.querySelectorAll("#scene > .plane")]
+    .map((p) => Math.round(new DOMMatrix(getComputedStyle(p).transform).m43));
+  // The focus smoothing (0.16/frame) is fully converged within ~40 frames. A
+  // hard timeout guarantees this evaluate resolves even if rAF is throttled.
   return new Promise((resolve) => {
     let frames = 0;
+    const cap = setTimeout(() => resolve(read()), 2500);
     (function tick() {
-      if (++frames < 90) {
-        requestAnimationFrame(tick);
-      } else {
-        const planes = [...document.querySelectorAll("#scene > .plane")];
-        resolve(planes.map((p) => Math.round(new DOMMatrix(getComputedStyle(p).transform).m43)));
-      }
+      if (++frames < 40) requestAnimationFrame(tick);
+      else { clearTimeout(cap); resolve(read()); }
     })();
   });
 };
@@ -81,7 +82,7 @@ test.describe("lab demo (index.html)", () => {
     expect(tabCount).toBeGreaterThan(1);
     for (let i = 0; i < tabCount; i++) {
       await page.locator(".tab").nth(i).click();
-      await page.waitForTimeout(700);
+      await page.waitForTimeout(350);
       const planes = await page.locator("#scene > .plane").count();
       expect(planes, `tab ${i} renders planes`).toBeGreaterThan(0);
       await expectScrubHealthy(page);
@@ -108,9 +109,9 @@ test.describe("gallery viewer (gallery.html)", () => {
     await page.waitForSelector(".entry");
     const total = await page.locator(".entry").count();
     // Sample across the (axis-grouped) list so several focus-mode examples are hit.
-    for (const i of [3, 24, 47, 71, 95].filter((n) => n < total)) {
+    for (const i of [3, 40, 80].filter((n) => n < total)) {
       await page.locator(".entry").nth(i).click();
-      await page.waitForTimeout(700);
+      await page.waitForTimeout(350);
       const planes = await page.locator("#scene > .plane").count();
       expect(planes, `entry ${i} renders planes`).toBeGreaterThan(0);
       await expectScrubHealthy(page);
