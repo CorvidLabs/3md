@@ -5,13 +5,17 @@
 /// Renders a ``Document`` as a clean, accessible, standalone HTML document.
 ///
 /// Each plane becomes a semantic `<section>` element carrying a `data-z`
-/// attribute, the plane's label as a heading, and the Markdown body in a
-/// `<pre>` block. The body text is HTML-escaped to prevent injection. No
-/// Markdown rendering is performed; the raw body is presented verbatim inside
-/// `<pre>`.
+/// attribute, the plane's label as a heading, and the Markdown body rendered
+/// to HTML by ``MarkdownRenderer``. The preamble is also rendered as Markdown.
+/// All text content is HTML-escaped to prevent injection.
 ///
 /// The renderer is stateless and safe to call from multiple concurrent contexts.
 public struct HTMLRenderer: Sendable {
+
+    // MARK: - Properties
+
+    /// The Markdown renderer used to convert plane bodies and the preamble.
+    private let markdownRenderer = MarkdownRenderer()
 
     // MARK: - Initializers
 
@@ -54,7 +58,7 @@ public struct HTMLRenderer: Sendable {
 
         if let preamble = document.preamble {
             lines.append("<section class=\"preamble\">")
-            lines.append("<pre>\(escape(preamble))</pre>")
+            lines.append(markdownRenderer.render(preamble))
             lines.append("</section>")
         }
 
@@ -92,7 +96,7 @@ public struct HTMLRenderer: Sendable {
         }
 
         if !plane.body.isEmpty {
-            lines.append("<pre><code>\(escape(plane.body))</code></pre>")
+            lines.append(markdownRenderer.render(plane.body))
         }
 
         lines.append("</section>")

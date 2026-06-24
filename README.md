@@ -51,11 +51,13 @@ Then depend on the `ThreeMD` library product:
 
 ### JavaScript / TypeScript
 
-A faithful TypeScript port of the Swift parser is published on npm. The two
-implementations are kept in sync by the shared conformance suite
-([conformance/](conformance)).
+A faithful TypeScript port of the Swift parser is published to GitHub Packages.
+The two implementations are kept in sync by the shared conformance suite
+([conformance/](conformance)). Point the `@corvidlabs` scope at the GitHub
+registry once (in a project or user `.npmrc`), then install:
 
 ```bash
+echo "@corvidlabs:registry=https://npm.pkg.github.com" >> .npmrc
 bun add @corvidlabs/threemd
 ```
 

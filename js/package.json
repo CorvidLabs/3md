@@ -4,6 +4,11 @@
   "description": "Parser and serializer for the 3md format: Markdown with a Z axis.",
   "type": "module",
   "license": "MIT",
+  "keywords": ["3md", "markdown", "parser", "serializer", "z-axis", "file-format", "corvidlabs"],
+  "repository": { "type": "git", "url": "git+https://github.com/CorvidLabs/3md.git", "directory": "js" },
+  "homepage": "https://github.com/CorvidLabs/3md#readme",
+  "bugs": { "url": "https://github.com/CorvidLabs/3md/issues" },
+  "publishConfig": { "registry": "https://npm.pkg.github.com" },
   "main": "./dist/index.js",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -20,7 +25,8 @@
   "scripts": {
     "test": "bun test",
     "build": "bun build ./src/index.ts --outdir ./dist --target node --format esm && tsc -p tsconfig.build.json",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "prepublishOnly": "bun run build"
   },
   "devDependencies": {
     "@types/bun": "latest",

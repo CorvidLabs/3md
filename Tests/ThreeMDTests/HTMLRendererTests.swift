@@ -88,7 +88,7 @@ final class HTMLRendererTests: XCTestCase {
         XCTAssertTrue(html.contains("<h2>Sprint Start</h2>"))
     }
 
-    func testBodyInPreElement() throws {
+    func testBodyRenderedAsMarkdown() throws {
         let source = """
             ---
             3md: 0.1
@@ -98,7 +98,7 @@ final class HTMLRendererTests: XCTestCase {
             """
         let document = try parser.parse(source)
         let html = renderer.render(document)
-        XCTAssertTrue(html.contains("<pre><code>Hello world</code></pre>"))
+        XCTAssertTrue(html.contains("<p>Hello world</p>"))
     }
 
     // MARK: - Axis and Title
