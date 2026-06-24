@@ -1,0 +1,138 @@
+---
+3md: 1.0
+axis: frame
+title: Aurora Borealis
+view: play
+fps: 6
+legend: G=🟩 g=🟢 C=🩵 c=🔵 P=🟣 p=💜 M=🩷 m=🌸 Y=🟡 y=💛 W=⬜ w=🌫️ .=⬛ -=🌑 _=🌫️
+category: Animation
+---
+
+Watch the aurora dance across the arctic sky — ribbons of green, violet, and rose rippling over a frozen horizon.
+
+@plane z=0 label="Curtain Rises"
+
+```
+...........W w w W...........
+.........C C C c C C.........
+.......G G G G G G G G.......
+......G G g G G g G G G......
+.....G G g g G G g g G G.....
+....G G g g g G g g g G G....
+...G G g g g g g g g g G G...
+.. G G G g g g g g g G G G ..
+. . G G G g g g g G G G . . .
+- - - - - - - - - - - - - - -
+- - - - - - - - - - - - - - -
+```
+
+*A green veil lifts silently over the tundra.*
+
+@plane z=1 label="Violet Joins"
+
+```
+..........W w W w W..........
+........C C P P C C C........
+......G G G P P P G G G......
+.....G G g P p P g G G G.....
+....G G g g p p p g g G G....
+...G G g g g p p g g g G G...
+.. G G g g g p g g g G G G ..
+. . G G G g g g g G G G . . .
+. . . G G G G G G G G . . . .
+- - - - - - - - - - - - - - -
+- - - - - - - - - - - - - - -
+```
+
+*Violet bleeds into the green — the sky begins to sing.*
+
+@plane z=2 label="Rose Blooms"
+
+```
+.........w W w W w w.........
+.......C C P P P C C C.......
+.....G G P P M M P P G G.....
+....G G g P M m M P g G G....
+...G G g g M m m M g g G G...
+..G G g g g m m m g g g G G..
+. G G G g g m m g g G G G . .
+. . G G G G g g G G G G . . .
+. . . . G G G G G G . . . . .
+- - - - - - - - - - - - - - -
+- - - - - - - - - - - - - - -
+```
+
+*Rose petals scatter through the violet — three colors now.*
+
+@plane z=3 label="Peak Shimmer"
+
+```
+........W w W M w W w........
+......C C M M M M C C C......
+....G G P M m M m M P G G....
+...G G g M m Y m M g G G G...
+..G G g g m Y y Y m g g G G..
+.G G g g g Y y y Y g g G G G.
+G G G g g g y y g g G G G G G
+. G G G G g g g G G G G . . .
+. . . . G G G G G G . . . . .
+- - - - - - - - - - - - - - -
+- - - - - - - - - - - - - - -
+```
+
+*A golden heart pulses at the core — the sky is fully alive.*
+
+@plane z=4 label="Slow Fade"
+
+```
+.........W w W w W w.........
+.......C C P P P C C.........
+.....G G G P M P G G G.......
+....G G g g P P g g G G......
+...G G g g g G g g g G G.....
+..G G G g g g g g G G G G....
+. G G G G G G G G G G G . . .
+. . . G G G G G G G . . . . .
+. . . . . G G G . . . . . . .
+- - - - - - - - - - - - - - -
+- - - - - - - - - - - - - - -
+```
+
+*Colors soften, the ribbons thin.*
+
+@plane z=5 label="Last Light"
+
+```
+..............W..............
+...........C C C.............
+.........G G G G G...........
+.......G G g G G g G.........
+.....G G g g g g g G G.......
+...G G G G g g g G G G G.....
+. G G G G G G G G G G G . . .
+. . . G G G G G G G . . . . .
+. . . . . . . . . . . . . . .
+- - - - - - - - - - - - - - -
+- - - - - - - - - - - - - - -
+```
+
+*One green ribbon remains, trembling, then still.*
+
+@plane z=6 label="Night Returns"
+
+```
+.............................
+.............................
+...........C C C.............
+.........G G G G G...........
+.......G G G G G G G.........
+. . . . . G G G . . . . . . .
+. . . . . . . . . . . . . . .
+- - - - - - - - - - - - - - -
+- - - - - - - - - - - - - - -
+- - - - - - - - - - - - - - -
+```
+
+*The arctic night reclaims its silence. The stars hold their breath.*
+
+> *"The aurora is nature's proof that beauty needs no audience."*

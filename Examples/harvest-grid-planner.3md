@@ -1,0 +1,161 @@
+---
+3md: 1.0
+axis: layer
+title: Harvest Grid Planner
+view: present
+legend: S=🟫 W=🟦 C=🌽 T=🍅 P=🥕 B=🏚️ .=🟩 F=🌻 R=🌾 x=⬛
+category: Games
+---
+
+Plan your farm season by season — each layer reveals what's growing, where water flows, and how to rotate crops for a bumper harvest.
+
+@plane z=0 label="Spring Planting"
+
+# Spring — First Planting
+
+Freshly tilled soil, seedlings just in the ground. Water channels dug along the south edge.
+
+```
+x x x x x x x x x x
+x S S C C C S S S x
+x S C C C C C S S x
+x W W W W W W W W x
+x S T T S S T T S x
+x S T T S S T T S x
+x W W W W W W W W x
+x S S P P P P S S x
+x S S P P P P S S x
+x B B B . . . . . x
+x x x x x x x x x x
+```
+
+**Legend**
+- 🟫 Bare soil — tilled and ready
+- 🌽 Corn block — north field
+- 🍅 Tomatoes — center rows
+- 🥕 Carrots — south bed
+- 🟦 Irrigation channels
+- 🏚️ Barn and tool storage
+- 🟩 Lawn / paths
+
+> Tip: plant corn on the north side so it doesn't shade the tomatoes below.
+
+@plane z=1 label="Summer Growth"
+
+# Summer — Full Canopy
+
+Crops are tall, water runs daily. The sunflower windbreak is blooming along the east wall.
+
+```
+x x x x x x x x x x
+x S S C C C S F S x
+x S C C C C C F S x
+x W W W W W W W W x
+x S T T S S T T S x
+x S T T S S T T S x
+x W W W W W W W W x
+x S S P P P P S S x
+x S S P P P P S S x
+x B B B . . . . . x
+x x x x x x x x x x
+```
+
+**This week's tasks**
+
+- [ ] Weed the carrot bed (row 8)
+- [ ] Check the east irrigation valve
+- [ ] Thin the corn if stalks are crowding
+- [ ] Harvest early tomatoes once blush shows
+
+> The sunflower 🌻 row is doing double duty — attracting pollinators *and* blocking the prevailing west wind.
+
+@plane z=2 label="Autumn Harvest"
+
+# Autumn — Harvest Season
+
+Corn and tomatoes are pulled. Carrots finish late. The rye cover crop goes in everywhere else.
+
+```
+x x x x x x x x x x
+x R R R R R R R R x
+x R R R R R R R R x
+x W W W W W W W W x
+x R R R R R R R R x
+x R R R R R R R R x
+x W W W W W W W W x
+x S S P P P P S S x
+x S S P P P P S S x
+x B B B . . . . . x
+x x x x x x x x x x
+```
+
+**Harvest log**
+
+| Crop | Rows | Yield estimate |
+|------|------|----------------|
+| Corn | 2–3 | ~180 ears |
+| Tomatoes | 5–6 | ~40 lbs |
+| Carrots | 8–9 | ~25 lbs |
+
+🌾 Rye cover crop protects soil over winter and fixes nitrogen for next spring's rotation.
+
+@plane z=3 label="Rotation Plan"
+
+# Next Year — Crop Rotation
+
+Rotate everything one block clockwise to break pest cycles and balance soil nutrients.
+
+```
+x x x x x x x x x x
+x S S T T T S F S x
+x S T T T T T F S x
+x W W W W W W W W x
+x S P P S S P P S x
+x S P P S S P P S x
+x W W W W W W W W x
+x S S C C C C S S x
+x S S C C C C S S x
+x B B B . . . . . x
+x x x x x x x x x x
+```
+
+**Rotation rules**
+
+1. **Corn → South** (nitrogen hungry; follows legume-enriched soil)
+2. **Tomatoes → North** (away from last year's blight risk)
+3. **Carrots → Center** (loose soil from prior root crops)
+
+- Never plant tomatoes where peppers or potatoes grew.
+- Add compost to the carrot rows before spring tilling.
+
+> See [[z=0|Spring Planting]] to start the next cycle fresh.
+
+@plane z=4 label="Water & Soil Notes"
+
+# Reference — Soil & Water Guide
+
+Keep this layer open while planning. All measurements per 10×10 grid square.
+
+## Soil Types
+
+| Symbol | Name | Best For | pH Target |
+|--------|------|----------|-----------|
+| 🟫 S | Tilled loam | General crops | 6.0–7.0 |
+| 🟩 . | Lawn / path | Walking, airflow | — |
+
+## Irrigation
+
+- **🟦 W rows** — drip tape runs at 6 AM and 6 PM in summer
+- Reduce to once daily in autumn
+- Shut off entirely after first frost
+
+## Quick Fixes
+
+- **Yellow corn leaves** → nitrogen deficiency; side-dress with compost
+- **Cracked carrots** → uneven watering; add mulch
+- **Blossom drop on tomatoes** → night temps too high; plant earlier next year
+- **Slugs in paths** → lay copper tape around the 🟩 border cells
+
+---
+
+*Print this layer and pin it to the barn door for the season.*

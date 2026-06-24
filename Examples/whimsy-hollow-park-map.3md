@@ -1,0 +1,140 @@
+---
+3md: 1.0
+axis: layer
+title: Whimsy Hollow Park Map
+view: stack
+legend: R=🎢 C=🎠 F=🍔 I=🍦 W=⛲ T=🌲 .=· ~=🌊 ^=⛺ P=🛖 B=🌉 E=🎡 S=🎪 X=🚻 $=🎟️
+park: Whimsy Hollow
+capacity: 12,000 guests
+category: Maps
+---
+
+Welcome to **Whimsy Hollow**, a park of three worlds stacked one atop the other — peel back each layer to reveal rides, services, and the hidden water realm beneath it all.
+
+@plane z=0 label="Terrain & Paths"
+
+# Terrain — The Land Itself
+
+The bones of the park: paths, water, and greenery.
+
+```
+. . . . . . . . . . . . . . . . . . . .
+. T T T . . . . . . . . . T T T T . . .
+. T T . . . . . . . . . . . T T T T . .
+. . . . . . ~ ~ ~ ~ . . . . . T T . . .
+. . . . . ~ ~ ~ ~ ~ ~ . . . . . . . . .
+. . . . . ~ ~ W ~ ~ ~ . . . . . . . . .
+. . . . . ~ ~ ~ ~ ~ ~ . . . . . . . . .
+. . . . . . ~ ~ ~ ~ . . . . . . . . . .
+. . . . . . . . . . . . . . . . . . . .
+. . . . B B . . . . . . . . . . . . . .
+. . . . B B . . . . . . . . . . . . . .
+. . . . . . . . . . . . . . . . . . . .
+. T . . . . . . . . . . . . . . . T T .
+. T T . . . . . . . . . . . . . T T T .
+. . . . . . . . . . . . . . . . . . . .
+```
+
+- `~` Shimmer Lake — rowboats available at the dock
+- `W` Central Fountain — meet-up landmark
+- `B` Briar Bridge — connects North and South zones
+- `T` Woodland buffer — noise dampening, picnic clearings
+
+@plane z=1 label="Rides & Attractions"
+
+# Rides & Attractions — The Magic Layer
+
+Every thrill, spin, and soar in the park.
+
+```
+. . . . . . . . . . . . . . . . . . . .
+. . . . . R R R . . . . E E . . . . . .
+. . . . . R R R . . . . E E . . . . . .
+. . . . . . . . . . . . . . . . . . . .
+. . C C . . . . . . . . . . . S S S . .
+. . C C . . . . . . . . . . . S S S . .
+. . . . . . . . . . . . . . . S S S . .
+. . . . . . . . . . . . . . . . . . . .
+. . . . . . . . . R R R R . . . . . . .
+. . . . . . . . . R R R R . . . . . . .
+. . . . . . . . . R R R R . . . . . . .
+. . . . . . . . . . . . . . . . . . . .
+. . . . . . . . . . . . . . . . . . . .
+. . . . C C . . . . . . . . . . . . . .
+. . . . C C . . . . . . . . . . . . . .
+```
+
+| Symbol | Attraction | Thrill | Height Min |
+|--------|------------|--------|------------|
+| 🎢 (NW) | **Thunderpine Run** — wooden coaster | ★★★★★ | 122 cm |
+| 🎡 (NE) | **Sky Lantern Wheel** — observation Ferris | ★★ | any |
+| 🎠 (W) | **Merry-Go-Meadow** — classic carousel | ★ | any |
+| 🎪 (E) | **The Hollow Tent** — illusion show + stunts | ★★★ | any |
+| 🎢 (S) | **Serpent's Spine** — steel inverting coaster | ★★★★★ | 132 cm |
+| 🎠 (SW) | **Dragonfly Flyers** — spinning teacup variant | ★★ | any |
+
+> **Fast Pass lanes** available at 🎢 Thunderpine Run and 🎢 Serpent's Spine. Purchase at [[z=2|any Food & Services kiosk]].
+
+@plane z=2 label="Food & Services"
+
+# Food & Services — Keep the Fun Going
+
+Fuel up, freshen up, find your family.
+
+```
+. . . . . . . . . . . . . . . . . . . .
+. . . . . . F F . . . . . . . . . . . .
+. . . . . . F F . . . X . . . . . . . .
+. . . . . . . . . . . . . . . . . . . .
+. . . . . . . . I I . . . . . . . . . .
+. $ . . . . . . I I . . . $ . . . . . .
+. . . . . . . . . . . . . . . . . . . .
+. . . . . . . . . . . . . . . F F . . .
+. . . . . . . . . . . . . . . F F . . .
+. . . X . . . . . . . . . . . . . . . .
+. . . . . . . . . . . . . . . . . . . .
+. . . . . . I . . . . . X . . . . . . .
+. . . . . . I . . . . . . . . . . . . .
+. $ . . . . . . . . . . . . . . $ . . .
+. . . . . . . . . . . . . . . . . . . .
+```
+
+| Symbol | Venue | Specialty |
+|--------|-------|-----------|
+| 🍔 (NW) | **Briar Burgers** | smash burgers, waffle fries |
+| 🍔 (SE) | **Hollow Hearth** | wood-fired pizza, hot cider |
+| 🍦 (center) | **Frostpine Creamery** | 24 flavors, hand-rolled cones |
+| 🍦 (S) | **Chilly Acorn Cart** | soft-serve, novelty bars |
+| 🚻 × 3 | Restrooms | accessible, family suites |
+| 🎟️ × 4 | Ticket & Fast Pass kiosks | cash + card + mobile pay |
+
+**Accessibility:** All food venues have step-free access. Quiet room located adjacent to 🍦 Frostpine Creamery (north side).
+
+@plane z=3 label="Hidden: Waterways"
+
+# The Waterways — What Lies Beneath
+
+The park's secret circulatory system: flume channels, misting pipes, and the underground river.
+
+```
+~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
+~ . . . . . . . . . . . . . . . . . . ~
+~ . . . . . . . . . . . . . . . . . . ~
+~ . . ~ ~ ~ ~ ~ ~ ~ ~ ~ . . . . . . . ~
+~ . ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ . . . . . . ~
+~ . ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ . . . . . . ~
+~ . ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ . . . . . . ~
+~ . . ~ ~ ~ ~ ~ ~ ~ ~ ~ . . . . . . . ~
+~ . . . ~ ~ ~ ~ ~ ~ ~ . . . . . . . . ~
+~ . . . . . . . . . . . . . . . . . . ~
+~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
+```
+
+The **Shimmer Lake** (see [[z=0|Terrain layer]]) feeds three hidden channels:
+
+1. **The Flume Feed** — pressurized pipe supplying the park's two log-flume ride holding pools (not shown on public map — staff only)
+2. **The Mist Ring** — low-pressure loop running beneath the main promenade; surface vents create cooling mist on hot days
+3. **The Lost River** — a natural underground stream predating the park, preserved and protected; viewable through a glass floor panel inside the Hollow Tent attraction ([[z=1|Rides layer]])
+
+> *"The water remembers the hollow long before the rides arrived."*
+> — Park historian Maren Holloway, 1987 dedication plaque

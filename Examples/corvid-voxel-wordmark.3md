@@ -1,0 +1,102 @@
+---
+3md: 1.0
+axis: depth
+title: CorvidLabs Voxel Logo
+view: blend
+voxel-size: 12px
+palette: "#=🟫 @=🟥 *=🟧 +=🟨"
+category: Creative
+---
+
+A chunky pixel wordmark for CorvidLabs, built as stacked voxel slices. Each plane is a cross-section of the 3D letterforms — read front-to-back to watch the logo emerge from solid geometry.
+
+@plane z=0 label="Front Face"
+
+```
+#####  ## ##  ##  ##  ###  ##  ##  ##  ###    ####  ##  ###   ###
+##     ## ##  ##  ##   ##  ##  ## ##   ##    ##  ## ##  ##  ##   
+####   ######  ####    ##  ######  ##   ##   ##  ## ##  ###   ### 
+##     ## ##    ##     ##  ## ##   ## ##    ##  ## ##  ##       ##
+#####  ## ##    ##    ###  ## ##   ##  ##    ####  ## ###   ####  
+```
+
+The outermost face — maximum contrast, fully filled letterforms. Every stroke is 3 pixels thick for that satisfying chunky-pixel feel.
+
+@plane z=1 label="Extrude A"
+
+```
+####   ## ##  ##  ##  ##   #####  ## ##   ##    ####  ##  ###   ##
+##     ## ##  ##  ##  ##   ##     ## ##  ##    ##  ## ##  ##  ##  
+####   ######  ####   ##   ###    ######  ##   ##  ## ##  ###   ##
+##     ## ##    ##    ##   ##     ## ##  ##    ##  ## ##  ##     ##
+####   ## ##    ##    ##   #####  ## ##   ##    ####  ## ###  ####
+```
+
+First extrusion layer. Same silhouette, slightly hollow — the letterforms begin to gain physical mass.
+
+@plane z=2 label="Extrude B"
+
+```
+###    ## ##  ##  ##  ##   ####   ## ##   ##    ###   ##  ##   ###
+##     ## ##  ##  ##  ##   ##     ## ##  ##    ## ##  ##  ##  ##  
+###    ######  ####   ##   ###    ######  ##   ## ##  ##  ##   ## 
+##     ## ##    ##    ##   ##     ## ##  ##    ## ##  ##  ##     ##
+###    ## ##    ##    ##   ####   ## ##   ##    ###   ##  ##  ####
+```
+
+Second extrusion — the negative space inside counter-forms (the "o", "a", "b" voids) starts to shrink inward.
+
+@plane z=3 label="Core"
+
+```
+##     ## ##  ##  ##  ##   ###    ## ##  ##     ##   ##  ##   ###
+##     ## ##  ##  ##  ##   ##     ## ## ##      ##   ##  ##  ##  
+##     ######  ####   ##   ###    ######  ##    ##   ##  ##   ## 
+##     ## ##    ##    ##   ##     ## ## ##      ##   ##  ##     ##
+##     ## ##    ##    ##   ###    ## ##  ##     ##   ##  ##  ####
+```
+
+The inner core — letterform strokes reduced to single-pixel-wide rails. This is the skeleton everything else wraps around.
+
+@plane z=4 label="Shadow Slice"
+
+```
+@@@@@  @@ @@  @@  @@  @@@  @@  @@  @@  @@@    @@@@  @@  @@@   @@@
+@@     @@ @@  @@  @@   @@  @@  @@ @@   @@    @@  @@ @@  @@  @@   
+@@@@   @@@@@@  @@@@    @@  @@@@@@  @@   @@   @@  @@ @@  @@@   @@@ 
+@@     @@ @@    @@     @@  @@ @@   @@ @@    @@  @@ @@  @@       @@
+@@@@@  @@ @@    @@    @@@  @@ @@   @@  @@    @@@@  @@ @@@   @@@@  
+```
+
+Drop-shadow plane, offset one voxel down-right. Rendered in accent red — gives the wordmark that thick-sticker, screen-printed quality.
+
+@plane z=5 label="Ground Plane"
+
+```
+***********************************************************************
+***********************************************************************
+```
+
+A solid colour bar anchors the logo — the ground it sits on. In amber-orange, it doubles as a baseline rule and a nod to warning-tape aesthetics.
+
+@plane z=6 label="Spec Sheet"
+
+# CorvidLabs Voxel Wordmark — Construction Notes
+
+**Voxel grid:** 5 rows × 72 columns per slice  
+**Extrusion depth:** 6 planes at 12 px each = **72 px total depth**  
+**Stroke weight:** 3 vx front face, tapering to 1 vx at core  
+**Palette:**  
+- `#` Saddle brown — primary letterform fill  
+- `@` Crimson — drop shadow / accent  
+- `*` Amber — ground plane / baseline  
+
+**Usage rules:**
+- Minimum render size: 288 × 60 px (4 px per voxel)
+- Never scale non-uniformly — voxels must stay square
+- Shadow plane (`z=4`) may be omitted at small sizes
+- Ground plane (`z=5`) is always optional
+
+**Inspiration:** late-1980s isometric game title screens, rubber-stamp logos, and the satisfying thud of a chunky mechanical keyboard.
+
+> *"Solid geometry is honest design."*

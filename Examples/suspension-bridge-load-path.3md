@@ -1,0 +1,155 @@
+---
+3md: 1.0
+axis: layer
+title: Suspension Bridge: Load Path in Layers
+view: stack
+legend: T=🟫 C=🟦 S=🟥 D=🟨 .=⬛ ^=🔼 |=⬜ ~=🌊
+category: Engineering
+---
+
+A suspension bridge doesn't just hold itself up — it *redirects* forces through a chain of clever handoffs. Each layer here peels back one structural system, revealing how a truck's weight travels from deck to earth.
+
+@plane z=0 label="Full Bridge"
+
+```
+..........T.....T.....T.....T..........
+.........T|T...T|T...T|T...T|T.........
+........T.|.T.T.|.T.T.|.T.T.|.T........
+.......T..|..T..|..T..|..T..|..T.......
+......T...|...T.|..T..|.T...|...T......
+.....CCCCCCCCCCCCCCCCCCCCCCCCCCCCCC....
+.....|..............D...............|...
+SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+```
+
+**The complete picture.** A loaded span carries a truck (D) across the stiffening girder deck. Above it, cables (C) sweep catenary curves between two towers (T). Below, the roadway sits on vertical hangers (|). The whole system bears on concrete anchor blocks and piers (S) at the shores.
+
+> Every force you see here is either **tension** (pulling) or **compression** (pushing) — nothing else.
+
+@plane z=1 label="Dead + Live Load"
+
+```
+..............🚛..............
+......................................
+    ↓ 800 kN     ↓ 800 kN
+- - - - - D - - - D - - - - -
+    ↓           ↓
+```
+
+**Where the load enters.** The truck applies concentrated **dead load** (its own weight, constant) plus **live load** (moving, variable) directly to the **stiffening girder** — the horizontal beam running the length of the deck.
+
+- Dead load: self-weight of deck, girder, hangers, cables
+- Live load: vehicles, pedestrians, wind, snow
+- The girder's job: **distribute** point loads into many smaller forces along its length
+
+**Key principle:** The girder resists local bending, preventing the cable from deforming into an ugly kink at every truck wheel.
+
+@plane z=2 label="Hangers: Tension Transfer"
+
+```
+    |       |       |       |
+    |  ↑T   |  ↑T   |  ↑T   |
+    |       |       |       |
+====|=======|=======|=======|====  ← stiffening girder
+    ↑       ↑       ↑       ↑
+  (load panels transferred upward)
+```
+
+**Hangers carry tension — only tension.** Vertical steel rods (or wire bundles) hang from the main cable above and attach to the girder below.
+
+- Each panel of deck load is **lifted** by its hanger
+- Hangers cannot push — they go slack if compressed
+- Typical hanger spacing: **6 – 12 m**
+- Material: high-strength galvanized wire rope or parallel wire strands
+
+> *If a hanger snapped, its load would redistribute to adjacent hangers — the bridge would sag locally but not collapse.*
+
+@plane z=3 label="Main Cable: Catenary Curve"
+
+```
+T                               T
+ \                             /
+  \           C C C           /
+   \       C       C       /
+    \   C               C   /
+     \ /                 \ /
+      *                   *
+   (low point)         (low point)
+      ↓ max tension here ↓
+```
+
+**The cable chooses its own shape.** Under uniform load a freely hanging cable forms a **parabola** (not a catenary — that's self-weight only). The main cable is a bundle of thousands of parallel high-strength wires, **cold-drawn** to 1,570 MPa tensile strength.
+
+- Sag ratio (sag ÷ span) is typically **1:10**
+- Shallower sag → higher cable tension, larger anchor forces
+- Steeper sag → lower tension, but more material and taller towers
+
+The cable is **always in pure tension** — it cannot carry bending. This is why suspension bridges can span so far: tension members are extremely efficient.
+
+@plane z=4 label="Towers: Compression Path"
+
+```
+      ████
+      ████   ← cable saddle at crown
+      ████
+     ██████
+     ██████
+    ████████
+    ████████
+   ██████████
+   ██████████
+  ████████████
+  ████████████  ← base: max compression
+SSSSSSSSSSSSSSSS
+```
+
+**Towers carry compression — straight down.** The cable pulls inward and downward on each tower top (the **saddle**). The tower converts this diagonal cable force into a **near-vertical compressive load** transmitted to its foundation.
+
+- Tower material: **steel box sections** (modern) or **reinforced concrete**
+- Golden Gate towers: 227 m tall, weigh 22,000 tonnes each
+- Base pressure on bedrock: up to **30 MPa**
+
+> *Towers are the only major compression members in a suspension bridge — everything else is in tension.*
+
+@plane z=5 label="Anchor Blocks: Force Resolution"
+
+```
+cable →→→→→→→→→→→\
+                   \  resultant
+                    \  ↘
+ ════════════════════ ANCHOR BLOCK ════
+                    ↙
+ uplift ↑↑↑↑↑↑↑↑↑↑ weight of concrete resists
+ 
+ ████████████████████████████████████
+ ████  GRAVITY ANCHOR  ██████████████   ~100,000 tonnes
+ ████████████████████████████████████
+ ||||||||||||||||||||||||||||||||||||
+         bedrock / soil
+```
+
+**The anchor block closes the load path.** Cables pull outward and upward on each anchor. A massive concrete block (gravity anchor) or a tunnel drilled into rock (rock anchor) provides the equal-and-opposite reaction.
+
+- Gravity anchor: pure dead weight resists cable pull
+- Rock anchor: cable strands fan out and bond into drilled holes
+- The horizontal cable component → **anchor must not slide**
+- The vertical cable component → **anchor must not tip**
+
+**Load path complete:**
+`Truck → Girder → Hangers → Cable → Towers → Foundations → Earth`
+`       (bending) (tension) (tension) (compression)     (bearing)`
+
+@plane z=6 label="Force Magnitude Map"
+
+| Member | Force Type | Typical Magnitude | Material |
+|---|---|---|---|
+| Deck girder | Bending + shear | 50 – 200 kN·m | Steel / concrete |
+| Hangers | Tension | 500 – 2,000 kN each | Wire rope |
+| Main cable | Tension | **500,000 – 2,000,000 kN** | Parallel wire strand |
+| Tower | Compression | 200,000 – 800,000 kN | Steel or concrete |
+| Anchor block | Tension pull-out | 300,000 – 1,500,000 kN | Concrete + rock |
+
+**Why the cable tension is so enormous:** it carries the *entire bridge* in one continuous element. The Golden Gate's main cables each contain **27,572 wires** — laid end-to-end they would circle the Earth **3.5 times**.
+
+> The elegance of suspension: a bridge that weighs hundreds of thousands of tonnes hangs from wires thinner than your wrist, because tension is the most efficient force a material can carry.

@@ -1,0 +1,107 @@
+---
+3md: 1.0
+axis: layer
+title: Obsidian Rift
+view: stack
+legend: R=⬛ O=🟧 B=🟦 G=🟩 Y=🟨 W=⬜ .=·· +=✦ ^=▲ v=▼ *=⬡
+category: Games
+---
+
+**Obsidian Rift** is a two-player abstract strategy game played across three stacked planes of a volcanic island shattering apart. Control the Rift by claiming tiles on all three layers simultaneously — surface, cavern, and magma core.
+
+@plane z=0 label="Surface — Turn 1 Setup"
+
+## Surface Layer
+
+The top plane. Movement here is **orthogonal** (4 directions). Claimed tiles become **obsidian bridges** — opponents may cross but not linger.
+
+**Legend:** `R` = Rift void · `O` = Orange (you) · `B` = Blue (opponent) · `G` = Grove (safe haven) · `W` = open field · `.` = empty
+
+```
+W W W W W G W W W W W
+W W W R R R R R W W W
+W G W R W W W R W G W
+W W W R W + W R W W W
+W W W R W W W R W W W
+O W W R R R R R W W B
+W W W W W G W W W W W
+```
+
+**`+` marks the Rift Nexus** — the single tile connecting all three layers. Whoever controls it at the start of their turn draws one **Rift Card** (see [[z=2|Rift Cards]]).
+
+**First Moves (Orange plays first):**
+1. Orange advances to `(0,5)→(2,5)` — two steps toward the Rift edge
+2. Blue mirrors at `(10,5)→(8,5)`
+3. Orange enters the Rift ring: `(2,5)→(3,4)` — now **adjacent to the Nexus**
+
+@plane z=1 label="Cavern — Turn 1 Setup"
+
+## Cavern Layer
+
+The middle plane. Movement here is **diagonal only** (4 directions). Tiles here **sink** — after 3 turns on a tile, it collapses into the Magma Core below, taking any piece with it (that piece is removed unless it holds a **Vent Token**).
+
+**Legend:** `R` = Rift shaft · `O` = Orange · `B` = Blue · `*` = Hex pillar (immovable, blocks) · `^` = Vent (safe from sinking) · `W` = open cavern
+
+```
+W W * W W W W W * W W
+W W W W * W * W W W W
+W * W W W R W W W * W
+W W W * R + R * W W W
+W W W W W R W W W W W
+W W * W * W * W * W W
+W W W W W W W W W W W
+```
+
+**Sinking timer** is tracked per tile on a physical token (d4, flip each turn). When it hits 0, the tile is removed from play.
+
+**Cavern First Moves** (these happen simultaneously with Surface moves, on the same turn):
+- Orange must place a **Vent Token** `^` on any cavern tile they occupy before sinking begins
+- Blue does the same
+
+@plane z=2 label="Magma Core — Rift Cards"
+
+## Magma Core & Rift Cards
+
+The deepest plane. Pieces that **fall through** collapsed Cavern tiles land here — instead of dying, they become **Embers**, with special rules:
+
+- Embers move **one step in any direction** per turn (8-directional)
+- Embers can be **rekindled** back to full pieces if another friendly piece on the Surface plays the `Rekindle` Rift Card
+- Embers that reach the **Magma Nexus** `+` win the game instantly
+
+```
+R R R R R R R R R R R
+R W W W W W W W W W R
+R W * W W W W W * W R
+R W W W W + W W W W R
+R W * W W W W W * W R
+R W W W W W W W W W R
+R R R R R R R R R R R
+```
+
+---
+
+## Rift Card Reference
+
+Draw one whenever you control the Nexus `+` at turn start:
+
+| Card | Effect |
+|---|---|
+| **Tremor** | Flip all sinking d4s forward by 1 on opponent's cavern tiles |
+| **Bridge** | Your Surface piece may cross the Rift void `R` this turn |
+| **Rekindle** | Restore one Ember to a full piece on any Surface tile you control |
+| **Vent Seal** | Remove one Vent Token `^` from any tile (yours or opponent's) |
+| **Cascade** | Move one piece on each of two different layers this turn |
+| **Echo** | Copy the last Rift Card your opponent played |
+
+---
+
+## Victory Conditions
+
+Win by **any one** of the following:
+
+- [ ] Control the Nexus `+` on **all three layers** simultaneously
+- [ ] Land an **Ember** on the Magma Nexus `+`
+- [ ] Reduce opponent to **zero pieces** across all layers combined
+- [ ] Hold **both Grove tiles** `G` on the Surface for two consecutive turns
+
+> *"The island does not forgive hesitation. Move, or be swallowed."*

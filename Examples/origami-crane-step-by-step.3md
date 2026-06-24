@@ -1,0 +1,175 @@
+---
+3md: 1.0
+axis: step
+title: Fold a Paper Crane
+view: present
+legend: "=═ -=─ |=│ /=╱ \=╲ +=╋ v=▼ ^=▲ x=✕ .=·"
+category: Home
+---
+
+Start with a square sheet of paper — 15 × 15 cm works perfectly.
+Colored side **face down**. Take your time; each crease is a commitment.
+
+@plane z=0 label="Square Base"
+
+## Step 1 — Diagonal Creases
+
+Fold corner to corner both ways, unfold each time. You are just scoring creases.
+
+```
+\......../
+.\....../.
+..\..../..
+...\../...
+....\+....
+..../.\...
+.../...\..
+../.....\..
+./.......\
+/.........\
+```
+
+Then fold in half horizontally and vertically — unfold again. You now have **8 radiating crease lines**.
+
+> **Tip:** Press each crease firmly with your thumbnail before unfolding.
+
+@plane z=1 label="Preliminary Fold"
+
+## Step 2 — Collapse to a Square
+
+Rotate so a flat edge faces you. Push the two side corners inward along the diagonal creases so the top corner falls to meet the bottom corner.
+
+```
+   ^
+  /|\
+ / | \
+/  |  \
+\  v  /
+ \ | /
+  \|/
+   v
+```
+
+You now have a small square with **two flaps on each side** — the *preliminary base*. Keep the open end toward you.
+
+> **Fold both layers together** so all four points meet cleanly at the bottom.
+
+@plane z=2 label="Kite Folds"
+
+## Step 3 — Kite the Front Flaps
+
+With the open (split) end pointing **down**, fold the left and right bottom edges of the **front layer only** into the centre line.
+
+```
+    ^
+   /|\
+  / | \
+ /  |  \
+/ \ | / \
+\  \|/  /
+ \  v  /
+  \.../
+   ===
+```
+
+Crease sharply, then **unfold** these folds — you only need the lines. Fold the top triangle down over those lines, crease, unfold.
+
+**Flip the whole piece over** and repeat the same three folds on the back.
+
+@plane z=3 label="Petal Fold"
+
+## Step 4 — Petal Fold (both sides)
+
+This is the trickiest move. Lift the bottom **front flap** upward, opening it gently.
+
+The sides collapse inward along the diagonal lines you scored in [[z=2|Step 3]] while the point travels all the way up to the top.
+
+```
+   ^
+  /=\
+ / = \
+/  = .\
+\  = /
+ \ =/
+  vv
+```
+
+Press flat — you get a long diamond shape. **Flip and repeat** on the back.
+
+You now have the *bird base*: four long points, two narrow at the top, two at the bottom.
+
+@plane z=4 label="Narrow the Wings"
+
+## Step 5 — Inside Reverse Folds
+
+The two bottom points will become the **head** and the **tail**.
+
+Fold each bottom point up along the centre line so it roughly bisects the wing angle — crease, unfold. Now push each point *inside* the outer layers along those creases (inside reverse fold).
+
+```
+  .........
+ / ======= \
+/ == + == \
+\ == + == /
+ \ ======= /
+  '---v---'
+   /     \
+  ^       ^
+head     tail
+```
+
+For the **head**: make a smaller inside reverse fold near the tip to angle it downward — the beak.
+
+@plane z=5 label="Open the Wings"
+
+## Step 6 — Inflate & Finish
+
+Hold the crane by the two side points (the wings). Gently pull them **apart** in opposite directions. The body puffs up and the wings spread wide.
+
+Pinch the tail to firm the body shape. Curve the wings slightly downward.
+
+```
+     ^
+    /|\
+   / | \
+__/  |  \__
+  \  |  /
+   \ | /
+    \|/
+  [crane]
+```
+
+**Your crane is complete.** 🎌
+
+> In Japan, folding **1 000 cranes** (*senbazuru*) is said to grant a single wish.
+> Start with this one. 999 to go.
+
+@plane z=6 label="Crease Diagram"
+
+## Full Crease Map Reference
+
+All mountain and valley folds in one diagram. Use this if you get lost on any earlier step.
+
+```
+\....|..../
+.\...|.../.
+..\..|../.
+...\.V./.
+....=X=.
+.../|V|\.
+../.|.|.\
+/...|.|...\
+\...|.|.../
+.\..V.V../
+..\..../.
+...\../.
+....\/.
+```
+
+**Legend:**
+- `─ ─ ─` Valley fold (fold toward you)
+- `─ · ─` Mountain fold (fold away from you)
+- `✕` Centre point — all creases pass through here
+
+> Save this plane as your reference card. When in doubt, **return to the centre**.
+---

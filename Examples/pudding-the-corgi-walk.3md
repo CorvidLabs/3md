@@ -1,0 +1,107 @@
+---
+3md: 1.0
+axis: frame
+title: Pudding the Corgi
+view: play
+fps: 8
+legend: "W=🟫 Y=🟨 .=⬛ P=🟪 R=🟥 N=⬜ T=🟧"
+category: Animation
+---
+
+A stubby-legged corgi on an endless trot. Eight frames of pure floofiness.
+
+@plane z=0 label="Frame 1 — Left Stride"
+```
+..YYYYYY....
+.YWWWWWWYY..
+YWWWWWWWWY..
+YWWRWWWWWY..
+.YWWWWWWWY..
+..YYYYYYYY..
+....YY..YY..
+....YY..YY..
+```
+
+@plane z=1 label="Frame 2 — Left Push"
+```
+..YYYYYY....
+.YWWWWWWYY..
+YWWWWWWWWY..
+YWWRWWWWWY..
+.YWWWWWWWY..
+..YYYYYYYY..
+....YYYY....
+...YY..YY...
+```
+
+@plane z=2 label="Frame 3 — Lift"
+```
+..YYYYYY....
+.YWWWWWWYY..
+YWWWWWWWWY..
+YWWRWWWWWY..
+.YWWWWWWWY..
+..YYYYYYYY..
+...YY..YY...
+....YYYY....
+```
+
+@plane z=3 label="Frame 4 — Float"
+```
+...YYYYYY...
+..YWWWWWWYY.
+.YWWWWWWWWY.
+.YWWRWWWWWY.
+..YWWWWWWWY.
+...YYYYYYYY.
+....YYYY....
+............
+```
+
+@plane z=4 label="Frame 5 — Right Stride"
+```
+..YYYYYY....
+.YWWWWWWYY..
+YWWWWWWWWY..
+YWWRWWWWWY..
+.YWWWWWWWY..
+..YYYYYYYY..
+..YY....YY..
+..YY....YY..
+```
+
+@plane z=5 label="Frame 6 — Right Push"
+```
+..YYYYYY....
+.YWWWWWWYY..
+YWWWWWWWWY..
+YWWRWWWWWY..
+.YWWWWWWWY..
+..YYYYYYYY..
+....YYYY....
+..YY....YY..
+```
+
+@plane z=6 label="Frame 7 — Lift"
+```
+..YYYYYY....
+.YWWWWWWYY..
+YWWWWWWWWY..
+YWWRWWWWWY..
+.YWWWWWWWY..
+..YYYYYYYY..
+...YY..YY...
+....YYYY....
+```
+
+@plane z=7 label="Frame 8 — Float"
+```
+...YYYYYY...
+..YWWWWWWYY.
+.YWWWWWWWWY.
+.YWWRWWWWWY.
+..YWWWWWWWY.
+...YYYYYYYY.
+....YYYY....
+............
+```

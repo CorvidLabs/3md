@@ -1,0 +1,204 @@
+---
+3md: 1.0
+axis: room
+title: Museum of the Anthropocene
+view: present
+legend: E=🚪 .=⬜ W=🟫 A=🟦 I=🟧 F=🟥 S=🟩 G=⬛ X=🔲 C=🟪 D=🟨 T=⬜
+curator: Dr. Maren Solvik
+floors: 1
+opened: 2031
+category: Maps
+---
+
+Welcome to the **Museum of the Anthropocene** — a self-guided journey through six rooms documenting humanity's mark on the planet. Use the legend map below to orient yourself, then step room by room through the exhibit.
+
+@plane z=0 label="Floor Map"
+
+## Floor Plan — Ground Level
+
+```
+W W W W W W W W W W W W W W W W W W W W W
+W . . . . . . . . . . . . . . . . . . . W
+W . A A A A . I I I I . F F F F . S S . W
+W . A A A A E I I I I E F F F F E S S . W
+W . A A A A . I I I I . F F F F . S S . W
+W . . . . . . . . . . . . . . . . . . . W
+W . G G G G . . . . . . C C C C . . . . W
+W . G G G G E . . . D D C C C C . . . . W
+W . G G G G . . . . D D C C C C . . . . W
+W . . . . . . . . . . . . . . . . . . . W
+W W W W W W W W W W W W W W W E W W W W W
+```
+
+**Legend**
+| Symbol | Room |
+|--------|------|
+| 🟦 A | Room 1 — Ocean Archive |
+| 🟧 I | Room 2 — Ice Memory |
+| 🟥 F | Room 3 — Fire Season |
+| 🟩 S | Room 4 — Species Vault |
+| ⬛ G | Room 5 — Ground Zero |
+| 🟪 C | Room 6 — Carbon Chapel |
+| 🟨 D | Reading Alcove |
+| 🚪 E | Doorways |
+
+> Start at the south entrance (bottom center) and proceed clockwise.
+
+@plane z=1 label="Room 1 — Ocean Archive"
+
+## Room 1 — Ocean Archive
+
+```
+W W W W W W W W W W
+W A A A A A A A A W
+W A A A A A A A A W
+W A A A A A A A A W
+W W W W E W W W W W
+```
+
+*Sea-level recordings from 1880 to 2031.*
+
+The walls here are floor-to-ceiling glass tanks filled with Atlantic seawater at three acidity levels — **1880**, **1980**, and **today**. Watch coral fragments placed in each tank: the rightmost dissolves visibly over the course of your visit.
+
+**Highlights**
+- [ ] Touch the pH tiles along the north wall
+- [ ] Listen to the hydrophone feed: open ocean, 1963 vs. 2031
+- [ ] Read the message-in-a-bottle station — notes from coastal villages now underwater
+
+> *"The sea remembers what the land forgets."* — wall inscription, east alcove
+
+**Key data point:** Average sea-level rise since 1900: **+21 cm**. Projected by 2100: **+0.6 to 1.1 m**.
+
+Proceed east through the doorway → [[z=2|Room 2 — Ice Memory]]
+
+@plane z=2 label="Room 2 — Ice Memory"
+
+## Room 2 — Ice Memory
+
+```
+W W W W E W W W W W
+W I I I I I I I I W
+W I I I I I I I I W
+W I I I I I I I I W
+W W W W E W W W W W
+```
+
+*An ice core library: 800,000 years of atmosphere, layered in cylinders of frozen time.*
+
+The room is kept at **−4 °C** — coats are provided at the door. Each cylindrical case holds a meter-long ice core, lit from below in blue. Labels read like tree rings: dust from the Toba eruption, CO₂ spikes from industrialization, a pale ash band from 2023's Pacific megafires.
+
+**Highlights**
+- [ ] Hold the sample shard — feel a bubble of Pleistocene air trapped inside
+- [ ] Trace the CO₂ graph etched into the floor in brass: flat for 10,000 years, then vertical
+- [ ] Find the 1950 layer — it glows faintly from residual bomb-test isotopes
+
+**Key data point:** Pre-industrial CO₂: **280 ppm**. June 2031: **428 ppm**.
+
+→ [[z=3|Room 3 — Fire Season]]
+
+@plane z=3 label="Room 3 — Fire Season"
+
+## Room 3 — Fire Season
+
+```
+W W W W E W W W W W
+W F F F F F F F F W
+W F F F F F F F F W
+W F F F F F F F F W
+W W W W E W W W W W
+```
+
+*The world's largest curated archive of wildfire smoke.*
+
+Amber resin panels line every wall — each panel casts the amber glow of a different mega-fire: Australia 2019, Siberia 2022, Amazon 2025. The scent (controlled diffuser) shifts as you move: eucalyptus char, boreal pine resin, wet ash.
+
+**Highlights**
+- [ ] The **Smoke Clock**: a mechanical display counting cumulative hectares burned since midnight today
+- [ ] Satellite loop projected on the floor — 12 months of fire-scar spread, on repeat
+- [ ] Interview booths: oral histories from three firefighters, three years apart, same forest
+
+> The red door at the far end is sealed. A plaque reads: *"This room represents 2041 projections. Not yet open."*
+
+**Key data point:** Global burned area trend: **+7% per decade** since 1980.
+
+→ [[z=4|Room 4 — Species Vault]]
+
+@plane z=4 label="Room 4 — Species Vault"
+
+## Room 4 — Species Vault
+
+```
+W W W W E W W W W
+W S S S S S S S W
+W S S S S S S S W
+W W W W W W W W W
+```
+
+*A cabinet of endings — and a few beginnings.*
+
+Floor-to-ceiling drawers, museum-style, each labeled with a species. Pull any drawer: inside is a cast of the last-known specimen, a sound recording (if one exists), a scent capsule, and a single pressed plant or feather under glass.
+
+**Highlights**
+- [ ] Drawer **B-047**: the Bramble Cay melomys — first mammal declared extinct due to climate change, 2016
+- [ ] The **Rewilding Wall**: 40 species brought back from the brink since 2010 — highlighted in gold
+- [ ] Listen for the birdsong loop — 14 minutes of silence where extinct species' songs would fall
+
+**Key data point:** Current extinction rate: **~1,000×** background rate. Rewilding successes since 2020: **214 species stabilized**.
+
+→ [[z=5|Room 5 — Ground Zero]]
+
+@plane z=5 label="Room 5 — Ground Zero"
+
+## Room 5 — Ground Zero
+
+```
+W W W W W W W W W
+W G G G G G G G W
+W G G G G G G G W
+W G G G G G G G W
+W W W E W W W W W
+```
+
+*Soil. The most overlooked archive on Earth.*
+
+The floor is glass — beneath it, a living cross-section of soil profiles from seven biomes, each column 2 meters deep and backlit. Roots, fungi, beetle galleries, earthworm tunnels: all visible. A time-lapse runs on the east wall: topsoil loss from a single Iowa field, 1930–2030.
+
+**Highlights**
+- [ ] Press the **Mycelium Panel** to watch a fungal network light up in real time (fluorescent spores)
+- [ ] Smell Station: healthy forest humus vs. degraded agricultural soil — the difference is striking
+- [ ] The **Debt Column**: a physical counter of tons of topsoil lost globally today — resets at midnight
+
+> *"We know more about the surface of Mars than the top 30 cm beneath our feet."*
+
+**Key data point:** Topsoil lost per year globally: **~24 billion tons**. Formation rate: **1 cm per 1,000 years**.
+
+→ [[z=6|Room 6 — Carbon Chapel]]
+
+@plane z=6 label="Room 6 — Carbon Chapel"
+
+## Room 6 — Carbon Chapel
+
+```
+W W W E W W W W W
+W C C C C C C C W
+W C C D D C C C W
+W C C D D C C C W
+W W W W W W W W W
+```
+
+*The final room. A space for reckoning — and for choice.*
+
+No artifacts here. The chapel is circular, with a single skylight. The walls display, in real time, a global CO₂ dashboard — emissions, drawdown, pledges, actuals. A reading alcove (🟨) holds **The Ledger**: a bound book visitors can write in, one sentence each, about what they will do.
+
+**Highlights**
+- [ ] Sit for five minutes — there are no prompts, no screens at eye level, only the sky
+- [ ] The **Pledge Wall**: 40,000 handwritten cards from previous visitors, organized by year
+- [ ] Write your entry in **The Ledger** before you leave
+
+**Key data point:** As of today, **~2,300 GtCO₂** of the remaining carbon budget is left for a 1.5 °C pathway. Each year of current emissions: **~37 Gt**.
+
+---
+
+*Thank you for visiting the Museum of the Anthropocene. The gift shop carries only secondhand items. The café is zero-waste. The building is carbon-negative.*
+
+**Exit** through the south door → back to [[z=0|Floor Map]]

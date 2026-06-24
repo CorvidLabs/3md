@@ -1,0 +1,98 @@
+---
+3md: 1.0
+axis: frame
+title: Twirl & Reach
+view: play
+fps: 6
+choreographer: Anonymous
+phrase: "step-together, arms rise, twirl, reach, bow"
+category: Animation
+---
+
+A short contemporary dance phrase — eight frames, one dancer.
+
+@plane z=0 label="Ready"
+
+```
+  o
+ /|\
+ / \
+```
+
+*Standing tall, weight centered.*
+
+@plane z=1 label="Step Together"
+
+```
+  o
+ \|/
+ / \
+```
+
+*Arms open wide, feet together.*
+
+@plane z=2 label="Arms Rise"
+
+```
+  o
+ \|/
+ | |
+```
+
+*Both arms sweep up overhead, legs parallel.*
+
+@plane z=3 label="Relevé"
+
+```
+  o
+ \|/
+  |
+ /^\
+```
+
+*Rise onto toes, arms reaching high.*
+
+@plane z=4 label="Twirl Begin"
+
+```
+  o>
+  |~
+  |\
+```
+
+*Body pivots right, one arm trails behind.*
+
+@plane z=5 label="Full Twirl"
+
+```
+ ~o~
+  |
+  |\
+```
+
+*Full rotation — arms spin out like a top.*
+
+@plane z=6 label="Reach"
+
+```
+    o
+   /|
+   |
+  /
+```
+
+*Landing from twirl, one arm stretches forward and up.*
+
+@plane z=7 label="Bow"
+
+```
+ o
+/|
+ |\
+```
+
+*Head drops, spine curves forward into a bow.*
+
+---
+
+> **Phrase cue:** step · open · rise · relevé · twirl · reach · bow

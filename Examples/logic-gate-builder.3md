@@ -1,0 +1,197 @@
+---
+3md: 1.0
+axis: layer
+title: Logic Gate Builder
+view: stack
+legend: "0=⬛ 1=🟨 A=🔵 B=🟣 X=🔴 G=🟩 |=⬜ >=⬜ -=⬜"
+circuit: "Full Adder: A XOR B XOR Cin"
+category: Engineering
+---
+
+A full adder built up gate by gate. Each layer adds one stage of logic — inputs arrive at the bottom, the sum bit emerges at the top.
+
+@plane z=0 label="Raw Inputs"
+
+## Layer 0 — Inputs
+
+Two single bits enter the circuit: **A** and **B**, plus a carry-in **Cin**.
+
+```
+        A       B      Cin
+        |       |       |
+        A       B       1
+```
+
+| Signal | Value |
+|--------|-------|
+| A      | `1`   |
+| B      | `0`   |
+| Cin    | `1`   |
+
+These are the raw electrons at the gate. Nothing has been evaluated yet — just labeled wires waiting for silicon to do its work.
+
+@plane z=1 label="XOR Gate (A⊕B)"
+
+## Layer 1 — First XOR
+
+**A XOR B** fires when exactly one input is HIGH.
+
+```
+A 1 >--\
+        XOR --> X1
+B 0 >--/
+```
+
+| A | B | A ⊕ B |
+|---|---|--------|
+| 0 | 0 |   0    |
+| 0 | 1 |   1    |
+| 1 | 0 |   1    |
+| 1 | 1 |   0    |
+
+With A=`1`, B=`0`:
+
+> **X1 = 1 ⊕ 0 = `1`**
+
+The XOR gate is the heart of addition — it produces the *difference without carry*. Think of it as binary subtraction that ignores borrowing.
+
+See how the signal propagates → [[z=2|AND Gate]]
+
+@plane z=2 label="AND Gate (A·B)"
+
+## Layer 2 — First AND
+
+**A AND B** detects when *both* inputs are HIGH — this will feed the carry chain.
+
+```
+A 1 >--\
+        AND --> C1
+B 0 >--/
+```
+
+| A | B | A · B |
+|---|---|--------|
+| 0 | 0 |   0    |
+| 0 | 1 |   0    |
+| 1 | 0 |   0    |
+| 1 | 1 |   1    |
+
+With A=`1`, B=`0`:
+
+> **C1 = 1 · 0 = `0`**
+
+This carry will only matter if *both* original inputs were HIGH. Here it is silent — but it stays in the circuit, ready to OR with the second carry later.
+
+Intermediate wire state so far:
+
+| Wire | Value |
+|------|-------|
+| X1   | `1`   |
+| C1   | `0`   |
+| Cin  | `1`   |
+
+@plane z=3 label="XOR Gate (X1⊕Cin)"
+
+## Layer 3 — Second XOR
+
+Now we fold **Cin** into the running partial sum.
+
+```
+X1  1 >--\
+           XOR --> SUM
+Cin 1 >--/
+```
+
+| X1 | Cin | Sum |
+|----|-----|-----|
+|  0 |  0  |  0  |
+|  0 |  1  |  1  |
+|  1 |  0  |  1  |
+|  1 |  1  |  0  |
+
+With X1=`1`, Cin=`1`:
+
+> **SUM = 1 ⊕ 1 = `0`**
+
+The final **sum bit** is `0`. Adding 1 + 0 + 1 in decimal gives 2, which in binary is `10` — sum bit `0`, carry bit `1`. The carry is computed in the next layer.
+
+@plane z=4 label="AND Gate (X1·Cin)"
+
+## Layer 4 — Second AND
+
+We need to detect if the *intermediate sum* and the carry-in are *both* HIGH — another source of carry-out.
+
+```
+X1  1 >--\
+           AND --> C2
+Cin 1 >--/
+```
+
+With X1=`1`, Cin=`1`:
+
+> **C2 = 1 · 1 = `1`**
+
+This is the second potential carry source. If either AND gate fires, a carry must propagate to the next full adder in the chain.
+
+| Wire | Value |
+|------|-------|
+| C1   | `0`   |
+| C2   | `1`   |
+
+@plane z=5 label="OR Gate (Carry-Out)"
+
+## Layer 5 — OR Gate → Carry-Out
+
+The final OR gate combines both carry sources. If *either* produced a carry, the output carry is HIGH.
+
+```
+C1 0 >--\
+          OR --> Cout
+C2 1 >--/
+```
+
+| C1 | C2 | Cout |
+|----|----|------|
+|  0 |  0 |   0  |
+|  0 |  1 |   1  |
+|  1 |  0 |   1  |
+|  1 |  1 |   1  |
+
+With C1=`0`, C2=`1`:
+
+> **Cout = 0 OR 1 = `1`**
+
+@plane z=6 label="Result"
+
+## Layer 6 — Full Adder Result
+
+The circuit is complete. All five gates have fired.
+
+```
+        A=1   B=0   Cin=1
+         |     |      |
+        [XOR] [AND]   |
+          \     |     |
+          X1=1 C1=0   |
+            \       /
+           [XOR] [AND]
+              |     |
+           SUM=0  C2=1
+                    |
+                  [OR]
+                    |
+                 Cout=1
+```
+
+### Final Output
+
+| Output | Value | Meaning           |
+|--------|-------|-------------------|
+| SUM    | `0`   | Low bit of result |
+| Cout   | `1`   | Carry to next bit |
+
+**1 + 0 + 1 = `10` in binary** (decimal 2). ✓
+
+The full adder uses exactly **5 gates**: 2× XOR, 2× AND, 1× OR. Chain 8 of these together and you have a working 8-bit adder — the arithmetic core of every CPU ever made.
+
+> "All of computing, traced back to gates. Gates traced back to transistors. Transistors traced back to sand."

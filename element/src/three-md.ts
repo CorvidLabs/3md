@@ -82,8 +82,11 @@ function parseLegend(raw: string | null | undefined): Record<string, string> {
   for (const tok of raw.trim().split(/[\s,]+/)) {
     const eq = tok.indexOf("=");
     if (eq <= 0) continue;
-    const key = [...tok.slice(0, eq)][0]; // one source character
-    const val = tok.slice(eq + 1);
+    // Tolerate quoted keys/values, e.g. "#"=🟫, so characters that look special
+    // in frontmatter can still be mapped.
+    const rawKey = tok.slice(0, eq).replace(/^["']|["']$/g, "");
+    const key = [...rawKey][0]; // one source character
+    const val = tok.slice(eq + 1).replace(/^["']|["']$/g, "");
     if (key && val) map[key] = val;
   }
   return map;

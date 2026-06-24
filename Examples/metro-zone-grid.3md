@@ -1,0 +1,140 @@
+---
+3md: 1.0
+axis: layer
+title: Metro Zone Grid
+view: stack
+legend: R=🟥 B=🟦 G=🟩 Y=🟨 P=🟪 O=🟧 .=⬛ -=➖ |=➖ *=⭐ ^=🔼 ~=🌊 T=🌲
+city: Velmont City Transit Authority
+lines: Red · Blue · Green · Yellow · Purple · Orange
+zones: 4 (Core → Outer)
+category: Maps
+---
+
+The **Velmont Metro** serves a city of 2.1 million across four concentric zones. Each layer reveals a different overlay of the same grid — infrastructure, then lines, then landmarks, then live service.
+
+@plane z=0 label="Zone Map"
+
+## Zone Boundaries
+
+```
+. . . . . . . . . . . . . . . .
+. . . G G G G G G G G G . . . .
+. . G G G G G G G G G G G . . .
+. G G G Y Y Y Y Y Y Y G G G . .
+. G G Y Y Y Y Y Y Y Y Y G G . .
+. G G Y Y R R R R R Y Y G G . .
+. G G Y Y R R * R R Y Y G G . .
+. G G Y Y R R R R R Y Y G G . .
+. G G Y Y Y Y Y Y Y Y Y G G . .
+. G G G Y Y Y Y Y Y Y G G G . .
+. . G G G G G G G G G G G . . .
+. . . G G G G G G G G G . . . .
+. . . . . . . . . . . . . . . .
+```
+
+| Symbol | Zone | Fare Multiplier |
+|--------|------|-----------------|
+| 🟥 | Zone 1 — Core | ×1.0 |
+| 🟨 | Zone 2 — Inner | ×1.4 |
+| 🟩 | Zone 3 — Outer | ×1.9 |
+| ⬛ | Zone 4 — Regional | ×2.5 |
+| ⭐ | Central Hub | transfer point |
+
+@plane z=1 label="Line Routes"
+
+## Rail Lines
+
+```
+. . . . . . . . . . . . . . . .
+. . . . . . . . B . . . . . . .
+. . . . . . . . B . . . . . . .
+. . . . R R R . B . . P P . . .
+. . . . R . R . B . . P . . . .
+. . . . R . R R * R R R . . . .
+. G G G * G G G * G G G . . . .
+. . . . R . . . * . . P . . . .
+. . . . R . . . B . . P . . . .
+. . . . R . . . B . . . . . . .
+. . . . . . . O O O O . . . . .
+. . . . . . . . . . . . . . . .
+. . . . . . . . . . . . . . . .
+```
+
+### Line Summaries
+
+- 🟥 **Red Line** — North–South spine, 14 stations, every 4 min peak
+- 🟦 **Blue Line** — East corridor express, 9 stations, every 6 min
+- 🟩 **Green Line** — Crosstown loop, 18 stations, every 5 min
+- 🟨 **Yellow Line** — Airport connector, 7 stations, every 10 min
+- 🟪 **Purple Line** — University branch, 11 stations, every 7 min
+- 🟧 **Orange Line** — Waterfront shuttle, 6 stations, every 8 min
+
+> Transfer at ⭐ **Central Hub** — all six lines converge at Velmont Grand
+
+@plane z=2 label="Landmarks"
+
+## Points of Interest
+
+```
+. . . . . . . . . . . . . . . .
+. . . T T T T T . . . . . . . .
+. . T T T T T T T . . . . . . .
+. . T T . . . . . . . . . . . .
+. . . . . . . . . ~ ~ ~ ~ . . .
+. . . . . . . . . ~ ~ ~ ~ . . .
+. . . . . ^ ^ ^ . ~ * ~ ~ . . .
+. . . . . ^ ^ ^ . ~ ~ ~ ~ . . .
+. . . . . ^ ^ ^ . . . . . . . .
+. . . . . . . . . . . . . . . .
+. . . . . . . . . . . . . . . .
+. . . . . . . . . . . . . . . .
+. . . . . . . . . . . . . . . .
+```
+
+| Symbol | Landmark | Nearest Station |
+|--------|----------|-----------------|
+| 🌲 | Velmont Forest Park | Park North (Green) |
+| 🌊 | Harbor District | Quay St (Orange) |
+| 🔼 | Old Quarter / Cathedral Hill | Founders Sq (Red) |
+| ⭐ | Velmont Grand (Central Hub) | All lines |
+
+**Accessibility:** All Zone 1 stations are step-free. Zone 2–3 step-free stations marked on platform maps.
+
+@plane z=3 label="Live Service"
+
+## Current Service Status
+
+```
+. . . . . . . . . . . . . . . .
+. . . . . . . . B . . . . . . .
+. . . . . . . . B . . . . . . .
+. . . . R R R . B . . P P . . .
+. . . . R . R . B . . P . . . .
+. . . . R . R R * R R R . . . .
+. G G G * G G G * G G G . . . .
+. . . . R . . . * . . P . . . .
+. . . . R . . . B . . P . . . .
+. . . . R . . . B . . . . . . .
+. . . . . . . O O O O . . . . .
+. . . . . . . . . . . . . . . .
+. . . . . . . . . . . . . . . .
+```
+
+### 🕐 Last updated: 08:42
+
+| Line | Status | Note |
+|------|--------|------|
+| 🟥 Red | ✅ Good service | — |
+| 🟦 Blue | ⚠️ Minor delays | Signal fault at Eastgate, +4 min |
+| 🟩 Green | ✅ Good service | — |
+| 🟨 Yellow | ✅ Good service | — |
+| 🟪 Purple | 🔴 Part suspended | Closed Uni East → Campus due to engineering |
+| 🟧 Orange | ✅ Good service | — |
+
+**Next departures from Central Hub ⭐**
+
+- Red northbound → Highfields: **08:44**
+- Green loop (clockwise): **08:46**
+- Blue express → Harbor: **08:49**
+
+[[z=0|Back to Zone Map]] · [[z=1|See All Lines]] · [[z=2|Landmarks]]

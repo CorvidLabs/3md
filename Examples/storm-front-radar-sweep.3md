@@ -1,0 +1,127 @@
+---
+3md: 1.0
+axis: frame
+title: Storm Front Radar Sweep
+view: play
+fps: 6
+legend: .=· R=🟩 Y=🟨 O=🟧 X=🟥 ~=🌊 ^=⛰️ T=🌲 *=⭐ c=🌀 @=🏙️ #=🌫️
+region: Pacific Northwest — 23 JUN 2026 02:14Z
+source: NEXRAD WSR-88D composite reflectivity
+category: Data
+---
+
+Regional radar mosaic. Watch the storm front push inland from the coast.
+
+Legend: 🟩 light · 🟨 moderate · 🟧 heavy · 🟥 extreme · 🌀 rotation · 🌫️ ground clutter
+
+@plane z=0 label="02:14Z — Clear"
+
+```
+. . . . . . . . . . . . . . . . . . . . .
+. . . . . ^ ^ . . . . . . . . . . . . . .
+. . . ^ ^ ^ ^ ^ . . . T T . . . . . . . .
+~ ~ . . ^ ^ ^ . . . T T T . . @  . . . .
+~ ~ ~ . . . . . . . . T T . . . . . . . .
+~ ~ ~ ~ . . . . . . . . . . . . . . . . .
+~ ~ ~ ~ ~ . . . . . . . . . . . . . . . .
+. ~ ~ ~ . . . . . . . . . . . . . . . . .
+. . . . . . . . . . . . . . . . . . . . .
+```
+
+**02:14Z** — Skies clear across the region. High pressure holding.
+
+@plane z=1 label="02:26Z — Cells Form"
+
+```
+R . . . . . . . . . . . . . . . . . . . .
+R R . . . ^ ^ . . . . . . . . . . . . . .
+R R . ^ ^ ^ ^ ^ . . . T T . . . . . . . .
+~ ~ R . ^ ^ ^ . . . T T T . . @  . . . .
+~ ~ ~ R . . . . . . . T T . . . . . . . .
+~ ~ ~ ~ R . . . . . . . . . . . . . . . .
+~ ~ ~ ~ ~ R . . . . . . . . . . . . . . .
+. ~ ~ ~ . . . . . . . . . . . . . . . . .
+. . . . . . . . . . . . . . . . . . . . .
+```
+
+**02:26Z** — Convective cells organizing offshore. Light returns at coast.
+
+@plane z=2 label="02:38Z — Line Develops"
+
+```
+Y R . . . . . . . . . . . . . . . . . . .
+Y Y R R . ^ ^ . . . . . . . . . . . . . .
+Y R R ^ ^ ^ ^ ^ . . . T T . . . . . . . .
+~ ~ Y R ^ ^ ^ . . . T T T . . @  . . . .
+~ ~ ~ Y R . . . . . . T T . . . . . . . .
+~ ~ ~ ~ Y R R . . . . . . . . . . . . . .
+~ ~ ~ ~ ~ Y R . . . . . . . . . . . . . .
+. ~ ~ ~ . R . . . . . . . . . . . . . . .
+. . . . . . . . . . . . . . . . . . . . .
+```
+
+**02:38Z** — Squall line sharpening. Moderate returns backing the leading edge.
+
+@plane z=3 label="02:50Z — Landfall"
+
+```
+O Y R R . . . . . . . . . . . . . . . . .
+O O Y Y R ^ ^ . . . . . . . . . . . . . .
+O Y Y ^ ^ ^ ^ ^ . . . T T . . . . . . . .
+~ ~ O Y ^ ^ R . . . T T T . . @  . . . .
+~ ~ ~ O Y R R . . . . T T . . . . . . . .
+~ ~ ~ ~ O Y Y R . . . . . . . . . . . . .
+~ ~ ~ ~ ~ O Y R . . . . . . . . . . . . .
+. ~ ~ ~ . Y R . . . . . . . . . . . . . .
+. . . . . R . . . . . . . . . . . . . . .
+```
+
+**02:50Z** — Front crossing the coastline. Heavy returns inland of the ridge.
+
+@plane z=4 label="03:02Z — Peak Intensity"
+
+```
+X O Y R . . . . . . . . . . . . . . . . .
+X X O O Y ^ ^ . . . . . . . . . . . . . .
+c X O ^ ^ ^ ^ ^ . . . T T . . . . . . . .
+~ ~ X O ^ ^ Y R . . T T T . . @  . . . .
+~ ~ ~ X O Y Y R . . . T T . . . . . . . .
+~ ~ ~ ~ X O O Y R . . . . . . . . . . . .
+~ ~ ~ ~ ~ X O Y R . . . . . . . . . . . .
+. ~ ~ ~ . O Y R . . . . . . . . . . . . .
+. . . . . Y R . . . . . . . . . . . . . .
+```
+
+**03:02Z** — Extreme reflectivity near the coast range gap. Possible rotation flagged (🌀). **SVR WARN issued.**
+
+@plane z=5 label="03:14Z — Inland Push"
+
+```
+# X O Y R . . . . . . . . . . . . . . . .
+# X X O O ^ ^ . . . . . . . . . . . . . .
+# c X ^ ^ ^ ^ ^ . . . T T . . . . . . . .
+~ ~ # X ^ ^ O Y R . T T T . . @  . . . .
+~ ~ ~ # X O O Y R . . T T . . . . . . . .
+~ ~ ~ ~ # X O O Y R . . . . . . . . . . .
+~ ~ ~ ~ ~ # X O Y R . . . . . . . . . . .
+. ~ ~ ~ . # X O R . . . . . . . . . . . .
+. . . . . # X Y . . . . . . . . . . . . .
+```
+
+**03:14Z** — Storm clearing the coastal peaks, spreading into the valley. Ground clutter (🌫️) masking low-level returns at western edge.
+
+@plane z=6 label="03:26Z — Valley Flood"
+
+```
+# # X O Y R . . . . . . . . . . . . . . .
+# # X X O ^ ^ R . . . . . . . . . . . . .
+# # X ^ ^ ^ ^ ^ R . . T T . . . . . . . .
+~ ~ # # ^ ^ X O Y . T T T . . @  . . . .
+~ ~ ~ # # X O O Y R . T T . . . . . . . .
+~ ~ ~ ~ # # X O O Y R . . . . . . . . . .
+~ ~ ~ ~ ~ # # X O Y R . . . . . . . . . .
+. ~ ~ ~ . # # X O R . . . . . . . . . . .
+. . . . . # # X Y R . . . . . . . . . . .
+```
+
+**03:26Z** — Heavy precip spreading into the valley floor. Metro area (🏙️) entering the 40 dBZ envelope. Flash flood watch in effect.

@@ -1,0 +1,188 @@
+---
+3md: 1.0
+axis: level
+title: Dungeon Crawl: The Descent
+view: present
+legend: "#"=🟫 .=⬛ ~=🟦 ^=🔺 T=🌲 @=🧙 $=💰 E=👹 D=🚪 S=⬇️ X=💀 *=🔥 !=⚠️ O=🪨 g=🟩
+hero: "@"
+seed: 7841
+floors: 5
+category: Games
+---
+
+> *You are **Alder**, a hedge-wizard with a borrowed spellbook and impractical boots. The stairs go only down.*
+
+@plane z=0 label="Floor 1 — The Gatehouse"
+
+```
+##########
+#@.......#
+#.O..E...#
+#...####.#
+#.$.#D#..#
+#...####.#
+#........#
+#....E...#
+########S#
+##########
+```
+
+**Floor 1 — The Gatehouse**
+
+| Symbol | Meaning |
+|--------|---------|
+| @ | You (Alder) |
+| E | Goblin Scout |
+| O | Rubble |
+| $ | 12 gold coins |
+| D | Locked door |
+| S | Stairs down |
+
+**Alder's status:** ❤️❤️❤️❤️❤️ &nbsp; 🪄 Spellbook (3 charges) &nbsp; 🗡️ Dagger +0
+
+> *The gatehouse reeks of torch smoke and old fear. A goblin scout paces near the rubble — it hasn't seen you yet.*
+
+Move to [[z=1|Floor 2]] once you find the stairs.
+
+@plane z=1 label="Floor 2 — The Flooded Vault"
+
+```
+##########
+#........#
+#.~~.E...#
+#.~~.####
+#.$..#.D.#
+###..####
+#....E..!#
+#@.......#
+########S#
+##########
+```
+
+**Floor 2 — The Flooded Vault**
+
+| Symbol | Meaning |
+|--------|---------|
+| ~ | Shallow water (slows movement) |
+| ! | Pressure plate (triggers dart trap) |
+| D | Unlocked door |
+| $ | Waterlogged chest: 40gp + scroll |
+
+**Alder's status:** ❤️❤️❤️❤️ &nbsp; 🪄 2 charges &nbsp; 🗡️ Dagger +0 &nbsp; 📜 *Scroll of Light*
+
+> *Water drips from a cracked ceiling. The vault was sealed centuries ago — the flooded tiles hide something glinting beneath the surface.*
+
+⚠️ **Stepping on `!` fires crossbow bolts from the east wall. Approach from the south.**
+
+[[z=0|Back up]] · [[z=2|Deeper down]]
+
+@plane z=2 label="Floor 3 — The Fungal Garden"
+
+```
+##########
+#T.T.T...#
+#.T..E.T.#
+#T.T..T..#
+#....####
+#.$..*...#
+####.####
+#@......E#
+########S#
+##########
+```
+
+**Floor 3 — The Fungal Garden**
+
+| Symbol | Meaning |
+|--------|---------|
+| T | Giant Mushroom (blocks line of sight) |
+| * | Spore vent (poison cloud, 2-tile radius) |
+| E | Myconid Drone (will not chase past mushrooms) |
+| $ | Spore pouch — trade at surface for 80gp |
+
+**Alder's status:** ❤️❤️❤️ &nbsp; 🪄 2 charges &nbsp; 🗡️ Dagger +1 *(looted from vault guard)* &nbsp; 📜 Scroll of Light &nbsp; 🍄 Spore pouch
+
+> *Bioluminescent caps cast everything in cold blue-green. The myconids communicate by puffing spores — right now they're saying something that sounds like your name.*
+
+**Pro tip:** Cast *Scroll of Light* near a spore vent to ignite the gas. Clears a room but costs 1 ❤️.
+
+@plane z=3 label="Floor 4 — The Trophy Hall"
+
+```
+##########
+#X.X.X.X.#
+#.......E#
+#OOOOOO..#
+#.......E#
+#.$..E...#
+####D####
+#@.......#
+####.####
+########S#
+##########
+```
+
+**Floor 4 — The Trophy Hall**
+
+| Symbol | Meaning |
+|--------|---------|
+| X | Skeleton (decorative — or is it?) |
+| O | Stone pedestal |
+| E | Tomb Guardian |
+| D | Sealed vault door (requires dungeon key) |
+| $ | **Dungeon Key** + 120gp |
+
+**Alder's status:** ❤️❤️ &nbsp; 🪄 1 charge &nbsp; 🗡️ Dagger +1 &nbsp; 🗝️ Dungeon Key
+
+> *Sixteen skeletal adventurers line the hall on their pedestals, arms crossed, eye sockets dark. The last one on the right is holding something.*
+>
+> *It's a map. **It's a map of this dungeon.** You were never supposed to make it this far.*
+
+**The Tomb Guardians are immune to the Scroll of Light.** Save that charge.
+
+[[z=4|Face the Dragon]]
+
+@plane z=4 label="Floor 5 — The Dragon's Hoard"
+
+```
+##########
+#........#
+#..OOOOO.#
+#.O$$$O..#
+#.O$*$O..#
+#.O$$$O..#
+#..OOOOO.#
+#........#
+#...E....#
+####@####
+```
+
+**Floor 5 — The Dragon's Hoard**
+
+| Symbol | Meaning |
+|--------|---------|
+| O | Gilded column |
+| $ | Treasure pile |
+| * | **Vyndrath** — Ancient Wyrm (Boss) |
+| E | Dragon Cultist (minion) |
+| @ | You arrive here, alone, with 1 spell charge |
+
+**Alder's final status:** ❤️❤️ &nbsp; 🪄 1 charge &nbsp; 🗡️ Dagger +1 &nbsp; 🗝️ Dungeon Key *(no door down here)* &nbsp; 💰 172gp
+
+---
+
+### Boss: Vyndrath the Moss-Drake
+
+> *He is the size of a carriage and smells like a hot kettle. One eye opens. He says, in perfect common tongue:*
+>
+> *"Another one. You people are relentless."*
+
+**Victory conditions (pick one):**
+
+- [ ] Defeat Vyndrath (spend spell charge + 1 ❤️, roll well)
+- [ ] Negotiate — offer the **spore pouch** (he's been sick; he just wants to rest)
+- [ ] Steal the hoard key and leave without a fight *(you coward; you brilliant coward)*
+
+**Reward:** 🏆 **850gp** · 📖 *Tome of Returning* · The stairs go **up**.
+
+> *The impractical boots, it turns out, were perfectly suited for running.*
