@@ -1,0 +1,68 @@
+---
+3md: 1.0
+axis: time
+title: Match Report City vs United
+competition: Premier League
+date: 2026-03-14
+final_score: City 2 - 1 United
+attendance: 53400
+---
+Minute-by-minute play-by-play of a derby. Each plane is a phase of the match.
+Times are match clock. Skip to the goals via the links, or read straight through.
+
+@plane z=0 label="Kickoff to 15'"
+# 0' to 15' - Feeling It Out
+
+- **0'** Kickoff, United get us underway playing left to right.
+- **3'** City press high; first corner of the game, headed clear.
+- **8'** Long ball over the top, United striker just offside.
+- **12'** First real chance: City winger cuts in, curls it just wide of the far post.
+- **15'** Cagey opening. Possession roughly even, no clear-cut chances converted.
+
+@plane z=1 label="15' to 45'"
+# 15' to Half-time
+
+- **23'** GOAL, City 1-0. Sweeping move down the right, low cross, tap-in at the back post. See [[z=4|the goals summary]].
+- **31'** United respond, free kick from 25 yards clips the wall and over.
+- **38'** Yellow card, United midfielder for a late challenge.
+- **44'** United equalize attempt headed off the line.
+- **45+2'** Half-time: **City 1-0 United**.
+
+@plane z=2 label="Second half restart"
+# 46' to 70' - United Push
+
+- **46'** United make a double change at the break, going more direct.
+- **52'** GOAL, City 1-1 United. Counter-attack, United striker finishes coolly one-on-one. Logged on [[z=4]].
+- **58'** End to end now. City keeper makes a strong low save.
+- **66'** City bring on fresh legs up front.
+- **70'** United growing into it, sustained pressure on the City box.
+
+@plane z=3 label="Final 20 and stoppage"
+# 71' to Full-time - The Winner
+
+- **74'** City hit the post from a corner.
+- **81'** GOAL, City 2-1 United. Substitute drills it in from the edge of the area after a loose clearance. Full detail on [[z=4]].
+- **88'** United throw everyone forward; City defend deep.
+- **90+4'** Final whistle. **City 2-1 United.**
+
+@plane z=4 label="Goals and stats"
+# Goals and Final Stats
+
+## Goals
+
+| Min | Team | Scorer type      | Score |
+| --- | ---- | ---------------- | ----- |
+| 23' | City | Back-post tap-in | 1-0   |
+| 52' | United | One-on-one     | 1-1   |
+| 81' | City | Substitute strike | 2-1  |
+
+## Match stats
+
+| Stat        | City | United |
+| ----------- | ---- | ------ |
+| Possession  | 54%  | 46%    |
+| Shots       | 14   | 9      |
+| On target   | 6    | 4      |
+| Corners     | 7    | 3      |
+
+Re-read the decisive phase at [[z=3|the final twenty minutes]].

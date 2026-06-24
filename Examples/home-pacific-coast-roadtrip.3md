@@ -1,0 +1,74 @@
+---
+3md: 1.0
+axis: time
+title: Pacific Coast Road Trip
+route: San Francisco to San Diego
+total_distance: approx 500 miles
+days: 4
+vehicle: any, full tank recommended before Big Sur
+---
+A four-leg drive down California Highway 1 and Highway 101. Each plane is one day.
+Drive times assume normal traffic and ignore stops, so pad heavily. Fuel up
+before [[z=1|the Big Sur leg]]; services are sparse there.
+
+@plane z=0 label="Day 1 - SF to Monterey"
+# Day 1: San Francisco to Monterey
+
+**Distance:** ~120 mi. **Drive time:** ~2.5 h.
+
+- Leave San Francisco south on Highway 1 / 101.
+- **Stop:** Santa Cruz boardwalk, stretch and coffee.
+- **Stop:** Elkhorn Slough near Moss Landing, sea otters.
+- **Overnight:** Monterey.
+
+Evening: Cannery Row and the aquarium if time allows. Tomorrow is the big one, [[z=1]].
+
+@plane z=1 label="Day 2 - Big Sur"
+# Day 2: Monterey to San Simeon (Big Sur)
+
+**Distance:** ~95 mi. **Drive time:** ~3 h (slow, winding).
+
+Fill the tank in Monterey. This is the scenic centerpiece, do not rush.
+
+- **Bixby Creek Bridge:** iconic photo pullout just south of Carmel.
+- **Pfeiffer Big Sur State Park:** redwood walk.
+- **McWay Falls:** waterfall onto the beach, short trail.
+- **Stop:** Elephant seal rookery near San Simeon.
+- **Overnight:** San Simeon or Cambria.
+
+Note: Highway 1 occasionally closes for slides. Check conditions before leaving.
+Next is wine country and beaches at [[z=2]].
+
+@plane z=2 label="Day 3 - SLO to Santa Barbara"
+# Day 3: San Simeon to Santa Barbara
+
+**Distance:** ~140 mi. **Drive time:** ~3 h.
+
+- **Stop:** Morro Bay, the giant rock and harbor.
+- **Stop:** San Luis Obispo for lunch downtown.
+- **Detour:** Solvang, Danish village (optional, adds ~30 min).
+- **Overnight:** Santa Barbara.
+
+Evening: Stearns Wharf and State Street. Final leg to the city tomorrow, [[z=3]].
+
+@plane z=3 label="Day 4 - LA to San Diego"
+# Day 4: Santa Barbara to San Diego
+
+**Distance:** ~210 mi. **Drive time:** ~4 h (LA traffic dependent).
+
+- **Stop:** Malibu, Zuma Beach.
+- **Through:** Los Angeles (time this outside rush hour: avoid 7-9 am and 4-7 pm).
+- **Stop:** Laguna Beach, last coastal town stretch.
+- **Arrive:** San Diego.
+
+## Trip totals
+
+| Leg | From -> To           | Miles |
+| --- | -------------------- | ----- |
+| 1   | SF -> Monterey       | 120   |
+| 2   | Monterey -> San Simeon | 95  |
+| 3   | San Simeon -> Santa Barbara | 140 |
+| 4   | Santa Barbara -> San Diego | 210 |
+
+Total about 565 driving miles. To reverse the trip, start here and run back to
+[[z=0|Day 1 in San Francisco]].

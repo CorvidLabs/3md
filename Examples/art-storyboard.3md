@@ -1,0 +1,95 @@
+---
+3md: 1.0
+axis: shot
+title: Storyboard - The Courier
+director: J. Okonkwo
+sequence: opening chase
+aspect: "2.39:1"
+duration: "00:42"
+---
+A film storyboard for the opening chase sequence, one shot per plane.
+Each plane carries the framing (an ASCII thumbnail), the camera move,
+and the action note. Scrub the Z axis (shot number) to flip through the boards.
+
+@plane z=1 label="Shot 1 - Establishing" camera="crane down, wide" length="00:08"
+# Shot 1 - WIDE
+
+Crane down over the night market. Neon, rain, crowds. We find our COURIER.
+
+```
++----------------------------+
+|  ##  ##   ##   ##  ##  ##   |
+|  ||rain||  *neon*  ||rain|| |
+|  .  . crowd crowd .  .  .   |
+|  .  .  .  [c]  .  .  .  .   |
++----------------------------+
+```
+
+ACTION: Courier weaves through the stalls, package clutched to chest. Cut to [[z=2|the look back]].
+
+@plane z=2 label="Shot 2 - Close Up" camera="handheld, tight" length="00:04"
+# Shot 2 - CLOSE
+
+Tight on the courier's face. A glance over the shoulder. Fear.
+
+```
++----------------------------+
+|        \         /         |
+|         ( o   o )          |
+|          (  >  )           |
+|           \___/            |
+|        breath fogs         |
++----------------------------+
+```
+
+ACTION: Eyes widen. They have been spotted.
+
+@plane z=3 label="Shot 3 - POV" camera="whip pan, POV" length="00:06"
+# Shot 3 - POV
+
+Courier's point of view, whipping back to the crowd. Two PURSUERS push through.
+
+```
++----------------------------+
+|   ##  ## blur ##  ##  ##    |
+|   .  [P]  . . .  [P]  .     |
+|   . . crowd parts . . .     |
+|   >>>>>>>> motion >>>>>>>   |
++----------------------------+
+```
+
+ACTION: The pursuers lock on. The chase is on. To [[z=4|the run]].
+
+@plane z=4 label="Shot 4 - Tracking" camera="lateral dolly, low" length="00:10"
+# Shot 4 - TRACKING
+
+Low lateral dolly running alongside the courier sprinting down an alley.
+
+```
++----------------------------+
+| ||  ||  ||  ||  ||  ||  ||  |
+| |brick wall blurring past| |
+|      [c]>>>                 |
+| ~~~ puddles splash ~~~~~~~  |
++----------------------------+
+```
+
+ACTION: Full sprint. Package still safe. Camera struggles to keep up.
+
+@plane z=5 label="Shot 5 - Wide Resolve" camera="locked off, high wide" length="00:14"
+# Shot 5 - HIGH WIDE
+
+Locked off high angle. The alley opens onto a bridge. Courier reaches the rail,
+turns, and the city sprawls behind. Hold. Title card lands.
+
+```
++----------------------------+
+|  city lights .  .  .  .  .  |
+|  ===========bridge========= |
+|         [c]                 |
+|  ~~~~~~~ river below ~~~~~~  |
+|       THE  COURIER          |
++----------------------------+
+```
+
+ACTION: Beat of stillness, then a hard cut to black. Loop back to [[z=1|the establishing shot]].

@@ -1,0 +1,137 @@
+---
+3md: 1.0
+axis: space
+title: Reception Seating Chart
+event: Maya and Daniel Wedding
+venue: The Old Mill, Riverside Room
+guest_count: 64
+head_table_at: front of room near dance floor
+---
+Floor plan of the reception. Each plane is one table, positioned with x/y so a
+spatial viewer can lay them out as they sit in the room. x increases to the right,
+y increases toward the back of the room. The dance floor and head table are at the
+front (low y). Start at the overview on [[z=0]].
+
+@plane z=0 label="Room overview" x=0 y=0
+# Room Overview
+
+```
+   FRONT (stage / dance floor)
+   [ HEAD TABLE - z=1 ]
+   ----------------------------------
+   T2          T3          T4
+   (z=2)       (z=3)       (z=4)
+   ----------------------------------
+   T5          T6          T7
+   (z=5)       (z=6)       (z=7)
+   ----------------------------------
+        BAR            ENTRANCE
+```
+
+- 8 tables total, 8 seats each.
+- Head table seats the couple and wedding party at [[z=1]].
+- Round tables T2 to T7 seat family and friends, [[z=2|T2]] through [[z=7|T7]].
+
+@plane z=1 label="Head Table" x=2 y=0
+# Head Table (front, center)
+
+Long rectangular table facing the room.
+
+| Seat | Guest            |
+| ---- | ---------------- |
+| 1    | Maya (bride)     |
+| 2    | Daniel (groom)   |
+| 3    | Aisha (maid of honor) |
+| 4    | Tom (best man)   |
+| 5    | Priya (bridesmaid) |
+| 6    | Marcus (groomsman) |
+| 7    | Lena (bridesmaid) |
+| 8    | Jon (groomsman)  |
+
+Closest table to the dance floor. Parents are seated nearby at [[z=2|T2]].
+
+@plane z=2 label="Table 2 - Family" x=0 y=2
+# Table 2 (left, front) - Immediate Family
+
+| Seat | Guest             |
+| ---- | ----------------- |
+| 1    | Carol (bride's mother) |
+| 2    | Robert (bride's father) |
+| 3    | Susan (groom's mother) |
+| 4    | David (groom's father) |
+| 5    | Grandma Ruth      |
+| 6    | Uncle Phil        |
+| 7    | Aunt Diane        |
+| 8    | Cousin Eli        |
+
+@plane z=3 label="Table 3 - College Friends" x=2 y=2
+# Table 3 (center, front) - College Friends
+
+| Seat | Guest          |
+| ---- | -------------- |
+| 1    | Nadia          |
+| 2    | Chris          |
+| 3    | Bex            |
+| 4    | Sam W.         |
+| 5    | Olivia         |
+| 6    | Hassan         |
+| 7    | Grace          |
+| 8    | Theo           |
+
+@plane z=4 label="Table 4 - Work Friends" x=4 y=2
+# Table 4 (right, front) - Daniel's Colleagues
+
+| Seat | Guest          |
+| ---- | -------------- |
+| 1    | Karen (manager) |
+| 2    | Bill           |
+| 3    | Yuki           |
+| 4    | Andre          |
+| 5    | Fatima         |
+| 6    | Pete           |
+| 7    | Sandra         |
+| 8    | Miguel         |
+
+@plane z=5 label="Table 5 - Bride's Aunts" x=0 y=4
+# Table 5 (left, back) - Extended Family
+
+| Seat | Guest          |
+| ---- | -------------- |
+| 1    | Aunt Margaret  |
+| 2    | Uncle George   |
+| 3    | Cousin Hannah  |
+| 4    | Cousin Will    |
+| 5    | Aunt Joy       |
+| 6    | Uncle Ray      |
+| 7    | Cousin Beth    |
+| 8    | Cousin Aaron   |
+
+@plane z=6 label="Table 6 - Neighbors" x=2 y=4
+# Table 6 (center, back) - Neighbors and Family Friends
+
+| Seat | Guest          |
+| ---- | -------------- |
+| 1    | The Okafors (Ben) |
+| 2    | The Okafors (Zoe) |
+| 3    | Mrs. Halloran  |
+| 4    | Mr. Halloran   |
+| 5    | Janet          |
+| 6    | Steve          |
+| 7    | Rosa           |
+| 8    | Frank          |
+
+@plane z=7 label="Table 7 - Kids and Plus-Ones" x=4 y=4
+# Table 7 (right, back) - Younger Guests
+
+| Seat | Guest          |
+| ---- | -------------- |
+| 1    | Leo (age 10)   |
+| 2    | Mia (age 9)    |
+| 3    | Noah (age 12)  |
+| 4    | Ivy (age 8)    |
+| 5    | Jordan +1      |
+| 6    | Alex +1        |
+| 7    | Casey +1       |
+| 8    | Robin +1       |
+
+Seated near the entrance and bar for easy in-and-out. Back to the [[z=0|room overview]].

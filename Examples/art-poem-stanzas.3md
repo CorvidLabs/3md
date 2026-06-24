@@ -1,0 +1,49 @@
+---
+3md: 1.0
+axis: stanza
+title: Tide Tables
+poet: Eira Vane
+form: free verse, four stanzas
+theme: memory and the sea
+---
+A poem in four stanzas. Each plane holds one stanza.
+Read them in Z order, or let each stanza stand alone as its own plane.
+
+@plane z=0 label="Stanza I - Ebb"
+# I
+
+The water keeps its own slow ledger,
+counting the stones it takes and returns,
+and we, who learn arithmetic late,
+mistake the borrowing for loss.
+
+Read on to [[z=1|the second stanza]].
+
+@plane z=1 label="Stanza II - Slack"
+# II
+
+There is an hour when the sea forgets
+which way it meant to go,
+and the whole gray field of it lies still,
+deciding nothing, owing nothing,
+a held breath the length of a coast.
+
+@plane z=2 label="Stanza III - Flood"
+# III
+
+Then it remembers. It comes back
+the way a name comes back,
+all at once and from everywhere,
+filling the prints we left
+as if we had never stepped away.
+
+@plane z=3 label="Stanza IV - Return"
+# IV
+
+So I have stopped grieving the going out.
+The tide is not a door that shuts.
+It is the long sentence of a voice
+that pauses only to say more,
+and will, and will, and will.
+
+Begin again at [[z=0|the ebb]].

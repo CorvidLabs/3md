@@ -1,0 +1,93 @@
+---
+3md: 1.0
+axis: step
+title: Proof That Root 2 Is Irrational
+subject: Mathematics
+method: proof by contradiction
+attributed: classical Greek mathematics
+---
+A step by step classical proof that the square root of 2 cannot be written as a
+fraction of two integers. The argument is a proof by contradiction. The final
+contradiction is reached at [[z=5|the conclusion]].
+
+@plane z=0 label="The Claim and the Strategy"
+# Step 0: The Claim and the Strategy
+
+**Claim:** The square root of 2 is irrational. That is, there are no integers
+a and b with b not zero such that (a / b) squared equals 2.
+
+**Strategy:** Assume the opposite is true and show it leads to a logical
+contradiction. If the assumption forces an impossibility, the assumption must be
+false, so the claim holds. This technique is called proof by contradiction.
+
+@plane z=1 label="Assume a Fraction in Lowest Terms"
+# Step 1: Assume a Fraction in Lowest Terms
+
+Suppose, for contradiction, that root 2 is rational. Then we can write:
+
+```
+sqrt(2) = a / b
+```
+
+where a and b are integers, b is not zero, and the fraction is in lowest terms.
+
+**Lowest terms means a and b share no common factor other than 1.** Any fraction
+can be reduced to lowest terms, so this assumption costs us nothing. In
+particular, a and b are not both even.
+
+@plane z=2 label="Square Both Sides"
+# Step 2: Square Both Sides
+
+Square both sides of the equation from [[z=1]]:
+
+```
+2 = a^2 / b^2
+```
+
+Multiply both sides by b squared:
+
+```
+a^2 = 2 * b^2
+```
+
+This says a squared is two times an integer, so **a squared is even.**
+
+@plane z=3 label="Deduce That a Is Even"
+# Step 3: Deduce That a Is Even
+
+We use this fact: if a squared is even, then a itself is even.
+
+- If a were odd, write a = 2k + 1. Then a squared = 4k^2 + 4k + 1, which is odd.
+- So an odd number always squares to an odd number.
+- Therefore, since a squared is even, a cannot be odd. **a is even.**
+
+Because a is even, write it as a = 2c for some integer c.
+
+@plane z=4 label="Deduce That b Is Even"
+# Step 4: Deduce That b Is Even
+
+Substitute a = 2c into the equation a^2 = 2 b^2 from [[z=2]]:
+
+```
+(2c)^2 = 2 * b^2
+4 * c^2 = 2 * b^2
+2 * c^2 = b^2
+```
+
+So b squared is two times an integer, meaning **b squared is even**, and by the
+same argument as Step 3, **b is even.**
+
+@plane z=5 label="The Contradiction"
+# Step 5: The Contradiction
+
+We have now shown both of these:
+- a is even (from [[z=3]])
+- b is even (from [[z=4]])
+
+But Step 1 assumed a and b share no common factor. If both are even, they share
+the factor 2. **This is a contradiction.**
+
+The contradiction came only from assuming root 2 is rational. Therefore that
+assumption is false.
+
+> Conclusion: The square root of 2 is irrational. QED.

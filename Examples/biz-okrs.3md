@@ -1,0 +1,62 @@
+---
+3md: 1.0
+axis: time
+title: 2026 Company OKRs
+company: Helio Software
+owner: Dana Cole (CEO)
+framework: OKR
+---
+Annual objectives and key results, one plane per quarter. Scores use the 0.0 to
+1.0 convention where 0.7 is on target. Walk forward through the year.
+
+@plane z=0 label="Q1 2026"
+# Q1: Foundation
+
+Objective: Stabilize the platform for scale.
+
+| Key Result | Target | Actual | Score |
+| --- | --- | --- | --- |
+| Reduce p95 latency | < 200ms | 240ms | 0.6 |
+| Uptime | 99.9% | 99.94% | 1.0 |
+| Cut infra cost per user | -15% | -11% | 0.7 |
+
+Quarter score: 0.77. Momentum carries into [[z=1|Q2]].
+
+@plane z=1 label="Q2 2026"
+# Q2: Growth Engine
+
+Objective: Build a repeatable acquisition motion.
+
+| Key Result | Target | Actual | Score |
+| --- | --- | --- | --- |
+| New paid accounts | 1,200 | 1,050 | 0.8 |
+| Trial to paid conversion | 18% | 16.5% | 0.7 |
+| CAC payback | < 9 mo | 10 mo | 0.5 |
+
+Quarter score: 0.67. See [[z=0|Q1]] for the baseline; ahead is [[z=2]].
+
+@plane z=2 label="Q3 2026"
+# Q3: Expansion
+
+Objective: Grow revenue within existing accounts.
+
+| Key Result | Target | Actual | Score |
+| --- | --- | --- | --- |
+| Net revenue retention | 115% | TBD | - |
+| Seats per account | +25% | TBD | - |
+| Enterprise pilots | 8 | TBD | - |
+
+In progress. Goals depend on the engine from [[z=1|Q2]].
+
+@plane z=3 label="Q4 2026"
+# Q4: Profitability
+
+Objective: Reach operational break-even.
+
+| Key Result | Target | Actual | Score |
+| --- | --- | --- | --- |
+| Gross margin | 75% | TBD | - |
+| Monthly burn | < $200k | TBD | - |
+| ARR | $12M | TBD | - |
+
+Closing the year. Compare against the [[z=0|Q1 foundation]].

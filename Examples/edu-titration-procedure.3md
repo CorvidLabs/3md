@@ -1,0 +1,99 @@
+---
+3md: 1.0
+axis: step
+title: Acid-Base Titration Procedure
+subject: Chemistry
+level: introductory lab
+safety: goggles and gloves required
+---
+A standard strong acid, strong base titration to find the concentration of an
+unknown hydrochloric acid using standardized sodium hydroxide and a
+phenolphthalein indicator. Follow the steps in order. The endpoint reasoning is
+explained at [[z=5|the calculation step]].
+
+@plane z=0 label="Safety and Setup"
+# Step 0: Safety and Setup
+
+**Before touching any chemical:**
+- Put on splash goggles and nitrile gloves.
+- Know the location of the eyewash station and acid spill kit.
+- Work over a tray to contain spills.
+
+## Materials
+- 50 mL burette and clamp on a ring stand
+- 250 mL Erlenmeyer flask
+- 25 mL volumetric pipette and bulb
+- Standardized NaOH, 0.100 mol/L
+- Unknown HCl solution
+- Phenolphthalein indicator
+- Distilled water wash bottle
+
+@plane z=1 label="Prepare the Burette"
+# Step 1: Prepare the Burette
+
+1. Rinse the burette twice with a small volume of the NaOH solution, draining
+   through the tip each time. This removes leftover water that would dilute it.
+2. Fill the burette above the zero mark with NaOH.
+3. Open the stopcock briefly to fill the tip and remove any air bubble.
+4. Record the starting volume to the nearest 0.05 mL. Read at the bottom of the
+   meniscus at eye level.
+
+> Do not assume the start is exactly 0.00 mL. Record the actual reading.
+
+@plane z=2 label="Prepare the Sample"
+# Step 2: Prepare the Sample
+
+1. Rinse the pipette with the unknown HCl, then pipette exactly 25.00 mL into
+   the clean Erlenmeyer flask.
+2. Add about 25 mL distilled water to the flask. This does not change the moles
+   of acid, only the volume, and makes the color change easier to see.
+3. Add 2 to 3 drops of phenolphthalein. The solution stays colorless in acid.
+
+@plane z=3 label="Titrate"
+# Step 3: Titrate to the Endpoint
+
+1. Place the flask under the burette on a white tile or sheet of paper.
+2. Add NaOH while swirling the flask continuously.
+3. As you near the endpoint, a pink color flashes where drops land and fades.
+   Slow to dropwise addition here.
+4. The endpoint is the first faint pink that persists for 30 seconds while
+   swirling.
+5. Record the final burette reading.
+
+The neutralization reaction is:
+```
+HCl  +  NaOH  -->  NaCl  +  H2O
+```
+
+@plane z=4 label="Repeat for Precision"
+# Step 4: Repeat for Precision
+
+1. Run the titration at least three times in total.
+2. The first run can be a rough trial; add quickly to find the approximate
+   endpoint, then go carefully on the later runs.
+3. Concordant results are titres agreeing within 0.10 mL of each other.
+4. Average only the concordant titres for the calculation.
+
+| Trial | Final (mL) | Start (mL) | Titre (mL) |
+|-------|-----------|-----------|-----------|
+| 1     |           |           |           |
+| 2     |           |           |           |
+| 3     |           |           |           |
+
+@plane z=5 label="Calculate the Concentration"
+# Step 5: Calculate the Concentration
+
+At the endpoint, moles of acid equal moles of base because the reaction is 1 to 1.
+
+1. moles NaOH = concentration x volume = 0.100 mol/L x (average titre in L)
+2. moles HCl = moles NaOH
+3. concentration HCl = moles HCl / 0.02500 L
+
+## Worked example
+If the average titre is 23.40 mL:
+- moles NaOH = 0.100 x 0.02340 = 0.002340 mol
+- moles HCl = 0.002340 mol
+- concentration HCl = 0.002340 / 0.02500 = 0.0936 mol/L
+
+Compare back to [[z=3|the titration step]] if your endpoint color was unclear,
+since an overshot endpoint inflates the titre and the calculated concentration.

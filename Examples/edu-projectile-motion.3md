@@ -1,0 +1,125 @@
+---
+3md: 1.0
+axis: frame
+title: Projectile Motion Frame by Frame
+subject: Physics
+topic: kinematics under gravity
+g: 9.8 m/s^2
+---
+A ball launched horizontally off a table, shown one frame at a time. Each plane
+is one frame of the animation, sampled every 0.2 seconds. Horizontal velocity
+stays constant while vertical velocity grows under gravity. The numbers behind
+the motion are summarized in [[z=4|the final data frame]].
+
+Launch conditions: horizontal speed 4 m/s, initial vertical speed 0, dropped from
+height. The ` o ` marks the ball, the `=` row is the table edge, and the bottom
+row is the ground.
+
+@plane z=0 label="Frame 0: Launch" t="0.0 s"
+```
+o
+=========
+.........
+.........
+.........
+.........
+_________
+```
+# Frame 0: Launch (t = 0.0 s)
+
+The ball leaves the table edge moving horizontally.
+
+- Horizontal position x = 0.0 m
+- Vertical drop y = 0.0 m
+- Vertical speed vy = 0.0 m/s
+
+Gravity has not yet had time to act, so the ball is still level with the table.
+
+@plane z=1 label="Frame 1" t="0.2 s"
+```
+.
+==o======
+.........
+.........
+.........
+.........
+_________
+```
+# Frame 1 (t = 0.2 s)
+
+- x = 4 x 0.2 = 0.8 m
+- y = 0.5 x 9.8 x 0.2^2 = 0.20 m
+- vy = 9.8 x 0.2 = 1.96 m/s
+
+The ball has moved sideways and begun to fall. The drop is still small because
+y grows with the square of time.
+
+@plane z=2 label="Frame 2" t="0.4 s"
+```
+.
+=========
+....o....
+.........
+.........
+.........
+_________
+```
+# Frame 2 (t = 0.4 s)
+
+- x = 4 x 0.4 = 1.6 m
+- y = 0.5 x 9.8 x 0.4^2 = 0.78 m
+- vy = 9.8 x 0.4 = 3.92 m/s
+
+The downward speed has doubled from the previous frame while the sideways speed
+is unchanged at 4 m/s.
+
+@plane z=3 label="Frame 3" t="0.6 s"
+```
+.
+=========
+.........
+.........
+......o..
+.........
+_________
+```
+# Frame 3 (t = 0.6 s)
+
+- x = 4 x 0.6 = 2.4 m
+- y = 0.5 x 9.8 x 0.6^2 = 1.76 m
+- vy = 9.8 x 0.6 = 5.88 m/s
+
+Notice the vertical gaps between frames are growing while the horizontal gaps
+stay equal. That is the signature of constant horizontal velocity with
+accelerating vertical fall.
+
+@plane z=4 label="Frame 4: Impact" t="0.8 s"
+```
+.
+=========
+.........
+.........
+.........
+.........
+________o
+```
+# Frame 4: Impact (t = 0.8 s)
+
+- x = 4 x 0.8 = 3.2 m
+- y = 0.5 x 9.8 x 0.8^2 = 3.14 m
+- vy = 9.8 x 0.8 = 7.84 m/s
+
+The ball reaches the ground after falling 3.14 m.
+
+## Why this works
+The two motions are independent. Horizontal: constant velocity, so equal steps.
+Vertical: constant acceleration, so steps that grow with time. The table below
+collects every frame from [[z=0|launch]] onward.
+
+| Frame | t (s) | x (m) | y (m) | vy (m/s) |
+|-------|-------|-------|-------|----------|
+| 0     | 0.0   | 0.0   | 0.00  | 0.00     |
+| 1     | 0.2   | 0.8   | 0.20  | 1.96     |
+| 2     | 0.4   | 1.6   | 0.78  | 3.92     |
+| 3     | 0.6   | 2.4   | 1.76  | 5.88     |
+| 4     | 0.8   | 3.2   | 3.14  | 7.84     |

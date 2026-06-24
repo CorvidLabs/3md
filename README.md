@@ -15,7 +15,7 @@ annotations. Space for a scene.
 **[viewer &amp; editor](https://corvidlabs.github.io/3md/viewer.html)** (paste any
 `.3md` and share a link), read the
 **[docs](https://corvidlabs.github.io/3md/docs.html)**, or
-**[browse 141 examples](https://corvidlabs.github.io/3md/gallery.html)** in the
+**[browse 171 examples](https://corvidlabs.github.io/3md/gallery.html)** in the
 gallery (all of [`Examples/`](Examples), rendered live).
 
 <p align="center">
@@ -151,7 +151,7 @@ See [SPEC.md](SPEC.md) for the full grammar and conformance rules.
 
 ## Examples
 
-The [Examples/](Examples) directory holds all 141 example documents across 13
+The [Examples/](Examples) directory holds all 171 example documents across 13
 axis types - from medical charts, weather, and file transfers to games, maps,
 and animations. Browse them all live in the
 [gallery viewer](https://corvidlabs.github.io/3md/gallery.html); a few highlights:

@@ -1,0 +1,84 @@
+---
+3md: 1.0
+axis: panel
+title: The Last Lighthouse
+author: Mara Quill
+medium: four-panel comic
+palette: dusk blue, lantern gold
+---
+A four-panel comic strip. Each plane is one panel, read in Z order.
+The keeper waits, the storm breaks, the light holds, the morning comes.
+Scrub the Z axis to read the panels in sequence.
+
+@plane z=0 label="Panel 1 - The Watch" caption="Night falls on the cape"
+# Panel 1
+
+A wide establishing shot. The lighthouse stands alone on a black rock.
+
+```
+.......*..........
+....~~~~~~~~~......
+...|######|.......
+...|##()##|.......
+...|######|.......
+...|######|.......
+~~~~~~~~~~~~~~~~~~~
+```
+
+KEEPER: *Another quiet night. Good.*
+
+The sea is flat. The lamp room glows soft gold.
+
+@plane z=1 label="Panel 2 - The Storm" caption="The barometer drops"
+# Panel 2
+
+Close on the keeper's face at the window. Rain streaks the glass.
+
+```
+\.|./\.|./\.|./...
+.\|/..\|/..\|/....
+--( o_o )---------
+...| - |.........
+../|   |\........
+.RAIN.RAIN.RAIN..
+```
+
+KEEPER: *That's not on the chart.*
+
+Wind hits the tower. Something out at sea is in trouble. See [[z=2|the signal]].
+
+@plane z=2 label="Panel 3 - The Signal" caption="A ship answers"
+# Panel 3
+
+The beam swings out across heaving water. A tiny ship answers with a flare.
+
+```
+####>>>>>>>>>>>>>>
+####>>>>>>>>>>*...
+####>>>>>>>>/__\..
+.........~~~~~~~~~
+......~~~~~~~~~~~~
+...~~~~~~~~~~~~~~~
+```
+
+KEEPER: *Hold on. I have you.*
+
+The light holds steady through the worst of it.
+
+@plane z=3 label="Panel 4 - The Morning" caption="Calm returns"
+# Panel 4
+
+Dawn. Flat water again. The ship is safe in the harbor below.
+
+```
+......\ | /.......
+.....-- O --......
+...|######|.......
+...|##()##|.......
+...|######|..~~/__\
+~~~~~~~~~~~~~~~~~~~
+```
+
+KEEPER: *Quiet again. Good.*
+
+Back to where we began. Return to [[z=0|the first watch]].

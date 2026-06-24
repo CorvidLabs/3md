@@ -1,0 +1,96 @@
+---
+3md: 1.0
+axis: step
+title: BILLY Bookcase Assembly
+product: BILLY 80x28x202 cm white
+tools_needed: Phillips screwdriver, rubber mallet
+est_minutes: 35
+people: 2 recommended
+---
+Flat-pack assembly walkthrough for the BILLY bookcase. Lay all parts on a soft
+surface (carpet or the unfolded cardboard) before you start. Count the hardware
+against the parts list on [[z=0]] so you do not discover a missing dowel halfway
+through.
+
+@plane z=0 label="Parts and hardware"
+# Step 0: Lay Out the Parts
+
+## Panels
+
+| Qty | Part | Code |
+| --- | ------------------ | ----- |
+| 2   | Side panel (tall)  | A     |
+| 1   | Top panel          | B     |
+| 1   | Bottom panel       | C     |
+| 5   | Adjustable shelf   | D     |
+| 1   | Back board (HDF)   | E     |
+
+## Hardware bag
+
+| Qty | Item                  | Code |
+| --- | --------------------- | ---- |
+| 8   | Wooden dowel          | 101  |
+| 4   | Cam lock screw        | 109  |
+| 4   | Cam lock disc         | 110  |
+| 20  | Shelf pin             | 115  |
+| 30  | Nail (back board)     | 121  |
+
+If any count is short, stop and contact support before continuing to [[z=1|the side panels]].
+
+@plane z=1 label="Frame the sides"
+# Step 1: Insert Dowels into Side Panels
+
+Take both **A** side panels. Find the pre-drilled holes on the inner faces.
+
+- Press one **dowel (101)** into each of the 4 top and bottom holes per panel.
+- Tap flush with the rubber mallet. Do NOT hammer the panel face directly.
+- Insert **cam lock screws (109)** into the small threaded holes, screwing by hand until snug.
+
+Lay both side panels inner-face up, mirrored, about a meter apart. Next: attach top and bottom at [[z=2]].
+
+@plane z=2 label="Attach top and bottom"
+# Step 2: Join Top and Bottom Panels
+
+1. Stand one side panel **A** upright (this is easier with a second person holding it).
+2. Lower the **top panel B** onto the top dowels of panel A.
+3. Lower the **bottom panel C** onto the bottom dowels.
+4. Insert **cam discs (110)** into the round holes on B and C, arrow pointing toward the cam screw.
+5. Fit the second side panel **A** onto the exposed dowel ends.
+6. Turn every cam disc a half turn clockwise to lock. The frame is now a rigid rectangle.
+
+Check the frame is square (measure both diagonals; they should match) before fixing the back at [[z=3]].
+
+@plane z=3 label="Fix the back board"
+# Step 3: Nail On the Back Board
+
+```
+  +---------------------+   <- top panel B
+  |  E (smooth side in) |
+  |                     |
+  |   nail every ~10cm  |
+  |                     |
+  +---------------------+   <- bottom panel C
+```
+
+- Lay the assembled frame face-down.
+- Place **back board E** with the white/smooth side facing into the cabinet.
+- Align all four edges, then drive **nails (121)** through E into the frame, roughly every 10 cm.
+- Start with the four corners to hold alignment, then fill in.
+
+The frame is locked square once the back is on. Continue to shelves at [[z=4]].
+
+@plane z=4 label="Shelves and wall anchor"
+# Step 4: Shelves, Stand-Up, and Safety
+
+1. Stand the bookcase upright.
+2. Insert four **shelf pins (115)** at your chosen height for each of the 5 **D** shelves.
+3. Rest each shelf **D** on its pins. Adjust heights now while empty.
+
+## Tip-over safety (do not skip)
+
+Tall bookcases must be secured to the wall.
+
+- Use the included wall-anchor bracket (in bag 115 area) and an appropriate screw for your wall type.
+- Fix the bracket to a stud or use a proper drywall anchor.
+
+Back to the [[z=0|parts list]] if anything is left over. A correctly built BILLY should have zero spare hardware except the extra shelf pins.

@@ -1,0 +1,74 @@
+---
+3md: 1.0
+axis: stage
+title: Q2 Sales Funnel
+team: SMB New Business
+period: 2026-Q2
+currency: USD
+crm: Salesforce
+---
+Pipeline conversion by stage. Each plane is one funnel stage, from raw leads at
+the top to closed-won at the bottom. Counts and conversion rates are for the
+quarter to date.
+
+@plane z=0 label="Leads"
+# Stage 1: Leads
+
+```
+Leads      ############################  4,200
+MQL        ##################            1,512
+SQL        #########                       680
+Opp        #####                           340
+Won        ##                               95
+```
+
+| Metric | Value |
+| --- | --- |
+| New leads | 4,200 |
+| Sources | inbound 58%, outbound 27%, events 15% |
+
+Next stage: [[z=1|Marketing Qualified]].
+
+@plane z=1 label="Marketing Qualified"
+# Stage 2: MQL
+
+| Metric | Value |
+| --- | --- |
+| MQLs | 1,512 |
+| Lead to MQL | 36.0% |
+| Avg time in stage | 4 days |
+
+Hand-off to sales happens at [[z=2|the SQL stage]].
+
+@plane z=2 label="Sales Qualified"
+# Stage 3: SQL
+
+| Metric | Value |
+| --- | --- |
+| SQLs | 680 |
+| MQL to SQL | 45.0% |
+| Disqualified | 832 |
+
+Qualified deals become [[z=3|opportunities]].
+
+@plane z=3 label="Opportunity"
+# Stage 4: Opportunity
+
+| Metric | Value |
+| --- | --- |
+| Open opps | 340 |
+| SQL to Opp | 50.0% |
+| Pipeline value | $5,440,000 |
+| Avg deal size | $16,000 |
+
+@plane z=4 label="Closed Won"
+# Stage 5: Closed Won
+
+| Metric | Value |
+| --- | --- |
+| Won | 95 |
+| Opp to Won | 27.9% |
+| Closed revenue | $1,520,000 |
+| Overall lead to won | 2.3% |
+
+Top of funnel started at 4,200 [[z=0|leads]].

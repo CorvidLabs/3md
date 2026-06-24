@@ -1,0 +1,71 @@
+---
+3md: 1.0
+axis: mileage
+title: Car Maintenance Schedule
+vehicle: 2019 Honda Civic 1.5T
+units: miles
+note: follow whichever comes first, miles or the time interval
+oil_type: 0W-20 full synthetic
+---
+Mileage-based service schedule. Each plane is a service interval. Items are
+cumulative: at higher mileage you still do the smaller routine items too. Always
+defer to the owner's manual and any maintenance-minder codes on the dash. Begin
+with the routine at [[z=5000|every 5,000 miles]].
+
+@plane z=5000 label="Every 5,000 miles"
+# Every 5,000 Miles (Routine)
+
+The bread-and-butter service.
+
+- Change **engine oil** (0W-20 full synthetic) and **oil filter**.
+- Rotate tires (front-to-rear, observe rotation pattern).
+- Inspect tire tread and set pressures to door-jamb spec.
+- Top off washer fluid; check coolant and brake fluid levels.
+- Reset the oil life / maintenance minder.
+
+This repeats at every multiple. The next bigger service is [[z=30000]].
+
+@plane z=30000 label="Every 30,000 miles"
+# Every 30,000 Miles
+
+Do all the [[z=5000|5k routine]] items, plus:
+
+- Replace **engine air filter**.
+- Replace **cabin air filter**.
+- Inspect brake pads, rotors, and brake lines.
+- Inspect suspension components and boots/CV joints.
+- Inspect drive belt condition.
+
+@plane z=60000 label="Every 60,000 miles"
+# Every 60,000 Miles
+
+Do the 5k and 30k items, plus:
+
+- Replace **brake fluid** (full flush).
+- Inspect and adjust **parking brake**.
+- Replace **transmission fluid** (CVT fluid for this trim).
+- Inspect all hoses and fuel lines.
+- Replace wiper blades.
+
+Major scheduled service next at [[z=100000]].
+
+@plane z=100000 label="100,000 mile service"
+# 100,000 Mile Major Service
+
+Do all earlier items, plus:
+
+- Replace **spark plugs** (iridium).
+- Replace **engine coolant** (Honda Type 2, long-life).
+- Inspect **water pump** and timing chain tensioner.
+- Inspect **drive belt**; replace if cracked or glazed.
+
+```
+service ladder:
+  5k   ----+
+  30k  ----+--- each level includes everything below it
+  60k  ----+
+  100k ----+
+```
+
+Then continue the cycle: the 5k routine resumes immediately. Jump back to
+[[z=5000|the routine service]] for the ongoing items.

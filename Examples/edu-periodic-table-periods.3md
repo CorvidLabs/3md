@@ -1,0 +1,89 @@
+---
+3md: 1.0
+axis: period
+title: The Periodic Table by Period
+subject: Chemistry
+source: IUPAC standard atomic data
+---
+The periodic table organized by period (row). Each plane is one period, stacked
+along the period axis. Within a period, atomic number increases left to right and
+a new electron shell fills. For the heavy synthetic elements see
+[[z=7|period 7]].
+
+@plane z=1 label="Period 1"
+# Period 1
+
+Only two elements. The 1s subshell fills.
+
+| Z | Symbol | Name     | Category   |
+|---|--------|----------|------------|
+| 1 | H      | Hydrogen | nonmetal   |
+| 2 | He     | Helium   | noble gas  |
+
+> Hydrogen sits above the alkali metals by convention but behaves like neither
+> group cleanly. Helium completes the n=1 shell with just two electrons.
+
+@plane z=2 label="Period 2"
+# Period 2
+
+The 2s and 2p subshells fill. This row contains the backbone elements of life.
+
+| Z  | Symbol | Name      | Category          |
+|----|--------|-----------|-------------------|
+| 3  | Li     | Lithium   | alkali metal      |
+| 4  | Be     | Beryllium | alkaline earth    |
+| 5  | B      | Boron     | metalloid         |
+| 6  | C      | Carbon    | nonmetal          |
+| 7  | N      | Nitrogen  | nonmetal          |
+| 8  | O      | Oxygen    | nonmetal          |
+| 9  | F      | Fluorine  | halogen           |
+| 10 | Ne     | Neon      | noble gas         |
+
+@plane z=3 label="Period 3"
+# Period 3
+
+The 3s and 3p subshells fill. Includes the most abundant element in Earth's
+crust by mass after oxygen.
+
+| Z  | Symbol | Name       | Category        |
+|----|--------|------------|-----------------|
+| 11 | Na     | Sodium     | alkali metal    |
+| 12 | Mg     | Magnesium  | alkaline earth  |
+| 13 | Al     | Aluminium  | post-transition |
+| 14 | Si     | Silicon    | metalloid       |
+| 15 | P      | Phosphorus | nonmetal        |
+| 16 | S      | Sulfur     | nonmetal        |
+| 17 | Cl     | Chlorine   | halogen         |
+| 18 | Ar     | Argon      | noble gas       |
+
+@plane z=4 label="Period 4"
+# Period 4
+
+The first period with the d-block. The 4s fills, then the 3d transition metals,
+then the 4p.
+
+## s-block and p-block
+- K (19) potassium, Ca (20) calcium
+- Ga (31) through Kr (36) finish the row
+
+## First transition series (3d)
+Sc (21), Ti (22), V (23), Cr (24), Mn (25), Fe (26), Co (27), Ni (28),
+Cu (29), Zn (30).
+
+> Iron (Fe, 26) is the most stable nucleus per nucleon, the endpoint of stellar
+> fusion in massive stars.
+
+@plane z=7 label="Period 7"
+# Period 7
+
+The heaviest known elements, almost all synthetic and radioactive. The 7s, 5f
+actinides, 6d, and 7p fill across the row.
+
+- Begins with Fr (87) francium and Ra (88) radium.
+- The actinides span Ac (89) through Lr (103), including U (92) uranium and
+  Pu (94) plutonium.
+- The superheavy elements run through Og (118) oganesson, the highest atomic
+  number confirmed by IUPAC.
+
+> Most period 7 elements past uranium do not occur naturally in meaningful
+> amounts and were first made in particle accelerators or reactors.

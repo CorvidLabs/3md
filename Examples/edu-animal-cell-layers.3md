@@ -1,0 +1,78 @@
+---
+3md: 1.0
+axis: layer
+title: The Animal Cell in Layers
+subject: Biology
+level: high school
+---
+An animal cell explored as concentric layers, from the outer boundary inward to
+the genetic core. Each plane is one structural layer. The genetic material in
+[[z=4|the nucleus]] directs everything in the layers around it.
+
+@plane z=0 label="Plasma Membrane"
+# Layer 0: Plasma Membrane
+
+The outer boundary that separates the cell from its surroundings.
+
+- A phospholipid bilayer, fluid and selectively permeable.
+- Embedded proteins act as channels, pumps, and receptors.
+- Controls what enters and leaves: diffusion, osmosis, and active transport.
+
+> Selective permeability is the key idea. The membrane lets some molecules pass
+> freely while pumping others against their gradient using energy.
+
+@plane z=1 label="Cytoplasm and Cytoskeleton"
+# Layer 1: Cytoplasm and Cytoskeleton
+
+The fluid interior and its internal scaffold.
+
+- Cytosol: the water-based gel where many reactions occur and organelles sit.
+- Cytoskeleton: microfilaments, intermediate filaments, and microtubules.
+- Functions: maintains shape, anchors organelles, and enables movement.
+
+The cytoskeleton also forms the tracks that vesicles travel along between the
+membrane and the organelles in [[z=2]].
+
+@plane z=2 label="The Endomembrane System"
+# Layer 2: The Endomembrane System
+
+The connected factory and shipping network of the cell.
+
+| Organelle              | Function                                   |
+|------------------------|--------------------------------------------|
+| Rough ER               | ribosome-studded, makes and folds proteins |
+| Smooth ER              | makes lipids, detoxifies                   |
+| Golgi apparatus        | modifies, sorts, and ships products        |
+| Lysosome               | digests waste and worn parts               |
+| Vesicles               | transport containers between organelles    |
+
+Proteins flow rough ER, then Golgi, then to the membrane or to lysosomes.
+
+@plane z=3 label="The Powerhouses"
+# Layer 3: The Mitochondria
+
+Where the cell harvests usable energy.
+
+- Double membrane; the inner membrane folds into cristae to increase area.
+- Site of cellular respiration, producing ATP from glucose and oxygen.
+- Carry their own small circular DNA and are inherited from the mother.
+
+```
+glucose  +  6 O2  -->  6 CO2  +  6 H2O  +  ATP
+```
+
+> Mitochondria are thought to descend from ancient free-living bacteria taken in
+> by an early cell, the endosymbiotic theory.
+
+@plane z=4 label="The Nucleus"
+# Layer 4: The Nucleus
+
+The control center holding the cell's genetic instructions.
+
+- Bounded by a double membrane, the nuclear envelope, with pores for traffic.
+- Contains chromatin (DNA wound on proteins) that condenses into chromosomes.
+- The nucleolus inside assembles ribosomes.
+
+DNA here is transcribed into messenger RNA, which exits through the pores to the
+ribosomes on the rough ER described in [[z=2|the endomembrane system]], where
+proteins are built.

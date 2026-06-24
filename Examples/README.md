@@ -1,10 +1,15 @@
 # 3md examples
 
-141 example `.3md` documents spanning many meanings of the Z axis. Every one validates with the parser and renders in the <three-md> component. Browse them live in the [gallery viewer](https://corvidlabs.github.io/3md/gallery.html).
+171 example `.3md` documents spanning many meanings of the Z axis. Every one validates with the parser and renders in the <three-md> component. Browse them live in the [gallery viewer](https://corvidlabs.github.io/3md/gallery.html).
 
-## axis: time (26)
+## axis: time (34)
 
+- [Nocturne Atlas - Track Listing](art-album.3md) - `art-album.3md`
 - [Infant Developmental Milestones by Month](baby-milestones.3md) - `baby-milestones.3md`
+- [2026 Company OKRs](biz-okrs.3md) - `biz-okrs.3md`
+- [Q2 Profit and Loss](biz-pnl.3md) - `biz-pnl.3md`
+- [Product Roadmap 2026](biz-roadmap.3md) - `biz-roadmap.3md`
+- [NVDA Weekly Watch](biz-stock-watch.3md) - `biz-stock-watch.3md`
 - [threemd Release History](changelog.3md) - `changelog.3md`
 - [Helmsman Product Roadmap (FY2026)](company-roadmap.3md) - `company-roadmap.3md`
 - [Holloway v. Meridian Freight - Case Timeline](court-timeline.3md) - `court-timeline.3md`
@@ -12,9 +17,12 @@
 - [Week of June 22](daily-planner.3md) - `daily-planner.3md`
 - [Commit History for feature/auth-rework](data-git-history.3md) - `data-git-history.3md`
 - [7-Day Forecast for Portland, OR](data-weather-forecast.3md) - `data-weather-forecast.3md`
+- [Photosynthesis Unit Plan](edu-photosynthesis-unit.3md) - `edu-photosynthesis-unit.3md`
 - [Major Events in the Evolution of Life](evolution-timeline.3md) - `evolution-timeline.3md`
 - [Earth's Geological Eras](geological-eras.3md) - `geological-eras.3md`
 - [Key Eras of Ancient Rome](history-of-rome.3md) - `history-of-rome.3md`
+- [Pacific Coast Road Trip](home-pacific-coast-roadtrip.3md) - `home-pacific-coast-roadtrip.3md`
+- [Match Report City vs United](home-soccer-playbyplay.3md) - `home-soccer-playbyplay.3md`
 - [Intro to Film Photography](life-course-syllabus.3md) - `life-course-syllabus.3md`
 - [Backyard Vegetable Garden Plan](life-garden-plan.3md) - `life-garden-plan.3md`
 - [Five Days in Kyoto](life-kyoto-itinerary.3md) - `life-kyoto-itinerary.3md`
@@ -31,11 +39,13 @@
 - [Helios Sync - Build Timeline](project-timeline.3md) - `project-timeline.3md`
 - [16-Week Marathon Training Plan](training-plan.3md) - `training-plan.3md`
 
-## axis: frame (18)
+## axis: frame (20)
 
 - [Bouncing dot](animation.3md) - `animation.3md`
+- [ASCII Loading Spinner](art-loading-spinner.3md) - `art-loading-spinner.3md`
 - [Bouncing Ball ASCII Animation](bouncing-ball.3md) - `bouncing-ball.3md`
 - [The Last Slice](comic-panels.3md) - `comic-panels.3md`
+- [Projectile Motion Frame by Frame](edu-projectile-motion.3md) - `edu-projectile-motion.3md`
 - [Fireworks Burst](fireworks.3md) - `fireworks.3md`
 - [Bouncing Ball](game-bouncing-ball.3md) - `game-bouncing-ball.3md`
 - [Conway's Game of Life](game-of-life.3md) - `game-of-life.3md`
@@ -52,9 +62,33 @@
 - [Blinking Typing Cursor](typing-cursor.3md) - `typing-cursor.3md`
 - [ASCII Walk Cycle](walk-cycle.3md) - `walk-cycle.3md`
 
-## axis: depth (15)
+## axis: step (19)
+
+- [The 21 Card Trick](card-trick.3md) - `card-trick.3md`
+- [Salsa Basic Step (On1, Cross-Body Lead Foundation)](dance-steps.3md) - `dance-steps.3md`
+- [API Request Lifecycle: POST /v1/orders](data-api-lifecycle.3md) - `data-api-lifecycle.3md`
+- [File Transfer Manifest for release-2.4.0](data-file-transfer.3md) - `data-file-transfer.3md`
+- [Proof That Root 2 Is Irrational](edu-sqrt2-irrational-proof.3md) - `edu-sqrt2-irrational-proof.3md`
+- [Acid-Base Titration Procedure](edu-titration-procedure.3md) - `edu-titration-procedure.3md`
+- [Measuring the Vitamin C Content of Orange Juice by Iodometric Titration](experiment.3md) - `experiment.3md`
+- [Adult CPR First Aid](first-aid.3md) - `first-aid.3md`
+- [Assembling the BJORKLUND 3-Drawer Dresser](furniture-assembly.3md) - `furniture-assembly.3md`
+- [The Italian Game](game-chess-opening.3md) - `game-chess-opening.3md`
+- [Tic-Tac-Toe, X Wins](game-tic-tac-toe.3md) - `game-tic-tac-toe.3md`
+- [BILLY Bookcase Assembly](home-bookshelf-assembly.3md) - `home-bookshelf-assembly.3md`
+- [Catan First-Game Walkthrough](home-catan-walkthrough.3md) - `home-catan-walkthrough.3md`
+- [Installing Sparrow CLI](install-guide.3md) - `install-guide.3md`
+- [Simple Ribbed Beanie (Knit Flat, Seamed)](knitting.3md) - `knitting.3md`
+- [Folding the Orizuru (Paper Crane)](origami.3md) - `origami.3md`
+- [Weeknight Shakshuka](recipe.3md) - `recipe.3md`
+- [Weeknight Lemon Garlic Chicken Thighs](recipe-steps.3md) - `recipe-steps.3md`
+- [20-Minute HIIT Circuit](workout.3md) - `workout.3md`
+
+## axis: depth (17)
 
 - [Pigeon Payments API](api-overview.3md) - `api-overview.3md`
+- [Voxel Heart - 3D Sculpture](art-voxel-heart.3md) - `art-voxel-heart.3md`
+- [The Solar System Outward](edu-solar-system.3md) - `edu-solar-system.3md`
 - [Q2 FY2026 Business Review - Northwind Cloud](exec-summary.3md) - `exec-summary.3md`
 - [The Hollis Family Tree](family-tree.3md) - `family-tree.3md`
 - [Self-Hosting Backups FAQ](faq-deepdive.3md) - `faq-deepdive.3md`
@@ -70,7 +104,27 @@
 - [Threat Model by Depth - Customer Records API](threat-model.3md) - `threat-model.3md`
 - [The Anatomy of a Tide Pool](tide-pool.3md) - `tide-pool.3md`
 
-## axis: space (15)
+## axis: layer (17)
+
+- [Accessible Figure - Tidal Marsh at Dawn](accessibility.3md) - `accessibility.3md`
+- [Mutual Non-Disclosure Agreement - Annotated](annotated-contract.3md) - `annotated-contract.3md`
+- [Corvid Design System - Layer Stack](art-design-system.3md) - `art-design-system.3md`
+- [Helio Software Org Chart](biz-org-chart.3md) - `biz-org-chart.3md`
+- [Code Review - RateLimiter.swift (PR #482)](code-review.3md) - `code-review.3md`
+- [Portable Folder: tempo-cli](data-folder-as-file.3md) - `data-folder-as-file.3md`
+- [The Sunken Foundry - Difficulty Layers](difficulty-modes.3md) - `difficulty-modes.3md`
+- [The Animal Cell in Layers](edu-animal-cell-layers.3md) - `edu-animal-cell-layers.3md`
+- [Annotated contract](layered-notes.3md) - `layered-notes.3md`
+- [Spanish Kitchen Verbs Deck](life-spanish-flashcards.3md) - `life-spanish-flashcards.3md`
+- [Downtown Mobility Map](map-overlays.3md) - `map-overlays.3md`
+- [Anterior Forearm - Layered Anatomy](med-forearm-anatomy.3md) - `med-forearm-anatomy.3md`
+- [Coastal Sunset - Adjustment Layer Stack](photo-edit.3md) - `photo-edit.3md`
+- [Operation Northwind - Progressive Redaction](redacted-doc.3md) - `redacted-doc.3md`
+- [Midnight Driver - Stem Breakdown](song-stems.3md) - `song-stems.3md`
+- [Account Settings Screen, Theme Variants](theme-variants.3md) - `theme-variants.3md`
+- [The Old Pond, Three Ways](translation-layers.3md) - `translation-layers.3md`
+
+## axis: space (16)
 
 - [The Ruy Lopez, Move by Move](chess-opening.3md) - `chess-opening.3md`
 - [Simple Circuit Board Component Layout](circuit-board.3md) - `circuit-board.3md`
@@ -81,47 +135,13 @@
 - [Sky Ruins, Level 1-1](game-platformer-map.3md) - `game-platformer-map.3md`
 - [The Lighthouse at Gale Point](game-text-adventure.3md) - `game-text-adventure.3md`
 - [Raised Bed Garden Layout (4 ft x 8 ft)](garden-layout.3md) - `garden-layout.3md`
+- [Reception Seating Chart](home-wedding-seating.3md) - `home-wedding-seating.3md`
 - [Downtown Transit Map](life-transit-map.3md) - `life-transit-map.3md`
 - [The Meridian Museum - Self-Guided Walking Tour](museum-tour.3md) - `museum-tour.3md`
 - [Cedar Ridge Garage - Section Map](parking-lot.3md) - `parking-lot.3md`
 - [Hale & Okonkwo Wedding Seating Chart](seating-chart.3md) - `seating-chart.3md`
 - [The Solar System by Distance](solar-system.3md) - `solar-system.3md`
 - [A Doll's House, Act III - Stage Set Design](stage-set.3md) - `stage-set.3md`
-
-## axis: step (15)
-
-- [The 21 Card Trick](card-trick.3md) - `card-trick.3md`
-- [Salsa Basic Step (On1, Cross-Body Lead Foundation)](dance-steps.3md) - `dance-steps.3md`
-- [API Request Lifecycle: POST /v1/orders](data-api-lifecycle.3md) - `data-api-lifecycle.3md`
-- [File Transfer Manifest for release-2.4.0](data-file-transfer.3md) - `data-file-transfer.3md`
-- [Measuring the Vitamin C Content of Orange Juice by Iodometric Titration](experiment.3md) - `experiment.3md`
-- [Adult CPR First Aid](first-aid.3md) - `first-aid.3md`
-- [Assembling the BJORKLUND 3-Drawer Dresser](furniture-assembly.3md) - `furniture-assembly.3md`
-- [The Italian Game](game-chess-opening.3md) - `game-chess-opening.3md`
-- [Tic-Tac-Toe, X Wins](game-tic-tac-toe.3md) - `game-tic-tac-toe.3md`
-- [Installing Sparrow CLI](install-guide.3md) - `install-guide.3md`
-- [Simple Ribbed Beanie (Knit Flat, Seamed)](knitting.3md) - `knitting.3md`
-- [Folding the Orizuru (Paper Crane)](origami.3md) - `origami.3md`
-- [Weeknight Shakshuka](recipe.3md) - `recipe.3md`
-- [Weeknight Lemon Garlic Chicken Thighs](recipe-steps.3md) - `recipe-steps.3md`
-- [20-Minute HIIT Circuit](workout.3md) - `workout.3md`
-
-## axis: layer (14)
-
-- [Accessible Figure - Tidal Marsh at Dawn](accessibility.3md) - `accessibility.3md`
-- [Mutual Non-Disclosure Agreement - Annotated](annotated-contract.3md) - `annotated-contract.3md`
-- [Code Review - RateLimiter.swift (PR #482)](code-review.3md) - `code-review.3md`
-- [Portable Folder: tempo-cli](data-folder-as-file.3md) - `data-folder-as-file.3md`
-- [The Sunken Foundry - Difficulty Layers](difficulty-modes.3md) - `difficulty-modes.3md`
-- [Annotated contract](layered-notes.3md) - `layered-notes.3md`
-- [Spanish Kitchen Verbs Deck](life-spanish-flashcards.3md) - `life-spanish-flashcards.3md`
-- [Downtown Mobility Map](map-overlays.3md) - `map-overlays.3md`
-- [Anterior Forearm - Layered Anatomy](med-forearm-anatomy.3md) - `med-forearm-anatomy.3md`
-- [Coastal Sunset - Adjustment Layer Stack](photo-edit.3md) - `photo-edit.3md`
-- [Operation Northwind - Progressive Redaction](redacted-doc.3md) - `redacted-doc.3md`
-- [Midnight Driver - Stem Breakdown](song-stems.3md) - `song-stems.3md`
-- [Account Settings Screen, Theme Variants](theme-variants.3md) - `theme-variants.3md`
-- [The Old Pond, Three Ways](translation-layers.3md) - `translation-layers.3md`
 
 ## axis: floor (11)
 
@@ -168,16 +188,50 @@
 - [Corvid Coffee Logo, v1 through v5](design-iterations.3md) - `design-iterations.3md`
 - [Orders Database Schema Migrations](schema-migrations.3md) - `schema-migrations.3md`
 
-## axis: section (2)
+## axis: section (3)
 
 - [3md, explained in 3md](3md-in-3md.3md) - `3md-in-3md.3md`
+- [Invoice 2026-0417](biz-invoice.3md) - `biz-invoice.3md`
 - [Wildflower Road - Song Chart](life-song-structure.3md) - `life-song-structure.3md`
 
-## axis: stage (2)
+## axis: stage (3)
 
+- [Q2 Sales Funnel](biz-sales-funnel.3md) - `biz-sales-funnel.3md`
 - [CI/CD Pipeline for api-gateway](data-cicd-pipeline.3md) - `data-cicd-pipeline.3md`
 - [Clinical Trial Roadmap - CRV-208 (novel GLP-1/GIP agonist)](med-clinical-trial-phases.3md) - `med-clinical-trial-phases.3md`
+
+## axis: measure (1)
+
+- [Ode to Joy - First Phrase](art-sheet-music.3md) - `art-sheet-music.3md`
+
+## axis: mileage (1)
+
+- [Car Maintenance Schedule](home-car-maintenance.3md) - `home-car-maintenance.3md`
+
+## axis: panel (1)
+
+- [The Last Lighthouse](art-comic-strip.3md) - `art-comic-strip.3md`
+
+## axis: period (1)
+
+- [The Periodic Table by Period](edu-periodic-table-periods.3md) - `edu-periodic-table-periods.3md`
+
+## axis: round (1)
+
+- [Champions Cup Knockout Bracket](home-ucl-bracket.3md) - `home-ucl-bracket.3md`
+
+## axis: row (1)
+
+- [Diagonal Garter Dishcloth](home-dishcloth-knit.3md) - `home-dishcloth-knit.3md`
 
 ## axis: scene (1)
 
 - [The Lighthouse Letter](life-short-story.3md) - `life-short-story.3md`
+
+## axis: shot (1)
+
+- [Storyboard - The Courier](art-storyboard.3md) - `art-storyboard.3md`
+
+## axis: stanza (1)
+
+- [Tide Tables](art-poem-stanzas.3md) - `art-poem-stanzas.3md`

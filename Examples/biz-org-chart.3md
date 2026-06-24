@@ -1,0 +1,65 @@
+---
+3md: 1.0
+axis: layer
+title: Helio Software Org Chart
+company: Helio Software
+headcount: 47
+as_of: 2026-Q2
+---
+Top-down org chart. The Z axis is the reporting layer: z=0 is the executive
+layer, deeper planes are levels further down the chain. The x attribute spreads
+siblings left to right for spatial viewers.
+
+@plane z=0 label="Executive" x=0
+# Executive Layer
+
+```
+                 [ CEO ]
+                Dana Cole
+                    |
+   +--------+-------+-------+--------+
+  CTO      CFO    CPO     CRO     COO
+```
+
+- CEO: Dana Cole
+
+Reports roll up from the [[z=1|leadership layer]].
+
+@plane z=1 label="Leadership Team" x=0
+# Leadership Layer
+
+| Role | Name | Org |
+| --- | --- | --- |
+| CTO | Marcus Lin | Engineering |
+| CFO | Priya Shah | Finance |
+| CPO | Tomas Reyes | Product |
+| CRO | Elena Voss | Revenue |
+| COO | Will Tan | Operations |
+
+Direct reports per manager are in [[z=2|the manager layer]].
+
+@plane z=2 label="Managers" x=-2
+# Manager Layer (Engineering and Product)
+
+- Eng Manager, Platform: Sara Kim (6 engineers)
+- Eng Manager, Apps: Raj Patel (5 engineers)
+- Design Lead: Mia Cho (3 designers)
+- PM Lead: Owen Frye (4 PMs)
+
+Sibling managers in other orgs sit at [[z=2|the same layer]]; individual
+contributors are at [[z=3]].
+
+@plane z=3 label="Individual Contributors" x=0
+# Staff Layer
+
+| Team | Members |
+| --- | --- |
+| Platform | 6 backend engineers |
+| Apps | 5 frontend engineers |
+| Design | 3 product designers |
+| Product | 4 product managers |
+| Finance | 3 analysts |
+| Revenue | 8 account execs |
+| Operations | 4 ops specialists |
+
+Total individual contributors: 33. Jump back to the [[z=0|executive layer]].

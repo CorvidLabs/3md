@@ -1,0 +1,69 @@
+---
+3md: 1.0
+axis: time
+title: Nocturne Atlas - Track Listing
+artist: Halcyon Drift
+label: Slow Light Records
+runtime: "38:14"
+format: LP
+---
+An album, one track per plane, laid out along the time axis as the running order.
+Each plane is a track sheet: timing, key, mood, and a line of liner notes.
+Scrub the Z axis to move through the record side A into side B.
+
+@plane z=0 label="A1 - Harbor Lights" time="00:00" length="4:12" key="A minor"
+# A1. Harbor Lights
+
+The opener. A slow synth swell and a single repeating piano figure.
+
+- BPM: 84
+- Mood: arrival, anticipation
+- Liner: *We started here because every map needs a port.*
+
+The record drifts out to sea on [[z=1|the next track]].
+
+@plane z=1 label="A2 - Salt and Static" time="04:12" length="3:48" key="C major"
+# A2. Salt and Static
+
+Brighter. A motorik drum pattern enters, tape hiss left in on purpose.
+
+- BPM: 112
+- Mood: motion, open road
+- Liner: *The static is the sound of the radio almost finding a station.*
+
+@plane z=2 label="A3 - Low Country" time="08:00" length="6:30" key="D dorian"
+# A3. Low Country
+
+The long centerpiece of side A. A slow build with a brass swell at 4:30.
+
+- BPM: 76
+- Mood: vast, patient
+- Liner: *Recorded in one take at 3am with the windows open.*
+
+@plane z=3 label="B1 - Cold Coast" time="14:30" length="4:05" key="F sharp minor"
+# B1. Cold Coast
+
+Side B opens darker and sparser. Just bass, a vocal sample, and reverb.
+
+- BPM: 90
+- Mood: solitude, distance
+- Liner: *The coldest song we have ever made, and our favorite.*
+
+@plane z=4 label="B2 - Halcyon Drift" time="18:35" length="5:20" key="B flat major"
+# B2. Halcyon Drift
+
+The title track. Everything from the record returns, layered together.
+
+- BPM: 100
+- Mood: gathering, release
+- Liner: *If you only hear one, hear this one.*
+
+@plane z=5 label="B3 - Last Light" time="23:55" length="14:19" key="A minor"
+# B3. Last Light
+
+The closer, and the longest cut. It resolves back to the opening key of A minor,
+closing the loop on the whole record.
+
+- BPM: 60
+- Mood: dusk, farewell
+- Liner: *Ends on the same chord [[z=0|Harbor Lights]] began on. The atlas folds shut.*

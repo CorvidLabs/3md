@@ -1,0 +1,102 @@
+---
+3md: 1.0
+axis: time
+title: Photosynthesis Unit Plan
+subject: Biology
+grade: 9
+duration: 5 weeks
+standard: NGSS HS-LS1-5
+---
+A five week unit introducing photosynthesis, from observable phenomena to the
+biochemistry of the light and Calvin cycles. Each plane is one teaching week.
+Jump ahead to the assessment week at [[z=4|the final project and exam]].
+
+@plane z=0 label="Week 1: Observing the Phenomenon"
+# Week 1: Observing the Phenomenon
+
+**Goal:** Establish that plants build mass from air and light, not soil.
+
+## Lessons
+- Day 1: Anchoring phenomenon. Show a time lapse of a seedling growing in a
+  sealed jar. Ask: where does the new mass come from?
+- Day 2: Van Helmont's willow tree experiment (1648). Read and discuss.
+- Day 3: Priestley's mouse and mint experiments. Introduce gas exchange.
+- Day 4: Lab. Float baking soda treated leaf disks under a lamp, measure rise time.
+- Day 5: Claim, Evidence, Reasoning writeup of the leaf disk results.
+
+## Vocabulary
+autotroph, biomass, gas exchange, control variable
+
+> Misconception to confront: "Plants get their food from the soil." They do not.
+> Soil provides water and minerals; the carbon comes from atmospheric CO2.
+
+@plane z=1 label="Week 2: Reactants and Products"
+# Week 2: Reactants and Products
+
+**Goal:** Write and balance the overall photosynthesis equation.
+
+## The balanced equation
+```
+6 CO2  +  6 H2O  --light-->  C6H12O6  +  6 O2
+```
+
+## Lessons
+- Day 1: Identify reactants and products from Week 1 evidence.
+- Day 2: Balance the equation; count atoms on each side.
+- Day 3: Compare to cellular respiration (the near reverse reaction).
+- Day 4: Lab. Elodea sprig in water, count oxygen bubbles vs. light distance.
+- Day 5: Graph bubble rate against light intensity; describe the trend.
+
+| Substance | Role     | Source       |
+|-----------|----------|--------------|
+| CO2       | reactant | air          |
+| H2O       | reactant | soil / roots |
+| Glucose   | product  | stored sugar |
+| O2        | product  | released gas |
+
+@plane z=2 label="Week 3: The Light-Dependent Reactions"
+# Week 3: The Light-Dependent Reactions
+
+**Goal:** Trace how light energy becomes chemical energy (ATP and NADPH).
+
+## Lessons
+- Day 1: Chloroplast structure. Thylakoid membranes and the stroma.
+- Day 2: Chlorophyll and absorption spectra; why leaves are green.
+- Day 3: Photosystems II and I, the electron transport chain, water splitting.
+- Day 4: Lab. Paper chromatography of leaf pigments.
+- Day 5: Diagram the light reactions; label where O2 is released.
+
+Inputs: light, H2O. Outputs: ATP, NADPH, O2. The glucose itself is not made
+here. That happens next week in [[z=3]].
+
+@plane z=3 label="Week 4: The Calvin Cycle"
+# Week 4: The Calvin Cycle
+
+**Goal:** Explain how CO2 is fixed into sugar using ATP and NADPH.
+
+## Lessons
+- Day 1: Carbon fixation; the enzyme RuBisCO joins CO2 to RuBP.
+- Day 2: Reduction phase; ATP and NADPH from [[z=2|the light reactions]] do work.
+- Day 3: Regeneration of RuBP; why the cycle must turn many times per glucose.
+- Day 4: Modeling activity with paper carbon atoms tracking three turns.
+- Day 5: Stomata, transpiration, and limiting factors review.
+
+> Key point: the Calvin cycle does not require light directly, but it depends on
+> products the light reactions make, so it stops in the dark.
+
+@plane z=4 label="Week 5: Assessment and Synthesis"
+# Week 5: Assessment and Synthesis
+
+**Goal:** Demonstrate understanding across the whole pathway.
+
+## Lessons
+- Day 1: Concept map linking light reactions and the Calvin cycle.
+- Day 2: Design a controlled experiment on a limiting factor of your choice.
+- Day 3: Peer review of experiment designs.
+- Day 4: Unit exam (equation, structures, energy flow, data interpretation).
+- Day 5: Reflection and connection to global carbon and oxygen cycles.
+
+## Exam blueprint
+- 30% vocabulary and structures
+- 30% the balanced equation and energy flow
+- 40% data analysis and experimental design

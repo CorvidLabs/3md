@@ -1,0 +1,138 @@
+---
+3md: 1.0
+axis: frame
+title: ASCII Loading Spinner
+designer: CorvidLabs Motion
+fps: "8"
+loop: "true"
+glyphset: box drawing
+---
+An ASCII loading animation, one frame per plane. A wedge of light sweeps
+clockwise around a ring while a progress bar fills and a label cycles.
+Play the Z axis as frames at 8 fps for a smooth loop. The grid frame is a
+constant 11 wide by 7 tall so the ring stays centered across all frames.
+
+@plane z=0 label="frame 0 - 0 percent" progress="0"
+# Frame 0
+
+The wedge points up. Bar empty.
+
+```
+....###....
+..##...##..
+.#..^^^..#.
+.#.<....>.#
+.#.......#.
+..##...##..
+....###....
+```
+
+`LOADING    [          ] 0%`
+
+Next: [[z=1|frame 1]].
+
+@plane z=1 label="frame 1 - 12 percent" progress="12"
+# Frame 1
+
+Wedge sweeps to upper right.
+
+```
+....###....
+..##...##>>
+.#.....>>>#
+.#......>.#
+.#.......#.
+..##...##..
+....###....
+```
+
+`LOADING.   [#         ] 12%`
+
+@plane z=2 label="frame 2 - 25 percent" progress="25"
+# Frame 2
+
+Wedge points right.
+
+```
+....###....
+..##...##..
+.#.......>>
+.#......>>>
+.#.......>>
+..##...##..
+....###....
+```
+
+`LOADING..  [##        ] 25%`
+
+@plane z=3 label="frame 3 - 50 percent" progress="50"
+# Frame 3
+
+Wedge sweeps to lower right.
+
+```
+....###....
+..##...##..
+.#.......#.
+.#......>.#
+.#.....>>>#
+..##...##>>
+....###....
+```
+
+`LOADING... [#####     ] 50%`
+
+Halfway. Onward to [[z=4|frame 4]].
+
+@plane z=4 label="frame 4 - 75 percent" progress="75"
+# Frame 4
+
+Wedge points down.
+
+```
+....###....
+..##...##..
+.#.......#.
+.#.......#.
+.#..vvv..#.
+..##vvv##..
+....###....
+```
+
+`LOADING    [#######   ] 75%`
+
+@plane z=5 label="frame 5 - 88 percent" progress="88"
+# Frame 5
+
+Wedge sweeps to lower left.
+
+```
+....###....
+..##...##..
+.#.......#.
+.#.<.....#.
+#<<<.....#.
+<<##...##..
+....###....
+```
+
+`LOADING.   [######### ] 88%`
+
+@plane z=6 label="frame 6 - 100 percent" progress="100"
+# Frame 6
+
+Wedge points left, bar full. Loop completes.
+
+```
+....###....
+..##...##..
+<<.......#.
+<<<......#.
+<<.......#.
+..##...##..
+....###....
+```
+
+`DONE       [##########] 100%`
+
+The loop restarts at [[z=0|frame 0]].

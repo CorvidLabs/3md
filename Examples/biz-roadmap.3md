@@ -1,0 +1,59 @@
+---
+3md: 1.0
+axis: time
+title: Product Roadmap 2026
+product: Helio Analytics
+pm: Tomas Reyes
+confidence: directional
+---
+Quarterly product roadmap. Each plane is a quarter with themes, shipping items,
+and dependencies. Later quarters are lower confidence.
+
+@plane z=0 label="Q1 Shipped"
+# Q1 2026 (Shipped)
+
+Theme: Self-serve onboarding.
+
+- [x] Guided setup wizard
+- [x] Sample dashboard templates
+- [x] In-app product tour
+- [x] SSO via Google and Okta
+
+Foundation for [[z=1|Q2 collaboration features]].
+
+@plane z=1 label="Q2 In Progress"
+# Q2 2026 (In Progress)
+
+Theme: Team collaboration.
+
+- [x] Shared workspaces
+- [~] Comment threads on charts
+- [~] Role-based permissions
+- [ ] Scheduled report email digests
+
+Depends on the permissions model; feeds [[z=2|Q3 enterprise work]].
+
+@plane z=2 label="Q3 Planned"
+# Q3 2026 (Planned)
+
+Theme: Enterprise readiness.
+
+- [ ] Audit logs
+- [ ] SCIM user provisioning
+- [ ] Data residency (EU region)
+- [ ] Custom SLAs and support tiers
+
+Requires RBAC from [[z=1|Q2]] to be complete.
+
+@plane z=3 label="Q4 Exploring"
+# Q4 2026 (Exploring)
+
+Theme: Intelligence layer.
+
+- [ ] Anomaly detection alerts
+- [ ] Natural-language query
+- [ ] Predictive forecasting widget
+- [ ] Public metrics API (v1)
+
+Lower confidence. Scope depends on adoption of the [[z=0|self-serve onboarding]]
+funnel and capacity freed up after Q3.

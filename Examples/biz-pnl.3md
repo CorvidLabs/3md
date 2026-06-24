@@ -1,0 +1,81 @@
+---
+3md: 1.0
+axis: time
+title: Q2 Profit and Loss
+company: Helio Software
+period: 2026-Q2
+currency: USD
+basis: accrual
+prepared_by: Priya Shah (CFO)
+---
+Monthly profit and loss for the second quarter, one plane per month, with a
+quarter rollup at the end. All figures in USD, accrual basis.
+
+@plane z=0 label="April 2026"
+# April P&L
+
+| Line | Amount |
+| --- | --- |
+| Revenue | $612,000 |
+| COGS | -$153,000 |
+| Gross profit | $459,000 |
+| Sales and marketing | -$210,000 |
+| R and D | -$165,000 |
+| G and A | -$98,000 |
+| Operating income | -$14,000 |
+
+Net margin: -2.3%. Trend continues in [[z=1|May]].
+
+@plane z=1 label="May 2026"
+# May P&L
+
+| Line | Amount |
+| --- | --- |
+| Revenue | $668,000 |
+| COGS | -$160,000 |
+| Gross profit | $508,000 |
+| Sales and marketing | -$215,000 |
+| R and D | -$168,000 |
+| G and A | -$99,000 |
+| Operating income | $26,000 |
+
+Net margin: 3.9%. First positive month. Compare to [[z=0|April]].
+
+@plane z=2 label="June 2026"
+# June P&L
+
+| Line | Amount |
+| --- | --- |
+| Revenue | $731,000 |
+| COGS | -$168,000 |
+| Gross profit | $563,000 |
+| Sales and marketing | -$222,000 |
+| R and D | -$171,000 |
+| G and A | -$101,000 |
+| Operating income | $69,000 |
+
+Net margin: 9.4%. See the full quarter in [[z=3|the Q2 rollup]].
+
+@plane z=3 label="Q2 Rollup"
+# Q2 2026 Total
+
+```
+op income
+ 70k |                    *
+ 40k |
+ 10k |          *
+-10k |  *
+     +----+----+----+
+       Apr  May  Jun
+```
+
+| Line | Amount |
+| --- | --- |
+| Revenue | $2,011,000 |
+| COGS | -$481,000 |
+| Gross profit | $1,530,000 |
+| Operating expenses | -$1,449,000 |
+| Operating income | $81,000 |
+
+Gross margin: 76.1%. Quarter turned profitable. Started the quarter at a loss in
+[[z=0|April]].

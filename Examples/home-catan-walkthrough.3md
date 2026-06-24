@@ -1,0 +1,96 @@
+---
+3md: 1.0
+axis: step
+title: Catan First-Game Walkthrough
+players: 3 to 4
+play_time: 60 to 90 minutes
+goal: first to 10 victory points
+edition: base game
+---
+A step-by-step rules walkthrough for teaching Catan to new players. Each plane is
+a phase of learning and playing. Read straight through for a first game. The
+turn loop you will repeat lives at [[z=3|the turn sequence]].
+
+@plane z=0 label="Setup the board"
+# Step 1: Set Up the Board
+
+1. Arrange the 19 terrain hexes (random or the beginner layout).
+2. Place the number tokens on the hexes (skip the desert; it gets the robber).
+3. Put the **robber** on the desert hex.
+4. Surround the board with the sea frame containing the harbor pieces.
+5. Sort resource cards into 5 supply stacks: brick, wood, sheep, wheat, ore.
+6. Shuffle development cards into a face-down deck.
+
+Each player picks a color and takes 5 settlements, 4 cities, 15 roads. Next, the
+opening placement at [[z=1]].
+
+@plane z=1 label="Opening placement"
+# Step 2: Initial Placement (the snake draft)
+
+Placement goes in two rounds, snake order (last player places twice in a row).
+
+- **Round 1:** each player places 1 settlement + 1 connected road.
+- **Round 2 (reverse order):** each places a 2nd settlement + road.
+- For the **second** settlement, collect one resource from each adjacent hex to start your hand.
+
+Tips for new players:
+
+- Aim for high-probability numbers (6 and 8 are best, then 5 and 9).
+- Cover a variety of resources; you need brick and wood early for roads.
+- Settlements must be at least two intersections apart.
+
+Now learn what the numbers mean at [[z=2]].
+
+@plane z=2 label="Resources and the dice"
+# Step 3: Resources, Dice, and the Robber
+
+```
+  number token odds (two dice):
+   2  3  4  5  6  7  8  9 10 11 12
+   *  ** *** **** ***** -- ***** **** *** ** *
+                       (7 = robber)
+```
+
+- Roll two dice each turn. Every hex with that number produces 1 resource to each
+  player who has a settlement (1 card) or city (2 cards) touching it.
+- **Rolling a 7:** no one produces. Anyone holding more than 7 cards discards
+  half. The roller moves the robber to a new hex and steals 1 random card from a
+  player there. The robbed hex produces nothing until the robber moves.
+
+With production understood, run the full turn at [[z=3]].
+
+@plane z=3 label="A turn step by step"
+# Step 4: The Turn Sequence (repeat each turn)
+
+1. **Roll** the dice. Everyone collects production (or resolve a 7).
+2. **Trade.** Trade resources with other players, or with the bank at 4:1 (or
+   2:1 / 3:1 at a matching harbor).
+3. **Build / buy.** Spend resources in any order:
+
+| Build       | Cost                                   |
+| ----------- | -------------------------------------- |
+| Road        | 1 brick + 1 wood                       |
+| Settlement  | 1 brick + 1 wood + 1 sheep + 1 wheat   |
+| City        | 3 ore + 2 wheat (upgrades a settlement)|
+| Dev card    | 1 ore + 1 sheep + 1 wheat              |
+
+4. **Pass** to the next player.
+
+Keep looping this until someone can win, scored at [[z=4]].
+
+@plane z=4 label="Winning the game"
+# Step 5: Victory Points and Winning
+
+Tally points (some kept hidden):
+
+| Source                | Points |
+| --------------------- | ------ |
+| Each settlement       | 1      |
+| Each city             | 2      |
+| Longest Road (5+)     | 2      |
+| Largest Army (3+ knights) | 2  |
+| Victory Point dev card| 1 (hidden) |
+
+The first player to reach **10 victory points on their own turn** declares and
+wins immediately. If no one has won, take another turn back at [[z=3|the turn
+sequence]].

@@ -1,0 +1,87 @@
+---
+3md: 1.0
+axis: layer
+title: Corvid Design System - Layer Stack
+team: CorvidLabs Design
+version: "2.0"
+basis: 8px spatial grid
+---
+A design system documented as a stack of layers. Each plane is one layer of
+the system, from the spatial grid at the bottom up through color, type, and the
+finished components. Toggle layers independently in the viewer, or stack them
+to see how a component is built from the layers beneath it.
+
+@plane z=0 label="Layer 0 - Spatial Grid" unit="8px"
+# Layer 0 - Spatial Grid
+
+Everything aligns to an 8px grid. Spacing tokens are multiples of the base unit.
+The grid below shows the column and gutter rhythm of a card.
+
+```
++ . . + . . + . . + . . +
+. . . . . . . . . . . . .
+. . . . . . . . . . . . .
++ . . + . . + . . + . . +
+. . . . . . . . . . . . .
+. . . . . . . . . . . . .
++ . . + . . + . . + . . +
+```
+
+Tokens: `space-1: 8px`, `space-2: 16px`, `space-3: 24px`, `space-4: 32px`.
+The color layer sits directly on top: see [[z=1|color]].
+
+@plane z=1 label="Layer 1 - Color" mode="light + dark"
+# Layer 1 - Color
+
+Semantic color tokens, not raw hex, are what components consume.
+
+| Token | Light | Dark | Use |
+|-------|-------|------|-----|
+| `bg.surface` | #FFFFFF | #14171C | card and sheet backgrounds |
+| `bg.subtle` | #F4F6F8 | #1C2127 | hover, zebra rows |
+| `fg.default` | #14171C | #E8ECF1 | body text |
+| `fg.muted` | #5B6470 | #9AA4B2 | captions, hints |
+| `accent` | #2E6BFF | #5C8CFF | primary actions, links |
+| `danger` | #D7263D | #FF5C6E | destructive actions |
+
+Contrast: every text-on-surface pair meets WCAG AA (4.5:1 or better).
+
+@plane z=2 label="Layer 2 - Typography" scale="1.25 major third"
+# Layer 2 - Typography
+
+A modular type scale with a 1.25 ratio, built on the 8px grid for line height.
+
+| Role | Size | Line | Weight |
+|------|------|------|--------|
+| `display` | 40px | 48px | 700 |
+| `title` | 32px | 40px | 700 |
+| `heading` | 24px | 32px | 600 |
+| `body` | 16px | 24px | 400 |
+| `caption` | 13px | 16px | 400 |
+
+Stack: system UI sans for interface, monospace for code and tokens.
+With grid, color, and type defined, components can be assembled: see [[z=3|components]].
+
+@plane z=3 label="Layer 3 - Components" depends="grid + color + type"
+# Layer 3 - Components
+
+A component is the three layers below it, composed. Here is the Button,
+specified as the sum of grid spacing, color tokens, and type roles.
+
+```
++------------------------+
+|  [  Save changes  ]    |   primary: bg=accent  fg=#FFFFFF
++------------------------+
+|  [  Cancel  ]          |   secondary: bg=bg.subtle fg=fg.default
++------------------------+
+|  [  Delete  ]          |   danger: bg=danger fg=#FFFFFF
++------------------------+
+```
+
+Button spec:
+- Padding: `space-1` vertical, `space-2` horizontal (from [[z=0|the grid]]).
+- Fill and text: from [[z=1|color]] semantic tokens.
+- Label: `body` weight 600 (from [[z=2|typography]]).
+- States: default, hover (`bg.subtle` overlay), focus (2px `accent` ring), disabled (40% opacity).
+
+Every component in the library is documented this same way: a recipe over the layers beneath it.

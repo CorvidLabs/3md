@@ -1,0 +1,74 @@
+---
+3md: 1.0
+axis: measure
+title: Ode to Joy - First Phrase
+composer: Ludwig van Beethoven
+arrangement: melody in C major, 4/4
+tempo: "120"
+clef: treble
+---
+The opening phrase of the Ode to Joy theme, one measure per plane.
+Each plane carries the notes for that measure on a small ASCII staff.
+Scrub the Z axis (measure number) to read the melody left to right.
+
+Legend: e = note head, | = barline, the five staff lines run E G B D F bottom to top.
+
+@plane z=1 label="Measure 1" notes="E E F G" lyric="Freu-de, schoe-ner"
+# Measure 1
+
+Notes: E4 E4 F4 G4 (all quarter notes)
+
+```
+-----------------
+--------------e--
+-----------e-----
+--e--e-----------
+-----------------
+```
+
+The theme begins on the third, stepping up to the dominant. Forward to [[z=2|measure 2]].
+
+@plane z=2 label="Measure 2" notes="G F E D" lyric="Goet-ter-fun-ken"
+# Measure 2
+
+Notes: G4 F4 E4 D4 (all quarter notes)
+
+```
+-----------------
+--e--------------
+-----e-----------
+--------e--------
+-----------e-----
+```
+
+The line turns and steps back down past the tonic.
+
+@plane z=3 label="Measure 3" notes="C C D E" lyric="Toch-ter aus E-"
+# Measure 3
+
+Notes: C4 C4 D4 E4 (all quarter notes)
+
+```
+-----------------
+-----------------
+-----------e-----
+--------e--------
+ee---------------
+```
+
+It settles to the tonic, then climbs again toward the third.
+
+@plane z=4 label="Measure 4" notes="E D D" lyric="-ly-si-um"
+# Measure 4
+
+Notes: E4 D4 (dotted quarter) D4 (eighth, then half) - the gentle cadence.
+
+```
+-----------------
+-----------------
+--e--------------
+-----e-----e-----
+-----------------
+```
+
+The phrase comes to rest. Back to [[z=1|the opening]] to play it again.

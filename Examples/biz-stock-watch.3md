@@ -1,0 +1,83 @@
+---
+3md: 1.0
+axis: time
+title: NVDA Weekly Watch
+ticker: NVDA
+period: May 2026
+currency: USD
+analyst: K. Rivera
+---
+Weekly close tracking for NVDA over five trading weeks. Each plane is one Friday
+close. Prices are illustrative. Start at the latest week and step back via the
+cross-plane links to compare the trend.
+
+@plane z=0 label="Week of May 1"
+# Week 1 close: $118.40
+
+| Metric | Value |
+| --- | --- |
+| Friday close | $118.40 |
+| Week change | -2.1% |
+| Volume (avg) | 41.2M |
+
+Reaction to soft guidance from a supplier. Watching the 50-day moving average at
+$120.
+
+Next: [[z=1|Week of May 8]]
+
+@plane z=1 label="Week of May 8"
+# Week 2 close: $124.95
+
+| Metric | Value |
+| --- | --- |
+| Friday close | $124.95 |
+| Week change | +5.5% |
+| Volume (avg) | 47.8M |
+
+Recovered the 50-day. Earnings preview drives buying into the print.
+
+Compare to [[z=0|opening week]] or jump ahead to [[z=4]].
+
+@plane z=2 label="Week of May 15"
+# Week 3 close: $131.20
+
+```
+close
+135 |                          *
+130 |                    *
+125 |              *
+120 |        *
+115 |  *
+    +----+----+----+----+----+
+      W0   W1   W2   W3   W4
+```
+
+| Metric | Value |
+| --- | --- |
+| Friday close | $131.20 |
+| Week change | +5.0% |
+| Volume (avg) | 52.1M |
+
+Breakout above resistance. Earnings beat consensus by 9%.
+
+@plane z=3 label="Week of May 22"
+# Week 4 close: $129.05
+
+| Metric | Value |
+| --- | --- |
+| Friday close | $129.05 |
+| Week change | -1.6% |
+| Volume (avg) | 38.4M |
+
+Consolidation after the run. Low volume suggests a pause, not a reversal.
+
+@plane z=4 label="Week of May 29"
+# Week 5 close: $136.70
+
+| Metric | Value |
+| --- | --- |
+| Friday close | $136.70 |
+| Week change | +5.9% |
+| Volume (avg) | 49.0M |
+
+New monthly high. Month-over-month gain of 15.4% from [[z=0|the first close]].

@@ -1,0 +1,96 @@
+---
+3md: 1.0
+axis: row
+title: Diagonal Garter Dishcloth
+yarn: worsted cotton, approx 50g
+needles: US 7 (4.5 mm)
+gauge: not critical
+abbreviations: k = knit, yo = yarn over, k2tog = knit two together, st = stitch
+---
+A classic corner-to-corner garter dishcloth. You increase one stitch each row
+until the diagonal is wide enough, then decrease back down to a corner. Stitch
+grids below: `|` = a garter stitch, `O` = the yarn-over eyelet edge.
+
+@plane z=0 label="Cast on and setup"
+# Setup
+
+Cast on **4 stitches**. This is the bottom corner.
+
+```
+start corner:  | | | |   (4 st)
+```
+
+Knit one plain row to set up. Then move to the increase phase at [[z=1]].
+
+@plane z=1 label="Increase rows"
+# Increase Section (repeat until 44 st)
+
+Work this single increase row over and over:
+
+> **k2, yo, k to end.**
+
+The `yo` makes the eyelet border and adds one stitch per row.
+
+```
+row  6:  O | | | | |        (6 st)
+row 10:  O | | | | | | | |  (10 st)
+row 20:  O | | | | | ...    (20 st)
+```
+
+- Keep going until you have **44 stitches** on the needle.
+- The piece is now a growing triangle. The yarn-over edge is always on the same side.
+
+When you hit 44 st, switch to the turning row at [[z=2|the center turn]].
+
+@plane z=2 label="Center turn"
+# Center Turning Row
+
+This is the widest point, the diagonal corner-to-corner line.
+
+> Turning row: **k1, k2tog, yo, k2tog, k to end.**
+
+This row both increases (the yo) and decreases twice, so the count drops by one.
+After this row you should have **43 stitches**.
+
+```
+center line:  O | | | | | | ... | |   (widest)
+```
+
+Now the triangle starts shrinking. Continue to decreases at [[z=3]].
+
+@plane z=3 label="Decrease rows"
+# Decrease Section (repeat until 6 st)
+
+Work this decrease row repeatedly:
+
+> **k1, k2tog, yo, k2tog, k to end.**
+
+You still make a yo (to keep the eyelet edge matching) but the double decrease
+shrinks the row by one stitch each time.
+
+```
+row -10:  O | | | | | ...   (30 st)
+row -20:  O | | | | |       (16 st)
+row -30:  O | | |           (6 st)
+```
+
+Continue until **6 stitches** remain. Then finish at [[z=4|bind off]].
+
+@plane z=4 label="Bind off and finish"
+# Finishing
+
+1. Last row: **k1, k2tog, k2tog, k1** to bring it down to **4 stitches**.
+2. Bind off all 4 stitches.
+3. Cut the yarn leaving a 15 cm tail.
+4. Weave in both tails (cast-on and bind-off) with a tapestry needle.
+
+```
+finished square (schematic):
+  +---------+
+  | / / / / |   garter ridges run on the diagonal
+  | / / / / |
+  +---------+
+```
+
+You now have a square dishcloth. To make another size, just change the target
+stitch count in [[z=1|the increase section]] (more stitches = bigger cloth).
