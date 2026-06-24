@@ -176,16 +176,22 @@ const STYLES = `
    the slider, arrows, and keyboard; the body scrolls with wheel or touch. */
 .plane.reader {
   top: 50%; left: 50%; transform: translate(-50%, -50%);
-  width: auto; max-width: var(--three-md-plane-width, 560px);
+  width: auto; max-width: min(var(--three-md-plane-width, 560px), 100%);
   margin: 0; height: auto; max-height: 100%; overflow-y: auto; overscroll-behavior: contain;
   touch-action: pan-y; -webkit-overflow-scrolling: touch; cursor: auto;
+}
+/* Flipbook frame (animations): centered, fit to the stage, instant swap. */
+.plane.frame {
+  top: 50%; left: 50%; transform: translate(-50%, -50%);
+  width: auto; max-width: min(var(--three-md-plane-width, 560px), 100%);
+  margin: 0; max-height: 100%; overflow: auto; transition: none;
 }
 .ptag { font-size: 10.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--three-md-accent); display: flex; justify-content: space-between; margin-bottom: 8px; }
 .ptag b { color: var(--three-md-text); font-weight: 700; }
 .md, .grid { font-size: 12.5px; line-height: 1.65; color: var(--three-md-muted); }
 .md .ph { font-family: var(--three-md-display, inherit); font-weight: 700; font-size: 16px; margin: 2px 0 8px; color: var(--three-md-text); }
 .md .ph2 { font-weight: 700; font-size: 13px; margin: 6px 0 6px; color: var(--three-md-text); }
-.md .code { margin: 6px 0; padding: 8px 10px; background: var(--three-md-hairline); border-radius: 4px; font-size: 11.5px; line-height: 1.5; white-space: pre; overflow-x: auto; color: var(--three-md-text); }
+.md .code { margin: 6px 0; padding: 8px 10px; background: var(--three-md-hairline); border-radius: 4px; font-size: 11.5px; line-height: 1.5; white-space: pre; overflow-x: auto; max-width: 100%; color: var(--three-md-text); }
 .md .li { display: flex; gap: 8px; }
 .md .box { color: var(--three-md-accent); }
 .md .done { color: var(--three-md-faint); text-decoration: line-through; }
@@ -193,7 +199,7 @@ const STYLES = `
 .md strong { color: var(--three-md-text); font-weight: 700; }
 .md em { font-style: italic; }
 .md code { font-family: inherit; background: var(--three-md-hairline); padding: 1px 5px; border-radius: 3px; color: var(--three-md-text); }
-.grid { font-size: 16px; line-height: 1.25; letter-spacing: 3px; color: var(--three-md-faint); white-space: pre; }
+.grid { font-size: 16px; line-height: 1.25; letter-spacing: 3px; color: var(--three-md-faint); white-space: pre; max-width: 100%; overflow-x: auto; }
 .grid .dot { color: var(--three-md-accent); }
 .voxel { position: absolute; left: 50%; top: 50%; width: 8px; height: 8px; margin: -4px 0 0 -4px;
   border-radius: 50%; background: var(--three-md-accent); opacity: .45;
@@ -389,7 +395,8 @@ export class ThreeMDElement extends HTMLElement {
     this._lastEmitted = -1;
     this._buildPlanes();
     this.render();
-    if (this.hasAttribute("autoplay")) this._startPlay();
+    // Animations (flipbook/play) auto-run; so does an explicit autoplay attribute.
+    if (this.hasAttribute("autoplay") || this._mode === "play") this._startPlay();
   }
 
   // Mode precedence: the `mode` attribute (an explicit override the viewer sets)
@@ -725,6 +732,24 @@ export class ThreeMDElement extends HTMLElement {
       return;
     }
 
+    // Flipbook view (animations): only the current frame, shown flat and swapped
+    // instantly in place, like a flipbook. No fanned deck, no perspective skew.
+    if (m === "play") {
+      this._els.forEach((el, idx) => {
+        const on = idx === fr;
+        el.style.transform = on ? "" : "translate3d(0px,0px,0px)";
+        el.style.opacity = on ? "1" : "0";
+        el.style.zIndex = on ? "10" : "0";
+        el.classList.toggle("frame", on); // centered, instant, fit-to-stage
+        el.classList.toggle("hot", false);
+        el.classList.toggle("dim", false);
+      });
+      this._scene.style.transform = "translateZ(0px)";
+      this._updateReadout();
+      this._maybeEmit(fr);
+      return;
+    }
+
     const n = this._els.length;
 
     this._els.forEach((el, idx) => {
@@ -733,9 +758,6 @@ export class ThreeMDElement extends HTMLElement {
       if (m === "stack") {
         z = -Math.abs(d) * 160; y = d * 26; x = d * 30;
         if (idx === fr) { s = 1.05; hot = true; }
-      } else if (m === "play") {
-        z = -Math.abs(d) * 160; y = d * 26; x = d * 30;
-        if (idx === fr) { s = 1.06; hot = true; } else dim = true;
       } else if (m === "layers") {
         z = -Math.abs(d) * 120; y = d * 30; x = d * 34;
         if (idx === fr) { s = 1.04; hot = true; }
