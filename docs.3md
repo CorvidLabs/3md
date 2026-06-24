@@ -1,0 +1,1477 @@
+---
+3md: 1.0
+axis: doc
+title: 3md Project Documentation
+note: every Markdown doc in the repo, combined into one navigable 3md file
+generated: regenerate with scripts/build-docs-3md.mjs - edit the source docs, not this
+---
+The whole documentation set as a single 3md document: each plane is one of the
+repo's docs. Scrub the Z axis to move between them. This is 3md used on itself.
+
+@plane z=0 label="README" file="README.md"
+# 3md
+
+[![CI](https://github.com/CorvidLabs/3md/actions/workflows/trust.yml/badge.svg)](https://github.com/CorvidLabs/3md/actions/workflows/trust.yml)
+[![Release](https://img.shields.io/github/v/release/CorvidLabs/3md?sort=semver)](https://github.com/CorvidLabs/3md/releases)
+[![License: MIT](https://img.shields.io/github/license/CorvidLabs/3md)](LICENSE)
+[![Live demo](https://img.shields.io/badge/demo-live-0E6F66)](https://corvidlabs.github.io/3md/)
+
+**Markdown with a Z axis.** A `.3md` file is ordinary Markdown extended along
+one free axis: stack your content into **planes** and tell the reader what the
+depth means. Time for a daily planner. Frames for an animation. Layers for
+annotations. Space for a scene.
+
+**[Try the interactive demo](https://corvidlabs.github.io/3md/)** (also on
+[corvidlabs.xyz/3md](https://corvidlabs.xyz/3md/)), open the
+**[viewer &amp; editor](https://corvidlabs.github.io/3md/viewer.html)** (paste any
+`.3md` and share a link), read the
+**[docs](https://corvidlabs.github.io/3md/docs.html)**, or
+**[browse 171 examples](https://corvidlabs.github.io/3md/gallery.html)** in the
+gallery (all of [`Examples/`](Examples), rendered live).
+
+This repo eats its own dog food: every doc here is also combined into one
+[`docs.3md`](docs.3md) (each Markdown file is a plane). GitHub can't preview
+`.3md` natively, so **[open all the docs in the 3md viewer](https://corvidlabs.github.io/3md/viewer.html?src=docs.3md)**
+and scrub through them.
+
+<p align="center">
+  <a href="https://corvidlabs.github.io/3md/"><img src="docs/demo.png" alt="The 3md interactive demo: planes stacked along the Z axis with a synced source view" width="760"></a>
+</p>
+
+```
+---
+3md: 0.1
+axis: time
+title: My Week
+---
+@plane z=0 label="Monday"
+# Monday
+- [ ] Standup
+
+@plane z=1 label="Tuesday"
+# Tuesday
+```
+
+This repository holds the format specification ([SPEC.md](SPEC.md)), example
+documents ([Examples/](Examples)), three parsers kept in lockstep (`ThreeMD`, a
+cross-platform Swift parser; a TypeScript port in [`js/`](js); and a Rust crate
+in [`rust/`](rust)), and a shared cross-implementation conformance suite
+([conformance/](conformance)) that all three pass.
+
+## Why
+
+Markdown is two dimensional. Plenty of documents are not: a planner moves
+through time, an annotated contract has overlay layers, an ASCII animation is a
+stack of frames. 3md keeps Markdown's plain-text simplicity and adds one axis,
+with the author declaring what that axis means. Nothing comparable ships today;
+the closest prior art renders existing Markdown into 3D rather than giving the
+text a depth dimension of its own.
+
+## Installation
+
+### Swift Package Manager
+
+Add the package to your `Package.swift`:
+
+```swift
+.package(url: "https://github.com/CorvidLabs/3md", from: "1.0.0")
+```
+
+Then depend on the `ThreeMD` library product:
+
+```swift
+.product(name: "ThreeMD", package: "3md")
+```
+
+### JavaScript / TypeScript
+
+A faithful TypeScript port of the Swift parser is published to GitHub Packages,
+alongside the [`<three-md>` web component](element/) (`@corvidlabs/three-md-element`).
+All three implementations (Swift, TypeScript, and the Rust crate in [`rust/`](rust))
+are kept in sync by the shared conformance suite ([conformance/](conformance)).
+
+GitHub Packages requires a GitHub token to install (even for public packages),
+so point the `@corvidlabs` scope at the registry and add a token in a project or
+user `.npmrc`, then install:
+
+```bash
+echo "@corvidlabs:registry=https://npm.pkg.github.com" >> .npmrc
+echo "//npm.pkg.github.com/:_authToken=YOUR_GITHUB_TOKEN" >> .npmrc
+bun add @corvidlabs/threemd
+```
+
+No install needed just to use it: try the hosted [editor and
+viewer](https://corvidlabs.github.io/3md/viewer.html), or load the self-contained
+component bundle directly with `<script type="module" src=".../three-md.js">`.
+
+```ts
+import { parse, serialize } from "@corvidlabs/threemd";
+
+const document = parse(source);
+console.log(document.axis); // "time"
+
+// Round trips back to text:
+const text = serialize(document);
+```
+
+### Rust
+
+The [`threemd`](https://crates.io/crates/threemd) crate is published on crates.io
+with zero runtime dependencies:
+
+```bash
+cargo add threemd
+```
+
+```rust
+let document = threemd::parse(source)?;
+println!("{}", document.axis); // "time"
+```
+
+## Library usage
+
+```swift
+import ThreeMD
+
+let document = try Parser().parse(source)
+print(document.axis)          // Axis(rawValue: "time")
+for plane in document.planesByZ {
+    print(plane.label ?? "", plane.body)
+}
+
+// Round trips back to text:
+let text = Serializer().render(document)
+```
+
+## Command-line tool
+
+The `threemd` CLI ships with the package and self-documents (run `threemd
+--help`). A path of `-` reads from standard input.
+
+```bash
+swift run threemd validate <file>   # parse a file; print "ok" or exit non-zero with the error
+swift run threemd info <file>       # print version, axis, title, and each plane's position
+swift run threemd html <file>       # render the document to HTML on stdout
+```
+
+## Format at a glance
+
+- A required `---` frontmatter block declares `3md:` (the version, and the file's
+  magic marker), an optional `axis:`, an optional `title:`, and free metadata.
+- `@plane z=... label="..."` directives start planes; the Markdown between
+  directives is the plane body.
+- A plain Markdown file with a 3md header and no directives is a valid one-plane
+  document.
+
+See [SPEC.md](SPEC.md) for the full grammar and conformance rules.
+
+## Examples
+
+The [Examples/](Examples) directory holds all 171 example documents across 13
+axis types - from medical charts, weather, and file transfers to games, maps,
+and animations. Browse them all live in the
+[gallery viewer](https://corvidlabs.github.io/3md/gallery.html); a few highlights:
+
+- [`daily-planner.3md`](Examples/daily-planner.3md) - `axis: time`, one plane per day.
+- [`animation.3md`](Examples/animation.3md) - `axis: frame`, one plane per frame.
+- [`layered-notes.3md`](Examples/layered-notes.3md) - `axis: layer`, stacked overlay layers.
+- [`dungeon.3md`](Examples/dungeon.3md) - `axis: space`, rooms wired with `[[z=N]]` cross-plane links.
+- [`tide-pool.3md`](Examples/tide-pool.3md) - `axis: depth`, authored by an AI from the spec alone (see [docs/PROOF.md](docs/PROOF.md)).
+- [`game-of-life.3md`](Examples/game-of-life.3md) - `axis: frame`, a real 24-generation Conway run (animates, and renders as a 3D object in the viewer's blend view).
+- [`3md-in-3md.3md`](Examples/3md-in-3md.3md) - 3md explained in 3md, with a `@plane` inside a code fence.
+- Plus `recipe`, `changelog`, `resume`, and `kanban`.
+
+Want to see it work? [docs/PROOF.md](docs/PROOF.md) records how 3md was verified
+for machines (a blind AI authored valid 3md from the spec; all three parsers
+agreed) and for people (plain, readable, diffable text).
+
+## Development
+
+This repo uses the CorvidLabs trust toolchain. The single gate is:
+
+```bash
+fledge lanes run verify
+```
+
+which runs the Swift format check, build, and tests plus the Rust crate. See
+[AGENTS.md](AGENTS.md) for the standing rules every contributor and agent follows.
+
+Each implementation has its own tests (the Swift suite has 122 tests, the
+TypeScript suite 76), and all three implementations run the shared 43-vector
+conformance suite in [conformance/](conformance), which is the
+cross-implementation contract that keeps the parsers behaving identically.
+
+## Status
+
+The format and spec are at version 1.0 (stable, frozen grammar). The latest
+release is v1.0.0. Older `3md: 0.1` documents remain valid: the parser is
+version-lenient and never rejects a document by its version string.
+
+## License
+
+MIT (c) CorvidLabs. See [LICENSE](LICENSE).
+
+@plane z=1 label="SPEC" file="SPEC.md"
+# 3md Format Specification
+
+Version: 1.0
+Status: stable (frozen grammar)
+File extension: `.3md`
+Media type (proposed): `text/3md`
+
+This document defines version 1.0 of the 3md format. The `3md:` key inside a
+document's frontmatter declares which format version that document targets. See
+section 9 (Stability) for the compatibility guarantees that version 1.0 makes.
+
+### Format version and back-compatibility
+
+The `3md:` frontmatter value identifies the format version a document was
+authored against. It is a free string. A conforming parser records this value
+and exposes it, but it does NOT reject a document on the basis of the version
+string: the parser is version-lenient by design. Any version string is accepted,
+and older markers stay valid. A document written as `3md: 0.1` continues to parse
+exactly as it did before, so all existing 0.1 documents remain valid 1.0-era
+files. The only hard requirement is that the `3md` key be present (it is the
+file's magic marker); its value is never validated against a known set.
+
+## 1. Overview
+
+3md is Markdown extended along a single free axis, called the Z axis. An
+ordinary Markdown document is two dimensional: characters flow left to right and
+blocks flow top to bottom. 3md adds depth: a document is a stack of **planes**,
+and each plane is ordinary Markdown.
+
+The author declares what the Z axis means. It can be:
+
+- **time**: a planner, an agenda, a timeline, a changelog
+- **depth**: foreground to background stacking
+- **layer**: independently toggled overlays (source, translation, annotations)
+- **frame**: animation frames played back in order
+- **space**: a literal coordinate for scene authoring
+
+The axis label is just metadata. Tools render it; the format does not constrain
+what it means.
+
+## 2. Document structure
+
+A 3md document is UTF-8 text with three regions, in order:
+
+1. A required **frontmatter** block.
+2. An optional **preamble** of Markdown.
+3. Zero or more **planes**.
+
+```
+---
+3md: 1.0
+axis: time
+title: My Week
+---
+Optional preamble Markdown.
+
+@plane z=0 label="Monday"
+# Monday
+- [ ] Standup
+
+@plane z=1 label="Tuesday"
+# Tuesday
+```
+
+## 3. Frontmatter
+
+The document MUST begin with a frontmatter block: a line containing exactly
+`---`, one or more `key: value` lines, and a closing line containing exactly
+`---`. Leading blank lines before the opening fence are allowed.
+
+### 3.1 The 3md frontmatter mini-format
+
+The frontmatter is its own small, flat, line-based key/value format, named here
+the **3md frontmatter** mini-format. It is NOT YAML. It only resembles YAML on
+the surface; do not feed it to a YAML parser and do not expect YAML semantics.
+The grammar is deliberately tiny and is defined exactly as follows:
+
+- Each non-ignored line is a single `key: value` pair, split on the FIRST colon
+  on the line. Everything before that colon is the key, everything after it is
+  the value. A line with no colon is invalid frontmatter.
+- The key is trimmed of surrounding whitespace. The value is trimmed of
+  surrounding whitespace before quote handling (see below).
+- The `3md`, `axis`, and `title` keys are RESERVED and are matched
+  case-insensitively (so `3MD`, `Axis`, and `TITLE` are recognized as the
+  reserved keys).
+- Every other key is preserved verbatim (its original casing and spelling are
+  kept), and its value is ALWAYS a string. Non-reserved values are never coerced
+  to numbers, booleans, dates, or any other type.
+- Duplicate keys are last-wins: if a key appears more than once, the final
+  occurrence in source order is the value that is used.
+- Blank lines and lines whose first non-whitespace character is `#` are ignored.
+  A `#` line is a comment; it is not a key/value pair.
+- A value MAY be wrapped in a matching pair of single (`'`) or double (`"`)
+  quotes. When it is, the outer quotes are stripped. Inside such a quoted value,
+  `\\` is unescaped to a single backslash and `\"` is unescaped to a double
+  quote. An unquoted value is taken verbatim.
+
+Non-goals (it only looks like YAML): there is no nesting, no mappings within a
+value, no lists or sequences, no anchors or aliases or references, and no
+multi-line scalars (every pair lives on exactly one line). The format is flat by
+construction.
+
+### 3.2 Reserved keys
+
+- `3md` (REQUIRED): the format version string. Its presence is the file's magic
+  marker. A document without it is not a valid 3md document. The value is
+  recorded but never validated; see the back-compatibility note in the header.
+- `axis` (OPTIONAL): the meaning of the Z axis. Defaults to `layer`. The value
+  is trimmed and lowercased; any string is permitted.
+- `title` (OPTIONAL): a human-readable title.
+- Any other key is preserved as string metadata, per section 3.1.
+
+## 4. Planes
+
+A plane begins with a directive line whose first whitespace-delimited token is
+`@plane`, followed by space-separated `key=value` attributes. Every attribute
+token MUST contain an `=` (the split is on the first `=`); attribute keys are
+lowercased. A directive MUST begin at column 0 and MUST lie outside a fenced code
+block: a `@plane` line inside a ``` or `~~~` fence, or indented as a code block,
+is body text, not a new plane. Every line after the directive, up to the next
+`@plane` directive or end of file, is that plane's Markdown body. Leading and
+trailing blank lines of a body are trimmed.
+
+### 4.1 Attributes
+
+- `z` (REQUIRED): a finite decimal number giving the plane's position on the Z
+  axis. The grammar is an optional sign, digits with an optional fraction, and an
+  optional decimal exponent (for example `0`, `-2.5`, `1e3`). Hexadecimal, `inf`,
+  and `nan` are rejected so implementations in different languages agree.
+- `x`, `y` (OPTIONAL): finite decimal numbers (same grammar as `z`) giving an
+  in-plane offset for spatial viewers.
+- `label` (OPTIONAL): a human-readable name for the plane.
+- Any other attribute is preserved as a string on the plane; values are never
+  coerced to numbers or booleans.
+
+Inside a quoted value, `\\` and `\"` are escape sequences for a literal
+backslash and a double-quote. An unterminated quote is an error. An unquoted
+value is taken verbatim.
+
+Values may be quoted; quote a value if it contains spaces. Numbers may be
+integers or decimals and may be negative.
+
+### 4.2 Rules
+
+- Two planes MUST NOT share the same `z` value.
+- Plane order in the source is preserved. Viewers MAY reorder by `z`.
+- Markdown content before the first `@plane` is the document preamble.
+
+## 5. The single-plane shorthand
+
+If a document has frontmatter but no `@plane` directives, the entire body is one
+implicit plane at `z = 0`. This means a normal Markdown file with a 3md
+frontmatter header is a valid one-plane 3md document.
+
+## 6. Errors
+
+A conforming parser MUST reject:
+
+- a document with no frontmatter block (`missingFrontmatter`)
+- a frontmatter block that is never closed (`invalidFrontmatter`)
+- a missing `3md` version key (`missingVersion`)
+- a `@plane` directive with no `z` (`missingPlanePosition`)
+- a `@plane` directive whose `z`, `x`, or `y` is not a finite decimal number,
+  that carries an attribute token with no `=`, or that has an unterminated quote
+  (`invalidPlaneDirective`)
+- two planes with the same `z` (`duplicatePlane`)
+
+## 7. Round tripping
+
+Serializing a parsed document and parsing the result MUST yield an equivalent
+document. Quoted values are escaped on the way out and unescaped on the way in,
+so values containing spaces, quotes, or backslashes round-trip exactly.
+
+A leading UTF-8 byte order mark (BOM) is ignored.
+
+## 8. Cross-plane links
+
+A plane body MAY reference another plane by its `z` position with a double-bracket
+link:
+
+```
+See [[z=2]] for the details, or jump [[z=0|back to the start]].
+```
+
+The grammar is `[[z=` followed by a finite decimal (the same grammar as the `z`
+attribute), an optional `|` and link text, then `]]`. The reference regular
+expression is `\[\[z=([^\]|]+)(?:\|([^\]]*))?\]\]`; if the captured target is not
+a finite decimal, the sequence is not a link and stays literal body text.
+
+Cross-plane links live inside Markdown bodies, so the core parser leaves them in
+the body verbatim. Implementations expose them through a separate step:
+
+- Extraction returns, in document order (planes in source order, then links
+  left to right within a body), one record per link with the source plane's `z`,
+  the target `z`, the optional text (absent is null), and whether a plane with
+  the target `z` exists in the document (`targetExists`, using the same numeric
+  equality as duplicate detection).
+- A renderer SHOULD resolve a link to an anchor whose target is the section for
+  the plane at that `z`.
+
+This makes link validation (find dangling references) and navigation portable
+across implementations, and it is pinned by the shared conformance vectors.
+
+## 9. Relation to prior art
+
+3md borrows the parts of existing formats that work and avoids the parts that
+make those formats hard to parse portably. The comparisons below explain what
+3md takes and what it deliberately leaves out.
+
+**YAML frontmatter (Jekyll, Hugo, Obsidian).** Static-site and notes tools put a
+`---` fenced YAML block at the top of a Markdown file for metadata. YAML is
+powerful but large: it has nesting, lists, anchors, typed scalars, and several
+multi-line string modes, and its edge cases differ between implementations. 3md
+keeps the familiar `---` fence and the `key: value` look, but replaces YAML with
+the flat 3md frontmatter mini-format (section 3) so every conforming parser, in
+any language, agrees on exactly what a frontmatter line means.
+
+**CommonMark generic and fenced directives (the `:::` proposal).** The directive
+proposal adds inline (`:span:`), leaf, and container (`::: name`) directives to
+Markdown, fenced by runs of colons with an attribute syntax. It is a general
+extension mechanism aimed at arbitrary custom blocks. 3md does not need a general
+container syntax: it needs exactly one concept, a plane, so it uses a single
+line-prefix directive (`@plane`) at column 0 instead of nestable colon fences,
+which keeps plane boundaries unambiguous and easy to scan.
+
+**reveal.js slide separators.** reveal.js splits a Markdown deck into slides with
+horizontal rules or configured separator strings, and into vertical stacks with a
+second separator, giving a fixed two-level slide structure. 3md generalizes that
+idea: instead of a fixed horizontal/vertical split, it offers one free Z axis
+whose meaning (time, depth, layer, frame, space) the author declares, and each
+plane carries an explicit numeric `z` rather than relying on positional order.
+
+**MDX.** MDX lets authors embed JSX components and JavaScript expressions inside
+Markdown, which makes documents expressive but couples them to a JavaScript
+toolchain and a compile step. 3md stays plain text and plain Markdown inside each
+plane: a plane body is just CommonMark, so any Markdown renderer can display it
+and no runtime is required to read the content.
+
+Rationale for 3md's choices: a single free Z axis (one new dimension, with its
+meaning chosen by the author rather than baked into the format), line-prefix
+`@plane` directives anchored at column 0 (so plane boundaries are trivially
+detectable and never ambiguous), and a flat non-YAML frontmatter (so metadata is
+portable and parses identically everywhere).
+
+## 10. Stability
+
+Version 1.0 freezes the grammar described in this document. Concretely:
+
+- The 1.0 grammar is frozen. The frontmatter mini-format, the `@plane` directive
+  and its attribute grammar, the numeric grammar for `z`/`x`/`y`, the
+  single-plane shorthand, cross-plane links, escaping, and the error set are
+  stable and will not change within the 1.x line.
+- Additive features ship in future MINOR spec versions (1.1, 1.2, and so on). A
+  minor version may introduce new optional keys, attributes, or directives, but
+  it must not invalidate any document that conforms to an earlier 1.x version.
+- Only a new MAJOR version (2.0) may break compatibility. Because parsers are
+  version-lenient (section header and section 3.2), bumping the `3md:` value does
+  not by itself change how a document parses; compatibility is a property of the
+  grammar, not of the version string.
+- The shared conformance suite is the contract. The portable test vectors, not
+  prose, are the authoritative definition of conforming behavior; any
+  implementation that passes them is conforming, and any change that would alter
+  their expected results is a breaking change.
+
+## 11. Open questions for later versions
+
+- Inline 3D model embeds, for example `@model src="scene.glb"`.
+- Transclusion across documents.
+- Per-plane transition or timing hints for `frame`/`time` axes.
+- A binary or compressed container for large scenes.
+
+@plane z=2 label="CHANGELOG" file="CHANGELOG.md"
+# Changelog
+
+## [v1.0.0] - 2026-06-23
+
+### Other
+
+- Freeze the format at 1.0 (ff8e202)
+- Fix doc drift from the verification sweep; add flagship polish (9863b7f)
+
+## [v0.6.0] - 2026-06-23
+
+### Other
+
+- Add VS Code syntax-highlighting extension (editor/vscode) (9d03371)
+- Add a Rust implementation; run all three impls in the verify lane (8eb9a73)
+- Serve the interactive demo on GitHub Pages (3aed0b3)
+
+## [v0.5.0] - 2026-06-23
+
+### Other
+
+- Add cross-plane links ([[z=N]]) in both parsers, rendered as anchors (e40038e)
+
+## [v0.4.0] - 2026-06-23
+
+### Other
+
+- Render Markdown in HTML output; wire npm publish to GitHub Packages (4d4e81b)
+- Add self-documenting example: 3md explained in 3md (d72dd0c)
+
+## [v0.3.0] - 2026-06-23
+
+### Other
+
+- Harden parser, docs, and tooling from the multi-agent review (133d14d)
+- Make web demo mobile friendly (responsive planes + touch orbit) (e17652f)
+- Harden attest: signed attestations and an enforcing policy (f2ff2d7)
+
+## [v0.2.0] - 2026-06-23
+
+### Other
+
+- Add HTML renderer, threemd CLI, TS package, and cross-language conformance (b9bd327)
+- Fix web demo source-panel highlighting (broken @plane markup) (7937526)
+
+## [v0.1.0] - 2026-06-23
+
+### Other
+
+- Fix web demo: scene z=0 fallback, scope arrow keys, honor fps (ebe937b)
+- Add interactive web demo and fill in spec companions and docs (9e1ce42)
+- Add 3md: Markdown with a Z axis, plus the CorvidLabs trust toolchain (46e4b57)
+
+@plane z=3 label="ROADMAP" file="ROADMAP.md"
+# 3md roadmap
+
+Where the format and its tooling are headed. Confidence is a rough 0 to 100 read
+on how sure we are a step is the right next move and will land cleanly.
+
+## Now (v1.0)
+
+The format is at version 1.0 (stable, frozen grammar). Shipped and verified: a
+frozen spec (SPEC.md) with a named frontmatter mini-format and a relation-to-prior-art
+section; three parsers in lockstep (Swift `ThreeMD`, TypeScript
+`@corvidlabs/threemd`, the Rust `threemd` crate) proven equivalent by a 43-vector
+conformance suite; a `threemd` CLI; an HTML renderer with Markdown rendering;
+cross-plane links; nine examples; VS Code syntax highlighting; two live demos
+(GitHub Pages and corvidlabs.xyz); MIT license; and enforcing signed attestations.
+State confidence: 93.
+
+## Done (from this roadmap)
+
+- Publish `@corvidlabs/threemd` to GitHub Packages (auto-published on release).
+- Real Markdown rendering in `threemd html`.
+- Cross-plane links (`[[z=N]]` / `[[z=N|text]]`).
+- A third implementation: the Rust crate, conformance-verified.
+- VS Code syntax-highlighting extension (`editor/vscode`, .vsix).
+- 1.0 spec freeze: named frontmatter mini-format, relation to prior art, stability guarantees.
+- Cross-browser demo tests (`uitests`, Playwright on Chromium + WebKit): a CI
+  gate asserting the interactive lab renders, the focused plane stays frontmost
+  while scrubbing, every axis tab and sampled gallery entries load, and the
+  console stays clean. Guards the Safari-only 3D depth regression that z-index
+  masks in Chromium.
+- Publish the `threemd` crate to [crates.io](https://crates.io/crates/threemd)
+  (v1.0.0, zero runtime deps), so all three implementations are installable from
+  their native registries. A `cargo-publish` workflow keeps it in sync on release.
+
+## Versioning
+
+Two independent numbers, kept distinct on purpose:
+
+- The **format version** is **1.0** and frozen. It only changes if the *grammar*
+  changes. A future **format 1.1** would mean new directives or attributes - the
+  additive proposals in [docs/PROPOSALS.md](docs/PROPOSALS.md) (per-plane timing
+  hints, `@asset`, `@include`, a container). None of those are implemented, so
+  the format is 1.0.
+- Each implementation is its own package with its own semver, all currently at
+  **1.0.0** for parity because they all implement format 1.0: the Swift package
+  (git tag v1.0.0), `@corvidlabs/threemd` (npm 1.0.0), the `threemd` crate
+  (crates.io 1.0.0), and the `<three-md>` component (`@corvidlabs/three-md-element`
+  1.0.0). A bug fix bumps a package's patch; new tooling bumps its minor;
+  neither changes the format version.
+
+## Tooling shipped on the 1.0 line
+
+These add capability without touching the frozen 1.0 grammar or the conformance
+contract.
+
+- The canonical `<three-md>` web component (`element/`,
+  `@corvidlabs/three-md-element` 1.0.0): one framework-agnostic, tested
+  interactive renderer backed by `@corvidlabs/threemd`. Replaces the bespoke
+  renderer that was duplicated between the demo and the site and drifted (the
+  Safari and Low-Power "focused plane never comes forward" bug had to be fixed
+  twice). `web/index.html` and the corvidlabs.xyz site both consume it, so the
+  demos and the shipped renderer are the same code. Tested in CI (Chromium +
+  WebKit): focused plane frontmost while scrubbing, works with
+  requestAnimationFrame paused (Low Power Mode), no horizontal overflow from
+  320px to 1440px, clean console. Closes #1.
+- Per-implementation spec-sync modules so every project (Swift, TypeScript,
+  Rust, the web component) is tracked by `fledge spec check`, not just Swift.
+
+## Next
+
+| Step | Confidence | Notes |
+|------|------------|-------|
+| Prebuilt CLI binaries for Homebrew | 65 | The tap formula builds from source (needs Xcode 15+). Shipping per-platform release binaries (as the other CorvidLabs formulae do) would make `brew install` fast and Xcode-free. |
+| VS Code Marketplace publish | 55 | The extension ships as a `.vsix` today; Marketplace + OpenVSX need a publisher account. Deferred until the format settles. |
+
+Shipped since this table was first written: the Homebrew tap (`brew install
+CorvidLabs/tap/threemd`), a static docs page (web/docs.html), the social-preview
+image, and cross-browser CI for the demos.
+
+## Later / open questions (SPEC.md section 8)
+
+Designed in [docs/PROPOSALS.md](docs/PROPOSALS.md) (non-normative; the 1.0 grammar
+is frozen and nothing there is implemented yet):
+
+- Per-plane transition or timing hints for time and frame axes (confidence 88).
+- Inline model/asset embeds (`@asset src="scene.glb"`) (confidence 70).
+- Transclusion across documents (`@include`) (confidence 52).
+- A binary or compressed container for large scenes (confidence 35).
+
+## Out of scope
+
+- Enforcing attest on the marketing site: its squash-merge, content-only flow
+  does not fit signature enforcement. It stays advisory there. Confidence ~30.
+
+@plane z=4 label="CONTRIBUTING" file="CONTRIBUTING.md"
+# Contributing to 3md
+
+Thanks for your interest. 3md is a small, plain-text format with three parsers
+kept in lockstep by a shared conformance suite. The most important rule:
+**behavior changes must land in every implementation and be pinned by a
+conformance vector.**
+
+## Layout
+
+- `Sources/ThreeMD/` - the canonical Swift parser, serializer, and HTML renderer.
+- `js/` - the TypeScript package (`@corvidlabs/threemd`).
+- `rust/` - the Rust crate (`threemd`).
+- `conformance/` - shared JSON vectors. Both `Tests/ThreeMDTests/ConformanceTests`
+  and `js/test/conformance.test.ts` and `rust/tests/conformance.rs` run them.
+- `Examples/` - sample `.3md` documents.
+- `SPEC.md` - the authoritative format specification.
+- `editor/vscode/` - the syntax-highlighting extension.
+- `web/` - the standalone interactive demo (served on GitHub Pages).
+
+## The gate
+
+One command runs everything (Swift format check, build, tests, and the Rust
+crate):
+
+```bash
+fledge lanes run verify
+```
+
+Run it before calling any change done. Per language:
+
+```bash
+swift test                                   # Swift
+cd js && bun install && bun test             # TypeScript
+cd rust && cargo test                        # Rust
+```
+
+The interactive demos in `web/` have their own cross-browser tests (Playwright
+on Chromium and WebKit, the engine behind Safari). Run them if you touch the
+lab:
+
+```bash
+cd uitests
+npm ci
+npx playwright install chromium webkit       # once
+npx playwright test
+```
+
+## Changing the format
+
+1. Update `SPEC.md` first: it is the contract.
+2. Add or update a vector in `conformance/` that pins the new behavior.
+3. Implement it in all three parsers (Swift, TypeScript, Rust) so every
+   conformance suite passes.
+4. Add language-level unit tests where useful.
+
+A change that only lands in one implementation will fail the others' conformance
+runs. That is the point.
+
+## House rules
+
+- No em-dash characters in committed text (brand rule). Use commas, colons,
+  parentheses, or hyphens.
+- Swift follows the CorvidLabs conventions (see AGENTS.md); `swift-format` and
+  the `.swift-format` config enforce the mechanical parts.
+- Keep the library targets dependency-free (Foundation for Swift, std for Rust,
+  no runtime deps for the TS package).
+
+## Trust toolchain
+
+This repo is governed by the CorvidLabs trust toolchain (fledge, spec-sync,
+augur, attest). See AGENTS.md for the standing rules; CI enforces the same gate.
+
+@plane z=5 label="SECURITY" file="SECURITY.md"
+# Security Policy
+
+## Supported versions
+
+3md is at 1.0 (a stable, frozen grammar). Security fixes target the latest
+release of each implementation: the Swift `ThreeMD` library, the
+`@corvidlabs/threemd` parser, the `threemd` crate, and the
+`@corvidlabs/three-md-element` web component.
+
+## Reporting a vulnerability
+
+Please report security issues privately rather than opening a public issue. Use
+GitHub's private vulnerability reporting on the repository (the Security tab,
+"Report a vulnerability") at https://github.com/CorvidLabs/3md/security. We aim
+to acknowledge a report within a few business days.
+
+## Attack surface
+
+- The parsers do no I/O. `parse` only reads a string; it never touches the
+  network or the filesystem, so the core has a minimal attack surface. A
+  malformed document throws a documented `ParseError`, which is correct behavior,
+  not a vulnerability.
+- The `<three-md>` web component renders untrusted 3md by escaping all author
+  text before it is inserted into the DOM (inline formatting is applied to the
+  already-escaped text), so document content cannot inject markup or script.
+  Please report any case where it can.
+- The `threemd` CLI reads the files you pass it and writes to standard output.
+
+## Not a vulnerability
+
+- A malformed document that is rejected with a documented `ParseError`.
+- Rendering differences between implementations for content outside the shared
+  conformance suite.
+
+@plane z=6 label="AGENTS" file="AGENTS.md"
+# 3md
+
+Markdown with a Z axis. See [README.md](README.md) for the pitch and
+[SPEC.md](SPEC.md) for the format definition. The implementation is the
+`ThreeMD` Swift package.
+
+## Project map
+
+- `Sources/ThreeMD/` - the parser and serializer library.
+- `Tests/ThreeMDTests/` - XCTest suite.
+- `Examples/` - sample `.3md` documents.
+- `specs/ThreeMD/` - the spec-sync contract for the library.
+- `SPEC.md` - the authoritative format specification.
+
+## Conventions
+
+CorvidLabs Swift conventions apply: explicit access control, K&R braces, no
+force unwrap, async/await only, Sendable across concurrency boundaries,
+descriptive generic names, 4-space indentation, 120-column lines. The formatter
+config in `.swift-format` enforces the mechanical parts.
+
+<!-- CorvidLabs trust toolchain: BEGIN (managed, do not edit inside) -->
+## CorvidLabs trust toolchain (standing rules)
+
+This repo is governed by four CLIs. Every session MUST use them; never bypass or weaken them.
+
+- fledge: run `fledge lanes run verify` before calling any change done. It must pass.
+- spec-sync: when you change a module with a *.spec.md, update the spec, then `fledge spec check`. (skipped: <reason>, if content-only)
+- augur: `augur check --staged` before a commit; `augur check --range origin/main..HEAD` before merge. A block verdict is a hard stop, never auto-overridden.
+- attest: after a green lane, `attest sign --commit HEAD --reviewer agent:<id> --from-augur augur.json --tests-passed`.
+
+CI enforces the same gate (.github/workflows/trust.yml) and fails if this block is missing. Brand rule: no em-dash characters in anything you write.
+<!-- CorvidLabs trust toolchain: END -->
+
+@plane z=7 label="PROOF" file="docs/PROOF.md"
+# Does 3md actually work? Proof notes
+
+This document is the evidence, not a promise. It records how 3md was verified to
+work for machines and for people, with reproducible commands. Everything here was
+run against the code in this repository.
+
+## 1. The three implementations agree (the contract)
+
+3md ships three independent parsers: a Swift library (`ThreeMD`), a TypeScript
+port (`@corvidlabs/threemd`), and a Rust crate (`threemd`). They are kept honest
+by one shared conformance suite in `conformance/` that all three must pass. The
+suite is the contract: if the parsers ever disagree, a vector fails.
+
+Latest run:
+
+| Implementation | Command | Result |
+|----------------|---------|--------|
+| Swift `ThreeMD` | `swift test` | 122 tests, 0 failures |
+| TypeScript `@corvidlabs/threemd` | `bun test` (in `js/`) | 76 pass, 0 fail |
+| Rust `threemd` | `cargo test` (in `rust/`) | all pass, incl. the 43-vector conformance suite |
+
+The CLI built from the Swift package validates and inspects documents:
+
+```
+$ threemd validate file.3md   # prints "ok" or exits non-zero with the error
+$ threemd info file.3md        # prints version, axis, title, and each plane
+$ threemd html file.3md        # renders the document to HTML
+```
+
+It installs cleanly through Homebrew (verified end to end: `brew install
+CorvidLabs/tap/threemd` then `brew test` both exit 0).
+
+## 2. Proof in an AI sense
+
+The claim: a machine can both author and read 3md correctly, using only the
+specification.
+
+The test was deliberately blind. A fresh AI agent was given exactly one file,
+`SPEC.md`, and forbidden from looking at any example, any parser source, or any
+existing `.3md` file. It was asked to invent an original, non-trivial document.
+It produced `Examples/tide-pool.3md` ("The Anatomy of a Tide Pool", axis
+`depth`): four planes descending from the surface film to the dark floor, with a
+quoted label containing a space, `x`/`y` placement on one plane, a custom string
+attribute on another, cross-plane links in both `[[z=N]]` and `[[z=N|text]]`
+forms, and real Markdown bodies (headings, lists, a table, a blockquote).
+
+That document was then fed to all three parsers, which had no part in writing it.
+They agreed exactly:
+
+| Field | Swift | TypeScript | Rust |
+|-------|-------|------------|------|
+| version | 1.0 | 1.0 | 1.0 |
+| axis | depth | depth | depth |
+| planes | 4 | 4 | 4 |
+| z=2 x / y | 0 / -12 | 0 / -12 | 0.0 / -12.0 |
+| attributes (`depth_cm`, `mood`) | preserved | preserved | preserved |
+
+What this demonstrates:
+
+- Authoring: an AI that has only read the spec writes conformant 3md on the first
+  try. The grammar is small and self-contained enough to learn from one
+  document. (The agent's only noted ambiguity was a cosmetic one: whether a blank
+  line is required between a `@plane` line and its body. It is not; body trimming
+  handles it.)
+- Comprehension: parsing yields a flat, predictable structure (version, axis,
+  ordered planes, each with z, optional label, optional x/y, a string-keyed
+  attribute map, and a Markdown body). That is trivial for a model to consume,
+  which is the point of keeping the frontmatter a flat mini-format rather than
+  arbitrary YAML.
+
+Reproduce: validate any document across the parsers with `threemd validate`, the
+`bun test` harness in `js/`, and `cargo test` in `rust/`; the shared vectors live
+in `conformance/`.
+
+## 3. Proof in a human sense
+
+The claim: a person can read, write, and review 3md by hand, with no tools.
+
+3md is plain UTF-8 text. A `.3md` file is ordinary Markdown with a short header
+and column-0 `@plane` lines. Open `Examples/tide-pool.3md` in any editor: the
+frontmatter reads as labeled lines, each `@plane` announces a clearly named
+section, and everything between directives is Markdown you already know. Nothing
+is encoded, compressed, or binary.
+
+Concretely, for humans:
+
+- Readable raw. The depth of the tide pool is legible as a top-to-bottom read of
+  the file, before any renderer is involved.
+- Writable by hand. The blind-author test is itself the proof that the rules fit
+  in your head; a person needs even less, since Markdown is already familiar.
+- Diff-friendly and reviewable. Because it is line-oriented text, edits show up
+  as clean diffs and the format passes through normal code review and version
+  control unchanged.
+- Tangible when rendered. The interactive lab makes the Z axis visceral without
+  changing the source: scrub the slider and the focused plane comes to the front.
+  Live at https://corvidlabs.github.io/3md/ (demo), `/gallery.html` (100
+  examples), and `/docs.html` (docs).
+
+## 4. Regression guard
+
+The interactive demos are covered by a cross-browser test suite (`uitests/`,
+Playwright on Chromium and WebKit) that runs in CI on every change to `web/`. It
+asserts that planes render, that the focused plane stays frontmost in true Z
+while scrubbing (the Safari-specific failure mode), that every axis tab loads,
+and that the console stays clean. This is what keeps the visual proof from
+silently breaking.
+
+## Summary
+
+- Three independent parsers, one conformance suite, all green.
+- A blind AI authored valid 3md from the spec alone; all three parsers agreed.
+- The format is plain text that a person can read, write, and review unaided.
+- The demos are guarded by cross-browser CI so the proof stays true.
+
+@plane z=8 label="PROPOSALS" file="docs/PROPOSALS.md"
+# 3md Post-1.0 Design Proposals
+
+Status: non-normative proposal (nothing here is implemented)
+Targets: a future MINOR spec version (1.1 or later)
+
+This document is a design proposal, not a specification. The 1.0 grammar is
+frozen: the frontmatter mini-format, the `@plane` directive and its attribute
+grammar, the numeric grammar for `z`/`x`/`y`, the single-plane shorthand,
+cross-plane links, escaping, and the error set are stable and will not change
+within the 1.x line (SPEC.md section 10). Everything below is a sketch for the
+maintainer to review before any implementation work begins. None of it is shipped,
+and none of it is binding. Where a proposal would touch the frozen grammar, it is
+designed to be purely additive so that 1.0 documents and 1.0 parsers are
+unaffected.
+
+The guiding constraint throughout is the 1.0 stability rule: parsers are
+version-lenient (they record the `3md:` value but never reject on it), and any
+additive directive, attribute, or key MUST degrade gracefully so that a 1.0
+parser that does not understand it still parses the document and a 1.0 renderer
+that does not understand it still shows the content. Each proposal is measured
+against that rule.
+
+The four candidate features are presented in priority order, most valuable and
+lowest risk first:
+
+1. Per-plane transition and timing hints
+2. Inline model and asset embeds
+3. Cross-document transclusion
+4. A binary or compressed container for large scenes
+
+---
+
+## 1. Per-plane transition and timing hints
+
+### Motivation
+
+The `frame` and `time` axes are sequences meant to be played back or scrubbed.
+`Examples/animation.3md` is a four-frame bounce; its only timing signal is an
+`fps: "12"` key in the frontmatter, which is document-wide and opaque to the
+core. There is no portable way for an author to say "hold this frame longer",
+"ease into the next plane", or "this day spans a different interval than the
+others". Today a renderer either guesses a uniform cadence or invents its own
+private metadata. A small set of standard per-plane hints lets authors express
+intent once and have every conforming renderer honor it the same way.
+
+This is the highest-priority candidate because it is the lowest-risk: it adds
+optional attributes to an existing directive, it changes no parsing rules, and
+it degrades to exactly today's behavior when ignored.
+
+### Proposed syntax
+
+Timing hints are ordinary `@plane` attributes. They reuse the existing attribute
+grammar verbatim (space-separated `key=value`, values quoted when they contain
+spaces, the `z`/`x`/`y` numeric grammar where a number is wanted). No new
+tokenization is introduced. Three attributes are proposed:
+
+- `hold`: how long this plane is shown before advancing, as a duration string.
+- `transition`: the named transition used when entering this plane.
+- `ease`: the named easing curve applied to that transition.
+
+A duration string is a finite decimal followed by a unit, where the unit is
+`ms`, `s`, or `f` (frames). It is carried as a string and validated by the
+timing-aware renderer, not by the core parser (see Parsing impact).
+
+Before (valid 1.0, unchanged):
+
+```3md
+---
+3md: 1.0
+axis: frame
+title: Bouncing dot
+fps: "12"
+---
+@plane z=0 label="frame-0"
+```
+o........
+```
+
+@plane z=1 label="frame-1"
+```
+..o......
+```
+```
+
+After (additive hints; still valid against a 1.0 parser):
+
+```3md
+---
+3md: 1.1
+axis: frame
+title: Bouncing dot
+fps: "12"
+---
+@plane z=0 label="frame-0" hold="250ms" transition="cut"
+```
+o........
+```
+
+@plane z=1 label="frame-1" hold="2f" transition="fade" ease="ease-in-out"
+```
+..o......
+```
+```
+
+For a `time` axis the same attributes read naturally as schedule hints:
+
+```3md
+@plane z=0 label="Monday" hold="1d" transition="slide"
+# Monday
+- [ ] Standup at 9
+```
+
+Here `1d` is an author-chosen duration string; the proposal reserves only the
+`ms`/`s`/`f` units as standard, and a renderer MAY accept additional units (`d`,
+`h`, `m`) for the `time` axis. Unknown units are a renderer concern, not a parse
+error, which keeps the core grammar untouched.
+
+### Parsing and grammar impact
+
+None to the core grammar. `hold`, `transition`, and `ease` are already legal 1.0
+attributes today: section 4.1 says "Any other attribute is preserved as a string
+on the plane; values are never coerced." A 1.0 parser already accepts these
+tokens and exposes them as string attributes. This proposal does not move them
+out of the catch-all; it only blesses three names and their value formats so
+every renderer agrees on meaning.
+
+A timing-aware implementation adds an optional extraction step, in the same
+spirit as the cross-plane link extractor (section 8): given a parsed document, it
+reads the three attributes off each plane, parses the duration grammar, and
+returns a per-plane timing record (`hold`, `transition`, `ease`, each nullable).
+Like link extraction, this is a separate, portable step pinned by new conformance
+vectors; it does not change what `parse` returns.
+
+Proposed standard vocabularies (renderer-facing, not grammar):
+
+- `transition`: `cut`, `fade`, `slide`, `dissolve`. Default `cut`.
+- `ease`: `linear`, `ease-in`, `ease-out`, `ease-in-out`. Default `linear`.
+
+Values outside these sets are preserved verbatim (they are already just strings);
+a renderer SHOULD fall back to the default for a name it does not recognize.
+
+### Backward-compatibility analysis
+
+Fully additive, and the safest of the four.
+
+- 1.0 documents are unaffected: they carry none of these attributes, so behavior
+  is identical.
+- 1.0 parsers are unaffected: the attributes already parse today as generic
+  string attributes per section 4.1, so a 1.0 parser reads an `after` document
+  without error and exposes the values as plain attributes.
+- 1.0 renderers degrade gracefully: a renderer that does not implement timing
+  ignores unknown attributes and uses its existing cadence (for example the
+  document `fps`), exactly as it does today.
+- The error set in section 6 does not grow. A malformed duration string is NOT a
+  parse error; it is a renderer-level concern, because making it a parse error
+  would change `parse` results and thus break the conformance contract.
+
+### Renderer impact
+
+A timing-aware renderer reads the per-plane timing record and uses it to drive
+playback or scrubbing: `hold` sets dwell time, `transition` and `ease` set the
+animation between planes. Renderers that do not animate (for example `threemd
+html` static output) ignore the hints with no loss of content. Because the hints
+are advisory, two renderers may differ in exactly how a `fade` looks; the
+conformance suite pins extraction (what the hints are), not pixels (how they
+render).
+
+### Open questions
+
+- Should `hold` on a `time` axis accept calendar units (`d`, `h`, `m`) as
+  standard, or stay limited to `ms`/`s`/`f` with calendar units left to
+  renderers?
+- Should a document-level default live in frontmatter (for example
+  `transition: fade` as a free metadata key) so authors avoid repeating it on
+  every plane? This is already expressible as free metadata; the question is only
+  whether to standardize the key name.
+- Should `f` (frames) be defined relative to the document `fps`, and what does
+  `f` mean on a non-`frame` axis (proposed: undefined, renderer's choice)?
+
+### Recommendation
+
+Adopt for the next minor version. It is the clearest win: real author demand
+(the `frame` and `time` axes exist precisely to be played), zero grammar change,
+and graceful degradation by construction. Confidence: 88.
+
+---
+
+## 2. Inline model and asset embeds
+
+### Motivation
+
+The `space` axis (`Examples/dungeon.3md`) lays planes out on an imagined map with
+`x`/`y`. The natural next step for scene authoring is to attach real assets to a
+plane: a 3D model, an image, an audio cue. Markdown already embeds images with
+`![alt](src)`, but there is no portable way to attach a richer asset (a `.glb`
+model, a point cloud) to a plane, and stuffing it into image syntax loses the
+alt-text fallback and the asset's type. A dedicated, `@plane`-consistent embed
+directive gives spatial and frame viewers something to place while keeping plain
+Markdown renderers fully functional.
+
+### Proposed syntax
+
+A new line-prefix directive, `@asset`, modeled exactly on `@plane`: first
+whitespace-delimited token is `@asset`, followed by space-separated `key=value`
+attributes using the identical attribute grammar (quoting, escaping, the
+`z`/`x`/`y` numeric grammar). The open question in SPEC.md section 11 names it
+`@model`; this proposal generalizes to `@asset` with a `kind` attribute so one
+directive covers models, images, audio, and future types, rather than minting a
+new directive per asset class.
+
+An `@asset` line lives inside a plane body. Unlike `@plane`, it does NOT start a
+new plane: it is a leaf directive that belongs to the plane it sits in. The lines
+immediately following it, up to the next blank line, the next `@asset`, the next
+`@plane`, or end of file, are its fallback Markdown (rendered when the asset is
+not supported).
+
+Proposed attributes:
+
+- `src` (REQUIRED): the asset location, a relative path or URL, quoted.
+- `kind` (OPTIONAL): `model`, `image`, `audio`, defaulting to a guess from the
+  `src` extension.
+- `x`, `y`, `z` (OPTIONAL): an in-plane placement offset, same numeric grammar.
+- `alt` (OPTIONAL): a text description, quoted.
+
+```3md
+---
+3md: 1.1
+axis: space
+title: The Sunken Vault
+---
+@plane z=3 label="vault" x=1 y=-1
+# The Sunken Vault
+The water pools around a stone chest ringed with old wards.
+
+@asset src="vault.glb" kind="model" alt="A stone chest ringed with wards"
+![A stone chest ringed with wards](vault.png)
+
+A guardian of silt and bone rises as you approach.
+```
+
+The fallback line directly under the `@asset` (here a standard Markdown image) is
+what a renderer without model support shows. The directive carries the rich asset;
+the body carries the graceful fallback.
+
+### Parsing and grammar impact
+
+This one DOES touch the frozen grammar and must be handled with care. Section 4
+defines `@plane` as the directive that starts a plane and says "Every line after
+the directive ... is that plane's Markdown body." A 1.0 parser therefore treats a
+`@asset` line as ordinary body text, which is the desired degradation (see
+below). Adding `@asset` as a recognized directive is an additive 1.1 grammar
+change: it introduces a new directive that a 1.1 parser lifts out of the body into
+a structured per-plane `assets` list, while a 1.0 parser leaves it inline.
+
+Because the line-prefix rules from section 4 are reused exactly (column 0,
+outside fenced code blocks, attribute tokens MUST contain `=`), the recognition
+logic is the same machinery `@plane` already uses. No new tokenizer, no new
+numeric grammar, no new escaping. The 1.0 error names are reused where they map
+(an `@asset` with an unterminated quote or an `=`-less token is the same shape of
+error as `invalidPlaneDirective`); a missing `src` is a new 1.1-only condition and
+SHOULD be a renderer-level warning rather than a hard parse error, to avoid
+enlarging the section 6 error set in a way that could change 1.0 conformance
+results.
+
+### Backward-compatibility analysis
+
+Additive, with a deliberate degradation path.
+
+- 1.0 documents are unaffected: they contain no `@asset` lines.
+- 1.0 parsers are unaffected in the sense that they never reject an `@asset`
+  document: an unknown directive at column 0 is just body text to them (it is not
+  `@plane`, so it does not start a plane, and section 4 sweeps it into the current
+  plane body). The line is preserved verbatim and round-trips.
+- 1.0 renderers degrade gracefully: because the `@asset` line and its fallback
+  Markdown both sit in the plane body, a 1.0 renderer shows the fallback (the
+  `![alt](src)` image, or the text) and shows the literal `@asset ...` line as a
+  stray line of text. To keep that stray line from being noise, a renderer MAY be
+  told via convention to drop lines beginning with `@`; but the safe assumption is
+  that the fallback below it is the real content.
+- The round-trip guarantee (section 7) holds: a 1.0 parser keeps the `@asset`
+  line as body text and re-serializes it unchanged.
+
+The one wart is that, under a 1.0 parser, the `@asset` line is visible as raw
+text. That is the price of a directive that a frozen parser cannot be taught to
+hide. The fallback-Markdown-immediately-below convention is what makes this
+acceptable: the meaningful content is always present in plain Markdown form.
+
+### Renderer impact
+
+An asset-aware renderer reads the per-plane `assets` list and places each asset
+in the plane (a `model` in a 3D viewport, an `image` inline, an `audio` cue tied
+to the plane's `hold` from proposal 1). A renderer that cannot show a given
+`kind` falls back to the Markdown immediately under the directive. The static
+`threemd html` path renders the fallback and SHOULD suppress the raw `@asset`
+line once it recognizes the 1.1 directive.
+
+### Open questions
+
+- Should `@asset` be allowed in the preamble (before the first `@plane`) to
+  attach a document-level asset, or is it strictly per-plane?
+- Where does the fallback boundary end: the proposal says "until the next blank
+  line". Should it instead be a single following line, to be unambiguous?
+- Should multiple assets per plane be ordered, and is that order significant to
+  renderers?
+- Do we need an explicit `@asset`-less inline form, or is the dedicated directive
+  enough?
+
+### Recommendation
+
+Adopt, but after proposal 1 and only once the fallback convention is pinned by
+conformance vectors. It is more invasive than timing hints because it adds a
+recognized directive, and its degradation under a 1.0 parser leaves a visible raw
+line. The design is sound and clearly motivated by the `space` axis. Confidence:
+70.
+
+---
+
+## 3. Cross-document transclusion
+
+### Motivation
+
+Large scenes, shared component libraries, and multi-author timelines all want to
+pull planes from another `.3md` file rather than copy them. A dungeon could keep
+each region in its own file; a planner could include a shared "recurring tasks"
+plane. Today the only option is to paste content, which drifts out of sync.
+Transclusion lets one document reference planes defined elsewhere.
+
+This is the most powerful candidate and by far the riskiest, because it crosses a
+file boundary and so drags in cycles, path resolution, axis mismatches, and
+security. It is ranked third for exactly that reason.
+
+### Proposed syntax
+
+A new line-prefix directive, `@include`, again modeled on `@plane`: column 0,
+outside code fences, `key=value` attributes with the 1.0 attribute grammar.
+Extending the `[[...]]` cross-plane link form was considered and rejected (see
+Open questions); a directive keeps included planes as first-class structure
+rather than inline link text.
+
+Proposed attributes:
+
+- `src` (REQUIRED): a relative path to another `.3md` file, quoted.
+- `select` (OPTIONAL): which planes to pull, as a `z` value or a `z` range using
+  the 1.0 numeric grammar (for example `select="2"` or `select="0..3"`). Absent
+  means all planes.
+- `at` (OPTIONAL): the `z` offset at which the included planes are placed in the
+  host document, same numeric grammar. Included `z` values are added to `at` so
+  they do not collide with host planes.
+
+```3md
+---
+3md: 1.1
+axis: space
+title: The Full Crypt
+---
+@plane z=0 label="entrance" x=0 y=0
+# The Entrance
+A cold stair descends north into the dark.
+
+@include src="vault-wing.3md" select="0..3" at="10"
+```
+
+The included file's planes at `z=0..3` appear in the host at `z=10..13`. The host
+remains a valid 3md document on its own; `@include` is resolved by a separate
+linking step, not by the core parser.
+
+### Parsing and grammar impact
+
+The core parser does NOT resolve includes. As with `@asset`, a 1.1 parser
+recognizes the `@include` directive and records it as a structured request
+(`src`, `select`, `at`) attached to the document; a 1.0 parser treats the line as
+ordinary body text. Resolution (reading the referenced file, parsing it, applying
+`select` and `at`, and merging planes) is a distinct, opt-in step layered above
+`parse`, comparable to link extraction in section 8 but with file I/O. Keeping
+resolution out of the core means the pure, no-I/O `parse` contract that the
+conformance suite pins is unchanged.
+
+Merge rules the resolution step must enforce:
+
+- After applying `at`, the merged document MUST still satisfy section 4.2: no two
+  planes share the same `z`. A collision is a resolution error, not a parse
+  error.
+- Plane source order is preserved with the `@include` expanded in place.
+
+### Hard questions this feature must answer
+
+- Cycles. A includes B includes A. The resolver MUST detect cycles (track the set
+  of resolved absolute paths on the current chain) and fail with a dedicated
+  resolution error rather than recursing forever. A depth limit is a secondary
+  guard.
+- Axis mismatches. The host declares `axis: space`; the included file declares
+  `axis: time`. Proposed rule: the host's axis wins, the included axis is
+  ignored, and the resolver SHOULD warn. Silently merging time planes into a
+  spatial scene is a footgun; a warning surfaces it without blocking.
+- Relative paths. `src` is resolved relative to the including file's directory,
+  never the process working directory, so a document tree is portable. Absolute
+  paths and parent-directory escapes (`../`) are where security bites (below).
+- Security. Transclusion reads arbitrary files and, with URLs, would fetch over
+  the network. The resolver MUST be sandboxable: a default policy that forbids
+  absolute paths, forbids `../` escapes outside a configured root, and forbids
+  non-`file` URLs unless explicitly enabled. Network includes SHOULD be opt-in
+  per call, never on by default. The core parser, which does no I/O, has no
+  exposure here; all risk is in the resolution step, which is exactly why it is
+  kept separate and opt-in.
+- Frontmatter of the included file. Proposed rule: only its planes are pulled;
+  its frontmatter (title, free metadata) is dropped, except the axis check above.
+
+### Backward-compatibility analysis
+
+Additive, same shape as `@asset`.
+
+- 1.0 documents are unaffected: no `@include` lines.
+- 1.0 parsers are unaffected: `@include` is an unknown column-0 line, swept into
+  the plane body as text, preserved and round-tripped.
+- 1.0 renderers degrade gracefully but incompletely: without the resolution step,
+  the included planes simply do not appear, and the host document renders as if
+  the `@include` were absent (the raw line shows as text, same wart as `@asset`).
+  This is acceptable for a feature that is inherently about composition: the host
+  still renders its own planes correctly.
+- `parse` results and the conformance contract are unchanged, because resolution
+  is a separate layer.
+
+### Renderer impact
+
+A resolution-aware tool runs the resolver before rendering, producing a single
+merged document that any renderer then displays normally. Renderers themselves
+need no transclusion knowledge; they render the merged result. Tools that skip
+resolution show only the host's own planes.
+
+### Open questions
+
+- Directive vs link form. Extending `[[z=N]]` to `[[src.3md#z=N]]` was
+  considered. It is rejected because the 1.0 link grammar and its pinned regex
+  (section 8) are frozen, and because a link is inline reference text whereas
+  transclusion produces structural planes; conflating them muddies both.
+- Should `select` support label-based selection (`select="vault"`) in addition to
+  `z`, given labels are not unique?
+- How do cross-plane links inside an included file rebase under `at`? A
+  `[[z=3]]` in the included file should presumably become `[[z=13]]` after an
+  `at="10"` shift; this rewrite is non-trivial and must be specified.
+- Do we cap include depth, and at what number?
+
+### Recommendation
+
+Defer past the next minor version. The feature is genuinely useful but carries
+the most semantic weight (link rebasing, axis policy, cycle detection) and the
+only real security surface in the four proposals. Ship proposals 1 and 2 first,
+let the `@asset`/`@include` directive-recognition machinery settle, then return
+to transclusion as its own focused minor version. Confidence: 52.
+
+---
+
+## 4. Binary or compressed container for large scenes
+
+### Motivation
+
+A `space` or `frame` document that embeds many assets (proposal 2) or transcludes
+a tree of files (proposal 3) can grow large. Plain `.3md` text is ideal for
+authoring and diffing but is not ideal for shipping a megabyte-scale scene with
+bundled binaries. A container format would let a finished scene travel as one
+compressed file with its assets inside.
+
+This is ranked last and is a sketch only: it is a packaging concern layered
+entirely above the text format, it interacts with features (assets,
+transclusion) that are themselves not yet shipped, and it has the weakest
+near-term demand.
+
+### Sketch of options
+
+The text format does not change at all. A container is a wrapper that holds one
+or more `.3md` documents plus their referenced assets, with a manifest. The
+sketch is intentionally shallow; the point is to record the tradeoffs, not to
+choose now.
+
+Option A: a zip-based bundle (a `.3mdz` file).
+
+```
+scene.3mdz                (a zip archive)
+  manifest.3md            (frontmatter + an @include or @asset graph)
+  planes/region-a.3md
+  assets/vault.glb
+  assets/vault.png
+```
+
+- Pros: zip is universal, every language has it, assets are stored verbatim,
+  inspectable by unzipping, and `manifest.3md` is itself a plain 3md document so
+  the existing parser reads it unchanged.
+- Cons: no streaming, whole-archive compression is coarse, and it is a real
+  container spec to define (path rules, the manifest contract).
+
+Option B: a single self-describing text-plus-blob file (frontmatter declares a
+binary payload appended after the planes).
+
+- Pros: stays "one file of mostly text", greppable header.
+- Cons: mixing text and binary in one stream fights the plain-text ethos and the
+  round-trip guarantee, and tooling support is bespoke.
+
+Option C: gzip the whole `.3md` (a transport encoding, `scene.3md.gz`).
+
+- Pros: trivial, no new format, handles the text-size case immediately.
+- Cons: does not bundle assets, so it solves only the smallest part of the
+  problem.
+
+Recommended direction if pursued: Option A (`.3mdz` zip bundle with a
+`manifest.3md`), because it reuses the unchanged text parser for the manifest,
+stores assets without re-encoding, and leans on a universally supported archive
+format. Option C is a zero-cost stopgap for pure-text size that can ship anytime
+since it touches nothing.
+
+### Parsing and grammar impact
+
+None on the text grammar. A container is a separate format with its own reader;
+the `.3md` parser is unchanged and is reused to read the manifest and any
+contained documents.
+
+### Backward-compatibility analysis
+
+Trivially compatible: `.3md` text and 1.0 parsers are entirely untouched. A
+container is a new, optional sibling format. A tool that does not understand
+`.3mdz` simply does not open it; nothing about existing `.3md` files or parsers
+changes.
+
+### Renderer impact
+
+A container-aware tool unpacks the bundle, resolves the manifest (which leans on
+proposals 2 and 3), and hands a merged document to an ordinary renderer.
+Renderers need no container knowledge.
+
+### Open questions
+
+- Is the demand real before assets and transclusion ship and prove out scene
+  sizes? Likely not.
+- Should the container be the same `.3md` text format zipped (Option A) or a
+  purpose-built layout?
+- Do we need streaming or random access into large scenes, or is whole-bundle
+  decompression enough?
+
+### Recommendation
+
+Later, and only after proposals 2 and 3 exist. It is a packaging layer for
+features not yet built, with no grammar impact and the least immediate need. If
+text size alone becomes a pain point sooner, ship Option C (`.3md.gz`) as a
+zero-spec transport stopgap. Confidence: 35.
+
+---
+
+## Summary
+
+| Feature | Confidence | Recommended for next minor version |
+|---------|------------|------------------------------------|
+| 1. Per-plane transition and timing hints | 88 | yes |
+| 2. Inline model and asset embeds | 70 | yes (after 1) |
+| 3. Cross-document transclusion | 52 | later |
+| 4. Binary or compressed container | 35 | later |
+
+Across all four, the design discipline is the same: keep the frozen 1.0 grammar
+untouched where possible, add only optional attributes or recognized directives
+that a 1.0 parser sweeps into the body as text, keep all I/O and resolution in
+separate opt-in steps so the pure `parse` contract and its conformance vectors
+never move, and make every feature degrade to today's behavior when a tool does
+not understand it.
+
+@plane z=9 label="LICENSE" file="LICENSE"
+MIT License
+
+Copyright (c) 2026 CorvidLabs
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+

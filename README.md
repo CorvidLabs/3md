@@ -18,6 +18,11 @@ annotations. Space for a scene.
 **[browse 171 examples](https://corvidlabs.github.io/3md/gallery.html)** in the
 gallery (all of [`Examples/`](Examples), rendered live).
 
+This repo eats its own dog food: every doc here is also combined into one
+[`docs.3md`](docs.3md) (each Markdown file is a plane). GitHub can't preview
+`.3md` natively, so **[open all the docs in the 3md viewer](https://corvidlabs.github.io/3md/viewer.html?src=docs.3md)**
+and scrub through them.
+
 <p align="center">
   <a href="https://corvidlabs.github.io/3md/"><img src="docs/demo.png" alt="The 3md interactive demo: planes stacked along the Z axis with a synced source view" width="760"></a>
 </p>
