@@ -1,0 +1,128 @@
+---
+3md: 1.0
+axis: phase
+title: CorvidLabs Q3 2026 Roadmap
+view: present
+quarter: Q3 2026
+owner: leif@corvidlabs.dev
+updated: 2026-06-23
+status: draft
+category: Business
+---
+Three horizons. One file. Ship or cut by July 14 planning sync.
+
+@plane z=0 label="Now"
+# Now — Shipping by Jul 31
+
+These are in-flight. No pivots without a retro.
+
+## swift-cache 2.1
+- [x] Actor-based storage rewrite merged
+- [x] `resolve(_:)` strict-access API landed
+- [ ] **Linux parity** — date formatter divergence, assign to @leif
+- [ ] Release notes + changelog (`fledge changelog`)
+
+## swift-valid 1.4
+- [x] `@Validated` property wrapper draft
+- [ ] Regex literal support (Swift 5.9 `#/pattern/`)
+- [ ] Docs pass — every public symbol needs `///`
+
+## swift-pinata 0.9 → 1.0
+- [ ] Remove last completion-handler path (3 files remain)
+- [ ] Sendable audit — `PinataFile` missing conformance
+- [ ] Tag `1.0.0-rc.1` this week
+
+> **Blocker:** Pinata API v3 auth changed Jun 18. @leif unblocking async token refresh by Jun 26.
+
+---
+*Horizon: 0–6 weeks · Confidence: high*
+
+@plane z=1 label="Next"
+# Next — Targeting Q4 kick-off
+
+Scoped but not started. Will be refined at Jul 14 sync.
+
+## swift-music 0.4
+- Chord voicing engine (`Chord.voicings(for:range:)`)
+- MIDI export via CoreMIDI (Darwin only, `#if canImport(Darwin)`)
+- Estimated: **3 weeks** of eng
+
+## swift-env 2.0 — breaking
+- Drop `@EnvVar` in favour of `@AppDependency` pattern (see [[z=2|Later]])
+- Typed throws on `resolve(_:)` — internal API only per conventions
+- Migration guide needed before tagging beta
+
+## swift-ascii 1.2
+- Voxel grid renderer (feeds 3md blend view — eat our own cooking)
+- `ASCIICanvas.snapshot() -> String` for test assertions
+- Estimated: **1.5 weeks**
+
+> **Decision needed:** swift-music CoreMIDI dependency breaks Linux target. Ship as Darwin-only or use virtual MIDI stub?
+
+---
+*Horizon: 6–14 weeks · Confidence: medium*
+
+@plane z=2 label="Later"
+# Later — Backlog / Bets
+
+Not committed. Needs a champion and a spike before Q4 planning.
+
+## swift-graph (new repo)
+- Directed/undirected graph with `AsyncSequence` BFS/DFS traversal
+- Potential dep for swift-cache invalidation chains
+- **Spike:** 3 days to validate API shape
+
+## `@AppDependency` unification
+- Single property-wrapper pattern across all CorvidLabs libs
+- Replaces ad-hoc KeyPath subscripts in swift-env, swift-cache, swift-pinata
+- High leverage if we land it — estimate **5 weeks** full rollout
+
+## swift-qr 2.0 — visionOS
+- Spatial QR scanning via ARKit (visionOS 1+)
+- Market: devs building spatial commerce apps
+- **Owner needed** — nobody has visionOS hardware yet
+
+## Telemetry / Usage Analytics (internal)
+- Anonymous `fledge` command usage to guide roadmap priorities
+- Privacy-first: opt-in, no PII, hashed repo IDs only
+- Needs legal sign-off before any code
+
+---
+*Horizon: 14+ weeks · Confidence: low — revisit Oct 1*
+
+@plane z=3 label="Cut List"
+# Cut — Removed from Roadmap
+
+Documented here so we stop re-proposing them.
+
+| Idea | Why Cut | Cut Date |
+|------|---------|----------|
+| swift-combine wrapper | Swift 6 Concurrency supersedes it; Linux non-starter | 2026-04-10 |
+| Vapor integration layer | Scope creep; Vapor team ships their own | 2026-05-02 |
+| swift-cache Redis backend | `Bun.redis` covers the web use case; Swift server market too small | 2026-06-01 |
+| Objective-C bridging headers | Contradicts zero-dependency philosophy | 2026-06-15 |
+
+> If you want to resurrect anything here, write a one-pager and bring it to the next planning sync. "We should do X" without a doc goes back on this list.
+
+@plane z=4 label="Principles"
+# Roadmap Principles
+
+These govern every scoping decision. Non-negotiable.
+
+**Zero dependencies by default.**
+Every new library ships with no third-party deps. Optional integrations go in separate targets.
+
+**Platforms first, features second.**
+If it doesn't pass CI on Linux and Windows, it doesn't ship. Add `#if canImport(Darwin)` gates, not exceptions.
+
+**Breaking changes need a migration guide.**
+Tag `-rc.1` at least 2 weeks before `1.0` or any major bump. No surprise majors.
+
+**Async/await everywhere.**
+No completion handlers in any public API, ever. New code that introduces callbacks is rejected at review — `fledge review` will flag it.
+
+**Ship it or cut it.**
+Anything sitting in "Next" for two consecutive quarters without a champion moves to "Cut List" automatically.
+
+---
+*Last reviewed: 2026-06-23 · Next review: 2026-07-14 planning sync*

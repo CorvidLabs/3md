@@ -1,0 +1,171 @@
+---
+3md: 1.0
+axis: frame
+title: Sicilian Najdorf: First 6 Moves
+view: play
+fps: 2
+opening: Sicilian Defense, Najdorf Variation
+eco: B90
+players: Fischer, Kasparov, Polgar — all loved this
+category: Games
+---
+The sharpest, most deeply analyzed opening in chess history. Used by Fischer and Kasparov to squeeze every ounce of imbalance out of the position. Watch it unfold move by move.
+
+@plane z=0 label="Start"
+## Starting Position
+
+```
+  a b c d e f g h
+8 ♜ ♞ ♝ ♛ ♚ ♝ ♞ ♜
+7 ♟ ♟ ♟ ♟ ♟ ♟ ♟ ♟
+6 · · · · · · · ·
+5 · · · · · · · ·
+4 · · · · · · · ·
+3 · · · · · · · ·
+2 ♙ ♙ ♙ ♙ ♙ ♙ ♙ ♙
+1 ♖ ♘ ♗ ♕ ♔ ♗ ♘ ♖
+  a b c d e f g h
+```
+
+**White to move.** Pieces set, tension zero, everything still possible.
+
+> "The most important feature of the chess position is the activity of the pieces." — Garry Kasparov
+
+@plane z=1 label="1. e4"
+## 1. e4 — White Occupies the Center
+
+```
+  a b c d e f g h
+8 ♜ ♞ ♝ ♛ ♚ ♝ ♞ ♜
+7 ♟ ♟ ♟ ♟ ♟ ♟ ♟ ♟
+6 · · · · · · · ·
+5 · · · · · · · ·
+4 · · · · ♙ · · ·
+3 · · · · · · · ·
+2 ♙ ♙ ♙ ♙ · ♙ ♙ ♙
+1 ♖ ♘ ♗ ♕ ♔ ♗ ♘ ♖
+  a b c d e f g h
+```
+
+**e4** — the King's Pawn. Controls d5 and f5, opens lines for the bishop and queen. Bobby Fischer called it "best by test."
+
+- Controls: **d5, f5**
+- Opens: **d1–h5 diagonal**, **f1 bishop**
+- Principle: *Occupy the center with pawns early*
+
+@plane z=2 label="1… c5"
+## 1… c5 — The Sicilian!
+
+```
+  a b c d e f g h
+8 ♜ ♞ ♝ ♛ ♚ ♝ ♞ ♜
+7 ♟ ♟ · ♟ ♟ ♟ ♟ ♟
+6 · · · · · · · ·
+5 · · ♟ · · · · ·
+4 · · · · ♙ · · ·
+3 · · · · · · · ·
+2 ♙ ♙ ♙ ♙ · ♙ ♙ ♙
+1 ♖ ♘ ♗ ♕ ♔ ♗ ♘ ♖
+  a b c d e f g h
+```
+
+**c5** — Black fights for d4 without mirroring White's center. Asymmetry is the whole point: Black gets queenside counterplay while White attacks the king.
+
+- Controls: **d4** (contests it without occupying)
+- Black's plan: **…d6, …Nf6, …a6**, then queenside expansion
+- This imbalance is why the Sicilian scores *so many decisive games*
+
+@plane z=3 label="2. Nf3 d6"
+## 2. Nf3 d6 — Development and Preparation
+
+```
+  a b c d e f g h
+8 ♜ ♞ ♝ ♛ ♚ ♝ ♞ ♜
+7 ♟ ♟ · · ♟ ♟ ♟ ♟
+6 · · · ♟ · · · ·
+5 · · ♟ · · · · ·
+4 · · · · ♙ · · ·
+3 · · · · · ♘ · ·
+2 ♙ ♙ ♙ ♙ · ♙ ♙ ♙
+1 ♖ ♘ ♗ ♕ ♔ ♗ ♘ ♖
+  a b c d e f g h
+```
+
+**Nf3** develops a piece and eyes d4 and e5. Black plays **d6**, supporting c5 and preparing …Nf6 without allowing e4–e5.
+
+- Nf3 threatens nothing yet — it develops with **tempo options** later
+- d6 is slightly passive but rock solid; it says "I'll defend before I attack"
+- Alternative: **2… Nc6** (Classical), **2… e6** (Scheveningen) — both good
+
+@plane z=4 label="3. d4 cxd4"
+## 3. d4 cxd4 — The Trade That Defines Everything
+
+```
+  a b c d e f g h
+8 ♜ ♞ ♝ ♛ ♚ ♝ ♞ ♜
+7 ♟ ♟ · · ♟ ♟ ♟ ♟
+6 · · · ♟ · · · ·
+5 · · · · · · · ·
+4 · · · ♟ ♙ · · ·
+3 · · · · · ♘ · ·
+2 ♙ ♙ ♙ · · ♙ ♙ ♙
+1 ♖ ♘ ♗ ♕ ♔ ♗ ♘ ♖
+  a b c d e f g h
+```
+
+White opens the center; Black captures. After **4. Nxd4**, White has a *pawn majority in the center* and space. Black has an *open c-file* and no doubled pawns.
+
+> The entire Sicilian is built on this structural imbalance.
+
+- White's extra central pawn → **kingside attack potential**
+- Black's open c-file → **queenside counterplay**
+- Material is equal; the *dynamic* imbalance is everything
+
+@plane z=5 label="4. Nxd4 Nf6 5. Nc3 a6"
+## 5… a6 — The Najdorf Move
+
+```
+  a b c d e f g h
+8 ♜ ♞ ♝ ♛ ♚ ♝ · ♜
+7 · ♟ · · ♟ ♟ ♟ ♟
+6 ♟ · · ♟ · ♞ · ·
+5 · · · · · · · ·
+4 · · · ♘ ♙ · · ·
+3 · · ♘ · · · · ·
+2 ♙ ♙ ♙ · · ♙ ♙ ♙
+1 ♖ · ♗ ♕ ♔ ♗ · ♖
+  a b c d e f g h
+```
+
+**a6** — Miguel Najdorf's patent. A quiet pawn move that prevents Nb5, prepares …b5–b4, and keeps maximum flexibility.
+
+- Stops **Nb5** (which would harass d6 and c7)
+- Prepares **…b5**, launching queenside counterplay
+- Keeps options: **…e5** (English Attack), **…e6** (Classical Najdorf)
+- Used by Fischer in his 1972 World Championship win over Spassky
+
+@plane z=6 label="6. Bg5 — The Main Line"
+## 6. Bg5 — Richter-Rauzer / Classical Attack
+
+```
+  a b c d e f g h
+8 ♜ ♞ ♝ ♛ ♚ ♝ · ♜
+7 · ♟ · · ♟ ♟ ♟ ♟
+6 ♟ · · ♟ · ♞ · ·
+5 · · · · · · ♗ ·
+4 · · · ♘ ♙ · · ·
+3 · · ♘ · · · · ·
+2 ♙ ♙ ♙ · · ♙ ♙ ♙
+1 ♖ · ♗ ♕ ♔ · · ♖
+  a b c d e f g h
+```
+
+**Bg5** — the sharpest reply. White pins the f6-knight immediately, making …e5 awkward and threatening to double Black's f-pawns.
+
+- Pin on f6 cramps Black's coordination
+- Black's classic response: **6… e6** (entering the Poisoned Pawn with 7. f4 Qb6?!)
+- Alternative: **6. Be3** (English Attack), **6. f3** (English Attack), **6. Bc4** (Fischer's favorite)
+
+> From here, theory runs 25+ moves deep. Every grandmaster has an opinion. Welcome to the Najdorf.
+
+[[z=0|Reset to start]]

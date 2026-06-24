@@ -1,0 +1,113 @@
+---
+3md: 1.0
+axis: region
+title: Region Pulse — Live Service Status
+view: stack
+updated: 2026-06-23T14:37:00Z
+on-call: leif@corvid.io (PagerDuty P1 active)
+category: Data
+---
+One pane per region. Flip through to spot the blast radius before your phone lights up.
+
+@plane z=0 label="us-east-1 🟢"
+# us-east-1 — Virginia
+**Overall: HEALTHY** — Last checked 14:37:00 UTC
+
+| Service | Status | p99 Latency | Error Rate |
+|---|---|---|---|
+| API Gateway | 🟢 OK | 42 ms | 0.01% |
+| Auth Service | 🟢 OK | 18 ms | 0.00% |
+| PostgreSQL primary | 🟢 OK | 3.1 ms | — |
+| Redis cluster | 🟢 OK | 0.8 ms | — |
+| S3 ingestion | 🟢 OK | 91 ms | 0.04% |
+| Worker fleet (48/48) | 🟢 OK | — | — |
+
+> Incident history: 0 P1s in last 30 days. SLO: 99.97% / rolling 28d actual: **99.98%**
+
+[[z=1|Check eu-west-1 →]]
+
+@plane z=1 label="eu-west-1 🟡"
+# eu-west-1 — Ireland
+**Overall: DEGRADED** — Last checked 14:37:02 UTC
+
+| Service | Status | p99 Latency | Error Rate |
+|---|---|---|---|
+| API Gateway | 🟡 SLOW | 387 ms | 0.62% |
+| Auth Service | 🟢 OK | 21 ms | 0.00% |
+| PostgreSQL primary | 🟢 OK | 4.4 ms | — |
+| Redis cluster | 🟡 SLOW | 14 ms | — |
+| S3 ingestion | 🟢 OK | 104 ms | 0.05% |
+| Worker fleet (44/48) | 🟡 4 DOWN | — | — |
+
+> **Active alert:** `eu-w1-worker-{09,17,23,31}` OOM-killed at 14:22 UTC. Restart loop since 14:28. EBS `vol-0af93c` IOPS throttled — provisioned 3000, consumed 3000 for 9 min.
+> On-call ack'd 14:34 UTC. Mitigation: volume resize in progress.
+
+[[z=0|← us-east-1]] · [[z=2|ap-southeast-1 →]]
+
+@plane z=2 label="ap-southeast-1 🔴"
+# ap-southeast-1 — Singapore
+**Overall: OUTAGE** — Last checked 14:37:05 UTC
+
+| Service | Status | p99 Latency | Error Rate |
+|---|---|---|---|
+| API Gateway | 🔴 DOWN | timeout | 100% |
+| Auth Service | 🔴 DOWN | timeout | 100% |
+| PostgreSQL primary | 🟡 READONLY | 5.1 ms | — |
+| Redis cluster | 🔴 DOWN | timeout | — |
+| S3 ingestion | 🟢 OK | 118 ms | 0.06% |
+| Worker fleet (0/16) | 🔴 ALL DOWN | — | — |
+
+> **P1 ACTIVE since 14:19 UTC** · PD incident `#INC-20483` · Bridge: [meet.corvid.io/war-room-20483]
+> Root cause: NAT Gateway `nat-0c7b3f` exhausted elastic IPs after deploy `v2.14.1` introduced connection leak in gRPC pool. 
+> Fix: rolled back to `v2.13.9` at 14:35. Recovery ETA **14:45 UTC**.
+
+[[z=1|← eu-west-1]] · [[z=3|us-west-2 →]]
+
+@plane z=3 label="us-west-2 🟢"
+# us-west-2 — Oregon
+**Overall: HEALTHY** — Last checked 14:37:08 UTC
+
+| Service | Status | p99 Latency | Error Rate |
+|---|---|---|---|
+| API Gateway | 🟢 OK | 38 ms | 0.02% |
+| Auth Service | 🟢 OK | 15 ms | 0.00% |
+| PostgreSQL replica | 🟢 OK | 2.9 ms | — |
+| Redis cluster | 🟢 OK | 0.7 ms | — |
+| S3 ingestion | 🟢 OK | 88 ms | 0.03% |
+| Worker fleet (32/32) | 🟢 OK | — | — |
+
+> Canary `v2.14.1` **held back** here pending ap-southeast-1 RCA. Good call.
+> Replication lag from us-east-1 primary: 0.3 s (normal ≤ 2 s).
+
+[[z=2|← ap-southeast-1]] · [[z=4|Global Summary →]]
+
+@plane z=4 label="Global Summary"
+# Global Summary — 2026-06-23 14:37 UTC
+
+## Blast Radius
+
+| Region | Status | Traffic Share | Impact |
+|---|---|---|---|
+| us-east-1 | 🟢 Healthy | 52% | None |
+| eu-west-1 | 🟡 Degraded | 28% | ~4% req elevated latency |
+| ap-southeast-1 | 🔴 Outage | 14% | **Full outage** |
+| us-west-2 | 🟢 Healthy | 6% | None |
+
+## Active Work
+
+- [ ] **ap-southeast-1** rollback deploy confirmed, awaiting health checks (`14:45` ETA)
+- [ ] **eu-west-1** EBS volume resize `vol-0af93c`: 3000 → 6000 IOPS (`~15 min`)
+- [ ] Post-incident review scheduled: **Wed 2026-06-25 10:00 UTC**
+
+## Global SLO (rolling 28d)
+
+```
+us-east-1    ████████████████████ 99.98%
+eu-west-1    ███████████████████░ 99.81%  ← trending down
+ap-southeast ██████████████████░░ 99.74%  ← below 99.9 SLO
+us-west-2    ████████████████████ 99.99%
+```
+
+> Next review: `fledge run slo-report --since=28d --regions=all`
+
+[[z=0|Start over: us-east-1 →]]

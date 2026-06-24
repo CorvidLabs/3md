@@ -1,0 +1,98 @@
+---
+3md: 1.0
+axis: depth
+title: The Word Falling Into Itself
+view: blend
+form: concrete poem
+subject: the word "hollow"
+note: Each plane strips the word down to its architecture. Read front to back, or let the viewer collapse it into voxels.
+category: Creative
+---
+
+A concrete poem in five depths. The word *hollow* examines itself.
+
+@plane z=0 label="Surface"
+```
+H H H H H H H H H H H H H H H
+H                             H
+H   h  o  l  l  o  w          H
+H                             H
+H H H H H H H H H H H H H H H
+```
+
+the word arrives whole,
+confident in its consonants,
+double-l standing like two posts
+of a doorframe
+no one walks through
+
+@plane z=1 label="Skin"
+```
+H   H   H   H   H   H   H   H
+  h   o   l   l   o   w      
+H   H   H   H   H   H   H   H
+                              
+H   H   H   H   H   H   H   H
+```
+
+the letters begin
+to breathe
+between themselves
+
+note the *o*—
+it has always known
+it was an opening
+
+@plane z=2 label="Structure"
+```
+H       H       H       H    
+    h       l       o        
+H       H       H       H    
+    o       l       w        
+H       H       H       H    
+```
+
+rearranged, the word
+still means itself:
+
+**h** — the small house
+**l l** — two candles
+**o o** — two eyes
+**w** — a valley seen from above
+
+@plane z=3 label="Cavity"
+```
+                             
+    h               o        
+                             
+        o   l   l            
+                    w        
+```
+
+nearly gone now.
+the letters drift
+like furniture in a room
+being slowly emptied.
+
+this is what *hollow* was
+always trying to tell you:
+the meaning
+was the space
+around the letters
+
+@plane z=4 label="Echo"
+```
+                             
+                             
+                o            
+                             
+                             
+```
+
+one *o*
+keeps the whole word
+company
+
+it does not even need
+to be read
+to mean something

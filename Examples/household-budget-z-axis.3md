@@ -1,0 +1,139 @@
+---
+3md: 1.0
+axis: section
+title: Monthly Household Budget
+view: present
+month: June 2026
+net-income: $7,840
+total-budgeted: $7,640
+total-actual: $7,318
+surplus: $522
+category: Data
+---
+One file. Every dollar. Drill from overview to actuals to savings targets.
+
+@plane z=0 label="Overview"
+# June 2026 Budget at a Glance
+
+| | Budgeted | Actual | Delta |
+|---|---|---|---|
+| **Housing** | $2,100 | $2,100 | $0 |
+| **Transportation** | $620 | $584 | **+$36** |
+| **Groceries** | $650 | $703 | -$53 |
+| **Utilities** | $310 | $287 | **+$23** |
+| **Subscriptions** | $180 | $175 | **+$5** |
+| **Dining & Fun** | $400 | $318 | **+$82** |
+| **Health** | $230 | $209 | **+$21** |
+| **Savings** | $1,500 | $1,500 | $0 |
+| **Misc / Buffer** | $650 | $442 | **+$208** |
+| **TOTAL** | **$7,640** | **$7,318** | **+$322** |
+
+**Net take-home:** $7,840 &nbsp;|&nbsp; **Unallocated surplus:** $522
+
+> Groceries ran over again. See [[z=2|line-item detail]] for the culprits.
+
+@plane z=1 label="Housing & Bills"
+# Housing & Fixed Bills
+
+## Rent / Mortgage
+- Rent (1BR, Capitol Hill): **$1,850** — paid 6/1
+
+## Insurance
+- Renters insurance (Lemonade): **$17/mo** — auto-pay
+- Health insurance (employer-split): **$133/mo** — payroll deduction
+- Dental (standalone): **$28/mo** — auto-pay
+
+## Internet & Phone
+- Comcast 400 Mbps: **$72** (promo ends Aug — renegotiate!)
+- T-Mobile Magenta: **$85** (includes partner line)
+
+**Subtotal Housing & Bills: $2,185**
+
+> - [ ] Call Comcast before Aug 15 to lock new rate
+> - [ ] Check if dental plan covers upcoming crown ($0 out-of-pocket?)
+
+@plane z=2 label="Groceries Detail"
+# Groceries — June Actuals ($703 vs $650 budget)
+
+**Overage: $53**
+
+| Date | Store | Amount | Notes |
+|---|---|---|---|
+| 6/3 | Trader Joe's | $112 | Restocking run |
+| 6/7 | QFC | $67 | Mid-week top-up |
+| 6/12 | Costco | $189 | Bulk buy — paper goods, olive oil, coffee |
+| 6/18 | Trader Joe's | $98 | Produce + wine x2 |
+| 6/22 | QFC | $44 | Forgot sunscreen — impulse snacks |
+| 6/25 | Farmers Market | $61 | Cherries, heirloom tomatoes, honey |
+| 6/28 | Trader Joe's | $132 | End-of-month refill |
+
+**Root cause:** Costco trip front-loaded ~$40 of July items (coffee, TP). True June overage closer to **$13**.
+
+> - [ ] Log Costco cross-month purchases as partial next-month credit
+> - [ ] Cap QFC mid-week runs at $50
+
+@plane z=3 label="Subscriptions"
+# Subscriptions Audit — June 2026
+
+| Service | Monthly | Annual Equiv | Last Used | Keep? |
+|---|---|---|---|---|
+| Netflix (Standard) | $17 | $204 | Daily | Yes |
+| Spotify Duo | $17 | $204 | Daily | Yes |
+| NYT All Access | $25 | $300 | 3x/week | Yes |
+| iCloud 200GB | $3 | $36 | Daily | Yes |
+| Headspace | $13 | $156 | Twice this month | **Review** |
+| Duolingo Super | $7 | $84 | Zero this month | **Cancel** |
+| Adobe Creative | $55 | $660 | Weekly | Yes |
+| GitHub Copilot | $10 | $120 | Daily | Yes |
+| Amazon Prime | $0 | $139/yr | Paid in Jan | Yes |
+| Setapp | $10 | $120 | Daily | Yes |
+
+**Monthly total: $157** (saving vs $180 budget if Duolingo cancelled: **+$7**)
+
+> - [ ] Cancel Duolingo Super by June 30 — $84/yr recovered
+> - [ ] Decide on Headspace by July 15
+
+@plane z=4 label="Savings & Goals"
+# Savings Targets — June Progress
+
+## Emergency Fund
+- Target: **$25,000** (6 months expenses)
+- Current balance: **$18,420**
+- Monthly contribution: **$500**
+- On track by: **~March 2027**
+
+## Vacation Fund (Japan trip, Oct 2027)
+- Target: **$6,500**
+- Saved so far: **$2,100**
+- Monthly contribution: **$400**
+- Gap: **$4,400** over 16 months = on track ✓
+
+## New Laptop Fund
+- Target: **$3,200** (M4 MacBook Pro)
+- Saved so far: **$1,600**
+- Monthly contribution: **$300**
+- On track by: **~November 2026**
+
+**Total savings rate this month: $1,200 / $7,840 = 15.3%**
+
+> Goal: reach 20% savings rate by Q1 2027 once emergency fund is complete — redirects $500/mo.
+
+@plane z=5 label="Trends"
+# 3-Month Spending Trends
+
+```
+Category        Apr      May      Jun      Trend
+──────────────────────────────────────────────────
+Groceries      $618     $672     $703     ↑ creeping
+Dining & Fun   $512     $445     $318     ↓ improving
+Utilities      $334     $301     $287     ↓ AC off
+Transportation $601     $598     $584     → stable
+Subscriptions  $192     $187     $175     ↓ auditing
+```
+
+**Insight:** Dining budget success is real — down $194 since April. Cooking at home is sticking.
+
+**Watch:** Groceries up $85 in 3 months. Not a crisis but worth a soft ceiling experiment in July: **$680 hard cap**, log everything.
+
+> - [ ] Set $680 grocery ceiling for July — review Aug 1
+> - [ ] Celebrate dining win — this was a deliberate change, it worked

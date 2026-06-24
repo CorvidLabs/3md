@@ -1,0 +1,173 @@
+---
+3md: 1.0
+axis: depth
+title: Dungeon Run #4471
+view: elevator
+seed: 4471
+character: Witch (Hexblade spec)
+started: 2026-06-23T02:14
+run_result: DEAD on floor 9
+category: Games
+---
+> *You descend. Each floor a new roll of the dice. Scroll down to fall deeper.*
+
+@plane z=0 label="Floor 1 — Vestibule"
+# Floor 1 — Vestibule
+**HP: 20/20** | Gold: 0 | Depth: 1
+
+You wake on cold stone. Torchlight stutters.
+
+**Room: Empty corridor.** Dust. Old blood, not yours.
+
+You find a **Rusted Dagger** +1 in a collapsed chest.
+
+- [x] Picked up Rusted Dagger
+- [ ] Found the staircase
+
+> *The walls breathe here. They always do on Floor 1.*
+
+@plane z=1 label="Floor 2 — Rat Warren"
+# Floor 2 — Rat Warren
+**HP: 17/20** | Gold: 4 | Depth: 2
+
+**Room: Nest chamber.** The rats were enormous. Three of them.
+
+You took **3 damage** — claws through the boot leather. Traded blows with the alpha until it stopped moving.
+
+Looted: `4 gold`, a `Torch x2`, and something wet you decide not to examine.
+
+**New passive unlocked:** *Vermin Sense* — you now hear rats through walls. Useful and unsettling.
+
+> *Smells like rot and old fur. You are getting good at ignoring smells.*
+
+@plane z=2 label="Floor 3 — Merchant"
+# Floor 3 — Merchant
+**HP: 17/20** | Gold: 4 | Depth: 3
+
+**Room: Wandering Merchant — Grell**
+
+Grell has three fingers and a cart that shouldn't fit in this dungeon. He doesn't explain.
+
+| Item | Cost |
+|---|---|
+| Health Potion | 6 gold |
+| Hex Scroll | 3 gold |
+| Iron Helm +2 DEF | 10 gold |
+
+You buy the **Hex Scroll** for 3 gold. You are now broke.
+
+Grell winks. "Come back if you survive floor 5."
+
+> *You will not see Grell again. This is always true.*
+
+@plane z=3 label="Floor 4 — Trap Hall"
+# Floor 4 — Trap Hall
+**HP: 12/20** | Gold: 1 | Depth: 4
+
+**Room: Pressure-plate corridor.** You spotted two. Missed the third.
+
+Dart trap: **5 damage.** The poison kind. You used the Hex Scroll to purge it — counterintuitively effective.
+
+Found a **secret door** (Vermin Sense triggered — rats avoid the east wall). Behind it: `1 gold coin` and a dead adventurer with a **journal, page 47 only.**
+
+> *"Floor 9 is wrong," the dead adventurer wrote. "The geometry doesn't add up."*
+
+@plane z=4 label="Floor 5 — Boss: Silt Golem"
+# Floor 5 — Boss: Silt Golem
+**HP: 8/20** | Gold: 1 | Depth: 5
+
+**Boss Room: Silt Golem, CR 4**
+
+Three rounds. Brutal.
+
+- **Round 1:** You hexbind its left arm. It slows. You don't.
+- **Round 2:** It regenerates. You use the last torch as a weapon. This works exactly once.
+- **Round 3:** Desperate lunge with the Rusted Dagger into the clay throat-seam. It crumbles.
+
+**Loot:** `Golem Core` (passive: +2 DEF when below 50% HP), `11 gold`, `Health Potion`.
+
+You drink the potion immediately. **HP: 16/20.**
+
+> *Your hands are full of grey silt. It takes days to wash out. You will not have days.*
+
+See [[z=7|the floor that breaks you]] if you want to skip ahead.
+
+@plane z=5 label="Floor 6 — Rest Shrine"
+# Floor 6 — Rest Shrine
+**HP: 16/20** | Gold: 12 | Depth: 6
+
+**Room: Shrine of the Hollow Saint**
+
+First rest since Floor 1. You sit. The shrine hums.
+
+**Choices (pick one):**
+- [x] **Heal to full** (HP: 20/20)
+- [ ] Level up Hexbind (longer duration)
+- [ ] Reveal Floor 7 map
+
+You heal. The practical choice. The boring choice. The alive choice.
+
+You find graffiti carved into the altar stone: *"Leif was here. Floor 8. Good luck."*
+
+Someone with your name made it further than you expected.
+
+@plane z=6 label="Floor 7 — Flooded"
+# Floor 7 — Flooded
+**HP: 20/20** | Gold: 12 | Depth: 7
+
+**Room: Flooded Tomb.** Knee-deep black water.
+
+Movement costs double. The **Golem Core** activates — you're at full HP so the +2 DEF does nothing.
+
+Two **Drowned Knights** rise. Slow, relentless, silent. You hex one, kite the other, use the pillars.
+
+**6 damage total.** HP: 14/20.
+
+Treasure chest is underwater. You hold your breath and retrieve: `Depth Chart` (reveals stairs on each floor) and a `Silver Ring` (unknown enchantment).
+
+> *The water was warm. You try not to think about why.*
+
+@plane z=7 label="Floor 8 — The Collector"
+# Floor 8 — The Collector
+**HP: 14/20** | Gold: 12 | Depth: 8
+
+**Room: The Collector's gallery.**
+
+She has been down here longer than the dungeon has existed. She collects *mistakes*. She offers a trade.
+
+> "Your Rusted Dagger — the one you've carried since Floor 1 — for my **Blade of Unmaking**."
+
+**Blade of Unmaking** stats: `+5 ATK`, `on-kill: echo the kill once`
+
+You hesitate. The dagger has killed seventeen things. It has *weight*.
+
+**You trade it.** The dagger disappears into a glass case labeled *"Attachment."*
+
+> *You immediately regret this. You will use it well anyway.*
+
+@plane z=8 label="Floor 9 — DEAD"
+# Floor 9 — The Wrong Room
+**HP: 0/20** | Gold: 12 | Depth: 9
+
+**Room: The geometry doesn't add up.**
+
+The dead adventurer was right. Floor 9 folds back on itself. The map is useless. You've been in this room before — you're sure of it — but the door behind you leads somewhere new each time.
+
+The **Lich Archivist** was waiting. Not spawned. *Waiting.* Like it knew your seed.
+
+You used the Blade of Unmaking. The echo-kill proc'd. It wasn't enough.
+
+**14 damage. Dead.**
+
+---
+
+**Run complete.**
+- Floors cleared: 8
+- Kills: 23
+- Gold unspent: 12 *(classic)*
+- Items: Blade of Unmaking, Silver Ring (still unknown), Depth Chart, Iron-nil helm you never bought
+
+**Unlock:** Hexblade Ascendant (available next run)
+
+> *The dungeon resets. Seed 4472 is already generating.*
+> *You will be back in four minutes.*

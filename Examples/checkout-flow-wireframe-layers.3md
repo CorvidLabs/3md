@@ -1,0 +1,164 @@
+---
+3md: 1.0
+axis: layer
+title: Checkout Flow: Layer by Layer
+view: elevator
+product: CorvidShop v2.4
+designer: Leif
+sprint: S-41
+last-revised: 2026-06-23
+category: Engineering
+---
+Five-step checkout dissected vertically: skeleton → structure → copy → states → annotations. Navigate layers to review each concern in isolation.
+
+@plane z=0 label="Skeleton"
+
+```
+┌─────────────────────────────────────┐
+│ ░░░░░░░░░░░   LOGO    ░░░░░░░░░░░  │
+├─────────────────────────────────────┤
+│  ①──────②──────③──────④──────⑤  │
+│  Cart   Ship   Pay   Review  Done  │
+├───────────────────┬─────────────────┤
+│                   │                 │
+│  ████████████████ │  ░░░░░░░░░░░░  │
+│  ████████████████ │  ░░░░░░░░░░░░  │
+│                   │  ──────────    │
+│  ████████████████ │  ░░░░░░░░░░░░  │
+│  ████████████████ │                │
+│                   │  ████████████  │
+└───────────────────┴─────────────────┘
+```
+
+**Layer 0 — Skeleton only.** Pure block shapes, no content. Use this frame when presenting to stakeholders who bikeshed copy — keep eyes on layout.
+
+- Left panel: form fields (2-up stacked)
+- Right panel: order summary sidebar
+- Top: step progress indicator
+
+@plane z=1 label="Structure"
+
+## Step 2 of 5 — Shipping Address
+
+**Left panel — Form**
+
+- [ ] First name / Last name (2-col)
+- [ ] Address line 1
+- [ ] Address line 2 (optional)
+- [ ] City / State / ZIP (3-col)
+- [ ] Country (dropdown)
+- [ ] `[ ] Save this address to my account`
+
+**Right panel — Order Summary**
+
+- Line items × 3
+- Subtotal row
+- Shipping row (TBD)
+- Tax row (calculated at next step)
+- **Total row (bold)**
+
+**Footer**
+
+- `← Back to Cart` (ghost button, left)
+- `Continue to Payment →` (primary CTA, right)
+
+> No copy yet — just slots. See [[z=2|Layer 2]] for real strings.
+
+@plane z=2 label="Copy"
+
+## Ship it to — where exactly?
+
+*Headline copy options (pick one):*
+
+| Option | Tone | Rec? |
+|--------|------|------|
+| "Where should we send it?" | Conversational | ✓ |
+| "Shipping Address" | Utilitarian | |
+| "Almost there — just your address" | Reassuring | maybe |
+
+**Field labels (final)**
+
+- First name → `First name`
+- Last name → `Last name`
+- Address line 2 → `Apt, suite, floor (optional)`
+- ZIP → `ZIP / Postal code`
+
+**CTA copy**
+
+- Primary: `Continue to Payment`
+- Back: `← Back`
+- Save checkbox: `Save for faster checkout next time`
+
+**Error strings**
+
+- Missing required: `This field is required.`
+- Bad ZIP: `That doesn't look like a valid ZIP code.`
+- PO Box blocked: `We can't ship to PO boxes — try a street address.`
+
+@plane z=3 label="States"
+
+## Interactive State Map
+
+### Default (empty form)
+
+- All fields blank, placeholder text visible
+- CTA disabled (greyed, `not-allowed` cursor)
+- Progress step ② active, rest inactive
+
+### In-progress (partial fill)
+
+- Filled fields show green checkmark on blur
+- CTA still disabled until all required fields valid
+- Address line 2 hides label when focused (floating label pattern)
+
+### Error state
+
+- Red border + inline message below field
+- Field scrolls into view on submit attempt
+- Screen reader: `role="alert"` on error container
+
+### Loading (after CTA tap)
+
+- CTA → spinner, label → `Checking address…`
+- Address validation API call (USPS, ~400 ms p50)
+- If suggestion returned: modal → `Did you mean 123 Main St?`
+
+### Success
+
+- Green flash on CTA
+- Animate progress bar → step ③
+- Sidebar shipping row updates from `TBD` → calculated rate
+
+> Contrast ratio for error red on white bg: **4.6:1** (meets AA). See [[z=4|annotations]] for full a11y notes.
+
+@plane z=4 label="Annotations"
+
+## Designer Notes — Sprint S-41
+
+### Open questions
+
+- [ ] **Address suggestion modal** — inline or toast? Engineering says toast is cheaper. UX says modal is safer. **Decision needed by 2026-06-25.**
+- [ ] **International flows** — ZIP field label changes per country. Currently hardcoded. Ticket #2841.
+- [ ] **Guest vs. logged-in** — Show "save address" checkbox only when logged in. Logic confirmed with backend.
+
+### Spacing tokens used
+
+| Element | Token | Value |
+|---------|-------|-------|
+| Form field gap | `--space-4` | 16 px |
+| Section padding | `--space-6` | 24 px |
+| Sidebar gap | `--space-8` | 32 px |
+
+### Accessibility
+
+- All inputs have associated `<label>` (not placeholder-only)
+- Error messages linked via `aria-describedby`
+- Progress steps use `aria-current="step"` on active item
+- CTA disabled state uses `aria-disabled="true"` + `tabindex="0"` (still focusable, explains why)
+
+### Handoff checklist
+
+- [x] Figma frame linked in #design-handoff Slack
+- [x] Motion spec: 200 ms ease-out on progress bar
+- [ ] Redline export pending
+- [ ] Dark mode pass (scheduled S-42)

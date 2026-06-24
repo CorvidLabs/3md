@@ -1,0 +1,136 @@
+---
+3md: 1.0
+axis: step
+title: Pythagorean Theorem: The Visual Proof Unfolds
+view: present
+subject: Geometry
+grade: 8–10
+theorem: a² + b² = c²
+proof-style: visual rearrangement (Bhaskara II, ~1150 CE)
+category: Education
+---
+A right triangle hides a secret. Peel back the layers to find it.
+
+@plane z=0 label="The Triangle"
+# Start Here: One Right Triangle
+
+Draw a right triangle with legs **a = 3** and **b = 4**.
+
+```
+        *
+       /|
+      / |
+   c /  | b = 4
+    /   |
+   /    |
+  *-----*
+   a = 3
+```
+
+We *know* from a ruler that **c ≈ 5**. But *why?*
+
+> "To see a proof is to understand it forever." — anonymous chalkboard, Room 214
+
+The next step builds a square from four copies of this triangle.
+
+[[z=1|Build the big square →]]
+
+@plane z=1 label="Four Copies"
+# Arrange Four Copies
+
+Take four identical (3, 4, 5) triangles. Arrange them in a **square**, each rotated 90°.
+
+```
+  +----------+
+  |*..       |
+  |  *..     |
+  |    *..   |
+  |      *.. |
+  |        * |
+  |      ..*  |
+  |    ..*    |
+  |  ..*      |
+  |..*        |
+  |*          |
+  +----------+
+```
+
+The four triangles form an outer square with side length **(a + b)**.
+
+In the middle? A **tilted square** with side length **c**.
+
+Total area of the big square: **(a + b)²**
+
+[[z=2|Count the areas →]]
+
+@plane z=2 label="Count Areas"
+# Two Ways to Count the Same Area
+
+**The big square** has area **(a + b)²**.
+
+Expand it:
+> (a + b)² = a² + 2ab + b²
+
+**The pieces inside** add up to the same thing:
+- 4 triangles × ½ab each = **2ab**
+- 1 tilted center square = **c²**
+
+So: **(a + b)² = 2ab + c²**
+
+Substitute the expansion:
+> a² + 2ab + b² = 2ab + c²
+
+Subtract **2ab** from both sides...
+
+[[z=3|The reveal →]]
+
+@plane z=3 label="The Proof"
+# ✦ a² + b² = c²
+
+That's it. The **2ab** terms cancel perfectly, and what remains is:
+
+$$a^2 + b^2 = c^2$$
+
+For our triangle: **3² + 4² = 5²** → **9 + 16 = 25** ✓
+
+This proof works for **any** right triangle — not just (3, 4, 5).
+
+The tiles rearrange. The area is conserved. The algebra falls out.
+
+> This proof is attributed to **Bhaskara II** (India, ~1150 CE). He allegedly wrote only one word beneath it: *"Behold!"*
+
+[[z=4|Try it yourself →]]
+
+@plane z=4 label="Your Turn"
+# Try These — No Calculator Needed
+
+**Warm-up:** Verify the algebra for a = 5, b = 12.
+- What is c?
+- Does 5² + 12² equal c²?
+
+**Draw it:** Sketch the four-triangle arrangement for (5, 12, 13). Label every side.
+
+**Challenge:** The proof uses *area conservation*. Can you write one sentence explaining *why* the 2ab terms vanish — without using algebra?
+
+**Extension:** What happens if the triangle is *not* right-angled? Does the center shape stay a square? Try it and see what changes.
+
+> The proof doesn't just tell you the theorem is true — it shows you **why it has to be**.
+
+[[z=0|Back to the triangle →]]
+
+@plane z=5 label="Classroom Notes"
+# Teacher Notes
+
+**Timing:** ~20 minutes for full walkthrough, 10 for review.
+
+**Common misconceptions to address:**
+- Students often think c = a + b. Ask: "What shape would four triangles make if that were true?"
+- The tilted center square surprises many — have them physically cut and rearrange paper triangles.
+
+**Physical version:** Print four congruent right triangles on cardstock. Let students arrange them freely before showing the proof.
+
+**Differentiation:**
+- *Support:* Provide a pre-drawn (a + b) × (a + b) grid
+- *Extend:* Ask students to find a *second* visual proof (the one with two squares side-by-side, credited to Euclid)
+
+**Assessment question:** "Explain in your own words why the 2ab terms cancel. What does that cancellation mean geometrically?"

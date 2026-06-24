@@ -1,0 +1,117 @@
+---
+3md: 1.0
+axis: frame
+title: Set List: Energy Arc
+view: play
+fps: 4
+bpm: 128
+venue: Monarch SF — Upstairs
+date: 2026-06-28
+category: Animation
+---
+A 90-minute set mapped as a living EQ. Each frame is one phase of the build.
+
+@plane z=0 label="Doors Open"
+```
+░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+░  ▂                            ░
+░  ▂  ▂                         ░
+░  ▃  ▂  ▂                      ░
+░  ▃  ▃  ▂  ▂                   ░
+░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+```
+**0:00 — Warm Up** · 118 BPM
+
+1. Burial — Archangel (edit)
+2. Four Tet — Sing
+3. Floating Points — LesAlpx
+
+> Low end only. Let the room fill. No rush.
+
+@plane z=1 label="First Lift"
+```
+░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+░  ▄  ▄                         ░
+░  ▄  ▄  ▄                      ░
+░  █  ▄  ▄  ▄                   ░
+░  █  █  ▄  ▄  ▄                ░
+░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+```
+**0:20 — First Lift** · 122 BPM
+
+4. Nicolas Jaar — Être
+5. Bicep — Glue (Optimo edit)
+6. Move D — Fabric 28 opener
+
+> Kick starts appearing. Watch the floor — if people move toward the booth, push.
+
+@plane z=2 label="Mid Groove"
+```
+░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+░  █  █  ▄                      ░
+░  █  █  █  ▄                   ░
+░  █  █  █  █  ▄                ░
+░  █  █  █  █  █  ▄             ░
+░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+```
+**0:40 — Mid Groove** · 125 BPM
+
+7. Peggy Gou — It Makes You Forget
+8. Midland — Final Credits
+9. Hammer — Deep Inside (Accapella blend)
+
+> This is the plateau. Sit here for 15 min. Let the bassline do the work.
+
+@plane z=3 label="The Climb"
+```
+░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+░  █  █  █  ▄                   ░
+░  █  █  █  █  █                ░
+░  █  █  █  █  █  ▄             ░
+░  █  █  █  █  █  █  ▄          ░
+░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+```
+**1:00 — The Climb** · 127 BPM
+
+10. Blawan — Getting Me Down
+11. Karenn — Battering Ram
+12. **TRANSITION:** cut filter down to 300Hz for 32 bars, then blow it open
+
+> Drop the hi-hats. Pure kick and bass. Watch people look up.
+
+@plane z=4 label="Peak"
+```
+░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+░  █  █  █  █  █  █  █  █  █   ░
+░  █  █  █  █  █  █  █  █  █   ░
+░  █  █  █  █  █  █  █  █  █   ░
+░  █  █  █  █  █  █  █  █  █   ░
+░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+```
+**1:15 — PEAK** · 128 BPM 🔴
+
+13. Surgeon — Magneze
+14. Paula Temple — Decon
+15. Ancient Methods — Stalker
+
+> Full spectrum. Every channel. Don't touch the EQ — let it breathe. This is the moment.
+
+@plane z=5 label="Cool Down"
+```
+░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+░  █  ▄  ▂                      ░
+░  █  ▄  ▂  ▂                   ░
+░  ▄  ▃  ▂  ▂                   ░
+░  ▃  ▂  ▂  ░                   ░
+░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+```
+**1:30 — Close** · 122 BPM
+
+16. Basic Channel — Phylyps Trak II
+17. Actress — Maze
+18. Theo Parrish — Falling Up (long version, let it run out)
+
+> Lower everything slowly. House lights at 10%. Let the last record play to silence.
+
+**Total: 90 min · ~54 tracks queued · 2 crates**
+---

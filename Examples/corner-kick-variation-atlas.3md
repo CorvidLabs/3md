@@ -1,0 +1,147 @@
+---
+3md: 1.0
+axis: phase
+title: Corner Kick Variation Atlas: Near-Post Flick Routines
+view: play
+sport: soccer / association football
+set_piece: corner kick
+variant: near-post flick series
+source: 2024-25 Champions League group stage, 156 corners tracked
+analyst: Leif
+tagged: UCL, set-piece, corner, near-post, xG
+category: Maps
+---
+Three-phase breakdown of the near-post flick corner — from delivery to second-ball finish. Each plane is a freeze-frame of the pitch slice around the six-yard box.
+
+@plane z=0 label="Delivery Shape"
+
+```
+         GK
+         |
+  |------+------| goal line
+  |  P3  |  P4  |
+  |      |      |
+  |  P1→ |←P2   |
+  |      |      |
+  |      |  P5  |
+  |      |      |
+  +------+------+
+         ↑
+    near post
+    
+  [C] ←— corner taker (right flank)
+```
+
+**Setup cue:** P1 and P2 run crossing routes inside the six-yard box timed to the ball leaving C's foot.
+
+| Runner | Start | Target | Timing |
+|--------|-------|--------|--------|
+| P1 | 12 yd line, near post | 5-yd arc, near post | step on contact |
+| P2 | far-post zone | near-post flick spot | -0.3 s before ball |
+| P3 | edge of box | second-ball | hold |
+| P4 | penalty spot | far post | hold until flick |
+
+**Delivery:** low, driven, 60–75 km/h, aimed at 5-yard arc (near post). Spin: inswinger from right.
+
+@plane z=1 label="Flick Contact"
+
+```
+         GK (committed near)
+         |
+  |------+------| goal line
+  |  P3→ |  P4↘ |
+  |      |      |
+  |  ★P1 |  P2↗ |   ← flick moment
+  |      |      |
+  |      |  P5  |
+  |      |      |
+  +------+------+
+    ↑ ball arrives here
+```
+
+**★ P1 flick contact point:** 5-yd mark, near-post. Head or near-side foot redirects toward far post or square across goal.
+
+> "The flick is not a shot — it is a pass to a space the GK cannot reach."
+> — coaching note, Phase 1 drill card
+
+**GK trap:** inswinger draws keeper off near post. Flick redirected far-post catches keeper mid-step.
+
+**xG at flick moment:** ~0.14 direct, ~0.31 for resulting second-ball zone (far-post six-yard box).
+
+**Variant: dummy run** — P1 dummies, ball continues to P2 arriving late near post. Triggers if GK holds position.
+
+@plane z=2 label="Second Ball"
+
+```
+         GK (scrambling)
+          \
+  |------+------| goal line
+  |      |  ★P4 |  ← tap-in zone
+  |      |   ↑  |
+  |      |  flick|
+  |  P3  |      |
+  |  (2nd ball) |
+  |      |  P5  |
+  |      |      |
+  +------+------+
+```
+
+**P4 arrival:** far-post six-yard box. Ball arrives via near-post flick within 0.8 s of corner delivery. Required: front-post block by P3 to isolate P4 from CB.
+
+**P3 role (second ball):** screens CB tracking P4. Does NOT try to score — creates 0.5-yard window.
+
+**Conversion rate (UCL 2024–25 sample):**
+
+| Outcome | Count | % |
+|---------|-------|---|
+| P4 shot on target | 14 | 39% |
+| GK catch / punch clear | 11 | 31% |
+| CB clearance | 8 | 22% |
+| Foul won (P3 screen) | 3 | 8% |
+
+**Best performers:** Man City (executed 7×, 3 goals), Atlético (5×, 2 goals + 1 pen)
+
+@plane z=3 label="Opponent Counter-Shape"
+
+```
+  DEFENDING TEAM shape vs. near-post flick
+  
+  |------+------| goal line
+  |  D1  | GK   |
+  | (post)|     |
+  |  D2  |  D3  |  ← zonal near-post block
+  |      |      |
+  |  D4  |  D5  |  ← man-mark P4 / P1
+  |      |      |
+  |  D6  |  D7  |  ← edge of box
+  +------+------+
+  
+  D8–D10: midfield press line (prevent short corner recycle)
+```
+
+**Vulnerability:** D2/D3 zonal block freezes on P1 dummy — creates gap for P2 late runner.
+
+**Exploit:** if D4 and D5 both track P1, P4 arrives at far post unmarked. Film shows this occurs ~40% of the time when defenders are set-piece naive.
+
+**Counter-counter:** pull P5 to corner short to reset; reset forces D-line to shift, reopens near-post channel. [[z=0|back to delivery shape]]
+
+@plane z=4 label="Analyst Notes"
+
+## Scouting Report Addendum
+
+**Most efficient trigger:** right-footed inswinging delivery from right corner flag. Left-footed outswinger from left flag produces ~60% of the xG value (GK not drawn as effectively).
+
+**Recommended training rep count:** 12–15 live reps per session until P1/P2 crossing runs become automatic. Timing window is 0.2 s — over-drilled is not possible.
+
+**Film timestamps (2024–25):**
+
+| Match | Minute | Outcome | Notes |
+|-------|--------|---------|-------|
+| City vs. PSG, MD2 | 67' | Goal (P4) | Textbook P3 screen |
+| Atletico vs. Bayer, MD4 | 34' | Pen (P3) | D4 over-committed |
+| City vs. Inter, MD5 | 81' | Shot saved | GK read P2 late run |
+| Atletico vs. Celtic, MD6 | 12' | Goal (P1 direct) | Dummy skipped |
+
+**Weakness to exploit next:** teams deploying a sweeper-GK (Alisson, ter Stegen) tend to stay deep — shift to late P2 run variant [[z=1|see flick contact plane]] when facing those keepers.
+
+**Open question:** does the near-post flick remain effective against hybrid man/zonal schemes? Sample too small (n=4) to conclude. Flag for Q2 analysis.

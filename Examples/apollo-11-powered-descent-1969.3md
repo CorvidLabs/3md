@@ -1,0 +1,135 @@
+---
+3md: 1.0
+axis: time
+title: Apollo 11: Powered Descent, Minute by Minute
+view: present
+epoch: 1969-07-20T20:08:16Z
+source: NASA Mission Report AS-506, Apollo 11 Technical Crew Debriefing
+category: Information
+---
+July 20, 1969. The Eagle separates from Columbia at 100 km altitude. What follows is 12 minutes and 36 seconds that change everything.
+
+@plane z=0 label="PDI — 20:08:16 UTC"
+# Powered Descent Initiation
+
+Altitude: **15,243 m** | Velocity: **1,695 m/s horizontal**
+
+The descent engine ignites at 10% throttle, then ramps to full power. Armstrong and Aldrin are lying on their backs, faces pointed toward the lunar surface below.
+
+Mission Control's guidance officer **Steve Bales**, 26 years old, watches the numbers.
+
+> "We are go for PDI." — CAPCOM Charlie Duke
+
+The computer running the descent is an AGC — Apollo Guidance Computer — with **4 KB of RAM** and a 2 MHz clock. It will make every critical decision in the next 12 minutes.
+
+**Burn duration planned:** 756 seconds
+
+@plane z=1 label="High Gate — 20:13:00 UTC"
+# High Gate: 2,400 m
+
+Altitude: **2,400 m** | Downrange: ~500 m from target
+
+The LM pitches upright. For the first time, Armstrong can see the surface through the triangular window. He has **seconds** to assess the landing zone.
+
+What he sees: the computer is guiding them into **West Crater** — a 180-meter bowl strewn with boulders the size of cars.
+
+> "That's not a good place to land." — Neil Armstrong (debriefing)
+
+He switches to **P66** — manual attitude hold — and takes the stick. He will fly the rest manually, searching for clear ground.
+
+Fuel remaining: **~8%**
+
+[[z=2|See the 1202 alarm two minutes earlier →]]
+
+@plane z=2 label="1202 Alarm — 20:14:18 UTC"
+# The 1202 Alarm
+
+*This plane jumps back 56 seconds — the crisis inside the cabin.*
+
+Altitude: **~3,000 m** | Time to landing: ~120 seconds
+
+The AGC flashes **1202: EXECUTIVE OVERFLOW**. The computer is being asked to do more than it can handle — radar data is flooding the processor.
+
+In Mission Control, 26-year-old **Jack Garman** has a handwritten cheat sheet taped to his console listing every alarm code and whether it's safe to continue.
+
+> "We're GO on that alarm." — Steve Bales to Flight Director Gene Kranz
+
+The alarm fires **four more times**. Each time: GO.
+
+The decision to continue — made in under two seconds, by a man barely old enough to rent a car — saves the mission.
+
+**1202 is a restart alarm, not a failure. The computer is prioritizing correctly.**
+
+@plane z=3 label="Low Gate — 20:17:02 UTC"
+# Low Gate: 150 m
+
+Altitude: **150 m** | Horizontal velocity: **~1 m/s** (almost zeroed)
+
+Armstrong has found a clear patch beyond West Crater. He is descending at **1 m/s vertical**, drifting slightly forward.
+
+Fuel state is now critical. Mission rules require abort if fuel drops below **2%** before touchdown.
+
+CAPCOM Charlie Duke, normally unflappable, is reading altitudes so fast his voice is clipping:
+
+> "Sixty seconds." — Duke (fuel warning: 60 seconds of hover remaining)
+
+In the LM, **Buzz Aldrin** is calling out numbers in a flat, rapid monotone:
+
+> "Forty feet, down two and a half. Picking up some dust. Thirty feet, two and a half down. Faint shadow. Four forward. Four forward. Drifting to the right a little."
+
+@plane z=4 label="Touchdown — 20:17:40 UTC"
+# Touchdown: Sea of Tranquility
+
+**Altitude: 0 m**
+**Mission Elapsed Time: 102:45:40**
+**Fuel remaining at engine cutoff: ~45 seconds**
+
+A **contact light** — one of three 5-foot probes hanging below the landing pads — touches the surface and triggers the blue light on the instrument panel.
+
+> "Contact light." — Aldrin
+
+Three seconds later, engine off. The LM settles.
+
+> "Shutdown."
+> "Okay, engine stop."
+> "Houston, Tranquility Base here. The Eagle has landed."
+
+**Twelve minutes and thirty-six seconds** from PDI to wheels down. Armstrong flew the last 100 meters by hand, to a spot he chose in real time, with less flight time on the actual vehicle than any test pilot in history.
+
+Gene Kranz, Flight Director: *"I think it was the best [landing] we could have had."*
+
+@plane z=5 label="The Numbers"
+# What the Data Says
+
+| Moment | Altitude | Fuel Remaining |
+|---|---|---|
+| PDI | 15,243 m | 100% |
+| High Gate | 2,400 m | ~12% |
+| 1202 Alarm | ~3,000 m | ~10% |
+| Low Gate | 150 m | ~4% |
+| Touchdown | 0 m | **~1.2%** |
+
+**Total burn:** 756 seconds (planned) / ~752 seconds (actual)
+**Manual flight time:** ~94 seconds
+**Distance flown past original target:** ~600 m downrange
+
+The AGC 1202 alarm has since been called *the most important two seconds in computer science history* — the moment a system correctly chose what to drop and what to keep under load, and a human trusted it.
+
+**Steve Bales** received the Presidential Medal of Freedom alongside the Apollo 11 crew. He was the youngest person ever awarded it at that time.
+
+@plane z=6 label="Primary Sources"
+# Read It Yourself
+
+**Mission transcripts (word for word):**
+- [Apollo 11 Air-to-Ground Voice Transcriptions](https://www.hq.nasa.gov/alsj/a11/a11transcript_tec.pdf) — NASA, 1969
+
+**The 1202 decision in depth:**
+- Don Eyles, *Sunburst and Luminary* (2018) — written by the MIT programmer who wrote the landing guidance code
+
+**Aldrin's altitude calls (audio):**
+- Search "Eagle has landed audio" — the 17-minute descent recording is on NASA's public archive
+
+**Jack Garman's cheat sheet:**
+- Reproduced in *Digital Apollo* by David Mindell (2008), MIT Press — the definitive technical history
+
+> "We were always aware that we were the tip of a very long spear." — Michael Collins, Command Module Pilot, orbiting 100 km above while this happened

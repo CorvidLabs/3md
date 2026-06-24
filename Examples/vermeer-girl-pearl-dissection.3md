@@ -1,0 +1,99 @@
+---
+3md: 1.0
+axis: layer
+title: Vermeer's Girl with a Pearl Earring: Layer by Layer
+view: elevator
+artist: Johannes Vermeer
+date: c. 1665
+medium: Oil on canvas
+dimensions: 44.5 × 39 cm
+location: Mauritshuis, The Hague
+accession: 670
+curator: Leif (annotated June 2026)
+category: Creative
+---
+*Peel back the canvas from varnish to ground — five centuries of craft in five layers.*
+
+@plane z=0 label="Surface: Varnish & Gaze"
+# What We First See
+
+The gaze arrests before anything else. She turns *toward* the viewer mid-motion — the Dutch call it a *tronie*, a character study, not a portrait of anyone known. No commission, no patron named.
+
+The varnish applied in 1994 (conservation, Jørgen Wadum) now reads as a warm amber cast over the blacks, which Vermeer glazed to near-total darkness — a void he used as a compositional anchor. Modern reflectography reveals he originally sketched a curtain in that corner and painted it out.
+
+**The earring** sits below and slightly *behind* her ear — physically implausible as a hung pearl, which led conservator Abbie Vandivere (2018 Scanning the Masterpiece project) to suggest it may be glass or tin, not pearl at all. The single specular highlight is just two brushstrokes.
+
+> "The background was never blank. It was a choice made twice."
+
+[[z=1|See the underdrawing →]]
+
+@plane z=1 label="Paint Layers: Wet-in-Wet"
+# Vermeer's Technique
+
+Vermeer worked **wet-in-wet** (alla prima), completing passages in single sessions before the paint could skin over. Macro X-ray fluorescence mapping (2018) confirmed:
+
+- **Flesh tones:** Lead white + smalt (cobalt-blue glass, now faded) + vermilion
+- **Yellow jacket (other works):** Suggests access to expensive pigments via his art-dealer network
+- **Ultramarine in the headscarf:** Lapis lazuli, ~25–30 particles per square millimeter — an extravagance even by 17th-century standards
+- **Black background:** Carbon black, 6–8 thin glazes, not a single opaque coat
+
+The transition from jaw to shadow (lower left cheek) contains a passage of **pure impasto lead white**, scraped and re-applied at least once. You can feel it under raking light at the Mauritshuis — a ridge 0.3 mm proud of the canvas.
+
+No pentimenti in her face. He knew exactly where she was going.
+
+[[z=2|Underdrawing & ground →]]
+
+@plane z=2 label="Underdrawing & Ground"
+# What Lies Beneath
+
+**Ground layer:** Double chalk ground (calcium carbonate), unusual for a Dutch painter of this period — most used lead white. The double ground gives Vermeer's lights their particular luminosity; the chalk scatters light back through the paint film.
+
+**Underdrawing (infrared reflectography):** Minimal. Unlike contemporaries (Rembrandt drew obsessively into his grounds), Vermeer appears to have worked almost freehand from a **camera obscura** projection. The 2001 Tim Jenison experiments and Penn State optical studies confirm the geometry is too precise for unaided freehand work at this scale.
+
+The collar — those three loose white strokes — has no underdrawing at all. Pure confidence.
+
+| Layer | Material | Thickness (μm) |
+|-------|----------|----------------|
+| Varnish | Dammar resin | 15–30 |
+| Paint (highlights) | Lead white + ultramarine | 80–120 |
+| Paint (darks) | Carbon black glazes | 20–40 each |
+| Ground (upper) | Chalk + linseed | 100 |
+| Ground (lower) | Chalk + animal glue | 150 |
+
+[[z=3|Symbolism & iconography →]]
+
+@plane z=3 label="Symbolism"
+# Reading the Painting as Language
+
+**The pearl (or glass drop):** In 17th-century Dutch iconography, pearls signal *vanitas* — beauty that fades. But they also denote *purity* and *Venus*. The ambiguity is deliberate. Vermeer painted pearl earrings in at least four works; they are never incidental.
+
+**The turban:** No Dutch woman of 1665 wore a turban. It is an *orientalist fantasy* — exotic, erotic, fictional. Vermeer is signaling: *this is art, not record*. The turban also flattens the silhouette, forcing all attention to the face and the earring.
+
+**The turned pose (contrapposto of the bust):** She is leaving, or arriving. The open mouth suggests interrupted speech — a *suspended moment* technique Vermeer borrowed from Italian *paragone* debates about whether painting could capture time better than sculpture.
+
+**What is absent:** No domestic setting, no window, no table, no allegory props. Pure person against pure dark. In Vermeer's 36 known works, this is the most stripped composition. It was probably unsellable in his lifetime — too uncommissioned, too strange.
+
+[[z=4|Restoration history →]]
+
+@plane z=4 label="Restoration: 1994 & 2018"
+# The Two Great Interventions
+
+## 1994 — Jørgen Wadum, Mauritshuis
+The painting arrived filthy: two layers of discolored varnish, old retouches over minor flake losses near the lower right, and a canvas lining applied c. 1882 that had introduced cupping distortions.
+
+- Varnish removed with isopropanol/water mixtures, under microscope
+- Old retouches lifted; losses inpainted with **Gamblin Conservation Colors** (reversible)
+- Lining stabilized but not removed
+- New Paraloid B-72 varnish applied — now a standard
+
+The cleaned painting shocked the museum. The background was not warm brown — it was **cold, almost blue-black**, dramatically changing the tonal temperature of the whole composition.
+
+## 2018 — Scanning the Masterpiece (Abbie Vandivere, lead)
+Non-invasive. MA-XRF, OCT, 3D surface scanning. Findings:
+
+- Eyelashes added late in campaign (not underdrawing)
+- Left eyebrow slightly repositioned
+- The earring: no drill hole in the ear visible — likely a clip or simply painted fiction
+- Micro-crack patterns (craquelure) consistent with age, no active flaking
+
+**Current condition:** Stable. Next examination scheduled 2029.

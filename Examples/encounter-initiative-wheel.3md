@@ -1,0 +1,159 @@
+---
+3md: 1.0
+axis: round
+title: Encounter: The Sunken Vault — Initiative Tracker
+view: present
+encounter: The Sunken Vault (Session 14)
+location: Flooded crypt, knee-deep water — difficult terrain
+party: Mira (Rogue 7), Thaddeus (Cleric 7), Oryn (Wizard 7), Brennan (Fighter 7)
+enemies: Tomb Warden x2, Drowned Revenant x1
+dc_notes: Warden AC 17, HP 84 | Revenant AC 13, HP 136 (regen 10)
+category: Games
+---
+> Advance planes to move round by round. Each plane shows the full initiative order, current HP, conditions, and DM notes for that round.
+
+@plane z=0 label="Setup / Round 0"
+
+# The Sunken Vault — Encounter Start
+
+**Terrain:** Knee-deep black water. Every 5 ft of movement costs 10 ft (difficult terrain). Open flame extinguished on entry.
+
+## Initiative Order (rolled)
+
+| # | Combatant | Init | HP | AC | Notes |
+|---|-----------|------|----|----|-------|
+| 1 | **Oryn** (Wizard) | 22 | 38 / 38 | 13 | Concentration: — |
+| 2 | **Tomb Warden A** | 19 | 84 / 84 | 17 | 60 ft darkvision |
+| 3 | **Mira** (Rogue) | 17 | 52 / 52 | 15 | Uncanny Dodge ready |
+| 4 | **Thaddeus** (Cleric) | 14 | 55 / 55 | 18 | Spiritual Weapon: — |
+| 5 | **Tomb Warden B** | 14 | 84 / 84 | 17 | Tied — monsters go last |
+| 6 | **Drowned Revenant** | 11 | 136 / 136 | 13 | Regen 10 / round |
+| 7 | **Brennan** (Fighter) | 8 | 68 / 68 | 19 | Action Surge: available |
+
+**DM SETUP NOTES**
+- Wardens start flanking the door (30 ft from party)
+- Revenant rises from water on its first turn — players don't see it yet
+- First player to move 20 ft must DC 12 Athletics or fall prone
+
+@plane z=1 label="Round 1"
+
+# Round 1
+
+## Initiative Order
+
+| # | Combatant | HP | Conditions |
+|---|-----------|----| -----------|
+| 1 | **Oryn** | 38 / 38 | — |
+| 2 | **Tomb Warden A** | 84 / 84 | — |
+| 3 | **Mira** | 52 / 52 | — |
+| 4 | **Thaddeus** | 55 / 55 | — |
+| 5 | **Tomb Warden B** | 84 / 84 | — |
+| 6 | **Drowned Revenant** | 136 / 136 | **HIDDEN** (submerged) |
+| 7 | **Brennan** | 68 / 68 | — |
+
+## DM Notes — Round 1
+
+**Oryn's turn:** Players likely open with area control — Fog Cloud or Grease useless here (water). Expect Fireball or Hold Person.
+
+**Warden A:** Multiattack, moves to engage nearest PC. Bonus: **Funerary Brand** — on hit, target makes DC 14 Con save or loses reaction until start of next turn.
+
+**Revenant turn:** Rises dramatically from the water. Describe: *"The water erupts. Something that was once a man stands, jaw unhinged, barnacles fused into its ribcage."* Uses **Corrupting Gaze** — one PC DC 15 Wis save or frightened until end of *Revenant's* next turn.
+
+> **Foreshadowing:** The water near the far altar has started spiraling. Nobody knows why yet. [[z=4|reveal in Round 3]]
+
+@plane z=2 label="Round 2"
+
+# Round 2
+
+## Initiative Order (update HP here)
+
+| # | Combatant | HP | Conditions |
+|---|-----------|----| -----------|
+| 1 | **Oryn** | ___ / 38 | — |
+| 2 | **Tomb Warden A** | ___ / 84 | — |
+| 3 | **Mira** | ___ / 52 | — |
+| 4 | **Thaddeus** | ___ / 55 | — |
+| 5 | **Tomb Warden B** | ___ / 84 | — |
+| 6 | **Drowned Revenant** | ___ / 136 | Regen 10 applies |
+| 7 | **Brennan** | ___ / 68 | — |
+
+## DM Notes — Round 2
+
+**Revenant Regen:** Add 10 HP back at start of its turn — UNLESS it took radiant or fire damage last round. Mark accordingly.
+
+**Warden Synergy (if both alive):** Wardens use **Tomb Bond** — if within 10 ft of each other, they have advantage on attack rolls. Reward players who split them up.
+
+**Thaddeus:** Spiritual Weapon should be live by now. The cleric's player will want to know the Revenant's weakness — DC 15 Religion check reveals: *"Revenants are bound to an unfulfilled obsession. Destroying the object of that obsession ends regeneration permanently."*
+
+**The Obsession Object:** A sealed iron coffer on the altar at the far end (AC 15, 22 HP). Wardens will move to protect it if threatened.
+
+> **Escalation:** Water level rises 6 inches at end of this round. Announce it ominously. No mechanical effect yet. [[z=3|effect kicks in Round 3]]
+
+@plane z=3 label="Round 3"
+
+# Round 3
+
+## Initiative Order
+
+| # | Combatant | HP | Conditions |
+|---|-----------|----| -----------|
+| 1 | **Oryn** | ___ / 38 | — |
+| 2 | **Tomb Warden A** | ___ / 84 | — |
+| 3 | **Mira** | ___ / 52 | — |
+| 4 | **Thaddeus** | ___ / 55 | — |
+| 5 | **Tomb Warden B** | ___ / 84 | — |
+| 6 | **Drowned Revenant** | ___ / 136 | Regen 10 (or stopped?) |
+| 7 | **Brennan** | ___ / 68 | — |
+
+## DM Notes — Round 3
+
+**WATER LEVEL:** Now waist-deep. Small creatures (none here, but note for future) would be swimming. Athletics checks to move are now DC 13.
+
+**Revenant enters melee:** Uses **Drowning Grasp** — grapple attack (+7), on success target begins drowning. DC 13 Athletics each turn to break. A drowning creature is incapacitated at 0 Con saves. *Very scary, very fair.*
+
+**Warden Desperation:** If one Warden is below 30 HP, the other uses its reaction for **Funerary Shroud** — the wounded Warden gains 2d10 temp HP and is surrounded by a 5 ft aura of necrotic damage (2d6, Con save DC 14 halves).
+
+**Iron Coffer reveal:** If players investigate or a Warden moves to guard it, they can now see the coffer pulses with faint blue light. History DC 12: *"Revenants in Nerath tradition were bound to a phylactery-like vessel holding their last mortal regret."*
+
+- [ ] Revenant grappling someone?
+- [ ] Coffer revealed?
+- [ ] Any PC at 0 HP?
+
+@plane z=4 label="Round 4 / End"
+
+# Round 4 — Climax & Resolution
+
+## Final Initiative
+
+| # | Combatant | HP | Conditions |
+|---|-----------|----| -----------|
+| 1 | **Oryn** | ___ / 38 | — |
+| 2 | **Tomb Warden A** | ___ / 84 | — |
+| 3 | **Mira** | ___ / 52 | — |
+| 4 | **Thaddeus** | ___ / 55 | — |
+| 5 | **Tomb Warden B** | ___ / 84 | — |
+| 6 | **Drowned Revenant** | ___ / 136 | — |
+| 7 | **Brennan** | ___ / 68 | — |
+
+## DM Notes — Round 4
+
+**Revenant at 0 HP without coffer destroyed:** It collapses, then reforms at **full HP** in 1d4 rounds. Players need to figure this out — give them a DC 10 Arcana check as a free breadcrumb if they seem stuck.
+
+**Coffer destroyed:** Revenant lets out a wail heard through two floors of the dungeon. It takes 6d8 necrotic damage (no save) and loses all regeneration. Its **Corrupting Gaze** recharges and it uses it immediately as a reaction — one last defiant scream.
+
+**Wardens surrender condition:** If the Revenant dies, both Wardens drop to one knee. They do not attack again unless attacked. They were bound to guard it — that contract is broken. *Roleplaying opportunity.*
+
+## Loot (if victorious)
+
+- Iron Coffer (if intact): 320 gp in ancient Nerathi coin, a *ring of water walking*, and a letter in Supernal — *"Forgive me, Celeste."*
+- Warden corpses: Each carries a **Funerary Seal** (spell component worth 50 gp, useful for Speak with Dead)
+
+## XP
+
+| Enemy | XP |
+|-------|----|
+| Tomb Warden x2 | 2,900 |
+| Drowned Revenant | 5,000 |
+| **Total** | **7,900 XP** |
+
+> Divided 4 ways: **1,975 XP each** — enough to push Mira and Oryn to level 8 if they're close.
