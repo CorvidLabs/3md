@@ -105,6 +105,27 @@ test.describe("<three-md> component", () => {
     expect(after, "index frozen after pause").toBe(at);
   });
 
+  test("frame animations render as a flipbook (one frame, no deck) and autoplay", async ({ page }) => {
+    await page.goto("/embed-example.html");
+    await page.waitForFunction(() => document.getElementById("inline")?.shadowRoot?.querySelectorAll(".plane").length === 3);
+    const r = await page.evaluate(() => {
+      const lab = document.getElementById("inline");
+      lab.removeAttribute("mode");
+      lab.setSource('---\n3md: 1.0\naxis: frame\nfps: 8\n---\n@plane z=0\nframe a\n@plane z=1\nframe b\n@plane z=2\nframe c\n');
+      const planes = [...lab.shadowRoot.querySelectorAll(".plane")];
+      const frameCards = lab.shadowRoot.querySelectorAll(".plane.frame").length;
+      const op = planes.map((p) => Number(getComputedStyle(p).opacity));
+      const visible = op.filter((o) => o > 0.5).length;
+      return { mode: lab._mode, playing: lab.playing, frameCards, visible, planes: planes.length };
+    });
+    // Animation auto-runs as a flipbook: exactly one frame shown, the rest hidden.
+    expect(r.mode).toBe("play");
+    expect(r.playing).toBe(true);
+    expect(r.frameCards).toBe(1);
+    expect(r.visible).toBe(1);
+    await page.evaluate(() => document.getElementById("inline").pause());
+  });
+
   test("blend mode renders content as 3D voxels", async ({ page }) => {
     const errors = [];
     page.on("pageerror", (e) => errors.push(String(e)));
