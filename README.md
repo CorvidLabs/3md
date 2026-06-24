@@ -88,6 +88,20 @@ console.log(document.axis); // "time"
 const text = serialize(document);
 ```
 
+### Rust
+
+The [`threemd`](https://crates.io/crates/threemd) crate is published on crates.io
+with zero runtime dependencies:
+
+```bash
+cargo add threemd
+```
+
+```rust
+let document = threemd::parse(source)?;
+println!("{}", document.axis); // "time"
+```
+
 ## Library usage
 
 ```swift

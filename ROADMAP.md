@@ -27,6 +27,9 @@ State confidence: 93.
   while scrubbing, every axis tab and sampled gallery entries load, and the
   console stays clean. Guards the Safari-only 3D depth regression that z-index
   masks in Chromium.
+- Publish the `threemd` crate to [crates.io](https://crates.io/crates/threemd)
+  (v1.0.0, zero runtime deps), so all three implementations are installable from
+  their native registries. A `cargo-publish` workflow keeps it in sync on release.
 
 ## 1.1 - additive tooling (the format stays frozen at 1.0)
 
@@ -50,7 +53,6 @@ conformance contract; it makes 3md easier to embed and extend.
 
 | Step | Confidence | Notes |
 |------|------------|-------|
-| Publish `threemd` to crates.io | 80 | The crate is publish-ready (`cargo publish --dry-run` is clean) but not yet on crates.io, so Rust users currently consume it as a git dependency. A `cargo-publish` workflow is in place; it needs a `CRATES_IO_TOKEN` secret, then it publishes on release like the npm package. |
 | Prebuilt CLI binaries for Homebrew | 65 | The tap formula builds from source (needs Xcode 15+). Shipping per-platform release binaries (as the other CorvidLabs formulae do) would make `brew install` fast and Xcode-free. |
 | VS Code Marketplace publish | 55 | The extension ships as a `.vsix` today; Marketplace + OpenVSX need a publisher account. Deferred until the format settles. |
 
