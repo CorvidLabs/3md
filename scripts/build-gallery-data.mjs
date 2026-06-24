@@ -17,19 +17,31 @@ export const CATEGORIES = [
 const RULES = [
   ["Entertainment", /\b(comedy|joke|stand-?up|magic|card-?trick|trick|game-?show|trivia|karaoke|movie|cinema|reality-?tv|circus|escape-?room|improv|fireworks|concert|festival|quiz|meme|talk-?show|monologue|set-?list)\b/],
   ["Games", /\b(game|chess|dungeon|quest|puzzle|catan|bracket|rpg|arcade|snake|maze|tournament|playbook|play-?by-?play|soccer|leaderboard|boss|dice)\b/],
-  ["Health", /\b(med|ecg|vitals?|workout|yoga|breath|triage|patient|heart|symptom|nutrition|recovery|therapy|fitness|marathon|wellness|sleep|pulse|dose|clinical|diagnos)\b/],
+  ["Health", /\b(med|ecg|vitals?|workout|yoga|breath|triage|patient|heart|symptom|nutrition|recovery|therapy|fitness|marathon|wellness|sleep|pulse|dose|clinical|diagnos|medication|first-?aid|cpr|milestone|training)\b/],
   ["Maps", /\b(map|itinerary|route|road-?trip|transit|seating|parking|topo|trail|metro|coast|directions|floor-?plan|dive)\b/],
-  ["Animation", /\b(animation|bounce|sprite|walk-?cycle|marquee|spinner|loading|cursor|typing|wave|beat|orbit|growth|frame)\b/],
+  ["Animation", /\b(animation|bounce|sprite|walk-?cycle|marquee|spinner|loading|cursor|typing|wave|beat|orbit|growth|frame|rain)\b/],
   ["Story", /\b(story|poem|stanza|novel|scene|comic|storyboard|fable|tale|verse|chapter|sermon|joke|punchline|toast)\b/],
-  ["Creative", /\b(art|voxel|paint|album|design-?system|music|sheet|song|melody|palette|colou?r|sketch|photo|portrait|theme)\b/],
+  ["Creative", /\b(art|voxel|paint|album|design-?system|music|sheet|song|melody|palette|colou?r|sketch|photo|portrait|theme|origami)\b/],
   ["Education", /\b(edu|lesson|syllabus|course|flash-?card|tutorial|theorem|proof|study|vocab|grammar|alphabet|periodic|quiz|learn|spanish|language|skill|translation)\b/],
-  ["Business", /\b(biz|pitch|road-?map|budget|sales|invoice|quarterly|okr|kpi|deck|startup|revenue|finance|expense|resume|strategy|proposal|funnel)\b/],
-  ["Engineering", /\b(api|schema|pipeline|migration|ci-?cd|deploy|server|rack|architecture|wireframe|dag|infra|kubernetes|database|git|threat|incident|attack|security|devops|code-?review|refactor|state-?machine|protocol|redacted)\b/],
-  ["Data", /\b(data|dashboard|forecast|weather|status|metrics?|chart|stats?|report|analytics|tide|rain|telemetry|monitor|sensor|traffic)\b/],
-  ["Home", /\b(home|recipe|latte|coffee|dinner|knit|garden|maintenance|assembly|bookshelf|grocery|wedding|household|car|dishcloth)\b/],
+  ["Business", /\b(biz|pitch|road-?map|budget|sales|invoice|quarterly|okr|kpi|deck|startup|revenue|finance|expense|resume|strategy|proposal|funnel|a-?b|ab-?variant|landing|headline|kanban|exec|executive|content-?calendar|order|fulfillment|grant)\b/],
+  ["Engineering", /\b(api|schema|pipeline|migration|ci-?cd|deploy|server|rack|architecture|wireframe|dag|infra|kubernetes|database|git|threat|incident|attack|security|devops|code-?review|refactor|state-?machine|protocol|redacted|accessibility|a11y|bug|circuit|install|onboarding)\b/],
+  ["Data", /\b(data|dashboard|forecast|weather|status|metrics?|chart|stats?|report|analytics|tide|telemetry|monitor|sensor|traffic)\b/],
+  ["Home", /\b(home|recipe|latte|coffee|dinner|knit|garden|maintenance|assembly|bookshelf|grocery|wedding|household|car|dishcloth|crop)\b/],
   ["Notes", /\b(note|journal|diary|tasting|wine|todo|checklist|planner|meeting|minutes|daily|reflection|podcast)\b/],
   ["Information", /\b(solar|history|timeline|museum|encyclopedia|fact|guide|reference|wiki|anatomy|explained|annotated|building|rocket|space)\b/],
 ];
+
+// A hand-picked set of standouts surfaced by the gallery's "Featured" filter.
+const FEATURED = new Set([
+  "3md-in-3md", "game-of-life", "478-breath-cycle", "froggy-hop-splash",
+  "corvid-voxel-ship", "crystal-mushroom-voxel", "dungeon-level-one", "dungeon-run-log",
+  "curtain-call-trivia", "forcing-the-seven", "cipher-vault-cascade",
+  "apollo-11-powered-descent-1969", "solar-system", "vermeer-girl-pearl-dissection",
+  "seed-pitch-deck-corvid", "last-train-to-oslo", "pythagoras-proof-unfolding",
+  "metro-zone-grid", "daily-planner", "seed-germination-ascii-timelapse",
+  "aurora-borealis-flipbook", "patient-vitals-shift-watch", "undercut-window",
+  "pixel-invaders-assault",
+]);
 
 function categorize(slug, title, axis, declared) {
   if (declared && CATEGORIES.includes(declared)) return declared;
@@ -54,7 +66,7 @@ for (const f of files) {
   const title = doc.title || doc.metadata.title || slug;
   const category = categorize(slug, title, doc.axis, doc.metadata.category);
   counts[category] = (counts[category] || 0) + 1;
-  out.push({ slug, axis: doc.axis, title, category, src });
+  out.push({ slug, axis: doc.axis, title, category, featured: FEATURED.has(slug), src });
 }
 writeFileSync("web/gallery-data.json", JSON.stringify(out));
 console.log(`gallery-data.json: ${out.length} entries`);

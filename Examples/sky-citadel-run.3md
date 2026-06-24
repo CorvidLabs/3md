@@ -1,0 +1,108 @@
+---
+3md: 1.0
+axis: level
+title: Sky Citadel Run
+view: parallax
+legend: .=· #=🟫 ^=🧱 ~=🌊 P=🧍 G=💎 S=🌿 C=🪨 M=⛓️ T=🌲 _=▪️ e=👾 b=🦇 k=🔑 d=🚪 X=💥 @=☁️
+difficulty: hard
+designer: Leif (Sky Citadel Series, World 4)
+category: Games
+---
+
+A crumbling citadel floats above an endless sea. Three layers: distant sky, midground ruins, and the deadly foreground floor. Navigate right to reach the gate — but the chains move.
+
+@plane z=0 label="Sky — Far Background"
+
+```
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@  @@@    @@@      @@@    @@   @@@@@     @@    @@@   @@@
+@       @@      @@      @@         @@        @@      @@@
+@@   @@      @@@    @@      @@@         @@@       @@  @@
+@       @@@      @@    @@@       @@   @@      @@@    @@@
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+```
+
+> The sky never stops breathing. Clouds drift east. You drift right.
+
+@plane z=1 label="Ruins — Midground Hazards"
+
+```
+........................................................
+....T.......b......b..........b..b..................T...
+..T...S.S.S...S.S....S.S.S.S....S.S.S.S.S...S.S.S....
+^^^^^...^^^^^...^^^^...^^^^^...^^^^^...^^^^^...^^^^^^^
+```
+
+**Bats** patrol the ruin arches. **Vines** (S) slow your jump. **Stone battlements** (^) are solid platforms.
+
+- 🦇 **Bat** — swoops in a figure-eight. Duck under on the return stroke.
+- 🌿 **Vine** — climbable but cuts horizontal speed by half.
+- 🧱 **Battlement** — land on top; hitting the side bounces you back.
+
+@plane z=2 label="Citadel Floor — Main Play Layer"
+
+```
+.......................................................
+....G..........k.....G.............................G..
+.P.....C.....M...M.....C.C.....M...M.M.....C......e..
+###^##...##^###...##^####...##^##...##^##...##^#####^
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+```
+
+**You** (P) start left. Reach the door (d) on the far right.
+
+| Symbol | Meaning | Tip |
+|--------|---------|-----|
+| 💎 G | Gem — 100 pts each | Safe to skip |
+| 🔑 k | Key — required | Grab before the door |
+| ⛓️ M | Swinging chain | Time your jump to the arc |
+| 🪨 C | Crumble block | Falls 1 s after first step |
+| 👾 e | Guard — patrols segment | Stomp or dodge under |
+| 🌊 ~ | Sea — instant death | Never touch |
+
+> **Pro move:** ride a crumble block (C) leftward off its edge — it gives you a free half-tile of extra height on the next jump.
+
+@plane z=3 label="Secret Ceiling Layer"
+
+```
+_________________________________________________
+__G_____G__________G________G___________G_______
+_________________________________________________
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+```
+
+Hidden above the main floor: a ceiling run unlocked after collecting the 🔑 key. Wall-jump the right edge of any battlement (^) to reach it.
+
+- Three bonus 💎 gems spaced across the ceiling path
+- No enemies — pure momentum puzzle
+- Rejoins the main layer at the door platform
+
+> **Secret:** the ceiling path skips the final chain (M) entirely. Worth it if you're going for S-rank time.
+
+@plane z=4 label="Boss Vestibule — The Gate"
+
+```
+..................................................
+......................................G...G...G...
+..............................................d...
+##################^###########^##########^#######
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+```
+
+The door (d) requires the key. Three final gems guard the approach — each one sits over a crumble block above the sea.
+
+**Gate conditions:**
+- [ ] Key collected from z=2
+- [ ] Guard (e) defeated or bypassed
+- [ ] Chains cleared without touching the sea
+
+```
+LEVEL CLEAR conditions
+──────────────────────
+Base time target : 90 s
+S-rank           : 55 s  (ceiling route required)
+All gems         : 8 total across all planes
+No-damage bonus  : +500 pts
+```
+
+> *The gate grinds open. Below, the sea is very far down. Ahead: World 5.*

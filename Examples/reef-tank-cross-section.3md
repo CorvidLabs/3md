@@ -1,0 +1,159 @@
+---
+3md: 1.0
+axis: depth
+title: Reef Tank Cross-Section
+view: elevator
+legend: C=🪸 F=🐟 S=🦈 T=🐠 A=🦀 U=🐙 O=🐚 G=🟩 B=🟦 W=🟫 .=·
+tank: 120-gallon reef, 48"×24"×24"
+category: Information
+---
+
+A living cross-section of a thriving reef aquarium — descend from the water surface to the sand bed.
+
+@plane z=0 label="Surface Zone (0–4 in)"
+
+## Surface Zone · *The Air–Water Interface*
+
+```
+B B B B B B B B B B B B
+B . . F . . . . F . . B
+B . . . . . . . . . . B
+B . . . . T . . . . . B
+B . . . . . . . . . . B
+B B B B B B B B B B B B
+```
+
+**Inhabitants**
+- **Clownfish** (Amphiprion ocellaris) — skimming just below the meniscus
+- **Chromis** — schooling in open water
+
+**Conditions**
+| Parameter | Value |
+|-----------|-------|
+| Light | 350 µmol/m²/s PAR |
+| Flow | High (return pump outlet) |
+| Temp | 78 °F |
+
+> Protein skimmer pulls surface film; auto top-off keeps salinity stable at 1.025.
+
+@plane z=1 label="Mid-Water (4–12 in)"
+
+## Mid-Water Column · *The Open Blue*
+
+```
+B . . . . . . . . . . B
+B . . F . . . F . . . B
+B . . . . . . . . F . B
+B . F . . T . . . . . B
+B . . . . . . F . . . B
+B . . . . . . . . . . B
+```
+
+**Inhabitants**
+- **Royal Gramma** — hovering near rockwork edges
+- **Firefish** — darting into crevices when startled
+- **Tangs** — grazing suspended algae particles
+
+**Conditions**
+| Parameter | Value |
+|-----------|-------|
+| Light | 200 µmol/m²/s PAR |
+| Flow | Moderate (wave makers) |
+| Salinity | 35 ppt |
+
+Wave makers on opposite walls create a chaotic surge — mimicking natural reef energy.
+
+@plane z=2 label="Coral Zone (12–18 in)"
+
+## Coral Zone · *The Living Architecture*
+
+```
+B . C . . C C . . C . B
+B C . C . . . C . . C B
+B . C . C . C . C . . B
+B C . . . C . . . C . B
+B . C C . . C . C . C B
+B C . . C . . C . . . B
+```
+
+**Coral Species**
+- **SPS (Small Polyp Stony)** — Acropora, Montipora demanding high flow + light
+- **LPS (Large Polyp Stony)** — Hammer, Torch, Frogspawn on shelf edges
+- **Soft Corals** — Xenia pulsing rhythmically mid-column
+
+**Conditions**
+| Parameter | Value |
+|-----------|-------|
+| Light | 120–180 µmol/m²/s PAR |
+| Alkalinity | 8.5 dKH |
+| Calcium | 440 ppm |
+| Magnesium | 1350 ppm |
+
+> Dosing two-part (Ca + Alk) maintains stability. Test twice weekly.
+
+**Coral Placement Logic**
+- [ ] SPS anchored to highest rock peaks
+- [ ] LPS on mid-level ledges (avoid flow direct hits)
+- [ ] Softies on lower sides, away from stinging LPS
+
+@plane z=3 label="Rockwork (18–22 in)"
+
+## Rockwork · *The Skeletal Reef*
+
+```
+W . W W . . W W . . W W
+W W . W W . W . W . W .
+. W W . W W . W W W . W
+W . W . . W W . . W W .
+W W . W . W . W . . W W
+. W W W W . W W W W . W
+```
+
+**What Lives in the Rock**
+- **Emerald Crabs** — cleaning algae from crevices
+- **Pistol Shrimp** — snapping in unseen tunnels
+- **Feather Dusters** — crown extended, filtering plankton
+- **Nassarius Snails** — emerging at feeding time
+
+**Live Rock Facts**
+- 80 lbs of aquacultured Reef Saver rock (lightweight, porous)
+- 3–5 year established biofilm — the invisible engine of the nitrogen cycle
+- Coralline algae (purple/pink crust) signals excellent water quality
+
+**Nitrogen Cycle — [[z=4|see sand bed]] for final stage**
+
+```
+Ammonia → Nitrite → Nitrate → (exported via refugium / water change)
+  (fish)   (Nitrosomonas) (Nitrobacter)
+```
+
+@plane z=4 label="Sand Bed (22–24 in)"
+
+## Sand Bed · *The Living Floor*
+
+```
+A . . O . . A . O . . A
+. O A . . O . . . A O .
+O . . A O . A . O . . O
+. A O . . A . O A . O .
+A . . O A . . O . A . O
+W W W W W W W W W W W W
+```
+
+**Sand Bed Crew**
+- **Nassarius Snails** — burrowing, aerating, devouring detritus
+- **Fighting Conch** — plowing furrows through the sand surface
+- **Serpent Starfish** — arms extending under rocks at night
+- **Sand-Sifting Cucumbers** — processing a tablespoon of sand per hour
+
+**Substrate Details**
+| Detail | Spec |
+|--------|------|
+| Depth | 1 inch (shallow — avoids anaerobic dead zones) |
+| Grain size | 0.5–1.0 mm aragonite |
+| Composition | CaribSea Arag-Alive |
+| Function | Biological filtration + calcium buffer |
+
+> A shallow sand bed (< 2 in) stays oxygenated throughout. Deep beds (> 4 in) risk hydrogen sulfide pockets — avoid unless you are running a specialized DSB refugium.
+
+**The bottom of the tank is the beginning of the cycle.** Detritus settles here, is processed by the clean-up crew, and the byproducts feed the corals above — back to [[z=2|the coral zone]].

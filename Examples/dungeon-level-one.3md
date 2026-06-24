@@ -1,0 +1,174 @@
+---
+3md: 1.0
+axis: level
+title: Dungeon Level One: The Sunken Vaults
+view: present
+legend: "#"=🟫 .=⬛ +=🚪 ~=🟦 $=💰 s=🪨 T=🔦 X=💀 o=🕯️ ^=⬆️ v=⬇️
+cartographer: Unknown (recovered from adventurer's pack)
+danger: Moderate
+category: Maps
+---
+
+> *You descend the crumbling stairs into cold stone air. Water drips somewhere below.*
+
+@plane z=0 label="Overview"
+
+# The Sunken Vaults — Level One
+
+A flooded dungeon beneath the ruins of Castle Morvaine. Three distinct chambers connect via narrow corridors.
+
+**Points of Interest**
+
+- **Entry Hall** — where you begin. A torch still burns.
+- **The Drowned Gallery** — partially flooded. Treasure lies beneath dark water.
+- **The Bone Antechamber** — collapsed ceiling, skeletal remains, and a locked iron door.
+- **Stairwell Down** — guarded by the remains of a warden.
+
+**Legend**
+
+| Symbol | Meaning |
+|--------|---------|
+| 🟫 | Stone wall |
+| ⬛ | Floor (walkable) |
+| 🚪 | Door |
+| 🟦 | Water (shallow) |
+| 💰 | Treasure |
+| 🪨 | Rubble / impassable |
+| 🔦 | Torch (light source) |
+| 💀 | Skeletal remains |
+| 🕯️ | Candle / altar |
+| ⬆️ | Stairs up |
+| ⬇️ | Stairs down |
+
+@plane z=1 label="Full Map"
+
+# Tile Map
+
+```
+###########################################################
+#.........#.......#.............#.........#...............#
+#.^.......+.......+.............+.........+...............#
+#.........#.......#....~~~......#.........#...X.......X...#
+###########.......#....~~~.$....#....o....#.....s.s.......#
+          #...T...#....~~~......#.........#...............#
+          #.......#.............$..o......+.....s...s.....#
+          #.......#.............#.........#..X...........X#
+          #########.....o.......#####.####.......s.s.......#
+                  #.............#   #.#  #...............#
+                  #.............#   #.#  ##########v######
+                  ###+###########   #.#
+                              #######.#
+                                    X.#
+                                   ###
+```
+
+@plane z=2 label="Entry Hall"
+
+# Room A — Entry Hall
+
+```
+###########
+#.........#
+#.^.......+
+#.........#
+###########
+```
+
+**Features:**
+- ⬆️ Stairs ascending to the surface — your escape route
+- The eastern door (+) leads to the Central Corridor
+- Walls are dry here; the air is musty but breathable
+
+**Notes:** *A rusted iron sconce holds a still-burning torch (🔦). How long has it been lit?*
+
+> Perception DC 8: The eastern door is slightly ajar. Something moved it recently.
+
+@plane z=3 label="Drowned Gallery"
+
+# Room B — The Drowned Gallery
+
+```
+#.............#
+#....~~~......#
+#....~~~.$....#
+#....~~~......#
+#.............$
+#.............#
+#.....o.......#
+```
+
+**Features:**
+- 🟦 Shallow water (3 inches) covers the northern half — **movement costs double**
+- 💰 Two treasure caches visible: one submerged, one behind a collapsed wall
+- 🕯️ A stone altar in the south, candle still lit, offerings long rotted
+
+**Submerged Treasure** *(requires wading into water)*
+
+- A waterlogged satchel containing 45 silver pieces
+- A jade ring set with a cloudy gemstone (value: 30 gp)
+
+**Loot on Altar:** Cracked ceramic vial — *Potion of Feather Fall* (still sealed)
+
+> Athletics DC 10 to retrieve sunken loot without dropping it.
+
+@plane z=4 label="Bone Antechamber"
+
+# Room C — The Bone Antechamber
+
+```
+#.........#...............#
+#.........+...X.......X...#
+#....o....#.....s.s.......#
+#.........#...............#
+#..o......+.....s...s.....#
+#.........#..X...........X#
+#####.####.......s.s.......#
+```
+
+**Features:**
+- 💀 Four skeletal remains — **2 are animated** (Skeleton, CR 1/4 each)
+- 🪨 Rubble piles block direct path; navigating costs 1 extra movement per pile
+- 🕯️ Two altar candles flicker — *someone has been here recently*
+- Locked iron door (eastern wall, not shown) — leads deeper
+
+**Encounter: Vault Skeletons**
+
+| Skeleton | HP | AC | Notes |
+|----------|----|----|-------|
+| Warden A | 13 | 13 | Near north altar |
+| Warden B | 11 | 13 | Patrols south half |
+
+**Locked Door:** Iron, DC 15 Thieves' Tools, or a key found on the warden's remains.
+
+@plane z=5 label="Stairs Down"
+
+# The Descent — Stairs to Level Two
+
+```
+##########v######
+#...............#
+#.....X.........#
+#...............#
+#################
+```
+
+**Features:**
+- ⬇️ Stone stairwell descends to **Level Two: The Fungal Depths**
+- 💀 A skeletal warden guards the landing — **armed with a rusted shortsword**
+- The air here is noticeably colder and smells faintly of mushrooms
+
+**Guardian: Warden Corpse**
+
+> *Once the dungeon's last loyal guard. He never received the order to stand down.*
+
+- HP 18 / AC 13
+- Attack: Shortsword +4, 1d6+2 piercing
+- On defeat: drops a *Dungeon Warden's Key* (opens all doors on Level One)
+
+**Choosing to Descend?**
+
+The stairs are stable. A cold draft rises from below, carrying the faint blue glow of bioluminescent spores.
+
+> *Level Two awaits. But first — have you found everything on this level?*
+
+[[z=1|Back to Full Map]]

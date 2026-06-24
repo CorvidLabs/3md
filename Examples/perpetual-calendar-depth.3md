@@ -1,0 +1,168 @@
+---
+3md: 1.0
+axis: depth
+title: Perpetual Calendar: Layers of Time
+view: elevator
+slug: perpetual-calendar-depth
+category: Engineering
+---
+
+A perpetual calendar never needs setting. It knows every month's length, leaps over leap years, and will be correct until 2100 — all through interlocking brass. Descend into it.
+
+@plane z=0 label="The Face"
+
+# What You See
+
+The watch face shows three windows and one hand.
+
+```
+┌──────────────────────────────┐
+│  MON  │   14   │  MAR        │
+│  ───  │  ────  │  ───        │
+│  day  │  date  │  month      │
+│                              │
+│           ●                  │
+│       leap year              │
+│         indicator            │
+└──────────────────────────────┘
+```
+
+The **date** ticks forward at midnight.
+The **day** jumps in sync.
+The **month** advances only when the date resets to 1.
+The **●** glows on leap years.
+
+Nothing here needs your fingers. Ever. Peer deeper to understand why.
+
+@plane z=1 label="The Date Cam"
+
+# Layer 1 — The 31-Tooth Date Wheel
+
+A disc with **31 teeth** around its edge rotates once per month. Each midnight, the movement's main gear train releases a lever that advances it one tooth.
+
+```
+Tooth positions:
+  1  2  3 ... 28  29  30  31
+  ↑
+  Today (tooth 14 faces the window)
+```
+
+The wheel itself is dumb — it just counts to 31 and resets. The *magic* that makes February end at 28 (or 29) lives one layer down.
+
+**The problem:** Months have 28, 29, 30, or 31 days. A naive wheel would always show 29, 30, 31 even in February.
+
+**The solution:** a programmable cam that *skips* teeth. ([[z=2|See the cam]])
+
+@plane z=2 label="The Annual Cam"
+
+# Layer 2 — The 48-Month Snail Cam
+
+One full rotation takes **four years** — exactly one leap cycle. Its edge is not a circle but a *snail* with 48 steps, one per month.
+
+```
+Cam profile (flattened):
+Month:  J  F  M  A  M  J  J  A  S  O  N  D  ← Year 1
+Steps: 31 28 31 30 31 30 31 31 30 31 30 31
+        ↑
+       Lever rests here, sets "end of month" stop
+
+Month:  J  F  M  A  M  J  J  A  S  O  N  D  ← Year 2
+Steps: 31 28 31 30 31 30 31 31 30 31 30 31
+
+Month:  J  F  M  A  M  J  J  A  S  O  N  D  ← Year 3
+Steps: 31 28 31 30 31 30 31 31 30 31 30 31
+
+Month:  J  F  M  A  M  J  J  A  S  O  N  D  ← Year 4 (LEAP)
+Steps: 31 [29] 31 30 31 30 31 31 30 31 30 31
+            ↑
+           One extra step cut into the cam here
+```
+
+A **finger** rests against this cam. When the date wheel tries to advance past the cam's current step, it **can't** — the finger blocks it. The month resets to 1 and the month wheel advances instead.
+
+The leap year step is simply one notch *deeper* cut into brass for February of year 4. No electronics. No software. Just geometry. ([[z=3|How the month wheel works]])
+
+@plane z=3 label="The Month Wheel"
+
+# Layer 3 — The 12-Month Wheel and Day Corrector
+
+A **12-tooth wheel** advances once per month-end event from the cam lever below. Each tooth represents one month; the window above shows the name.
+
+But days of the week are trickier. The day must stay *synchronized* with the date across month boundaries that vary in length.
+
+```
+Month-end event:
+  Date resets 31 → 1  (or 30→1, 29→1, 28→1)
+  Month wheel  +1 tooth
+  Day wheel    +N teeth  ← N varies!
+
+  28-day month: day advances  0 extra (28 = 4×7, clean)
+  29-day month: day advances +1
+  30-day month: day advances +2
+  31-day month: day advances +3
+```
+
+A **kidney-shaped corrector disc** on the month wheel encodes these offsets. As the month wheel turns, the corrector's profile pushes the day wheel's lever by 0, 1, 2, or 3 extra positions at each month boundary.
+
+28 divides evenly into weeks — so February (in non-leap years) requires *zero* correction. That is not a coincidence. It is why the Gregorian calendar was designed with February as the short month. ([[z=4|The leap year detector]])
+
+@plane z=4 label="Leap Detector"
+
+# Layer 4 — The Leap Year Detector
+
+The 48-month cam rotates once every four years. A **simple lever arm** with a follower pin rides its outer edge.
+
+```
+Year 1, 2, 3:
+  Cam outer edge is HIGH
+  Lever is pushed OUT
+  Leap indicator window: blank
+
+Year 4 (leap):
+  Cam outer edge drops into a NOTCH
+  Lever falls IN under spring tension
+  Leap indicator window: ●  (or "LEAP")
+
+February of year 4:
+  The cam's February step is one notch deeper
+  Date wheel stops at 29, not 28
+  On March 1, cam advances, notch exits, lever resets
+```
+
+The same single cam surface simultaneously:
+- Controls when each month ends (step profile)
+- Signals the leap year (notch on outer edge)
+- Extends February to 29 days (deeper February step in year 4)
+
+Three functions. One piece of brass. This is the perpetual calendar's central insight: **encode all the rules in the shape of a surface**.
+
+([[z=5|The correction problem — and 2100]])
+
+@plane z=5 label="The 2100 Problem"
+
+# Layer 5 — Why It Fails in 2100
+
+The Gregorian calendar has one more rule:
+
+> Century years (1900, 2100, 2200…) are **not** leap years,
+> *unless* divisible by 400 (2000 was a leap year).
+
+The 48-month cam encodes a *pure* 4-year cycle. It has no knowledge of centuries.
+
+```
+What the cam believes:        What the calendar requires:
+  2096 → leap ✓               2096 → leap ✓
+  2100 → leap ✗               2100 → NOT a leap year
+  2104 → leap ✓               2104 → leap ✓
+```
+
+On **28 February 2100**, every perpetual calendar watch (including yours, if it survives) will show **29 February 2100** — a date that does not exist.
+
+You will need to manually advance the date by one day.
+
+The watchmakers know this. It is printed in every perpetual calendar manual, in small type, near the back. It is the one honest admission that *no mechanism is infinite* — only very, very patient.
+
+> "A perpetual calendar corrects itself for 874 years out of every 875. The remaining one day, every century, we leave to the owner."
+> — attributed to various Swiss ateliers
+
+The cam is not a failure. It is a *deliberate tradeoff*, in brass, between complexity and longevity — the same tradeoff every watchmaker makes, plane by plane, tooth by tooth.

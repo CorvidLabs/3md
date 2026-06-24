@@ -1,0 +1,106 @@
+---
+3md: 1.0
+axis: time
+title: Balcony Garden by Season
+view: present
+legend: T=🪴 H=🌿 R=🌹 S=🌻 B=🫐 P=🌶️ L=🥬 W=🌾 E=🌱 .=⬜ ,=🟫
+category: Home
+---
+
+A 6×4 balcony grid plan. Each cell is a pot or planter slot.
+Columns 1–6 left to right, rows 1–4 front to back.
+
+@plane z=0 label="Spring"
+
+**March – May** · Cool crops, first sowings, tender herbs getting established.
+
+```
+. E E E E .
+L L H H L L
+T . R . T .
+, , , , , ,
+```
+
+| Symbol | Plant | Notes |
+|--------|-------|-------|
+| E | Seedling starts | Tomatoes, peppers — indoors still |
+| L | Lettuce mix | Direct sow, cut-and-come-again |
+| H | Herb cluster | Parsley, chives, cilantro |
+| T | Potted shrub | Blueberry in 5-gal bucket |
+| , | Soil/drainage | Bottom row = drainage tray row |
+
+- [ ] Harden off seedlings week of last frost
+- [ ] Top-dress all pots with compost
+- [ ] Install drip irrigation timer
+
+@plane z=1 label="Summer"
+
+**June – August** · Full heat, peak production, vertical climbers up the rail.
+
+```
+S S W W S S
+P P H H P P
+B . R . B .
+, , , , , ,
+```
+
+| Symbol | Plant | Notes |
+|--------|-------|-------|
+| S | Sunflower | Back rail — doubles as privacy screen |
+| W | Climbing beans | Trellis on railing, pole variety |
+| P | Chili pepper | Thrives in pots, full sun |
+| H | Basil | Peak flavor, pinch flowers weekly |
+| B | Blueberry | Netting on by July to beat birds |
+| R | Rose | Deadhead every 10 days |
+
+- [ ] Water twice daily in heat waves
+- [ ] Fertilize peppers and tomatoes weekly
+- [ ] Harvest beans every 3 days to keep producing
+
+@plane z=2 label="Autumn"
+
+**September – November** · Second cool flush, preserving, winding down.
+
+```
+. . W W . .
+L L H H L L
+T . R . T .
+, , , , , ,
+```
+
+| Symbol | Plant | Notes |
+|--------|-------|-------|
+| W | Kale / chard | Sweetens after first frost |
+| L | Arugula | Fast crop before hard freeze |
+| H | Sage, thyme | Hardy — leave out through frost |
+| T | Blueberry | Prune after leaves drop |
+| R | Rose | Final deadhead; mulch crown |
+
+- [ ] Collect seeds from peppers and sunflowers
+- [ ] Move tender herbs inside before first frost
+- [ ] Empty and store terracotta pots (freeze damage)
+
+@plane z=3 label="Winter"
+
+**December – February** · Rest, plan, sow indoors.
+
+```
+. . . . . .
+E E E E E E
+T . . . T .
+, , , , , ,
+```
+
+| Symbol | Plant | Notes |
+|--------|-------|-------|
+| E | Indoor seedling tray | On a grow-light shelf indoors |
+| T | Blueberry (dormant) | Leave outside — needs chill hours |
+| . | Empty / resting | Pots stored or turned upside-down |
+
+**Winter tasks**
+- [ ] Order seed catalogs by January 1
+- [ ] Clean and oil all hand tools
+- [ ] Sketch next year's rotation — see [[z=0|Spring plan]]
+- [ ] Start peppers and tomatoes indoors in February
+
+> **Rotation rule:** never put the same nightshade (pepper, tomato) in the same pot two years running — refresh soil or swap containers.

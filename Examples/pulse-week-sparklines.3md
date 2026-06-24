@@ -1,0 +1,144 @@
+---
+3md: 1.0
+axis: layer
+title: Pulse: A Week in Sparklines
+view: stack
+week: 2026-06-16 / 2026-06-22
+legend: 8=█ 7=▇ 6=▆ 5=▅ 4=▄ 3=▃ 2=▂ 1=▁ 0=· x=✕ o=○ f=◆ .=·
+category: Data
+---
+
+Seven days. Four signals. One pulse.
+
+Scroll the layers to move from raw numbers down to the story they tell.
+
+@plane z=0 label="Focus Hours"
+
+# Focus Hours  ·  Mon → Sun
+
+```
+Mon  Tue  Wed  Thu  Fri  Sat  Sun
+ 6h   4h   7h   5h   3h   1h   2h
+
+83838383878787878585858585838383434343433232323232
+6·6·6·6·7·7·7·7·5·5·5·5·5·3·3·3·3·1·1·1·1·2·2·2
+```
+
+| Day | Hours | Feel |
+|-----|-------|------|
+| Mon | 6 h | Solid start |
+| Tue | 4 h | Meeting drag |
+| Wed | 7 h | Peak flow |
+| Thu | 5 h | Steady |
+| Fri | 3 h | Friday fade |
+| Sat | 1 h | Side project dip |
+| Sun | 2 h | Slow warm-up |
+
+**Weekly total:** 28 h  ·  **Best day:** Wednesday  ·  **Watch:** Fri–Sat cliff
+
+@plane z=1 label="Commits"
+
+# Commits  ·  Mon → Sun
+
+```
+Mon  Tue  Wed  Thu  Fri  Sat  Sun
+  8    3   12    6    2    0    1
+
+88888888888888888888888888888888333333333333
+........................oooooo..............
+ffffffffffffffffffffffffffffffffffffffff....
+```
+
+| Day | Commits | Notes |
+|-----|---------|-------|
+| Mon | 8 | Refactor push |
+| Tue | 3 | Review day |
+| Wed | 12 | Ship it Wednesday |
+| Thu | 6 | Bug fixes |
+| Fri | 2 | One tiny hotfix |
+| Sat | 0 | Dark |
+| Sun | 1 | Readme tweak |
+
+**Weekly total:** 32  ·  **Streak:** Mon–Fri  ·  **Zero day:** Saturday
+
+> Commits mirror focus hours almost perfectly — Wednesday is your engine.
+
+@plane z=2 label="Sleep"
+
+# Sleep  ·  Mon → Sun
+
+```
+Mon  Tue  Wed  Thu  Fri  Sat  Sun
+6.5h  7h  6h  7.5h  5h  9h  8.5h
+
+676767676787878787878787876565656565656598989898988585858585
+```
+
+| Day | Sleep | Quality |
+|-----|-------|---------|
+| Mon | 6.5 h | ▆ |
+| Tue | 7.0 h | ▇ |
+| Wed | 6.0 h | ▅  late night |
+| Thu | 7.5 h | █ |
+| Fri | 5.0 h | ▄  out late |
+| Sat | 9.0 h | recovery |
+| Sun | 8.5 h | recovery |
+
+**Weekly avg:** 7.1 h  ·  **Debt:** ~1 h built Fri  ·  **Recovery:** weekend solid
+
+> Notice Wed was your best commit day *and* a short-sleep night. Unsustainable? Check [[z=3|the correlation layer]].
+
+@plane z=3 label="Energy"
+
+# Energy Index  ·  Mon → Sun
+
+Composite of focus + sleep + commits, scaled 0–10.
+
+```
+Mon  Tue  Wed  Thu  Fri  Sat  Sun
+  7    6    8    7    4    3    5
+
+878787876767676767878787878787877474747474343434345252525252
+```
+
+| Day | Index | Driver |
+|-----|-------|--------|
+| Mon | 7 | Good sleep carry |
+| Tue | 6 | Meetings cut flow |
+| Wed | 8 | Peak — everything aligned |
+| Thu | 7 | Solid follow-through |
+| Fri | 4 | Sleep debt bites |
+| Sat | 3 | Low but intentional rest |
+| Sun | 5 | Rebuilding |
+
+**Insight:** Energy and commits are nearly identical curves (r ≈ 0.93).  
+Sleep the night *before* matters more than same-night sleep.
+
+@plane z=4 label="Story"
+
+# The Week in One Read
+
+```
+         M    T    W    T    F    S    S
+Focus    ▆    ▄    █    ▅    ▃    ▁    ▂
+Commits  ▇    ▃    █    ▅    ▂    ·    ▁
+Sleep    ▆    ▇    ▅    █    ▄    ·    ·
+Energy   ▇    ▆    █    ▇    ▄    ▃    ▅
+```
+
+**The arc:**
+
+1. **Monday** — Good inertia from weekend rest
+2. **Tuesday** — Meetings tax the system
+3. **Wednesday** — Everything peaks together: the sweet spot
+4. **Thursday** — Momentum carries, but sleep hours were the real fuel
+5. **Friday** — Debt arrives; output collapses
+6. **Weekend** — Biological reset, minimal output by design
+
+**Three levers for next week:**
+
+- [ ] Protect Wednesday morning — block all meetings before noon
+- [ ] Cap Thu late work to bank sleep for Friday
+- [ ] Add one Sat commit to keep the streak alive
+
+> The numbers don't judge the week. They just show you the shape of it.

@@ -1,0 +1,113 @@
+---
+3md: 1.0
+axis: frame
+title: HELLO assembles
+view: play
+fps: 6
+slug: word-assembles-letter-by-letter
+category: Animation
+---
+
+Watch a word arrive — one glyph at a time, then hold, then dissolve.
+
+@plane z=0 label="Blank"
+
+```
+  _   _   _   _   _
+ | | | | | | | | | |
+ |_| |_| |_| |_| |_|
+
+                     
+```
+
+@plane z=1 label="H"
+
+```
+  _
+ | |__
+ |  __|
+ |_|
+      
+
+```
+
+@plane z=2 label="HE"
+
+```
+  _
+ | |__   ___
+ |  __| / _ \
+ |_|   |  __/
+       \___|
+
+```
+
+@plane z=3 label="HEL"
+
+```
+  _
+ | |__   ___   _
+ |  __| / _ \ | |
+ |_|   |  __/ | |___
+       \___|  |_____|
+
+```
+
+@plane z=4 label="HELL"
+
+```
+  _
+ | |__   ___   _    _
+ |  __| / _ \ | |  | |
+ |_|   |  __/ | |__| |
+       \___|  |_____|
+
+```
+
+@plane z=5 label="HELLO"
+
+```
+  _
+ | |__   ___   _    _    ___
+ |  __| / _ \ | |  | |  / _ \
+ |_|   |  __/ | |__| | | (_) |
+       \___|  |_____/  \___/
+
+```
+
+@plane z=6 label="HELLO ✦"
+
+```
+  _
+ | |__   ___   _    _    ___
+ |  __| / _ \ | |  | |  / _ \
+ |_|   |  __/ | |__| | | (_) |
+       \___|  |_____/  \___/
+
+          ✦  ✦  ✦
+```
+
+@plane z=7 label="Fading…"
+
+```
+  ·
+ ·····  ···  ·    ·    ···
+ ·····  · ·  ·    ·    · ·
+ ·      · ·  ·····  ·  · ·
+        ···  ·····   ···
+
+          ·  ·  ·
+```
+
+@plane z=8 label="Gone"
+
+```
+
+
+
+
+          . . .
+
+
+
+```

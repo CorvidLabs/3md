@@ -207,7 +207,7 @@ const CAT_COLORS = {
 };
 const CAT_ORDER = ["Games","Entertainment","Animation","Story","Creative","Data","Information","Education","Business","Engineering","Health","Home","Maps","Notes"];
 
-let EXAMPLES = [], activeCat = "All", query = "";
+let EXAMPLES = [], activeCat = "Featured", query = "";
 const grid = document.getElementById("grid");
 const chips = document.getElementById("chips");
 const search = document.getElementById("search");
@@ -224,10 +224,12 @@ function b64(src){
 
 function buildChips(){
   const counts = {}; for(const e of EXAMPLES) counts[e.category]=(counts[e.category]||0)+1;
+  const featured = EXAMPLES.filter(e=>e.featured).length;
   const cats = CAT_ORDER.filter(c=>counts[c]);
-  const all = [["All", EXAMPLES.length], ...cats.map(c=>[c,counts[c]])];
-  chips.innerHTML = all.map(([c,n])=>
-    `<button class="chip" type="button" role="button" data-cat="${esc(c)}" aria-pressed="${c===activeCat}">${esc(c)}<span class="n">${n}</span></button>`
+  // [catKey, label, count]
+  const all = [["Featured","★ Featured",featured], ["All","All",EXAMPLES.length], ...cats.map(c=>[c,c,counts[c]])];
+  chips.innerHTML = all.map(([key,label,n])=>
+    `<button class="chip" type="button" role="button" data-cat="${esc(key)}" aria-pressed="${key===activeCat}">${esc(label)}<span class="n">${n}</span></button>`
   ).join("");
   chips.querySelectorAll(".chip").forEach(b=>b.onclick=()=>{ activeCat=b.dataset.cat; chips.querySelectorAll(".chip").forEach(x=>x.setAttribute("aria-pressed", String(x.dataset.cat===activeCat))); render(); });
 }
@@ -235,7 +237,8 @@ function buildChips(){
 function visible(){
   const q = query.trim().toLowerCase();
   return EXAMPLES.filter(e=>{
-    if(activeCat!=="All" && e.category!==activeCat) return false;
+    if(activeCat==="Featured" && !e.featured) return false;
+    else if(activeCat!=="All" && activeCat!=="Featured" && e.category!==activeCat) return false;
     if(!q) return true;
     return `${e.title} ${e.slug} ${e.axis} ${e.category}`.toLowerCase().includes(q);
   });

@@ -1,0 +1,115 @@
+---
+3md: 1.0
+axis: layer
+title: The Vigenere Vault
+view: stack
+slug: cipher-across-planes
+category: Entertainment
+---
+
+You have broken into the Vault's antechamber. Three stone slabs hang in the air, each carved with a partial truth. Only by reading *through* all three at once will the final passphrase emerge.
+
+> "The key lives between the layers. The message lives in the gaps."
+
+---
+
+@plane z=0 label="Slab I — The Grid"
+
+```
+ A  B  C  D  E  F  G  H  I  J
+ K  L  M  N  O  P  Q  R  S  T
+ U  V  W  X  Y  Z  .  .  .  .
+```
+
+The carved inscription reads:
+
+**WKHDQVZHULV**
+
+Beneath it, etched in small letters:
+
+> *"Shift each letter back by the value of its twin on the slab below. Where you see a dot, hold your position."*
+
+- [ ] Find the shift values on Slab II
+- [ ] Apply each shift to each letter above
+- [ ] Write down your decoded letters — they are not the answer yet
+
+[[z=1|Descend to Slab II →]]
+
+---
+
+@plane z=1 label="Slab II — The Key"
+
+The second slab is warmer to the touch. Numbers are pressed into the stone in groups:
+
+```
+ 3   8   5  -  -  19   8   9  6  20
+```
+
+A note is pinned here in faded ink:
+
+> *"These are not random. They are the ordinal positions of a word — a word you already know. Speak that word and the shifts become letters. The letters become the key."*
+
+**Clue carved on the side of this slab:**
+
+> What opens every lock and closes every wound?
+
+- Ordinal 20 = T
+- Ordinal 9 = I
+- Ordinal 13 = M
+- Ordinal 5 = E
+
+Arrange: **3 · 8 · 5 · · 19 · 8 · 9 · 6 · 20**
+
+That spells: **C H E _ S H I F T**
+
+The missing value (blank) corresponds to position **5** — which is **E**.
+
+Full key: **C H E S T S H I F T**  *(but is that really all of it?)*
+
+[[z=0|Return to Slab I]] | [[z=2|Descend to Slab III →]]
+
+---
+
+@plane z=2 label="Slab III — The Cipher Wheel"
+
+```
+Outer ring (plaintext):   A B C D E F G H I J K L M N O P Q R S T U V W X Y Z
+Inner ring (cipher):      X Y Z A B C D E F G H I J K L M N O P Q R S T U V W
+```
+
+Legend for the wheel above:
+- Outer = the letter *you have after applying shifts from Slab II*
+- Inner = the letter *you read on Slab I*
+
+A brass plate reads:
+
+> *"Run the wheel in reverse. The inner ring was the message. The outer ring was the noise. Align them with the key from Slab II and read what was always here."*
+
+Apply the **CHESTSHIFT** key (C=3, H=8, E=5, S=19, T=20, S=19, H=8, I=9, F=6, T=20) to decrypt **WKHDQVZHULV**:
+
+| Cipher | Key Letter | Shift Back | Plain |
+|--------|-----------|-----------|-------|
+| W      | C (+3)     | -3        | **T** |
+| K      | H (+8)     | -8        | **C** |
+| H      | E (+5)     | -5        | **H** |
+| D      | S (+19)    | -19       | **E** |
+| Q      | T (+20)    | -20       | **S** |
+| V      | S (+19)    | -19       | **T** |
+| Z      | H (+8)     | -8        | **H** |
+| H      | I (+9)     | -9        | **I** |
+| U      | F (+6)     | -6        | **F** |
+| L      | T (+20)    | -20       | **T** |
+| V      | (repeat)   | -3        | **S** |
+
+The Vault door groans. The passphrase, hidden in the key all along, was the key *itself*:
+
+# **CHESTSHIFTS**
+
+> *The Vault does not guard treasure. It guards the understanding that the answer was always the question.*
+
+- [x] Slab I decoded
+- [x] Key reconstructed on Slab II
+- [x] Cipher wheel resolved on Slab III
+- [x] **Vault opened**
+
+[[z=0|Start Over]]

@@ -1,0 +1,146 @@
+---
+3md: 1.0
+axis: layer
+title: Mushroom Anatomy: Layer by Layer
+view: elevator
+subject: Amanita muscaria (Fly Agaric)
+category: Education
+---
+
+Peel back the layers of one of nature's most iconic fruiting bodies. Each plane reveals a new anatomical secret of *Amanita muscaria* — the scarlet sentinel of boreal forests.
+
+@plane z=0 label="Cap (Pileus)"
+
+# Cap — *Pileus*
+
+The **scarlet dome** is the mushroom's face to the world. Bright red, 8–20 cm across, studded with white warts — remnants of the universal veil that once enclosed the entire fruiting body.
+
+```
+        .  *  .
+     .  * * * *  .
+   . * *  * * *  * .
+  * * * WHITE WARTS * *
+ * *    on RED FLESH    * *
+  * * * * * * * * * * * *
+    * * * * * * * * * *
+```
+
+- **Color:** Vivid scarlet to orange-red
+- **Surface:** Sticky when wet, smooth when dry
+- **Warts:** Universal veil fragments; wash off in rain
+- **Function:** Protects the gills; signals toxicity to mammals
+
+> The color is a warning, not an invitation. The warts are cosmetic — not gills in disguise.
+
+@plane z=1 label="Gills (Lamellae)"
+
+# Gills — *Lamellae*
+
+Flip the cap and you enter a **forest of white blades** — the spore factory. *Amanita* gills are **free** (they don't attach to the stem), densely packed, and pure white even at maturity.
+
+```
+| | | | | | | | | | | | | | | | | |
+| | | | | | | | | | | | | | | | | |
+| | | | | | | | | | | | | | | | | |
+ \_________________________________/
+```
+
+- **Attachment:** Free — a key diagnostic feature of *Amanita*
+- **Color:** White throughout; never yellowing
+- **Spacing:** Crowded, with shorter intermediate lamellulae
+- **Edge:** Smooth, slightly fringed under magnification
+
+**Why it matters:** The gill surface (hymenium) is lined with millions of **basidia** — club-shaped cells each bearing exactly **4 basidiospores**. One cap can produce 10–30 *billion* spores over its lifespan.
+
+> Run your finger gently underneath. The gills feel like the pages of a tiny, damp encyclopedia.
+
+@plane z=2 label="Stem (Stipe)"
+
+# Stem — *Stipe*
+
+The **white pillar** lifting the cap into the spore-dispersing wind. In *Amanita muscaria* the stem carries two unmistakable identity markers.
+
+```
+     ________
+    |  RING  |  ← skirt-like annulus (partial veil remnant)
+    |________|
+         |
+         |   ← white, fibrous, hollow with age
+         |
+    ,----+----.
+   ( VOLVA CUP )  ← bulbous base with concentric rings
+    `----------'
+```
+
+| Feature | Description |
+|---|---|
+| **Annulus** | Skirt-like ring; partial veil remnant; fragile |
+| **Surface** | White, with shaggy scales toward base |
+| **Base** | Swollen bulb with concentric wart-rings (not a true volva cup) |
+| **Height** | 10–25 cm; thickest near the base |
+
+- **Hollow or stuffed?** Solid when young, becoming hollow with age
+- **Taste:** Mildly unpleasant — not a foraging endorsement
+- **Toxins reside here too** — ibotenic acid and muscimol throughout
+
+@plane z=3 label="Flesh & Veil"
+
+# Flesh & Universal Veil
+
+Beneath the surface lies the **trama** — the architectural tissue holding everything together. And wrapped around the infant fruiting body: the universal veil.
+
+```
+YOUNG BUTTON                  MATURE
+  ______                     ______
+ / EGG  \    →→→           /      \
+|  white |               /  RED    \
+|  solid |              |  pileus   |
+ \______/               |___________|
+  ↑                          |
+Universal veil              Veil remnants =
+fully enclosing             warts on cap +
+the button                  scales on stem
+```
+
+- **Flesh color:** White, not changing when cut (no bluing — unlike *Boletus*)
+- **Odor:** Faint, fungal, not distinctive
+- **Universal veil:** Encases the egg-stage button; tears as cap expands
+- **Partial veil:** Stretched across gills in youth; tears to leave the annulus
+
+> The warts on the cap and the rings at the stem base are the *same tissue* — you can trace the veil's life story across the whole mushroom.
+
+@plane z=4 label="Spores"
+
+# Spores — The Final Layer
+
+Invisible to the naked eye, yet the whole architecture exists to make these. *Amanita muscaria* spores are the end of one story and the seed of another.
+
+```
+SPORE PRINT COLOR: White ████████████ ░░░░ (never dark)
+
+Single spore (magnified ~400×):
+
+   ___
+  /   \
+ | · · |   ← ellipsoidal to cylindrical
+  \___/    ← smooth, thin-walled, inamyloid
+
+Size: 9–13 × 6.5–9 µm
+```
+
+**Spore characteristics — the mycologist's fingerprint:**
+
+- **Shape:** Broadly ellipsoidal, smooth
+- **Color in mass:** White
+- **Reaction:** Inamyloid (does not turn blue-black in Melzer's reagent)
+- **Germination:** Spore → mycelium → ectomycorrhizal partnership with birch or pine
+
+**Life cycle closing the loop:**
+
+1. Spore lands near a tree root
+2. Mycelium germinates, seeks root tips
+3. Forms **ectomycorrhiza** — trading minerals for sugars with the tree
+4. After years underground, conditions trigger: a new egg pushes up
+5. In 3–5 days: [[z=0|the scarlet cap]] opens again
+
+> You have now traveled from the outermost skin of the cap to the single cell that restarts the cycle. The mushroom is not the organism — it is the organism's message to the future.

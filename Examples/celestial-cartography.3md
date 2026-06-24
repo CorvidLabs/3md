@@ -1,0 +1,188 @@
+---
+3md: 1.0
+axis: layer
+title: Celestial Cartography
+view: stack
+legend: *=✦ .=· o=⭕ +=✧ @=🌟 ^=💫 ~=🌌 -=— |=│
+season: Winter Skies
+region: Northern Hemisphere
+latitude: 45°N
+category: Education
+---
+
+# Celestial Cartography
+*Stack the layers to read the winter sky like the ancients did.*
+
+@plane z=0 label="Raw Sky"
+
+```
+. . . . . . . . . . . . . . . . . . . . . . . . .
+. . . . * . . . . . . . . . . . * . . . . . . . .
+. . . . . . . . * . . . . . . . . . . . . . . . .
+. . * . . . . . . . . . . * . . . . . * . . . . .
+. . . . . . * . . . . . . . . . . . . . . . . . .
+. . . . . . . . . . . * . . . . . . . . . * . . .
+. . . . * . . . . . . . . . . . . * . . . . . . .
+. . . . . . . . . . . . . * . . . . . . . . . . .
+. . . . . . . . + . . . . . . . . . . . . . . . .
+. . * . . . . . . . . . . . . * . . . . . . * . .
+. . . . . . . . . . * . . . . . . . . . . . . . .
+. . . . . . * . . . . . . . . . . * . . . . . . .
+. . . . . . . . . . . . . . * . . . . . . . . * .
+. . * . . . . . . . * . . . . . . . . . . . . . .
+. . . . . . . . . . . . . . . . . . * . . . . . .
+. . . . . . . . . . . . * . . . . . . . . . . . .
+. . . . . * . . . . . . . . . . . . . . . * . . .
+. . . . . . . . . . . . . . . . . . . . . . . . .
+```
+
+A field of anonymous stars. Can you find the patterns?
+
+@plane z=1 label="Orion"
+
+```
+. . . . . . . . . . . . . . . . . . . . . . . . .
+. . . . * . . . . . . . . . . . * . . . . . . . .
+. . . . . . . . * . . . . . . . . . . . . . . . .
+. . * . . . . . . . . . . @ . . . . . * . . . . .
+. . . . . . * . . . . . . . . . . . . . . . . . .
+. . . . . . . . . . . * . . . . . . . . . * . . .
+. . . . * . . . . . . . . . . @ . . * . . . . . .
+. . . . . . . . . . . . . * . . . . . . . . . . .
+. . . . . . . . + . . . . . . . . . . . . . . . .
+. . * . . . . . . . . . . . . * . . . . . . * . .
+. . . . . . . . . . * . . . . . . . . . . . . . .
+. . . . . . * . . . . . . . . . . @ . . . . . . .
+. . . . . . . . . . . . . . * . . . . . . . . * .
+. . * . . . . . . . * . . . . . . . . . . . . . .
+. . . . . . . . . . . . . . . . . . * . . . . . .
+. . . . . . . . . . . . * . . . . . . . . . . . .
+. . . . . * . . . . . . . . . . . . . . . * . . .
+. . . . . . . . . . . . . . . . . . . . . . . . .
+```
+
+**Orion the Hunter** — Three bright stars form his belt (Alnitak, Alnilam, Mintaka). Betelgeuse glows red at his shoulder. Rigel blazes blue-white at his foot.
+
+- 🌟 = named star of magnitude ≤ 2.0
+- ✧ = variable or notable star
+
+@plane z=2 label="Orion Traced"
+
+```
+. . . . . . . . . . . . . . . . . . . . . . . . .
+. . . . * . . . . . . . . . . . * . . . . . . . .
+. . . . . . . . * . . . . . . . . . . . . . . . .
+. . * . . . . . . . . . . @ . . . . . * . . . . .
+. . . . . . * . . . . . . | . . . . . . . . . . .
+. . . . . . . . . . . * . | . . . . . . . * . . .
+. . . . * . . . . . . . . | . . @ . . * . . . . .
+. . . . . . . . . . . . . * . . . . . . . . . . .
+. . . . . . . . + . . . - * - - @ - - * . . . . .
+. . * . . . . . . . . . . * . . . . . . . * . . .
+. . . . . . . . . . * . . | . . . . . . . . . . .
+. . . . . . * . . . . . . | . . @ . . . . . . . .
+. . . . . . . . . . . . . | . . . . . . . . * . .
+. . * . . . . . . . * . . . . . . . . . . . . . .
+. . . . . . . . . . . . . . . . . . * . . . . . .
+. . . . . . . . . . . . * . . . . . . . . . . . .
+. . . . . * . . . . . . . . . . . . . . . * . . .
+. . . . . . . . . . . . . . . . . . . . . . . . .
+```
+
+The stick figure emerges. Belt stars connected horizontally. Body traced vertically from Betelgeuse to Rigel.
+
+> *"In winter, Orion dominates the southern sky, rising in the east around sunset and setting in the west near dawn."*
+
+@plane z=3 label="Taurus & Pleiades"
+
+```
+~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
+~ ~ ~ ~ * ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ * ~ ~ ~ ~ ~ ~ ~ ~
+~ ~ ~ ~ ~ ~ ~ ~ * ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
+~ ~ * ~ ~ ~ ~ ~ ~ ^ ^ ^ ~ @ ~ ~ ~ ~ ~ * ~ ~ ~ ~ ~
+~ ~ ~ ~ ~ ~ * ~ ^ ~ ~ ~ ^ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
+~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ * ^ ~ ~ ~ ~ ~ ~ ~ ~ * ~ ~ ~
+~ ~ ~ ~ * ~ ~ ~ ~ ~ ~ ~ @ ~ ~ @ ~ ~ * ~ ~ ~ ~ ~ ~
+~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ * ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
+~ ~ ~ ~ ~ ~ ~ ~ + ~ ~ ~ - * - - @ - - * ~ ~ ~ ~ ~
+~ * ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ * ~ ~ ~ ~ ~ ~ ~ * ~ ~ ~
+~ ~ ~ ~ ~ ~ ~ ~ ~ ~ * ~ ~ | ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
+~ ~ ~ ~ ~ ~ * ~ ~ ~ ~ ~ ~ | ~ ~ @ ~ ~ ~ ~ ~ ~ ~ ~
+~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ | ~ ~ ~ ~ ~ ~ ~ ~ * ~ ~
+~ * ~ ~ ~ ~ ~ ~ ~ * ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
+~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ * ~ ~ ~ ~ ~ ~
+~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ * ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
+~ ~ ~ ~ ~ * ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ * ~ ~ ~
+~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
+```
+
+**Taurus the Bull** flanks Orion to the northwest. The Pleiades (Seven Sisters) cluster marks his shoulder. Aldebaran, the red eye of the bull, burns fiercely.
+
+- 💫 = the Pleiades open cluster (M45)
+- The V-shape of stars is the Hyades cluster — the bull's face
+
+@plane z=4 label="Full Winter Hexagon"
+
+```
+~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
+~ ~ ~ ~ * ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ @ ~ ~ ~ ~ ~ ~ ~ ~
+~ ~ ~ ~ ~ ~ ~ ~ * ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
+~ * ~ ~ ~ ~ ~ ~ ~ ^ ^ ^ ~ @ ~ ~ ~ ~ ~ * ~ ~ ~ ~ ~
+~ ~ ~ ~ ~ ~ * ~ ^ ~ ~ ~ ^ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
+~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ * ^ ~ ~ ~ ~ ~ ~ ~ ~ * ~ ~ ~
+~ ~ ~ ~ @ ~ ~ ~ ~ ~ ~ ~ @ ~ ~ @ ~ ~ * ~ ~ ~ ~ ~ ~
+~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ * ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
+~ ~ ~ ~ ~ ~ ~ ~ @ ~ ~ ~ - * - - @ - - * ~ ~ ~ ~ ~
+~ * ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ * ~ ~ ~ ~ ~ ~ ~ * ~ ~ ~
+~ ~ ~ ~ ~ ~ ~ ~ ~ ~ * ~ ~ | ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
+~ ~ ~ ~ ~ ~ @ ~ ~ ~ ~ ~ ~ | ~ ~ @ ~ ~ ~ ~ ~ ~ ~ ~
+~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ | ~ ~ ~ ~ ~ ~ ~ ~ @ ~ ~
+~ * ~ ~ ~ ~ ~ ~ ~ * ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
+~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ @ ~ ~ ~ ~ ~ ~
+~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ * ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
+~ ~ ~ ~ @ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ * ~ ~ ~
+~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
+```
+
+**The Winter Hexagon** — six brilliant stars forming a grand asterism spanning the winter sky:
+
+| Star | Constellation | Color |
+|------|--------------|-------|
+| Sirius | Canis Major | Blue-white |
+| Procyon | Canis Minor | Yellow-white |
+| Pollux | Gemini | Orange |
+| Capella | Auriga | Yellow |
+| Aldebaran | Taurus | Orange-red |
+| Rigel | Orion | Blue-white |
+
+Orion's Betelgeuse sits at the center of the hexagon — a crimson heart for winter's crown.
+
+@plane z=5 label="Observer's Log"
+
+# Your Observation Record
+
+**Date:** _______________  
+**Location:** _______________  
+**Seeing conditions:** ☐ Poor ☐ Fair ☐ Good ☐ Excellent
+
+## Objects Found Tonight
+
+- [ ] Orion's Belt (Alnitak · Alnilam · Mintaka)
+- [ ] Betelgeuse — notice the red-orange hue?
+- [ ] Rigel — how blue-white compared to Betelgeuse?
+- [ ] M42 — the Orion Nebula (below the belt, naked eye on dark nights)
+- [ ] Pleiades — count the sisters. Most see 6; sharp eyes catch 7+
+- [ ] Aldebaran — the angry red eye of Taurus
+- [ ] Sirius — brightest star in the night sky, may twinkle wildly near the horizon
+
+## Notes
+
+> *What surprised you most?*
+
+_______________________________________________
+
+_______________________________________________
+
+> *Sketch anything unusual here on [[z=0|the blank sky plane]]*
+
+**Next session goal:** Try to trace the Winter Hexagon with your arm outstretched — it spans roughly 90° of sky.
