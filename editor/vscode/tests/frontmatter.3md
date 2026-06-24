@@ -1,0 +1,23 @@
+# SYNTAX TEST "source.3md" "frontmatter block"
+---
+#<- meta.frontmatter.3md punctuation.definition.frontmatter.begin.3md
+3md: 0.1
+#<- meta.frontmatter.3md keyword.control.frontmatter.3md
+#  ^ punctuation.separator.key-value.3md
+#     ^ string.unquoted.frontmatter.3md
+axis: time
+#<- keyword.control.frontmatter.3md
+#      ^ string.unquoted.frontmatter.3md
+title: Week of June 22
+#<- keyword.control.frontmatter.3md
+author: leif
+#<- entity.name.tag.frontmatter.3md
+#    ^ entity.name.tag.frontmatter.3md
+#     ^ punctuation.separator.key-value.3md
+#       ^ string.unquoted.frontmatter.3md
+# a comment line
+#<- comment.line.number-sign.3md punctuation.definition.comment.3md
+#   ^ comment.line.number-sign.3md
+---
+#<- meta.frontmatter.3md punctuation.definition.frontmatter.end.3md
+This is preamble Markdown, not frontmatter.

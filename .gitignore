@@ -23,3 +23,7 @@ js/dist/
 
 # Rust crate (rust/)
 rust/target/
+
+# VS Code extension (editor/vscode/)
+editor/vscode/node_modules/
+*.vsix

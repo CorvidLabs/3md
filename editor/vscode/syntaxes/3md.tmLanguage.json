@@ -1,0 +1,100 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "3md",
+  "scopeName": "source.3md",
+  "patterns": [
+    { "include": "#frontmatter" },
+    { "include": "#plane-directive" },
+    { "include": "#body" }
+  ],
+  "repository": {
+    "frontmatter": {
+      "begin": "\\A(?:\\uFEFF)?(?:\\s*\\n)*^(-{3})\\s*$",
+      "beginCaptures": {
+        "1": { "name": "punctuation.definition.frontmatter.begin.3md" }
+      },
+      "end": "^(-{3})\\s*$",
+      "endCaptures": {
+        "1": { "name": "punctuation.definition.frontmatter.end.3md" }
+      },
+      "name": "meta.frontmatter.3md",
+      "patterns": [
+        {
+          "match": "^\\s*(#).*$",
+          "captures": {
+            "0": { "name": "comment.line.number-sign.3md" },
+            "1": { "name": "punctuation.definition.comment.3md" }
+          }
+        },
+        {
+          "match": "^\\s*(3md|axis|title)\\s*(:)\\s*(.*?)\\s*$",
+          "captures": {
+            "1": { "name": "keyword.control.frontmatter.3md" },
+            "2": { "name": "punctuation.separator.key-value.3md" },
+            "3": { "name": "string.unquoted.frontmatter.3md" }
+          }
+        },
+        {
+          "match": "^\\s*([A-Za-z0-9_-]+)\\s*(:)\\s*(.*?)\\s*$",
+          "captures": {
+            "1": { "name": "entity.name.tag.frontmatter.3md" },
+            "2": { "name": "punctuation.separator.key-value.3md" },
+            "3": { "name": "string.unquoted.frontmatter.3md" }
+          }
+        }
+      ]
+    },
+    "plane-directive": {
+      "begin": "^(@plane)\\b",
+      "beginCaptures": {
+        "1": { "name": "keyword.control.directive.plane.3md" }
+      },
+      "end": "$",
+      "name": "meta.directive.plane.3md",
+      "patterns": [
+        { "include": "#plane-attribute" }
+      ]
+    },
+    "plane-attribute": {
+      "patterns": [
+        {
+          "match": "\\b(z|x|y|label)\\s*(=)\\s*(\"(?:[^\"\\\\]|\\\\.)*\")",
+          "captures": {
+            "1": { "name": "entity.other.attribute-name.plane.3md" },
+            "2": { "name": "punctuation.separator.key-value.3md" },
+            "3": { "name": "string.quoted.double.3md" }
+          }
+        },
+        {
+          "match": "\\b(z|x|y)\\s*(=)\\s*([+-]?[0-9]+(?:\\.[0-9]+)?(?:[eE][+-]?[0-9]+)?)\\b",
+          "captures": {
+            "1": { "name": "entity.other.attribute-name.plane.3md" },
+            "2": { "name": "punctuation.separator.key-value.3md" },
+            "3": { "name": "constant.numeric.3md" }
+          }
+        },
+        {
+          "match": "\\b([A-Za-z0-9_-]+)\\s*(=)\\s*(\"(?:[^\"\\\\]|\\\\.)*\")",
+          "captures": {
+            "1": { "name": "entity.other.attribute-name.plane.3md" },
+            "2": { "name": "punctuation.separator.key-value.3md" },
+            "3": { "name": "string.quoted.double.3md" }
+          }
+        },
+        {
+          "match": "\\b([A-Za-z0-9_-]+)\\s*(=)\\s*([^\\s]+)",
+          "captures": {
+            "1": { "name": "entity.other.attribute-name.plane.3md" },
+            "2": { "name": "punctuation.separator.key-value.3md" },
+            "3": { "name": "string.unquoted.plane.3md" }
+          }
+        }
+      ]
+    },
+    "body": {
+      "patterns": [
+        { "include": "text.html.markdown" }
+      ]
+    }
+  }
+}

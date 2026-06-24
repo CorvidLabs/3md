@@ -1,0 +1,23 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "3md cross-plane links",
+  "scopeName": "source.3md.links.injection",
+  "injectionSelector": "L:source.3md -comment -string -meta.directive.plane.3md -meta.frontmatter.3md",
+  "patterns": [
+    { "include": "#cross-plane-link" }
+  ],
+  "repository": {
+    "cross-plane-link": {
+      "match": "(\\[\\[)(z=)([+-]?[0-9]+(?:\\.[0-9]+)?(?:[eE][+-]?[0-9]+)?)(?:(\\|)([^\\]]*))?(\\]\\])",
+      "name": "markup.underline.link.cross-plane.3md",
+      "captures": {
+        "1": { "name": "punctuation.definition.link.begin.3md" },
+        "2": { "name": "entity.other.attribute-name.link.3md" },
+        "3": { "name": "constant.numeric.link.3md" },
+        "4": { "name": "punctuation.separator.link.3md" },
+        "5": { "name": "string.other.link.text.3md" },
+        "6": { "name": "punctuation.definition.link.end.3md" }
+      }
+    }
+  }
+}

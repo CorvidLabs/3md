@@ -1,0 +1,16 @@
+# SYNTAX TEST "source.3md" "cross-plane links"
+---
+3md: 0.1
+---
+@plane z=0 label="start"
+See [[z=2|the details]] and [[z=0]] later.
+#   ^^ markup.underline.link.cross-plane.3md punctuation.definition.link.begin.3md
+#     ^^ markup.underline.link.cross-plane.3md entity.other.attribute-name.link.3md
+#       ^ markup.underline.link.cross-plane.3md constant.numeric.link.3md
+#        ^ markup.underline.link.cross-plane.3md punctuation.separator.link.3md
+#         ^^^^^^^^^^^ markup.underline.link.cross-plane.3md string.other.link.text.3md
+#                    ^^ markup.underline.link.cross-plane.3md punctuation.definition.link.end.3md
+#                           ^^ markup.underline.link.cross-plane.3md punctuation.definition.link.begin.3md
+#                             ^^ markup.underline.link.cross-plane.3md entity.other.attribute-name.link.3md
+#                               ^ markup.underline.link.cross-plane.3md constant.numeric.link.3md
+#                                ^^ markup.underline.link.cross-plane.3md punctuation.definition.link.end.3md

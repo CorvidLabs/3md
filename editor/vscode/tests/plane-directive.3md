@@ -1,0 +1,19 @@
+# SYNTAX TEST "source.3md" "@plane directive"
+---
+3md: 0.1
+---
+@plane z=0 label="Monday" x=1.5 mood=happy
+#<- keyword.control.directive.plane.3md
+#^^^^^ keyword.control.directive.plane.3md
+#      ^ entity.other.attribute-name.plane.3md
+#       ^ punctuation.separator.key-value.3md
+#        ^ constant.numeric.3md
+#          ^^^^ entity.other.attribute-name.plane.3md
+#               ^ punctuation.separator.key-value.3md
+#                ^^^^^^^^ string.quoted.double.3md
+#                         ^ entity.other.attribute-name.plane.3md
+#                          ^ punctuation.separator.key-value.3md
+#                           ^^^ constant.numeric.3md
+#                               ^^^^ entity.other.attribute-name.plane.3md
+#                                   ^ punctuation.separator.key-value.3md
+#                                    ^^^^^ string.unquoted.plane.3md

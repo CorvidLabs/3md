@@ -1,0 +1,18 @@
+# SYNTAX TEST "source.3md" "markdown body content"
+---
+3md: 0.1
+---
+@plane z=0 label="demo"
+# Monday
+#<- markup.heading.markdown punctuation.definition.heading.markdown
+#  ^^^^^^ entity.name.section.markdown
+
+Body text with **bold** words.
+
+```bash
+#<- markup.fenced_code.block.markdown punctuation.definition.markdown
+#   ^^^^ fenced_code.block.language
+echo hi
+#^^^^^^ markup.fenced_code.block.markdown
+```
+#<- markup.fenced_code.block.markdown punctuation.definition.markdown

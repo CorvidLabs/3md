@@ -1,0 +1,8 @@
+.vscode/**
+tests/**
+node_modules/**
+bun.lock
+bun.lockb
+.vscode-tmgrammar-test.json
+**/*.vsix
+**/.DS_Store

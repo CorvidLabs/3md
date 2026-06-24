@@ -1,0 +1,65 @@
+{
+  "name": "threemd",
+  "displayName": "3md",
+  "description": "Syntax highlighting for the 3md format (Markdown extended along a Z axis of planes).",
+  "version": "0.1.0",
+  "publisher": "corvidlabs",
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "keywords": [
+    "3md",
+    "markdown",
+    "planes",
+    "syntax highlighting"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/CorvidLabs/3md",
+    "directory": "editor/vscode"
+  },
+  "homepage": "https://github.com/CorvidLabs/3md/tree/main/editor/vscode",
+  "bugs": {
+    "url": "https://github.com/CorvidLabs/3md/issues"
+  },
+  "contributes": {
+    "languages": [
+      {
+        "id": "3md",
+        "extensions": [
+          ".3md"
+        ],
+        "aliases": [
+          "3md"
+        ],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "3md",
+        "scopeName": "source.3md",
+        "path": "./syntaxes/3md.tmLanguage.json"
+      },
+      {
+        "scopeName": "source.3md.links.injection",
+        "path": "./syntaxes/3md-links.injection.json",
+        "injectTo": [
+          "source.3md"
+        ]
+      }
+    ]
+  },
+  "scripts": {
+    "test": "vscode-tmgrammar-test -g syntaxes/3md.tmLanguage.json -g syntaxes/3md-links.injection.json -g tests/grammars/markdown.tmLanguage.json \"tests/*.3md\"",
+    "package": "vsce package"
+  },
+  "devDependencies": {
+    "@vscode/vsce": "^2.24.0",
+    "vscode-tmgrammar-test": "^0.1.3"
+  }
+}
