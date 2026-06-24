@@ -1,0 +1,1037 @@
+---
+3md: 1.0
+axis: example
+title: 3md Examples Gallery (animated)
+view: single
+note: each plane shows one example as an animated GIF; scrub to flip through them
+---
+Every example, captured in motion. Use the slider or arrows to step through; the
+"single card" view shows one at a time. Each frame is a real render of that
+example in the <three-md> component.
+
+@plane z=0 label="3md, explained in 3md" slug="3md-in-3md" axis="section"
+## 3md, explained in 3md
+section - 3md-in-3md
+
+![3md, explained in 3md](./gifs/3md-in-3md.gif)
+
+@plane z=1 label="Landing Headline A/B/C Test" slug="ab-variants" axis="version"
+## Landing Headline A/B/C Test
+version - ab-variants
+
+![Landing Headline A/B/C Test](./gifs/ab-variants.gif)
+
+@plane z=2 label="Accessible Figure - Tidal Marsh at Dawn" slug="accessibility" axis="layer"
+## Accessible Figure - Tidal Marsh at Dawn
+layer - accessibility
+
+![Accessible Figure - Tidal Marsh at Dawn](./gifs/accessibility.gif)
+
+@plane z=3 label="Bouncing dot" slug="animation" axis="frame"
+## Bouncing dot
+frame - animation
+
+![Bouncing dot](./gifs/animation.gif)
+
+@plane z=4 label="Mutual Non-Disclosure Agreement - Annotated" slug="annotated-contract" axis="layer"
+## Mutual Non-Disclosure Agreement - Annotated
+layer - annotated-contract
+
+![Mutual Non-Disclosure Agreement - Annotated](./gifs/annotated-contract.gif)
+
+@plane z=5 label="Maplewood Court - Unit Stack (Line 04)" slug="apartment-stack" axis="floor"
+## Maplewood Court - Unit Stack (Line 04)
+floor - apartment-stack
+
+![Maplewood Court - Unit Stack (Line 04)](./gifs/apartment-stack.gif)
+
+@plane z=6 label="Pigeon Payments API" slug="api-overview" axis="depth"
+## Pigeon Payments API
+depth - api-overview
+
+![Pigeon Payments API](./gifs/api-overview.gif)
+
+@plane z=7 label="Payments API across v1, v2, and v3" slug="api-versions" axis="version"
+## Payments API across v1, v2, and v3
+version - api-versions
+
+![Payments API across v1, v2, and v3](./gifs/api-versions.gif)
+
+@plane z=8 label="Nocturne Atlas - Track Listing" slug="art-album" axis="time"
+## Nocturne Atlas - Track Listing
+time - art-album
+
+![Nocturne Atlas - Track Listing](./gifs/art-album.gif)
+
+@plane z=9 label="The Last Lighthouse" slug="art-comic-strip" axis="panel"
+## The Last Lighthouse
+panel - art-comic-strip
+
+![The Last Lighthouse](./gifs/art-comic-strip.gif)
+
+@plane z=10 label="Corvid Design System - Layer Stack" slug="art-design-system" axis="layer"
+## Corvid Design System - Layer Stack
+layer - art-design-system
+
+![Corvid Design System - Layer Stack](./gifs/art-design-system.gif)
+
+@plane z=11 label="ASCII Loading Spinner" slug="art-loading-spinner" axis="frame"
+## ASCII Loading Spinner
+frame - art-loading-spinner
+
+![ASCII Loading Spinner](./gifs/art-loading-spinner.gif)
+
+@plane z=12 label="Tide Tables" slug="art-poem-stanzas" axis="stanza"
+## Tide Tables
+stanza - art-poem-stanzas
+
+![Tide Tables](./gifs/art-poem-stanzas.gif)
+
+@plane z=13 label="Ode to Joy - First Phrase" slug="art-sheet-music" axis="measure"
+## Ode to Joy - First Phrase
+measure - art-sheet-music
+
+![Ode to Joy - First Phrase](./gifs/art-sheet-music.gif)
+
+@plane z=14 label="Storyboard - The Courier" slug="art-storyboard" axis="shot"
+## Storyboard - The Courier
+shot - art-storyboard
+
+![Storyboard - The Courier](./gifs/art-storyboard.gif)
+
+@plane z=15 label="Voxel Heart - 3D Sculpture" slug="art-voxel-heart" axis="depth"
+## Voxel Heart - 3D Sculpture
+depth - art-voxel-heart
+
+![Voxel Heart - 3D Sculpture](./gifs/art-voxel-heart.gif)
+
+@plane z=16 label="Infant Developmental Milestones by Month" slug="baby-milestones" axis="time"
+## Infant Developmental Milestones by Month
+time - baby-milestones
+
+![Infant Developmental Milestones by Month](./gifs/baby-milestones.gif)
+
+@plane z=17 label="Invoice 2026-0417" slug="biz-invoice" axis="section"
+## Invoice 2026-0417
+section - biz-invoice
+
+![Invoice 2026-0417](./gifs/biz-invoice.gif)
+
+@plane z=18 label="2026 Company OKRs" slug="biz-okrs" axis="time"
+## 2026 Company OKRs
+time - biz-okrs
+
+![2026 Company OKRs](./gifs/biz-okrs.gif)
+
+@plane z=19 label="Helio Software Org Chart" slug="biz-org-chart" axis="layer"
+## Helio Software Org Chart
+layer - biz-org-chart
+
+![Helio Software Org Chart](./gifs/biz-org-chart.gif)
+
+@plane z=20 label="Q2 Profit and Loss" slug="biz-pnl" axis="time"
+## Q2 Profit and Loss
+time - biz-pnl
+
+![Q2 Profit and Loss](./gifs/biz-pnl.gif)
+
+@plane z=21 label="Product Roadmap 2026" slug="biz-roadmap" axis="time"
+## Product Roadmap 2026
+time - biz-roadmap
+
+![Product Roadmap 2026](./gifs/biz-roadmap.gif)
+
+@plane z=22 label="Q2 Sales Funnel" slug="biz-sales-funnel" axis="stage"
+## Q2 Sales Funnel
+stage - biz-sales-funnel
+
+![Q2 Sales Funnel](./gifs/biz-sales-funnel.gif)
+
+@plane z=23 label="NVDA Weekly Watch" slug="biz-stock-watch" axis="time"
+## NVDA Weekly Watch
+time - biz-stock-watch
+
+![NVDA Weekly Watch](./gifs/biz-stock-watch.gif)
+
+@plane z=24 label="Bouncing Ball ASCII Animation" slug="bouncing-ball" axis="frame"
+## Bouncing Ball ASCII Animation
+frame - bouncing-ball
+
+![Bouncing Ball ASCII Animation](./gifs/bouncing-ball.gif)
+
+@plane z=25 label="The Lifecycle of a Bug" slug="bug-lifecycle" axis="status"
+## The Lifecycle of a Bug
+status - bug-lifecycle
+
+![The Lifecycle of a Bug](./gifs/bug-lifecycle.gif)
+
+@plane z=26 label="The 21 Card Trick" slug="card-trick" axis="step"
+## The 21 Card Trick
+step - card-trick
+
+![The 21 Card Trick](./gifs/card-trick.gif)
+
+@plane z=27 label="threemd Release History" slug="changelog" axis="time"
+## threemd Release History
+time - changelog
+
+![threemd Release History](./gifs/changelog.gif)
+
+@plane z=28 label="The Ruy Lopez, Move by Move" slug="chess-opening" axis="space"
+## The Ruy Lopez, Move by Move
+space - chess-opening
+
+![The Ruy Lopez, Move by Move](./gifs/chess-opening.gif)
+
+@plane z=29 label="Simple Circuit Board Component Layout" slug="circuit-board" axis="space"
+## Simple Circuit Board Component Layout
+space - circuit-board
+
+![Simple Circuit Board Component Layout](./gifs/circuit-board.gif)
+
+@plane z=30 label="Code Review - RateLimiter.swift (PR #482)" slug="code-review" axis="layer"
+## Code Review - RateLimiter.swift (PR #482)
+layer - code-review
+
+![Code Review - RateLimiter.swift (PR #482)](./gifs/code-review.gif)
+
+@plane z=31 label="Build a URL Shortener in Python" slug="coding-tutorial" axis="slide"
+## Build a URL Shortener in Python
+slide - coding-tutorial
+
+![Build a URL Shortener in Python](./gifs/coding-tutorial.gif)
+
+@plane z=32 label="The Last Slice" slug="comic-panels" axis="frame"
+## The Last Slice
+frame - comic-panels
+
+![The Last Slice](./gifs/comic-panels.gif)
+
+@plane z=33 label="Helmsman Product Roadmap (FY2026)" slug="company-roadmap" axis="time"
+## Helmsman Product Roadmap (FY2026)
+time - company-roadmap
+
+![Helmsman Product Roadmap (FY2026)](./gifs/company-roadmap.gif)
+
+@plane z=34 label="Content Production Pipeline" slug="content-calendar" axis="status"
+## Content Production Pipeline
+status - content-calendar
+
+![Content Production Pipeline](./gifs/content-calendar.gif)
+
+@plane z=35 label="Holloway v. Meridian Freight - Case Timeline" slug="court-timeline" axis="time"
+## Holloway v. Meridian Freight - Case Timeline
+time - court-timeline
+
+![Holloway v. Meridian Freight - Case Timeline](./gifs/court-timeline.gif)
+
+@plane z=36 label="Four-Season Crop Rotation Plan" slug="crop-rotation" axis="time"
+## Four-Season Crop Rotation Plan
+time - crop-rotation
+
+![Four-Season Crop Rotation Plan](./gifs/crop-rotation.gif)
+
+@plane z=37 label="Week of June 22" slug="daily-planner" axis="time"
+## Week of June 22
+time - daily-planner
+
+![Week of June 22](./gifs/daily-planner.gif)
+
+@plane z=38 label="Salsa Basic Step (On1, Cross-Body Lead Foundation)" slug="dance-steps" axis="step"
+## Salsa Basic Step (On1, Cross-Body Lead Foundation)
+step - dance-steps
+
+![Salsa Basic Step (On1, Cross-Body Lead Foundation)](./gifs/dance-steps.gif)
+
+@plane z=39 label="API Request Lifecycle: POST /v1/orders" slug="data-api-lifecycle" axis="step"
+## API Request Lifecycle: POST /v1/orders
+step - data-api-lifecycle
+
+![API Request Lifecycle: POST /v1/orders](./gifs/data-api-lifecycle.gif)
+
+@plane z=40 label="Halcyon DC-2 - Rack Layout by Row" slug="data-center" axis="floor"
+## Halcyon DC-2 - Rack Layout by Row
+floor - data-center
+
+![Halcyon DC-2 - Rack Layout by Row](./gifs/data-center.gif)
+
+@plane z=41 label="CI/CD Pipeline for api-gateway" slug="data-cicd-pipeline" axis="stage"
+## CI/CD Pipeline for api-gateway
+stage - data-cicd-pipeline
+
+![CI/CD Pipeline for api-gateway](./gifs/data-cicd-pipeline.gif)
+
+@plane z=42 label="Database Migration Sequence" slug="data-db-migrations" axis="version"
+## Database Migration Sequence
+version - data-db-migrations
+
+![Database Migration Sequence](./gifs/data-db-migrations.gif)
+
+@plane z=43 label="File Transfer Manifest for release-2.4.0" slug="data-file-transfer" axis="step"
+## File Transfer Manifest for release-2.4.0
+step - data-file-transfer
+
+![File Transfer Manifest for release-2.4.0](./gifs/data-file-transfer.gif)
+
+@plane z=44 label="Portable Folder: tempo-cli" slug="data-folder-as-file" axis="layer"
+## Portable Folder: tempo-cli
+layer - data-folder-as-file
+
+![Portable Folder: tempo-cli](./gifs/data-folder-as-file.gif)
+
+@plane z=45 label="Commit History for feature/auth-rework" slug="data-git-history" axis="time"
+## Commit History for feature/auth-rework
+time - data-git-history
+
+![Commit History for feature/auth-rework](./gifs/data-git-history.gif)
+
+@plane z=46 label="Server Rack and Network Map: Rack B" slug="data-server-rack" axis="space"
+## Server Rack and Network Map: Rack B
+space - data-server-rack
+
+![Server Rack and Network Map: Rack B](./gifs/data-server-rack.gif)
+
+@plane z=47 label="7-Day Forecast for Portland, OR" slug="data-weather-forecast" axis="time"
+## 7-Day Forecast for Portland, OR
+time - data-weather-forecast
+
+![7-Day Forecast for Portland, OR](./gifs/data-weather-forecast.gif)
+
+@plane z=48 label="Helios Analytics - Live Product Demo" slug="demo-script" axis="slide"
+## Helios Analytics - Live Product Demo
+slide - demo-script
+
+![Helios Analytics - Live Product Demo](./gifs/demo-script.gif)
+
+@plane z=49 label="Checkout Service Deployment Pipeline" slug="deploy-stages" axis="status"
+## Checkout Service Deployment Pipeline
+status - deploy-stages
+
+![Checkout Service Deployment Pipeline](./gifs/deploy-stages.gif)
+
+@plane z=50 label="Corvid Coffee Logo, v1 through v5" slug="design-iterations" axis="version"
+## Corvid Coffee Logo, v1 through v5
+version - design-iterations
+
+![Corvid Coffee Logo, v1 through v5](./gifs/design-iterations.gif)
+
+@plane z=51 label="The Sunken Foundry - Difficulty Layers" slug="difficulty-modes" axis="layer"
+## The Sunken Foundry - Difficulty Layers
+layer - difficulty-modes
+
+![The Sunken Foundry - Difficulty Layers](./gifs/difficulty-modes.gif)
+
+@plane z=52 label="The Sunken Vault" slug="dungeon" axis="space"
+## The Sunken Vault
+space - dungeon
+
+![The Sunken Vault](./gifs/dungeon.gif)
+
+@plane z=53 label="The Animal Cell in Layers" slug="edu-animal-cell-layers" axis="layer"
+## The Animal Cell in Layers
+layer - edu-animal-cell-layers
+
+![The Animal Cell in Layers](./gifs/edu-animal-cell-layers.gif)
+
+@plane z=54 label="The Periodic Table by Period" slug="edu-periodic-table-periods" axis="period"
+## The Periodic Table by Period
+period - edu-periodic-table-periods
+
+![The Periodic Table by Period](./gifs/edu-periodic-table-periods.gif)
+
+@plane z=55 label="Photosynthesis Unit Plan" slug="edu-photosynthesis-unit" axis="time"
+## Photosynthesis Unit Plan
+time - edu-photosynthesis-unit
+
+![Photosynthesis Unit Plan](./gifs/edu-photosynthesis-unit.gif)
+
+@plane z=56 label="Projectile Motion Frame by Frame" slug="edu-projectile-motion" axis="frame"
+## Projectile Motion Frame by Frame
+frame - edu-projectile-motion
+
+![Projectile Motion Frame by Frame](./gifs/edu-projectile-motion.gif)
+
+@plane z=57 label="The Solar System Outward" slug="edu-solar-system" axis="depth"
+## The Solar System Outward
+depth - edu-solar-system
+
+![The Solar System Outward](./gifs/edu-solar-system.gif)
+
+@plane z=58 label="Proof That Root 2 Is Irrational" slug="edu-sqrt2-irrational-proof" axis="step"
+## Proof That Root 2 Is Irrational
+step - edu-sqrt2-irrational-proof
+
+![Proof That Root 2 Is Irrational](./gifs/edu-sqrt2-irrational-proof.gif)
+
+@plane z=59 label="Acid-Base Titration Procedure" slug="edu-titration-procedure" axis="step"
+## Acid-Base Titration Procedure
+step - edu-titration-procedure
+
+![Acid-Base Titration Procedure](./gifs/edu-titration-procedure.gif)
+
+@plane z=60 label="Major Events in the Evolution of Life" slug="evolution-timeline" axis="time"
+## Major Events in the Evolution of Life
+time - evolution-timeline
+
+![Major Events in the Evolution of Life](./gifs/evolution-timeline.gif)
+
+@plane z=61 label="Q2 FY2026 Business Review - Northwind Cloud" slug="exec-summary" axis="depth"
+## Q2 FY2026 Business Review - Northwind Cloud
+depth - exec-summary
+
+![Q2 FY2026 Business Review - Northwind Cloud](./gifs/exec-summary.gif)
+
+@plane z=62 label="Measuring the Vitamin C Content of Orange Juice by Iodometric Titration" slug="experiment" axis="step"
+## Measuring the Vitamin C Content of Orange Juice by Iodometric Titration
+step - experiment
+
+![Measuring the Vitamin C Content of Orange Juice by Iodometric Titration](./gifs/experiment.gif)
+
+@plane z=63 label="The Hollis Family Tree" slug="family-tree" axis="depth"
+## The Hollis Family Tree
+depth - family-tree
+
+![The Hollis Family Tree](./gifs/family-tree.gif)
+
+@plane z=64 label="Self-Hosting Backups FAQ" slug="faq-deepdive" axis="depth"
+## Self-Hosting Backups FAQ
+depth - faq-deepdive
+
+![Self-Hosting Backups FAQ](./gifs/faq-deepdive.gif)
+
+@plane z=65 label="Fireworks Burst" slug="fireworks" axis="frame"
+## Fireworks Burst
+frame - fireworks
+
+![Fireworks Burst](./gifs/fireworks.gif)
+
+@plane z=66 label="Adult CPR First Aid" slug="first-aid" axis="step"
+## Adult CPR First Aid
+step - first-aid
+
+![Adult CPR First Aid](./gifs/first-aid.gif)
+
+@plane z=67 label="Maple Cottage - Floor Plan" slug="floor-plan" axis="space"
+## Maple Cottage - Floor Plan
+space - floor-plan
+
+![Maple Cottage - Floor Plan](./gifs/floor-plan.gif)
+
+@plane z=68 label="Assembling the BJORKLUND 3-Drawer Dresser" slug="furniture-assembly" axis="step"
+## Assembling the BJORKLUND 3-Drawer Dresser
+step - furniture-assembly
+
+![Assembling the BJORKLUND 3-Drawer Dresser](./gifs/furniture-assembly.gif)
+
+@plane z=69 label="Octahedron Slices" slug="game-3d-diamond" axis="depth"
+## Octahedron Slices
+depth - game-3d-diamond
+
+![Octahedron Slices](./gifs/game-3d-diamond.gif)
+
+@plane z=70 label="Bouncing Ball" slug="game-bouncing-ball" axis="frame"
+## Bouncing Ball
+frame - game-bouncing-ball
+
+![Bouncing Ball](./gifs/game-bouncing-ball.gif)
+
+@plane z=71 label="The Italian Game" slug="game-chess-opening" axis="step"
+## The Italian Game
+step - game-chess-opening
+
+![The Italian Game](./gifs/game-chess-opening.gif)
+
+@plane z=72 label="The Hedge Maze" slug="game-maze" axis="space"
+## The Hedge Maze
+space - game-maze
+
+![The Hedge Maze](./gifs/game-maze.gif)
+
+@plane z=73 label="Conway's Game of Life" slug="game-of-life" axis="frame"
+## Conway's Game of Life
+frame - game-of-life
+
+![Conway's Game of Life](./gifs/game-of-life.gif)
+
+@plane z=74 label="Sky Ruins, Level 1-1" slug="game-platformer-map" axis="space"
+## Sky Ruins, Level 1-1
+space - game-platformer-map
+
+![Sky Ruins, Level 1-1](./gifs/game-platformer-map.gif)
+
+@plane z=75 label="Rocket Launch" slug="game-rocket-launch" axis="frame"
+## Rocket Launch
+frame - game-rocket-launch
+
+![Rocket Launch](./gifs/game-rocket-launch.gif)
+
+@plane z=76 label="Snake" slug="game-snake" axis="frame"
+## Snake
+frame - game-snake
+
+![Snake](./gifs/game-snake.gif)
+
+@plane z=77 label="The Lighthouse at Gale Point" slug="game-text-adventure" axis="space"
+## The Lighthouse at Gale Point
+space - game-text-adventure
+
+![The Lighthouse at Gale Point](./gifs/game-text-adventure.gif)
+
+@plane z=78 label="Tic-Tac-Toe, X Wins" slug="game-tic-tac-toe" axis="step"
+## Tic-Tac-Toe, X Wins
+step - game-tic-tac-toe
+
+![Tic-Tac-Toe, X Wins](./gifs/game-tic-tac-toe.gif)
+
+@plane z=79 label="Raised Bed Garden Layout (4 ft x 8 ft)" slug="garden-layout" axis="space"
+## Raised Bed Garden Layout (4 ft x 8 ft)
+space - garden-layout
+
+![Raised Bed Garden Layout (4 ft x 8 ft)](./gifs/garden-layout.gif)
+
+@plane z=80 label="Earth's Geological Eras" slug="geological-eras" axis="time"
+## Earth's Geological Eras
+time - geological-eras
+
+![Earth's Geological Eras](./gifs/geological-eras.gif)
+
+@plane z=81 label="Grant Application Pipeline" slug="grant-stages" axis="status"
+## Grant Application Pipeline
+status - grant-stages
+
+![Grant Application Pipeline](./gifs/grant-stages.gif)
+
+@plane z=82 label="EKG Heartbeat ASCII Animation" slug="heartbeat" axis="frame"
+## EKG Heartbeat ASCII Animation
+frame - heartbeat
+
+![EKG Heartbeat ASCII Animation](./gifs/heartbeat.gif)
+
+@plane z=83 label="Senior Backend Engineer - Hiring Funnel" slug="hiring-pipeline" axis="status"
+## Senior Backend Engineer - Hiring Funnel
+status - hiring-pipeline
+
+![Senior Backend Engineer - Hiring Funnel](./gifs/hiring-pipeline.gif)
+
+@plane z=84 label="Key Eras of Ancient Rome" slug="history-of-rome" axis="time"
+## Key Eras of Ancient Rome
+time - history-of-rome
+
+![Key Eras of Ancient Rome](./gifs/history-of-rome.gif)
+
+@plane z=85 label="BILLY Bookcase Assembly" slug="home-bookshelf-assembly" axis="step"
+## BILLY Bookcase Assembly
+step - home-bookshelf-assembly
+
+![BILLY Bookcase Assembly](./gifs/home-bookshelf-assembly.gif)
+
+@plane z=86 label="Car Maintenance Schedule" slug="home-car-maintenance" axis="mileage"
+## Car Maintenance Schedule
+mileage - home-car-maintenance
+
+![Car Maintenance Schedule](./gifs/home-car-maintenance.gif)
+
+@plane z=87 label="Catan First-Game Walkthrough" slug="home-catan-walkthrough" axis="step"
+## Catan First-Game Walkthrough
+step - home-catan-walkthrough
+
+![Catan First-Game Walkthrough](./gifs/home-catan-walkthrough.gif)
+
+@plane z=88 label="Diagonal Garter Dishcloth" slug="home-dishcloth-knit" axis="row"
+## Diagonal Garter Dishcloth
+row - home-dishcloth-knit
+
+![Diagonal Garter Dishcloth](./gifs/home-dishcloth-knit.gif)
+
+@plane z=89 label="Pacific Coast Road Trip" slug="home-pacific-coast-roadtrip" axis="time"
+## Pacific Coast Road Trip
+time - home-pacific-coast-roadtrip
+
+![Pacific Coast Road Trip](./gifs/home-pacific-coast-roadtrip.gif)
+
+@plane z=90 label="Match Report City vs United" slug="home-soccer-playbyplay" axis="time"
+## Match Report City vs United
+time - home-soccer-playbyplay
+
+![Match Report City vs United](./gifs/home-soccer-playbyplay.gif)
+
+@plane z=91 label="Champions Cup Knockout Bracket" slug="home-ucl-bracket" axis="round"
+## Champions Cup Knockout Bracket
+round - home-ucl-bracket
+
+![Champions Cup Knockout Bracket](./gifs/home-ucl-bracket.gif)
+
+@plane z=92 label="Reception Seating Chart" slug="home-wedding-seating" axis="space"
+## Reception Seating Chart
+space - home-wedding-seating
+
+![Reception Seating Chart](./gifs/home-wedding-seating.gif)
+
+@plane z=93 label="Mercy General Hospital - Floor Guide" slug="hospital-wings" axis="floor"
+## Mercy General Hospital - Floor Guide
+floor - hospital-wings
+
+![Mercy General Hospital - Floor Guide](./gifs/hospital-wings.gif)
+
+@plane z=94 label="The Larkspur Hotel - Amenities by Floor" slug="hotel-amenities" axis="floor"
+## The Larkspur Hotel - Amenities by Floor
+floor - hotel-amenities
+
+![The Larkspur Hotel - Amenities by Floor](./gifs/hotel-amenities.gif)
+
+@plane z=95 label="Installing Sparrow CLI" slug="install-guide" axis="step"
+## Installing Sparrow CLI
+step - install-guide
+
+![Installing Sparrow CLI](./gifs/install-guide.gif)
+
+@plane z=96 label="Sprint 14 Board" slug="kanban" axis="status"
+## Sprint 14 Board
+status - kanban
+
+![Sprint 14 Board](./gifs/kanban.gif)
+
+@plane z=97 label="Building for the Edge - Conference Keynote Outline" slug="keynote" axis="slide"
+## Building for the Edge - Conference Keynote Outline
+slide - keynote
+
+![Building for the Edge - Conference Keynote Outline](./gifs/keynote.gif)
+
+@plane z=98 label="Simple Ribbed Beanie (Knit Flat, Seamed)" slug="knitting" axis="step"
+## Simple Ribbed Beanie (Knit Flat, Seamed)
+step - knitting
+
+![Simple Ribbed Beanie (Knit Flat, Seamed)](./gifs/knitting.gif)
+
+@plane z=99 label="Annotated contract" slug="layered-notes" axis="layer"
+## Annotated contract
+layer - layered-notes
+
+![Annotated contract](./gifs/layered-notes.gif)
+
+@plane z=100 label="Brief in Opposition to Summary Judgment" slug="legal-brief" axis="depth"
+## Brief in Opposition to Summary Judgment
+depth - legal-brief
+
+![Brief in Opposition to Summary Judgment](./gifs/legal-brief.gif)
+
+@plane z=101 label="Why Does the Moon Change Shape?" slug="lesson-plan" axis="slide"
+## Why Does the Moon Change Shape?
+slide - lesson-plan
+
+![Why Does the Moon Change Shape?](./gifs/lesson-plan.gif)
+
+@plane z=102 label="Maplewood Central Library - Floor Guide" slug="library-floors" axis="floor"
+## Maplewood Central Library - Floor Guide
+floor - library-floors
+
+![Maplewood Central Library - Floor Guide](./gifs/library-floors.gif)
+
+@plane z=103 label="Intro to Film Photography" slug="life-course-syllabus" axis="time"
+## Intro to Film Photography
+time - life-course-syllabus
+
+![Intro to Film Photography](./gifs/life-course-syllabus.gif)
+
+@plane z=104 label="Backyard Vegetable Garden Plan" slug="life-garden-plan" axis="time"
+## Backyard Vegetable Garden Plan
+time - life-garden-plan
+
+![Backyard Vegetable Garden Plan](./gifs/life-garden-plan.gif)
+
+@plane z=105 label="Maple Street House Tour" slug="life-house-tour" axis="floor"
+## Maple Street House Tour
+floor - life-house-tour
+
+![Maple Street House Tour](./gifs/life-house-tour.gif)
+
+@plane z=106 label="Five Days in Kyoto" slug="life-kyoto-itinerary" axis="time"
+## Five Days in Kyoto
+time - life-kyoto-itinerary
+
+![Five Days in Kyoto](./gifs/life-kyoto-itinerary.gif)
+
+@plane z=107 label="Household Budget Q1" slug="life-monthly-budget" axis="time"
+## Household Budget Q1
+time - life-monthly-budget
+
+![Household Budget Q1](./gifs/life-monthly-budget.gif)
+
+@plane z=108 label="The Lighthouse Letter" slug="life-short-story" axis="scene"
+## The Lighthouse Letter
+scene - life-short-story
+
+![The Lighthouse Letter](./gifs/life-short-story.gif)
+
+@plane z=109 label="Wildflower Road - Song Chart" slug="life-song-structure" axis="section"
+## Wildflower Road - Song Chart
+section - life-song-structure
+
+![Wildflower Road - Song Chart](./gifs/life-song-structure.gif)
+
+@plane z=110 label="Spanish Kitchen Verbs Deck" slug="life-spanish-flashcards" axis="layer"
+## Spanish Kitchen Verbs Deck
+layer - life-spanish-flashcards
+
+![Spanish Kitchen Verbs Deck](./gifs/life-spanish-flashcards.gif)
+
+@plane z=111 label="Downtown Transit Map" slug="life-transit-map" axis="space"
+## Downtown Transit Map
+space - life-transit-map
+
+![Downtown Transit Map](./gifs/life-transit-map.gif)
+
+@plane z=112 label="Ship It Before You Read It: Trust Your Test Suite" slug="lightning-talk" axis="slide"
+## Ship It Before You Read It: Trust Your Test Suite
+slide - lightning-talk
+
+![Ship It Before You Read It: Trust Your Test Suite](./gifs/lightning-talk.gif)
+
+@plane z=113 label="ASCII Loading Spinner" slug="loading-spinner" axis="frame"
+## ASCII Loading Spinner
+frame - loading-spinner
+
+![ASCII Loading Spinner](./gifs/loading-spinner.gif)
+
+@plane z=114 label="Riverbend Galleria - Store Directory" slug="mall-directory" axis="floor"
+## Riverbend Galleria - Store Directory
+floor - mall-directory
+
+![Riverbend Galleria - Store Directory](./gifs/mall-directory.gif)
+
+@plane z=115 label="Downtown Mobility Map" slug="map-overlays" axis="layer"
+## Downtown Mobility Map
+layer - map-overlays
+
+![Downtown Mobility Map](./gifs/map-overlays.gif)
+
+@plane z=116 label="ACL Reconstruction - Recovery Timeline" slug="med-acl-recovery" axis="time"
+## ACL Reconstruction - Recovery Timeline
+time - med-acl-recovery
+
+![ACL Reconstruction - Recovery Timeline](./gifs/med-acl-recovery.gif)
+
+@plane z=117 label="Head CT - Axial Slices (Superior to Inferior)" slug="med-brain-ct-slices" axis="depth"
+## Head CT - Axial Slices (Superior to Inferior)
+depth - med-brain-ct-slices
+
+![Head CT - Axial Slices (Superior to Inferior)](./gifs/med-brain-ct-slices.gif)
+
+@plane z=118 label="Clinical Trial Roadmap - CRV-208 (novel GLP-1/GIP agonist)" slug="med-clinical-trial-phases" axis="stage"
+## Clinical Trial Roadmap - CRV-208 (novel GLP-1/GIP agonist)
+stage - med-clinical-trial-phases
+
+![Clinical Trial Roadmap - CRV-208 (novel GLP-1/GIP agonist)](./gifs/med-clinical-trial-phases.gif)
+
+@plane z=119 label="ECG Lead II - One Cardiac Cycle (Animated)" slug="med-ecg-animation" axis="frame"
+## ECG Lead II - One Cardiac Cycle (Animated)
+frame - med-ecg-animation
+
+![ECG Lead II - One Cardiac Cycle (Animated)](./gifs/med-ecg-animation.gif)
+
+@plane z=120 label="Anterior Forearm - Layered Anatomy" slug="med-forearm-anatomy" axis="layer"
+## Anterior Forearm - Layered Anatomy
+layer - med-forearm-anatomy
+
+![Anterior Forearm - Layered Anatomy](./gifs/med-forearm-anatomy.gif)
+
+@plane z=121 label="Daily Medication Schedule - Polypharmacy Plan" slug="med-medication-schedule" axis="time"
+## Daily Medication Schedule - Polypharmacy Plan
+time - med-medication-schedule
+
+![Daily Medication Schedule - Polypharmacy Plan](./gifs/med-medication-schedule.gif)
+
+@plane z=122 label="Migraine Symptom Diary - Episode Phases" slug="med-migraine-diary" axis="time"
+## Migraine Symptom Diary - Episode Phases
+time - med-migraine-diary
+
+![Migraine Symptom Diary - Episode Phases](./gifs/med-migraine-diary.gif)
+
+@plane z=123 label="Inpatient Chart - Rivera, J. (MRN 0048-2291)" slug="med-patient-chart" axis="time"
+## Inpatient Chart - Rivera, J. (MRN 0048-2291)
+time - med-patient-chart
+
+![Inpatient Chart - Rivera, J. (MRN 0048-2291)](./gifs/med-patient-chart.gif)
+
+@plane z=124 label="5-Day Strength Program - Hypertrophy Block, Week 3" slug="med-strength-program" axis="time"
+## 5-Day Strength Program - Hypertrophy Block, Week 3
+time - med-strength-program
+
+![5-Day Strength Program - Hypertrophy Block, Week 3](./gifs/med-strength-program.gif)
+
+@plane z=125 label="Daily Medication Schedule" slug="medication-schedule" axis="time"
+## Daily Medication Schedule
+time - medication-schedule
+
+![Daily Medication Schedule](./gifs/medication-schedule.gif)
+
+@plane z=126 label="Q3 Platform Sync - Weekly Engineering Meeting" slug="meeting-agenda" axis="time"
+## Q3 Platform Sync - Weekly Engineering Meeting
+time - meeting-agenda
+
+![Q3 Platform Sync - Weekly Engineering Meeting](./gifs/meeting-agenda.gif)
+
+@plane z=127 label="The Lunar Cycle, Phase by Phase" slug="moon-phases" axis="time"
+## The Lunar Cycle, Phase by Phase
+time - moon-phases
+
+![The Lunar Cycle, Phase by Phase](./gifs/moon-phases.gif)
+
+@plane z=128 label="The Meridian Museum - Self-Guided Walking Tour" slug="museum-tour" axis="space"
+## The Meridian Museum - Self-Guided Walking Tour
+space - museum-tour
+
+![The Meridian Museum - Self-Guided Walking Tour](./gifs/museum-tour.gif)
+
+@plane z=129 label="Ode to Joy - First Phrase by Measure" slug="music-score" axis="frame"
+## Ode to Joy - First Phrase by Measure
+frame - music-score
+
+![Ode to Joy - First Phrase by Measure](./gifs/music-score.gif)
+
+@plane z=130 label="City Council Approves Riverside Flood Barrier" slug="news-pyramid" axis="depth"
+## City Council Approves Riverside Flood Barrier
+depth - news-pyramid
+
+![City Council Approves Riverside Flood Barrier](./gifs/news-pyramid.gif)
+
+@plane z=131 label="Meridian Tower - Building Directory" slug="office-directory" axis="floor"
+## Meridian Tower - Building Directory
+floor - office-directory
+
+![Meridian Tower - Building Directory](./gifs/office-directory.gif)
+
+@plane z=132 label="Progressive Product Onboarding" slug="onboarding" axis="depth"
+## Progressive Product Onboarding
+depth - onboarding
+
+![Progressive Product Onboarding](./gifs/onboarding.gif)
+
+@plane z=133 label="Order Fulfillment Pipeline" slug="order-fulfillment" axis="status"
+## Order Fulfillment Pipeline
+status - order-fulfillment
+
+![Order Fulfillment Pipeline](./gifs/order-fulfillment.gif)
+
+@plane z=134 label="Folding the Orizuru (Paper Crane)" slug="origami" axis="step"
+## Folding the Orizuru (Paper Crane)
+step - origami
+
+![Folding the Orizuru (Paper Crane)](./gifs/origami.gif)
+
+@plane z=135 label="Sparse Attention Routing for Long-Context Transformers" slug="paper-abstract" axis="depth"
+## Sparse Attention Routing for Long-Context Transformers
+depth - paper-abstract
+
+![Sparse Attention Routing for Long-Context Transformers](./gifs/paper-abstract.gif)
+
+@plane z=136 label="Cedar Street Garage - Levels P1 to P5" slug="parking-levels" axis="floor"
+## Cedar Street Garage - Levels P1 to P5
+floor - parking-levels
+
+![Cedar Street Garage - Levels P1 to P5](./gifs/parking-levels.gif)
+
+@plane z=137 label="Cedar Ridge Garage - Section Map" slug="parking-lot" axis="space"
+## Cedar Ridge Garage - Section Map
+space - parking-lot
+
+![Cedar Ridge Garage - Section Map](./gifs/parking-lot.gif)
+
+@plane z=138 label="Swinging Pendulum" slug="pendulum" axis="frame"
+## Swinging Pendulum
+frame - pendulum
+
+![Swinging Pendulum](./gifs/pendulum.gif)
+
+@plane z=139 label="Coastal Sunset - Adjustment Layer Stack" slug="photo-edit" axis="layer"
+## Coastal Sunset - Adjustment Layer Stack
+layer - photo-edit
+
+![Coastal Sunset - Adjustment Layer Stack](./gifs/photo-edit.gif)
+
+@plane z=140 label="Driftwood - Inventory Intelligence for Independent Cafes" slug="pitch-deck" axis="slide"
+## Driftwood - Inventory Intelligence for Independent Cafes
+slide - pitch-deck
+
+![Driftwood - Inventory Intelligence for Independent Cafes](./gifs/pitch-deck.gif)
+
+@plane z=141 label="Signal Drift - Season 2 Episode Guide" slug="podcast-season" axis="time"
+## Signal Drift - Season 2 Episode Guide
+time - podcast-season
+
+![Signal Drift - Season 2 Episode Guide](./gifs/podcast-season.gif)
+
+@plane z=142 label="Helios Sync - Build Timeline" slug="project-timeline" axis="time"
+## Helios Sync - Build Timeline
+time - project-timeline
+
+![Helios Sync - Build Timeline](./gifs/project-timeline.gif)
+
+@plane z=143 label="Q2 2026 Quarterly Business Review" slug="quarterly-review" axis="slide"
+## Q2 2026 Quarterly Business Review
+slide - quarterly-review
+
+![Q2 2026 Quarterly Business Review](./gifs/quarterly-review.gif)
+
+@plane z=144 label="Falling Rain" slug="rain" axis="frame"
+## Falling Rain
+frame - rain
+
+![Falling Rain](./gifs/rain.gif)
+
+@plane z=145 label="One-Pan Lemon Garlic Chicken" slug="recipe-depth" axis="depth"
+## One-Pan Lemon Garlic Chicken
+depth - recipe-depth
+
+![One-Pan Lemon Garlic Chicken](./gifs/recipe-depth.gif)
+
+@plane z=146 label="Weeknight Lemon Garlic Chicken Thighs" slug="recipe-steps" axis="step"
+## Weeknight Lemon Garlic Chicken Thighs
+step - recipe-steps
+
+![Weeknight Lemon Garlic Chicken Thighs](./gifs/recipe-steps.gif)
+
+@plane z=147 label="Weeknight Shakshuka" slug="recipe" axis="step"
+## Weeknight Shakshuka
+step - recipe
+
+![Weeknight Shakshuka](./gifs/recipe.gif)
+
+@plane z=148 label="Operation Northwind - Progressive Redaction" slug="redacted-doc" axis="layer"
+## Operation Northwind - Progressive Redaction
+layer - redacted-doc
+
+![Operation Northwind - Progressive Redaction](./gifs/redacted-doc.gif)
+
+@plane z=149 label="Ada Byron - Resume" slug="resume" axis="depth"
+## Ada Byron - Resume
+depth - resume
+
+![Ada Byron - Resume](./gifs/resume.gif)
+
+@plane z=150 label="Anatomy of a Three-Stage Launch Vehicle" slug="rocket-stages" axis="floor"
+## Anatomy of a Three-Stage Launch Vehicle
+floor - rocket-stages
+
+![Anatomy of a Three-Stage Launch Vehicle](./gifs/rocket-stages.gif)
+
+@plane z=151 label="Outbound Sales Call Script - Acme Analytics" slug="sales-script" axis="slide"
+## Outbound Sales Call Script - Acme Analytics
+slide - sales-script
+
+![Outbound Sales Call Script - Acme Analytics](./gifs/sales-script.gif)
+
+@plane z=152 label="Orders Database Schema Migrations" slug="schema-migrations" axis="version"
+## Orders Database Schema Migrations
+version - schema-migrations
+
+![Orders Database Schema Migrations](./gifs/schema-migrations.gif)
+
+@plane z=153 label="Hale & Okonkwo Wedding Seating Chart" slug="seating-chart" axis="space"
+## Hale & Okonkwo Wedding Seating Chart
+space - seating-chart
+
+![Hale & Okonkwo Wedding Seating Chart](./gifs/seating-chart.gif)
+
+@plane z=154 label="The Prodigal Son - Coming Home" slug="sermon" axis="slide"
+## The Prodigal Son - Coming Home
+slide - sermon
+
+![The Prodigal Son - Coming Home](./gifs/sermon.gif)
+
+@plane z=155 label="MS Corvid Aurora - Deck Plan" slug="ship-decks" axis="floor"
+## MS Corvid Aurora - Deck Plan
+floor - ship-decks
+
+![MS Corvid Aurora - Deck Plan](./gifs/ship-decks.gif)
+
+@plane z=156 label="Stormcaller Skill Tree" slug="skill-tree" axis="depth"
+## Stormcaller Skill Tree
+depth - skill-tree
+
+![Stormcaller Skill Tree](./gifs/skill-tree.gif)
+
+@plane z=157 label="The Solar System by Distance" slug="solar-system" axis="space"
+## The Solar System by Distance
+space - solar-system
+
+![The Solar System by Distance](./gifs/solar-system.gif)
+
+@plane z=158 label="Midnight Driver - Stem Breakdown" slug="song-stems" axis="layer"
+## Midnight Driver - Stem Breakdown
+layer - song-stems
+
+![Midnight Driver - Stem Breakdown](./gifs/song-stems.gif)
+
+@plane z=159 label="ASCII Jump Sprite Sequence" slug="sprite-jump" axis="frame"
+## ASCII Jump Sprite Sequence
+frame - sprite-jump
+
+![ASCII Jump Sprite Sequence](./gifs/sprite-jump.gif)
+
+@plane z=160 label="A Doll's House, Act III - Stage Set Design" slug="stage-set" axis="space"
+## A Doll's House, Act III - Stage Set Design
+space - stage-set
+
+![A Doll's House, Act III - Stage Set Design](./gifs/stage-set.gif)
+
+@plane z=161 label="Account Settings Screen, Theme Variants" slug="theme-variants" axis="layer"
+## Account Settings Screen, Theme Variants
+layer - theme-variants
+
+![Account Settings Screen, Theme Variants](./gifs/theme-variants.gif)
+
+@plane z=162 label="Threat Model by Depth - Customer Records API" slug="threat-model" axis="depth"
+## Threat Model by Depth - Customer Records API
+depth - threat-model
+
+![Threat Model by Depth - Customer Records API](./gifs/threat-model.gif)
+
+@plane z=163 label="The Anatomy of a Tide Pool" slug="tide-pool" axis="depth"
+## The Anatomy of a Tide Pool
+depth - tide-pool
+
+![The Anatomy of a Tide Pool](./gifs/tide-pool.gif)
+
+@plane z=164 label="Traffic Light State Animation" slug="traffic-light" axis="frame"
+## Traffic Light State Animation
+frame - traffic-light
+
+![Traffic Light State Animation](./gifs/traffic-light.gif)
+
+@plane z=165 label="16-Week Marathon Training Plan" slug="training-plan" axis="time"
+## 16-Week Marathon Training Plan
+time - training-plan
+
+![16-Week Marathon Training Plan](./gifs/training-plan.gif)
+
+@plane z=166 label="The Old Pond, Three Ways" slug="translation-layers" axis="layer"
+## The Old Pond, Three Ways
+layer - translation-layers
+
+![The Old Pond, Three Ways](./gifs/translation-layers.gif)
+
+@plane z=167 label="Blinking Typing Cursor" slug="typing-cursor" axis="frame"
+## Blinking Typing Cursor
+frame - typing-cursor
+
+![Blinking Typing Cursor](./gifs/typing-cursor.gif)
+
+@plane z=168 label="ASCII Walk Cycle" slug="walk-cycle" axis="frame"
+## ASCII Walk Cycle
+frame - walk-cycle
+
+![ASCII Walk Cycle](./gifs/walk-cycle.gif)
+
+@plane z=169 label="A Toast to Mara and Devin" slug="wedding-toast" axis="slide"
+## A Toast to Mara and Devin
+slide - wedding-toast
+
+![A Toast to Mara and Devin](./gifs/wedding-toast.gif)
+
+@plane z=170 label="20-Minute HIIT Circuit" slug="workout" axis="step"
+## 20-Minute HIIT Circuit
+step - workout
+
+![20-Minute HIIT Circuit](./gifs/workout.gif)
+
