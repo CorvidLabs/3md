@@ -480,6 +480,7 @@ function load(ex){
   parsedEl.innerHTML=colorJSON(meta);
   parsedMeta.textContent=doc.planes.length+" planes";
   lab.setAttribute("mode",ex.mode);
+  lab.toggleAttribute("autoplay",ex.mode==="play"); // animations auto-run
   lab.setSource(ex.src);
   highlightSource(0);
 }

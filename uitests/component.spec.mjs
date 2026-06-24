@@ -89,6 +89,22 @@ test.describe("<three-md> component", () => {
     }
   });
 
+  test("playback advances and pauses (animations)", async ({ page }) => {
+    await page.goto("/embed-example.html");
+    await page.waitForFunction(() => document.getElementById("inline")?.shadowRoot?.querySelectorAll(".plane").length === 3);
+    const before = await page.evaluate(() => document.getElementById("inline").currentIndex);
+    await page.evaluate(() => document.getElementById("inline").play());
+    await page.waitForTimeout(1400); // longer than one ~600ms step
+    const playing = await page.evaluate(() => document.getElementById("inline").currentIndex);
+    expect(playing, "index advanced during playback").not.toBe(before);
+    // Pause and confirm it stops advancing.
+    await page.evaluate(() => document.getElementById("inline").pause());
+    const at = await page.evaluate(() => document.getElementById("inline").currentIndex);
+    await page.waitForTimeout(900);
+    const after = await page.evaluate(() => document.getElementById("inline").currentIndex);
+    expect(after, "index frozen after pause").toBe(at);
+  });
+
   test("emits planechange when stepping", async ({ page }) => {
     await page.goto("/embed-example.html");
     await page.waitForFunction(() => document.getElementById("inline")?.shadowRoot?.querySelectorAll(".plane").length === 3);

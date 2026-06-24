@@ -154,7 +154,7 @@ input[type=range] { flex: 1; min-width: 120px; accent-color: var(--three-md-acce
 
 export class ThreeMDElement extends HTMLElement {
   static get observedAttributes(): string[] {
-    return ["src", "mode"];
+    return ["src", "mode", "autoplay"];
   }
 
   private _root: ShadowRoot;
@@ -176,7 +176,6 @@ export class ThreeMDElement extends HTMLElement {
   private _dragRY = 0;
   private _mx = 0;
   private _my = 0;
-  private _t = 0;
 
   private _dragging = false;
   private _lastX = 0;
@@ -186,9 +185,11 @@ export class ThreeMDElement extends HTMLElement {
   private _dragStartTarget = 0;
   private _dragAxis: "x" | "y" | null = null;
   private _pointerId: number | null = null;
-  private _raf = 0;
   private _lastEmitted = -1;
   private _loadToken = 0;
+  private _playBtn!: HTMLButtonElement;
+  private _playing = false;
+  private _playTimer: ReturnType<typeof setInterval> | null = null;
 
   constructor() {
     super();
@@ -203,12 +204,10 @@ export class ThreeMDElement extends HTMLElement {
     } else {
       this._loadFromText(this.textContent || "");
     }
-    this._startLoop();
   }
 
   disconnectedCallback(): void {
-    if (this._raf) cancelAnimationFrame(this._raf);
-    this._raf = 0;
+    this._stopPlay();
   }
 
   attributeChangedCallback(name: string, _old: string | null, value: string | null): void {
@@ -218,6 +217,8 @@ export class ThreeMDElement extends HTMLElement {
     } else if (name === "mode") {
       this._applyMode();
       this.render();
+    } else if (name === "autoplay") {
+      if (value !== null) this._startPlay(); else this._stopPlay();
     }
   }
 
@@ -247,6 +248,21 @@ export class ThreeMDElement extends HTMLElement {
   setSource(source: string): void {
     if (!this._scene) this._build();
     this._loadFromText(source);
+  }
+
+  /** Start auto-advancing through the planes (honors the document's fps metadata). */
+  play(): void {
+    this._startPlay();
+  }
+
+  /** Stop auto-advancing. */
+  pause(): void {
+    this._stopPlay();
+  }
+
+  /** Whether playback is currently running. */
+  get playing(): boolean {
+    return this._playing;
   }
 
   // MARK: - Loading
@@ -281,11 +297,22 @@ export class ThreeMDElement extends HTMLElement {
     this._doc = doc;
     this._planes = doc.planes;
     this._applyMode();
+    this._stopPlay();
+    // Reset all accumulated view state so each document starts fresh. Without
+    // this, orbit/parallax drift piles up across loads and the stage gets more
+    // and more skewed the longer the element is used.
     this._focus = 0;
     this._target = 0;
+    this._dragRX = 0;
+    this._dragRY = 0;
+    this._mx = 0;
+    this._my = 0;
+    this._dragAxis = null;
+    this._dragging = false;
     this._lastEmitted = -1;
     this._buildPlanes();
     this.render();
+    if (this.hasAttribute("autoplay")) this._startPlay();
   }
 
   private _applyMode(): void {
@@ -323,6 +350,7 @@ export class ThreeMDElement extends HTMLElement {
         <button class="navbtn" part="prev" type="button" aria-label="previous plane">←</button>
         <input type="range" part="scrubber" min="0" max="0" step="0.001" value="0" aria-label="scrub the Z axis" />
         <button class="navbtn" part="next" type="button" aria-label="next plane">→</button>
+        <button class="navbtn" part="play" type="button" aria-label="play">▶</button>
         <div class="readout" part="readout"></div>
       </div>`;
     this._root.appendChild(this._wrap);
@@ -332,12 +360,15 @@ export class ThreeMDElement extends HTMLElement {
     this._scene = this._wrap.querySelector(".scene")!;
     this._scrub = this._wrap.querySelector("input")!;
     this._readout = this._wrap.querySelector(".readout")!;
+    this._playBtn = this._wrap.querySelector('[part="play"]')!;
 
     this._scrub.addEventListener("input", () => {
+      this._stopPlay(); // manual scrub takes over from playback
       this._target = parseFloat(this._scrub.value);
       this._focus = this._target; // snap: correct without rAF
       this.render();
     });
+    this._playBtn.addEventListener("click", () => this._togglePlay());
     this._wrap.querySelector('[part="prev"]')!.addEventListener("click", () => this._setTarget(Math.round(this._target) - 1));
     this._wrap.querySelector('[part="next"]')!.addEventListener("click", () => this._setTarget(Math.round(this._target) + 1));
     this.tabIndex = this.tabIndex < 0 ? 0 : this.tabIndex;
@@ -380,9 +411,43 @@ export class ThreeMDElement extends HTMLElement {
     this._updateReadout();
   }
 
+  // MARK: - Playback
+
+  /** Advance one plane, wrapping. Used by the autoplay timer only. */
+  private _step(): void {
+    const n = this._planes.length;
+    if (n <= 1) return;
+    this._target = (Math.round(this._target) + 1) % n;
+    this._focus = this._target;
+    this._scrub.value = String(this._target);
+    this.render();
+  }
+
+  private _startPlay(): void {
+    if (this._playing || this._planes.length <= 1) return;
+    this._playing = true;
+    if (this._playBtn) { this._playBtn.textContent = "⏸"; this._playBtn.setAttribute("aria-label", "pause"); }
+    // Honor the document's fps metadata; clamp so playback stays watchable.
+    // setInterval (not rAF) keeps animations running under iOS Low Power Mode.
+    const fps = this._doc ? parseInt(this._doc.metadata?.fps ?? "", 10) : NaN;
+    const delay = fps > 0 ? Math.min(1000, Math.max(80, 1000 / fps)) : 600;
+    this._playTimer = setInterval(() => this._step(), delay);
+  }
+
+  private _stopPlay(): void {
+    this._playing = false;
+    if (this._playTimer) { clearInterval(this._playTimer); this._playTimer = null; }
+    if (this._playBtn) { this._playBtn.textContent = "▶"; this._playBtn.setAttribute("aria-label", "play"); }
+  }
+
+  private _togglePlay(): void {
+    if (this._playing) this._stopPlay(); else this._startPlay();
+  }
+
   // MARK: - Interaction
 
   private _setTarget(index: number): void {
+    this._stopPlay(); // manual navigation takes over from playback
     const max = this._planes.length - 1;
     this._target = Math.max(0, Math.min(max, index));
     this._focus = this._target; // snap so it is correct even with rAF paused
@@ -396,6 +461,7 @@ export class ThreeMDElement extends HTMLElement {
   }
 
   private _onPointerDown(e: PointerEvent): void {
+    this._stopPlay(); // dragging takes over from playback
     this._dragging = true;
     this._pointerId = e.pointerId;
     this._lastX = e.clientX;
@@ -501,7 +567,7 @@ export class ThreeMDElement extends HTMLElement {
     } else if (m === "elevator") {
       st = `translateZ(-150px) rotateY(${(-6 + this._dragRY).toFixed(2)}deg)`;
     } else {
-      const ry = -22 + this._mx * 10 + Math.sin(this._t) * 3 + this._dragRY;
+      const ry = -22 + this._mx * 10 + this._dragRY;
       const rx = 8 - this._my * 8 + this._dragRX;
       st = `translateZ(-160px) rotateX(${rx.toFixed(2)}deg) rotateY(${ry.toFixed(2)}deg)`;
     }
@@ -531,24 +597,6 @@ export class ThreeMDElement extends HTMLElement {
     }));
   }
 
-  // MARK: - Optional animation loop (progressive enhancement only)
-
-  private _startLoop(): void {
-    if (typeof requestAnimationFrame !== "function") return;
-    const tick = () => {
-      // Gentle idle drift toward the pointer. Purely cosmetic: every value here
-      // is also produced by a direct interaction + synchronous render(), so the
-      // element is fully usable if this loop never runs (Low Power Mode).
-      this._t += 0.006;
-      const dxm = (0 - this._mx) * 0;
-      void dxm;
-      if (!this._dragging) {
-        this.render();
-      }
-      this._raf = requestAnimationFrame(tick);
-    };
-    this._raf = requestAnimationFrame(tick);
-  }
 }
 
 if (typeof customElements !== "undefined" && !customElements.get("three-md")) {
