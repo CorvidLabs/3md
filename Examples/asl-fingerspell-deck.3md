@@ -1,0 +1,127 @@
+---
+3md: 1.0
+axis: frame
+title: ASL Fingerspelling Flashcards
+view: single
+subject: American Sign Language
+level: beginner
+handshape_count: 26
+category: Education
+---
+Tap through each letter. Read the handshape cue, try it with your hand, then flip to check. Work A → Z or shuffle by jumping to any plane.
+
+@plane z=0 label="A"
+# A
+```
+  ___
+ /   \
+| fist |
+ \___/
+  thumb
+  side
+```
+**Handshape:** Closed fist, thumb resting against the side of the index finger — *not* tucked inside.
+
+**Memory hook:** The **A**-frame of a tent: solid, upright, no gaps.
+
+**Common error:** Students tuck the thumb like an **S**. Keep thumb visible on the side.
+
+[[z=1|Next: B →]]
+
+@plane z=1 label="B"
+# B
+```
+  ||||
+  ||||   ← four fingers flat, together
+  |  |
+  thumb
+  tucked
+```
+**Handshape:** Four fingers straight up and pressed together. Thumb folded across the palm.
+
+**Memory hook:** The two bumps on a capital **B** become your fingers stacked tall.
+
+**Drill:** Spell B-U-S, B-A-G, B-I-G — you'll use B constantly in everyday words.
+
+[[z=0|← A]] · [[z=2|C →]]
+
+@plane z=2 label="C"
+# C
+```
+   __
+  /
+ |      ← curved hand, open
+  \
+   --
+```
+**Handshape:** Curve all fingers and thumb into a **C** shape — like you're holding a tennis ball.
+
+**Memory hook:** The letter **C** literally is the shape. This one's free.
+
+**Watch out:** Don't let the pinky drop away; keep all five fingers in the curve.
+
+[[z=1|← B]] · [[z=3|D →]]
+
+@plane z=3 label="D"
+# D
+```
+  O   ← index tip touches thumb tip
+  |
+  |||  ← middle, ring, pinky curl
+```
+**Handshape:** Index finger points up. Middle, ring, and pinky curl down. Thumb tip meets index tip, forming a circle on the side.
+
+**Memory hook:** The circle + straight line = the printed letter **D**.
+
+**Speed tip:** Transition D → E smoothly: just collapse the index finger.
+
+[[z=2|← C]] · [[z=4|E →]]
+
+@plane z=4 label="E"
+# E
+```
+  ||||  ← fingers hooked/bent
+  ||||
+  ====  ← thumb tucked under
+```
+**Handshape:** All four fingers bend/hook at the middle knuckle. Thumb tucks underneath, pressing against the fingertips.
+
+**Memory hook:** Three horizontal bars of the letter **E** become three rows of knuckles.
+
+**Common error:** Flattening it into a claw. Keep the thumb actively pressing up.
+
+[[z=3|← D]] · [[z=5|F →]]
+
+@plane z=5 label="F"
+# F
+```
+  O     ← index tip + thumb tip circle
+  |||   ← middle, ring, pinky straight up
+```
+**Handshape:** Index fingertip touches thumb tip (small O). Middle, ring, and pinky extend straight up.
+
+**Memory hook:** The three prongs of the letter **F** are your three standing fingers.
+
+**Contrast drill:** Practice F next to [[z=9|K]] — beginners confuse the two. F's circle faces forward; K has no circle.
+
+[[z=4|← E]] · [[z=6|Quick-check quiz →]]
+
+@plane z=6 label="Quiz: A–F"
+# Quick Check: Letters A – F
+
+Cover the handshape descriptions and test yourself. Say the letter aloud, form the shape, then peek.
+
+| Letter | One-word cue | Most common mistake |
+|--------|-------------|-------------------|
+| **A** | Fist, thumb side | Thumb tucked (makes S) |
+| **B** | Flat four, thumb in | Fingers spread apart |
+| **C** | Open curve | Pinky drooping |
+| **D** | Index up, circle side | Circle too large |
+| **E** | Hooked, thumb under | Flat claw, thumb out |
+| **F** | Circle, three up | Confusing with K |
+
+**Practice word:** Spell **F-A-C-E** three times, aiming for smooth transitions.
+
+> "Fluency isn't speed — it's clarity at increasing speed." — common ASL instructor mantra
+
+[[z=0|Start over: A →]]

@@ -1,0 +1,159 @@
+---
+3md: 1.0
+axis: stage
+title: Tonkotsu: 18-Hour Broth
+view: elevator
+subtitle: A living record of one pot across a full day
+servings: 6 bowls (about 2.4L finished broth)
+bones: 1.8 kg pork trotters + 600 g neck bones
+start: 06:00
+finish: 00:00
+category: Home
+---
+One pot. Eighteen hours. Each plane is a stage — open the next only when you reach it.
+
+@plane z=0 label="6:00 — Cold Water"
+
+# The Blank Slate
+
+Fill a 10L stockpot with **cold** water. Add bones straight from the fridge — no blanching skip here.
+
+Bring to a **rolling boil** over high heat. You want the ugly stuff: grey foam, marrow scum, bits of everything. This is the purge.
+
+- Duration: ~20 min hard boil
+- Don't skim yet — let it all surface
+- The water will look like dishwater. Perfect.
+
+> "A clean broth is a liar. Let it confess first."
+
+When the foam peaks and starts to recede: **drain everything, rinse each bone under cold tap water, scrub the pot.**
+
+You are now ready. [[z=1|Go to Hour 1]]
+
+@plane z=1 label="Hour 1 — The Simmer Begins"
+
+# 07:00 — Fresh Water, Fresh Start
+
+Return the clean bones to the clean pot. Cover with **fresh cold water**, about 3cm above bones.
+
+Bring back to boil, then dial to **a vigorous simmer** — not a gentle one. Tonkotsu needs turbulence. The fat and collagen must emulsify into the water, not float on top of it.
+
+| What you want | What to avoid |
+|---|---|
+| Milky white roil | Clear gentle simmer |
+| Lid off or cracked | Lid fully on |
+| Active bubbling surface | Still surface with ring of fat |
+
+Add now:
+- 1 whole head of garlic, halved crosswise
+- 4 cm knob of ginger, sliced
+
+Set a timer. Walk away. [[z=2|Hour 4]]
+
+@plane z=2 label="Hour 4 — Colour Check"
+
+# 11:00 — First Colour
+
+The broth should be turning **pale ivory**. Lift a ladle and look through it — it should be opaque, not translucent.
+
+**Taste it now.** It will taste thin and faintly porky. That is correct.
+
+### Adjust heat if:
+- Still pale/clear → increase to full vigorous simmer
+- Reducing too fast → add boiling water from kettle to maintain level
+
+**Add the aromatics for the second phase:**
+- 1 large white onion, halved and charred cut-side down in a dry pan
+- 2 tbsp sake
+- 1 tsp white pepper, cracked
+
+The charred onion brings a faint sweetness that will deepen by hour 10. You won't taste it now. Trust it.
+
+[[z=3|Hour 8 — The Midpoint]]
+
+@plane z=3 label="Hour 8 — Midpoint"
+
+# 14:00 — It Becomes Itself
+
+The kitchen smells like **rendered fat and bone mineral**. This is the smell.
+
+Broth colour: **milky white to light cream**. The surface should have a constant lazy roll — small bubbles breaking, not a dead flat skim.
+
+### The spoon test
+Dip a cold metal spoon. Pull it out. Watch the broth:
+- Runs off clean → not yet
+- Clings slightly → on track
+- Coats the back → ahead of schedule, lower heat slightly
+
+**Do not add salt yet.** Salt concentrates as water evaporates. You will calibrate at the end.
+
+Check water level. The bones should stay submerged. Add boiling water if the level has dropped more than 4cm.
+
+[[z=4|Hour 13]]
+
+@plane z=4 label="Hour 13 — Tare Time"
+
+# 19:00 — Make the Tare While You Wait
+
+Your broth needs 5 more hours. Use this window to build the **shio tare** (salt seasoning).
+
+### Shio Tare (makes enough for 8 bowls)
+```
+60 ml sake
+60 ml mirin
+Bring to boil, cook off alcohol: 2 min
+
+Add:
+  25 g fine sea salt
+  5 g MSG (do not skip — this is not negotiable)
+  1 tsp white soy sauce (shiro shoyu)
+
+Stir until dissolved. Cool. Store in jar.
+```
+
+Each bowl gets **1.5 tbsp tare** added to the bowl before ladle-ing broth over it. Never season the pot — season each bowl individually. Control is everything.
+
+[[z=5|Hour 16 — Reduction]]
+
+@plane z=5 label="Hour 16 — Reduction"
+
+# 22:00 — Final Push
+
+Two hours remain. **Increase heat** to reduce by about 20%. You want to concentrate without burning.
+
+The broth should now be:
+- **Deep creamy white**, nearly the colour of whole milk
+- Viscous enough to feel slightly coating on the tongue
+- Smelling of deep pork, sweet bone, faint char
+
+**Remove and discard:** garlic, ginger, onion — they've given everything.
+
+### Taste and balance
+- Too flat? The tare will fix salt. This is collagen depth, not seasoning.
+- Too rich? Add a small splash of cold water and let it simmer 10 min.
+- Too thin still? Hard boil for 20 minutes with lid off.
+
+Prepare your toppings now. Chashu should already be sliced. [[z=6|Midnight — The Bowl]]
+
+@plane z=6 label="Hour 18 — The Bowl"
+
+# 00:00 — Assembly
+
+Strain the broth through a fine mesh sieve. Press the bones with a ladle — extract every drop.
+
+**The bowl, in order:**
+
+1. Warm bowl with hot water, dump it
+2. Add **1.5 tbsp shio tare** to the dry warm bowl
+3. Ladle **300 ml broth** directly over the tare — it will swirl and integrate
+4. Add noodles (fresh thin straight, 130 g cooked, drained)
+5. **Toppings:**
+   - 2 slices chashu, blowtorched if you have one
+   - 1 soft-boiled egg, halved (marinated 4+ hrs)
+   - Nori sheet, standing vertical
+   - Thin-sliced green onion
+   - Black garlic oil: 1 tsp, drizzled last
+
+> Eat immediately. Ramen waits for no one.
+
+The 18 hours exist for this 8 minutes. [[z=0|Start again tomorrow?]]

@@ -1,0 +1,143 @@
+---
+3md: 1.0
+axis: depth
+title: ILS Approach Stack — KSFO 28R
+view: elevator
+airport: KSFO
+runway: 28R
+ils_freq: 110.9 MHz
+glideslope: 3.0°
+filed_separation: 1000 ft vertical / 3 NM horizontal
+weather: OVC012 BKN008 VIS 4SM -RA
+sequence_time: 18:47Z
+category: Engineering
+---
+Six aircraft on the KSFO 28R ILS. Step down through the stack — each plane is one aircraft on final. Depth 0 is highest inbound; depth 5 is wheels on asphalt.
+
+@plane z=0 label="UAL1822 — 7,000 ft"
+# UAL1822 — United B737-900 · 7,000 ft MSL
+
+**Position:** MENLO intersection, 22 NM out
+**Speed:** 240 KIAS — slowing to 210
+**Status:** Established ILS 28R, gear still up
+
+> "UAL1822, reduce to 210, cross DUMBA at 6,000, sequence number one."
+
+- Altimeter: 29.87
+- Wind: 270/14 kt
+- Fuel state: nominal
+- [ ] Speed cards out at DUMBA
+- [ ] Flaps 5 by FAITH
+
+**Separation to traffic below:** 1,100 ft / 3.4 NM — **GOOD**
+
+*Next fix:* DUMBA at 16 NM [[z=1|see UAL301 below]]
+
+---
+@plane z=1 label="UAL301 — 5,000 ft"
+# UAL301 — United A320 · 5,000 ft MSL
+
+**Position:** FAITH fix, 17 NM out
+**Speed:** 200 KIAS — slowing to 180
+**Status:** ILS captured, flaps 10, gear still up
+
+> "UAL301, you're number two, traffic is a 737 three miles in trail, 1,000 above."
+
+- Altimeter: 29.87
+- Ride: moderate chop reported at 4,000
+- ATIS: Information **NOVEMBER** current
+- [x] ATIS copied
+- [ ] Flaps 20 by REBAS
+- [ ] Gear down by 1,500 AGL
+
+**Gap to UAL1822 ahead:** closing — monitor
+**Gap to SWA445 behind:** 1,200 ft / 3.1 NM — **GOOD**
+
+*Expect vectors if UAL1822 slows below 175 KIAS.*
+
+---
+@plane z=2 label="SWA445 — 3,500 ft"
+# SWA445 — Southwest B737-8 · 3,500 ft MSL
+
+**Position:** REBAS fix, 12 NM out
+**Speed:** 180 KIAS · Flaps 20 · Gear DOWN
+**Status:** Fully configured, on glideslope
+
+> "SWA445, maintain 180, you're number three, cleared ILS runway 28R."
+
+- Altimeter: 29.87
+- Glideslope: **centered** ●——●——
+- Localizer: **1 dot left**, correcting
+- [x] Gear down, three green
+- [x] Flaps 30 set
+- [x] Checklist complete
+
+**Ceiling:** OVC012 — breaking out of cloud around 1,200 ft AGL
+**Wind shear PIREP:** -8 kt at 800 ft from UAL1822 two minutes ago
+
+*Number three — expect on-time.*
+
+---
+@plane z=3 label="AAL2190 — 2,200 ft"
+# AAL2190 — American A321 · 2,200 ft MSL
+
+**Position:** 8 NM final
+**Speed:** 160 KIAS · Flaps 30 · Gear DOWN
+**Status:** On glideslope, on localizer, GPWS armed
+
+> "AAL2190, wind 260 at 12, runway 28R, cleared to land."
+
+- Glideslope: **centered** ●——●——
+- Localizer: **centered** ——●——
+- Vref: 138 KIAS · Vapp: 143 KIAS
+- [x] Landing clearance received
+- [x] Autobrake 3 set
+- [x] Runway in sight — negative
+
+**Still IMC.** Minimums: 200 ft AGL / RVR 1800
+**Current RVR 28R:** 2,400 ft — **above mins**
+
+*Crew is heads-down on instruments. No further transmissions unless go-around.*
+
+---
+@plane z=4 label="DAL88 — 800 ft"
+# DAL88 — Delta B757-200 · 800 ft MSL
+
+**Position:** 3 NM final — **inside the marker**
+**Speed:** 145 KIAS · Flaps 30 · Full config
+**Status:** VISUAL — broke out at 1,150 ft AGL
+
+> "DAL88, continue, traffic is a CRJ vacating at Charlie. Wind 270 at 10."
+
+- Runway 28R: **IN SIGHT** — lights on centerline
+- PAPI: **two white two red** — perfect glidepath
+- Autoland: ENGAGED (Cat III backup)
+- [x] 1,000 ft callout complete
+- [ ] 500 ft callout
+- [ ] 100 ft callout — flare
+
+**Go-around altitude:** 3,000 ft, fly runway heading
+**Traffic on runway:** SkyWest ERJ vacating at C3 — *will be clear*
+
+*Crossing the threshold in ~90 seconds.*
+
+---
+@plane z=5 label="N441MK — Rollout"
+# N441MK — NetJets Citation CJ4 · On Runway
+
+**Position:** 28R — 4,800 ft remaining, 90 KIAS decelerating
+**Status:** LANDED · Thrust reversers stowed · Heavy braking
+
+> "N441MK, turn right Charlie 3, contact Ground 121.9."
+
+- Touchdown: **18:46:52Z** — on centerline
+- Touchdown zone: **+800 ft** — nominal
+- Braking action: **GOOD** (reported)
+- [x] Runway turnoff: Charlie 3 in sight
+- [x] Lights — taxi mode
+- [ ] Contact Ground 121.9
+
+**Runway occupancy time:** 38 sec elapsed · est. 20 sec to clear
+**Threshold crossing time for DAL88:** ~T+55 sec — **will be clear**
+
+*Sequence complete. Stack compressed. DAL88 clears, AAL2190 lands, repeat.*

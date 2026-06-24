@@ -1,0 +1,152 @@
+---
+3md: 1.0
+axis: frame
+title: Shell Burst Finale
+view: play
+fps: 5
+shells: 7
+finale: grand bouquet
+cue: 23:59:42
+category: Entertainment
+---
+
+*Grand finale sequence — 7 shells, 8 frames, 800ft ceiling. Cue at 23:59:42.*
+
+@plane z=0 label="Launch"
+```
+                                         *
+     .                 .                 |
+     |        .        |        .        |
+     |        |        |        |        |
+  [MORTAR] [MORTAR] [MORTAR] [MORTAR] [MORTAR]
+  #1 Red   #2 Gold  #3 Blue  #4 Silv  #5 Red
+     ~        ~        ~        ~        ~
+===============================================
+   FINALE CUE 23:59:42 — ALL FIVE MORTARS HOT
+```
+
+**Shell manifest:** 5x 3″ chrysanthemum, 2x 4″ peony (flanks)  
+**Lift charge:** 90g black powder each  
+**Timing:** staggered +0.3s per shell left-to-right
+
+@plane z=1 label="Ascent"
+```
+     *                 *
+     |        *        |        *
+     |        |        |        |        *
+     ↑        ↑        ↑        ↑        ↑
+  ~~~~~~~~ ~~~~~~~~ ~~~~~~~~ ~~~~~~~~ ~~~~~~~~
+  [MORTAR] [MORTAR] [MORTAR] [MORTAR] [MORTAR]
+===============================================
+   T+0.0s ... shells climbing at 280 ft/s
+```
+
+*All shells nominal. Flight time to burst: ~2.8s*
+
+@plane z=2 label="Peak"
+```
+     *        *        *        *        *
+     ·        ·        ·        ·        ·
+     ·        ·        ·        ·        ·
+     ·        ·        ·        ·        ·
+
+
+
+
+===============================================
+   T+2.8s — SHELLS AT APEX  800ft AGL
+```
+
+*Delay fuses burning. 0.1s to ignition.*
+
+@plane z=3 label="First Break"
+```
+   \·|·/    \·|·/
+   -·*·-    -·*·-    *        *        *
+   /·|·\    /·|·\    ·        ·        ·
+     R        R       ·        ·        ·
+             G        ·        ·        ·
+
+
+
+===============================================
+   T+2.9s — #1 RED  #2 GOLD break — CHRYSANTH
+```
+
+**Break type:** chrysanthemum — 64-star, 18ft spread  
+**Color:** #1 bright red (strontium), #2 gold (charcoal tail)
+
+@plane z=4 label="Full Break"
+```
+   \·|·/    \·|·/    \·|·/    \·|·/
+   -·*·-    -·*·-    -·*·-    -·*·-    *
+   /·|·\    /·|·\    /·|·\    /·|·\    ·
+     R        G        B        S        ·
+
+
+
+===============================================
+   T+3.0s — #3 BLUE  #4 SILVER break — PEONY
+```
+
+**#3 blue** (copper chloride) — **#4 silver** (titanium)  
+Spread: 22ft — widest shells of the night
+
+@plane z=5 label="Grand Bouquet"
+```
+   \·|·/    \·|·/    \·|·/    \·|·/    \·|·/
+   -·*·-    -·*·-    -·*·-    -·*·-    -·*·-
+   /·|·\    /·|·\    /·|·\    /·|·\    /·|·\
+     R        G        B        S        R
+      ·  *  ·    ·  *  ·    ·  *  ·
+       \·|·/      \·|·/      \·|·/
+       -·*·-      -·*·-      -·*·-      BOOM
+       /·|·\      /·|·\      /·|·\       ×2
+===============================================
+   T+3.1s — ALL 7 SHELLS BURSTING — BOUQUET
+```
+
+*This is the money shot. 7 simultaneous breaks, 800ft up.*  
+*Audience looks up. Radio silence. Then the concussion hits.*
+
+@plane z=6 label="Fade"
+```
+    ·  ·  ·    ·  ·  ·    ·  ·  ·
+   · · · · ·  · · · · ·  · · · · ·
+  ·  · · ·  ··  · · ·  ··  · · ·  ·
+    · · · ·    · · · ·    · · · ·
+      · · ·      · · ·      · · ·
+        · ·        · ·        · ·
+          ·          ·          ·
+
+===============================================
+   T+4.5s — stars fading, tails drifting south
+```
+
+*Wind at 6kt SSW — drift within safe perimeter.*  
+*All stars below 400ft. Fallout zone clear.*
+
+@plane z=7 label="All Clear"
+```
+
+
+
+
+        ✓  SHOW COMPLETE  ✓
+        ✓  FALLOUT CLEAR  ✓
+        ✓  NO MISFIRES    ✓
+
+
+
+
+===============================================
+   T+18s — SITE SECURE — log time 00:00:00
+```
+
+**Post-show checklist:**
+- [ ] Walk mortar field — check all 5 tubes
+- [ ] Account for all 7 shells (no duds)
+- [ ] Radio "all clear" to dispatch
+- [ ] Sign off with AHJ inspector
+
+*Duration: 18.3s. Budget: $2,400. Crowd: 12,000. Worth it.*

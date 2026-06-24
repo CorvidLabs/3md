@@ -1,0 +1,130 @@
+---
+3md: 1.0
+axis: lap
+title: Undercut Window: 2024 Spanish GP Lap 32
+view: present
+race: Spanish Grand Prix · Circuit de Catalunya
+session: Race · 66 laps total
+lead_car: VER #1 · Hard C2 · deg 38%
+chase_car: NOR #4 · Hard C2 · deg 43%
+gap_at_entry: 2.3s
+analyst: Wall Strategy / Stint 2 decision window
+category: Data
+---
+The clock is at lap 32. Norris is 2.3 s behind Verstappen. Both on ageing Hards. The undercut window is cracking open — but only just. Six planes. One call.
+
+@plane z=0 label="Situation"
+# The Setup · L32 of 66
+
+| | VER #1 | NOR #4 |
+|---|---|---|
+| Tyre | Hard C2 | Hard C2 |
+| Age | 28 laps | 28 laps |
+| Deg % | 38 | 43 |
+| Lap delta | — | +0.4 s/lap |
+| Gap | **2.3 s** | — |
+
+> NOR is losing 0.4 s/lap to VER on worn rubber. At this rate, gap grows to **3.5 s by L36** — outside clean air range.
+
+**Decision point:** box NOR now (L32) or commit to L35+ and accept track position.
+
+See pit-stop delta model → [[z=1|Undercut Math]]
+
+@plane z=1 label="Undercut Math"
+# Undercut Model · L32 Box
+
+**Assumptions**
+- Pit loss (in + stationary + out): **22.8 s** (Catalunya pit lane measured)
+- Fresh Medium C3 vs aged Hard C2: **+0.9 s/lap pace advantage**
+- Laps remaining after box: **34**
+
+**Break-even calc**
+
+```
+Gap to recover:  2.3 s (current) + 22.8 s (pit loss) = 25.1 s deficit on exit
+Recovery rate:   0.9 s/lap (tyre delta) + 0.4 s/lap (deg) = 1.3 s/lap
+Laps to recover: 25.1 / 1.3 = ~19 laps
+```
+
+**Verdict:** NOR rejoins ahead of VER if VER pits L33–L38 (expected). If VER reacts L32, undercut **fails** — see [[z=2|Overcut Fallback]].
+
+@plane z=2 label="Overcut Fallback"
+# Overcut Fallback · Stay Out to L36+
+
+If Red Bull covers immediately (box VER L32 reactive), NOR's options shift:
+
+| Stay-out to | Clean air laps | Exit gap to VER | Risk |
+|---|---|---|---|
+| L34 | +2 laps | ~1.1 s behind | Tyre cliff looming |
+| L36 | +4 laps | ~0.3 s behind | **Cliff zone** |
+| L38 | +6 laps | Likely lose 2+ s | Too late |
+
+**Overcut only works to L36.** Beyond that, NOR's C2 deg (43%) enters the cliff — lap time drops 0.7 s in a single lap.
+
+- [ ] Monitor VER lap time L32 S1 split
+- [ ] If VER pits L32 → commit NOR to L36 overcut
+- [ ] If VER stays → execute undercut NOW
+
+See tire compounds → [[z=3|Compound Choice]]
+
+@plane z=3 label="Compound Choice"
+# Compound Choice · What Goes On?
+
+Three options for NOR's final stint (34 laps):
+
+| Compound | Pace vs Hard | Deg/lap | Cliff lap | Notes |
+|---|---|---|---|---|
+| **Medium C3** | +0.9 s | 0.31% | ~L58 | Recommended. Covers to end. |
+| Soft C4 | +1.6 s | 0.62% | ~L52 | Fastest but risks L52+ collapse |
+| Hard C2 (new) | +0.3 s | 0.19% | None | Safe but won't close the gap |
+
+**Call: Medium C3.**
+
+Soft looks tempting (+1.6 s) but a cliff at L52 with 14 laps left hands VER the position back. Medium gets NOR to the flag with ~0.1 s margin on deg.
+
+Gap projection on Medium → [[z=4|Gap Projection]]
+
+@plane z=4 label="Gap Projection"
+# Gap Projection · L32–L66 on Medium C3
+
+Assumes NOR boxes L32, VER boxes L33 (one lap later, standard reactive).
+
+```
+L32  NOR pits →  exits P2, 4.1 s behind VER (in-lap + pit loss)
+L33  VER pits →  NOR gap: 1.8 s (NOR gains 1.3 s while VER in pit lane)
+L36  NOR gap: 1.5 s  (closing 0.1 s/lap — tyre advantage minus clean air)
+L42  NOR gap: 0.9 s
+L50  NOR gap: 0.3 s  ← DRS window opens
+L52  NOR within 1.0 s → DRS enabled on back straight
+L55  NOR attempts pass T1
+```
+
+> **Key risk:** If VER manages to stretch to L35, he exits on fresher tyres and the gap never closes. **Timing is everything.**
+
+Final recommendation → [[z=5|The Call]]
+
+@plane z=5 label="The Call"
+# The Call · Radio Script
+
+**BOX NOR · L32 · Medium C3**
+
+---
+
+> **Engineer:** "Lando, box this lap. Box box box. Medium tyres. You're undercutting."
+
+> **NOR:** "Understood. Box box box."
+
+---
+
+**Post-box targets**
+- [ ] Exit gap < 5.0 s (nominal: 4.1 s) ✓
+- [ ] Beat VER out of pit lane (if he reacts L33) → need 22.6 s stop or faster
+- [ ] Tyre temp window hit by L34 exit corner
+- [ ] DRS window by L50
+
+**What kills this strategy**
+- Safety car L33–L38 (free stop for VER, nullifies undercut)
+- NOR stop > 24 s (slow wheel, traffic)
+- VER pits same lap (L32) — reduces to pace race only
+
+> *"You don't win races in the pits. But you lose them by staying out one lap too long."*

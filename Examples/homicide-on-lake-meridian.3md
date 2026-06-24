@@ -1,0 +1,160 @@
+---
+3md: 1.0
+axis: step
+title: Homicide on Lake Meridian — Case 2024-0447
+view: present
+case: 2024-0447
+detective: Sgt. M. Vasiliev, King County ME
+victim: John Aldred Moss, 54, retired civil engineer
+scene: Lake Meridian Park, Auburn WA — Pier 3 access road
+date-found: 2024-09-14 06:22 PDT
+status: closed — conviction 2025-03-11
+category: Information
+---
+Reconstruct the timeline. Each step reveals the next layer of evidence.
+Tap through in order — this is how the case broke open.
+
+@plane z=0 label="Scene Discovery"
+# 06:22 — Body Found
+
+A jogger, **Darla Fitch, 31**, calls 911 from the Lake Meridian boat launch.
+
+> "He's just lying there at the end of the gravel road. I thought he was sleeping."
+
+**Initial observations (first officer on scene):**
+- Male, prone, face-down, no visible trauma
+- Fully dressed: khaki work pants, fleece pullover
+- Hands underneath torso
+- No wallet, no phone, no keys
+
+**Weather that morning:** 11°C, heavy dew, no rain since 09-12
+
+One anomaly noted immediately: **the dew pattern on the victim's back is uniform** — no disturbance, no scuff marks in gravel within 2 meters.
+
+→ He was placed here. Not where he died. [[z=1|See lividity findings]]
+
+@plane z=1 label="Lividity & PMI"
+# 08:47 — ME On Scene
+
+**Dr. Claire Touma** rolls the body at 08:47. The finding is immediate.
+
+**Lividity:** Fixed, posterior — meaning blood pooled in the *back* of the body within 6–8 hours of death.
+
+But Moss was found **face-down**.
+
+| Finding | Implication |
+|---|---|
+| Fixed posterior lividity | Died lying on his back |
+| Found face-down | Moved after lividity fixed |
+| PMI estimate | Death between **09-13 21:00 – 23:00** |
+| Core temp at scene | 28.4°C → ~9 hrs since death |
+
+**Petechial hemorrhaging** in the conjunctiva. Sub-dermal bruising at the neck — two parallel lines, 3.1 cm apart.
+
+Preliminary CoD: **ligature asphyxiation**.
+
+The killer had 7+ hours to move the body before discovery. [[z=2|Follow the phone data]]
+
+@plane z=2 label="Digital Trail"
+# 11:30 — Phone Carrier Subpoena
+
+Moss's iPhone 14 (recovered from Duwamish River, 09-15) had been powered off — but **carrier tower pings** don't lie.
+
+**Last 12 hours of tower hits:**
+
+```
+09-13 18:04  Tower 7A  — Home (46th Ave SE, Auburn)
+09-13 19:47  Tower 7A  — Home
+09-13 21:12  Tower 12C — Lake Meridian area ← arrives at scene
+09-13 21:19  Tower 12C — [LAST PING — phone powered off]
+09-14 03:44  Tower 8F  — 167th Ave SE, 2.1 mi north ← phantom ping
+```
+
+The 03:44 ping isn't Moss's phone. It's **the suspect's phone pinging the same tower** while transporting the body — logged because Moss's carrier used the same tower ID in their CDR export.
+
+Cross-referencing that tower hit against all devices: **37 phones active**. Narrow by cell plan, prior criminal, known associate of victim → [[z=3|One name surfaces]]
+
+@plane z=3 label="The Associate"
+# 14:15 — Victor Greiss, 51
+
+**Victor Greiss** — Moss's former business partner. Civil dispute over a land surveying contract, **$214,000 judgment** against Greiss filed 09-01-2024.
+
+- His T-Mobile number in the 03:44 tower hit batch: ✓
+- Address: 9 minutes from dump site: ✓
+- 2012 domestic violence conviction (strangulation): ✓
+
+**Search warrant executed 09-15, 16:00:**
+
+- Garage: **Honda Ridgeline, 2021** — rear cargo liner recently bleached
+- Luminol test on liner: **positive, two zones**, consistent with body drag
+- On workbench: **paracord spool**, cut end, diameter 3.1 mm
+- In trash (not taken out yet): **disposable nitrile gloves**, size L
+
+Greiss's alibi: "I was home all night, ask my wife."
+
+Wife's interview: [[z=4|She hesitated exactly once]]
+
+@plane z=4 label="Alibi Fracture"
+# 09-16, 10:05 — Interview: Sandra Greiss
+
+Det. Vasiliev notes the hesitation on the question: *"Did Victor leave the house at all on the night of the 13th?"*
+
+> **Sandra:** "No. He — no, he was home. We watched a movie."
+> **Vasiliev:** "What movie?"
+> **Sandra:** *(3.2 second pause)* "I don't remember the title. Something on Netflix."
+
+Netflix account subpoena (09-17):
+
+| Date | Title | Start | End | Device |
+|---|---|---|---|---|
+| 09-13 | *The Gentlemen* Ep 4 | 20:11 | 21:03 | Samsung TV |
+| 09-13 | *The Gentlemen* Ep 4 | 21:03 | 21:03 | Samsung TV — **paused, never resumed** |
+
+Victor left the house at **~21:05**. Sandra knew. Her attorney contacted the DA at 09-19.
+
+Plea deal: immunity for full cooperation. [[z=5|The cord matches]]
+
+@plane z=5 label="Physical Match"
+# 09-21 — Trace & Toolmark Lab
+
+**Paracord from workbench spool** vs. **ligature furrow dimensions from autopsy:**
+
+- Diameter: **3.1 mm** — consistent ✓
+- Nylon braid pattern (8-strand diamond): lifted from furrow via SEM imaging — **matches spool batch** ✓
+- Partial fingerprint on spool core: **Greiss, right index, 12-point match** ✓
+
+**Cargo liner DNA:**
+- Zone 1: Moss (victim) — 99.97% profile match
+- Zone 2: Greiss — 94.3% profile match (partial, degraded by bleach)
+
+**Touch DNA on Moss's collar:**
+- Greiss epithelials, inside right collar fold
+
+At this point, Det. Vasiliev's case summary reads:
+
+> *"Physical, digital, and testimonial evidence converge. Request DA review for first-degree murder warrant."*
+
+Warrant issued 09-22. Greiss arrested 09-22 at 07:48. [[z=6|Verdict]]
+
+@plane z=6 label="Verdict"
+# 2025-03-11 — King County Superior Court
+
+**Jury deliberation: 4 hours 17 minutes.**
+
+**Verdict: Guilty — Murder in the First Degree**
+
+**Sentence: 26 years, Washington State Corrections**
+
+---
+
+**What broke the case, in order:**
+
+1. - [x] Dew pattern → body was moved
+2. - [x] Lividity → died on his back, found face-down
+3. - [x] Tower ping at 03:44 → suspect's phone placed at scene
+4. - [x] Paracord diameter → physical link
+5. - [x] Netflix subpoena → alibi collapsed in 3.2 seconds
+6. - [x] Sandra's testimony → placed Greiss out of house at time of death
+
+> "Forensics doesn't catch killers. It catches liars."
+> — Sgt. Vasiliev, post-trial press statement

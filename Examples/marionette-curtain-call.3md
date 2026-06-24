@@ -1,0 +1,142 @@
+---
+3md: 1.0
+axis: frame
+title: The Marionette Takes a Bow
+view: play
+fps: 5
+description: A wooden marionette — cross-bar, strings, and all — animated through a full curtain-call bow in ASCII
+category: Animation
+---
+
+@plane z=0 label="Standing"
+```
+     /|\ 
+    (_|_)    ← cross-bar
+    | | |
+    | | |    ← strings
+   /|   |\
+  (_)   (_)  ← shoulders
+    |   |
+   _|   |_
+  |_|   |_|  ← torso
+    |   |
+    |   |
+   / \ / \
+  (_) (_)    ← feet
+```
+*The marionette stands center stage, perfectly still, awaiting the applause.*
+
+@plane z=1 label="Lean Forward"
+```
+     /|\ 
+    (_|_)    ← cross-bar tilts
+   /  |  \
+  /   |   \
+ /|   |    \
+(_)   |    (_)
+  \   |   /
+  _\  |  /_
+ |_|  |  |_|
+     /|\
+    / | \
+   (_)(_)
+```
+*A slight lean — the puppeteer lowers the front bar. The marionette begins its descent.*
+
+@plane z=2 label="Head Drops"
+```
+       /|\
+      (_|_)
+      /   \
+     /     \
+    /|       \
+   (_)       (_)
+    \         /
+    _\       /_
+   |_|       |_|
+      \     /
+       \   /
+       (_)(_)
+```
+*Head swings forward, chin toward chest. Sawdust and linseed oil — forty years of performances.*
+
+@plane z=3 label="Full Bow"
+```
+         /|\
+        (_|_)
+       /     \
+      /       \
+    (_)       (_)
+      \       /
+  _____\_____/___
+ |    back flat   |
+ |_________________|
+        | |
+       / \ 
+      (_) (_)
+```
+*The deepest bow. The carved walnut head nearly touches the boards. The audience goes wild.*
+
+@plane z=4 label="Held"
+```
+         /|\
+        (_|_)
+       /     \
+      /       \
+    (_)       (_)
+      \_______/
+   _____|||||_____
+  |  ___________  |
+  | |           | |
+  |_|___________|_|
+        | |
+       (_)(_)
+```
+*One beat. Two beats. Let them breathe it in. The pause is the performance.*
+
+@plane z=5 label="Rising"
+```
+     /|\ 
+    (_|_)
+    /   \
+   /     \
+  /|     |\
+ (_)     (_)
+  |       |
+ _|       |_
+|_|       |_|
+   \     /
+    \   /
+   (_)(_)
+```
+*The strings lift. Knees come up first — always the knees — then the torso unfurls.*
+
+@plane z=6 label="Upright Again"
+```
+     /|\ 
+    (_|_)
+    | | |
+    | | |
+   /|   |\
+  (_)   (_)
+    |   |
+   _|   |_
+  |_|   |_|
+    |   |
+    |   |
+   / \ / \
+  (_) (_)
+```
+*Standing tall once more. The painted eyes catch the spotlight. The curtain begins to fall.*
+
+@plane z=7 label="Curtain"
+```
+████▓▓▒▒░░          ░░▒▒▓▓████
+████▓▓▒▒░░          ░░▒▒▓▓████
+████▓▓▒▒░░   /|\    ░░▒▒▓▓████
+████▓▓▒▒░░  (_|_)   ░░▒▒▓▓████
+████▓▓▒▒░░  | | |   ░░▒▒▓▓████
+████▓▓▒▒▒░░░░▒▒▒▓▓▓▓████████
+████████████████████████████
+```
+*The velvet descends. Behind it, the puppeteer sets down the cross-bar and flexes her fingers.*

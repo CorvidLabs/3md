@@ -1,0 +1,191 @@
+---
+3md: 1.0
+axis: room
+title: Night Patrol: Wing by Wing
+view: present
+guard: Marcus Delvalle, Badge #47
+shift: 22:00 – 06:00
+museum: Halcroft Museum of Natural & Human History
+floors: 3
+category: Maps
+---
+Your flashlight sweeps the dark. Every room on this route, room by room — the map is the patrol.
+
+@plane z=0 label="Lobby / Start"
+# 22:00 — Grand Lobby
+
+```
+  ┌──────────────────────────┐
+  │  HALCROFT MUSEUM         │
+  │                          │
+  │  [ENTRY DESK]   [COAT]   │
+  │                          │
+  │     ↑ YOU ARE HERE ↑     │
+  │        Badge #47         │
+  └──────────────────────────┘
+```
+
+**Checklist before first sweep:**
+- [ ] Sign the log book (Desk drawer, left side)
+- [ ] Test radio — Channel 3 for dispatch
+- [ ] Silence alarm panel: code `0947` then `#`
+- [ ] Check camera feed: monitors 1–6 all green
+
+> The lobby smells like floor wax and old paper. The Olmec head in the east alcove watches you. It always watches you.
+
+Next stop: [[z=1|Egyptian Wing →]]
+
+@plane z=1 label="Egyptian Wing"
+# 22:18 — Egyptian Wing (Hall C)
+
+```
+  ┌──────────────────────────┐
+  │  SARCOPHAGI ROW          │
+  │  [A] [B] [C]  [ANUBIS]  │
+  │                          │
+  │  ← lobby    canopic jars→│
+  │                          │
+  │     ↑ YOU ARE HERE ↑     │
+  └──────────────────────────┘
+```
+
+**Known quirks:**
+- Case B lid vibrates at 23 Hz from HVAC duct — not a ghost, not tonight
+- Humidity sensor #14 trips a false alarm if temp drops below 62°F; reset with rear button
+- The Anubis statue's left ear is loose — **do not touch**, conservator note taped to base
+
+**Log entry format:** `22:18 | C-Hall | nominal | MVD`
+
+> Ptolemy III stares from the papyrus case. You've memorized his face better than most Egyptologists. He looks annoyed.
+
+Next stop: [[z=2|Fossil Hall →]]
+
+@plane z=2 label="Fossil Hall"
+# 22:41 — Fossil Hall (Wing D, Ground Floor)
+
+```
+  ┌──────────────────────────┐
+  │  ~~~T. REX~~~            │
+  │       ║                  │
+  │  ══╦══╩══╦══             │
+  │    ║     ║               │
+  │  [TRICERATOPS]           │
+  │                          │
+  │     ↑ YOU ARE HERE ↑     │
+  └──────────────────────────┘
+```
+
+**Things that go bump:**
+- The T. rex armature shifts with the building — **normal creak at 23:05 every night**, logged
+- Exit sign in NW corner has been flickering since Tuesday; work order #2241 filed
+- Check the pterosaur wire at ceiling — tension gauge on north column, reading should be **green**
+
+**Your favorite spot:** The bench under the brachiosaurus neck. You eat your 23:30 sandwich here. The Cretaceous felt warmer.
+
+Next stop: [[z=3|Impressionist Gallery →]]
+
+@plane z=3 label="Art Wing"
+# 23:15 — Impressionist Gallery (Floor 2, East)
+
+```
+  ┌──────────────────────────┐
+  │  [MONET]  [PISSARRO]     │
+  │                          │
+  │  [DEGAS]       [RENOIR]  │
+  │                          │
+  │  ← stairs    vault door →│
+  │                          │
+  │     ↑ YOU ARE HERE ↑     │
+  └──────────────────────────┘
+```
+
+**Security tier: HIGH**
+- Motion sensors active — move slowly, stay on marked path (blue tape)
+- Vault door: biometric + keypad. Your clearance does **not** cover this door
+- If vault alarm triggers: **do not enter**, call dispatch, wait at east stairwell
+
+**The painting:** Degas's *Répétition* — the ballerina third from left, you've decided, is looking directly at you. Every night. You've stopped arguing about it.
+
+> Humidity: 51%. Temp: 68°F. Both nominal. The paintings sleep well tonight.
+
+Next stop: [[z=4|Indigenous Peoples Wing →]]
+
+@plane z=4 label="Indigenous Wing"
+# 00:02 — Indigenous Peoples Wing (Floor 2, West)
+
+```
+  ┌──────────────────────────┐
+  │  [TOTEM]   [CANOE]       │
+  │                          │
+  │  [MASKS]        [BEADS]  │
+  │                          │
+  │  ← gallery   elevator →  │
+  │                          │
+  │     ↑ YOU ARE HERE ↑     │
+  └──────────────────────────┘
+```
+
+**Cultural protocol note (staff memo, 03/14):**
+- The Cedar Bent-Box display: do not photograph, per community agreement
+- Two items on loan from Tsleil-Waututh Nation — **condition report due Friday**
+- The large drum: do not touch the skin. Ever.
+
+**Marcus's note to self:** The masks at midnight look different than at noon. The docents describe them as "welcoming." You describe them as "aware." Both can be true.
+
+Next stop: [[z=5|Rooftop / Break →]]
+
+@plane z=5 label="Rooftop Break"
+# 00:30 — Rooftop Mechanical Level
+
+```
+  ┌──────────────────────────┐
+  │  ░░░░░░ CITY ░░░░░░░░░░  │
+  │                          │
+  │  [HVAC1] [HVAC2] [HVAC3] │
+  │                          │
+  │  [BREAK CHAIR] ← yours   │
+  │                          │
+  │     ↑ YOU ARE HERE ↑     │
+  └──────────────────────────┘
+```
+
+**Mandatory break: 30 min**
+
+The city spreads out below you — amber and blue. The museum breathes under your feet: 43,000 square feet, 1.2 million objects, all quiet for now.
+
+- HVAC readings: log panel temps (all should be in **yellow or green**)
+- Radio check-in at **00:45** with dispatch: "Post 3, all secure"
+- Your thermos is in the mechanical closet. Left shelf. Behind the spare fuses.
+
+> This is the only moment tonight where nothing needs checking, nothing needs logging. The Olmec head is somewhere below you, still watching. You are watching back.
+
+Next stop: [[z=6|Final Sweep / Sign-Out →]]
+
+@plane z=6 label="Dawn Sign-Out"
+# 05:45 — Grand Lobby, End of Shift
+
+```
+  ┌──────────────────────────┐
+  │  HALCROFT MUSEUM         │
+  │                          │
+  │  [ENTRY DESK]   [COAT]   │
+  │                          │
+  │     ↑ YOU ARE HERE ↑     │
+  │       Shift complete.    │
+  └──────────────────────────┘
+```
+
+**Close-out checklist:**
+- [ ] Final log entry: `05:45 | All posts | nominal | MVD`
+- [ ] Humidity anomaly in Hall C? → flag for conservator
+- [ ] Vault alarm reset (if triggered): form 7-B on desk
+- [ ] Badge returned to board before 06:00
+
+**Overnight summary — Marcus Delvalle, 06/23/2026:**
+- Incidents: 0
+- False alarms: 0 (HVAC creak at 23:05, logged, expected)
+- Work orders flagged: NW exit sign still flickering (#2241)
+- Notes: Pterosaur tension gauge showing low-green; recommend check before opening
+
+> The day guard, Carol, arrives at 06:00 with coffee and too many questions. You hand her the log. The museum held together one more night. It usually does.
+---

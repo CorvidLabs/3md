@@ -1,0 +1,167 @@
+---
+3md: 1.0
+axis: time
+title: Perseid Peak: Hour by Hour
+view: present
+date: August 12–13, 2026
+peak: ~110 meteors/hr at 03:30 local (ZHR)
+radiant: Perseus constellation, RA 3h 04m / Dec +58°
+parent comet: 109P/Swift-Tuttle
+moon phase: Waning crescent, 12% — excellent viewing
+best location: Dark-sky site, Bortle 3 or lower
+category: Information
+---
+The Perseids are here. Step outside and look up. This guide runs from dusk to dawn on the peak night, August 12–13, 2026.
+
+@plane z=0 label="21:00 — Dusk Setup"
+# 21:00 — Dusk Setup
+
+The sky is not yet dark enough for meteors, but this is your window to prepare.
+
+**Your checklist:**
+- [ ] Lay out a reclining chair or blanket facing northeast
+- [ ] Let your eyes dark-adapt — no phone screens for 20 min
+- [ ] Note Perseus rising low in the NE: find the "W" of Cassiopeia, then drop south
+- [ ] Red-light only from here on
+
+**Conditions tonight:**
+- Moon sets at **22:47** — patience pays off
+- Temperature drop: bring layers, dew forms fast on optics
+- Radiant altitude at 21:00: only **24°** — rates are still suppressed
+
+> First light takes 30 minutes to reach full sensitivity. Start the clock now.
+
+@plane z=1 label="22:30 — Moon Sets"
+# 22:30 — Moon Sets
+
+The waning crescent drops below the horizon. **Darkness arrives.**
+
+```
+        ·  ✦  ·      Perseus radiant ~35° above NE horizon
+   ·         ✦
+       —  )  —       ← Moon exiting stage left
+  _______________
+  ≈≈≈≈≈≈≈≈≈≈≈≈≈≈≈    treeline
+```
+
+**What to expect now:**
+- ZHR climbs toward ~40 meteors/hr
+- Sporadic background rate: ~8/hr for comparison
+- Look 40–50° away from the radiant — longer, more dramatic trails
+- First fireballs possible (Perseids skew bright: avg magnitude +2.5)
+
+**The radiant rule:** meteors *appear* to stream from Perseus, but the longest trails are *away* from it. Pan your gaze to Cassiopeia–Cepheus border for the sweetest geometry.
+
+@plane z=2 label="00:30 — Warming Up"
+# 00:30 — Midnight Run
+
+Perseus clears 55° altitude. Rates are climbing fast.
+
+| Hour (local) | Approx rate (clear, Bortle 4) | Radiant alt |
+|---|---|---|
+| 22:30 | ~20/hr | 35° |
+| 23:30 | ~32/hr | 44° |
+| **00:30** | **~50/hr** | **55°** |
+| 01:30 | ~68/hr | 65° |
+
+**What you'll see:**
+- **Swift faint streaks** — sub-second, mag +4 to +5
+- **Occasional fireballs** — mag -1 or brighter, with persistent trains
+- **Color:** fast Perseids often show blue-white; slower ones can flare orange
+
+**Persistent trains:** after a fireball, watch for the glowing ionized trail twisting in upper-atmosphere winds. Can last 10–30 seconds. Photograph wide-field if you have a camera on a tracker.
+
+> A 5-second gap in your count is normal. Then three arrive in 40 seconds. Perseids clump.
+
+@plane z=3 label="02:00 — The Surge"
+# 02:00 — The Surge
+
+Rates push past 70/hr. Perseus is near zenith. This is the climb.
+
+```
+                  ✦ ZENITH
+              ·    ✦   ·
+          ·    ╲  ╱  ╱    ·
+      ·     ·   ✦  ╱  ·      ·
+    ✦   ·      ╱  ✦     ·  ✦
+          ·  ╱       ·
+  NE ←  Perseus radiant (near zenith now)
+```
+
+**Shower geometry at 02:00:**
+- Earth is rotating *into* the debris stream — head-on geometry
+- Meteors hit atmosphere at **59 km/s** — among the fastest annual showers
+- Typical ablation altitude: 80–120 km up
+
+**Observer tip:** lie flat on your back. The whole sky is your field of view. No binoculars — you need peripheral vision, not magnification.
+
+**Photography settings (if shooting):**
+- 14–24mm f/2.8, ISO 3200, 20-sec exposures
+- Aim 60° from the radiant toward the NE Milky Way band
+
+@plane z=4 label="03:30 — True Peak"
+# 03:30 — True Peak
+
+**ZHR 110+.** This is it. The predicted maximum for 2026.
+
+> Swift-Tuttle last passed the Sun in 1992 and won't return until 2125. Every Perseid you see tonight is dust shed over millennia, burning up 80 km above your head in under a second.
+
+**What peak looks like in practice:**
+- Under Bortle 3 skies: 80–90 visible meteors per hour (ZHR corrected for radiant altitude, limiting magnitude, FOV)
+- Under suburban skies (Bortle 6): 25–35/hr
+- Fireballs (mag -1 or brighter): expect 3–6 during this hour
+
+**The ones to watch for:**
+- **Earth-grazers** near the horizon — long, slow, colorful
+- **Terminal flares** — brighten sharply at end of trail
+- **Trains** that drift and curl in stratospheric wind shear
+
+**Count method:** mark a tally every 15 minutes. Your personal rate is ZHR × sin(radiant altitude) × your limiting magnitude factor.
+
+@plane z=5 label="04:30 — Falling Off"
+# 04:30 — Falling Off
+
+Past peak, but still beautiful. Rates ease to ~70/hr.
+
+The sky is beginning its slow tilt toward dawn. Cygnus is high. The Milky Way core is setting in the SW.
+
+**Secondary targets while you wait for dawn:**
+- **Sporadic fireballs** — random meteors unrelated to Perseids, now easier to distinguish
+- **Satellites** — count how many ISS-brightness objects cross in 30 min (usually 4–8)
+- **Zodiacal light** — by 04:45 a faint pyramid of light appears in the E; it's interplanetary dust
+
+**If you're exhausted:** the next best Perseid window is tonight again (Aug 13 pre-dawn), at ~70% of peak rate. The shower is broad.
+
+> You have now witnessed Earth sweeping through the wake of a comet that last visited the inner solar system when Bill Clinton was president.
+
+@plane z=6 label="05:30 — Astronomical Dawn"
+# 05:30 — Astronomical Dawn
+
+The sky brightens. The meteors don't stop — you just lose them to the blue.
+
+```
+        ░░░░  gradual twilight glow  ░░░░
+   ·  ·    ·      ·    ✦    ·    ·
+       ✦        ·          ·
+  ————————————————————————————————————
+  E                                  W
+```
+
+**Final minutes checklist:**
+- [ ] Venus rises in the E around 05:10 — brilliant, unmissable
+- [ ] Jupiter follows at 05:35
+- [ ] Look for one last fireball silhouetted against the brightening sky — they're visible longer than faint ones
+
+**Your night, in numbers (estimated under Bortle 4):**
+| Hour | Meteors seen |
+|---|---|
+| 22:30–23:30 | ~25 |
+| 23:30–00:30 | ~38 |
+| 00:30–01:30 | ~55 |
+| 01:30–02:30 | ~64 |
+| 02:30–03:30 | ~82 |
+| 03:30–04:30 | ~78 |
+| 04:30–05:30 | ~52 |
+| **Total** | **~394** |
+
+Go sleep. You've earned it. See you at [[z=0|dusk]] next August.

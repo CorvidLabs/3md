@@ -1,0 +1,120 @@
+---
+3md: 1.0
+axis: beat
+title: Monologue Autopsy
+view: present
+show: The Reckoning with Dave Kellerman
+air_date: 2026-06-23
+runtime_target: 4m 30s
+writer: you, 1:47am, third Red Bull
+category: Entertainment
+---
+Every monologue is a machine. This one, beat by beat, under the knife.
+
+@plane z=0 label="The Cold Open"
+# THE PREMISE
+
+**Topic:** FAA approves first fully autonomous air traffic control tower. No humans. Zero.
+
+> "Great news for travelers who've always felt the sky needed more *vibes* and fewer *trained professionals*."
+
+**Why it works:** absurdist reframe. We panic about AI in every other context — this is the one nobody thought to worry about yet.
+
+*Setup function:* plants the image of a lone server rack clearing a 747 for landing.
+
+Audience read at this beat: **curious, not committed yet.**
+
+@plane z=1 label="The Escalation"
+# ACT ONE: PILE ON
+
+Three beats, each adding one more absurd detail:
+
+1. **The tower plays hold music** — *confirmed real* — Vivaldi's Four Seasons, "Spring." \
+   "Nothing calms a pilot like a robot humming about flowers while you're in a microburst."
+
+2. **The AI has a name: TARA** (Traffic Autonomous Routing Algorithm) \
+   "They named it TARA. Which is also the name of the woman at American Airlines who used to do this job and is now teaching yoga in Sedona."
+
+3. **TARA's error rate is 0.003%** \
+   "Which sounds great until you remember that 0.003% of *planes landing* is still like... planes."
+
+**Callback plant:** "Tara in Sedona" — we will use her again.
+
+*Audience read:* **leaning in, laughing at beat 2, groaning at beat 3 (that's good).**
+
+@plane z=2 label="The Pivot"
+# THE TURN
+
+This is where you earn it. Don't stay in premise-land.
+
+**Pivot line:**
+> "I don't blame the FAA. I blame us. We spent twenty years making *humans* feel like the problem — customer service bots, self-checkout, automated HR systems that fire you via PDF. At some point the machines looked at each other and went: *yeah, we got this.*"
+
+**What this does:**
+- Shifts from *the story* to *the pattern*
+- Gets a real laugh + a recognition laugh (those feel different in the room)
+- Sets Dave up for the riff
+
+**Timing note:** pause after "yeah, we got this." Let the room catch up. Dave tilts to camera here — two seconds minimum.
+
+*Audience read:* **audience is now WITH you, not just watching.*
+
+@plane z=3 label="The Callback"
+# TARA IN SEDONA
+
+**The callback payoff:**
+
+> "Meanwhile Tara — *human* Tara, Sedona Tara — I looked her up. She has a podcast now. It's called *Clear Skies*. It has **forty thousand subscribers**. She does episodes on breathwork, releasing control, *trusting the universe*."
+
+> "She was replaced by a machine and accidentally became a wellness guru. TARA got her job. Tara got TARA's audience."
+
+**Why this lands:**
+- We planted the name two beats ago, audience forgot, now it pays off double
+- The irony is real and verifiable (hypothetically — but it *feels* true, which is the whole game)
+- "TARA got her job. Tara got TARA's audience." — this is the **button line**, say it slow
+
+*Mechanics:* alliteration + inversion + the satisfaction of a circle closing.
+
+@plane z=4 label="The Button"
+# CLOSING THE MACHINE
+
+**Final beat — Dave ad lib territory:**
+
+> "I just hope when TARA makes her first mistake — and she will, 0.003%, it's coming — I hope the black box recording is just… *Vivaldi.*"
+
+> *[Dave mimes violin]*
+
+> "Spring. Movement one. Allegro. As a 737 clips a jetway in Cincinnati."
+
+**Hold for laugh. Desk slap. Move to desk.**
+
+---
+
+**Post-mortem notes for revision:**
+
+- [ ] "Vivaldi" callback needs to be in the escalation OR cut — don't plant what you can't pay
+- [ ] "Cincinnati" is funnier than any coastal city — keep it
+- [ ] Tara/TARA bit might need a name change if there's a real Tara on staff
+- [ ] Time this at table read: **target 4:10, budget to 4:45 max**
+
+*Total laugh opportunities mapped:* **9** \
+*Must-land moments:* beats at z=1 (TARA name), z=3 (callback close)
+
+@plane z=5 label="The Score"
+# BEAT MAP SCORECARD
+
+| Beat | Type | Est. Laugh | Risk |
+|------|------|------------|------|
+| Cold open reframe | Recognition | Medium | Low |
+| Hold music / Vivaldi | Absurdist detail | Big | Low |
+| TARA the name | Character plant | Big | Medium* |
+| 0.003% pivot | Math horror | Groan-laugh | Low |
+| "We made humans the problem" | Thematic turn | Recognition | Medium |
+| Tara/TARA callback | Callback payoff | **Biggest** | High** |
+| Vivaldi button | Callback #2 + image | Warm close | Low |
+
+\* *if anyone in the room is named Tara*
+\*\* *callback jokes either kill or die, no middle ground — if the room is cold, Dave can save it with the violin mime*
+
+**Overall machine health:** ✓ \
+**Recommend to table read:** yes, tonight's draft

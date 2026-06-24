@@ -1,0 +1,131 @@
+---
+3md: 1.0
+axis: level
+title: Fulton Street Block 43: Floor by Floor
+view: elevator
+block: 43
+street: Fulton Street, Oakland CA 94607
+parcel: APN 006-0231-043-00
+lot_area_sf: 18,400
+year_built: 1924
+last_permit: 2023-11-14
+zoning: CN-3 (Commercial Neighborhood, High Intensity)
+far_allowed: 4.0
+far_actual: 2.7
+category: Maps
+---
+Mixed-use block at Fulton & 7th. Walk it floor by floor — retail hum at grade, then up through offices, housing, and rooftop sky.
+
+@plane z=0 label="Basement (−1)"
+## Basement — Utility & Storage
+
+**Ceiling height:** 8 ft 4 in (restricted, no habitable use permitted)
+
+| Tenant | Sq Ft | Notes |
+|---|---|---|
+| Pho Bà Mươi (restaurant) | 640 | Walk-in coolers, dry storage |
+| Building mechanical | 310 | 2023 HVAC upgrade, HW-29 permit |
+| Oakland Roaster Co. (café) | 480 | Green bean storage, roasting drum |
+| Vacant | 210 | Former darkroom, asbestos abated 2019 |
+
+> **Planner note:** 210 sf vacant space flagged for possible bike parking conversion under AB-2097 compliance review.
+
+- Water meter: 4-inch, shared main
+- Electrical: 800A service panel, room for ADU sub-panel split
+
+@plane z=1 label="Ground Floor"
+## Ground Floor — Retail & Activation
+
+**Ceiling height:** 14 ft | **Street frontage:** 92 linear ft on Fulton
+
+| Unit | Tenant | Sq Ft | Use Type | Lease Expires |
+|---|---|---|---|---|
+| 101 | Oakland Roaster Co. | 1,240 | Food & Bev | 2026-03 |
+| 103 | Pho Bà Mươi | 1,820 | Restaurant | 2027-09 |
+| 105 | Vacant (former nail salon) | 680 | Retail | — |
+| 107 | Fruitvale Notary & Shipping | 440 | Service | Month-to-month |
+
+**Sidewalk notes:**
+- 12 ft clear pedestrian zone maintained ✓
+- 3 parklet seats permitted (Permit PWE-2022-0441)
+- ADA ramp at 7th St corner: **non-compliant**, 8.3% slope — **flagged for 2025 CIP**
+
+> Unit 105 vacancy = opportunity. CN-3 allows childcare by right — [[z=2|see mezzanine]] for overflow space option.
+
+@plane z=2 label="Mezzanine / 2nd Floor"
+## Mezzanine — Creative Office & Co-Work
+
+**Ceiling height:** 10 ft 6 in | **Sq Ft:** 3,980 usable
+
+| Tenant | Desks | Lease | Notes |
+|---|---|---|---|
+| Catalyst Oakland (co-work) | 34 hot desks | 2028-06 | 78% avg occupancy |
+| Bay Area Muralists Collective | Studio A, 610 sf | 2026-12 | Street-facing windows, needs venting |
+| Oakland Small Biz Dev Center | 2 counseling offices | City sublease | Tuesdays + Thursdays only |
+
+**Natural light:** South-facing clerestory windows added 2019 — excellent daylighting score (LEED Daylighting Credit eligible)
+
+**Stair/elevator access:**
+- Elevator: 1 passenger (max 2,500 lbs), 1924 cage, modernized 2011
+- Fire stair: compliant, 44-inch clear width
+
+> Muralists Collective at capacity. [[z=3|3rd floor]] has 800 sf shell space — expansion candidate if 2026 lease renews.
+
+@plane z=3 label="3rd Floor"
+## 3rd Floor — Transitional Housing (12 Units)
+
+**Program:** Alameda County PATH-funded transitional housing, operated by **Rising Futures Inc.**
+**Avg stay:** 14 months | **Current occupancy:** 11 of 12 units
+
+| Unit Type | Count | Sq Ft ea | Rent (subsidized) |
+|---|---|---|---|
+| SRO single | 8 | 280 sf | $423/mo (HUD FMR) |
+| 1-BR accessible | 3 | 490 sf | $781/mo |
+| Manager unit | 1 | 520 sf | Comp'd |
+
+**Services on-floor:**
+- [ ] Laundry (2 washers, 2 dryers) — 1 dryer out of service since May
+- [x] Case manager office (shared with 4th floor)
+- [x] Broadband (ACP-subsidized)
+- [ ] Community kitchen — permit renewal pending, expired 2025-01
+
+> **Action item:** Community kitchen permit. Contact Alameda Env. Health: (510) 567-8100. Renewal packet drafted by Rising Futures, needs city co-signature by **2026-07-15**.
+
+@plane z=4 label="4th Floor"
+## 4th Floor — Market-Rate Apartments (8 Units)
+
+**Ceiling height:** 9 ft | **Vintage:** Original 1924 wood frame, seismically retrofitted 2017
+
+| Unit | Beds | Sq Ft | Rent | Status |
+|---|---|---|---|---|
+| 4A | Studio | 420 | $1,875 | Occupied |
+| 4B | 1 BR | 610 | $2,340 | Occupied |
+| 4C | 1 BR | 595 | $2,290 | Occupied |
+| 4D | Studio | 400 | $1,820 | **Vacant** |
+| 4E | 2 BR | 810 | $3,100 | Occupied |
+| 4F | 1 BR/ADA | 640 | $2,190 | Occupied |
+| 4G | Studio | 390 | $1,800 | Occupied |
+| 4H | 2 BR | 840 | $3,050 | Occupied |
+
+**Avg rent/sf:** $3.31 — slightly below Uptown Oakland median ($3.58)
+
+> Unit 4D vacancy: landlord holding for family member (declared 11/2025). Ellis Act clock **not** triggered. Monitor per Oakland Just Cause Eviction Ordinance §8.22.360.
+
+@plane z=5 label="Roof"
+## Roof — Underutilized Infrastructure & Potential
+
+**Roof area:** 4,600 sf | **Structural load:** 40 psf dead + 30 psf live (adequate for rooftop ADU with engineering review)
+
+**Existing:**
+- HVAC equipment: 620 sf footprint
+- 2 × T-Mobile antenna mounts (lease: $1,840/mo through 2031)
+- Parapet height: 42 in (code compliant for occupiable roof)
+- Drainage: 4 scuppers, no green infrastructure
+
+**Potential uses (CN-3 allows by-right):**
+- [ ] Rooftop ADU — est. 1,200 sf buildable, ~$380K construction
+- [ ] Community garden (12–16 beds, ~800 sf)
+- [ ] Solar canopy — 28 panels estimated, 9.8 kW, $4,200/yr savings
+- [ ] Nothing — current revenue from antennas covers insurance
+
+> **Planner take:** Rooftop ADU + solar canopy is the highest-value combo. ADU would push FAR to 3.1 — still under 4.0 cap. Present at Block 43 owners' meeting **2026-07-28**. See [[z=0|basement]] bike parking + ADU sub-panel note for infrastructure alignment.

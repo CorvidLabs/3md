@@ -1,0 +1,140 @@
+---
+3md: 1.0
+axis: quarter
+title: Burn the Bridge: Runway Model Q1–Q4
+view: present
+company: Meridian AI
+seed_raised: $2.4M
+monthly_burn_q1: $148,000
+target_series_a: $8M
+category: Business
+---
+> You raised $2.4M. Series A is the bridge. Here's how you cross it — or don't.
+
+@plane z=0 label="Q1 · Foundation"
+# Q1 2026 — Burn the Runway In
+**Cash in bank:** $2,400,000
+**Monthly burn:** $148,000
+**Headcount:** 11 FTE
+
+| Category | Monthly | Quarterly |
+|---|---|---|
+| Payroll (eng-heavy) | $101,000 | $303,000 |
+| Infra / AWS | $18,000 | $54,000 |
+| G&A / tools | $14,000 | $42,000 |
+| Sales & marketing | $15,000 | $45,000 |
+| **Total out** | **$148,000** | **$444,000** |
+
+**Revenue:** $0 (pre-launch)
+**Net burn:** -$148k/mo
+**End Q1 cash:** $1,956,000
+
+> Runway at this rate: **13.2 months.** Clock is ticking. [[z=1|See Q2]]
+
+@plane z=1 label="Q2 · First Signal"
+# Q2 2026 — Revenue Enters the Room
+**Cash in bank:** $1,956,000
+**First customers signed:** 4 pilots @ $8,500/mo ARR each
+
+| Flow | Monthly | Quarterly |
+|---|---|---|
+| Burn (up: new hire) | $162,000 | $486,000 |
+| MRR (pilots, 50% collected) | $17,000 | $51,000 |
+| **Net burn** | **-$145,000** | **-$435,000** |
+
+**End Q2 cash:** $1,521,000
+
+**Key metric:** CAC is $42,000. LTV at 24mo = $204,000. LTV/CAC = **4.9x** — fundable.
+
+- [x] Pilot contracts executed
+- [x] NPS > 50 on first cohort
+- [ ] Design partner → paid conversion: 2 of 4 done
+
+> Burn barely moved. Growth hasn't bent the curve yet. [[z=2|Q3 is the hinge]]
+
+@plane z=2 label="Q3 · The Hinge"
+# Q3 2026 — This Quarter Decides the A Round
+**Cash in bank:** $1,521,000
+**ARR entering quarter:** $204,000
+
+### Two scenarios side by side
+
+| | Bear | Bull |
+|---|---|---|
+| New logos | 3 | 9 |
+| Avg contract | $6k/mo | $9k/mo |
+| New MRR | $18k | $81k |
+| Net burn | -$144k/mo | -$91k/mo |
+| End Q3 cash | **$1,089,000** | **$1,248,000** |
+| Runway left | **7.3 mo** | **13.7 mo** |
+
+**Bear:** You are 90 days from a distressed conversation with existing investors.
+**Bull:** You walk into Series A with $1.9M ARR, positive signal, full deck.
+
+> The delta is 6 logos. That's the whole game. [[z=3|Q4 endgame]]
+
+@plane z=3 label="Q4 · Series A or Bust"
+# Q4 2026 — The Bridge Moment
+**Assumed scenario:** Bull Q3 → $1,248,000 cash entering Q4
+**ARR:** $1,908,000
+
+### Series A fundraise timeline embedded in burn model
+
+| Month | Cash out | Cash in | Balance |
+|---|---|---|---|
+| Oct | $173k burn | — | $1,075,000 |
+| Nov | $173k burn | — | $902,000 |
+| Dec | $173k burn | $8,000,000 close | **$8,729,000** |
+
+**Close assumption:** Dec 15 wire. Slip to Jan = **$556,000 cushion** entering negotiations. Slip to Feb = **dangerously thin.**
+
+> Every week of fundraise delay costs $43,250 in negotiating leverage.
+
+- [ ] LOI from lead by Nov 1
+- [ ] Data room complete by Oct 15
+- [ ] Board approval Oct 28
+
+[[z=4|What you control]]
+
+@plane z=4 label="Levers"
+# The CFO's Four Levers
+
+These are the only variables that matter. Everything else is noise.
+
+**1. Headcount timing**
+Hiring that $190k VP Sales in Aug vs Oct = $31,667 saved. Multiply by 3 hires = **$95k runway.**
+
+**2. Infrastructure efficiency**
+Current AWS: $18k/mo. Committed-use discount at $15k/mo = **$36k/year found on a call.**
+
+**3. Collections velocity**
+Net-60 terms vs net-30 on $204k ARR = **$102k of float locked up.** Push net-30 from day one.
+
+**4. Revenue timing**
+One $12k/mo enterprise deal signed Oct 1 vs Nov 1 = $12k more cash before close. *Every deal date matters.*
+
+> CFO job: make December feel inevitable in August. [[z=5|Dashboard]]
+
+@plane z=5 label="Dashboard"
+# Weekly CFO Dashboard — What to Watch
+
+```
+MERIDIAN AI · WEEK OF 2026-06-23
+─────────────────────────────────────────────
+CASH              $1,521,000   ████████░░  61%
+RUNWAY (mo)       10.4         ██████░░░░
+BURN RATE         $162,000/mo  ████░░░░░░  ↑9%
+MRR               $17,000      ██░░░░░░░░
+ARR               $204,000
+MRR GROWTH        —            (first full quarter)
+PIPELINE (90d)    $81,000 MRR potential
+SERIES A STATUS   Deck draft   ░░░░░░░░░░  0%
+─────────────────────────────────────────────
+NEXT TRIGGER: Cash < $900k → activate bridge note
+TARGET DATE:  Dec 15, 2026 (Series A close)
+DAYS TO TARGET:   175
+```
+
+**Red line:** If cash drops below $600k before term sheet, call the bridge note now. Do not wait.
+
+> Burn is not the enemy. Uncertainty is. Know your number, know your date.

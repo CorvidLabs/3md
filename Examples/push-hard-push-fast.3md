@@ -1,0 +1,204 @@
+---
+3md: 1.0
+axis: frame
+title: Hands-Only CPR: Push Hard, Push Fast
+view: play
+fps: 5
+depth: 8 frames — one full compression cycle at 100–120 bpm
+category: Health
+---
+
+Hands-only CPR. No breaths. No hesitation. **Push hard. Push fast.**
+
+@plane z=0 label="Victim Down"
+```
+     ___
+    (   )
+  __|___|__
+ /  VICTIM  \
+|  ___________| 
+|_____________|
+     | |
+     | |
+```
+
+# Scene: Unresponsive Adult
+
+**You arrive.** Person is on the ground. No response. No normal breathing.
+
+1. **Shout** — "Are you okay?"
+2. **Call 911** or yell for someone to call
+3. **Position yourself** — kneel beside their chest
+
+> AED on the way. You are the bridge.
+
+@plane z=1 label="Hand Position"
+```
+     ___
+    (   )
+  __|___|__
+ /    X    \     <-- heel of hand, center of chest
+|  ___X_____|
+|_____________|
+     | |
+     | |
+```
+
+# Find Your Landmark
+
+Place the **heel of your dominant hand** on the **center of the chest** — lower half of the sternum.
+
+- Interlock your fingers, **lift them off the ribs**
+- Keep arms straight, shoulders directly above hands
+- **Do NOT press on ribs or the xiphoid tip**
+
+> Target: *between the nipples* on the sternum
+
+@plane z=2 label="Load ↓"
+```
+     ___
+    (   )
+  __|___|__
+ /  VVVVV  \
+|  __|||____|
+|_____________|
+     | |
+     | |
+```
+
+# Compression Loading — Arms Lock
+
+**Begin the downstroke.**
+
+- Lean your body weight forward
+- Arms remain **locked straight**
+- Feel the chest wall begin to resist
+
+**Target depth:** 2–2.4 inches (5–6 cm)
+
+> This is where most bystanders stop too early. Keep going.
+
+@plane z=3 label="Full Compress ↓↓"
+```
+     ___
+    (   )
+  __|___|__
+ /  ═════  \     <-- chest compressed ~2.4 in
+|  __███____|
+|_____________|
+     | |
+     | |
+```
+
+# Full Compression
+
+**Bottom of the stroke.** Chest is at full depth.
+
+- Hold for a **split second** — don't bounce
+- Blood is being pushed out of the heart
+- Carotid and brachial pulses are generated **here**
+
+**Rate:** aim for the beat of *Stayin' Alive* — 104 bpm
+
+> "Ah, ha, ha, ha — stayin' alive, stayin' alive"
+
+@plane z=4 label="Recoil ↑"
+```
+     ___
+    (   )
+  __|___|__
+ /  ^^^^^  \
+|  ___↑_____|
+|_____________|
+     | |
+     | |
+```
+
+# Full Chest Recoil — Critical!
+
+**Lift your weight.** Let the chest come **all the way back up.**
+
+- Do **not** lean into the chest between compressions
+- Recoil creates negative pressure — heart refills with blood
+- Hands stay in contact, but **weight comes off**
+
+> Incomplete recoil = less cardiac output. This step is as important as the push.
+
+@plane z=5 label="Rhythm Check"
+```
+  bpm  ████████████████████ 120
+       ████████████████     100
+       ████████             80
+       ████                 60
+
+  depth ██████████████████  2.4"
+        ████████████        1.5"  ← too shallow
+        ████████████████    2.0"
+        ██████████████████  2.4"  ✓
+```
+
+# Quality Metrics
+
+| Metric | Target | Common Error |
+|---|---|---|
+| Rate | 100–120 /min | Too slow (<80) |
+| Depth | 2–2.4 in / 5–6 cm | Too shallow |
+| Recoil | Full, hands light | Leaning between |
+| Interruptions | <10 sec pause | Long pulse checks |
+
+**Switch compressors every 2 minutes** — fatigue degrades depth by 30% at 3 min.
+
+@plane z=6 label="Switch!"
+```
+     ___
+    (   )
+  __|___|__
+ / SWITCH!  \    ← call out loud at 1:45
+|  _________| 
+|_____________|
+     | |
+     | |
+     
+  [Compressor A]    [Compressor B ready]
+  ████████████  →   ░░░░░░░░░░░░
+```
+
+# Two-Rescuer Handoff
+
+**Call the switch at 1:45 — not 2:00.**
+
+1. Compressor A: "Switching on next upstroke"
+2. Compressor B: moves into position **before** A stops
+3. A lifts → B places hands → **gap under 5 seconds**
+4. AED operator keeps analyzing without interrupting
+
+> In a real arrest, clean handoffs save lives as surely as compressions do.
+
+@plane z=7 label="Until AED"
+```
+  AED PAD PLACEMENT
+  
+  Right: below collarbone, right of sternum
+  Left:  left side, below armpit
+
+     [R pad]
+       __|__
+      /     \
+  [L pad]   |
+      \_____|
+
+  "Stand clear — analyzing"
+  >>> SHOCK ADVISED <<<
+  "Everybody clear — shocking in 3…2…1"
+```
+
+# AED Arrives — Resume Immediately
+
+- **Do not stop CPR** until pads are placed and AED says "analyzing"
+- After shock: **resume compressions immediately** — do not wait for pulse check
+- Post-shock rhythm is rarely perfusing; compressions bridge to recovery
+
+**Survival equation:**
+> Early 911 + Early CPR + Early Defibrillation = **best chance**
+
+[[z=0|Start over — run the cycle again]]

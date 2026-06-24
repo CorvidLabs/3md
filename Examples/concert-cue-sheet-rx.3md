@@ -1,0 +1,129 @@
+---
+3md: 1.0
+axis: cue
+title: Radiohead @ MSG — Cue Sheet
+view: present
+venue: Madison Square Garden, New York
+date: 2026-06-23
+show: Radiohead — The Bends 30th Anniversary
+LD: Leif Eriksson
+console: grandMA3 Full Size
+dimmer-rack: ETC Sensor3 × 4 racks
+moving-lights: Robe BMFL Blade × 48, GLP X4 Bar 20 × 32
+follow-spots: 2 × Robert Juliat Lancelot (FOH), 1 × Balcony
+haze: Look Solutions Unique 2.1 × 4
+notes: Timecodes are MTC from Ableton Link. All times 00:HH:MM:FF @ 25fps.
+category: Creative
+---
+Cue sheet for the full production. Each plane is one song. Navigate cues with arrow keys — or let the playhead scroll you through the night.
+
+@plane z=0 label="01 — Planet Telex"
+## 01 · Planet Telex
+**Timecode IN:** `00:00:00:00`  **Timecode OUT:** `00:04:39:12`
+
+| # | TC | Cue Name | Fixture Group | Action |
+|---|-----|----------|---------------|--------|
+| Q1.0 | 00:00 | Pre-set | All wash | Full deep blue 204/0/255, 0% dimmer → 35% over 4s |
+| Q1.1 | 00:04 | Downbeat | Robe BMFL grid | Snap pan/tilt to audience wash position; iris 60% |
+| Q1.2 | 00:08 | Verse 1 | GLP X4 Bar cyc | Slow cyan chase, 0.4 Hz, 100% intensity |
+| Q1.3 | 01:12 | Chorus | Full rig | Bump to white 255/255/255; strobe @4Hz for 2 beats then release |
+| Q1.4 | 03:58 | Outro swell | Robe BMFL | Fan-out upstage; 8-second iris close to 0% |
+| Q1.5 | 04:39 | Blackout | All | Hard blackout snap |
+
+**Haze:** medium continuous from downbeat.  
+**Follow-spots:** FOH spot A on Thom from Q1.1; no spot B this song.  
+> *Note from Jonny's tech: Jonny's side floor pocket has a practical blue neon — do NOT hit it with strobe.*
+
+@plane z=1 label="02 — The Bends"
+## 02 · The Bends
+**Timecode IN:** `00:05:10:00`  **Timecode OUT:** `00:08:44:06`
+
+| # | TC | Cue Name | Fixture Group | Action |
+|---|-----|----------|---------------|--------|
+| Q2.0 | 00:00 | Intro guitar | Robe BMFL USL+USR | Tight spot pools on Colin and Jonny; amber 255/120/0 |
+| Q2.1 | 00:22 | Verse 1 | GLP bars | Red pulse on snare hits; program MIDI trigger ch12 |
+| Q2.2 | 01:04 | "I wish I was special" | FOH Robe grid | Slow pan sweep 30s, 180° arc, blue→violet fade |
+| Q2.3 | 01:52 | Chorus | Full rig | All on, desaturated white; gobo rotation medium |
+| Q2.4 | 02:45 | Guitar solo | Robe BMFL DS pair | Tight elliptical wash on Thom DSC; magenta 255/0/140 |
+| Q2.5 | 03:30 | Final chorus | Robe all | Swap to harsh white + 1Hz strobe bursts on chord hits |
+| Q2.6 | 08:44 | End | All | 6-second fade to blackout |
+
+**Haze:** heavy during chorus. Bump haze off 30s before end.  
+**Follow-spots:** Both FOH on Thom from Q2.2. Balcony spot on Phil from Q2.3.  
+> Thom goes to piano at Q2.2 — tell spot A operator: TIGHTEN iris to 50%, follow left.
+
+@plane z=2 label="03 — High & Dry"
+## 03 · High & Dry
+**Timecode IN:** `00:09:20:00`  **Timecode OUT:** `00:13:55:18`
+
+| # | TC | Cue Name | Fixture Group | Action |
+|---|-----|----------|---------------|--------|
+| Q3.0 | 00:00 | Acoustic intro | Robe BMFL × 2 DSC | Single warm pool; CTO full; 80% dimmer |
+| Q3.1 | 00:34 | Band enters | GLP cyc | Gentle sunrise; orange→yellow, 20s fade |
+| Q3.2 | 01:20 | Verse 2 | Full wash | Warm white 255/200/160; slow cross-fade |
+| Q3.3 | 02:08 | Chorus | Full rig | Add BMFL aerial beams; fan position 40° spread |
+| Q3.4 | 03:18 | "Don't leave me high" | Robe top hats DSC | Tight shaft on Thom only; all else to 10% |
+| Q3.5 | 03:55 | Final build | All rig | Slow intensity climb 10→100% over 45s; colour desat |
+| Q3.6 | 13:55 | Resolve | All | Snap to blackout on final chord |
+
+**Haze:** minimal — thin veil only.  
+**Follow-spots:** FOH A on Thom full show. FOH B standby.  
+> This song photographs well. If photo pit is still open during Q3.3, warn them: beams will be in eyes.
+
+@plane z=3 label="04 — Fake Plastic Trees"
+## 04 · Fake Plastic Trees
+**Timecode IN:** `00:14:45:00`  **Timecode OUT:** `00:19:12:00`
+
+| # | TC | Cue Name | Fixture Group | Action |
+|---|-----|----------|---------------|--------|
+| Q4.0 | 00:00 | Solo vocal | Single Robe DSC | Bare bulb look; one fixture, 3000K, no gel, 75% |
+| Q4.1 | 00:52 | Acoustic guitar in | Add SL Robe | Second warm pool; subtle divergence, 60cm gap |
+| Q4.2 | 01:48 | Band swell | GLP cyc bars | Deep violet from top; let it breathe, 30s in |
+| Q4.3 | 02:38 | Emotional peak | All low fixtures | Kneeling wash; 15° angle; no overhead; blush pink |
+| Q4.4 | 03:44 | Post-chorus drop | All to 0% except DSC spot | Silence = silence in light |
+| Q4.5 | 04:10 | Outro build | All rig | Slow full-rig sunrise; 120s to 100%; warm white |
+| Q4.6 | 19:12 | End | All | 8s fade; leave haze drifting 10s |
+
+**Haze:** off during Q4.0–Q4.3. Enable at Q4.5 to catch the beam shafts in the build.  
+**Follow-spots:** FOH A full show, FULL open iris — this is a close song.  
+> This is usually the first moment the audience goes quiet. Don't ruin it. Trust the one lamp.
+
+@plane z=4 label="05 — Just"
+## 05 · Just
+**Timecode IN:** `00:20:00:00`  **Timecode OUT:** `00:23:41:20`
+
+| # | TC | Cue Name | Fixture Group | Action |
+|---|-----|----------|---------------|--------|
+| Q5.0 | 00:00 | Intro riff | GLP bars | Red hard-edge bars across stage; no wash |
+| Q5.1 | 00:10 | Full band | Robe BMFL full | Grid snap to 90° tilt, all beams vertical; cyan |
+| Q5.2 | 00:55 | Verse | GLP + Robe mix | Alternate red/cyan per beat; 4-beat cycle |
+| Q5.3 | 01:28 | Chorus | All rig | Full intensity; fast CMY chase; 2Hz gobo spin |
+| Q5.4 | 02:02 | Guitar break | Robe BMFL SR beam cluster | Tight aerial fan; white; 100% iris open |
+| Q5.5 | 02:44 | "You do it to yourself" | All fixtures | Snap to full white; strobe 8Hz × 4 beats ONLY |
+| Q5.6 | 03:10 | Final build | All | Increase strobe rate with each bar: 2→4→8→16Hz |
+| Q5.7 | 23:41 | Hard stop | All | Frame-accurate blackout on last beat |
+
+**Haze:** heavy from Q5.0. This is a beam song — feed the haze machine.  
+**Follow-spots:** BOTH FOH + balcony on Thom. Fast iris work. Thom moves a lot — warn operators: stay tight.  
+> Epilepsy warning was issued at house open. Strobe sequence at Q5.6 is cleared by venue.  
+> **Q5.7 must be frame-accurate.** Set as a hard chase cue in grandMA, NOT a manual go.
+
+@plane z=5 label="06 — Street Spirit"
+## 06 · Street Spirit (Fade Out)
+**Timecode IN:** `00:38:00:00`  **Timecode OUT:** `00:42:48:00`
+
+| # | TC | Cue Name | Fixture Group | Action |
+|---|-----|----------|---------------|--------|
+| Q6.0 | 00:00 | Arpeggiated intro | All to 0% | Complete darkness; let audience settle |
+| Q6.1 | 00:08 | Melody enters | Single pinspot on Thom | 1% intensity; build to 12% over 30s; NO colour |
+| Q6.2 | 01:00 | First lyric | Add single cyc uplight | Deep blue 0/0/180; 5% intensity only |
+| Q6.3 | 02:15 | Chorus | GLP bars top | Slow blue drip from top; 60s total fade; 0→40% |
+| Q6.4 | 03:20 | "Immerse your soul in love" | All rig | 90s slow fade to full deep blue; let it breathe |
+| Q6.5 | 04:10 | Final repeat | Robe BMFL slow tilt | Beams begin drift from vertical; 2°/s; imperceptible |
+| Q6.6 | 04:48 | End | All | Fade to 0% over final note; 4s |
+| Q6.7 | 04:52 | House lights | FOH | Slow house to 20%; hold for applause |
+
+**Haze:** off entirely. The column of smoke in the one pinspot IS the effect.  
+**Follow-spots:** FOH A only. Iris to minimum. No colour correction frame.  
+> This is the closer. The whole show is for this song. Less is everything.  
+> After Q6.7, walk the stage in the dark and check: *did we earn it?*

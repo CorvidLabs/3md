@@ -1,0 +1,151 @@
+---
+3md: 1.0
+axis: time
+title: Kilauea 2018: Hour by Hour
+view: present
+event: Lower East Rift Zone eruption, May 3–4 2018
+location: Leilani Estates, Puna District, Hawaii
+eruption_type: Fissure/effusive (basaltic)
+source: USGS Hawaiian Volcano Observatory
+category: Information
+---
+The Lower East Rift Zone awakens. May 3, 2018. These are the hours.
+
+@plane z=0 label="00:00 — Tremor"
+# 00:00 — First Tremor Detected
+
+HVO seismometers pick up a **continuous low-frequency tremor** signal beneath Leilani Estates. Amplitude: 0.4 µm/s. Below the threshold most residents would feel.
+
+The magma column in Pu'u 'O'o crater has been dropping for two days — a drainage signal every volcanologist dreads.
+
+> "The edifice is deflating. Something is moving east."
+> — HVO duty scientist field log, 04:12 HST
+
+**Instruments watching:**
+- 14 tiltmeters across the rift zone
+- GPS baseline on Pu'u 'O'o shortening at 3 cm/hr
+- SO₂ flux from summit: **3,200 tonnes/day** (baseline: 800)
+
+*The magma is already in the pipe. It has been traveling since April 30.*
+
+[[z=1|Next: ground cracking]]
+
+@plane z=1 label="02:30 — Cracking"
+# 02:30 — Ground Cracks Open on Mohala Street
+
+A row of hairline fractures splits asphalt on **Mohala Street**, running NE–SW — parallel to the rift axis, exactly as the stress model predicted.
+
+Steam rises from cracks. Temperature at the fracture: **94 °C**. Not lava yet — groundwater flashing to steam as the dike approaches from below.
+
+**Dike geometry (estimated):**
+| Parameter | Value |
+|-----------|-------|
+| Depth to top | ~1.5 km |
+| Width | ~1 m |
+| Propagation rate | ~0.8 km/hr east |
+| Overpressure | ~12 MPa |
+
+Civil Defense issues **voluntary evacuation** for Zone 9. Most residents stay.
+
+The dike is now directly below residential streets. It is 1,500 meters from the surface.
+
+[[z=2|Next: fissure opens]]
+
+@plane z=2 label="04:45 — Fissure 1"
+# 04:45 — Fissure 1 Breaks the Surface
+
+A 500-meter-long fissure opens along **Leilani Avenue**. Initial lava fountains reach **30 meters**. The magma temperature at vent: **1,150 °C**.
+
+The spatter is olivine-rich basalt, phenocrysts up to 4 mm — this is **stored rift zone magma**, not fresh summit material. It has been sitting in the system since 1955.
+
+**Sound:** A low roar, like a waterfall, audible 2 km away. This is gas escaping at 40 m/s through a 1-meter-wide crack in the earth.
+
+**Lava chemistry (first sample, 06:00):**
+- SiO₂: 51.2%
+- MgO: 7.1%
+- TiO₂: 2.8%
+- SO₂ at vent margin: **125 ppm** (mask required at 50 ppm)
+
+Within 20 minutes, the first house on Leilani Avenue is consumed.
+
+[[z=3|Next: laze and vog]]
+
+@plane z=3 label="09:00 — Laze Plume"
+# 09:00 — Lava Reaches Vacationland Road
+
+The first lava flow, moving at **180 meters/hour**, reaches a drainage ditch. When basalt at 1,100 °C contacts standing water, the reaction is immediate.
+
+**Laze:** Lava haze. The plume contains:
+- Hydrochloric acid (HCl) — from seawater minerals in the soil
+- Steam
+- Fine glass shards (Pele's hair) at **< 10 µm** — respirable
+- Hydrogen sulfide
+
+> Wind direction: NE at 12 knots. The plume is moving toward Pohoiki.
+
+Meanwhile, **vog** (volcanic smog) from SO₂ reacting with atmospheric moisture drifts across Hilo. Air Quality Index in Hilo: **168 (Unhealthy)**.
+
+Fissures 2 and 3 have opened overnight. The rift is activating sequentially eastward, like a zipper.
+
+[[z=4|Next: peak fountaining]]
+
+@plane z=4 label="16:00 — Fissure 8 Roars"
+# 16:00 — Fissure 8 Becomes the Main Vent
+
+**Fissure 8** — later named *Ahu'ailā'au* — has consolidated all activity. Lava fountains now reach **80 meters**. The channel leaving the vent is **30 meters wide**, flowing at **7 km/hour** toward the coast.
+
+This is a **Hawaiian-style** eruption at its most photogenic and most dangerous.
+
+**Channel cross-section:**
+```
+  ~~ lava surface (1,070°C) ~~
+  ========================= 
+  |  molten channel core   |  ← 30 m wide, 2–4 m deep
+  =========================
+     solid levees (crust)
+```
+
+The effusion rate: **100 m³/second**. For scale — that is filling an Olympic swimming pool every 25 seconds.
+
+SO₂ emissions peak at **100,000 tonnes/day**. The summit caldera is collapsing in response, triggering M5.3 earthquakes every 6–8 hours.
+
+[[z=5|Next: ocean entry]]
+
+@plane z=5 label="20:00 — Ocean Entry"
+# 20:00 — The Flow Reaches the Sea
+
+The channel crosses Highway 132 and enters the Pacific at **Kapoho Bay** — a popular snorkeling reef that has existed for 500 years.
+
+**Delta formation begins.** As lava meets seawater:
+1. Instant steam explosion (littoral explosion) — ejects lava fragments 100 m
+2. Pillow lava forms where flow submerges
+3. New land accretes at **~2 hectares/hour**
+4. The reef is buried under 10–25 m of basalt within 8 hours
+
+> Kapoho Bay — 0.4 km² of protected reef, home to 50+ coral species — is gone by midnight.
+
+The new land added to Hawaii's coastline tonight: **0.8 km²**.
+
+Geologists will be studying these flow lobes for decades. You are watching an island grow.
+
+[[z=6|Next: ashfall and close]]
+
+@plane z=6 label="36:00 — Ash and Silence"
+# 36:00 — Summit Collapse, Ashfall, Quiet
+
+At **02:00 on May 5**, the Halemaumau crater floor collapses 300 meters. The implosion sends an ash column **6 km** into the atmosphere.
+
+Ashfall deposits at Volcano Village: **1.2 mm** of fine basaltic tephra. Gray dust on every surface. The smell of sulfur, metallic and cold.
+
+**The eruption fingerprint — what you take home:**
+- 35 km² of new lava field
+- 716 homes destroyed
+- 875 million m³ of lava erupted over 3 months
+- ~3.5 km² of new land added to Hawaii Island
+- 24 active fissures (Fissure 8 dominant)
+
+And then — over the weeks that follow — silence. The fountains die. The channel drains. Fissure 8 goes cold. The new field steams in the rain for months.
+
+> The rift does not announce when it is finished. One morning you check the seismograms and the tremor is gone, and you realize it has been quiet for two days, and that was the end.
+
+*Field season opens. The mapping begins.*

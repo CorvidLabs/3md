@@ -1,0 +1,103 @@
+---
+3md: 1.0
+axis: frame
+title: Bass Drop Light Show
+view: play
+fps: 8
+bpm: 140
+key: F minor
+drop: frame 4
+category: Entertainment
+---
+The EQ builds, the crowd holds its breath. Frame by frame, the drop hits.
+
+@plane z=0 label="Build 1"
+```
+·  ·  ·  ·  ·  ·  ·  ·  ·  ·  ·  ·  ·  ·  ·  ·
+·  ·  ·  ·  ·  ·  ·  ·  ·  ·  ·  ·  ·  ·  ·  ·
+·  ·  ·  ·  ·  ·  ·  ·  ·  ·  ·  ·  ·  ·  ·  ·
+·  ·  ·  ·  ·  ·  ·  ·  ·  ·  ·  ·  ·  ·  ·  ·
+·  ·  ·  ·  ·  ▄  ·  ·  ·  ·  ▄  ·  ·  ·  ·  ·
+·  ·  ·  ·  ▄  █  ▄  ·  ·  ▄  █  ▄  ·  ·  ·  ·
+·  ·  ·  ▄  █  █  █  ▄  ▄  █  █  █  ▄  ·  ·  ·
+·  ▄  ▄  █  █  █  █  █  █  █  █  █  █  ▄  ▄  ·
+```
+> **140 BPM** · F minor · EQ rising at sub-bass 60Hz · crowd: 42,000
+
+@plane z=1 label="Build 2"
+```
+·  ·  ·  ·  ·  ▄  ·  ·  ·  ·  ·  ▄  ·  ·  ·  ·
+·  ·  ·  ·  ▄  █  ▄  ·  ·  ·  ▄  █  ▄  ·  ·  ·
+·  ·  ·  ▄  █  █  █  ▄  ·  ▄  █  █  █  ▄  ·  ·
+·  ·  ▄  █  █  █  █  █  ·  █  █  █  █  █  ▄  ·
+·  ▄  █  █  █  █  █  █  ·  █  █  █  █  █  █  ▄
+·  █  █  █  █  █  █  █  █  █  █  █  █  █  █  █
+▄  █  █  █  █  █  █  █  █  █  █  █  █  █  █  ▄
+█  █  █  █  █  █  █  █  █  █  █  █  █  █  █  █
+```
+> **+4 bars** · mid-range 800Hz kicks in · strobes at quarter-note · arms raised
+
+@plane z=2 label="Pre-Drop"
+```
+·  ▄  █  ▄  ·  ▄  █  ▄  ·  ▄  █  ▄  ·  ▄  █  ·
+▄  █  █  █  ▄  █  █  █  ▄  █  █  █  ▄  █  █  ▄
+█  █  █  █  █  █  █  █  █  █  █  █  █  █  █  █
+█  █  █  █  █  █  █  █  █  █  █  █  █  █  █  █
+█  █  █  █  █  █  █  █  █  █  █  █  █  █  █  █
+█  █  █  ▀  █  █  █  ▀  █  █  █  ▀  █  █  █  ▀
+█  ▀  ▀  ·  ▀  ▀  ▀  ·  ▀  ▀  ▀  ·  ▀  ▀  ▀  ·
+▀  ·  ·  ·  ·  ·  ·  ·  ·  ·  ·  ·  ·  ·  ·  ·
+```
+> **SILENCE** · all EQ bands maxed then **CUT** · 2-second void · DJ raises fist
+
+@plane z=3 label="THE DROP"
+```
+█  ▀  █  ▀  █  ▀  █  ▀  █  ▀  █  ▀  █  ▀  █  ▀
+▀  █  ▀  █  ▀  █  ▀  █  ▀  █  ▀  █  ▀  █  ▀  █
+█  ▀  █  ▀  █  ▀  █  ▀  █  ▀  █  ▀  █  ▀  █  ▀
+▀  █  ▀  █  ▀  █  ▀  █  ▀  █  ▀  █  ▀  █  ▀  █
+█  ▀  █  ▀  █  ▀  █  ▀  █  ▀  █  ▀  █  ▀  █  ▀
+▀  █  ▀  █  ▀  █  ▀  █  ▀  █  ▀  █  ▀  █  ▀  █
+█  ▀  █  ▀  █  ▀  █  ▀  █  ▀  █  ▀  █  ▀  █  ▀
+▀  █  ▀  █  ▀  █  ▀  █  ▀  █  ▀  █  ▀  █  ▀  █
+```
+> **IMPACT** · 808 sub at 47Hz · all lights FULL WHITE · pyro column 1+4 fire · **42,000 people lose their minds**
+
+@plane z=4 label="Aftershock 1"
+```
+█  █  █  █  █  █  █  █  █  █  █  █  █  █  █  █
+█  ·  ·  ·  ·  ·  ·  ·  ·  ·  ·  ·  ·  ·  ·  █
+█  ·  ▄  ▄  ·  ·  ·  ·  ·  ·  ·  ▄  ▄  ·  ·  █
+█  ·  █  █  ·  ▄  ▄  ·  ·  ▄  ▄  █  █  ·  ·  █
+█  ·  █  █  ·  █  █  ·  ·  █  █  █  █  ·  ·  █
+█  ·  █  █  ·  █  █  ▄  ▄  █  █  █  █  ·  ·  █
+█  ·  █  █  ·  █  █  █  █  █  █  █  █  ·  ·  █
+█  █  █  █  █  █  █  █  █  █  █  █  █  █  █  █
+```
+> Kick+snare locked · 4 on the floor · moving heads sweep crowd · confetti burst
+
+@plane z=5 label="Aftershock 2"
+```
+█  ·  █  ·  █  ·  █  ·  █  ·  █  ·  █  ·  █  ·
+·  █  ·  █  ·  █  ·  █  ·  █  ·  █  ·  █  ·  █
+█  ·  ▄  ·  █  ·  ▄  ·  █  ·  ▄  ·  █  ·  ▄  ·
+·  █  █  █  ·  █  █  █  ·  █  █  █  ·  █  █  █
+█  ·  █  ▀  █  ·  █  ▀  █  ·  █  ▀  █  ·  █  ▀
+·  █  ▀  ·  ·  █  ▀  ·  ·  █  ▀  ·  ·  █  ▀  ·
+█  ·  ·  ·  █  ·  ·  ·  █  ·  ·  ·  █  ·  ·  ·
+·  ·  ·  ·  ·  ·  ·  ·  ·  ·  ·  ·  ·  ·  ·  ·
+```
+> EQ settles into groove · hi-hats 16th-note roll · lasers trace figure-8 over floor
+
+@plane z=6 label="Groove Lock"
+```
+·  ·  ▄  ·  ·  ·  ▄  ·  ·  ·  ▄  ·  ·  ·  ▄  ·
+·  ▄  █  ▄  ·  ▄  █  ▄  ·  ▄  █  ▄  ·  ▄  █  ▄
+▄  █  █  █  ▄  █  █  █  ▄  █  █  █  ▄  █  █  █
+█  █  █  █  █  █  █  █  █  █  █  █  █  █  █  █
+█  █  █  █  █  █  █  █  █  █  █  █  █  █  █  █
+▀  █  █  █  ▀  █  █  █  ▀  █  █  █  ▀  █  █  █
+·  ▀  █  ▀  ·  ▀  █  ▀  ·  ▀  █  ▀  ·  ▀  █  ▀
+·  ·  ▀  ·  ·  ·  ▀  ·  ·  ·  ▀  ·  ·  ·  ▀  ·
+```
+> **Locked in.** Bass runs clean at 128dB · 42,000 heartbeats synchronised · next drop in 32 bars → [[z=0|loop back]]

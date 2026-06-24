@@ -1,0 +1,129 @@
+---
+3md: 1.0
+axis: depth
+title: Coral Reef by Depth Zone
+view: elevator
+author: Reef Depth Atlas
+light: diminishes -50% per 10m
+temp_surface: 29°C
+temp_mesophotic: 14°C
+category: Information
+---
+Descend through a Indo-Pacific reef from the surge zone to the twilight margin — each plane is a distinct ecological band with its own light budget, pressure, and cast of characters.
+
+@plane z=0 label="Surge Zone (0–3 m)"
+# Surge Zone · 0–3 m
+
+**PAR:** ~2,000 µmol m⁻² s⁻¹ · **Temp:** 29–31 °C · **Pressure:** 1 atm
+
+The violent fringe. UV is punishing; wave surge scours everything loose.
+
+**Dominant corals**
+- *Acropora palifera* — table form, UV-absorbing mycosporines saturate tissue pink
+- *Pocillopora damicornis* — weedy pioneer, recruits after every storm
+
+**Fauna highlights**
+- **Surgeonfish** (*Acanthurus nigricans*) graze turf algae in tight schools
+- **Sally Lightfoot crabs** sprint between pulses, feeding on encrusting coralline
+- Encrusting *Porolithon* coralline algae: the rebar that holds the reef crest together
+
+> Wave energy here can exceed **10 kW/m** during cyclone swell. Coral tissue on the surge face turns pale within 48 h of bleaching onset — your earliest sentinel.
+
+@plane z=1 label="Reef Flat (3–10 m)"
+# Reef Flat · 3–10 m
+
+**PAR:** ~900 µmol m⁻² s⁻¹ · **Temp:** 28–30 °C · **Pressure:** 1.3–2 atm
+
+The broadest habitat by area. Sedimentation and thermal stress interact.
+
+**Dominant corals**
+- *Porites lutea* — massive heads up to 5 m diameter, >500-year growth records in Sr/Ca isotopes
+- *Goniastrea retiformis* — tolerates turbidity; δ¹⁸O bands archive bleaching history
+
+**Fauna highlights**
+- **Parrotfish** (*Chlorurus microrhinos*) produce ~200 kg of carbonate sand per individual per year
+- **Crown-of-thorns** (*Acanthaster planci*) outbreaks leave white feeding scars visible on satellite
+- **Tridacna gigas** — photosymbiotic, iridophores scatter light into zooxanthellae like a fiber-optic array
+
+**Field note:** plot 10×10 m quadrats here for annual benthic cover surveys; photo-transect at nadir avoids parallax error on massive corals.
+
+@plane z=2 label="Reef Slope (10–30 m)"
+# Reef Slope · 10–30 m
+
+**PAR:** ~150–400 µmol m⁻² s⁻¹ · **Temp:** 25–28 °C · **Pressure:** 2–4 atm
+
+Peak coral diversity. Structural complexity is highest; rugosity index ~3.5.
+
+**Dominant corals**
+- *Acropora hyacinthus* — plate form tilts horizontal to intercept oblique light
+- *Lobophyllia hemprichii* — fleshy lobes fluoresce green (GFP homologs) under blue light
+- *Leptoseris* spp. begin appearing below 20 m as light-harvesting specialists
+
+**Fauna highlights**
+| Species | Role | Depth preference |
+|---|---|---|
+| *Cheilinus undulatus* (Napoleon wrasse) | Apex predator, crushes echinoderms | 10–30 m |
+| *Pterois volitans* | Ambush, invasive in Atlantic | 5–60 m |
+| *Cephalopholis miniata* | Cooperates with moray for hunts | 15–30 m |
+
+> **Thermocline effect:** On many Indo-Pacific slopes a sharp thermocline at ~22 m creates a thermal refuge during bleaching events — monitor this layer with string loggers every 2 m.
+
+@plane z=3 label="Transition Zone (30–60 m)"
+# Transition Zone · 30–60 m
+
+**PAR:** ~20–50 µmol m⁻² s⁻¹ · **Temp:** 18–25 °C · **Pressure:** 4–7 atm
+
+The "coral twilight" — scleractinians thin out; sponges and gorgonians ascend.
+
+**Dominant corals**
+- *Leptoseris papyracea* — leaf-thin plates; zooxanthellae density ~4× surface corals
+- *Pachyseris speciosa* — corrugated plates maximise surface-to-volume for photon capture
+- Azooxanthellate *Tubastraea micranthus* (orange cup) — filter-feeds; no light dependency
+
+**Fauna highlights**
+- **Deepwater grouper** (*Epinephelus polyphekadion*) aggregate here for spawning — critical fisheries data point
+- **Black-tip reef sharks** descend at dusk hunting snapper along the drop-off
+- **Sea fans** (*Subergorgia mollis*): orient perpendicular to prevailing current; use compass bearing as a proxy for bottom current direction
+
+**Tech-diving window:** 30–40 m reachable on SCUBA with nitrox 32%; below 40 m requires trimix or CCR. Plan deco stops at 9 m and 6 m.
+
+@plane z=4 label="Mesophotic (60–120 m)"
+# Mesophotic Zone · 60–120 m
+
+**PAR:** < 5 µmol m⁻² s⁻¹ · **Temp:** 14–18 °C · **Pressure:** 7–13 atm
+
+The "Deep Reef Refugia" hypothesis lives or dies here.
+
+**Dominant corals**
+- *Leptoseris troglodyta* — described from caves, functions below 1% surface irradiance
+- *Cycloseris* spp. — free-living solitary discs; distribute by rolling with bottom current
+- Encrusting *Montipora* morphotypes with expanded corallite spacing
+
+**Fauna highlights**
+- **Pristipomoides filamentosus** (opakapaka) — commercially important deepwater snapper; spawning aggregations documented by acoustic tagging
+- **Antipatharian black corals** — slow-growing (~0.3 mm/yr); radiocarbon-dated specimens >4,000 years old
+- **Squat lobsters** (*Pleuroncodes*) in dense patches where organic fallout collects in topographic lows
+
+**Why it matters:** ROV surveys show bleaching-naïve communities here even during mass bleaching events. Whether shallow larvae successfully replenish from mesophotic stock remains the open question — see [[z=5|twilight border]] for the data gap.
+
+@plane z=5 label="Twilight Border (120–200 m)"
+# Twilight Border · 120–200 m
+
+**PAR:** < 0.1 µmol m⁻² s⁻¹ · **Temp:** 10–14 °C · **Pressure:** 13–21 atm
+
+Effectively aphotic for zooxanthellate corals. Life reorganizes around chemolithotrophy and marine snow.
+
+**What remains of coral**
+- Azooxanthellate *Lophelia pertusa* (cold-water coral) appears at depth — frame-builder in its own right
+- Skeletal rubble from slope corals, bored by *Lithophaga* bivalves for centuries
+
+**Fauna highlights**
+- **Echinoderms dominate:** *Ophiura* brittle stars in densities >50 m⁻² on soft substrate
+- **Siphonophores** trail 30–40 m tentacle arrays through the water column
+- **Viperfish** (*Chauliodus sloani*) — bioluminescent lures, hinged jaw accommodates prey >60% body length
+
+**Instrumentation at this depth**
+- Lander-deployed time-lapse cameras: 1 frame / 15 min, AA-battery powered for 6-month deployments
+- Sediment traps calibrate particle flux (mg C m⁻² day⁻¹) — key for carbon budget models
+
+> The reef as you know it has ended. Below here, the benthos is connected to the surface only by sinking particles and vertically migrating fauna — a different kind of ecology entirely.
