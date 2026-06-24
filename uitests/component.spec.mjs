@@ -136,10 +136,70 @@ test.describe("<three-md> component", () => {
     await page.waitForTimeout(450); // let the opacity transition settle
     const op = await page.evaluate(() =>
       [...document.getElementById("inline").shadowRoot.querySelectorAll(".plane")].map((p) => Number(getComputedStyle(p).opacity)));
-    // Only plane index 1 is visible; the others are faded out.
-    expect(op[1]).toBe(1);
-    expect(op[0]).toBe(0);
-    expect(op[2]).toBe(0);
+    // Only plane index 1 is visible; the others are faded out. Use a tolerance
+    // because opacity animates via a CSS transition and may not land on an exact
+    // 0 at the moment we sample it.
+    expect(op[1]).toBeGreaterThan(0.95);
+    expect(op[0]).toBeLessThan(0.05);
+    expect(op[2]).toBeLessThan(0.05);
+  });
+
+  test("single-card mode scrolls a long plane (reader)", async ({ page }) => {
+    await page.goto("/embed-example.html");
+    await page.waitForFunction(() => document.getElementById("inline")?.shadowRoot?.querySelectorAll(".plane").length === 3);
+    const long = "---\n3md: 1.0\naxis: doc\nview: single\n---\n@plane z=0 label=\"Long\"\n# Long\n\n" +
+      Array.from({ length: 150 }, (_, i) => `Paragraph ${i + 1}. Lorem ipsum dolor sit amet.`).join("\n\n") +
+      "\n@plane z=1 label=\"Short\"\n# Short\n\nLittle.\n";
+    const r = await page.evaluate((src) => {
+      const el = document.getElementById("inline");
+      el.setSource(src);
+      const reader = el.shadowRoot.querySelector(".plane.reader");
+      const overflowY = getComputedStyle(reader).overflowY;
+      const overflows = reader.scrollHeight > reader.clientHeight + 10;
+      reader.scrollTop = 500;
+      return { hasReader: !!reader, overflowY, overflows, scrolled: reader.scrollTop > 0 };
+    }, long);
+    // The focused plane is a real scroll container, so a 150-paragraph plane is
+    // fully readable instead of being clipped by the stage.
+    expect(r.hasReader).toBe(true);
+    expect(r.overflowY).toBe("auto");
+    expect(r.overflows).toBe(true);
+    expect(r.scrolled).toBe(true);
+  });
+
+  test("reflects the resolved mode as data-mode (for fullscreen styling)", async ({ page }) => {
+    await page.goto("/embed-example.html");
+    await page.waitForFunction(() => document.getElementById("inline")?.shadowRoot?.querySelectorAll(".plane").length === 3);
+    const modes = await page.evaluate(() => {
+      const el = document.getElementById("inline");
+      const out = {};
+      for (const m of ["present", "single", "stack", "blend"]) { el.setAttribute("mode", m); out[m] = el.getAttribute("data-mode"); }
+      return out;
+    });
+    expect(modes).toEqual({ present: "present", single: "single", stack: "stack", blend: "blend" });
+  });
+
+  test("space and PageDown advance like a slideshow (not in reader)", async ({ page }) => {
+    await page.goto("/embed-example.html");
+    await page.waitForFunction(() => document.getElementById("inline")?.shadowRoot?.querySelectorAll(".plane").length === 3);
+    const r = await page.evaluate(() => {
+      const el = document.getElementById("inline");
+      el.setAttribute("mode", "present");
+      el.focus();
+      const fire = (key) => el.dispatchEvent(new KeyboardEvent("keydown", { key, bubbles: true }));
+      const start = el.currentIndex;
+      fire("PageDown"); const afterPage = el.currentIndex;
+      fire(" "); const afterSpace = el.currentIndex;
+      fire("PageUp"); const afterUp = el.currentIndex;
+      // In reader (single) mode, space must NOT advance (it scrolls the body).
+      el.setAttribute("mode", "single"); el.focus();
+      const sBefore = el.currentIndex; fire(" "); const sAfter = el.currentIndex;
+      return { start, afterPage, afterSpace, afterUp, spaceInReaderMoved: sAfter !== sBefore };
+    });
+    expect(r.afterPage).toBe(r.start + 1);
+    expect(r.afterSpace).toBe(r.start + 2);
+    expect(r.afterUp).toBe(r.start + 1);
+    expect(r.spaceInReaderMoved).toBe(false);
   });
 
   test("emits planechange when stepping", async ({ page }) => {
