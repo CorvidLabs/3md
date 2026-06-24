@@ -1,5 +1,5 @@
 ---
-3md: 0.1
+3md: 1.0
 axis: section
 title: 3md, explained in 3md
 ---
@@ -20,7 +20,7 @@ that plane's body. Here is a whole 3md file shown inside a code block:
 
 ```3md
 ---
-3md: 0.1
+3md: 1.0
 axis: time
 title: My Week
 ---

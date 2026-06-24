@@ -1,9 +1,24 @@
 # 3md Format Specification
 
-Version: 0.1 (draft)
-Status: experimental
+Version: 1.0
+Status: stable (frozen grammar)
 File extension: `.3md`
 Media type (proposed): `text/3md`
+
+This document defines version 1.0 of the 3md format. The `3md:` key inside a
+document's frontmatter declares which format version that document targets. See
+section 9 (Stability) for the compatibility guarantees that version 1.0 makes.
+
+### Format version and back-compatibility
+
+The `3md:` frontmatter value identifies the format version a document was
+authored against. It is a free string. A conforming parser records this value
+and exposes it, but it does NOT reject a document on the basis of the version
+string: the parser is version-lenient by design. Any version string is accepted,
+and older markers stay valid. A document written as `3md: 0.1` continues to parse
+exactly as it did before, so all existing 0.1 documents remain valid 1.0-era
+files. The only hard requirement is that the `3md` key be present (it is the
+file's magic marker); its value is never validated against a known set.
 
 ## 1. Overview
 
@@ -33,7 +48,7 @@ A 3md document is UTF-8 text with three regions, in order:
 
 ```
 ---
-3md: 0.1
+3md: 1.0
 axis: time
 title: My Week
 ---
@@ -53,16 +68,47 @@ The document MUST begin with a frontmatter block: a line containing exactly
 `---`, one or more `key: value` lines, and a closing line containing exactly
 `---`. Leading blank lines before the opening fence are allowed.
 
+### 3.1 The 3md frontmatter mini-format
+
+The frontmatter is its own small, flat, line-based key/value format, named here
+the **3md frontmatter** mini-format. It is NOT YAML. It only resembles YAML on
+the surface; do not feed it to a YAML parser and do not expect YAML semantics.
+The grammar is deliberately tiny and is defined exactly as follows:
+
+- Each non-ignored line is a single `key: value` pair, split on the FIRST colon
+  on the line. Everything before that colon is the key, everything after it is
+  the value. A line with no colon is invalid frontmatter.
+- The key is trimmed of surrounding whitespace. The value is trimmed of
+  surrounding whitespace before quote handling (see below).
+- The `3md`, `axis`, and `title` keys are RESERVED and are matched
+  case-insensitively (so `3MD`, `Axis`, and `TITLE` are recognized as the
+  reserved keys).
+- Every other key is preserved verbatim (its original casing and spelling are
+  kept), and its value is ALWAYS a string. Non-reserved values are never coerced
+  to numbers, booleans, dates, or any other type.
+- Duplicate keys are last-wins: if a key appears more than once, the final
+  occurrence in source order is the value that is used.
+- Blank lines and lines whose first non-whitespace character is `#` are ignored.
+  A `#` line is a comment; it is not a key/value pair.
+- A value MAY be wrapped in a matching pair of single (`'`) or double (`"`)
+  quotes. When it is, the outer quotes are stripped. Inside such a quoted value,
+  `\\` is unescaped to a single backslash and `\"` is unescaped to a double
+  quote. An unquoted value is taken verbatim.
+
+Non-goals (it only looks like YAML): there is no nesting, no mappings within a
+value, no lists or sequences, no anchors or aliases or references, and no
+multi-line scalars (every pair lives on exactly one line). The format is flat by
+construction.
+
+### 3.2 Reserved keys
+
 - `3md` (REQUIRED): the format version string. Its presence is the file's magic
-  marker. A document without it is not a valid 3md document.
+  marker. A document without it is not a valid 3md document. The value is
+  recorded but never validated; see the back-compatibility note in the header.
 - `axis` (OPTIONAL): the meaning of the Z axis. Defaults to `layer`. The value
   is trimmed and lowercased; any string is permitted.
 - `title` (OPTIONAL): a human-readable title.
-- Any other key is preserved as string metadata.
-
-Blank lines and lines beginning with `#` inside the frontmatter are ignored.
-Values may be wrapped in matching single or double quotes; the quotes are
-stripped.
+- Any other key is preserved as string metadata, per section 3.1.
 
 ## 4. Planes
 
@@ -155,7 +201,68 @@ the body verbatim. Implementations expose them through a separate step:
 This makes link validation (find dangling references) and navigation portable
 across implementations, and it is pinned by the shared conformance vectors.
 
-## 9. Open questions for later versions
+## 9. Relation to prior art
+
+3md borrows the parts of existing formats that work and avoids the parts that
+make those formats hard to parse portably. The comparisons below explain what
+3md takes and what it deliberately leaves out.
+
+**YAML frontmatter (Jekyll, Hugo, Obsidian).** Static-site and notes tools put a
+`---` fenced YAML block at the top of a Markdown file for metadata. YAML is
+powerful but large: it has nesting, lists, anchors, typed scalars, and several
+multi-line string modes, and its edge cases differ between implementations. 3md
+keeps the familiar `---` fence and the `key: value` look, but replaces YAML with
+the flat 3md frontmatter mini-format (section 3) so every conforming parser, in
+any language, agrees on exactly what a frontmatter line means.
+
+**CommonMark generic and fenced directives (the `:::` proposal).** The directive
+proposal adds inline (`:span:`), leaf, and container (`::: name`) directives to
+Markdown, fenced by runs of colons with an attribute syntax. It is a general
+extension mechanism aimed at arbitrary custom blocks. 3md does not need a general
+container syntax: it needs exactly one concept, a plane, so it uses a single
+line-prefix directive (`@plane`) at column 0 instead of nestable colon fences,
+which keeps plane boundaries unambiguous and easy to scan.
+
+**reveal.js slide separators.** reveal.js splits a Markdown deck into slides with
+horizontal rules or configured separator strings, and into vertical stacks with a
+second separator, giving a fixed two-level slide structure. 3md generalizes that
+idea: instead of a fixed horizontal/vertical split, it offers one free Z axis
+whose meaning (time, depth, layer, frame, space) the author declares, and each
+plane carries an explicit numeric `z` rather than relying on positional order.
+
+**MDX.** MDX lets authors embed JSX components and JavaScript expressions inside
+Markdown, which makes documents expressive but couples them to a JavaScript
+toolchain and a compile step. 3md stays plain text and plain Markdown inside each
+plane: a plane body is just CommonMark, so any Markdown renderer can display it
+and no runtime is required to read the content.
+
+Rationale for 3md's choices: a single free Z axis (one new dimension, with its
+meaning chosen by the author rather than baked into the format), line-prefix
+`@plane` directives anchored at column 0 (so plane boundaries are trivially
+detectable and never ambiguous), and a flat non-YAML frontmatter (so metadata is
+portable and parses identically everywhere).
+
+## 10. Stability
+
+Version 1.0 freezes the grammar described in this document. Concretely:
+
+- The 1.0 grammar is frozen. The frontmatter mini-format, the `@plane` directive
+  and its attribute grammar, the numeric grammar for `z`/`x`/`y`, the
+  single-plane shorthand, cross-plane links, escaping, and the error set are
+  stable and will not change within the 1.x line.
+- Additive features ship in future MINOR spec versions (1.1, 1.2, and so on). A
+  minor version may introduce new optional keys, attributes, or directives, but
+  it must not invalidate any document that conforms to an earlier 1.x version.
+- Only a new MAJOR version (2.0) may break compatibility. Because parsers are
+  version-lenient (section header and section 3.2), bumping the `3md:` value does
+  not by itself change how a document parses; compatibility is a property of the
+  grammar, not of the version string.
+- The shared conformance suite is the contract. The portable test vectors, not
+  prose, are the authoritative definition of conforming behavior; any
+  implementation that passes them is conforming, and any change that would alter
+  their expected results is a breaking change.
+
+## 11. Open questions for later versions
 
 - Inline 3D model embeds, for example `@model src="scene.glb"`.
 - Transclusion across documents.

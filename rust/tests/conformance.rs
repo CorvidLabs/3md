@@ -176,6 +176,6 @@ fn conformance_vectors_pass() {
         count += 1;
     }
 
-    assert_eq!(count, 42, "expected exactly 42 conformance vectors");
+    assert_eq!(count, 43, "expected exactly 43 conformance vectors");
     println!("conformance: all {count} vectors passed");
 }

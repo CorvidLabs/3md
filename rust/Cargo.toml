@@ -1,6 +1,6 @@
 [package]
 name = "threemd"
-version = "0.1.0"
+version = "1.0.0"
 edition = "2021"
 description = "A faithful Rust implementation of the 3md format: Markdown extended along a single free Z axis."
 license = "MIT"

@@ -1,0 +1,14 @@
+{
+  "name": "the 1.0 format marker parses, with version reported as 1.0",
+  "source": "---\n3md: 1.0\n---\n@plane z=0\nhi\n",
+  "expected": {
+    "version": "1.0",
+    "axis": "layer",
+    "title": null,
+    "metadata": {},
+    "preamble": null,
+    "planes": [
+      { "z": 0, "label": null, "x": null, "y": null, "attributes": {}, "body": "hi" }
+    ]
+  }
+}

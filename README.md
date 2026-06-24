@@ -53,7 +53,7 @@ text a depth dimension of its own.
 Add the package to your `Package.swift`:
 
 ```swift
-.package(url: "https://github.com/CorvidLabs/3md", from: "0.6.0")
+.package(url: "https://github.com/CorvidLabs/3md", from: "1.0.0")
 ```
 
 Then depend on the `ThreeMD` library product:
@@ -151,8 +151,9 @@ cross-implementation contract that keeps the parsers behaving identically.
 
 ## Status
 
-The format and spec are at version 0.1 (experimental), and the grammar may still
-change before 1.0. The latest release is v0.6.0.
+The format and spec are at version 1.0 (stable, frozen grammar). The latest
+release is v1.0.0. Older `3md: 0.1` documents remain valid: the parser is
+version-lenient and never rejects a document by its version string.
 
 ## License
 

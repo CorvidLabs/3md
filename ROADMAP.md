@@ -3,14 +3,16 @@
 Where the format and its tooling are headed. Confidence is a rough 0 to 100 read
 on how sure we are a step is the right next move and will land cleanly.
 
-## Now
+## Now (v1.0)
 
-Shipped and verified: a defined format (SPEC.md); three parsers in lockstep
-(Swift `ThreeMD`, TypeScript `@corvidlabs/threemd`, and the Rust `threemd` crate)
-proven equivalent by a 42-vector conformance suite; a `threemd` CLI; an HTML
-renderer with Markdown rendering; cross-plane links; nine examples; two live demos
-(GitHub Pages and corvidlabs.xyz); MIT license; and enforcing signed
-attestations. State confidence: 92.
+The format is at version 1.0 (stable, frozen grammar). Shipped and verified: a
+frozen spec (SPEC.md) with a named frontmatter mini-format and a relation-to-prior-art
+section; three parsers in lockstep (Swift `ThreeMD`, TypeScript
+`@corvidlabs/threemd`, the Rust `threemd` crate) proven equivalent by a 43-vector
+conformance suite; a `threemd` CLI; an HTML renderer with Markdown rendering;
+cross-plane links; nine examples; VS Code syntax highlighting; two live demos
+(GitHub Pages and corvidlabs.xyz); MIT license; and enforcing signed attestations.
+State confidence: 93.
 
 ## Done (from this roadmap)
 
@@ -18,13 +20,15 @@ attestations. State confidence: 92.
 - Real Markdown rendering in `threemd html`.
 - Cross-plane links (`[[z=N]]` / `[[z=N|text]]`).
 - A third implementation: the Rust crate, conformance-verified.
+- VS Code syntax-highlighting extension (`editor/vscode`, .vsix).
+- 1.0 spec freeze: named frontmatter mini-format, relation to prior art, stability guarantees.
 
 ## Next
 
 | Step | Confidence | Notes |
 |------|------------|-------|
-| Editor support (VS Code extension) | 70 | Syntax highlighting and live preview for `.3md`. The biggest adoption lever; larger, separate effort. |
-| 1.0 spec freeze plus a "relation to prior art" section | 64 | Decide the frontmatter-vs-YAML question, lock the grammar, compare to CommonMark directives and reveal.js, then freeze. Let the 0.x line bake first. |
+| VS Code Marketplace publish | 55 | The extension ships as a `.vsix` today; Marketplace + OpenVSX need a publisher account. Deferred until the format settles. |
+| Docs site (Astro) + Homebrew tap + social-preview image | 60 | Remaining flagship-presentation polish. Each is a standalone follow-up. |
 
 ## Later / open questions (SPEC.md section 8)
 
