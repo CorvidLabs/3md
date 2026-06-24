@@ -37,10 +37,13 @@ State confidence: 93.
 
 ## Later / open questions (SPEC.md section 8)
 
-- Inline model embeds (`@model src="scene.glb"`).
-- Transclusion across documents.
-- Per-plane transition or timing hints for time and frame axes.
-- A binary or compressed container for large scenes.
+Designed in [docs/PROPOSALS.md](docs/PROPOSALS.md) (non-normative; the 1.0 grammar
+is frozen and nothing there is implemented yet):
+
+- Per-plane transition or timing hints for time and frame axes (confidence 88).
+- Inline model/asset embeds (`@asset src="scene.glb"`) (confidence 70).
+- Transclusion across documents (`@include`) (confidence 52).
+- A binary or compressed container for large scenes (confidence 35).
 
 ## Out of scope
 
