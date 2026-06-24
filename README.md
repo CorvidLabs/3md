@@ -127,14 +127,19 @@ See [SPEC.md](SPEC.md) for the full grammar and conformance rules.
 
 ## Examples
 
-The [Examples/](Examples) directory has nine documents spanning many axis types:
+The [Examples/](Examples) directory has ten documents spanning many axis types:
 
 - [`daily-planner.3md`](Examples/daily-planner.3md) - `axis: time`, one plane per day.
 - [`animation.3md`](Examples/animation.3md) - `axis: frame`, one plane per frame.
 - [`layered-notes.3md`](Examples/layered-notes.3md) - `axis: layer`, stacked overlay layers.
 - [`dungeon.3md`](Examples/dungeon.3md) - `axis: space`, rooms wired with `[[z=N]]` cross-plane links.
+- [`tide-pool.3md`](Examples/tide-pool.3md) - `axis: depth`, authored by an AI from the spec alone (see [docs/PROOF.md](docs/PROOF.md)).
 - [`3md-in-3md.3md`](Examples/3md-in-3md.3md) - 3md explained in 3md, with a `@plane` inside a code fence.
 - Plus `recipe`, `changelog`, `resume`, and `kanban`.
+
+Want to see it work? [docs/PROOF.md](docs/PROOF.md) records how 3md was verified
+for machines (a blind AI authored valid 3md from the spec; all three parsers
+agreed) and for people (plain, readable, diffable text).
 
 ## Development
 

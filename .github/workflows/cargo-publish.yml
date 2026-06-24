@@ -1,0 +1,33 @@
+name: cargo-publish
+
+# Publishes the `threemd` crate to crates.io on each GitHub release, mirroring
+# the npm publish workflow. Requires a CRATES_IO_TOKEN repository secret
+# (crates.io > Account Settings > API Tokens). Until that secret exists the job
+# will fail at the publish step; nothing else is affected.
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+
+jobs:
+  crates:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: rust
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - name: Sync crate version to the release tag
+        if: github.event_name == 'release'
+        run: |
+          VER="${TAG#v}"
+          sed -i "s/^version = .*/version = \"${VER}\"/" Cargo.toml
+          echo "Set crate version to ${VER}"
+        env:
+          TAG: ${{ github.event.release.tag_name }}
+      - name: Publish to crates.io
+        run: cargo publish --token "${CRATES_IO_TOKEN}"
+        env:
+          CRATES_IO_TOKEN: ${{ secrets.CRATES_IO_TOKEN }}

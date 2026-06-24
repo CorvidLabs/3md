@@ -1,0 +1,76 @@
+---
+3md: 1.0
+axis: depth
+title: The Anatomy of a Tide Pool
+author: Claude (blind-test author)
+license: CC-BY-4.0
+# the line below is a comment and is ignored by the parser
+camera: "looking straight down, noon light"
+---
+A single tide pool, read as a stack of **depth planes** rather than a timeline.
+Start at the glittering surface and descend, plane by plane, into the cold dark
+where the rock meets the sea floor. Each plane is the same patch of water at a
+different depth; the Z axis here is literal vertical distance, measured in
+centimetres below the waterline.
+
+Begin at [[z=0|the surface film]] and sink toward [[z=3]].
+
+@plane z=0 label="Surface Film" depth_cm="0"
+# 0 cm - The Surface Film
+
+A skin of water one molecule could almost balance on. This is where air and
+ocean negotiate.
+
+- **Glare** scatters off every ripple; you see more sky than water.
+- **Sea foam** collects in the lee of the rock, a lace of popped bubbles.
+- A single **water strider** ghosts across, dimpling the meniscus.
+
+> Everything below is refracted, bent, and a little bit lied about.
+
+Look past the shine and descend to [[z=1|the sunlit shallows]].
+
+@plane z=1 label="Sunlit Shallows"
+# 1-10 cm - The Sunlit Shallows
+
+Light still rules here. Photosynthesis hums.
+
+1. **Green algae** fur the upper rock, soft as wet velvet.
+2. **Snails** graze slow trails through the film of diatoms.
+3. **Shrimp** flicker, near-transparent, betrayed only by their shadows.
+
+This is the loud, bright, crowded floor of the pool - the part a child kneeling
+on the rock actually sees. The real strangeness waits in the cold layers under
+[[z=2]].
+
+@plane z=2 label="The Cold Middle" x="0" y="-12"
+# 10-25 cm - The Cold Middle
+
+Colour starts to drain. Reds vanish first, so the **red anemones** here read as
+muddy brown until you bring them up into the light.
+
+| Inhabitant   | Strategy          |
+|--------------|-------------------|
+| Anemone      | Wait and sting    |
+| Hermit crab  | Borrow and hide   |
+| Brittle star | Curl and creep    |
+
+The `x`/`y` attributes on this plane mark where, in the pool's footprint, the
+cold pocket actually sits - twelve centimetres back from the front lip, dead
+centre left-to-right.
+
+Below this, the rock closes in. Continue to [[z=3|the dark floor]].
+
+@plane z=3 label="The Dark Floor" mood="primordial"
+# 25 cm and down - The Dark Floor
+
+The bottom. Cold, still, and old.
+
+- **Encrusting sponges** plate the rock in dull orange.
+- A **chiton** clamps down, an armoured tongue of the sea.
+- Detritus drifts and settles: the pool's slow memory of every tide.
+
+Nothing here hurries. Nothing here needs the sun. When the tide returns it will
+rinse this floor and reset the whole column - but for now, this is as deep as the
+pool goes.
+
+Rise back to [[z=0|the surface]] and start the descent again.

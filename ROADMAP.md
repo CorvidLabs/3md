@@ -32,8 +32,13 @@ State confidence: 93.
 
 | Step | Confidence | Notes |
 |------|------------|-------|
+| Publish `threemd` to crates.io | 80 | The crate is publish-ready (`cargo publish --dry-run` is clean) but not yet on crates.io, so Rust users currently consume it as a git dependency. A `cargo-publish` workflow is in place; it needs a `CRATES_IO_TOKEN` secret, then it publishes on release like the npm package. |
+| Prebuilt CLI binaries for Homebrew | 65 | The tap formula builds from source (needs Xcode 15+). Shipping per-platform release binaries (as the other CorvidLabs formulae do) would make `brew install` fast and Xcode-free. |
 | VS Code Marketplace publish | 55 | The extension ships as a `.vsix` today; Marketplace + OpenVSX need a publisher account. Deferred until the format settles. |
-| Docs site (Astro) + Homebrew tap + social-preview image | 60 | Remaining flagship-presentation polish. Each is a standalone follow-up. |
+
+Shipped since this table was first written: the Homebrew tap (`brew install
+CorvidLabs/tap/threemd`), a static docs page (web/docs.html), the social-preview
+image, and cross-browser CI for the demos.
 
 ## Later / open questions (SPEC.md section 8)
 
