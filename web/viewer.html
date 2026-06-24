@@ -61,6 +61,17 @@
   .status.err{color:#ff8f8f}
   .status.ok{color:var(--sheen-strong,var(--sheen))}
   .foot{margin-top:22px;font-size:12px;color:var(--text-faint)}
+  /* theme toggle (shared look with the rest of the site) */
+  .corvid-theme-toggle{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;padding:0;background:none;border:1px solid var(--ink-12,var(--hairline));color:var(--ink-70,var(--text-muted));cursor:pointer;transition:border-color .2s,color .2s;border-radius:3px}
+  .corvid-theme-toggle:hover{border-color:var(--sheen);color:var(--sheen)}
+  .corvid-theme-toggle:focus-visible{outline:2px solid var(--sheen);outline-offset:2px}
+  .corvid-theme-toggle svg{width:17px;height:17px}
+  .corvid-theme-toggle .moon{display:none}
+  :root[data-theme="dark"] .corvid-theme-toggle .sun{display:none}
+  :root[data-theme="dark"] .corvid-theme-toggle .moon{display:inline}
+  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .corvid-theme-toggle .sun{display:none}:root:not([data-theme="light"]) .corvid-theme-toggle .moon{display:inline}}
+  :root[data-theme="light"] .corvid-theme-toggle .sun{display:inline}
+  :root[data-theme="light"] .corvid-theme-toggle .moon{display:none}
 </style>
 </head>
 <body>
@@ -120,7 +131,7 @@
   </div>
 
   <script defer src="assets/theme.js"></script>
-  <script type="module" src="assets/three-md.js"></script>
+  <script type="module" src="assets/three-md.js?v=1.6.2"></script>
   <script type="module">
     const STARTER = `---
 3md: 1.0
@@ -199,7 +210,7 @@ Paste your own .3md here, or pick an example above. It renders live on the right
         render();
         history.replaceState(null, "", "#" + enc(ed.value));
       } catch (e) { status.className = "status err"; status.textContent = "Could not load example: " + e.message; }
-      exampleSel.value = "";
+      // Keep the dropdown showing the loaded example instead of resetting it.
     });
 
     // Open a local file
