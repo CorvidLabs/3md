@@ -19,7 +19,11 @@
  *     horizontally.
  */
 
-import { parse, type Document, type Plane } from "@corvidlabs/threemd";
+// Imported from source (not the built package) so the bundle never depends on
+// js/dist being built first. bun inlines the parser into dist/three-md.js, so
+// the published package is self-contained with zero runtime dependencies. This
+// is the same code published as @corvidlabs/threemd.
+import { parse, type Document, type Plane } from "../../js/src/index.ts";
 
 type Mode = "stack" | "play" | "layers" | "scene" | "parallax" | "present" | "elevator";
 

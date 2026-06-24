@@ -22,13 +22,9 @@
   "sideEffects": ["./dist/three-md.js"],
   "scripts": {
     "build:dist": "bun build ./src/three-md.ts --outfile ./dist/three-md.js --format esm --target browser --minify",
-    "build:types": "tsc --emitDeclarationOnly --declaration --outDir dist src/three-md.ts || true",
+    "build:types": "mkdir -p dist && cp ./three-md.d.ts ./dist/three-md.d.ts",
     "build:web": "cp ./dist/three-md.js ../web/assets/three-md.js",
     "build": "bun run build:dist && bun run build:types && bun run build:web",
     "prepublishOnly": "bun run build:dist && bun run build:types"
-  },
-  "devDependencies": {
-    "@corvidlabs/threemd": "file:../js",
-    "typescript": "^5.6.0"
   }
 }

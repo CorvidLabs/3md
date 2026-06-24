@@ -58,8 +58,8 @@ jobs:
           node-version: "20"
           registry-url: "https://npm.pkg.github.com"
           scope: "@corvidlabs"
-      # Resolves @corvidlabs/threemd via the local file:../js path so the build
-      # can bundle it into the published, self-contained dist.
+      # Installs typescript for the .d.ts build. The bundle imports the parser
+      # from source (../../js/src), so it needs no other dependency.
       - run: bun install
       - name: Sync package version to the release tag
         if: github.event_name == 'release'
