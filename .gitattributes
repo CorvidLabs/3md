@@ -1,0 +1,15 @@
+# 3md files are Markdown with a Z axis. Without this, GitHub's language detector
+# (Linguist) sees the leading-dot ASCII grids and `@plane`/`---` lines as Roff
+# (troff macros start with a dot), which wrongly dominates the language bar.
+*.3md linguist-language=Markdown
+
+# The example corpus is sample content, not source - keep it out of language stats.
+Examples/** linguist-documentation
+docs.3md linguist-documentation
+web/docs.3md linguist-documentation
+web/examples-gallery.3md linguist-documentation
+
+# Generated/vendored artifacts: don't count toward language stats.
+web/gifs/** linguist-generated
+web/assets/three-md.js linguist-generated
+conformance/** linguist-documentation
