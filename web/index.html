@@ -506,9 +506,9 @@ else init();
 <script>
 // Keep the example count truthful: read the full corpus from all-examples.json
 // so this never goes stale as examples are added.
-fetch("all-examples.json").then(r => r.json()).then(a => {
+fetch("all-examples.json").then(r => r.ok ? r.json() : []).then(a => {
   const el = document.getElementById("exCount");
-  if (el && Array.isArray(a)) el.textContent = a.length;
+  if (el && Array.isArray(a) && a.length) el.textContent = a.length;
 }).catch(() => {});
 </script>
 <script type="module" src="assets/three-md.js?v=1.7.17"></script>
