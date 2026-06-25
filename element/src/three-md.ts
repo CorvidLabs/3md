@@ -289,8 +289,11 @@ const STYLES = `
 }
 .plane {
   position: absolute; left: 50%; top: 50%;
-  width: min(var(--three-md-plane-width, 320px), 84%);
-  margin-left: calc(min(var(--three-md-plane-width, 320px), 84%) / -2); margin-top: -104px;
+  /* One width for the whole document (--three-md-card-w, computed to fit the widest
+     content, capped) so every card - deck and focused - is the SAME width. Falls
+     back to the default before it is measured. */
+  width: var(--three-md-card-w, min(var(--three-md-plane-width, 320px), 84%));
+  margin-left: calc(var(--three-md-card-w, min(var(--three-md-plane-width, 320px), 84%)) / -2); margin-top: -104px;
   /* Keep cards inside the stage: cap height and clip; the focused card scrolls. */
   max-height: calc(100% - 18px); overflow: hidden;
   border-radius: 8px; padding: 14px 16px;
@@ -307,10 +310,8 @@ const STYLES = `
 :host([data-mode="present"]) .plane.hot {
   top: 0; bottom: 0; left: 0; right: 0; height: max-content; max-height: calc(100% - 20px);
   margin: auto; overflow-y: auto;
-  /* Grow to fit WIDE content (grids, tables) up to a readable cap, so nothing is
-     clipped on the sides; prose still wraps at ~64ch. Auto margins centre it. */
-  width: max-content; min-width: min(var(--three-md-plane-width, 320px), 84%);
-  max-width: min(64ch, calc(100% - 20px));
+  /* Width comes from the shared --three-md-card-w (same as the deck), so the focused
+     card matches the cards behind it - no wide-front / narrow-back mismatch. */
 }
 /* Layers: EVERY overlay (not just the focused one) is a centered, stage-height,
    scrollable box so a layer of any length fits in frame; they sit perfectly
@@ -811,12 +812,32 @@ export class ThreeMDElement extends HTMLElement {
         this._scene.appendChild(el);
         this._els.push(el);
       });
+      this._measureCardWidth();
     }
     this._scrub.max = String(Math.max(0, this._planes.length - 1));
     this._scrub.value = "0";
     this._measureFrames();
     this._buildLayerChips();
     this._updateReadout();
+  }
+
+  /** Pick ONE card width for the whole document: the widest card's natural content
+   * width (measured with prose capped to a readable line length), clamped to a sane
+   * range, applied to every card so the deck and the focused card are uniform. */
+  private _measureCardWidth(): void {
+    if (!this._els.length || !this._stage) return;
+    const stageW = this._stage.clientWidth || 600;
+    const cap = Math.min(540, Math.round(stageW * 0.88));
+    const floor = Math.min(320, Math.round(stageW * 0.84));
+    let widest = 0;
+    for (const el of this._els) {
+      const prev = el.style.cssText;
+      el.style.cssText = "width:max-content;max-width:" + cap + "px";
+      widest = Math.max(widest, el.offsetWidth);
+      el.style.cssText = prev;
+    }
+    const cardW = Math.max(floor, Math.min(widest, cap));
+    this._wrap.style.setProperty("--three-md-card-w", cardW + "px");
   }
 
   /** In layers view, a row of toggle chips shows/hides each overlay. */
@@ -1363,7 +1384,7 @@ export class ThreeMDElement extends HTMLElement {
           if (hotEl.parentNode !== this._detail) this._detail.appendChild(hotEl);
           // Content-width (capped to a readable measure) so wide grids/tables are not
           // clipped before we measure; pop then scales the whole card to fit the stage.
-          hotEl.style.cssText = "position:relative;margin:0;top:auto;left:auto;right:auto;bottom:auto;height:max-content;max-height:none;width:max-content;min-width:280px;max-width:64ch;opacity:1;transform:none";
+          hotEl.style.cssText = "position:relative;margin:0;top:auto;left:auto;right:auto;bottom:auto;height:max-content;max-height:none;width:var(--three-md-card-w, 340px);opacity:1;transform:none";
           const natH = Math.max(1, hotEl.offsetHeight), natW = Math.max(1, hotEl.offsetWidth);
           const pop = Math.max(0.6, Math.min(1.8, (stageH - 22) / natH, (stageW - 22) / natW));
           hotEl.style.transform = `scale(${pop.toFixed(3)})`;

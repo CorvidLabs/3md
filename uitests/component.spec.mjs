@@ -50,6 +50,22 @@ test.describe("<three-md> component", () => {
     expect(errors, errors.join("\n")).toEqual([]);
   });
 
+  test("all deck cards share one width (focused matches the cards behind it)", async ({ page }) => {
+    await page.goto("/embed-example.html");
+    await page.waitForFunction(() => document.getElementById("inline")?.shadowRoot?.querySelectorAll(".plane").length === 3);
+    const r = await page.evaluate(() => {
+      const lab = document.getElementById("inline");
+      lab.setAttribute("mode", "stack");
+      // Mixed content: a wide table plane + narrow prose planes.
+      lab.setSource('---\n3md: 1.0\naxis: time\n---\n@plane z=0\n# Wide\n| A | B | C | D |\n| - | - | - | - |\n| 11 | 22 | 33 | 44 |\n@plane z=1\n# Narrow\nhi\n@plane z=2\n# Narrow 2\nyo\n');
+      // offsetWidth is the layout width (ignores the deck's per-card transform scale).
+      const ws = [...lab.shadowRoot.querySelectorAll(".plane")].map((p) => p.offsetWidth);
+      return { ws, uniform: new Set(ws).size === 1, cardVar: lab.shadowRoot.querySelector(".wrap").style.getPropertyValue("--three-md-card-w") };
+    });
+    expect(r.uniform).toBe(true);        // every card the same width
+    expect(r.cardVar).toMatch(/px$/);    // a computed shared width is set
+  });
+
   test("focused plane is frontmost across the scrubber", async ({ page }) => {
     await page.goto("/embed-example.html");
     await page.waitForFunction(() => document.getElementById("inline")?.shadowRoot?.querySelectorAll(".plane").length === 3);
