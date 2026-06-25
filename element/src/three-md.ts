@@ -305,8 +305,12 @@ const STYLES = `
 :host([data-mode="stack"]) .plane.hot,
 :host([data-mode="elevator"]) .plane.hot,
 :host([data-mode="present"]) .plane.hot {
-  top: 0; bottom: 0; height: max-content; max-height: calc(100% - 20px);
-  margin-top: auto; margin-bottom: auto; overflow-y: auto;
+  top: 0; bottom: 0; left: 0; right: 0; height: max-content; max-height: calc(100% - 20px);
+  margin: auto; overflow-y: auto;
+  /* Grow to fit WIDE content (grids, tables) up to a readable cap, so nothing is
+     clipped on the sides; prose still wraps at ~64ch. Auto margins centre it. */
+  width: max-content; min-width: min(var(--three-md-plane-width, 320px), 84%);
+  max-width: min(64ch, calc(100% - 20px));
 }
 /* Layers: EVERY overlay (not just the focused one) is a centered, stage-height,
    scrollable box so a layer of any length fits in frame; they sit perfectly
@@ -1354,7 +1358,9 @@ export class ThreeMDElement extends HTMLElement {
           hotEl.classList.add("hot", "popped");
           hotEl.classList.toggle("dim", false); hotEl.classList.toggle("reader", false); hotEl.classList.toggle("frame", false);
           if (hotEl.parentNode !== this._detail) this._detail.appendChild(hotEl);
-          hotEl.style.cssText = "position:relative;margin:0;top:auto;left:auto;right:auto;bottom:auto;height:max-content;max-height:none;opacity:1;transform:none";
+          // Content-width (capped to a readable measure) so wide grids/tables are not
+          // clipped before we measure; pop then scales the whole card to fit the stage.
+          hotEl.style.cssText = "position:relative;margin:0;top:auto;left:auto;right:auto;bottom:auto;height:max-content;max-height:none;width:max-content;min-width:280px;max-width:64ch;opacity:1;transform:none";
           const natH = Math.max(1, hotEl.offsetHeight), natW = Math.max(1, hotEl.offsetWidth);
           const pop = Math.max(0.6, Math.min(1.8, (stageH - 22) / natH, (stageW - 22) / natW));
           hotEl.style.transform = `scale(${pop.toFixed(3)})`;
