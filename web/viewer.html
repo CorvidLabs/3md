@@ -504,10 +504,21 @@ See [[z=1|Tuesday]] for what's next.
         validBadge.dataset.mode = lab.mode || "";
         // Non-fatal lints (the doc still parses, but an agent likely meant something).
         const warns = [];
-        // 1. An axis that is not recognized silently falls back to the deck view.
-        const axisKnown = !doc.axis || KNOWN_AXES.has(String(doc.axis).toLowerCase());
+        // 1. axis is a FREE STRING by spec (a semantic label like "status"/"season"
+        //    that defaults to the deck is valid, not an error). So only warn when the
+        //    axis looks like a TYPO of a known mode/axis (small edit distance); expose
+        //    data-axis-known for agents either way.
+        const axisLc = String(doc.axis || "").toLowerCase();
+        const axisKnown = !axisLc || KNOWN_AXES.has(axisLc);
         validBadge.dataset.axisKnown = String(axisKnown);
-        if (!axisKnown) warns.push(`axis "${doc.axis}" not recognized — showing "${lab.mode}". Known: ${[...CANON_AXES].join(", ")}`);
+        delete validBadge.dataset.axisTypo;
+        if (!axisKnown) {
+          const near = nearestAxis(axisLc);
+          if (near && near.d <= 2) {
+            validBadge.dataset.axisTypo = near.token;
+            warns.push(`axis "${doc.axis}" looks like a typo — did you mean "${near.token}"? (showing "${lab.mode}")`);
+          }
+        }
         // 2. Cross-plane links that point at a z with no plane.
         const dangling = danglingLinks(src, doc);
         if (dangling.length) warns.push(`${dangling.length} dangling link${dangling.length === 1 ? "" : "s"} (z=${dangling.join(", z=")})`);
@@ -524,6 +535,25 @@ See [[z=1|Tuesday]] for what's next.
     const KNOWN_AXES = new Set([...CANON_AXES,
       "frames", "layers", "slides", "deck", "scene", "floors", "parallax",
       "stack", "play", "single", "present", "blend", "map", "elevator"]);
+    // Levenshtein distance + nearest known token, for typo-only axis warnings.
+    function lev(a, b) {
+      const m = a.length, n = b.length;
+      if (!m) return n; if (!n) return m;
+      let prev = Array.from({ length: n + 1 }, (_, i) => i);
+      for (let i = 1; i <= m; i++) {
+        const cur = [i];
+        for (let j = 1; j <= n; j++) {
+          cur[j] = a[i - 1] === b[j - 1] ? prev[j - 1] : 1 + Math.min(prev[j - 1], prev[j], cur[j - 1]);
+        }
+        prev = cur;
+      }
+      return prev[n];
+    }
+    function nearestAxis(axis) {
+      let token = null, d = 99;
+      for (const k of KNOWN_AXES) { const e = lev(axis, k); if (e < d) { d = e; token = k; } }
+      return token ? { token, d } : null;
+    }
 
     // Cross-plane links ([[z=N]]) whose target plane does not exist. Non-fatal.
     function danglingLinks(src, doc) {
