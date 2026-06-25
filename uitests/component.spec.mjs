@@ -339,7 +339,7 @@ test.describe("<three-md> component", () => {
       const lab = document.getElementById("inline");
       lab.removeAttribute("mode");
       lab.setSource('---\n3md: 1.0\naxis: space\n---\n@plane z=0\nGo to [[z=2|the vault]].\n@plane z=1\nmid\n@plane z=2\nback to [[z=0|start]]\n');
-      const link = lab.shadowRoot.querySelector(".xlink");
+      const link = lab.shadowRoot.querySelector('.xlink[data-z="2"]');
       const text = link?.textContent;
       link.click();
       return { hasLink: !!link, text, indexAfter: lab.currentIndex };

@@ -256,6 +256,13 @@ const STYLES = `
 }
 .stage:active { cursor: grabbing; }
 .scene { position: absolute; inset: 0; transform-style: preserve-3d; }
+/* Flat 2D overlay for the focus-to-read card: lives OUTSIDE the perspective'd
+   scene so the read card is never skewed by the board's tilt. Clicks pass through
+   to the board behind, except on the card itself. */
+.detail { position: absolute; inset: 0; display: none; align-items: center; justify-content: center; pointer-events: none; z-index: 5; }
+:host([data-mode="map"]) .detail { display: flex; }
+.detail .plane.popped { pointer-events: auto; position: relative; inset: auto; left: auto; top: auto; right: auto; bottom: auto;
+  margin: 0; height: max-content; max-height: none; transform-origin: center center; }
 /* The hint sits BELOW the stage, never over the plane content. */
 .hint { margin: 8px 2px 0; font-size: 11px; color: var(--three-md-faint); }
 .fs { margin-left: auto; }
@@ -411,6 +418,7 @@ export class ThreeMDElement extends HTMLElement {
   private _root: ShadowRoot;
   private _scene!: HTMLDivElement;
   private _stage!: HTMLDivElement;
+  private _detail!: HTMLDivElement; // flat overlay (outside the 3D scene) for the focus-to-read card
   private _axisEl!: HTMLDivElement;
   private _scrub!: HTMLInputElement;
   private _readout!: HTMLDivElement;
@@ -685,6 +693,7 @@ export class ThreeMDElement extends HTMLElement {
       <div class="axis" part="axis"></div>
       <div class="stage" part="stage">
         <div class="scene" part="scene"></div>
+        <div class="detail" part="detail"></div>
       </div>
       <div class="hint" part="hint">drag to orbit · WASD / arrows move · slider or ↑↓ scrub Z</div>
       <div class="controls" part="controls">
@@ -702,6 +711,7 @@ export class ThreeMDElement extends HTMLElement {
     this._axisEl = this._wrap.querySelector(".axis")!;
     this._stage = this._wrap.querySelector(".stage")!;
     this._scene = this._wrap.querySelector(".scene")!;
+    this._detail = this._wrap.querySelector(".detail")!;
     this._scrub = this._wrap.querySelector("input")!;
     this._readout = this._wrap.querySelector(".readout")!;
     this._chipsEl = this._wrap.querySelector(".layerchips")!;
@@ -723,9 +733,10 @@ export class ThreeMDElement extends HTMLElement {
       this._loop = !this._loop;
       this._loopBtn.setAttribute("aria-pressed", String(this._loop));
     });
-    // Cross-plane links ([[z=N|text]]) jump to that plane. Capture so the click
-    // does not also trigger the plane card's select handler.
-    this._scene.addEventListener("click", (e) => {
+    // Cross-plane links ([[z=N|text]]) jump to that plane. Bound to the stage (not
+    // just the scene) so links on the focus-to-read overlay card also navigate.
+    // Capture so the click does not also trigger the plane card's select handler.
+    this._stage.addEventListener("click", (e) => {
       const link = (e.target as HTMLElement)?.closest?.(".xlink") as HTMLElement | null;
       if (!link) return;
       e.preventDefault();
@@ -750,6 +761,7 @@ export class ThreeMDElement extends HTMLElement {
   private _showError(message: string): void {
     if (!this._wrap) this._build();
     this._scene.innerHTML = "";
+    if (this._detail) this._detail.innerHTML = "";
     this._els = [];
     this._scene.style.transform = ""; // flat, not skewed by a stale camera pose
     if (this._axisEl) this._axisEl.textContent = "";
@@ -763,6 +775,7 @@ export class ThreeMDElement extends HTMLElement {
 
   private _buildPlanes(): void {
     this._scene.innerHTML = "";
+    if (this._detail) this._detail.innerHTML = ""; // drop any popped focus-to-read card
     this._els = [];
     this._voxels = [];
     this._axisEl.textContent = this._doc ? `axis = ${this._doc.axis}` : "";
@@ -1121,6 +1134,17 @@ export class ThreeMDElement extends HTMLElement {
     const focus = this._focus;
     const fr = Math.round(focus);
 
+    // Re-home any card that was popped into the flat detail overlay (map focus-to-
+    // read) back into the 3D scene before any mode renders, so every other mode sees
+    // a clean set of plane cards in the scene.
+    for (const el of this._els) {
+      if (el.parentNode === this._detail) {
+        el.classList.remove("popped");
+        el.removeAttribute("style");
+        this._scene.appendChild(el);
+      }
+    }
+
     // Blended object view: a static voxel/text cloud the user orbits freely.
     if (m === "blend") {
       if (!this._voxels.length) return;
@@ -1297,21 +1321,21 @@ export class ThreeMDElement extends HTMLElement {
         el.classList.toggle("reader", false);
         el.classList.toggle("frame", false);
       });
-      // Focus-to-read: the focused tile pops to the board centre and is scaled so its
-      // WHOLE content fits the stage - every line readable, no scroll - countering the
-      // board's fit-scale and camera tilt so it faces the viewer. Board dims behind.
+      // Focus-to-read: the focused tile is lifted OUT of the 3D scene into the flat
+      // overlay (so it is never skewed by the board's tilt/perspective) and scaled so
+      // its WHOLE content fits the stage - every line readable, no scroll. Board dims
+      // behind. Clicks on the dimmed board still reach it (overlay is click-through).
       const hotEl = this._els[fr];
       if (hotEl) {
-        hotEl.classList.add("hot");
+        hotEl.classList.add("hot", "popped");
         hotEl.classList.toggle("dim", false); hotEl.classList.toggle("reader", false); hotEl.classList.toggle("frame", false);
-        hotEl.style.top = "0px"; hotEl.style.bottom = "0px"; hotEl.style.height = "max-content";
-        hotEl.style.maxHeight = "none"; hotEl.style.marginTop = "auto"; hotEl.style.marginBottom = "auto";
-        hotEl.style.transform = "none"; // measure natural content size first
+        if (hotEl.parentNode !== this._detail) this._detail.appendChild(hotEl);
+        // Neutralize the board-tile positioning (inline beats the map .plane rule) and
+        // measure the flat card's natural size.
+        hotEl.style.cssText = "position:relative;margin:0;top:auto;left:auto;right:auto;bottom:auto;height:max-content;max-height:none;opacity:1;transform:none";
         const natH = Math.max(1, hotEl.offsetHeight), natW = Math.max(1, hotEl.offsetWidth);
-        const pop = Math.max(0.5, Math.min(2.6, (stageH - 22) / natH, (stageW - 22) / natW));
-        hotEl.style.transform = `translate3d(0px,0px,90px) rotateY(${(-this._yaw).toFixed(2)}deg) rotateX(${(-this._pitch).toFixed(2)}deg) scale(${pop.toFixed(3)})`;
-        hotEl.style.opacity = "1";
-        hotEl.style.zIndex = "500";
+        const pop = Math.max(0.6, Math.min(1.8, (stageH - 22) / natH, (stageW - 22) / natW));
+        hotEl.style.transform = `scale(${pop.toFixed(3)})`;
       }
       this._scene.style.transform = `${this._cameraTransform(-120)} scale(${fit.toFixed(3)})`;
       this._updateReadout();
