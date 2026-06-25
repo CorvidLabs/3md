@@ -175,7 +175,7 @@
     <h1 class="wordmark">3md<span class="z">.</span></h1>
     <p class="tagline">Markdown, but with a <em>third axis</em> you name yourself.</p>
     <p class="sub">time · frames · layers · depth · space · slides · floors - same file, you choose what Z means</p>
-    <p class="sub"><a href="viewer.html">Open the viewer &amp; editor</a> &nbsp;·&nbsp; <a href="docs.html">Read the docs</a> &nbsp;·&nbsp; <a href="gallery.html">Browse all 270 examples &rarr;</a></p>
+    <p class="sub"><a href="viewer.html">Open the viewer &amp; editor</a> &nbsp;·&nbsp; <a href="docs.html">Read the docs</a> &nbsp;·&nbsp; <a href="gallery.html">Browse all <span id="exCount">282</span> examples &rarr;</a></p>
   </header>
   <hr class="irid" />
 
@@ -502,6 +502,14 @@ function init(){
 if(window.customElements&&customElements.get("three-md")) init();
 else if(window.customElements) customElements.whenDefined("three-md").then(init);
 else init();
+</script>
+<script>
+// Keep the example count truthful: read the full corpus from all-examples.json
+// so this never goes stale as examples are added.
+fetch("all-examples.json").then(r => r.json()).then(a => {
+  const el = document.getElementById("exCount");
+  if (el && Array.isArray(a)) el.textContent = a.length;
+}).catch(() => {});
 </script>
 <script type="module" src="assets/three-md.js?v=1.7.17"></script>
 </body>

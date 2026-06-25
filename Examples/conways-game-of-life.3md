@@ -1,0 +1,586 @@
+---
+3md: 1.0
+category: Animation
+axis: generation
+legend: o=█
+billboard: true
+title: Conway Spacetime - an R-pentomino, generation by generation
+rule: B3/S23
+seed: R-pentomino
+note: play it to run the simulation; blend it so the generation axis becomes depth and the whole history fuses into one spacetime sculpture
+---
+A cellular automaton where time is the third axis. Each plane is one generation
+of Conway's Game of Life, seeded with an R-pentomino (a tiny five-cell pattern
+that churns for over a thousand generations before settling). Scrub the planes
+to watch it evolve; blend them and every generation stacks into depth, so the
+pattern's entire life history becomes a single solid object you can orbit.
+
+@plane z=0 label="gen 0 - 5 alive"
+# generation 0
+
+```
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                oo              
+               oo               
+                o               
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+```
+
+@plane z=1 label="gen 1 - 6 alive"
+# generation 1
+
+```
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+               ooo              
+               o                
+               oo               
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+```
+
+@plane z=2 label="gen 2 - 7 alive"
+# generation 2
+
+```
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                o               
+               oo               
+              o  o              
+               oo               
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+```
+
+@plane z=3 label="gen 3 - 9 alive"
+# generation 3
+
+```
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+               oo               
+               ooo              
+              o  o              
+               oo               
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+```
+
+@plane z=4 label="gen 4 - 8 alive"
+# generation 4
+
+```
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+               o o              
+              o  o              
+              o  o              
+               oo               
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+```
+
+@plane z=5 label="gen 5 - 9 alive"
+# generation 5
+
+```
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                o               
+              oo oo             
+              o  o              
+               oo               
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+```
+
+@plane z=6 label="gen 6 - 12 alive"
+# generation 6
+
+```
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+               ooo              
+              oo oo             
+              o  oo             
+               oo               
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+```
+
+@plane z=7 label="gen 7 - 11 alive"
+# generation 7
+
+```
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                o               
+              oo oo             
+              o                 
+              o   o             
+               ooo              
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+```
+
+@plane z=8 label="gen 8 - 18 alive"
+# generation 8
+
+```
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+               ooo              
+              oooo              
+             oo  oo             
+              o oo              
+               ooo              
+                o               
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+```
+
+@plane z=9 label="gen 9 - 11 alive"
+# generation 9
+
+```
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                o               
+              o  o              
+             o                  
+             o    o             
+             oo                 
+                                
+               ooo              
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+```
+
+@plane z=10 label="gen 10 - 11 alive"
+# generation 10
+
+```
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+             oo                 
+            oo                  
+             oo                 
+              ooo               
+                o               
+                o               
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+```
+
+@plane z=11 label="gen 11 - 10 alive"
+# generation 11
+
+```
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+            ooo                 
+            o                   
+            o                   
+             oo o               
+                oo              
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+```
+
+@plane z=12 label="gen 12 - 13 alive"
+# generation 12
+
+```
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+             o                  
+            oo                  
+           oo                   
+            o                   
+             o ooo              
+               ooo              
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+```
+
+@plane z=13 label="gen 13 - 16 alive"
+# generation 13
+
+```
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+            oo                  
+           o o                  
+           o                    
+           ooo  o               
+              oo o              
+              oo o              
+                o               
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+```
+
+@plane z=14 label="gen 14 - 19 alive"
+# generation 14
+
+```
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+            oo                  
+           o o                  
+          oo o                  
+           oooooo               
+            o    o              
+              o  o              
+               oo               
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+                                
+```

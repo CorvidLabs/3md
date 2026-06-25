@@ -1,0 +1,72 @@
+---
+3md: 1.0
+category: Creative
+axis: bar
+legend: K=● S=◆ H=∘ C=✕ P=▲
+billboard: true
+title: TR-3MD // a groove you can orbit
+tempo: 124 BPM
+kit: K kick / S snare / H hat / C clap / P perc
+render: play loops the groove bar by bar; blend stacks the bars into a 3D rhythm lattice
+---
+A five-bar house groove written as a step sequencer. Each plane is one bar of a
+16-step grid: five instrument rows, sixteen step columns. Scrub the bars as a
+[[z=0|flipbook]] to hear it in your head, or blend them so the whole loop becomes
+one solid rhythm sculpture you can rotate: the kick is the steady spine, the hats
+are the dense mist, the fill flares at the back.
+
+@plane z=0 label="bar 1 - four on the floor"
+# bar 1: four on the floor
+
+```
+K   K   K   K   
+    S       S   
+H H H H H H H H 
+                
+                
+```
+
+@plane z=1 label="bar 2 - drive"
+# bar 2: drive
+
+```
+K   K   K   K   
+    S       S   
+HHHHHHHHHHHHHHHH
+                
+  P   P   P   P 
+```
+
+@plane z=2 label="bar 3 - syncopate"
+# bar 3: syncopate
+
+```
+K   K   K   K K 
+    S       S   
+HHHHHHHHHHHHHHHH
+    C       C   
+  P   P   P   P 
+```
+
+@plane z=3 label="bar 4 - push"
+# bar 4: push
+
+```
+K   K   K  KK   
+    S       S   
+HHHHHHHHHHHHHHHH
+    C       C   
+  P   PP  P   P 
+```
+
+@plane z=4 label="bar 5 - fill"
+# bar 5: fill
+
+```
+K   K   K       
+            SSSS
+H H H H H H     
+               C
+            PPPP
+```
+

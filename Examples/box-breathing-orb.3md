@@ -1,0 +1,477 @@
+---
+3md: 1.0
+category: Health
+axis: breath
+legend: o=●
+title: Box Breathing
+guide: inhale 4, hold 4, exhale 4, hold 4. play it, follow the orb, loop as long as you like.
+view: play
+---
+A breath you can watch. Play this flipbook and let the orb pace you: it swells as
+you breathe in, rests full, sinks as you breathe out, rests empty. One loop is one
+box breath. Stay as many loops as you need.
+
+@plane z=0 label="breathe in · 1"
+# breathe in  1
+
+```
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+               o               
+            ooooooo            
+           ooooooooo           
+            ooooooo            
+               o               
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+```
+
+@plane z=1 label="breathe in · 2"
+# breathe in  2
+
+```
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+            ooooooo            
+          ooooooooooo          
+         ooooooooooooo         
+        ooooooooooooooo        
+         ooooooooooooo         
+          ooooooooooo          
+            ooooooo            
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+```
+
+@plane z=2 label="breathe in · 3"
+# breathe in  3
+
+```
+                               
+                               
+                               
+                               
+                               
+                               
+               o               
+         ooooooooooooo         
+       ooooooooooooooooo       
+      ooooooooooooooooooo      
+      ooooooooooooooooooo      
+     ooooooooooooooooooooo     
+      ooooooooooooooooooo      
+      ooooooooooooooooooo      
+       ooooooooooooooooo       
+         ooooooooooooo         
+               o               
+                               
+                               
+                               
+                               
+                               
+                               
+```
+
+@plane z=3 label="breathe in · 4"
+# breathe in  4
+
+```
+                               
+                               
+                               
+                               
+                               
+          ooooooooooo          
+       ooooooooooooooooo       
+     ooooooooooooooooooooo     
+    ooooooooooooooooooooooo    
+   ooooooooooooooooooooooooo   
+   ooooooooooooooooooooooooo   
+  ooooooooooooooooooooooooooo  
+   ooooooooooooooooooooooooo   
+   ooooooooooooooooooooooooo   
+    ooooooooooooooooooooooo    
+     ooooooooooooooooooooo     
+       ooooooooooooooooo       
+          ooooooooooo          
+                               
+                               
+                               
+                               
+                               
+```
+
+@plane z=4 label="hold · 1"
+# hold  1
+
+```
+                               
+                               
+                               
+                               
+                               
+          ooooooooooo          
+       ooooooooooooooooo       
+     ooooooooooooooooooooo     
+    ooooooooooooooooooooooo    
+   ooooooooooooooooooooooooo   
+   ooooooooooooooooooooooooo   
+  ooooooooooooooooooooooooooo  
+   ooooooooooooooooooooooooo   
+   ooooooooooooooooooooooooo   
+    ooooooooooooooooooooooo    
+     ooooooooooooooooooooo     
+       ooooooooooooooooo       
+          ooooooooooo          
+                               
+                               
+                               
+                               
+                               
+```
+
+@plane z=5 label="hold · 2"
+# hold  2
+
+```
+                               
+                               
+                               
+                               
+                               
+          ooooooooooo          
+       ooooooooooooooooo       
+     ooooooooooooooooooooo     
+    ooooooooooooooooooooooo    
+   ooooooooooooooooooooooooo   
+   ooooooooooooooooooooooooo   
+  ooooooooooooooooooooooooooo  
+   ooooooooooooooooooooooooo   
+   ooooooooooooooooooooooooo   
+    ooooooooooooooooooooooo    
+     ooooooooooooooooooooo     
+       ooooooooooooooooo       
+          ooooooooooo          
+                               
+                               
+                               
+                               
+                               
+```
+
+@plane z=6 label="hold · 3"
+# hold  3
+
+```
+                               
+                               
+                               
+                               
+                               
+          ooooooooooo          
+       ooooooooooooooooo       
+     ooooooooooooooooooooo     
+    ooooooooooooooooooooooo    
+   ooooooooooooooooooooooooo   
+   ooooooooooooooooooooooooo   
+  ooooooooooooooooooooooooooo  
+   ooooooooooooooooooooooooo   
+   ooooooooooooooooooooooooo   
+    ooooooooooooooooooooooo    
+     ooooooooooooooooooooo     
+       ooooooooooooooooo       
+          ooooooooooo          
+                               
+                               
+                               
+                               
+                               
+```
+
+@plane z=7 label="hold · 4"
+# hold  4
+
+```
+                               
+                               
+                               
+                               
+                               
+          ooooooooooo          
+       ooooooooooooooooo       
+     ooooooooooooooooooooo     
+    ooooooooooooooooooooooo    
+   ooooooooooooooooooooooooo   
+   ooooooooooooooooooooooooo   
+  ooooooooooooooooooooooooooo  
+   ooooooooooooooooooooooooo   
+   ooooooooooooooooooooooooo   
+    ooooooooooooooooooooooo    
+     ooooooooooooooooooooo     
+       ooooooooooooooooo       
+          ooooooooooo          
+                               
+                               
+                               
+                               
+                               
+```
+
+@plane z=8 label="breathe out · 1"
+# breathe out  1
+
+```
+                               
+                               
+                               
+                               
+                               
+                               
+               o               
+         ooooooooooooo         
+       ooooooooooooooooo       
+      ooooooooooooooooooo      
+      ooooooooooooooooooo      
+     ooooooooooooooooooooo     
+      ooooooooooooooooooo      
+      ooooooooooooooooooo      
+       ooooooooooooooooo       
+         ooooooooooooo         
+               o               
+                               
+                               
+                               
+                               
+                               
+                               
+```
+
+@plane z=9 label="breathe out · 2"
+# breathe out  2
+
+```
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+            ooooooo            
+          ooooooooooo          
+         ooooooooooooo         
+        ooooooooooooooo        
+         ooooooooooooo         
+          ooooooooooo          
+            ooooooo            
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+```
+
+@plane z=10 label="breathe out · 3"
+# breathe out  3
+
+```
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+               o               
+            ooooooo            
+           ooooooooo           
+            ooooooo            
+               o               
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+```
+
+@plane z=11 label="breathe out · 4"
+# breathe out  4
+
+```
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+             ooooo             
+            ooooooo            
+             ooooo             
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+```
+
+@plane z=12 label="hold · 1"
+# hold  1
+
+```
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+             ooooo             
+            ooooooo            
+             ooooo             
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+```
+
+@plane z=13 label="hold · 2"
+# hold  2
+
+```
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+             ooooo             
+            ooooooo            
+             ooooo             
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+```
+
+@plane z=14 label="hold · 3"
+# hold  3
+
+```
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+             ooooo             
+            ooooooo            
+             ooooo             
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+```
+
+@plane z=15 label="hold · 4"
+# hold  4
+
+```
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+             ooooo             
+            ooooooo            
+             ooooo             
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+                               
+```
+
