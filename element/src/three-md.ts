@@ -75,6 +75,13 @@ function esc(value: string): string {
     .replace(/>/g, "&gt;");
 }
 
+/** Escape for interpolation inside a double-quoted HTML attribute: also
+ * neutralizes quote characters so a value can never break out of the attribute
+ * (complete sanitization for the attribute sink). */
+function escAttr(value: string): string {
+  return esc(value).replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+}
+
 /** Inline Markdown on already-escaped text: code, bold, italic. */
 function inline(escaped: string): string {
   // Note: no `_italic_` rule - underscores are left alone so snake_case
@@ -89,7 +96,7 @@ function inline(escaped: string): string {
     // left alone.) Only link URLs with no attribute-breaking characters; anything
     // else stays plain text, so the href sink is provably safe.
     .replace(/(^|[^!])\[([^\]]+)\]\((https?:\/\/[^)\s"'<>`]+)\)/g,
-      (_m, pre, text, url) => `${pre}<a class="xlink" part="link" href="${url}" target="_blank" rel="noopener">${text}</a>`)
+      (_m, pre, text, url) => `${pre}<a class="xlink" part="link" href="${escAttr(url)}" target="_blank" rel="noopener">${text}</a>`)
     .replace(/`([^`]+)`/g, "<code>$1</code>")
     .replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>")
     .replace(/\*([^*]+)\*/g, "<em>$1</em>");
@@ -182,12 +189,13 @@ function renderMarkdown(body: string, legend: Record<string, string> = {}): stri
     else if (/^!\[[^\]]*\]\([^)\s]+\)\s*$/.test(l.trim())) {
       // A Markdown image on its own line: ![alt](url). Renders images and GIFs.
       const m = l.trim().match(/^!\[([^\]]*)\]\(([^)\s]+)\)/);
-      const alt = m ? esc(m[1]) : "";
+      const alt = m ? escAttr(m[1]) : "";
       const url = m ? m[2] : "";
       // Allowlisted scheme AND no characters that could break out of the quoted
-      // attribute (provably safe sink - complete sanitization by rejection).
+      // attribute. escAttr then fully neutralizes quotes/markup, so the sink is
+      // sanitized both by rejection and by complete attribute escaping.
       const okUrl = /^(https?:\/\/|\/|\.{0,2}\/|data:image\/)/i.test(url) && !/["'<>`\s]/.test(url);
-      const safe = okUrl ? esc(url) : "";
+      const safe = okUrl ? escAttr(url) : "";
       if (safe) out.push(`<img class="img" part="image" src="${safe}" alt="${alt}" loading="lazy">`);
     }
     else if (l.trim() !== "") out.push(`<div>${fmt(l)}</div>`);
