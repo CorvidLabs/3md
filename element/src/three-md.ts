@@ -378,7 +378,9 @@ input[type=range] { flex: 1 1 auto; min-width: 48px; accent-color: var(--three-m
 .readout b { color: var(--three-md-accent); }
 .md .xlink, [part="link"] { color: var(--three-md-accent); text-decoration: underline; text-underline-offset: 2px; cursor: pointer; }
 .md .xlink:hover { opacity: .8; }
-.err { padding: 16px; color: #ff8f8f; font-size: 13px; }
+.err { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+  text-align: center; padding: 24px; color: var(--three-md-error, #ff8f8f); font-size: 13px; line-height: 1.6; }
+:host([data-state="empty"]) .err { color: var(--three-md-muted); } /* empty is not an error */
 `;
 
 export class ThreeMDElement extends HTMLElement {
@@ -428,6 +430,7 @@ export class ThreeMDElement extends HTMLElement {
   private _lastEmitted = -1;
   private _error: string | null = null;
   private _errorLine: number | null = null;
+  private _errorCode: string | null = null;
   private _loadToken = 0;
   private _playBtn!: HTMLButtonElement;
   private _loopBtn!: HTMLButtonElement;
@@ -485,6 +488,11 @@ export class ThreeMDElement extends HTMLElement {
   /** The 1-based source line a parse error was attributed to, or null. */
   get errorLine(): number | null {
     return this._errorLine;
+  }
+
+  /** The stable parser error code from the most recent failed load, or null. */
+  get errorCode(): string | null {
+    return this._errorCode;
   }
 
   /** The index of the currently focused plane. */
@@ -556,8 +564,9 @@ export class ThreeMDElement extends HTMLElement {
   private _loadFromText(source: string): void {
     const trimmed = source.trim();
     if (!trimmed) {
-      this._error = "No 3md source provided.";
+      this._error = "Nothing to render yet — start typing or load a 3md document.";
       this._errorLine = null;
+      this._errorCode = null;
       this._doc = null; this._planes = [];
       this._stopPlay();
       this.setAttribute("data-state", "empty");
@@ -568,9 +577,10 @@ export class ThreeMDElement extends HTMLElement {
     try {
       doc = parse(trimmed);
     } catch (error) {
-      const pe = error as { message?: string; line?: number };
+      const pe = error as { message?: string; line?: number; code?: string };
       this._error = pe.message ?? String(error);
       this._errorLine = typeof pe.line === "number" ? pe.line : null;
+      this._errorCode = typeof pe.code === "string" ? pe.code : null;
       // Drop the stale document so programmatic callers never read a doc that no
       // longer matches the source, and a dead scene's controls are not left live.
       this._doc = null; this._planes = [];
@@ -581,6 +591,7 @@ export class ThreeMDElement extends HTMLElement {
     }
     this._error = null;
     this._errorLine = null;
+    this._errorCode = null;
     this.setAttribute("data-state", "ready");
     this._doc = doc;
     this._planes = doc.planes;

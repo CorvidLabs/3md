@@ -131,7 +131,8 @@
   /* ---- viewer side ---- */
   .viewer{padding:14px}
   three-md:focus-visible{outline:2px solid var(--sheen);outline-offset:2px;border-radius:8px}
-  three-md{--three-md-accent:var(--sheen);--three-md-bg:var(--surface-strong);--three-md-surface:var(--surface);
+  #editorWrap:focus-within{outline:2px solid var(--sheen);outline-offset:-1px;border-radius:0 0 8px 8px}
+  three-md{--three-md-accent:var(--sheen);--three-md-bg:var(--surface-strong);--three-md-surface:var(--surface);--three-md-error:var(--err);
     --three-md-text:var(--ink);--three-md-muted:var(--text-muted);--three-md-faint:var(--text-faint);
     --three-md-hairline:var(--hairline);--three-md-height:480px;--three-md-display:var(--font-display)}
   .outline{display:flex;gap:6px;flex-wrap:wrap;padding:10px 13px;border-top:1px solid var(--hairline);
@@ -169,7 +170,7 @@
   <div class="wrap">
     <div class="topbar">
       <a class="brand" href="index.html">
-        <svg viewBox="0 0 64 64" aria-label="CorvidLabs"><circle cx="24" cy="32" r="18" fill="currentColor"/><path d="M33 21.5 L58.5 29.5 L33 39.5 Z" fill="currentColor"/><circle cx="27.5" cy="26" r="3" fill="var(--paper)"/></svg>
+        <svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="24" cy="32" r="18" fill="currentColor"/><path d="M33 21.5 L58.5 29.5 L33 39.5 Z" fill="currentColor"/><circle cx="27.5" cy="26" r="3" fill="var(--paper)"/></svg>
         <span>Corvid<b>Labs</b></span>
       </a>
       <button type="button" class="corvid-theme-toggle" data-corvid-theme-toggle aria-pressed="false" aria-label="Switch theme" title="Switch theme">
@@ -226,7 +227,7 @@
         <div class="bar"><span>live viewer</span><span class="right"><span id="validBadge" class="badge"><span class="dot"></span><span id="validText">&mdash;</span></span></span></div>
         <div class="viewer"><three-md id="lab" role="group" aria-label="Live 3md preview" aria-describedby="planeLive"></three-md></div>
         <div id="planeLive" class="sr-only" aria-live="polite"></div>
-        <div class="outline" id="outline" aria-label="plane outline"></div>
+        <div class="outline" id="outline" role="group" aria-label="plane outline"></div>
       </div>
     </div>
     <div class="status" id="status" role="status" aria-live="polite"></div>
@@ -236,7 +237,7 @@
   </div>
 
   <script defer src="assets/theme.js"></script>
-  <script type="module" src="assets/three-md.js?v=1.7.11"></script>
+  <script type="module" src="assets/three-md.js?v=1.7.12"></script>
   <script type="module">
     const STARTER = `---
 3md: 1.0
@@ -407,6 +408,8 @@ See [[z=1|Tuesday]] for what's next.
         delete validBadge.dataset.axis;
         if (errLine >= 0) validBadge.dataset.errorLine = String(errLine + 1);
         else delete validBadge.dataset.errorLine;
+        if (lab.errorCode) validBadge.dataset.errorCode = lab.errorCode; else delete validBadge.dataset.errorCode;
+        delete validBadge.dataset.warnings;
         document.body.dataset.threeMdValid = "false";
         // The badge becomes an operable "jump to error" control (mouse + keyboard).
         if (errLine >= 0) {
@@ -427,11 +430,29 @@ See [[z=1|Tuesday]] for what's next.
         validBadge.dataset.planes = doc ? String(doc.planes.length) : "0";
         validBadge.dataset.axis = doc ? doc.axis : "";
         delete validBadge.dataset.errorLine;
+        delete validBadge.dataset.errorCode;
         validBadge.removeAttribute("role"); validBadge.removeAttribute("tabindex"); validBadge.removeAttribute("aria-label");
         document.body.dataset.threeMdValid = "true";
+        // Non-fatal lint: cross-plane links that point at a z with no plane.
+        const dangling = danglingLinks(src, doc);
+        if (dangling.length) {
+          validBadge.dataset.warnings = String(dangling.length);
+          status.textContent += ` · ${dangling.length} dangling link${dangling.length === 1 ? "" : "s"} (z=${dangling.join(", z=")})`;
+        } else { delete validBadge.dataset.warnings; }
         buildOutline(doc);
       }
-      paint();
+      paintNow(); // apply/clear the error-line highlight synchronously
+    }
+
+    // Cross-plane links ([[z=N]]) whose target plane does not exist. Non-fatal.
+    function danglingLinks(src, doc) {
+      if (!doc) return [];
+      const zs = new Set(doc.planes.map((p) => p.z));
+      const out = new Set();
+      const re = /\[\[z=([-+0-9eE.]{1,40})(?:\|[^\]\n]{0,400})?\]\]/g;
+      let m;
+      while ((m = re.exec(src))) { const z = Number(m[1]); if (Number.isFinite(z) && !zs.has(z)) out.add(m[1]); }
+      return [...out];
     }
 
     function updateCursor() {
@@ -635,7 +656,8 @@ See [[z=1|Tuesday]] for what's next.
         }
       } else if (hash) {
         const decoded = dec(hash);
-        ed.value = decoded != null ? decoded : STARTER;
+        if (decoded != null) { ed.value = decoded; }
+        else { ed.value = ""; loadError = "Share link could not be decoded."; }
       } else {
         ed.value = STARTER;
       }
@@ -649,20 +671,35 @@ See [[z=1|Tuesday]] for what's next.
       }
     }
     // Programmatic API for headless agents: set/validate without synthesizing DOM
-    // input events or waiting out the debounce. validate() parses synchronously.
+    // input events or waiting out the debounce.
+    function ready() {
+      if (!lab || typeof lab.setSource !== "function") {
+        throw new Error("three-md component is not loaded (serve viewer.html over http(s), not file://).");
+      }
+    }
+    function snapshot() {
+      const doc = lab.document;
+      return {
+        valid: !lab.error,
+        axis: doc ? doc.axis : null,
+        planes: doc ? doc.planes.length : 0,
+        errorLine: typeof lab.errorLine === "number" ? lab.errorLine : null,
+        errorCode: lab.errorCode || null,
+        message: lab.error || null,
+      };
+    }
     window.threeMd = {
-      set(src) { ed.value = String(src); render(); updateCursor(); return this.validate(); },
+      set(src) { ready(); ed.value = String(src); render(); updateCursor(); return snapshot(); },
+      // Side-effect-free: parses `src` and restores the live editor document after.
       validate(src) {
-        if (src != null) lab.setSource(String(src));
-        const doc = lab.document;
-        return {
-          valid: !lab.error,
-          axis: doc ? doc.axis : null,
-          planes: doc ? doc.planes.length : 0,
-          errorLine: typeof lab.errorLine === "number" ? lab.errorLine : null,
-          message: lab.error || null,
-        };
+        ready();
+        if (src == null) return snapshot();
+        lab.setSource(String(src));
+        const result = snapshot();
+        lab.setSource(ed.value); // restore the live preview to the editor's document
+        return result;
       },
+      get document() { ready(); return lab.document; },
       get source() { return ed.value; },
     };
 

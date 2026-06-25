@@ -195,6 +195,41 @@ test.describe("viewer & editor (viewer.html)", () => {
     expect(r.bad.message).toBeTruthy();
   });
 
+  test("validate(src) is side-effect-free and reports the error code", async ({ page }) => {
+    await page.goto("/viewer.html");
+    await page.waitForFunction(() => document.getElementById("lab")?.shadowRoot?.querySelectorAll(".plane").length > 0);
+    const r = await page.evaluate(() => {
+      const liveBefore = window.threeMd.validate(); // current editor doc
+      const bad = window.threeMd.validate("axis: time\nno version");
+      const liveAfter = window.threeMd.validate(); // must be unchanged by the probe
+      return { liveBefore, bad, liveAfter, badgeValid: document.getElementById("validBadge").dataset.valid };
+    });
+    expect(r.liveBefore.valid).toBe(true);
+    expect(r.bad.valid).toBe(false);
+    expect(r.bad.errorCode).toBeTruthy(); // stable code, not just prose
+    expect(r.liveAfter.valid).toBe(true); // probe did not poison live state
+    expect(r.badgeValid).toBe("true");
+  });
+
+  test("dangling cross-plane links are flagged as a non-fatal warning", async ({ page }) => {
+    await page.goto("/viewer.html");
+    await page.waitForFunction(() => document.getElementById("lab")?.shadowRoot?.querySelectorAll(".plane").length > 0);
+    await page.fill("#editor", '---\n3md: 1.0\naxis: depth\n---\n@plane z=0\nSee [[z=9|nope]]\n@plane z=1\nB\n');
+    await page.waitForTimeout(250);
+    const ds = await page.evaluate(() => ({ ...document.getElementById("validBadge").dataset }));
+    expect(ds.valid).toBe("true"); // still valid, just warned
+    expect(ds.warnings).toBe("1");
+  });
+
+  test("a corrupt share hash signals a decode error (not a silent starter)", async ({ page }) => {
+    await page.goto("/viewer.html#not%20valid%20base64!!!");
+    await page.waitForFunction(() => document.getElementById("lab")?.shadowRoot !== undefined);
+    await page.waitForTimeout(250);
+    const r = await page.evaluate(() => ({ loadError: document.body.dataset.loadError, status: document.getElementById("status").textContent }));
+    expect(r.loadError).toBe("true");
+    expect(r.status.toLowerCase()).toContain("could not");
+  });
+
   test("the embedded agent schema marks axis optional, only 3md required", async ({ page }) => {
     await page.goto("/viewer.html");
     const schema = await page.evaluate(() => JSON.parse(document.getElementById("threemd-schema").textContent));
