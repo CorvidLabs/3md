@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>3md viewer &amp; editor</title>
-<meta name="description" content="A free, official viewer and editor for the 3md format. Paste or edit any .3md and see it render live, then share it with a link." />
+<meta name="description" content="A free, official viewer and editor for the 3md format. Paste or edit any .3md and see it render live, with syntax highlighting, a plane outline, and shareable links." />
 <link rel="icon" href="assets/favicon.svg" />
 <meta property="og:title" content="3md viewer &amp; editor" />
 <meta property="og:description" content="Paste or edit any .3md and see it render live. Free, official, shareable." />
@@ -24,44 +24,109 @@
 <link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;700;900&family=Spline+Sans+Mono:wght@400;500&display=swap" rel="stylesheet" />
 <style>
   *{box-sizing:border-box}
+  :root{
+    --gutter:52px;
+    --code-font:var(--font-mono,ui-monospace,"Spline Sans Mono",monospace);
+    --code-size:13px; --code-lh:1.7;
+    /* syntax palette, derived from the site tokens so it follows the theme */
+    --tok-key:var(--sheen);
+    --tok-str:#7fb88f; --tok-num:#c9a06a; --tok-directive:#d98ab0;
+    --tok-head:var(--ink); --tok-link:var(--sheen); --tok-code:#c9a06a;
+    --tok-punct:var(--text-faint); --tok-quote:var(--text-muted);
+  }
+  :root[data-theme="light"]{--tok-str:#3f7a52;--tok-num:#9a6b1f;--tok-directive:#b04e7e;}
   body{margin:0;background:var(--paper);color:var(--ink);
-    font-family:var(--font-mono,ui-monospace,"Spline Sans Mono",monospace);
+    font-family:var(--code-font);
     background-image:linear-gradient(var(--ink-06) 1px,transparent 1px),linear-gradient(90deg,var(--ink-06) 1px,transparent 1px);
     background-size:40px 40px;min-height:100vh}
   a{color:var(--sheen);text-decoration:none} a:hover{text-decoration:underline}
-  .wrap{max-width:1280px;margin:0 auto;padding:18px 18px 64px}
+  .wrap{max-width:1320px;margin:0 auto;padding:18px 18px 64px}
   .topbar{display:flex;align-items:center;justify-content:space-between;padding:6px 0 18px}
   .brand{display:flex;align-items:center;gap:10px;font-size:13px;letter-spacing:.04em;color:var(--ink)}
   .brand svg{width:24px;height:24px;color:var(--ink)}
   .brand b{font-weight:700}
   .head{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin-bottom:6px}
-  h1{font-family:var(--font-display);font-weight:900;font-size:clamp(30px,5vw,46px);letter-spacing:-.03em;margin:0;color:var(--ink)}
+  h1{font-family:var(--font-display);font-weight:900;font-size:clamp(28px,5vw,44px);letter-spacing:-.03em;margin:0;color:var(--ink)}
   h1 .z{color:var(--sheen)}
-  .lead{color:var(--text-faint);font-size:13.5px;margin:0 0 16px}
+  .lead{color:var(--text-faint);font-size:13.5px;margin:0 0 14px}
   .toolbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:14px}
-  .btn{font:inherit;font-size:12px;letter-spacing:.04em;color:var(--ink);background:var(--surface);border:1px solid var(--hairline);
-    padding:8px 12px;border-radius:4px;cursor:pointer;transition:.15s}
+  .toolbar .sep{width:1px;height:22px;background:var(--hairline);margin:0 2px}
+  .btn{font:inherit;font-size:12px;letter-spacing:.03em;color:var(--ink);background:var(--surface);border:1px solid var(--hairline);
+    padding:8px 12px;border-radius:4px;cursor:pointer;transition:.15s;white-space:nowrap}
   .btn:hover{border-color:var(--sheen);color:var(--sheen)}
+  .btn:focus-visible{outline:2px solid var(--sheen);outline-offset:2px}
   .btn.primary{background:var(--sheen);color:var(--paper);border-color:var(--sheen);font-weight:500}
-  select.btn{padding-right:8px}
+  .btn.icon{padding:8px 10px;font-weight:700}
+  select.btn{padding-right:8px;max-width:240px}
+  #example{max-width:min(260px,52vw)}
+  @media(max-width:560px){select.btn{max-width:46vw}}
   .toolbar label{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--text-faint)}
-  .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:stretch}
   .grid>*{min-width:0}
-  @media(max-width:880px){.grid{grid-template-columns:1fr}}
+  @media(max-width:900px){.grid{grid-template-columns:1fr}}
   .pane{border:1px solid var(--hairline);border-radius:8px;background:var(--surface);overflow:hidden;display:flex;flex-direction:column}
-  .pane .bar{display:flex;justify-content:space-between;align-items:center;padding:9px 13px;border-bottom:1px solid var(--hairline);
+  .pane .bar{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:9px 13px;border-bottom:1px solid var(--hairline);
     font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--text-faint)}
-  #editor{width:100%;min-height:520px;resize:vertical;border:0;outline:none;background:transparent;color:var(--ink);
-    font-family:var(--font-mono,monospace);font-size:13px;line-height:1.65;padding:14px;tab-size:2}
+  .pane .bar .right{display:flex;align-items:center;gap:10px;text-transform:none;letter-spacing:.02em}
+  .badge{display:inline-flex;align-items:center;gap:6px;font-size:11px;padding:3px 8px;border-radius:999px;border:1px solid var(--hairline);color:var(--text-muted)}
+  .badge.ok{color:#7fb88f;border-color:#7fb88f55}
+  .badge.err{color:#ff8f8f;border-color:#ff8f8f55;cursor:pointer}
+  .badge .dot{width:6px;height:6px;border-radius:50%;background:currentColor}
+
+  /* ---- code editor (gutter + highlight backdrop + transparent textarea) ---- */
+  .editor{position:relative;flex:1;min-height:560px;overflow:hidden}
+  .backdrop{position:absolute;inset:0;overflow:hidden;margin:0;pointer-events:none;background:
+    linear-gradient(90deg,var(--ink-04,rgba(127,127,127,.05)) 0,var(--ink-04,rgba(127,127,127,.05)) var(--gutter),transparent var(--gutter))}
+  .hl{margin:0;counter-reset:ln;color:var(--ink)}
+  .hl,.ta{font-family:var(--code-font);font-size:var(--code-size);line-height:var(--code-lh);
+    padding:14px 16px 14px var(--gutter);tab-size:2;
+    white-space:pre-wrap;overflow-wrap:break-word;word-break:break-word;letter-spacing:0}
+  .ta{position:absolute;inset:0;width:100%;height:100%;resize:none;border:0;outline:none;
+    background:transparent;color:transparent;caret-color:var(--sheen);overflow:auto;display:block}
+  .ta::selection{background:color-mix(in srgb,var(--sheen) 28%,transparent)}
+  .hl .line{position:relative;display:block;min-height:calc(var(--code-size)*var(--code-lh))}
+  .hl .line::before{counter-increment:ln;content:counter(ln);position:absolute;left:calc(-1*var(--gutter));
+    width:calc(var(--gutter) - 14px);text-align:right;color:var(--text-faint);opacity:.6;font-size:11.5px}
+  .hl .line.errline{background:#ff8f8f1f;box-shadow:-14px 0 0 #ff8f8f1f, 0 0 0 #ff8f8f1f}
+  .hl .line.errline::before{color:#ff8f8f;opacity:1}
+  /* tokens */
+  .t-key{color:var(--tok-key);font-weight:500}
+  .t-str{color:var(--tok-str)}
+  .t-num{color:var(--tok-num)}
+  .t-dir{color:var(--tok-directive);font-weight:700}
+  .t-attr{color:var(--tok-key)}
+  .t-head{color:var(--tok-head);font-weight:700}
+  .t-link{color:var(--tok-link);text-decoration:underline;text-decoration-color:var(--tok-link)}
+  .t-zlink{color:var(--tok-directive)}
+  .t-code{color:var(--tok-code)}
+  .t-bold{color:var(--ink);font-weight:700}
+  .t-punct{color:var(--tok-punct)}
+  .t-quote{color:var(--tok-quote);font-style:italic}
+  .t-fence{color:var(--tok-punct)}
+  .t-rule{color:var(--tok-punct)}
+
+  /* ---- viewer side ---- */
   .viewer{padding:14px}
   three-md{--three-md-accent:var(--sheen);--three-md-bg:var(--surface-strong);--three-md-surface:var(--surface);
     --three-md-text:var(--ink);--three-md-muted:var(--text-muted);--three-md-faint:var(--text-faint);
     --three-md-hairline:var(--hairline);--three-md-height:480px;--three-md-display:var(--font-display)}
-  .status{font-size:12px;color:var(--text-faint);margin-top:8px;min-height:16px}
+  .outline{display:flex;gap:6px;flex-wrap:wrap;padding:10px 13px;border-top:1px solid var(--hairline);
+    max-height:120px;overflow:auto}
+  .outline:empty{display:none}
+  .ochip{font:inherit;font-size:11px;color:var(--text-muted);background:var(--surface-strong,var(--surface));
+    border:1px solid var(--hairline);border-radius:999px;padding:4px 10px;cursor:pointer;transition:.12s;white-space:nowrap}
+  .ochip:hover{color:var(--ink);border-color:var(--sheen)}
+  .ochip[aria-current="true"]{color:var(--paper);background:var(--sheen);border-color:var(--sheen)}
+  .ochip .oz{opacity:.6;margin-right:5px}
+
+  .status{font-size:12px;color:var(--text-faint);margin-top:10px;min-height:16px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
   .status.err{color:#ff8f8f}
   .status.ok{color:var(--sheen-strong,var(--sheen))}
+  .hint{font-size:11.5px;color:var(--text-faint);margin-top:6px}
+  .hint kbd{font-family:var(--code-font);font-size:10.5px;background:var(--surface);border:1px solid var(--hairline);
+    border-bottom-width:2px;border-radius:3px;padding:1px 5px;color:var(--text-muted)}
   .foot{margin-top:22px;font-size:12px;color:var(--text-faint)}
-  /* theme toggle (shared look with the rest of the site) */
+
   .corvid-theme-toggle{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;padding:0;background:none;border:1px solid var(--ink-12,var(--hairline));color:var(--ink-70,var(--text-muted));cursor:pointer;transition:border-color .2s,color .2s;border-radius:3px}
   .corvid-theme-toggle:hover{border-color:var(--sheen);color:var(--sheen)}
   .corvid-theme-toggle:focus-visible{outline:2px solid var(--sheen);outline-offset:2px}
@@ -89,7 +154,7 @@
 
     <div class="head">
       <h1>3md viewer<span class="z">.</span></h1>
-      <p class="lead">Paste or edit any <code>.3md</code> on the left, see it live on the right. Free and official. <a href="docs.html">docs</a> &middot; <a href="gallery.html">gallery</a></p>
+      <p class="lead">Write or paste any <code>.3md</code> on the left, see it live on the right. Syntax-highlighted, shareable, free and official. <a href="docs.html">docs</a> &middot; <a href="gallery.html">gallery</a></p>
     </div>
 
     <div class="toolbar">
@@ -108,23 +173,37 @@
         <option value="map">map</option>
       </select>
       <button id="playBtn" class="btn" type="button">play</button>
+      <span class="sep"></span>
+      <button id="planeBtn" class="btn icon" type="button" title="Insert a plane (Ctrl/Cmd+Enter inserts too)">+ plane</button>
+      <button id="linkBtn" class="btn icon" type="button" title="Insert a cross-plane link">+ link</button>
+      <button id="fmBtn" class="btn icon" type="button" title="Insert frontmatter">+ frontmatter</button>
+      <span class="sep"></span>
       <button id="openBtn" class="btn" type="button">open file</button>
       <input id="fileInput" type="file" accept=".3md,.md,.txt,text/plain" hidden />
+      <button id="copyBtn" class="btn" type="button">copy source</button>
       <button id="dlBtn" class="btn" type="button">download</button>
       <button id="shareBtn" class="btn primary" type="button">copy share link</button>
     </div>
 
     <div class="grid">
       <div class="pane">
-        <div class="bar"><span>source.3md</span><span id="counts"></span></div>
-        <textarea id="editor" spellcheck="false" aria-label="3md source editor"></textarea>
+        <div class="bar">
+          <span>source.3md</span>
+          <span class="right"><span id="cursor">Ln 1, Col 1</span> &middot; <span id="counts"></span></span>
+        </div>
+        <div class="editor" id="editorWrap">
+          <div class="backdrop"><pre class="hl" id="hl" aria-hidden="true"></pre></div>
+          <textarea class="ta" id="editor" spellcheck="false" autocomplete="off" autocapitalize="off" autocorrect="off" wrap="soft" aria-label="3md source editor"></textarea>
+        </div>
       </div>
       <div class="pane">
-        <div class="bar"><span>live viewer</span><span class="d">&lt;three-md&gt;</span></div>
+        <div class="bar"><span>live viewer</span><span class="right"><span id="validBadge" class="badge"><span class="dot"></span><span id="validText">&mdash;</span></span></span></div>
         <div class="viewer"><three-md id="lab"></three-md></div>
+        <div class="outline" id="outline" aria-label="plane outline"></div>
       </div>
     </div>
     <div class="status" id="status"></div>
+    <p class="hint"><kbd>Tab</kbd> indent &middot; <kbd>Enter</kbd> continues lists &middot; <kbd>Ctrl/&#8984;+S</kbd> download &middot; <kbd>Ctrl/&#8984;+Enter</kbd> new plane &middot; <kbd>Ctrl/&#8984;+/</kbd> play</p>
 
     <p class="foot">Powered by the open-source <a href="https://github.com/CorvidLabs/3md">3md</a> format and the <code>&lt;three-md&gt;</code> web component. MIT.</p>
   </div>
@@ -137,54 +216,259 @@
 axis: time
 title: My first 3md
 ---
-Paste your own .3md here, or pick an example above. It renders live on the right.
+Write your own .3md here, or pick an example above. It renders live on the right.
 
 @plane z=0 label="Monday"
 # Monday
 - [ ] Try the 3md viewer
 - [x] Learn the format in one screen
+See [[z=1|Tuesday]] for what's next.
 
 @plane z=1 label="Tuesday"
 # Tuesday
 - [ ] Share a link to this document
 `;
 
-    const EXAMPLES = {
-      "Daily planner (time)": "examples/daily-planner.3md",
-      "Game of Life (frame)": "examples/game-of-life.3md",
-      "Layered notes (layer)": "examples/layered-notes.3md",
-      "Dungeon map (space)": "examples/dungeon.3md",
-      "Tide pool (depth)": "examples/tide-pool.3md",
-    };
-
     const ed = document.getElementById("editor");
+    const hl = document.getElementById("hl");
     const lab = document.getElementById("lab");
     const status = document.getElementById("status");
     const counts = document.getElementById("counts");
+    const cursor = document.getElementById("cursor");
     const modeSel = document.getElementById("modeSel");
     const exampleSel = document.getElementById("example");
     const playBtn = document.getElementById("playBtn");
+    const outline = document.getElementById("outline");
+    const validBadge = document.getElementById("validBadge");
+    const validText = document.getElementById("validText");
 
     // base64url <-> UTF-8 text, for sharing a whole document in the URL hash.
     const enc = (s) => btoa(unescape(encodeURIComponent(s))).replace(/\+/g,"-").replace(/\//g,"_").replace(/=+$/,"");
     const dec = (s) => { try { return decodeURIComponent(escape(atob(s.replace(/-/g,"+").replace(/_/g,"/")))); } catch { return null; } };
 
+    const escHtml = (s) => s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+
+    // ---- Syntax highlighter: returns one <div class="line"> per source line.
+    // Input is escaped first, so no user content can inject markup.
+    function inlineMd(s) {
+      // s is already HTML-escaped. Apply spans for inline constructs.
+      return s
+        .replace(/(\[\[z=[^\]]*\]\])/g, '<span class="t-zlink">$1</span>')
+        .replace(/(\[[^\]]+\]\([^)\s]+\))/g, '<span class="t-link">$1</span>')
+        .replace(/(`[^`]+`)/g, '<span class="t-code">$1</span>')
+        .replace(/(\*\*[^*]+\*\*)/g, '<span class="t-bold">$1</span>');
+    }
+    function highlight(src) {
+      const lines = src.split("\n");
+      let inFm = false, fmSeen = false, inCode = false;
+      const out = [];
+      for (let i = 0; i < lines.length; i++) {
+        const raw = lines[i];
+        const e = escHtml(raw);
+        let html;
+        const isFence = /^```/.test(raw);
+        if (isFence) {
+          html = '<span class="t-fence">' + e + "</span>";
+          inCode = !inCode;
+        } else if (inCode) {
+          html = '<span class="t-code">' + e + "</span>";
+        } else if (raw.trim() === "---" && !fmSeen && i === 0) {
+          inFm = true; fmSeen = true; html = '<span class="t-punct">' + e + "</span>";
+        } else if (raw.trim() === "---" && inFm) {
+          inFm = false; html = '<span class="t-punct">' + e + "</span>";
+        } else if (inFm) {
+          const m = raw.match(/^(\s*)([A-Za-z0-9_-]+)(:)(.*)$/);
+          html = m
+            ? escHtml(m[1]) + '<span class="t-key">' + escHtml(m[2]) + '</span><span class="t-punct">:</span>' + '<span class="t-str">' + escHtml(m[4]) + "</span>"
+            : e;
+        } else if (/^@plane\b/.test(raw)) {
+          // @plane z=0 label="x" x= y= -- tokenize the (escaped) attributes BEFORE
+          // adding any markup, so the regex never matches an injected span's class=.
+          const mm = raw.match(/^(@plane)([\s\S]*)$/);
+          let rest = escHtml(mm[2]).replace(
+            /([a-zA-Z]+)=("[^"]*"?|-?[0-9][0-9.eE+-]*|\S*)/g,
+            (whole, k, v) => {
+              const vcls = /^-?[0-9][0-9.eE+-]*$/.test(v) ? "t-num" : "t-str";
+              return '<span class="t-attr">' + k + '</span><span class="t-punct">=</span><span class="' + vcls + '">' + v + "</span>";
+            });
+          html = '<span class="t-dir">' + escHtml(mm[1]) + "</span>" + rest;
+        } else if (/^#{1,6}\s/.test(raw)) {
+          html = '<span class="t-head">' + e + "</span>";
+        } else if (/^\s*>\s/.test(raw)) {
+          html = '<span class="t-quote">' + e + "</span>";
+        } else if (/^\s*(-{3,}|\*{3,})\s*$/.test(raw)) {
+          html = '<span class="t-rule">' + e + "</span>";
+        } else if (/^\s*([-*]|\d+\.)\s/.test(raw)) {
+          html = e.replace(/^(\s*)([-*]|\d+\.)(\s)(\[[ xX]\])?/, (mm, sp, b, gap, box) =>
+            sp + '<span class="t-punct">' + b + "</span>" + gap + (box ? '<span class="t-num">' + box + "</span>" : ""));
+          html = inlineMd(html);
+        } else if (/^\s*\|.*\|/.test(raw)) {
+          html = '<span class="t-punct">' + e + "</span>";
+        } else {
+          html = inlineMd(e);
+        }
+        if (html === "") html = "​"; // keep empty lines tall
+        out.push('<div class="line">' + html + "</div>");
+      }
+      return out.join("");
+    }
+
+    let errLine = -1;
+    function paint() {
+      hl.innerHTML = highlight(ed.value);
+      if (errLine >= 0) {
+        const node = hl.children[errLine];
+        if (node) node.classList.add("errline");
+      }
+      hl.scrollTop = ed.scrollTop; hl.scrollLeft = ed.scrollLeft;
+    }
+    // Best-effort: find a line to blame for a parse error message.
+    function blameLine(msg) {
+      if (!msg) return -1;
+      if (/3md|version|frontmatter/i.test(msg)) {
+        const i = ed.value.split("\n").findIndex((l) => /^---\s*$/.test(l));
+        return i < 0 ? 0 : i;
+      }
+      const zmatch = msg.match(/z\s*=?\s*(-?[0-9.]+)/i);
+      if (zmatch) {
+        const i = ed.value.split("\n").findIndex((l) => l.includes("z=" + zmatch[1]));
+        if (i >= 0) return i;
+      }
+      return -1;
+    }
+
+    function buildOutline(doc) {
+      outline.innerHTML = "";
+      if (!doc || !doc.planes) return;
+      doc.planes.forEach((p, i) => {
+        const b = document.createElement("button");
+        b.type = "button"; b.className = "ochip"; b.dataset.idx = String(i);
+        b.innerHTML = '<span class="oz">z' + p.z + "</span>" + escHtml(p.label || ("plane " + (i + 1)));
+        b.addEventListener("click", () => { lab.goTo(i); markOutline(i); });
+        outline.appendChild(b);
+      });
+      markOutline(lab.currentIndex || 0);
+    }
+    function markOutline(i) {
+      [...outline.children].forEach((c, j) => c.setAttribute("aria-current", j === i ? "true" : "false"));
+    }
+
     function render() {
       const src = ed.value;
-      counts.textContent = src.split("\n").length + " lines";
+      counts.textContent = src.split("\n").length + " lines, " + src.length + " chars";
       lab.setSource(src);
       if (lab.error) {
+        errLine = blameLine(lab.error);
         status.className = "status err";
         status.textContent = "Invalid 3md: " + lab.error;
+        validBadge.className = "badge err";
+        validText.textContent = "invalid";
+        validBadge.title = lab.error;
+        outline.innerHTML = "";
       } else {
+        errLine = -1;
         const doc = lab.document;
         status.className = "status ok";
-        status.textContent = doc ? `valid - axis "${doc.axis}", ${doc.planes.length} plane${doc.planes.length === 1 ? "" : "s"}` : "";
+        status.textContent = doc ? `valid · axis "${doc.axis}" · ${doc.planes.length} plane${doc.planes.length === 1 ? "" : "s"}` : "";
+        validBadge.className = "badge ok";
+        validText.textContent = doc ? `${doc.planes.length} plane${doc.planes.length === 1 ? "" : "s"}` : "valid";
+        validBadge.title = "";
+        buildOutline(doc);
       }
+      paint();
+    }
+
+    function updateCursor() {
+      const upto = ed.value.slice(0, ed.selectionStart);
+      const line = upto.split("\n");
+      cursor.textContent = "Ln " + line.length + ", Col " + (line[line.length - 1].length + 1);
     }
 
     let timer = null;
-    ed.addEventListener("input", () => { clearTimeout(timer); timer = setTimeout(render, 200); });
+    ed.addEventListener("input", () => { paint(); clearTimeout(timer); timer = setTimeout(render, 160); });
+    ed.addEventListener("scroll", () => { hl.scrollTop = ed.scrollTop; hl.scrollLeft = ed.scrollLeft; });
+    ed.addEventListener("keyup", updateCursor);
+    ed.addEventListener("click", updateCursor);
+    ed.addEventListener("select", updateCursor);
+
+    // ---- smart editing keys
+    function setRange(start, end) { ed.selectionStart = start; ed.selectionEnd = end; }
+    function replaceSel(text, selStart, selEnd) {
+      const s = ed.selectionStart, e = ed.selectionEnd;
+      ed.setRangeText(text, s, e, "end");
+      if (selStart != null) setRange(selStart, selEnd != null ? selEnd : selStart);
+      ed.dispatchEvent(new Event("input"));
+    }
+    function insertAtCursor(snippet, caretBack) {
+      const s = ed.selectionStart;
+      ed.setRangeText(snippet, s, ed.selectionEnd, "end");
+      if (caretBack != null) { const pos = s + snippet.length - caretBack; setRange(pos, pos); }
+      ed.focus(); ed.dispatchEvent(new Event("input")); updateCursor();
+    }
+    ed.addEventListener("keydown", (e) => {
+      const mod = e.metaKey || e.ctrlKey;
+      if (mod && (e.key === "s" || e.key === "S")) { e.preventDefault(); document.getElementById("dlBtn").click(); return; }
+      if (mod && e.key === "Enter") { e.preventDefault(); insertPlane(); return; }
+      if (mod && e.key === "/") { e.preventDefault(); playBtn.click(); return; }
+      if (e.key === "Tab") {
+        e.preventDefault();
+        const s = ed.selectionStart, en = ed.selectionEnd;
+        if (s !== en && ed.value.slice(s, en).includes("\n")) {
+          // indent/dedent whole lines
+          const startLine = ed.value.lastIndexOf("\n", s - 1) + 1;
+          const block = ed.value.slice(startLine, en);
+          const shifted = e.shiftKey
+            ? block.replace(/^ {1,2}/gm, "")
+            : block.replace(/^/gm, "  ");
+          ed.setRangeText(shifted, startLine, en, "preserve");
+          setRange(startLine, startLine + shifted.length);
+        } else if (e.shiftKey) {
+          const ls = ed.value.lastIndexOf("\n", s - 1) + 1;
+          if (/^ {1,2}/.test(ed.value.slice(ls))) { ed.setRangeText("", ls, ls + Math.min(2, ed.value.slice(ls).match(/^ +/)[0].length), "preserve"); }
+        } else {
+          replaceSel("  ");
+        }
+        ed.dispatchEvent(new Event("input"));
+        return;
+      }
+      if (e.key === "Enter" && !mod) {
+        const s = ed.selectionStart;
+        const lineStart = ed.value.lastIndexOf("\n", s - 1) + 1;
+        const line = ed.value.slice(lineStart, s);
+        const m = line.match(/^(\s*)([-*]\s\[[ xX]\]\s|[-*]\s|\d+\.\s)?/);
+        if (m && m[2]) {
+          const indent = m[1];
+          let marker = m[2];
+          if (/^\s*$/.test(line.slice((indent + marker).length))) {
+            // empty list item -> end the list
+            e.preventDefault();
+            ed.setRangeText("\n", lineStart, s, "end");
+            ed.dispatchEvent(new Event("input")); return;
+          }
+          if (/\[[ xX]\]/.test(marker)) marker = marker.replace(/\[[xX]\]/, "[ ]");
+          else if (/^\d+\./.test(marker)) marker = (parseInt(marker) + 1) + ". ";
+          e.preventDefault();
+          insertAtCursor("\n" + indent + marker);
+          return;
+        }
+      }
+    });
+
+    // ---- inserts
+    function insertPlane() {
+      const doc = lab.document;
+      const nextZ = doc && doc.planes.length ? (Math.max(...doc.planes.map((p) => p.z)) + 1) : 0;
+      const atEnd = ed.value.endsWith("\n") ? "" : "\n";
+      const snippet = `${atEnd}\n@plane z=${nextZ} label=""\n# New plane\n`;
+      ed.selectionStart = ed.selectionEnd = ed.value.length;
+      insertAtCursor(snippet, snippet.length - snippet.indexOf('label="') - 7);
+    }
+    document.getElementById("planeBtn").addEventListener("click", insertPlane);
+    document.getElementById("linkBtn").addEventListener("click", () => insertAtCursor("[[z=0|text]]", 6));
+    document.getElementById("fmBtn").addEventListener("click", () => {
+      if (/^---/.test(ed.value)) { status.className = "status"; status.textContent = "Document already has frontmatter."; return; }
+      insertAtCursor("---\n3md: 1.0\naxis: time\ntitle: Untitled\n---\n\n", 0);
+    });
 
     modeSel.addEventListener("change", () => {
       if (modeSel.value) lab.setAttribute("mode", modeSel.value); else lab.removeAttribute("mode");
@@ -195,21 +479,36 @@ Paste your own .3md here, or pick an example above. It renders live on the right
       if (lab.playing) { lab.pause(); playBtn.textContent = "play"; }
       else { lab.play(); playBtn.textContent = "pause"; }
     });
-    lab.addEventListener("planechange", () => { playBtn.textContent = lab.playing ? "pause" : "play"; });
+    lab.addEventListener("planechange", (ev) => {
+      playBtn.textContent = lab.playing ? "pause" : "play";
+      if (ev && ev.detail && typeof ev.detail.index === "number") markOutline(ev.detail.index);
+    });
 
-    // Examples dropdown
+    validBadge.addEventListener("click", () => {
+      if (errLine < 0) return;
+      const node = hl.children[errLine];
+      if (node) node.scrollIntoView({ block: "center" });
+      // place caret at start of the error line
+      const pos = ed.value.split("\n").slice(0, errLine).join("\n").length + (errLine ? 1 : 0);
+      ed.focus(); setRange(pos, pos); updateCursor();
+    });
+
+    // Examples dropdown, populated from the curated gallery (src is inline).
     exampleSel.appendChild(new Option("load an example...", ""));
-    for (const name of Object.keys(EXAMPLES)) exampleSel.appendChild(new Option(name, EXAMPLES[name]));
-    exampleSel.addEventListener("change", async () => {
-      const path = exampleSel.value;
-      if (!path) return;
-      try {
-        const res = await fetch(path);
-        ed.value = await res.text();
-        render();
-        history.replaceState(null, "", "#" + enc(ed.value));
-      } catch (e) { status.className = "status err"; status.textContent = "Could not load example: " + e.message; }
-      // Keep the dropdown showing the loaded example instead of resetting it.
+    let EXAMPLES = {};
+    fetch("gallery-data.json").then((r) => r.json()).then((list) => {
+      list.sort((a, b) => a.title.localeCompare(b.title));
+      for (const ex of list) { EXAMPLES[ex.slug] = ex.src; exampleSel.appendChild(new Option(`${ex.title}  (${ex.axis})`, ex.slug)); }
+    }).catch(() => {
+      // Fallback: a couple of inline examples if the manifest is unavailable.
+      EXAMPLES["starter"] = STARTER; exampleSel.appendChild(new Option("Starter", "starter"));
+    });
+    exampleSel.addEventListener("change", () => {
+      const slug = exampleSel.value;
+      if (!slug || !EXAMPLES[slug]) return;
+      ed.value = EXAMPLES[slug];
+      render(); updateCursor();
+      history.replaceState(null, "", "#" + enc(ed.value));
     });
 
     // Open a local file
@@ -219,8 +518,14 @@ Paste your own .3md here, or pick an example above. It renders live on the right
       const f = fileInput.files && fileInput.files[0];
       if (!f) return;
       const r = new FileReader();
-      r.onload = () => { ed.value = String(r.result); render(); };
+      r.onload = () => { ed.value = String(r.result); render(); updateCursor(); };
       r.readAsText(f);
+    });
+
+    // Copy the raw source (agent-friendly: grab the exact document)
+    document.getElementById("copyBtn").addEventListener("click", async () => {
+      try { await navigator.clipboard.writeText(ed.value); status.className = "status ok"; status.textContent = "Source copied to clipboard."; }
+      catch { status.className = "status err"; status.textContent = "Could not copy (clipboard blocked)."; }
     });
 
     // Download the current source
@@ -232,6 +537,7 @@ Paste your own .3md here, or pick an example above. It renders live on the right
       a.download = (title ? title.trim().replace(/[^a-z0-9]+/gi, "-").toLowerCase() : "document") + ".3md";
       a.click();
       URL.revokeObjectURL(a.href);
+      status.className = "status ok"; status.textContent = "Downloaded " + a.download;
     });
 
     // Share: put the whole document in the URL hash and copy the link
@@ -255,7 +561,7 @@ Paste your own .3md here, or pick an example above. It renders live on the right
       } else {
         ed.value = STARTER;
       }
-      render();
+      render(); updateCursor();
     }
     if (window.customElements) customElements.whenDefined("three-md").then(init);
     else init();
