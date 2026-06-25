@@ -25,7 +25,21 @@
     }
   },
   "plane": { "directive": "@plane z=<number> [label=\"...\"] [x=<number>] [y=<number>]", "body": "Markdown until the next @plane or EOF" },
-  "crossPlaneLink": "[[z=<number>|text]] -- a clickable jump to the plane at that z (z may be a decimal or scientific notation)"
+  "crossPlaneLink": "[[z=<number>|text]] -- a clickable jump to the plane at that z (z may be a decimal or scientific notation)",
+  "axisModes": {
+    "note": "axis selects the render mode; an unrecognized axis falls back to stack and is flagged as a non-fatal warning (badge data-axis-known=false)",
+    "time": "stack", "depth": "stack", "frame": "play", "layer": "layers",
+    "space": "map", "slide": "present", "floor": "elevator",
+    "aliases": { "frames": "play", "layers": "layers", "slides": "present", "deck": "present", "scene": "map", "floors": "elevator", "parallax": "stack" }
+  },
+  "errorCodes": ["missingFrontmatter", "invalidFrontmatter", "missingVersion", "invalidPlaneDirective", "missingPlanePosition", "duplicatePlane"],
+  "agentApi": {
+    "note": "available on window.threeMd when served over http(s)",
+    "set(src)": "loads src into the editor and returns the snapshot",
+    "validate(src)": "side-effect-free; returns the snapshot for src without changing the live document",
+    "document": "the parsed document (planes) or null",
+    "snapshot": "{ valid, empty, axis, axisKnown, mode, planes, errorLine, errorCode, message }"
+  }
 }
 </script>
 
@@ -53,8 +67,8 @@
     --tok-punct:var(--text-faint); --tok-quote:var(--text-muted);
     --ok:#7fb88f; --err:#ff8f8f;
   }
-  :root[data-theme="light"]{--tok-str:#3f7a52;--tok-num:#8c5f14;--tok-code:#8c5f14;--tok-directive:#b04e7e;--ok:#2f7d4f;--err:#c0392b;}
-  @media (prefers-color-scheme:light){:root:not([data-theme="dark"]){--tok-str:#3f7a52;--tok-num:#8c5f14;--tok-code:#8c5f14;--tok-directive:#b04e7e;--ok:#2f7d4f;--err:#c0392b;}}
+  :root[data-theme="light"]{--tok-str:#3f7a52;--tok-num:#8c5f14;--tok-code:#8c5f14;--tok-directive:#a8456f;--ok:#2f7d4f;--err:#c0392b;}
+  @media (prefers-color-scheme:light){:root:not([data-theme="dark"]){--tok-str:#3f7a52;--tok-num:#8c5f14;--tok-code:#8c5f14;--tok-directive:#a8456f;--ok:#2f7d4f;--err:#c0392b;}}
   @media (prefers-reduced-motion:reduce){*{transition-duration:.001ms !important;animation-duration:.001ms !important}}
   body{margin:0;background:var(--paper);color:var(--ink);
     font-family:var(--code-font);
@@ -141,6 +155,7 @@
   .ochip{font:inherit;font-size:11px;color:var(--text-muted);background:var(--surface-strong,var(--surface));
     border:1px solid var(--hairline);border-radius:999px;padding:4px 10px;cursor:pointer;transition:.12s;white-space:nowrap}
   .ochip:hover{color:var(--ink);border-color:var(--sheen)}
+  .ochip:focus-visible{outline:2px solid var(--sheen);outline-offset:2px}
   .ochip[aria-current="true"]{color:var(--paper);background:var(--sheen);border-color:var(--sheen)}
   .ochip .oz{opacity:.6;margin-right:5px}
 
@@ -409,7 +424,7 @@ See [[z=1|Tuesday]] for what's next.
         if (errLine >= 0) validBadge.dataset.errorLine = String(errLine + 1);
         else delete validBadge.dataset.errorLine;
         if (lab.errorCode) validBadge.dataset.errorCode = lab.errorCode; else delete validBadge.dataset.errorCode;
-        delete validBadge.dataset.warnings;
+        delete validBadge.dataset.warnings; delete validBadge.dataset.mode; delete validBadge.dataset.axisKnown;
         document.body.dataset.threeMdValid = "false";
         // The badge becomes an operable "jump to error" control (mouse + keyboard).
         if (errLine >= 0) {
@@ -433,16 +448,29 @@ See [[z=1|Tuesday]] for what's next.
         delete validBadge.dataset.errorCode;
         validBadge.removeAttribute("role"); validBadge.removeAttribute("tabindex"); validBadge.removeAttribute("aria-label");
         document.body.dataset.threeMdValid = "true";
-        // Non-fatal lint: cross-plane links that point at a z with no plane.
+        validBadge.dataset.mode = lab.mode || "";
+        // Non-fatal lints (the doc still parses, but an agent likely meant something).
+        const warns = [];
+        // 1. An axis that is not recognized silently falls back to the deck view.
+        const axisKnown = !doc.axis || KNOWN_AXES.has(String(doc.axis).toLowerCase());
+        validBadge.dataset.axisKnown = String(axisKnown);
+        if (!axisKnown) warns.push(`axis "${doc.axis}" not recognized — showing "${lab.mode}". Known: ${[...CANON_AXES].join(", ")}`);
+        // 2. Cross-plane links that point at a z with no plane.
         const dangling = danglingLinks(src, doc);
-        if (dangling.length) {
-          validBadge.dataset.warnings = String(dangling.length);
-          status.textContent += ` · ${dangling.length} dangling link${dangling.length === 1 ? "" : "s"} (z=${dangling.join(", z=")})`;
-        } else { delete validBadge.dataset.warnings; }
+        if (dangling.length) warns.push(`${dangling.length} dangling link${dangling.length === 1 ? "" : "s"} (z=${dangling.join(", z=")})`);
+        if (warns.length) { validBadge.dataset.warnings = String(warns.length); status.textContent += " · " + warns.join(" · "); }
+        else { delete validBadge.dataset.warnings; }
         buildOutline(doc);
       }
       paintNow(); // apply/clear the error-line highlight synchronously
     }
+
+    // Canonical axes (for the "did you mean" hint) and the full set the renderer
+    // accepts (canonical + aliases + mode names), mirroring the component.
+    const CANON_AXES = new Set(["time", "frame", "layer", "space", "depth", "slide", "floor"]);
+    const KNOWN_AXES = new Set([...CANON_AXES,
+      "frames", "layers", "slides", "deck", "scene", "floors", "parallax",
+      "stack", "play", "single", "present", "blend", "map", "elevator"]);
 
     // Cross-plane links ([[z=N]]) whose target plane does not exist. Non-fatal.
     function danglingLinks(src, doc) {
@@ -679,13 +707,17 @@ See [[z=1|Tuesday]] for what's next.
     }
     function snapshot() {
       const doc = lab.document;
+      const empty = lab.getAttribute("data-state") === "empty";
       return {
         valid: !lab.error,
+        empty,
         axis: doc ? doc.axis : null,
+        axisKnown: doc ? (!doc.axis || KNOWN_AXES.has(String(doc.axis).toLowerCase())) : null,
+        mode: doc ? lab.mode : null,
         planes: doc ? doc.planes.length : 0,
         errorLine: typeof lab.errorLine === "number" ? lab.errorLine : null,
         errorCode: lab.errorCode || null,
-        message: lab.error || null,
+        message: empty ? null : (lab.error || null),
       };
     }
     window.threeMd = {
