@@ -89,12 +89,15 @@
     padding:8px 12px;border-radius:4px;cursor:pointer;transition:.15s;white-space:nowrap}
   .btn:hover{border-color:var(--sheen);color:var(--sheen)}
   .btn:focus-visible{outline:2px solid var(--sheen);outline-offset:2px;box-shadow:0 0 0 2px var(--paper),0 0 0 4px var(--sheen)}
-  .btn.primary{background:var(--sheen);color:var(--paper);border-color:var(--sheen);font-weight:600}
+  /* The primary share action is the ONLY filled-green element, lifted so it reads
+     as the single most important control. */
+  .btn.primary{background:var(--sheen);color:var(--paper);border-color:var(--sheen);font-weight:600;
+    box-shadow:0 1px 2px rgba(0,0,0,.12),0 3px 10px color-mix(in srgb,var(--sheen) 24%,transparent)}
   .btn.primary:hover{background:var(--sheen-hover);border-color:var(--sheen-hover);color:var(--paper)}
-  /* Authoring inserts are a distinct accent-ghost tier, between primary and the
-     neutral file actions, so the toolbar reads as a hierarchy not a flat row. */
-  .btn.ins{color:var(--sheen);border-color:color-mix(in srgb,var(--sheen) 32%,var(--hairline));font-weight:600}
-  .btn.ins:hover{background:color-mix(in srgb,var(--sheen) 10%,transparent);border-color:var(--sheen)}
+  /* Authoring inserts are a tinted GROUP (neutral text, not green) so they read as
+     a tier without competing with the primary's green fill. */
+  .btn.ins{background:color-mix(in srgb,var(--sheen) 7%,var(--surface));border-color:color-mix(in srgb,var(--sheen) 22%,var(--hairline));font-weight:600}
+  .btn.ins:hover{background:color-mix(in srgb,var(--sheen) 15%,var(--surface));border-color:var(--sheen);color:var(--sheen);transform:translateY(-1px)}
   .btn.icon{padding:8px 11px}
   #cursor,#counts{font-family:var(--code-font);font-size:11px}
   select.btn{padding-right:8px;max-width:240px}
@@ -103,9 +106,23 @@
   .toolbar label{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--text-faint)}
   .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:stretch}
   .grid>*{min-width:0}
-  /* Stack below 900px: a side-by-side viewer narrower than ~430px clips the 3D
-     stage's neighbouring planes, so tablets get the full-width stacked layout. */
-  @media(max-width:900px){.grid{grid-template-columns:1fr}}
+  /* The primary share action is anchored to the right edge of the toolbar so the
+     primary/secondary hierarchy survives wrapping. */
+  .toolbar .primary{margin-left:auto}
+  /* Segmented Source|Live switch: only shown when the layout is too narrow for a
+     useful side-by-side, so the live preview is one tap away (not below the fold). */
+  .paneswitch{display:none;gap:0;margin-bottom:12px;border:1px solid var(--hairline);border-radius:7px;overflow:hidden;width:max-content}
+  .pstab{font:inherit;font-size:12px;font-weight:600;letter-spacing:.03em;color:var(--text-muted);background:var(--surface);border:0;padding:8px 20px;cursor:pointer;transition:.15s}
+  .pstab+.pstab{border-left:1px solid var(--hairline)}
+  .pstab[aria-selected="true"]{background:var(--sheen);color:var(--paper)}
+  .pstab:focus-visible{outline:2px solid var(--sheen);outline-offset:-2px}
+  @media(max-width:900px){
+    .grid{grid-template-columns:1fr}
+    .paneswitch{display:inline-flex}
+    .grid .viewerPane{display:none}
+    .grid[data-show="live"] .editorPane{display:none}
+    .grid[data-show="live"] .viewerPane{display:flex}
+  }
   .pane{border:1px solid var(--hairline);border-radius:8px;background:var(--surface);overflow:hidden;display:flex;flex-direction:column}
   .pane .bar{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:9px 13px;border-bottom:1px solid var(--hairline);
     font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--text-faint)}
@@ -119,7 +136,7 @@
   /* ---- code editor (gutter + highlight backdrop + transparent textarea) ---- */
   .editor{position:relative;flex:1;min-height:560px;overflow:hidden}
   .backdrop{position:absolute;inset:0;overflow:hidden;margin:0;pointer-events:none;background:
-    linear-gradient(90deg,var(--ink-04,rgba(127,127,127,.05)) 0,var(--ink-04,rgba(127,127,127,.05)) var(--gutter),transparent var(--gutter))}
+    linear-gradient(90deg,var(--ink-06) 0,var(--ink-06) var(--gutter),transparent var(--gutter))}
   .hl{margin:0;counter-reset:ln;color:var(--ink)}
   .hl,.ta{font-family:var(--code-font);font-size:var(--code-size);line-height:var(--code-lh);
     padding:14px 16px 14px var(--gutter);tab-size:2;
@@ -143,10 +160,10 @@
   .t-zlink{color:var(--sheen);font-weight:500}
   .t-code{color:var(--code-function)}
   .t-bold{color:var(--ink);font-weight:700}
-  .t-punct{color:var(--code-comment)}
+  .t-punct{color:var(--text-faint)}
   .t-quote{color:var(--text-faint);font-style:italic}
-  .t-fence{color:var(--code-comment)}
-  .t-rule{color:var(--code-comment)}
+  .t-fence{color:var(--text-faint)}
+  .t-rule{color:var(--text-faint)}
 
   /* ---- viewer side ---- */
   .viewer{padding:14px}
@@ -232,8 +249,12 @@
       <button id="shareBtn" class="btn primary" type="button">copy share link</button>
     </div>
 
-    <div class="grid">
-      <div class="pane">
+    <div class="paneswitch" role="tablist" aria-label="Show source or live preview">
+      <button class="pstab" type="button" role="tab" data-pane="source" aria-selected="true">Source</button>
+      <button class="pstab" type="button" role="tab" data-pane="live" aria-selected="false">Live</button>
+    </div>
+    <div class="grid" id="grid" data-show="source">
+      <div class="pane editorPane">
         <div class="bar">
           <span>source.3md</span>
           <span class="right"><span id="cursor">Ln 1, Col 1</span> &middot; <span id="counts"></span></span>
@@ -243,7 +264,7 @@
           <textarea class="ta" id="editor" spellcheck="false" autocomplete="off" autocapitalize="off" autocorrect="off" wrap="soft" aria-label="3md source editor"></textarea>
         </div>
       </div>
-      <div class="pane">
+      <div class="pane viewerPane">
         <div class="bar"><span>live viewer</span><span class="right"><span id="validBadge" class="badge"><span class="dot"></span><span id="validText">&mdash;</span></span></span></div>
         <div class="viewer"><three-md id="lab" role="group" aria-label="Live 3md preview" aria-describedby="planeLive"></three-md></div>
         <div id="planeLive" class="sr-only" aria-live="polite"></div>
@@ -415,6 +436,24 @@ See [[z=1|Tuesday]] for what's next.
       const src = ed.value;
       counts.textContent = src.split("\n").length + " lines, " + src.length + " chars";
       lab.setSource(src);
+      // An empty document is NOT an error: show a neutral prompt, no red, no errline.
+      if (!src.trim()) {
+        errLine = -1;
+        status.className = "status";
+        status.textContent = "Empty — start typing or load a 3md document.";
+        validBadge.className = "badge";
+        validText.textContent = "empty";
+        validBadge.title = "";
+        validBadge.dataset.valid = "false";
+        validBadge.dataset.empty = "true";
+        ["planes", "axis", "errorLine", "errorCode", "warnings", "mode", "axisKnown"].forEach((k) => delete validBadge.dataset[k]);
+        validBadge.removeAttribute("role"); validBadge.removeAttribute("tabindex"); validBadge.removeAttribute("aria-label");
+        document.body.dataset.threeMdValid = "false";
+        outline.innerHTML = "";
+        paintNow();
+        return;
+      }
+      delete validBadge.dataset.empty;
       if (lab.error) {
         errLine = blameLine();
         status.className = "status err";
@@ -703,6 +742,17 @@ See [[z=1|Tuesday]] for what's next.
         delete document.body.dataset.loadError;
       }
     }
+    // Source|Live segmented switch (visible only on narrow layouts).
+    const grid = document.getElementById("grid");
+    document.querySelectorAll(".pstab").forEach((tab) => {
+      tab.addEventListener("click", () => {
+        const pane = tab.dataset.pane;
+        grid.dataset.show = pane;
+        document.querySelectorAll(".pstab").forEach((t) => t.setAttribute("aria-selected", String(t === tab)));
+        if (pane === "live") lab.render && lab.render(); // re-measure now that it's visible
+      });
+    });
+
     // Programmatic API for headless agents: set/validate without synthesizing DOM
     // input events or waiting out the debounce.
     function ready() {
