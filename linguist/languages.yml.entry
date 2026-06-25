@@ -1,0 +1,15 @@
+# Entry to add to github-linguist's lib/linguist/languages.yml (keep the file's
+# alphabetical order; "3md" sorts before "4D"). Assign an unused language_id when
+# opening the PR (Linguist maintainers confirm a stable value; do not reuse one).
+3md:
+  type: prose
+  color: "#0E6F66"
+  extensions:
+  - ".3md"
+  tm_scope: source.3md
+  ace_mode: markdown
+  codemirror_mode: gfm
+  codemirror_mime_type: text/x-gfm
+  aliases:
+  - threemd
+  language_id: 0   # TODO: replace with an unused id before submitting
