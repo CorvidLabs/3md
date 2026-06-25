@@ -1,7 +1,7 @@
 ---
 3md: 1.0
 axis: hour
-legend: ".=░ :=▒ +=▓ #=█ @=█"
+legend: ".=· :=░ +=▒ #=▓ @=█"
 billboard: true
 title: Datacenter Heat - request load across a rack grid, hour by hour
 category: Data

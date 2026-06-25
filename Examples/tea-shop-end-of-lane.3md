@@ -45,16 +45,6 @@ You sit. The chair sighs happily. The shop, you realize, has been **waiting**.
 - Drink before [[z=3|anyone notices]]
 - Wait, politely, for [[z=4|the owner]]
 
-@plane z=5 label="The good cup"
-# The cup you needed
-
-It tastes like the afternoon you forgot you missed: sunlight on a kitchen
-table, a book you never finished, someone humming in the next room.
-
-You leave a coin you didn't know you had. The fox knocker winks.
-
-> Begin again from [[z=0|the lane]]?
-
 @plane z=3 label="What You Need"
 # "Whatever I need"
 
@@ -74,3 +64,13 @@ to a jar that hums, and measure three careful drops into roaring hot water.
 *"Bravery is mostly just the first sip,"* they say.
 
 - [[z=5|Take the first sip]]
+
+@plane z=5 label="The good cup"
+# The cup you needed
+
+It tastes like the afternoon you forgot you missed: sunlight on a kitchen
+table, a book you never finished, someone humming in the next room.
+
+You leave a coin you didn't know you had. The fox knocker winks.
+
+> Begin again from [[z=0|the lane]]?
