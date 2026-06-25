@@ -530,6 +530,23 @@ test.describe("<three-md> component", () => {
     expect(r.worst, `worst overflow ${r.worst}px at extreme pose`).toBeLessThanOrEqual(12);
   });
 
+  test("map: partially-positioned planes (only x or only y) do not pile up", async ({ page }) => {
+    await page.goto("/embed-example.html");
+    await page.waitForFunction(() => document.getElementById("inline")?.shadowRoot?.querySelectorAll(".plane").length === 3);
+    const pts = await page.evaluate(() => {
+      const lab = document.getElementById("inline");
+      lab.setAttribute("mode", "map");
+      // Two planes with ONLY x set (y omitted) plus one with only y: the missing
+      // axis must come from the grid, not collapse to the board centre.
+      lab.setSource('---\n3md: 1.0\naxis: space\n---\n@plane z=0 x=2\nonly x a\n@plane z=1 x=8\nonly x b\n@plane z=2 y=4\nonly y\n');
+      return [...lab.shadowRoot.querySelectorAll(".plane")].map((p) => {
+        const m = new DOMMatrix(getComputedStyle(p).transform);
+        return Math.round(m.m41) + "," + Math.round(m.m42);
+      });
+    });
+    expect(new Set(pts).size).toBe(3); // all three at distinct positions
+  });
+
   test("map: unpositioned planes do not collapse onto explicit (0,0)", async ({ page }) => {
     await page.goto("/embed-example.html");
     await page.waitForFunction(() => document.getElementById("inline")?.shadowRoot?.querySelectorAll(".plane").length === 3);

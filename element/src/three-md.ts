@@ -1174,7 +1174,12 @@ export class ThreeMDElement extends HTMLElement {
         posOf = (idx) => {
           const p = this._planes[idx];
           if (p.x == null && p.y == null) return gridPos(idx); // unpositioned -> grid
-          return [((p.x ?? cx) - cx) / rx * 360, -((p.y ?? cy) - cy) / ry * 250];
+          // A partially-positioned plane (only x OR only y) takes its missing axis
+          // from the grid slot, not the board centre, so such planes never pile up.
+          const g = gridPos(idx);
+          const px = p.x == null ? g[0] : ((p.x - cx) / rx * 360);
+          const py = p.y == null ? g[1] : -((p.y - cy) / ry * 250);
+          return [px, py];
         };
       } else {
         posOf = gridPos;
