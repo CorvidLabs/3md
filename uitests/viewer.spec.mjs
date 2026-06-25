@@ -211,6 +211,40 @@ test.describe("viewer & editor (viewer.html)", () => {
     expect(r.badgeValid).toBe("true");
   });
 
+  test("narrow layout offers a Source|Live switch that swaps the visible pane", async ({ page }) => {
+    await page.setViewportSize({ width: 800, height: 760 });
+    await page.goto("/viewer.html");
+    await page.waitForFunction(() => document.getElementById("lab")?.shadowRoot !== undefined);
+    const sw = await page.evaluate(() => getComputedStyle(document.querySelector(".paneswitch")).display);
+    expect(sw).not.toBe("none"); // switch is visible on narrow
+    // Default shows the editor; tapping Live shows the viewer and hides the editor.
+    await page.click('.pstab[data-pane="live"]');
+    await page.waitForTimeout(150);
+    const vis = await page.evaluate(() => ({
+      viewer: getComputedStyle(document.querySelector(".viewerPane")).display,
+      editor: getComputedStyle(document.querySelector(".editorPane")).display,
+    }));
+    expect(vis.viewer).not.toBe("none");
+    expect(vis.editor).toBe("none");
+  });
+
+  test("an empty document reads as a neutral prompt, not a red error", async ({ page }) => {
+    await page.goto("/viewer.html");
+    await page.waitForFunction(() => document.getElementById("lab")?.shadowRoot?.querySelectorAll(".plane").length > 0);
+    await page.fill("#editor", "");
+    await page.waitForTimeout(250);
+    const r = await page.evaluate(() => ({
+      badgeClass: document.getElementById("validBadge").className,
+      empty: document.getElementById("validBadge").dataset.empty,
+      statusClass: document.getElementById("status").className,
+      errlines: document.querySelectorAll("#hl .line.errline").length,
+    }));
+    expect(r.badgeClass).not.toContain("err"); // neutral, not red
+    expect(r.empty).toBe("true");
+    expect(r.statusClass).not.toContain("err");
+    expect(r.errlines).toBe(0); // no hard-error band
+  });
+
   test("an unrecognized axis is flagged (not silently mis-rendered)", async ({ page }) => {
     await page.goto("/viewer.html");
     await page.waitForFunction(() => document.getElementById("lab")?.shadowRoot?.querySelectorAll(".plane").length > 0);
