@@ -515,6 +515,28 @@ test.describe("<three-md> component", () => {
     expect(glyphs).toEqual(["A", "B"]); // raw chars, no legend
   });
 
+  test("blend is gated to COMPACT art: a sprawling grid is not voxelizable (falls back to deck)", async ({ page }) => {
+    await page.goto("/embed-example.html");
+    await page.waitForFunction(() => document.getElementById("inline")?.shadowRoot);
+    const r = await page.evaluate(() => {
+      const lab = document.getElementById("inline");
+      const compact = "##\n##"; // 2x2
+      const wide = "#".repeat(41); // 41 wide -> sprawling, not a clean object
+      lab.setSource(`---\n3md: 1.0\naxis: depth\n---\n@plane z=0\n\`\`\`\n${compact}\n\`\`\`\n`);
+      const compactVox = lab.voxelizable;
+      lab.setSource(`---\n3md: 1.0\naxis: depth\n---\n@plane z=0\n\`\`\`\n${wide}\n${wide}\n\`\`\`\n`);
+      const wideVox = lab.voxelizable;
+      // a wide-grid doc forced into blend falls back to the deck
+      lab.setAttribute("mode", "blend");
+      lab.setSource(`---\n3md: 1.0\naxis: depth\n---\n@plane z=0\n\`\`\`\n${wide}\n\`\`\`\n`);
+      return { compactVox, wideVox, mode: lab.mode, voxels: lab.shadowRoot.querySelectorAll(".voxel").length };
+    });
+    expect(r.compactVox).toBe(true);   // small grid -> blend offered
+    expect(r.wideVox).toBe(false);     // 41-wide grid -> not compact, no blend
+    expect(r.mode).toBe("stack");      // forcing blend on it falls back to the deck
+    expect(r.voxels).toBe(0);
+  });
+
   test("map and layers keep every tile inside the stage on all edges (many tiles)", async ({ page }) => {
     await page.goto("/embed-example.html");
     await page.waitForFunction(() => document.getElementById("inline")?.shadowRoot?.querySelectorAll(".plane").length === 3);
