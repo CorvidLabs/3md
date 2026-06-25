@@ -623,10 +623,10 @@ export function links(document: Document): CrossPlaneLink[] {
   const targets = new Set<number>(document.planes.map((plane) => plane.z));
 
   for (const plane of document.planes) {
-    // z is a finite decimal, so match only decimal characters (a single, tight
-    // char class is linear - it avoids the [^\]|]+ / [^\]]* overlap CodeQL flags
-    // as polynomial backtracking). parseFiniteDecimal still validates the value.
-    const pattern = /\[\[z=([-+0-9eE.]+)(?:\|([^\]\n]*))?\]\]/g;
+    // z is a short finite decimal; the link text is short. Bounded quantifiers
+    // make this provably linear (no polynomial backtracking - CodeQL clean).
+    // parseFiniteDecimal still validates the captured z value.
+    const pattern = /\[\[z=([-+0-9eE.]{1,40})(?:\|([^\]\n]{0,400}))?\]\]/g;
     let match: RegExpExecArray | null = pattern.exec(plane.body);
     while (match !== null) {
       const targetZ = parseFiniteDecimal(match[1] ?? "");

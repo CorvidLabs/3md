@@ -83,9 +83,11 @@ function inline(escaped: string): string {
     // Cross-plane links: [[z=2|text]] or [[z=2]] become clickable jumps.
     .replace(/\[\[z=(-?\d+)(?:\|([^\]]*))?\]\]/g,
       (_m, z, text) => `<a class="xlink" part="link" data-z="${z}">${text || "z=" + z}</a>`)
-    // Markdown links to http(s): [text](url). (Not preceded by ! so images are left alone.)
-    .replace(/(^|[^!])\[([^\]]+)\]\((https?:\/\/[^)\s]+)\)/g,
-      (_m, pre, text, url) => `${pre}<a class="xlink" part="link" href="${url.replace(/"/g, "&quot;").replace(/'/g, "&#39;")}" target="_blank" rel="noopener">${text}</a>`)
+    // Markdown links to http(s): [text](url). (Not preceded by ! so images are
+    // left alone.) Only link URLs with no attribute-breaking characters; anything
+    // else stays plain text, so the href sink is provably safe.
+    .replace(/(^|[^!])\[([^\]]+)\]\((https?:\/\/[^)\s"'<>`]+)\)/g,
+      (_m, pre, text, url) => `${pre}<a class="xlink" part="link" href="${url}" target="_blank" rel="noopener">${text}</a>`)
     .replace(/`([^`]+)`/g, "<code>$1</code>")
     .replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>")
     .replace(/\*([^*]+)\*/g, "<em>$1</em>");
@@ -177,7 +179,10 @@ function renderMarkdown(body: string, legend: Record<string, string> = {}): stri
       const m = l.trim().match(/^!\[([^\]]*)\]\(([^)\s]+)\)/);
       const alt = m ? esc(m[1]) : "";
       const url = m ? m[2] : "";
-      const safe = /^(https?:\/\/|\/|\.{0,2}\/|data:image\/)/i.test(url) ? esc(url).replace(/"/g, "&quot;").replace(/'/g, "&#39;") : "";
+      // Allowlisted scheme AND no characters that could break out of the quoted
+      // attribute (provably safe sink - complete sanitization by rejection).
+      const okUrl = /^(https?:\/\/|\/|\.{0,2}\/|data:image\/)/i.test(url) && !/["'<>`\s]/.test(url);
+      const safe = okUrl ? esc(url) : "";
       if (safe) out.push(`<img class="img" part="image" src="${safe}" alt="${alt}" loading="lazy">`);
     }
     else if (l.trim() !== "") out.push(`<div>${fmt(l)}</div>`);
