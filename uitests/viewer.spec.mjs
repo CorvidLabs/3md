@@ -211,6 +211,35 @@ test.describe("viewer & editor (viewer.html)", () => {
     expect(r.badgeValid).toBe("true");
   });
 
+  test("an unrecognized axis is flagged (not silently mis-rendered)", async ({ page }) => {
+    await page.goto("/viewer.html");
+    await page.waitForFunction(() => document.getElementById("lab")?.shadowRoot?.querySelectorAll(".plane").length > 0);
+    const r = await page.evaluate(() => {
+      const snap = window.threeMd.set('---\n3md: 1.0\naxis: animation\n---\n@plane z=0\nA\n');
+      return { snap, axisKnown: document.getElementById("validBadge").dataset.axisKnown, warnings: document.getElementById("validBadge").dataset.warnings, status: document.getElementById("status").textContent };
+    });
+    expect(r.snap.valid).toBe(true);        // still parses
+    expect(r.snap.axisKnown).toBe(false);   // but the axis is not recognized
+    expect(r.snap.mode).toBeTruthy();        // resolved render mode is exposed
+    expect(r.axisKnown).toBe("false");
+    expect(r.warnings).toBe("1");
+    expect(r.status.toLowerCase()).toContain("not recognized");
+    // A known axis is clean.
+    const ok = await page.evaluate(() => window.threeMd.set('---\n3md: 1.0\naxis: time\n---\n@plane z=0\nA\n'));
+    expect(ok.axisKnown).toBe(true);
+    expect(ok.mode).toBe("stack");
+  });
+
+  test("the agent schema lists error codes and the axis-to-mode map", async ({ page }) => {
+    await page.goto("/viewer.html");
+    const s = await page.evaluate(() => JSON.parse(document.getElementById("threemd-schema").textContent));
+    expect(Array.isArray(s.errorCodes)).toBe(true);
+    expect(s.errorCodes).toContain("duplicatePlane");
+    expect(s.axisModes.time).toBe("stack");
+    expect(s.axisModes.frame).toBe("play");
+    expect(s.agentApi).toBeTruthy();
+  });
+
   test("dangling cross-plane links are flagged as a non-fatal warning", async ({ page }) => {
     await page.goto("/viewer.html");
     await page.waitForFunction(() => document.getElementById("lab")?.shadowRoot?.querySelectorAll(".plane").length > 0);
