@@ -876,7 +876,7 @@ export class ThreeMDElement extends HTMLElement {
     else if (this._mode === "stack") { this._yaw = -18; this._pitch = 8; }
     else if (this._mode === "layers") { this._yaw = -22; this._pitch = 12; } // angle to see the stacked sheets
     else if (this._mode === "elevator") { this._yaw = -10; this._pitch = 6; } // mostly front, slight angle
-    else if (this._mode === "map") { this._yaw = 0; this._pitch = 30; this._zoom = -540; } // tilt + pull back to see the whole board
+    else if (this._mode === "map") { this._yaw = 0; this._pitch = 30; this._zoom = 0; } // tilt; auto-fit scales the board to the stage
     else { this._yaw = 0; this._pitch = 0; } // flat modes look head-on
   }
 
@@ -1097,7 +1097,11 @@ export class ThreeMDElement extends HTMLElement {
         const on = idx === fr;
         // Aligned overlays: no vertical fan (that pushed tall cards out of frame);
         // depth (z) + opacity carry the stacked-sheet look, revealed when orbited.
-        el.style.transform = `translate3d(0px, 0px, ${(-Math.abs(d) * 45).toFixed(1)}px)`;
+        // Cap the depth spread so that under the yaw angle the deepest sheet's
+        // horizontal shift (|z|*sin yaw) never pokes a wide card past the edge,
+        // however many layers a document has.
+        const depth = -Math.min(Math.abs(d), 4) * 45;
+        el.style.transform = `translate3d(0px, 0px, ${depth.toFixed(1)}px)`;
         el.style.opacity = hidden ? "0" : (on ? "0.97" : "0.42");
         el.style.zIndex = on ? "300" : String(120 - Math.abs(fr - idx));
         el.style.pointerEvents = hidden ? "none" : "auto";
@@ -1162,6 +1166,18 @@ export class ThreeMDElement extends HTMLElement {
       } else {
         posOf = gridPos;
       }
+      // Auto-fit: scale the whole board so the outermost tiles stay on the stage
+      // no matter how many tiles or how wide the coordinate range (the user can
+      // still wheel-zoom in). Without this, big boards spilled off the sides.
+      const stageW = this._stage.clientWidth || 1, stageH = this._stage.clientHeight || 1;
+      const cw = this._els[0]?.offsetWidth || 300, ch = this._els[0]?.offsetHeight || 180;
+      let halfW = cw / 2, halfH = ch / 2;
+      this._els.forEach((el, idx) => {
+        const [x, y] = posOf(idx);
+        halfW = Math.max(halfW, Math.abs(x) + cw * 0.45); // 0.45 = half x max tile scale
+        halfH = Math.max(halfH, Math.abs(y) + ch * 0.45);
+      });
+      const fit = Math.min(1, (stageW / 2 - 16) / halfW, (stageH / 2 - 16) / halfH);
       this._els.forEach((el, idx) => {
         const on = idx === fr;
         const [x, y] = posOf(idx);
@@ -1173,7 +1189,7 @@ export class ThreeMDElement extends HTMLElement {
         el.classList.toggle("reader", false);
         el.classList.toggle("frame", false);
       });
-      this._scene.style.transform = this._cameraTransform(-120);
+      this._scene.style.transform = `${this._cameraTransform(-120)} scale(${fit.toFixed(3)})`;
       this._updateReadout();
       this._maybeEmit(fr);
       return;

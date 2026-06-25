@@ -479,6 +479,33 @@ test.describe("<three-md> component", () => {
     expect(r.voxels).toBeGreaterThan(0);
   });
 
+  test("map and layers keep every tile inside the stage on all edges (many tiles)", async ({ page }) => {
+    await page.goto("/embed-example.html");
+    await page.waitForFunction(() => document.getElementById("inline")?.shadowRoot?.querySelectorAll(".plane").length === 3);
+    // A document with many planes: enough to spill a fixed-size board off the sides
+    // (this is the horizontal-overflow regression the vertical-only audit missed).
+    const planes = Array.from({ length: 16 }, (_, i) => `@plane z=${i}\nFrame ${i}\n\`\`\`\n#### ####\n## ## ##\n\`\`\`\n`).join("\n");
+    const doc = `---\n3md: 1.0\naxis: space\n---\n${planes}`;
+    for (const mode of ["map", "layers"]) {
+      const worst = await page.evaluate(({ doc, mode }) => {
+        const lab = document.getElementById("inline");
+        lab.setAttribute("mode", mode);
+        lab.setSource(doc);
+        const sr = lab.shadowRoot;
+        const stage = sr.querySelector(".stage").getBoundingClientRect();
+        let max = 0;
+        for (const el of sr.querySelectorAll(".plane")) {
+          if (Number(getComputedStyle(el).opacity) < 0.05) continue; // skip hidden layers
+          const r = el.getBoundingClientRect();
+          max = Math.max(max, stage.top - r.top, r.bottom - stage.bottom, stage.left - r.left, r.right - stage.right);
+        }
+        return Math.round(max);
+      }, { doc, mode });
+      // A small tolerance for sub-pixel/shadow; the regression was 60-100px spills.
+      expect(worst, `${mode} worst overflow ${worst}px`).toBeLessThanOrEqual(12);
+    }
+  });
+
   test("map: unpositioned planes do not collapse onto explicit (0,0)", async ({ page }) => {
     await page.goto("/embed-example.html");
     await page.waitForFunction(() => document.getElementById("inline")?.shadowRoot?.querySelectorAll(".plane").length === 3);
