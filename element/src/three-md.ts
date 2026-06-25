@@ -821,22 +821,31 @@ export class ThreeMDElement extends HTMLElement {
     this._updateReadout();
   }
 
-  /** Pick ONE card width for the whole document: the widest card's natural content
-   * width (measured with prose capped to a readable line length), clamped to a sane
-   * range, applied to every card so the deck and the focused card are uniform. */
+  /** Pick ONE card width for the whole document, applied to every card so the deck
+   * and focused card are uniform. The width is driven by the widest RIGID content
+   * (code/ASCII-art blocks and tables, which must show in full) up to the stage
+   * width; prose is NOT counted (it wraps), so prose-only docs keep the readable
+   * default. This both prevents wide art from clipping and keeps prose comfortable. */
   private _measureCardWidth(): void {
     if (!this._els.length || !this._stage) return;
+    this._wrap.style.removeProperty("--three-md-card-w"); // measure at the default width
     const stageW = this._stage.clientWidth || 600;
-    const cap = Math.min(540, Math.round(stageW * 0.88));
+    const cap = Math.round(stageW * 0.92);
     const floor = Math.min(320, Math.round(stageW * 0.84));
-    let widest = 0;
+    let rigid = 0;
     for (const el of this._els) {
-      const prev = el.style.cssText;
-      el.style.cssText = "width:max-content;max-width:" + cap + "px";
-      widest = Math.max(widest, el.offsetWidth);
-      el.style.cssText = prev;
+      // Code blocks (white-space:pre) report their full natural width via scrollWidth.
+      for (const c of el.querySelectorAll<HTMLElement>(".code")) rigid = Math.max(rigid, c.scrollWidth);
+      // Tables compress to the container, so measure their natural width directly.
+      for (const t of el.querySelectorAll<HTMLElement>(".tbl, table")) {
+        const prev = t.style.cssText; t.style.cssText = "width:max-content";
+        rigid = Math.max(rigid, t.offsetWidth);
+        t.style.cssText = prev;
+      }
     }
-    const cardW = Math.max(floor, Math.min(widest, cap));
+    // +36 for the card's horizontal padding; clamp to [default, stage]. No rigid
+    // content (pure prose) -> default width so prose wraps at a readable measure.
+    const cardW = rigid ? Math.max(floor, Math.min(rigid + 36, cap)) : floor;
     this._wrap.style.setProperty("--three-md-card-w", cardW + "px");
   }
 

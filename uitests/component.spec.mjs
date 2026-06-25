@@ -66,6 +66,21 @@ test.describe("<three-md> component", () => {
     expect(r.cardVar).toMatch(/px$/);    // a computed shared width is set
   });
 
+  test("wide ASCII-art content is not clipped (card widens to fit rigid blocks)", async ({ page }) => {
+    await page.goto("/embed-example.html");
+    await page.waitForFunction(() => document.getElementById("inline")?.shadowRoot?.querySelectorAll(".plane").length === 3);
+    const clipped = await page.evaluate(() => {
+      const lab = document.getElementById("inline");
+      lab.setAttribute("mode", "stack");
+      const wide = "=".repeat(70); // a wide ASCII-art row, wider than the default card
+      lab.setSource(`---\n3md: 1.0\naxis: layer\n---\n@plane z=0\n# Wide art\n\`\`\`\n${wide}\n${wide}\n\`\`\`\n@plane z=1\n# Prose\nshort\n`);
+      let worst = false;
+      for (const c of lab.shadowRoot.querySelectorAll(".code")) if (c.scrollWidth > c.clientWidth + 2) worst = true;
+      return worst;
+    });
+    expect(clipped).toBe(false); // the card grew to show the full-width art
+  });
+
   test("focused plane is frontmost across the scrubber", async ({ page }) => {
     await page.goto("/embed-example.html");
     await page.waitForFunction(() => document.getElementById("inline")?.shadowRoot?.querySelectorAll(".plane").length === 3);
