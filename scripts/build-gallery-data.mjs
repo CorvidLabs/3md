@@ -1,9 +1,9 @@
-// Build web/gallery-data.json from every file in Examples/. Each entry carries
-// {slug, axis, title, category, src}. Category is taken from the file's own
-// `category:` frontmatter when present (authoritative); otherwise it is inferred
-// from the slug, title, and axis. Run from the repo root:
-//   node scripts/build-gallery-data.mjs
-import { readFileSync, writeFileSync, readdirSync } from "node:fs";
+// Build web/gallery-data.json from the curated animated examples. Each entry
+// carries {slug, axis, title, category, src}. Category is taken from the file's
+// own `category:` frontmatter when present (authoritative); otherwise it is
+// inferred from the slug, title, and axis. Run from the repo root:
+//   bun scripts/build-gallery-data.mjs
+import { existsSync, readFileSync, writeFileSync, readdirSync } from "node:fs";
 import { parse } from "../js/src/index.ts";
 
 // Canonical category set surfaced in the gallery UI.
@@ -33,14 +33,15 @@ const RULES = [
 
 // A hand-picked set of standouts surfaced by the gallery's "Featured" filter.
 const FEATURED = new Set([
-  "3md-in-3md", "game-of-life", "478-breath-cycle", "froggy-hop-splash",
-  "corvid-voxel-ship", "crystal-mushroom-voxel", "dungeon-level-one", "dungeon-run-log",
-  "curtain-call-trivia", "forcing-the-seven", "cipher-vault-cascade",
-  "apollo-11-powered-descent-1969", "solar-system", "vermeer-girl-pearl-dissection",
-  "seed-pitch-deck-corvid", "last-train-to-oslo", "pythagoras-proof-unfolding",
-  "metro-zone-grid", "daily-planner", "seed-germination-ascii-timelapse",
-  "aurora-borealis-flipbook", "patient-vitals-shift-watch", "undercut-window",
-  "pixel-invaders-assault",
+  "bug-lifecycle", "dungeon-crawl-descent", "dungeon-run-log",
+  "game-tic-tac-toe", "gather-to-anneal", "hive-year",
+  "home-wedding-seating", "junction-interlocking", "life-song-structure",
+  "metro-zone-grid", "museum-of-the-anthropocene-walkthrough",
+  "reef-tank-cross-section", "solar-system-depth-dive", "solar-system",
+  "spanish-ser-vs-estar-flashcards", "suspension-bridge-load-path",
+  "whimsy-hollow-park-map", "color-grading-layers",
+  "chef-service-rush", "fault-tree-cascade", "mission-control-loop",
+  "supply-chain-port-map",
 ]);
 
 function categorize(slug, title, axis, declared) {
@@ -57,8 +58,13 @@ const dir = "Examples";
 const files = readdirSync(dir).filter((f) => f.endsWith(".3md")).sort();
 const out = [];
 const counts = {};
+let skippedWithoutGif = 0;
 for (const f of files) {
   const slug = f.replace(/\.3md$/, "");
+  if (!existsSync(`web/gifs/${slug}.gif`)) {
+    skippedWithoutGif++;
+    continue;
+  }
   const src = readFileSync(`${dir}/${f}`, "utf8");
   let doc;
   try { doc = parse(src); }
@@ -70,4 +76,5 @@ for (const f of files) {
 }
 writeFileSync("web/gallery-data.json", JSON.stringify(out));
 console.log(`gallery-data.json: ${out.length} entries`);
+console.log(`skipped without curated gif: ${skippedWithoutGif}`);
 console.log("by category:", JSON.stringify(counts, null, 0));

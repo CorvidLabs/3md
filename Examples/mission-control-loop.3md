@@ -1,0 +1,99 @@
+---
+3md: 1.0
+axis: minute
+title: Mission Control Loop - TLI Go Poll
+view: present
+category: Engineering
+---
+
+A go/no-go poll as an operational loop. Each plane shows one minute of the room
+as the team converges on a Trans-Lunar Injection burn.
+
+@plane z=0 label="T minus 5"
+# T minus 5 - Systems Quiet
+
+```
+FLIGHT LOOP
+
+GUIDO   green
+FIDO    green
+EECOM   green
+GNC     watching drift
+RETRO   green
+CAPCOM  standby
+```
+
+Telemetry is stable. Guidance sees a small drift but it is inside limits.
+
+@plane z=1 label="T minus 4"
+# T minus 4 - Drift Check
+
+```
+attitude error
+
+pitch  +0.03 deg  OK
+yaw    +0.07 deg  watch
+roll   -0.02 deg  OK
+```
+
+GNC asks for one more sample before giving a clean go. Flight holds the poll.
+
+@plane z=2 label="T minus 3"
+# T minus 3 - Go Poll Opens
+
+```
+FLIGHT: "Give me your go for TLI."
+
+GUIDO  GO
+FIDO   GO
+EECOM  GO
+GNC    GO, drift damping
+RETRO  GO
+```
+
+The room tightens around one answer. Nobody speaks twice unless the data
+changes.
+
+@plane z=3 label="T minus 2"
+# T minus 2 - Commit Criteria
+
+```
+burn gate
+
+state vector      locked
+engine gimbal     armed
+abort corridor    valid
+ground uplink     closed
+crew checklist    complete
+```
+
+Every gate has an owner. Every owner has a number.
+
+@plane z=4 label="T minus 1"
+# T minus 1 - CAPCOM Call
+
+```
+CAPCOM to crew:
+
+"You are go for TLI."
+
+crew:
+"Roger, go for TLI."
+```
+
+The loop collapses into one sentence. That is the beauty of the poll.
+
+@plane z=5 label="Ignition"
+# Ignition
+
+```
+S-IVB burn
+
+00:00 ignition
+00:12 chamber stable
+01:20 guidance holding
+05:48 cutoff predicted
+```
+
+The room moves from decision to watch mode. A good go poll leaves no loose
+threads behind.

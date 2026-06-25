@@ -1,0 +1,92 @@
+---
+3md: 1.0
+axis: layer
+title: Supply Chain Port Map - Coffee Lot 42
+view: stack
+category: Maps
+---
+
+A logistics map for one coffee lot. Each layer adds a different part of the
+route, from origin to exception handling.
+
+@plane z=0 label="Origin"
+# Origin Layer
+
+```
+FARM CLUSTER
+
+ A1  A2  A3
+  \  |  /
+   mill-7
+     |
+  dry warehouse
+```
+
+- Lot: 42
+- Origin: Huehuetenango
+- Bags: 160
+- Moisture: 10.8 percent
+
+@plane z=1 label="Inland"
+# Inland Trucking
+
+```
+dry warehouse
+     |
+     v  214 km
+customs pre-check
+     |
+     v   38 km
+Puerto Barrios gate
+```
+
+Two checkpoints matter: customs documents and container seal. The map keeps
+both visible before the ship layer.
+
+@plane z=2 label="Ocean"
+# Ocean Leg
+
+```
+Puerto Barrios
+      |
+      |  vessel MV North Star
+      v
+Houston berth 12
+
+ETA: 2026-07-18
+temperature logger: active
+```
+
+The ocean layer tracks vessel, berth, ETA, and logger status without hiding the
+origin story.
+
+@plane z=3 label="Exceptions"
+# Exception Layer
+
+```
+risk board
+
+[ ] seal mismatch
+[x] rain delay at gate
+[ ] temp excursion
+[ ] document hold
+```
+
+Rain delayed gate entry by six hours. No quality risk, but downstream roasting
+slots should move by one day.
+
+@plane z=4 label="Arrival"
+# Arrival Plan
+
+```
+Houston berth 12
+     |
+     v
+bonded warehouse
+     |
+     +--> QC sample
+     |
+     +--> roaster slot B
+```
+
+The final layer turns the route into actions: inspect, sample, schedule, roast.

@@ -1,0 +1,96 @@
+---
+3md: 1.0
+axis: minute
+title: Chef Service Rush - Tickets to Pass
+view: present
+category: Home
+---
+
+Dinner service as a timed stack. Each plane shows the kitchen at a different
+minute, from first tickets to the clean pass.
+
+@plane z=0 label="5:57 Prep"
+# 5:57 PM - Prep Locked
+
+```
+STATION MAP
+
+[ grill ] steaks rested     [ saute ] pans hot
+[ fry   ] baskets staged    [ pass  ] empty rail
+
+ticket rail: 0
+```
+
+- Mise checked
+- Sauces hot
+- Expo calls: "Doors in three"
+
+@plane z=1 label="6:04 First Wave"
+# 6:04 PM - First Wave
+
+```
+TICKET RAIL
+
+  12  14  18
+ [2] [4] [3] covers
+
+GRILL: 2 steaks
+SAUTE: 3 pastas
+FRY:   4 fries
+PASS:  garnish ready
+```
+
+The rush begins clean. The key is keeping proteins and pastas aligned to the
+same pickup window.
+
+@plane z=2 label="6:17 Peak"
+# 6:17 PM - Peak Heat
+
+```
+TICKET RAIL
+
+  21  23  25  28  31
+ [5] [2] [6] [4] [3]
+
+GRILL: ████████ 8 items
+SAUTE: ██████   6 pans
+FRY:   █████    5 baskets
+PASS:  3 plates waiting
+```
+
+Expo splits ticket 25: mains fire now, sides hold ninety seconds. The rail is
+busy but still readable.
+
+@plane z=3 label="6:29 Recovery"
+# 6:29 PM - Recovery Window
+
+```
+SENT: 21, 23, 25
+HELD: 28 sauce
+NEW:  34 dessert
+
+PASS
+┌────────────┬────────────┐
+│ steak x2   │ pasta x1   │
+│ fries x3   │ salad x2   │
+└────────────┴────────────┘
+```
+
+One sauce delay threatens the rhythm. Expo moves garnish forward and keeps the
+next tickets from stacking behind it.
+
+@plane z=4 label="6:41 Clear Rail"
+# 6:41 PM - Rail Clear
+
+```
+TICKET RAIL
+
+ [ clear ] [ clear ] [ clear ]
+
+GRILL: wipe down
+SAUTE: refill pasta water
+FRY:   skim oil
+PASS:  reset herbs
+```
+
+The rush resolves. The best service map shows pressure without losing sequence.
