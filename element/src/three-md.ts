@@ -530,10 +530,13 @@ export class ThreeMDElement extends HTMLElement {
     return this._errorCode;
   }
 
-  /** Whether the document has voxelizable ASCII-art (so blend/3D mode is
-   * meaningful). False for pure-text docs, which blend cannot render usefully. */
+  /** Whether the document has COMPACT voxelizable ASCII-art (so blend/3D mode reads
+   * as a clean object). False for pure-text docs and for sprawling grids (large
+   * floor-plans), which blend turns into a cluttered depth-stack - those are better
+   * in their flat modes. A grid is "compact" if neither dimension exceeds 36 cells. */
   get voxelizable(): boolean {
-    return this._planes.some((p) => this._gridOf(p.body) !== null);
+    const grids = this._planes.map((p) => this._gridOf(p.body)).filter((g): g is NonNullable<typeof g> => g !== null);
+    return grids.length > 0 && grids.every((g) => g.w <= 36 && g.h <= 36);
   }
 
   /** The index of the currently focused plane. */
