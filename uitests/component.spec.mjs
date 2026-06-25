@@ -554,7 +554,8 @@ test.describe("<three-md> component", () => {
       const sr = lab.shadowRoot;
       const stage = sr.querySelector(".stage").getBoundingClientRect();
       let max = 0;
-      for (const el of sr.querySelectorAll(".plane")) {
+      // Board tiles only; the focused card is an intentional centered read overlay.
+      for (const el of sr.querySelectorAll(".plane:not(.hot)")) {
         if (Number(getComputedStyle(el).opacity) < 0.05) continue;
         const h = el.getBoundingClientRect();
         max = Math.max(max, stage.top - h.top, h.bottom - stage.bottom, stage.left - h.left, h.right - stage.right);
@@ -574,7 +575,8 @@ test.describe("<three-md> component", () => {
       lab.setAttribute("mode", "map");
       // 4 planes on a 2x2 coordinate grid.
       lab.setSource('---\n3md: 1.0\naxis: space\n---\n@plane z=0 x=1 y=1\nA\n@plane z=1 x=1 y=2\nB\n@plane z=2 x=2 y=1\nC\n@plane z=3 x=2 y=2\nD\n');
-      const rects = [...lab.shadowRoot.querySelectorAll(".plane")].map((e) => e.getBoundingClientRect());
+      // Board tiles only (the focused card pops to a centered read overlay).
+      const rects = [...lab.shadowRoot.querySelectorAll(".plane:not(.hot)")].map((e) => e.getBoundingClientRect());
       const m = (e) => ({ x: Math.round(e.x + e.width / 2), y: Math.round(e.y + e.height / 2) });
       const c = rects.map(m);
       // no overlap
@@ -585,9 +587,9 @@ test.describe("<three-md> component", () => {
         const oy = Math.min(a.bottom, b.bottom) - Math.max(a.top, b.top);
         if (ox > 0 && oy > 0) overlap = Math.max(overlap, Math.min(ox, oy));
       }
-      // Compare non-focused cards (idx 0 is focused, so scaled/lifted differently):
-      // idx2 (x2,y1) vs idx3 (x2,y2) share column x=2; idx1 (x1,y2) vs idx3 (x2,y2) share row y=2.
-      return { overlap: Math.round(overlap), sameColX: Math.abs(c[2].x - c[3].x) < 6, sameRowY: Math.abs(c[1].y - c[3].y) < 6 };
+      // idx 0 is focused (excluded). Remaining board tiles: [x1y2, x2y1, x2y2].
+      // x2y1 & x2y2 share column x=2; x1y2 & x2y2 share row y=2.
+      return { overlap: Math.round(overlap), sameColX: Math.abs(c[1].x - c[2].x) < 6, sameRowY: Math.abs(c[0].y - c[2].y) < 6 };
     });
     expect(r.overlap).toBe(0);       // cells never overlap
     expect(r.sameColX).toBe(true);   // same x => same column (same screen x)
@@ -601,7 +603,7 @@ test.describe("<three-md> component", () => {
       const lab = document.getElementById("inline");
       lab.setAttribute("mode", "map");
       lab.setSource('---\n3md: 1.0\naxis: space\n---\n' + Array.from({ length: 9 }, (_, i) => `@plane z=${i}\nCard ${i}`).join("\n"));
-      const rects = [...lab.shadowRoot.querySelectorAll(".plane")].map((e) => e.getBoundingClientRect());
+      const rects = [...lab.shadowRoot.querySelectorAll(".plane:not(.hot)")].map((e) => e.getBoundingClientRect());
       let worst = 0;
       for (let i = 0; i < rects.length; i++) for (let j = i + 1; j < rects.length; j++) {
         const a = rects[i], b = rects[j];
@@ -612,6 +614,23 @@ test.describe("<three-md> component", () => {
       return Math.round(worst);
     });
     expect(overlap).toBe(0);
+  });
+
+  test("map: the focused card pops to a larger readable size than the board tiles", async ({ page }) => {
+    await page.goto("/embed-example.html");
+    await page.waitForFunction(() => document.getElementById("inline")?.shadowRoot?.querySelectorAll(".plane").length === 3);
+    const r = await page.evaluate(() => {
+      const lab = document.getElementById("inline");
+      lab.setAttribute("mode", "map");
+      lab.setSource('---\n3md: 1.0\naxis: space\n---\n@plane z=0 x=1 y=1\n# Table A\nSeat 1: Ana\nSeat 2: Ben\n@plane z=1 x=2 y=1\n# Table B\nSeat 1: Cal\n@plane z=2 x=1 y=2\n# Table C\nSeat 1: Dee\n');
+      lab.goTo(0);
+      const sr = lab.shadowRoot;
+      const hot = sr.querySelector(".plane.hot").getBoundingClientRect();
+      const tile = sr.querySelector(".plane:not(.hot)").getBoundingClientRect();
+      return { hotW: Math.round(hot.width), tileW: Math.round(tile.width) };
+    });
+    // The focused (read) card is clearly larger than a board tile.
+    expect(r.hotW).toBeGreaterThan(r.tileW * 1.2);
   });
 
   test("map: partially-positioned planes (only x or only y) do not pile up", async ({ page }) => {
