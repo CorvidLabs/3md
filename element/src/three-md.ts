@@ -375,10 +375,14 @@ const STYLES = `
 .md code { font-family: inherit; background: var(--three-md-hairline); padding: 1px 5px; border-radius: 3px; color: var(--three-md-text); }
 .grid { font-size: 16px; line-height: 1.25; letter-spacing: 3px; color: var(--three-md-faint); white-space: pre; max-width: 100%; overflow-x: auto; }
 .grid .dot { color: var(--three-md-accent); }
-.voxel { position: absolute; left: 50%; top: 50%; width: 8px; height: 8px; margin: -4px 0 0 -4px;
-  border-radius: 50%; background: var(--three-md-accent); opacity: .45;
-  box-shadow: 0 0 6px var(--three-md-accent); transition: opacity .2s; }
-.voxel.near { opacity: 1; width: 11px; height: 11px; margin: -5.5px 0 0 -5.5px; }
+/* A voxel IS its character glyph (legend-remapped): emoji/symbols render in full
+   colour, plain chars in the accent. Depth is cued by opacity (near = focused). */
+.voxel { position: absolute; left: 50%; top: 50%; width: 14px; height: 14px; margin: -7px 0 0 -7px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--three-md-mono, ui-monospace, "Spline Sans Mono", monospace);
+  font-size: 13px; line-height: 1; color: var(--three-md-accent); opacity: .4;
+  transition: opacity .2s; pointer-events: none; }
+.voxel.near { opacity: 1; }
 .floattext { position: absolute; left: 50%; top: 50%; font-size: 11px; line-height: 1.5;
   color: var(--three-md-faint); opacity: .5; white-space: pre; pointer-events: none; }
 /* nowrap so the button row never reflows and shifts under the cursor. */
@@ -417,6 +421,7 @@ export class ThreeMDElement extends HTMLElement {
   private _planes: readonly Plane[] = [];
   private _els: HTMLDivElement[] = [];
   private _voxels: HTMLDivElement[] = [];
+  private _billboard = false;
   private _mode: Mode = "stack";
   private _legend: Record<string, string> = {};
 
@@ -618,6 +623,8 @@ export class ThreeMDElement extends HTMLElement {
     this._doc = doc;
     this._planes = doc.planes;
     this._legend = parseLegend(doc.metadata?.legend);
+    const bb = String(doc.metadata?.billboard ?? "").toLowerCase();
+    this._billboard = bb === "true" || bb === "yes" || bb === "1";
     this._applyMode();
     this._stopPlay();
     // Reset all accumulated view state so each document starts fresh. Without
@@ -859,7 +866,7 @@ export class ThreeMDElement extends HTMLElement {
   // fence, or when the block looks like code rather than ASCII art (a code
   // block such as JSON uses many distinct characters; art/games use a few), so
   // code never gets voxelized in blend view.
-  private _gridOf(body: string): { w: number; h: number; cells: boolean[][] } | null {
+  private _gridOf(body: string): { w: number; h: number; cells: boolean[][]; rows: string[] } | null {
     const lines = body.split("\n");
     const start = lines.findIndex((l) => l.startsWith("```"));
     if (start < 0) return null;
@@ -875,7 +882,7 @@ export class ThreeMDElement extends HTMLElement {
       for (let c = 0; c < w; c++) { const ch = r[c] ?? " "; out.push(ch !== " " && ch !== "."); }
       return out;
     });
-    return { w, h: rows.length, cells };
+    return { w, h: rows.length, cells, rows };
   }
 
   // Blended "object" view: drop the plane cards and place each plane's content
@@ -894,12 +901,18 @@ export class ThreeMDElement extends HTMLElement {
         for (let r = 0; r < g.h; r++) {
           for (let c = 0; c < g.w; c++) {
             if (!g.cells[r][c]) continue;
+            const raw = g.rows[r]?.[c] ?? "";
+            // Each cell IS its character: a legend remaps it (e.g. #->🧱), otherwise
+            // the raw glyph shows through. Emoji/symbols carry their own colour.
+            const glyph = this._legend[raw] ?? raw;
             const v = document.createElement("div");
             v.className = "voxel";
             v.setAttribute("part", "voxel");
             v.dataset.z = String(idx);
+            v.textContent = glyph;
             const x = (c - (W - 1) / 2) * CELL;
             const y = (r - (H - 1) / 2) * CELL;
+            v.dataset.tx = x.toFixed(1); v.dataset.ty = y.toFixed(1); v.dataset.tz = z.toFixed(1);
             v.style.transform = `translate3d(${x.toFixed(1)}px,${y.toFixed(1)}px,${z.toFixed(1)}px)`;
             this._scene.appendChild(v);
             this._voxels.push(v);
@@ -1112,6 +1125,14 @@ export class ThreeMDElement extends HTMLElement {
     if (m === "blend") {
       if (!this._voxels.length) return;
       for (const v of this._voxels) v.classList.toggle("near", Number(v.dataset.z) === fr);
+      // Billboard (opt-in via `billboard: true`): each glyph counter-rotates the
+      // camera so it always faces the viewer (useful for emoji/character scenes).
+      if (this._billboard) {
+        for (const v of this._voxels) {
+          if (v.dataset.tx === undefined) continue;
+          v.style.transform = `translate3d(${v.dataset.tx}px,${v.dataset.ty}px,${v.dataset.tz}px) rotateY(${(-this._yaw).toFixed(2)}deg) rotateX(${(-this._pitch).toFixed(2)}deg)`;
+        }
+      }
       this._scene.style.transform = this._cameraTransform(-30);
       this._updateReadout();
       this._maybeEmit(fr);

@@ -484,6 +484,37 @@ test.describe("<three-md> component", () => {
     expect(r.voxels).toBeGreaterThan(0);
   });
 
+  test("blend voxels are the legend-mapped character glyphs, and billboard faces the camera", async ({ page }) => {
+    await page.goto("/embed-example.html");
+    await page.waitForFunction(() => document.getElementById("inline")?.shadowRoot);
+    const r = await page.evaluate(() => {
+      const lab = document.getElementById("inline");
+      lab.setAttribute("mode", "blend");
+      lab.setSource('---\n3md: 1.0\naxis: depth\nlegend: "#"=🧱 o=🟦\nbillboard: true\n---\n@plane z=0\n```\n#o#\n#o#\n```\n');
+      const vox = [...lab.shadowRoot.querySelectorAll(".voxel")];
+      return {
+        glyphs: [...new Set(vox.map((v) => v.textContent))].sort(),
+        billboard: vox.length > 0 && vox.every((v) => /rotateY/.test(v.style.transform)),
+        noGreenDots: vox.every((v) => getComputedStyle(v).borderRadius !== "50%"),
+      };
+    });
+    expect(r.glyphs).toEqual(["🟦", "🧱"]); // legend overrode the raw # and o
+    expect(r.billboard).toBe(true);
+    expect(r.noGreenDots).toBe(true);
+  });
+
+  test("without a legend, blend voxels show the raw characters", async ({ page }) => {
+    await page.goto("/embed-example.html");
+    await page.waitForFunction(() => document.getElementById("inline")?.shadowRoot);
+    const glyphs = await page.evaluate(() => {
+      const lab = document.getElementById("inline");
+      lab.setAttribute("mode", "blend");
+      lab.setSource('---\n3md: 1.0\naxis: depth\n---\n@plane z=0\n```\nAB\nBA\n```\n');
+      return [...new Set([...lab.shadowRoot.querySelectorAll(".voxel")].map((v) => v.textContent))].sort();
+    });
+    expect(glyphs).toEqual(["A", "B"]); // raw chars, no legend
+  });
+
   test("map and layers keep every tile inside the stage on all edges (many tiles)", async ({ page }) => {
     await page.goto("/embed-example.html");
     await page.waitForFunction(() => document.getElementById("inline")?.shadowRoot?.querySelectorAll(".plane").length === 3);
