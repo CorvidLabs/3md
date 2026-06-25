@@ -262,7 +262,9 @@ const STYLES = `
 .layerchips { display: none; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
 :host([data-mode="layers"]) .layerchips { display: flex; }
 .layerchip { font: inherit; font-size: 11px; color: var(--three-md-muted); background: var(--three-md-surface);
-  border: 1px solid var(--three-md-hairline); border-radius: 999px; padding: 4px 11px; cursor: pointer; }
+  border: 1px solid var(--three-md-hairline); border-radius: 999px; padding: 4px 11px; cursor: pointer;
+  transition: color .15s, border-color .15s, opacity .15s; }
+.layerchip:hover { color: var(--three-md-text); border-color: var(--three-md-accent); }
 .layerchip[aria-pressed="true"] { color: var(--three-md-text); border-color: var(--three-md-accent); }
 .layerchip[aria-pressed="false"] { opacity: .45; text-decoration: line-through; }
 .plane.dim { opacity: .18; filter: saturate(.5); }
