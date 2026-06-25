@@ -575,8 +575,8 @@ test.describe("<three-md> component", () => {
       lab.setAttribute("mode", "map");
       // 4 planes on a 2x2 coordinate grid.
       lab.setSource('---\n3md: 1.0\naxis: space\n---\n@plane z=0 x=1 y=1\nA\n@plane z=1 x=1 y=2\nB\n@plane z=2 x=2 y=1\nC\n@plane z=3 x=2 y=2\nD\n');
-      // Board tiles only (the focused card pops to a centered read overlay).
-      const rects = [...lab.shadowRoot.querySelectorAll(".plane:not(.hot)")].map((e) => e.getBoundingClientRect());
+      // Map opens on the full-board overview: all 4 tiles laid out, none popped.
+      const rects = [...lab.shadowRoot.querySelectorAll(".plane")].map((e) => e.getBoundingClientRect());
       const m = (e) => ({ x: Math.round(e.x + e.width / 2), y: Math.round(e.y + e.height / 2) });
       const c = rects.map(m);
       // no overlap
@@ -587,9 +587,9 @@ test.describe("<three-md> component", () => {
         const oy = Math.min(a.bottom, b.bottom) - Math.max(a.top, b.top);
         if (ox > 0 && oy > 0) overlap = Math.max(overlap, Math.min(ox, oy));
       }
-      // idx 0 is focused (excluded). Remaining board tiles: [x1y2, x2y1, x2y2].
-      // x2y1 & x2y2 share column x=2; x1y2 & x2y2 share row y=2.
-      return { overlap: Math.round(overlap), sameColX: Math.abs(c[1].x - c[2].x) < 6, sameRowY: Math.abs(c[0].y - c[2].y) < 6 };
+      // idx0=x1y1, idx1=x1y2, idx2=x2y1, idx3=x2y2.
+      // idx0 & idx1 share column x=1; idx0 & idx2 share row y=1.
+      return { overlap: Math.round(overlap), sameColX: Math.abs(c[0].x - c[1].x) < 6, sameRowY: Math.abs(c[0].y - c[2].y) < 6 };
     });
     expect(r.overlap).toBe(0);       // cells never overlap
     expect(r.sameColX).toBe(true);   // same x => same column (same screen x)
@@ -623,7 +623,7 @@ test.describe("<three-md> component", () => {
       const lab = document.getElementById("inline");
       lab.setAttribute("mode", "map");
       lab.setSource('---\n3md: 1.0\naxis: space\n---\n@plane z=0 x=1 y=1\n# Table A\nSeat 1: Ana\nSeat 2: Ben\n@plane z=1 x=2 y=1\n# Table B\nSeat 1: Cal\n@plane z=2 x=1 y=2\n# Table C\nSeat 1: Dee\n');
-      lab.goTo(0);
+      lab._mapOverview = false; lab.goTo(0); lab.render(); // open a card (as a click does)
       const sr = lab.shadowRoot;
       const hot = sr.querySelector(".plane.hot").getBoundingClientRect();
       const tile = sr.querySelector(".plane:not(.hot)").getBoundingClientRect();
@@ -631,6 +631,28 @@ test.describe("<three-md> component", () => {
     });
     // The focused (read) card is clearly larger than a board tile.
     expect(r.hotW).toBeGreaterThan(r.tileW * 1.2);
+  });
+
+  test("map opens on a full-board overview (nothing forced open) until a tile is opened", async ({ page }) => {
+    await page.goto("/embed-example.html");
+    await page.waitForFunction(() => document.getElementById("inline")?.shadowRoot?.querySelectorAll(".plane").length === 3);
+    const r = await page.evaluate(() => {
+      const lab = document.getElementById("inline");
+      lab.setAttribute("mode", "map");
+      lab.setSource('---\n3md: 1.0\naxis: space\n---\n@plane z=0 x=1 y=1\n# A\nhi\n@plane z=1 x=2 y=1\n# B\nyo\n@plane z=2 x=1 y=2\n# C\nyo\n');
+      const sr = lab.shadowRoot;
+      const overview = { popped: sr.querySelectorAll(".detail .plane").length, dimmed: [...sr.querySelectorAll(".scene .plane")].filter((p) => Number(getComputedStyle(p).opacity) < 0.9).length, attr: lab.getAttribute("data-map-overview") };
+      lab._mapOverview = false; lab.goTo(0); lab.render(); // open a tile
+      const opened = sr.querySelectorAll(".detail .plane.hot").length;
+      lab._mapOverview = true; lab.render(); // Esc / tap empty -> back to board
+      const closed = sr.querySelectorAll(".detail .plane").length;
+      return { overview, opened, closed };
+    });
+    expect(r.overview.attr).toBe("true");
+    expect(r.overview.popped).toBe(0);   // nothing popped by default
+    expect(r.overview.dimmed).toBe(0);   // no tile dimmed (all equal on the board)
+    expect(r.opened).toBe(1);            // opening a tile pops it
+    expect(r.closed).toBe(0);            // returning clears the overlay
   });
 
   test("map: partially-positioned planes (only x or only y) do not pile up", async ({ page }) => {
