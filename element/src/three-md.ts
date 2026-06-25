@@ -254,11 +254,17 @@ const STYLES = `
    so long content is always reachable (the fixed -104px anchor clipped tall cards
    off the bottom). */
 :host([data-mode="stack"]) .plane.hot,
-:host([data-mode="layers"]) .plane.hot,
 :host([data-mode="elevator"]) .plane.hot,
 :host([data-mode="present"]) .plane.hot {
   top: 10px; bottom: 10px; height: auto; margin-top: 0; max-height: none; overflow-y: auto;
 }
+/* Layers: aligned translucent overlays seen together (not one-at-a-time). */
+.layerchips { display: none; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
+:host([data-mode="layers"]) .layerchips { display: flex; }
+.layerchip { font: inherit; font-size: 11px; color: var(--three-md-muted); background: var(--three-md-surface);
+  border: 1px solid var(--three-md-hairline); border-radius: 999px; padding: 4px 11px; cursor: pointer; }
+.layerchip[aria-pressed="true"] { color: var(--three-md-text); border-color: var(--three-md-accent); }
+.layerchip[aria-pressed="false"] { opacity: .45; text-decoration: line-through; }
 .plane.dim { opacity: .18; filter: saturate(.5); }
 .plane.hot { box-shadow: 0 0 0 2px var(--three-md-accent), 0 18px 44px rgba(0,0,0,.5); }
 /* Reader: the focused plane in single-card view fills the stage and scrolls its
@@ -374,6 +380,8 @@ export class ThreeMDElement extends HTMLElement {
   private _dragAxis: "x" | "y" | null = null;
   private _pointerId: number | null = null;
   private _pendingDrag = false;
+  private _hiddenLayers = new Set<number>(); // layers toggled off in layers view
+  private _chipsEl!: HTMLDivElement;
   private _keys = new Set<string>();
   private _camRaf: number | null = null;
   private _lastEmitted = -1;
@@ -411,6 +419,7 @@ export class ThreeMDElement extends HTMLElement {
     } else if (name === "mode") {
       this._applyMode();
       this._resetCamera(); // each view has its own default camera
+      this._buildLayerChips(); // show/hide the layer toggles for this view
       this.render();
     } else if (name === "autoplay") {
       if (value !== null) this._startPlay(); else this._stopPlay();
@@ -518,6 +527,7 @@ export class ThreeMDElement extends HTMLElement {
     this._target = 0;
     this._resetCamera();
     this._keys.clear();
+    this._hiddenLayers.clear();
     if (this._camRaf != null) { cancelAnimationFrame(this._camRaf); this._camRaf = null; }
     this._dragAxis = null;
     this._dragging = false;
@@ -578,7 +588,8 @@ export class ThreeMDElement extends HTMLElement {
         <button class="navbtn loop" part="loop" type="button" aria-label="toggle loop" title="Loop playback" aria-pressed="true">⟲</button>
         <button class="navbtn fs" part="fullscreen" type="button" aria-label="fullscreen" title="Fullscreen">⛶</button>
       </div>
-      <div class="readout" part="readout"></div>`;
+      <div class="readout" part="readout"></div>
+      <div class="layerchips" part="layer-toggles"></div>`;
     this._root.appendChild(this._wrap);
 
     this._axisEl = this._wrap.querySelector(".axis")!;
@@ -586,6 +597,7 @@ export class ThreeMDElement extends HTMLElement {
     this._scene = this._wrap.querySelector(".scene")!;
     this._scrub = this._wrap.querySelector("input")!;
     this._readout = this._wrap.querySelector(".readout")!;
+    this._chipsEl = this._wrap.querySelector(".layerchips")!;
     this._hintEl = this._wrap.querySelector(".hint")!;
     this._playBtn = this._wrap.querySelector('[part="play"]')!;
 
@@ -669,7 +681,30 @@ export class ThreeMDElement extends HTMLElement {
     this._scrub.max = String(Math.max(0, this._planes.length - 1));
     this._scrub.value = "0";
     this._measureFrames();
+    this._buildLayerChips();
     this._updateReadout();
+  }
+
+  /** In layers view, a row of toggle chips shows/hides each overlay. */
+  private _buildLayerChips(): void {
+    if (!this._chipsEl) return;
+    this._chipsEl.innerHTML = "";
+    if (this._mode !== "layers") return;
+    this._planes.forEach((p, idx) => {
+      const chip = document.createElement("button");
+      chip.type = "button";
+      chip.className = "layerchip";
+      chip.setAttribute("part", "layer-toggle");
+      chip.textContent = p.label || `z${p.z}`;
+      chip.setAttribute("aria-pressed", String(!this._hiddenLayers.has(idx)));
+      chip.addEventListener("click", () => {
+        if (this._hiddenLayers.has(idx)) this._hiddenLayers.delete(idx);
+        else this._hiddenLayers.add(idx);
+        chip.setAttribute("aria-pressed", String(!this._hiddenLayers.has(idx)));
+        this.render();
+      });
+      this._chipsEl.appendChild(chip);
+    });
   }
 
   /**
@@ -972,6 +1007,8 @@ export class ThreeMDElement extends HTMLElement {
     }
 
     if (!this._els.length) return;
+    // Clear any per-layer pointer-event blocking; only layers view re-applies it.
+    if (m !== "layers") for (const el of this._els) el.style.pointerEvents = "";
 
     // Single-card view: one stationary card whose contents swap as you scrub.
     // No deck, no 3D - the other planes fade out and the focused one fades in.
@@ -1015,18 +1052,23 @@ export class ThreeMDElement extends HTMLElement {
     // depth; the focused one is opaque up front, the rest are translucent sheets
     // behind it. Orbit to see the layering. For annotations and overlays.
     if (m === "layers") {
+      // Overlays of one thing, seen TOGETHER: aligned (same x), shallow depth so
+      // you see through the stack; the focused layer is opaque, others ghosted;
+      // toggle chips hide/show each. This is what makes layers != a sequence deck.
       this._els.forEach((el, idx) => {
+        const hidden = this._hiddenLayers.has(idx);
         const d = idx - focus;
         const on = idx === fr;
-        el.style.transform = `translate3d(0px, ${(d * 10).toFixed(1)}px, ${(-Math.abs(d) * 80).toFixed(1)}px) scale(${on ? 1 : 0.97})`;
-        el.style.opacity = on ? "1" : Math.max(0.3, 1 - Math.abs(d) * 0.34).toFixed(2);
+        el.style.transform = `translate3d(0px, ${(d * 6).toFixed(1)}px, ${(-Math.abs(d) * 45).toFixed(1)}px)`;
+        el.style.opacity = hidden ? "0" : (on ? "0.97" : "0.42");
         el.style.zIndex = on ? "300" : String(120 - Math.abs(fr - idx));
-        el.classList.toggle("hot", on);
+        el.style.pointerEvents = hidden ? "none" : "auto";
+        el.classList.toggle("hot", on && !hidden);
         el.classList.toggle("dim", false);
         el.classList.toggle("reader", false);
         el.classList.toggle("frame", false);
       });
-      this._scene.style.transform = this._cameraTransform(-160);
+      this._scene.style.transform = this._cameraTransform(-150);
       this._updateReadout();
       this._maybeEmit(fr);
       return;
