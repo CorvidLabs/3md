@@ -33,6 +33,7 @@ const RULES = [
 
 // A hand-picked set of standouts surfaced by the gallery's "Featured" filter.
 const FEATURED = new Set([
+  "aegis-sensor-sweep", "datacenter-heat-grid", "incident-response-runbook",
   "bug-lifecycle", "dungeon-crawl-descent", "dungeon-run-log",
   "game-tic-tac-toe", "gather-to-anneal", "hive-year",
   "home-wedding-seating", "junction-interlocking", "life-song-structure",

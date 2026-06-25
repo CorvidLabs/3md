@@ -1,0 +1,81 @@
+---
+3md: 1.0
+axis: job
+title: Release Pipeline (CI/CD DAG)
+category: Engineering
+schema: pipeline/1
+machine: corvid-ci
+roots: ["0", "1"]
+sink: "8"
+legend: o=●
+description: A CI/CD pipeline as a directed acyclic graph. Each plane is a job; each [[z=N|job]] link is a "needs" (dependency) edge pointing upstream. Parse planes as nodes and links as edges, then topologically sort to get a valid run order.
+---
+A release pipeline encoded as a DAG. Read each job as a card, or follow the
+[[z=2|needs]] links upstream to recover the dependency graph. Jobs with no
+needs (lint, unit-test) are the roots; notify is the sink. Fan-out at build,
+fan-in at deploy-prod.
+
+@plane z=0 label="lint" runs_on=ubuntu needs="" duration="40s"
+# lint
+
+Static analysis and formatting gate. No upstream dependencies; runs immediately.
+
+- needs: nothing (root job)
+
+@plane z=1 label="unit-test" runs_on=ubuntu needs="" duration="3m"
+# unit-test
+
+Fast unit suite. Also a root; runs in parallel with [[z=0|lint]].
+
+- needs: nothing (root job)
+
+@plane z=2 label="build" runs_on=ubuntu needs="0,1" duration="5m"
+# build
+
+Compile and bundle the artifact. Fan-in: waits for both gates.
+
+- needs -> [[z=0|lint]]
+- needs -> [[z=1|unit-test]]
+
+@plane z=3 label="deploy-staging" runs_on=deploy needs="2" duration="2m"
+# deploy-staging
+
+Push the built artifact to the staging environment.
+
+- needs -> [[z=2|build]]
+
+@plane z=4 label="e2e" runs_on=ubuntu needs="3" duration="8m"
+# e2e
+
+End-to-end browser tests against staging.
+
+- needs -> [[z=3|deploy-staging]]
+
+@plane z=5 label="security-scan" runs_on=ubuntu needs="2" duration="6m"
+# security-scan
+
+SAST + dependency audit on the build. Runs in parallel with the staging branch.
+
+- needs -> [[z=2|build]]
+
+@plane z=6 label="deploy-prod" runs_on=deploy needs="4,5" duration="3m"
+# deploy-prod
+
+Promote to production. Fan-in: gated on both e2e and the security scan.
+
+- needs -> [[z=4|e2e]]
+- needs -> [[z=5|security-scan]]
+
+@plane z=7 label="smoke-test" runs_on=ubuntu needs="6" duration="1m"
+# smoke-test
+
+Post-deploy smoke checks against production.
+
+- needs -> [[z=6|deploy-prod]]
+
+@plane z=8 label="notify" runs_on=ubuntu needs="7" duration="10s"
+# notify
+
+Announce the release to the team channel. Sink job.
+
+- needs -> [[z=7|smoke-test]]

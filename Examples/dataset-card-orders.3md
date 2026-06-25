@@ -1,0 +1,100 @@
+---
+3md: 1.0
+axis: field
+title: Dataset Card - orders (e-commerce fact table)
+category: Data
+dataset: analytics.orders
+grain: one row per placed order
+schema: datacard/1
+owner: data-platform
+rows: "~42M"
+---
+A data dictionary you can read like a doc and parse like a schema. Each @plane
+is one column: the label is the field name, the attrs carry the machine schema
+(type, nullable, unit, range, key), and the body is what a human actually needs
+(meaning, example values, and the gotcha that will bite you).
+
+Walk it as a reader (single), or see the whole table as a board (map).
+
+@plane z=0 label="order_id" type="uuid" nullable="false" key="primary" pii="false"
+# order_id
+
+Surrogate primary key for the order. Stable for the life of the order.
+
+- example: `7f3a9c20-1e6b-4f8a-9b21-0c5d6e7a1234`
+- gotcha: not sequential and not time-ordered. Do not sort by it to get
+  chronological order. Use [[z=5|created_at]] instead.
+
+@plane z=1 label="customer_id" type="uuid" nullable="false" key="foreign" ref="dim_customer.customer_id" pii="false"
+# customer_id
+
+Foreign key to the customer who placed the order.
+
+- example: `c1a2b3d4-...`
+- gotcha: guest checkouts get a synthetic customer_id that is unique per order,
+  so counting distinct customer_id over-counts true customers by ~6 percent.
+
+@plane z=2 label="order_status" type="enum" nullable="false" values="placed|paid|shipped|delivered|cancelled|refunded"
+# order_status
+
+Lifecycle state at the time the row was last updated.
+
+- example: `delivered`
+- gotcha: `cancelled` and `refunded` rows still carry a non-zero
+  [[z=3|total_amount]]. Filter them out before summing revenue.
+
+@plane z=3 label="total_amount" type="integer" nullable="false" unit="USD cents" range="0..100000000"
+# total_amount
+
+Order total INCLUDING tax and shipping, AFTER discounts.
+
+- example: `4999` means $49.99
+- gotcha: stored in integer cents, not dollars. Divide by 100. Mixing this with
+  a dollars column is the single most common revenue bug here.
+
+@plane z=4 label="currency" type="char" length="3" nullable="false" default="USD"
+# currency
+
+ISO 4217 currency code for [[z=3|total_amount]].
+
+- example: `USD`, `EUR`, `JPY`
+- gotcha: JPY has no minor unit, so for JPY rows `total_amount` is whole yen, not
+  cents. Currency-aware conversion is required before cross-currency sums.
+
+@plane z=5 label="created_at" type="timestamptz" nullable="false"
+# created_at
+
+When the order was placed. The canonical event time for this table.
+
+- example: `2026-06-24T18:30:05Z`
+- gotcha: stored in UTC. The storefront reports in store-local time, so daily
+  counts will disagree with the app dashboard near midnight unless you convert.
+
+@plane z=6 label="shipped_at" type="timestamptz" nullable="true"
+# shipped_at
+
+When the order shipped. NULL until it does.
+
+- example: `2026-06-25T09:12:00Z` or `NULL`
+- gotcha: NULL means "not shipped yet", not "shipped at an unknown time".
+  `shipped_at - [[z=5|created_at]]` is your fulfillment latency, but only for
+  non-null rows.
+
+@plane z=7 label="item_count" type="integer" nullable="false" range="1..500"
+# item_count
+
+Number of line items on the order.
+
+- example: `3`
+- gotcha: this is distinct SKUs, not total quantity. A cart of 10 of one SKU has
+  item_count = 1.
+
+@plane z=8 label="discount_pct" type="numeric" precision="5,2" nullable="true" unit="percent" range="0..100"
+# discount_pct
+
+Order-level discount applied, as a percentage.
+
+- example: `15.00`
+- gotcha: NULL means no discount, which is NOT the same as `0.00` (an explicitly
+  recorded zero-value promo). Coalesce to 0 only if you do not care about that
+  distinction.
