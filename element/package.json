@@ -1,6 +1,6 @@
 {
   "name": "@corvidlabs/three-md-element",
-  "version": "1.7.10",
+  "version": "1.7.11",
   "description": "The canonical <three-md> web component: a framework-agnostic interactive renderer for the 3md format, backed by @corvidlabs/threemd.",
   "type": "module",
   "license": "MIT",
