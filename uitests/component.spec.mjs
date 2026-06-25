@@ -205,6 +205,28 @@ test.describe("<three-md> component", () => {
     expect(r.rawPipe).toBe(false);
   });
 
+  test("layers shows aligned overlays at once, with toggle chips", async ({ page }) => {
+    await page.goto("/embed-example.html");
+    await page.waitForFunction(() => document.getElementById("inline")?.shadowRoot?.querySelectorAll(".plane").length === 3);
+    const r = await page.evaluate(() => {
+      const lab = document.getElementById("inline");
+      lab.setAttribute("mode", "layers");
+      lab.setSource('---\n3md: 1.0\naxis: layer\n---\n@plane z=0 label="source"\nA\n@plane z=1 label="plain"\nB\n@plane z=2 label="legal"\nC\n');
+      const sr = lab.shadowRoot;
+      const planes = [...sr.querySelectorAll(".plane")];
+      const visible = planes.filter((p) => Number(getComputedStyle(p).opacity) > 0.1).length; // all overlays visible together
+      const aligned = new Set(planes.map((p) => Math.round(new DOMMatrix(getComputedStyle(p).transform).m41))).size === 1; // same x
+      const chips = sr.querySelectorAll(".layerchip").length;
+      // toggle the first layer off
+      sr.querySelector(".layerchip").click();
+      return { visible, aligned, chips, hiddenAfterToggle: lab._hiddenLayers.has(0) };
+    });
+    expect(r.visible).toBe(3);          // overlays seen together, not one-at-a-time
+    expect(r.aligned).toBe(true);       // stacked aligned (a deck would fan them in x)
+    expect(r.chips).toBe(3);
+    expect(r.hiddenAfterToggle).toBe(true);
+  });
+
   test("blend mode renders content as 3D voxels", async ({ page }) => {
     const errors = [];
     page.on("pageerror", (e) => errors.push(String(e)));

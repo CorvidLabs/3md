@@ -1,0 +1,89 @@
+---
+3md: 1.0
+axis: depth
+title: Fault Tree Cascade - API Latency Incident
+view: stack
+category: Engineering
+---
+
+An incident review as a layered fault tree. Each depth moves from symptom to
+mechanism to prevention.
+
+@plane z=0 label="Symptom"
+# Symptom
+
+```
+checkout-api p95 latency
+
+10:04  220 ms
+10:08  410 ms
+10:12  960 ms
+10:16  1800 ms
+10:20  2400 ms
+```
+
+Users saw slow checkout confirmation pages. Error rate stayed low, which made
+the incident look smaller than it felt.
+
+@plane z=1 label="Immediate Cause"
+# Immediate Cause
+
+```
+checkout-api
+    |
+    v
+inventory-read
+    |
+    v
+primary postgres
+
+pool wait: 1430 ms
+```
+
+Connection pool wait dominated request time. Threads were not blocked; they
+were waiting politely in a very long line.
+
+@plane z=2 label="Contributing Factors"
+# Contributing Factors
+
+```
+               promo traffic +42%
+                    |
+cache TTL cut 15m -> 2m
+                    |
+read replica lag 38s
+                    |
+fallback to primary
+```
+
+No single change broke the system. The cascade needed traffic, lower cache
+life, and replica lag at the same time.
+
+@plane z=3 label="Control Breaks"
+# Control Breaks
+
+```
+alerting gap
+  p95 page latency: yes
+  DB pool wait:     no
+  replica lag:      delayed
+
+runbook gap
+  safe cache TTL rollback: missing
+```
+
+The team knew the page was slow before it knew why. That cost nine minutes.
+
+@plane z=4 label="Fix Stack"
+# Fix Stack
+
+```
+1. Add pool-wait SLO
+2. Pin promo TTL floor at 10m
+3. Fail closed on replica lag over 10s
+4. Add one-command TTL rollback
+5. Load test promo profile weekly
+```
+
+The fix is a stack, too: detect earlier, prevent the risky combination, and
+make rollback boring.
