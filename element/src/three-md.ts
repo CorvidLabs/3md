@@ -204,6 +204,19 @@ function renderMarkdown(body: string, legend: Record<string, string> = {}): stri
   return `<div class="md" part="plane-body">${out.join("")}</div>`;
 }
 
+/** Uniform control-bar icons: one viewBox, one stroke weight, sized by CSS, so
+ * every button reads at the same optical size (the old unicode glyphs did not). */
+const SVG = (body: string, fill = false): string =>
+  `<svg viewBox="0 0 24 24" ${fill ? 'fill="currentColor" stroke="none"' : 'fill="none" stroke="currentColor" stroke-width="2"'} stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${body}</svg>`;
+const ICONS = {
+  prev: SVG('<path d="M15 5l-7 7 7 7"/>'),
+  next: SVG('<path d="M9 5l7 7-7 7"/>'),
+  play: SVG('<path d="M8 5.5v13l11-6.5z"/>', true),
+  pause: SVG('<path d="M9 5v14M15 5v14"/>'),
+  loop: SVG('<path d="M3.5 12a8.5 8.5 0 0 1 14.5-6M20.5 12a8.5 8.5 0 0 1-14.5 6"/><path d="M18 2.5V6h-3.5M6 21.5V18h3.5"/>'),
+  fullscreen: SVG('<path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/>'),
+};
+
 const STYLES = `
 :host {
   display: block;
@@ -258,7 +271,8 @@ const STYLES = `
 :host(:fullscreen) .md .ph2 { font-size: clamp(15px, 1.7vw, 22px); }
 :host(:fullscreen) .md .code { font-size: clamp(12px, 1.2vw, 16px); }
 :host(:fullscreen) .ptag { font-size: clamp(11px, 1vw, 14px); }
-:host(:fullscreen) .navbtn { width: 44px; height: 40px; font-size: 16px; }
+:host(:fullscreen) .navbtn { width: 44px; height: 40px; }
+:host(:fullscreen) .navbtn svg { width: 18px; height: 18px; }
 /* Reader (single) and present become big centered slides. */
 :host(:fullscreen[data-mode="single"]) .plane.reader {
   width: min(70vw, 900px); max-width: min(70vw, 900px); padding: clamp(20px, 3vw, 44px);
@@ -278,13 +292,14 @@ const STYLES = `
   transition: opacity .3s, box-shadow .3s, filter .3s;
 }
 .plane.hot { overflow-y: auto; } /* the focused card can scroll long content */
-/* In card modes the focused card becomes a centered, full-height, scrollable box,
-   so long content is always reachable (the fixed -104px anchor clipped tall cards
-   off the bottom). */
+/* In card modes the focused card hugs its CONTENT (so a short plane is a small
+   card, not a big empty box), stays vertically centered via auto margins, and only
+   caps + scrolls when the content is genuinely taller than the stage. */
 :host([data-mode="stack"]) .plane.hot,
 :host([data-mode="elevator"]) .plane.hot,
 :host([data-mode="present"]) .plane.hot {
-  top: 10px; bottom: 10px; height: auto; margin-top: 0; max-height: none; overflow-y: auto;
+  top: 0; bottom: 0; height: max-content; max-height: calc(100% - 20px);
+  margin-top: auto; margin-bottom: auto; overflow-y: auto;
 }
 /* Layers: EVERY overlay (not just the focused one) is a centered, stage-height,
    scrollable box so a layer of any length fits in frame; they sit perfectly
@@ -368,7 +383,8 @@ const STYLES = `
   color: var(--three-md-faint); opacity: .5; white-space: pre; pointer-events: none; }
 /* nowrap so the button row never reflows and shifts under the cursor. */
 .controls { display: flex; align-items: center; gap: 8px; margin-top: 12px; flex-wrap: nowrap; }
-.navbtn { flex: 0 0 auto; font: inherit; font-size: 14px; color: var(--three-md-text); background: var(--three-md-surface); border: 1px solid var(--three-md-hairline); width: 38px; height: 34px; border-radius: 4px; cursor: pointer; }
+.navbtn { flex: 0 0 auto; display: inline-flex; align-items: center; justify-content: center; color: var(--three-md-text); background: var(--three-md-surface); border: 1px solid var(--three-md-hairline); width: 38px; height: 34px; border-radius: 4px; cursor: pointer; }
+.navbtn svg { width: 16px; height: 16px; display: block; }
 .navbtn:hover { border-color: var(--three-md-accent); color: var(--three-md-accent); }
 .navbtn.loop[aria-pressed="true"] { color: var(--three-md-accent); border-color: var(--three-md-accent); }
 .navbtn.loop[aria-pressed="false"] { opacity: .55; }
@@ -659,12 +675,12 @@ export class ThreeMDElement extends HTMLElement {
       </div>
       <div class="hint" part="hint">drag to orbit · WASD / arrows move · slider or ↑↓ scrub Z</div>
       <div class="controls" part="controls">
-        <button class="navbtn" part="prev" type="button" aria-label="previous plane">←</button>
+        <button class="navbtn" part="prev" type="button" aria-label="previous plane">${ICONS.prev}</button>
         <input type="range" part="scrubber" min="0" max="0" step="0.001" value="0" aria-label="scrub the Z axis" />
-        <button class="navbtn" part="next" type="button" aria-label="next plane">→</button>
-        <button class="navbtn" part="play" type="button" aria-label="play">▶</button>
-        <button class="navbtn loop" part="loop" type="button" aria-label="toggle loop" title="Loop playback" aria-pressed="true">⟲</button>
-        <button class="navbtn fs" part="fullscreen" type="button" aria-label="fullscreen" title="Fullscreen">⛶</button>
+        <button class="navbtn" part="next" type="button" aria-label="next plane">${ICONS.next}</button>
+        <button class="navbtn" part="play" type="button" aria-label="play">${ICONS.play}</button>
+        <button class="navbtn loop" part="loop" type="button" aria-label="toggle loop" title="Loop playback" aria-pressed="true">${ICONS.loop}</button>
+        <button class="navbtn fs" part="fullscreen" type="button" aria-label="fullscreen" title="Fullscreen">${ICONS.fullscreen}</button>
       </div>
       <div class="readout" part="readout"></div>
       <div class="layerchips" part="layer-toggles"></div>`;
@@ -934,7 +950,7 @@ export class ThreeMDElement extends HTMLElement {
   private _startPlay(): void {
     if (this._playing || this._planes.length <= 1) return;
     this._playing = true;
-    if (this._playBtn) { this._playBtn.textContent = "⏸"; this._playBtn.setAttribute("aria-label", "pause"); }
+    if (this._playBtn) { this._playBtn.innerHTML = ICONS.pause; this._playBtn.setAttribute("aria-label", "pause"); }
     // Honor the document's fps metadata; clamp so playback stays watchable.
     // setInterval (not rAF) keeps animations running under iOS Low Power Mode.
     // Clamp playback to a calm, watchable range (about 1.5-7.5 fps) so animations
@@ -947,7 +963,7 @@ export class ThreeMDElement extends HTMLElement {
   private _stopPlay(): void {
     this._playing = false;
     if (this._playTimer) { clearInterval(this._playTimer); this._playTimer = null; }
-    if (this._playBtn) { this._playBtn.textContent = "▶"; this._playBtn.setAttribute("aria-label", "play"); }
+    if (this._playBtn) { this._playBtn.innerHTML = ICONS.play; this._playBtn.setAttribute("aria-label", "play"); }
   }
 
   private _togglePlay(): void {
