@@ -276,6 +276,17 @@ const STYLES = `
 :host([data-mode="present"]) .plane.hot {
   top: 10px; bottom: 10px; height: auto; margin-top: 0; max-height: none; overflow-y: auto;
 }
+/* Layers: EVERY overlay (not just the focused one) is a centered, stage-height,
+   scrollable box so a layer of any length fits in frame; they sit perfectly
+   aligned, with depth + opacity (not a vertical fan) giving the stacked look. */
+:host([data-mode="layers"]) .plane {
+  top: 8px; bottom: 8px; height: auto; margin-top: 0; max-height: none; overflow-y: auto;
+}
+/* Map: each tile is a bounded, centered, scrollable card (margin-top matches half
+   the cap) so a tall tile stays on the board instead of spilling off the bottom. */
+:host([data-mode="map"]) .plane {
+  max-height: 180px; margin-top: -90px; overflow-y: auto;
+}
 /* Layers: aligned translucent overlays seen together (not one-at-a-time). */
 .layerchips { display: none; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
 :host([data-mode="layers"]) .layerchips { display: flex; }
@@ -1084,7 +1095,9 @@ export class ThreeMDElement extends HTMLElement {
         const hidden = this._hiddenLayers.has(idx);
         const d = idx - focus;
         const on = idx === fr;
-        el.style.transform = `translate3d(0px, ${(d * 6).toFixed(1)}px, ${(-Math.abs(d) * 45).toFixed(1)}px)`;
+        // Aligned overlays: no vertical fan (that pushed tall cards out of frame);
+        // depth (z) + opacity carry the stacked-sheet look, revealed when orbited.
+        el.style.transform = `translate3d(0px, 0px, ${(-Math.abs(d) * 45).toFixed(1)}px)`;
         el.style.opacity = hidden ? "0" : (on ? "0.97" : "0.42");
         el.style.zIndex = on ? "300" : String(120 - Math.abs(fr - idx));
         el.style.pointerEvents = hidden ? "none" : "auto";
@@ -1152,7 +1165,7 @@ export class ThreeMDElement extends HTMLElement {
       this._els.forEach((el, idx) => {
         const on = idx === fr;
         const [x, y] = posOf(idx);
-        el.style.transform = `translate3d(${x.toFixed(1)}px, ${y.toFixed(1)}px, ${on ? 24 : 0}px) scale(${on ? 0.92 : 0.74})`;
+        el.style.transform = `translate3d(${x.toFixed(1)}px, ${y.toFixed(1)}px, ${on ? 12 : 0}px) scale(${on ? 0.9 : 0.74})`;
         el.style.opacity = "1";
         el.style.zIndex = on ? "300" : String(100 + idx);
         el.classList.toggle("hot", on);
