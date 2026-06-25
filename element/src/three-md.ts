@@ -178,6 +178,7 @@ const STYLES = `
   color: var(--three-md-text);
 }
 * { box-sizing: border-box; }
+:host(:focus), :host(:focus-visible) { outline: none; } /* no harsh focus ring while flying with WASD */
 .wrap { width: 100%; max-width: 100%; }
 .axis { font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--three-md-accent); margin: 0 0 8px; }
 .stage {
@@ -216,31 +217,40 @@ const STYLES = `
   position: absolute; left: 50%; top: 50%;
   width: min(var(--three-md-plane-width, 320px), 84%);
   margin-left: calc(min(var(--three-md-plane-width, 320px), 84%) / -2); margin-top: -104px;
+  /* Keep cards inside the stage: cap height and clip; the focused card scrolls. */
+  max-height: calc(100% - 18px); overflow: hidden;
   border-radius: 8px; padding: 14px 16px;
   background: var(--three-md-surface); border: 1px solid var(--three-md-accent);
   box-shadow: 0 18px 44px rgba(0,0,0,.45); cursor: pointer;
   transition: opacity .3s, box-shadow .3s, filter .3s;
 }
+.plane.hot { overflow-y: auto; } /* the focused card can scroll long content */
 .plane.dim { opacity: .18; filter: saturate(.5); }
 .plane.hot { box-shadow: 0 0 0 2px var(--three-md-accent), 0 18px 44px rgba(0,0,0,.5); }
 /* Reader: the focused plane in single-card view fills the stage and scrolls its
    own body, so a plane of any length stays fully readable. Navigation moves to
    the slider, arrows, and keyboard; the body scrolls with wheel or touch. */
-.plane.reader {
-  top: 50%; left: 50%; transform: translate(-50%, -50%);
-  width: auto; max-width: min(var(--three-md-plane-width, 560px), 100%);
-  margin: 0; height: auto; max-height: 100%; overflow-y: auto; overscroll-behavior: contain;
-  touch-action: pan-y; -webkit-overflow-scrolling: touch; cursor: auto;
+/* Reader (single): every plane shares ONE fixed, scrollable box, so changing
+   plane never resizes or shifts the card - the content just swaps and scrolls. */
+:host([data-mode="single"]) .plane {
+  top: 50%; left: 50%; transform: translate(-50%, -50%) !important;
+  width: min(var(--three-md-plane-width, 560px), 92%); height: calc(100% - 14px);
+  margin: 0; max-width: none; max-height: none; overflow-y: auto; overscroll-behavior: contain;
+  touch-action: pan-y; -webkit-overflow-scrolling: touch; cursor: auto; transition: opacity .15s;
+  -webkit-user-select: text; user-select: text;
 }
 /* Flipbook frame (animations): a FIXED-size centered card (not content-sized, so
    it never grows/shrinks between frames; not full-bleed, so small animations are
    not lost in a huge box). Content is centered; swaps are instant (no ghosting). */
 .plane.frame {
-  top: 50%; left: 50%; transform: translate(-50%, -50%) !important;
-  width: min(var(--three-md-plane-width, 360px), 88%);
-  height: min(72%, 340px); margin: 0;
-  display: flex; flex-direction: column; justify-content: center;
-  overflow: auto; transition: none;
+  top: 50%; left: 50%;
+  /* Natural content size (measured in JS) scaled to fit the stage, so every frame
+     is the same size AND the whole animation is visible with NO scrollbars. */
+  transform: translate(-50%, -50%) scale(var(--three-md-frame-scale, 1)) !important;
+  width: var(--three-md-frame-w, min(var(--three-md-plane-width, 360px), 88%));
+  height: var(--three-md-frame-h, min(72%, 340px)); margin: 0;
+  display: flex; flex-direction: column; justify-content: center; align-items: center;
+  overflow: hidden; transition: none;
 }
 :host([data-mode="play"]) .plane { transition: none; } /* instant frame swaps */
 /* No accidental text selection while orbiting/flying; the reader stays selectable. */
@@ -608,7 +618,39 @@ export class ThreeMDElement extends HTMLElement {
     }
     this._scrub.max = String(Math.max(0, this._planes.length - 1));
     this._scrub.value = "0";
+    this._measureFrames();
     this._updateReadout();
+  }
+
+  /**
+   * Size the flipbook frame to the WIDEST/TALLEST frame's natural content, so the
+   * animation box is tight to the content yet identical for every frame (no
+   * grow/shrink between frames). Clamped to the stage. Only runs in play mode.
+   */
+  private _measureFrames(): void {
+    this.style.removeProperty("--three-md-frame-w");
+    this.style.removeProperty("--three-md-frame-h");
+    this.style.removeProperty("--three-md-frame-scale");
+    if (this._mode !== "play" || !this._els.length) return;
+    let w = 0, h = 0;
+    for (const el of this._els) {
+      const save = el.style.cssText;
+      el.classList.remove("frame");
+      el.style.transform = "none"; el.style.opacity = "0";
+      el.style.width = "max-content"; el.style.height = "auto";
+      el.style.maxWidth = "none"; el.style.maxHeight = "none";
+      w = Math.max(w, el.offsetWidth); h = Math.max(h, el.offsetHeight);
+      el.style.cssText = save;
+    }
+    if (w <= 0 || h <= 0) return;
+    // The frame is the content's natural size; a scale shrinks it to fit the stage
+    // so the whole animation is visible with NO scrollbars and no clipping.
+    const sw = (this._stage?.clientWidth || 9999) - 24;
+    const sh = (this._stage?.clientHeight || 9999) - 24;
+    const scale = Math.min(sw / w, sh / h, 1);
+    this.style.setProperty("--three-md-frame-w", w + "px");
+    this.style.setProperty("--three-md-frame-h", h + "px");
+    this.style.setProperty("--three-md-frame-scale", scale.toFixed(3));
   }
 
   // Extract the first fenced block in a plane body as a grid (boolean cell
@@ -789,7 +831,7 @@ export class ThreeMDElement extends HTMLElement {
   private _onPointerMove(e: PointerEvent): void {
     if (this._pointerId !== null && e.pointerId !== this._pointerId) return;
     if (this._pendingDrag && !this._dragging) {
-      if (Math.hypot(e.clientX - this._dragStartX, e.clientY - this._dragStartY) < 5) return;
+      if (Math.hypot(e.clientX - this._dragStartX, e.clientY - this._dragStartY) < 8) return;
       this._dragging = true; // crossed the threshold: this is an orbit, not a tap
       this._stopPlay();
       try { this._stage.setPointerCapture(e.pointerId); } catch { /* ignore */ }
