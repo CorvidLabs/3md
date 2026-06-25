@@ -108,6 +108,67 @@ test.describe("viewer & editor (viewer.html)", () => {
     expect(idx).toBe(1);
   });
 
+  test("the highlight backdrop scrolls with the textarea (tall document)", async ({ page }) => {
+    await page.goto("/viewer.html");
+    await page.waitForFunction(() => document.getElementById("lab")?.shadowRoot?.querySelectorAll(".plane").length > 0);
+    const r = await page.evaluate(async () => {
+      const ed = document.getElementById("editor"), hl = document.getElementById("hl");
+      ed.focus(); ed.select();
+      document.execCommand("insertText", false, Array.from({ length: 200 }, (_, i) => "line " + i).join("\n"));
+      ed.scrollTop = 1500; ed.dispatchEvent(new Event("scroll"));
+      await new Promise((res) => requestAnimationFrame(() => requestAnimationFrame(res)));
+      const m = new DOMMatrix(getComputedStyle(hl).transform);
+      return { ty: Math.round(m.f), scrollTop: ed.scrollTop };
+    });
+    // The highlight layer is translated up by the scroll amount (no-op scrollTop is gone).
+    expect(r.ty).toBe(-r.scrollTop);
+  });
+
+  test("smart-key edits are undoable and never corrupt the buffer", async ({ page }) => {
+    await page.goto("/viewer.html");
+    await page.waitForFunction(() => document.getElementById("lab")?.shadowRoot?.querySelectorAll(".plane").length > 0);
+    const starter = await page.evaluate(() => document.getElementById("editor").value);
+    await page.click("#editor");
+    await page.evaluate(() => { const ed = document.getElementById("editor"); ed.setSelectionRange(ed.value.length, ed.value.length); });
+    await page.keyboard.type("\nZZZ");
+    await page.evaluate(() => { const ed = document.getElementById("editor"); const p = ed.value.indexOf("ZZZ"); ed.setSelectionRange(p, p); });
+    await page.keyboard.press("Tab");
+    await page.waitForTimeout(40);
+    const afterTab = await page.evaluate(() => document.getElementById("editor").value);
+    expect(afterTab).toContain("  ZZZ"); // Tab indented
+    await page.keyboard.press(process.platform === "darwin" ? "Meta+z" : "Control+z");
+    await page.waitForTimeout(40);
+    const afterUndo = await page.evaluate(() => document.getElementById("editor").value);
+    // Undo must land on a clean prior state, never a merged/duplicated buffer.
+    const cleanStates = [starter, starter + "\nZZZ", starter + "\n  ZZZ"];
+    expect(cleanStates).toContain(afterUndo);
+  });
+
+  test("validity state is machine-readable via data attributes", async ({ page }) => {
+    await page.goto("/viewer.html");
+    await page.waitForFunction(() => document.getElementById("lab")?.shadowRoot?.querySelectorAll(".plane").length > 0);
+    const ok = await page.evaluate(() => ({
+      valid: document.getElementById("validBadge").dataset.valid,
+      planes: document.getElementById("validBadge").dataset.planes,
+      bodyValid: document.body.dataset.threeMdValid,
+      live: document.getElementById("status").getAttribute("aria-live"),
+    }));
+    expect(ok.valid).toBe("true");
+    expect(Number(ok.planes)).toBeGreaterThan(0);
+    expect(ok.bodyValid).toBe("true");
+    expect(ok.live).toBe("polite");
+    await page.fill("#editor", "axis: time\nbroken");
+    await page.waitForTimeout(250);
+    const bad = await page.evaluate(() => ({
+      valid: document.getElementById("validBadge").dataset.valid,
+      bodyValid: document.body.dataset.threeMdValid,
+      stale: document.getElementById("lab").document, // must be null on error, not stale
+    }));
+    expect(bad.valid).toBe("false");
+    expect(bad.bodyValid).toBe("false");
+    expect(bad.stale).toBeNull();
+  });
+
   test("an invalid document flags the offending line and the badge", async ({ page }) => {
     await page.goto("/viewer.html");
     await viewerReady(page);

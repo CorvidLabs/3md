@@ -11,6 +11,21 @@
 <meta property="og:image" content="https://corvidlabs.github.io/3md/social-preview.png" />
 <meta name="twitter:card" content="summary_large_image" />
 
+<!-- Machine-readable 3md grammar hint for agents authoring documents headlessly. -->
+<script type="application/schema+json" id="threemd-schema">
+{
+  "format": "3md",
+  "version": "1.0",
+  "frontmatter": {
+    "delimiter": "--- ... --- at the top of the document",
+    "required": { "3md": "the format version, e.g. 1.0", "axis": "one of: time, frame, layer, space, depth, slide, floor" },
+    "optional": { "title": "string", "view": "override render mode", "legend": "char=replacement pairs applied inside code fences" }
+  },
+  "plane": { "directive": "@plane z=<number> [label=\"...\"] [x=<number>] [y=<number>]", "body": "Markdown until the next @plane or EOF" },
+  "crossPlaneLink": "[[z=<number>|text]] -- a clickable jump to the plane at that z (z may be a decimal or scientific notation)"
+}
+</script>
+
 <script>
   (() => { try {
     const q = new URLSearchParams(location.search).get("theme");
@@ -33,8 +48,10 @@
     --tok-str:#7fb88f; --tok-num:#c9a06a; --tok-directive:#d98ab0;
     --tok-head:var(--ink); --tok-link:var(--sheen); --tok-code:#c9a06a;
     --tok-punct:var(--text-faint); --tok-quote:var(--text-muted);
+    --ok:#7fb88f; --err:#ff8f8f;
   }
-  :root[data-theme="light"]{--tok-str:#3f7a52;--tok-num:#9a6b1f;--tok-directive:#b04e7e;}
+  :root[data-theme="light"]{--tok-str:#3f7a52;--tok-num:#8c5f14;--tok-directive:#b04e7e;--ok:#2f7d4f;--err:#c0392b;}
+  @media (prefers-color-scheme:light){:root:not([data-theme="dark"]){--tok-str:#3f7a52;--tok-num:#8c5f14;--tok-directive:#b04e7e;--ok:#2f7d4f;--err:#c0392b;}}
   body{margin:0;background:var(--paper);color:var(--ink);
     font-family:var(--code-font);
     background-image:linear-gradient(var(--ink-06) 1px,transparent 1px),linear-gradient(90deg,var(--ink-06) 1px,transparent 1px);
@@ -63,14 +80,14 @@
   .toolbar label{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--text-faint)}
   .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:stretch}
   .grid>*{min-width:0}
-  @media(max-width:900px){.grid{grid-template-columns:1fr}}
+  @media(max-width:720px){.grid{grid-template-columns:1fr}}
   .pane{border:1px solid var(--hairline);border-radius:8px;background:var(--surface);overflow:hidden;display:flex;flex-direction:column}
   .pane .bar{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:9px 13px;border-bottom:1px solid var(--hairline);
     font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--text-faint)}
   .pane .bar .right{display:flex;align-items:center;gap:10px;text-transform:none;letter-spacing:.02em}
   .badge{display:inline-flex;align-items:center;gap:6px;font-size:11px;padding:3px 8px;border-radius:999px;border:1px solid var(--hairline);color:var(--text-muted)}
-  .badge.ok{color:#7fb88f;border-color:#7fb88f55}
-  .badge.err{color:#ff8f8f;border-color:#ff8f8f55;cursor:pointer}
+  .badge.ok{color:var(--ok);border-color:color-mix(in srgb,var(--ok) 45%,transparent)}
+  .badge.err{color:var(--err);border-color:color-mix(in srgb,var(--err) 45%,transparent);cursor:pointer}
   .badge .dot{width:6px;height:6px;border-radius:50%;background:currentColor}
 
   /* ---- code editor (gutter + highlight backdrop + transparent textarea) ---- */
@@ -86,9 +103,9 @@
   .ta::selection{background:color-mix(in srgb,var(--sheen) 28%,transparent)}
   .hl .line{position:relative;display:block;min-height:calc(var(--code-size)*var(--code-lh))}
   .hl .line::before{counter-increment:ln;content:counter(ln);position:absolute;left:calc(-1*var(--gutter));
-    width:calc(var(--gutter) - 14px);text-align:right;color:var(--text-faint);opacity:.6;font-size:11.5px}
-  .hl .line.errline{background:#ff8f8f1f;box-shadow:-14px 0 0 #ff8f8f1f, 0 0 0 #ff8f8f1f}
-  .hl .line.errline::before{color:#ff8f8f;opacity:1}
+    width:calc(var(--gutter) - 14px);text-align:right;color:var(--text-muted);opacity:.85;font-size:11.5px}
+  .hl .line.errline{background:color-mix(in srgb,var(--err) 12%,transparent);box-shadow:-14px 0 0 color-mix(in srgb,var(--err) 12%,transparent)}
+  .hl .line.errline::before{color:var(--err);opacity:1}
   /* tokens */
   .t-key{color:var(--tok-key);font-weight:500}
   .t-str{color:var(--tok-str)}
@@ -107,6 +124,7 @@
 
   /* ---- viewer side ---- */
   .viewer{padding:14px}
+  three-md:focus-visible{outline:2px solid var(--sheen);outline-offset:2px;border-radius:8px}
   three-md{--three-md-accent:var(--sheen);--three-md-bg:var(--surface-strong);--three-md-surface:var(--surface);
     --three-md-text:var(--ink);--three-md-muted:var(--text-muted);--three-md-faint:var(--text-faint);
     --three-md-hairline:var(--hairline);--three-md-height:480px;--three-md-display:var(--font-display)}
@@ -120,7 +138,7 @@
   .ochip .oz{opacity:.6;margin-right:5px}
 
   .status{font-size:12px;color:var(--text-faint);margin-top:10px;min-height:16px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-  .status.err{color:#ff8f8f}
+  .status.err{color:var(--err)}
   .status.ok{color:var(--sheen-strong,var(--sheen))}
   .hint{font-size:11.5px;color:var(--text-faint);margin-top:6px}
   .hint kbd{font-family:var(--code-font);font-size:10.5px;background:var(--surface);border:1px solid var(--hairline);
@@ -202,14 +220,14 @@
         <div class="outline" id="outline" aria-label="plane outline"></div>
       </div>
     </div>
-    <div class="status" id="status"></div>
+    <div class="status" id="status" role="status" aria-live="polite"></div>
     <p class="hint"><kbd>Tab</kbd> indent &middot; <kbd>Enter</kbd> continues lists &middot; <kbd>Ctrl/&#8984;+S</kbd> download &middot; <kbd>Ctrl/&#8984;+Enter</kbd> new plane &middot; <kbd>Ctrl/&#8984;+/</kbd> play</p>
 
-    <p class="foot">Powered by the open-source <a href="https://github.com/CorvidLabs/3md">3md</a> format and the <code>&lt;three-md&gt;</code> web component. MIT.</p>
+    <p class="foot">Powered by the open-source <a href="https://github.com/CorvidLabs/3md">3md</a> format and the <code>&lt;three-md&gt;</code> web component. MIT. &middot; <a href="https://github.com/CorvidLabs/3md/blob/main/SPEC.md">format spec</a></p>
   </div>
 
   <script defer src="assets/theme.js"></script>
-  <script type="module" src="assets/three-md.js?v=1.7.10"></script>
+  <script type="module" src="assets/three-md.js?v=1.7.11"></script>
   <script type="module">
     const STARTER = `---
 3md: 1.0
@@ -272,7 +290,7 @@ See [[z=1|Tuesday]] for what's next.
           inCode = !inCode;
         } else if (inCode) {
           html = '<span class="t-code">' + e + "</span>";
-        } else if (raw.trim() === "---" && !fmSeen && i === 0) {
+        } else if (raw.trim() === "---" && !fmSeen && lines.slice(0, i).every((l) => l.trim() === "")) {
           inFm = true; fmSeen = true; html = '<span class="t-punct">' + e + "</span>";
         } else if (raw.trim() === "---" && inFm) {
           inFm = false; html = '<span class="t-punct">' + e + "</span>";
@@ -293,7 +311,10 @@ See [[z=1|Tuesday]] for what's next.
             });
           html = '<span class="t-dir">' + escHtml(mm[1]) + "</span>" + rest;
         } else if (/^#{1,6}\s/.test(raw)) {
-          html = '<span class="t-head">' + e + "</span>";
+          // Heading: keep the leading #'s as the heading token, but still let
+          // inline **bold** / `code` / links render in the text (matches lists).
+          const hm = raw.match(/^(#{1,6}\s)([\s\S]*)$/);
+          html = '<span class="t-head">' + escHtml(hm[1]) + inlineMd(escHtml(hm[2])) + "</span>";
         } else if (/^\s*>\s/.test(raw)) {
           html = '<span class="t-quote">' + e + "</span>";
         } else if (/^\s*(-{3,}|\*{3,})\s*$/.test(raw)) {
@@ -313,26 +334,28 @@ See [[z=1|Tuesday]] for what's next.
       return out.join("");
     }
 
-    let errLine = -1;
-    function paint() {
+    let errLine = -1, paintQueued = false;
+    // The highlight backdrop is a <pre> (not a scroll container), so it is moved
+    // with a transform to track the textarea's scroll. (Assigning scrollTop to it
+    // is a no-op and would desync the highlight on any document taller than the box.)
+    function syncScroll() { hl.style.transform = "translate(" + (-ed.scrollLeft) + "px," + (-ed.scrollTop) + "px)"; }
+    function paintNow() {
+      paintQueued = false;
       hl.innerHTML = highlight(ed.value);
-      if (errLine >= 0) {
-        const node = hl.children[errLine];
-        if (node) node.classList.add("errline");
-      }
-      hl.scrollTop = ed.scrollTop; hl.scrollLeft = ed.scrollLeft;
+      if (errLine >= 0) { const node = hl.children[errLine]; if (node) node.classList.add("errline"); }
+      syncScroll();
     }
-    // Best-effort: find a line to blame for a parse error message.
-    function blameLine(msg) {
-      if (!msg) return -1;
+    function paint() { if (paintQueued) return; paintQueued = true; requestAnimationFrame(paintNow); }
+    // The component knows the exact 1-based error line; fall back to the message
+    // text, then to the frontmatter heuristic.
+    function blameLine() {
+      if (typeof lab.errorLine === "number" && lab.errorLine > 0) return lab.errorLine - 1;
+      const msg = lab.error || "";
+      const m = msg.match(/line (\d+)/i);
+      if (m) return parseInt(m[1], 10) - 1;
       if (/3md|version|frontmatter/i.test(msg)) {
         const i = ed.value.split("\n").findIndex((l) => /^---\s*$/.test(l));
         return i < 0 ? 0 : i;
-      }
-      const zmatch = msg.match(/z\s*=?\s*(-?[0-9.]+)/i);
-      if (zmatch) {
-        const i = ed.value.split("\n").findIndex((l) => l.includes("z=" + zmatch[1]));
-        if (i >= 0) return i;
       }
       return -1;
     }
@@ -358,12 +381,16 @@ See [[z=1|Tuesday]] for what's next.
       counts.textContent = src.split("\n").length + " lines, " + src.length + " chars";
       lab.setSource(src);
       if (lab.error) {
-        errLine = blameLine(lab.error);
+        errLine = blameLine();
         status.className = "status err";
         status.textContent = "Invalid 3md: " + lab.error;
         validBadge.className = "badge err";
         validText.textContent = "invalid";
         validBadge.title = lab.error;
+        // Machine-readable validity state for agents and assistive tech.
+        validBadge.dataset.valid = "false";
+        validBadge.dataset.errorLine = String(errLine + 1);
+        document.body.dataset.threeMdValid = "false";
         outline.innerHTML = "";
       } else {
         errLine = -1;
@@ -373,6 +400,11 @@ See [[z=1|Tuesday]] for what's next.
         validBadge.className = "badge ok";
         validText.textContent = doc ? `${doc.planes.length} plane${doc.planes.length === 1 ? "" : "s"}` : "valid";
         validBadge.title = "";
+        validBadge.dataset.valid = "true";
+        validBadge.dataset.planes = doc ? String(doc.planes.length) : "0";
+        validBadge.dataset.axis = doc ? doc.axis : "";
+        delete validBadge.dataset.errorLine;
+        document.body.dataset.threeMdValid = "true";
         buildOutline(doc);
       }
       paint();
@@ -386,24 +418,31 @@ See [[z=1|Tuesday]] for what's next.
 
     let timer = null;
     ed.addEventListener("input", () => { paint(); clearTimeout(timer); timer = setTimeout(render, 160); });
-    ed.addEventListener("scroll", () => { hl.scrollTop = ed.scrollTop; hl.scrollLeft = ed.scrollLeft; });
+    ed.addEventListener("scroll", syncScroll);
     ed.addEventListener("keyup", updateCursor);
     ed.addEventListener("click", updateCursor);
     ed.addEventListener("select", updateCursor);
 
     // ---- smart editing keys
     function setRange(start, end) { ed.selectionStart = start; ed.selectionEnd = end; }
-    function replaceSel(text, selStart, selEnd) {
-      const s = ed.selectionStart, e = ed.selectionEnd;
-      ed.setRangeText(text, s, e, "end");
-      if (selStart != null) setRange(selStart, selEnd != null ? selEnd : selStart);
-      ed.dispatchEvent(new Event("input"));
+    // Apply an edit THROUGH the native undo stack so Ctrl/Cmd+Z works for every
+    // smart edit. execCommand("insertText") is deprecated but is the only
+    // cross-engine way to mutate a textarea while preserving (and not corrupting)
+    // its undo history; setRangeText/value= silently break it. It also fires the
+    // "input" event itself, which drives paint()/render().
+    function applyEdit(start, end, text) {
+      ed.focus();
+      ed.setSelectionRange(start, end);
+      let ok = false;
+      try { ok = document.execCommand("insertText", false, text); } catch (_) {}
+      if (!ok) { ed.setRangeText(text, start, end, "end"); ed.dispatchEvent(new Event("input")); }
     }
+    function replaceSel(text) { applyEdit(ed.selectionStart, ed.selectionEnd, text); }
     function insertAtCursor(snippet, caretBack) {
       const s = ed.selectionStart;
-      ed.setRangeText(snippet, s, ed.selectionEnd, "end");
+      applyEdit(s, ed.selectionEnd, snippet);
       if (caretBack != null) { const pos = s + snippet.length - caretBack; setRange(pos, pos); }
-      ed.focus(); ed.dispatchEvent(new Event("input")); updateCursor();
+      updateCursor();
     }
     ed.addEventListener("keydown", (e) => {
       const mod = e.metaKey || e.ctrlKey;
@@ -414,21 +453,19 @@ See [[z=1|Tuesday]] for what's next.
         e.preventDefault();
         const s = ed.selectionStart, en = ed.selectionEnd;
         if (s !== en && ed.value.slice(s, en).includes("\n")) {
-          // indent/dedent whole lines
+          // indent/dedent whole lines (one undo entry)
           const startLine = ed.value.lastIndexOf("\n", s - 1) + 1;
           const block = ed.value.slice(startLine, en);
-          const shifted = e.shiftKey
-            ? block.replace(/^ {1,2}/gm, "")
-            : block.replace(/^/gm, "  ");
-          ed.setRangeText(shifted, startLine, en, "preserve");
+          const shifted = e.shiftKey ? block.replace(/^ {1,2}/gm, "") : block.replace(/^/gm, "  ");
+          applyEdit(startLine, en, shifted);
           setRange(startLine, startLine + shifted.length);
         } else if (e.shiftKey) {
           const ls = ed.value.lastIndexOf("\n", s - 1) + 1;
-          if (/^ {1,2}/.test(ed.value.slice(ls))) { ed.setRangeText("", ls, ls + Math.min(2, ed.value.slice(ls).match(/^ +/)[0].length), "preserve"); }
+          const lead = ed.value.slice(ls).match(/^ +/);
+          if (lead) applyEdit(ls, ls + Math.min(2, lead[0].length), "");
         } else {
           replaceSel("  ");
         }
-        ed.dispatchEvent(new Event("input"));
         return;
       }
       if (e.key === "Enter" && !mod) {
@@ -440,10 +477,9 @@ See [[z=1|Tuesday]] for what's next.
           const indent = m[1];
           let marker = m[2];
           if (/^\s*$/.test(line.slice((indent + marker).length))) {
-            // empty list item -> end the list
             e.preventDefault();
-            ed.setRangeText("\n", lineStart, s, "end");
-            ed.dispatchEvent(new Event("input")); return;
+            applyEdit(lineStart, s, "\n"); // empty list item -> end the list
+            return;
           }
           if (/\[[ xX]\]/.test(marker)) marker = marker.replace(/\[[xX]\]/, "[ ]");
           else if (/^\d+\./.test(marker)) marker = (parseInt(marker) + 1) + ". ";

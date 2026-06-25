@@ -221,7 +221,17 @@ const STYLES = `
   color: var(--three-md-text);
 }
 * { box-sizing: border-box; }
-:host(:focus), :host(:focus-visible) { outline: none; } /* no harsh focus ring while flying with WASD */
+:host(:focus) { outline: none; } /* no harsh ring on pointer/drag while flying */
+/* Keyboard focus DOES get a visible indicator (WCAG 2.4.7); focus-visible never
+   fires on pointer interaction, so it doesn't reappear while dragging. */
+:host(:focus-visible) { outline: none; box-shadow: 0 0 0 2px var(--three-md-accent); border-radius: 8px; }
+/* An errored or empty document has no live scene: hide its stale controls. */
+:host([data-state="error"]) .controls, :host([data-state="empty"]) .controls,
+:host([data-state="error"]) .hint, :host([data-state="empty"]) .hint,
+:host([data-state="error"]) .readout, :host([data-state="empty"]) .readout { display: none; }
+@media (prefers-reduced-motion: reduce) {
+  .plane, .scene, .floattext { transition-duration: .001ms !important; }
+}
 .wrap { width: 100%; max-width: 100%; }
 .axis { font-size: 12px; letter-spacing: .14em; text-transform: uppercase; color: var(--three-md-accent); margin: 0 0 8px; }
 .stage {
@@ -417,6 +427,7 @@ export class ThreeMDElement extends HTMLElement {
   private _camRaf: number | null = null;
   private _lastEmitted = -1;
   private _error: string | null = null;
+  private _errorLine: number | null = null;
   private _loadToken = 0;
   private _playBtn!: HTMLButtonElement;
   private _loopBtn!: HTMLButtonElement;
@@ -464,9 +475,16 @@ export class ThreeMDElement extends HTMLElement {
 
   // MARK: - Public API
 
-  /** The parsed document, or null before content has loaded. */
+  /** The parsed document, or null before content has loaded or when the most
+   * recent load failed to parse. Callers should check `error` first; a stale
+   * document is never returned after an error. */
   get document(): Document | null {
-    return this._doc;
+    return this._error ? null : this._doc;
+  }
+
+  /** The 1-based source line a parse error was attributed to, or null. */
+  get errorLine(): number | null {
+    return this._errorLine;
   }
 
   /** The index of the currently focused plane. */
@@ -539,6 +557,10 @@ export class ThreeMDElement extends HTMLElement {
     const trimmed = source.trim();
     if (!trimmed) {
       this._error = "No 3md source provided.";
+      this._errorLine = null;
+      this._doc = null; this._planes = [];
+      this._stopPlay();
+      this.setAttribute("data-state", "empty");
       this._showError(this._error);
       return;
     }
@@ -546,11 +568,20 @@ export class ThreeMDElement extends HTMLElement {
     try {
       doc = parse(trimmed);
     } catch (error) {
-      this._error = (error as Error).message;
+      const pe = error as { message?: string; line?: number };
+      this._error = pe.message ?? String(error);
+      this._errorLine = typeof pe.line === "number" ? pe.line : null;
+      // Drop the stale document so programmatic callers never read a doc that no
+      // longer matches the source, and a dead scene's controls are not left live.
+      this._doc = null; this._planes = [];
+      this._stopPlay();
+      this.setAttribute("data-state", "error");
       this._showError(`Invalid 3md: ${this._error}`);
       return;
     }
     this._error = null;
+    this._errorLine = null;
+    this.setAttribute("data-state", "ready");
     this._doc = doc;
     this._planes = doc.planes;
     this._legend = parseLegend(doc.metadata?.legend);
@@ -680,6 +711,9 @@ export class ThreeMDElement extends HTMLElement {
     if (!this._wrap) this._build();
     this._scene.innerHTML = "";
     this._els = [];
+    this._scene.style.transform = ""; // flat, not skewed by a stale camera pose
+    if (this._axisEl) this._axisEl.textContent = "";
+    if (this._readout) this._readout.textContent = "";
     const box = document.createElement("div");
     box.className = "err";
     box.setAttribute("part", "error");
