@@ -39,9 +39,7 @@ const FEATURED = new Set([
   "metro-zone-grid", "museum-of-the-anthropocene-walkthrough",
   "reef-tank-cross-section", "solar-system-depth-dive", "solar-system",
   "spanish-ser-vs-estar-flashcards", "suspension-bridge-load-path",
-  "whimsy-hollow-park-map", "color-grading-layers",
-  "chef-service-rush", "fault-tree-cascade", "mission-control-loop",
-  "supply-chain-port-map",
+  "whimsy-hollow-park-map",
 ]);
 
 function categorize(slug, title, axis, declared) {

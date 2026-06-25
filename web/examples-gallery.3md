@@ -15,127 +15,97 @@ status - bug-lifecycle
 
 ![The Lifecycle of a Bug](./gifs/bug-lifecycle.gif)
 
-@plane z=1 label="Chef Service Rush - Tickets to Pass" slug="chef-service-rush" axis="minute"
-## Chef Service Rush - Tickets to Pass
-minute - chef-service-rush
-
-![Chef Service Rush - Tickets to Pass](./gifs/chef-service-rush.gif)
-
-@plane z=2 label="Color Grading Layers - Night Market Still" slug="color-grading-layers" axis="layer"
-## Color Grading Layers - Night Market Still
-layer - color-grading-layers
-
-![Color Grading Layers - Night Market Still](./gifs/color-grading-layers.gif)
-
-@plane z=3 label="Dungeon Crawl: The Descent" slug="dungeon-crawl-descent" axis="level"
+@plane z=1 label="Dungeon Crawl: The Descent" slug="dungeon-crawl-descent" axis="level"
 ## Dungeon Crawl: The Descent
 level - dungeon-crawl-descent
 
 ![Dungeon Crawl: The Descent](./gifs/dungeon-crawl-descent.gif)
 
-@plane z=4 label="Dungeon Run #4471" slug="dungeon-run-log" axis="depth"
+@plane z=2 label="Dungeon Run #4471" slug="dungeon-run-log" axis="depth"
 ## Dungeon Run #4471
 depth - dungeon-run-log
 
 ![Dungeon Run #4471](./gifs/dungeon-run-log.gif)
 
-@plane z=5 label="Fault Tree Cascade - API Latency Incident" slug="fault-tree-cascade" axis="depth"
-## Fault Tree Cascade - API Latency Incident
-depth - fault-tree-cascade
-
-![Fault Tree Cascade - API Latency Incident](./gifs/fault-tree-cascade.gif)
-
-@plane z=6 label="Tic-Tac-Toe, X Wins" slug="game-tic-tac-toe" axis="step"
+@plane z=3 label="Tic-Tac-Toe, X Wins" slug="game-tic-tac-toe" axis="step"
 ## Tic-Tac-Toe, X Wins
 step - game-tic-tac-toe
 
 ![Tic-Tac-Toe, X Wins](./gifs/game-tic-tac-toe.gif)
 
-@plane z=7 label="Hand-Blown Vase: Gather to Anneal" slug="gather-to-anneal" axis="step"
+@plane z=4 label="Hand-Blown Vase: Gather to Anneal" slug="gather-to-anneal" axis="step"
 ## Hand-Blown Vase: Gather to Anneal
 step - gather-to-anneal
 
 ![Hand-Blown Vase: Gather to Anneal](./gifs/gather-to-anneal.gif)
 
-@plane z=8 label="A Year in the Hive" slug="hive-year" axis="season"
+@plane z=5 label="A Year in the Hive" slug="hive-year" axis="season"
 ## A Year in the Hive
 season - hive-year
 
 ![A Year in the Hive](./gifs/hive-year.gif)
 
-@plane z=9 label="Reception Seating Chart" slug="home-wedding-seating" axis="space"
+@plane z=6 label="Reception Seating Chart" slug="home-wedding-seating" axis="space"
 ## Reception Seating Chart
 space - home-wedding-seating
 
 ![Reception Seating Chart](./gifs/home-wedding-seating.gif)
 
-@plane z=10 label="Welwyn North Interlocking — Down Fast to Platform 2" slug="junction-interlocking" axis="step"
+@plane z=7 label="Welwyn North Interlocking — Down Fast to Platform 2" slug="junction-interlocking" axis="step"
 ## Welwyn North Interlocking — Down Fast to Platform 2
 step - junction-interlocking
 
 ![Welwyn North Interlocking — Down Fast to Platform 2](./gifs/junction-interlocking.gif)
 
-@plane z=11 label="Wildflower Road - Song Chart" slug="life-song-structure" axis="section"
+@plane z=8 label="Wildflower Road - Song Chart" slug="life-song-structure" axis="section"
 ## Wildflower Road - Song Chart
 section - life-song-structure
 
 ![Wildflower Road - Song Chart](./gifs/life-song-structure.gif)
 
-@plane z=12 label="Metro Zone Grid" slug="metro-zone-grid" axis="layer"
+@plane z=9 label="Metro Zone Grid" slug="metro-zone-grid" axis="layer"
 ## Metro Zone Grid
 layer - metro-zone-grid
 
 ![Metro Zone Grid](./gifs/metro-zone-grid.gif)
 
-@plane z=13 label="Mission Control Loop - TLI Go Poll" slug="mission-control-loop" axis="minute"
-## Mission Control Loop - TLI Go Poll
-minute - mission-control-loop
-
-![Mission Control Loop - TLI Go Poll](./gifs/mission-control-loop.gif)
-
-@plane z=14 label="Museum of the Anthropocene" slug="museum-of-the-anthropocene-walkthrough" axis="room"
+@plane z=10 label="Museum of the Anthropocene" slug="museum-of-the-anthropocene-walkthrough" axis="room"
 ## Museum of the Anthropocene
 room - museum-of-the-anthropocene-walkthrough
 
 ![Museum of the Anthropocene](./gifs/museum-of-the-anthropocene-walkthrough.gif)
 
-@plane z=15 label="Reef Tank Cross-Section" slug="reef-tank-cross-section" axis="depth"
+@plane z=11 label="Reef Tank Cross-Section" slug="reef-tank-cross-section" axis="depth"
 ## Reef Tank Cross-Section
 depth - reef-tank-cross-section
 
 ![Reef Tank Cross-Section](./gifs/reef-tank-cross-section.gif)
 
-@plane z=16 label="Solar System by Depth" slug="solar-system-depth-dive" axis="depth"
+@plane z=12 label="Solar System by Depth" slug="solar-system-depth-dive" axis="depth"
 ## Solar System by Depth
 depth - solar-system-depth-dive
 
 ![Solar System by Depth](./gifs/solar-system-depth-dive.gif)
 
-@plane z=17 label="The Solar System by Distance" slug="solar-system" axis="space"
+@plane z=13 label="The Solar System by Distance" slug="solar-system" axis="space"
 ## The Solar System by Distance
 space - solar-system
 
 ![The Solar System by Distance](./gifs/solar-system.gif)
 
-@plane z=18 label="Ser vs. Estar: The One That Always Trips You Up" slug="spanish-ser-vs-estar-flashcards" axis="side"
+@plane z=14 label="Ser vs. Estar: The One That Always Trips You Up" slug="spanish-ser-vs-estar-flashcards" axis="side"
 ## Ser vs. Estar: The One That Always Trips You Up
 side - spanish-ser-vs-estar-flashcards
 
 ![Ser vs. Estar: The One That Always Trips You Up](./gifs/spanish-ser-vs-estar-flashcards.gif)
 
-@plane z=19 label="Supply Chain Port Map - Coffee Lot 42" slug="supply-chain-port-map" axis="layer"
-## Supply Chain Port Map - Coffee Lot 42
-layer - supply-chain-port-map
-
-![Supply Chain Port Map - Coffee Lot 42](./gifs/supply-chain-port-map.gif)
-
-@plane z=20 label="Suspension Bridge: Load Path in Layers" slug="suspension-bridge-load-path" axis="layer"
+@plane z=15 label="Suspension Bridge: Load Path in Layers" slug="suspension-bridge-load-path" axis="layer"
 ## Suspension Bridge: Load Path in Layers
 layer - suspension-bridge-load-path
 
 ![Suspension Bridge: Load Path in Layers](./gifs/suspension-bridge-load-path.gif)
 
-@plane z=21 label="Whimsy Hollow Park Map" slug="whimsy-hollow-park-map" axis="layer"
+@plane z=16 label="Whimsy Hollow Park Map" slug="whimsy-hollow-park-map" axis="layer"
 ## Whimsy Hollow Park Map
 layer - whimsy-hollow-park-map
 

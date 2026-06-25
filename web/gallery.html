@@ -80,7 +80,7 @@
   .card:hover{transform:translateY(-3px);border-color:var(--sheen);box-shadow:0 14px 30px var(--ink-12);text-decoration:none}
   .card:focus-visible{outline:2px solid var(--sheen);outline-offset:2px}
   .thumb{position:relative;aspect-ratio:4/3;background:var(--surface-strong);overflow:hidden;display:flex;align-items:center;justify-content:center}
-  .thumb img{width:100%;height:100%;object-fit:cover;display:block}
+  .thumb img{width:100%;height:100%;object-fit:contain;display:block;padding:8px;background:var(--surface-strong)}
   .thumb .ph{font-family:var(--font-mono);font-size:11px;color:var(--text-faint);padding:10px;text-align:center}
   .thumb .ax{position:absolute;left:8px;bottom:8px;font-family:var(--font-mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--paper);background:var(--ink-70);padding:3px 7px;border-radius:4px;backdrop-filter:blur(2px)}
   .cardbody{padding:11px 13px 13px;display:flex;flex-direction:column;gap:6px;flex:1}
