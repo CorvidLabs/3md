@@ -83,6 +83,9 @@ function inline(escaped: string): string {
     // Cross-plane links: [[z=2|text]] or [[z=2]] become clickable jumps.
     .replace(/\[\[z=(-?\d+)(?:\|([^\]]*))?\]\]/g,
       (_m, z, text) => `<a class="xlink" part="link" data-z="${z}">${text || "z=" + z}</a>`)
+    // Markdown links to http(s): [text](url). (Not preceded by ! so images are left alone.)
+    .replace(/(^|[^!])\[([^\]]+)\]\((https?:\/\/[^)\s]+)\)/g,
+      (_m, pre, text, url) => `${pre}<a class="xlink" part="link" href="${url.replace(/"/g, "&quot;")}" target="_blank" rel="noopener">${text}</a>`)
     .replace(/`([^`]+)`/g, "<code>$1</code>")
     .replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>")
     .replace(/\*([^*]+)\*/g, "<em>$1</em>");
@@ -126,29 +129,49 @@ function applyLegend(escaped: string, legend: Record<string, string>): string {
   return escaped.replace(new RegExp(`[${cls}]`, "g"), (c) => legend[c] ?? c);
 }
 
-/** A deliberately small Markdown subset, matching the reference lab renderer. */
+/** A compact Markdown renderer: headings, lists, checkboxes, quotes, images,
+ * fenced code, links, and GitHub-style tables. */
 function renderMarkdown(body: string, legend: Record<string, string> = {}): string {
   const lines = body.split("\n");
   const fence = (rows: string[]) =>
     `<pre class="code" part="code">${rows.map((r) => applyLegend(esc(r), legend)).join("\n")}</pre>`;
+  const isRow = (l: string) => /^\s*\|.*\|\s*$/.test(l);
+  const isSep = (l: string) => /-/.test(l) && /^\s*\|?[\s:|-]*\|[\s:|-]*$/.test(l);
+  const cells = (l: string) => l.trim().replace(/^\||\|$/g, "").split("|").map((c) => c.trim());
   const out: string[] = [];
   let code: string[] | null = null; // collecting a fenced code block
-  for (const l of lines) {
+  for (let i = 0; i < lines.length; i++) {
+    const l = lines[i];
     if (l.startsWith("```")) {
       if (code === null) { code = []; }
       else { out.push(fence(code)); code = null; }
       continue;
     }
     if (code !== null) { code.push(l); continue; }
+    // GitHub-style table: a header row, then a |---|---| separator, then rows.
+    if (isRow(l) && i + 1 < lines.length && isSep(lines[i + 1])) {
+      const head = cells(l);
+      i += 2;
+      const rows: string[][] = [];
+      while (i < lines.length && isRow(lines[i])) { rows.push(cells(lines[i])); i++; }
+      i--; // the for-loop will advance past the last consumed line
+      out.push(
+        `<table class="tbl" part="table"><thead><tr>${head.map((c) => `<th>${fmt(c)}</th>`).join("")}</tr></thead>`
+        + `<tbody>${rows.map((r) => `<tr>${r.map((c) => `<td>${fmt(c)}</td>`).join("")}</tr>`).join("")}</tbody></table>`,
+      );
+      continue;
+    }
     // Plane titles render as styled divs, not <h4>/<h5>, so the component never
     // injects headings that would break the host page's heading order (a11y).
     if (l.startsWith("# ")) out.push(`<div class="ph" part="plane-title">${fmt(l.slice(2))}</div>`);
     else if (l.startsWith("## ")) out.push(`<div class="ph2" part="plane-subtitle">${fmt(l.slice(3))}</div>`);
-    else if (l.startsWith("- [x] ")) out.push(`<div class="li"><span class="box">▣</span><span class="done">${fmt(l.slice(6))}</span></div>`);
+    else if (l.startsWith("### ")) out.push(`<div class="ph2" part="plane-subtitle">${fmt(l.slice(4))}</div>`);
+    else if (l.startsWith("- [x] ") || l.startsWith("- [X] ")) out.push(`<div class="li"><span class="box">▣</span><span class="done">${fmt(l.slice(6))}</span></div>`);
     else if (l.startsWith("- [ ] ")) out.push(`<div class="li"><span class="box">▢</span><span>${fmt(l.slice(6))}</span></div>`);
-    else if (l.startsWith("- ")) out.push(`<div class="li"><span class="box">•</span><span>${fmt(l.slice(2))}</span></div>`);
+    else if (/^\s*[-*] /.test(l)) { const t = l.replace(/^(\s*)[-*] /, "$1"); const indent = (l.match(/^\s*/)?.[0].length || 0) > 0; out.push(`<div class="li${indent ? " sub" : ""}"><span class="box">•</span><span>${fmt(t.trim())}</span></div>`); }
     else if (/^\d+\. /.test(l)) out.push(`<div class="li"><span class="box">${esc(l.slice(0, l.indexOf(".")))}</span><span>${fmt(l.slice(l.indexOf(".") + 2))}</span></div>`);
     else if (l.startsWith("> ")) out.push(`<div class="quote">${fmt(l.slice(2))}</div>`);
+    else if (/^\s*(-{3,}|\*{3,}|_{3,})\s*$/.test(l)) out.push(`<hr class="rule">`);
     else if (/^!\[[^\]]*\]\([^)\s]+\)\s*$/.test(l.trim())) {
       // A Markdown image on its own line: ![alt](url). Renders images and GIFs.
       const m = l.trim().match(/^!\[([^\]]*)\]\(([^)\s]+)\)/);
@@ -261,7 +284,9 @@ const STYLES = `
   width: var(--three-md-frame-w, min(var(--three-md-plane-width, 360px), 88%));
   height: var(--three-md-frame-h, min(72%, 340px)); margin: 0;
   display: flex; flex-direction: column; justify-content: center; align-items: center;
-  overflow: hidden; transition: none;
+  /* Real animations fit via the scale, so no scrollbar appears; only content that
+     genuinely cannot fit (e.g. a long text doc forced into animation) scrolls. */
+  overflow: auto; transition: none;
 }
 :host([data-mode="play"]) .plane { transition: none; } /* instant frame swaps */
 /* No accidental text selection while orbiting/flying; the reader stays selectable. */
@@ -277,6 +302,12 @@ const STYLES = `
 .md .box { color: var(--three-md-accent); }
 .md .done { color: var(--three-md-faint); text-decoration: line-through; }
 .md .quote { border-left: 2px solid var(--three-md-hairline); padding-left: 10px; color: var(--three-md-faint); font-style: italic; }
+.md .li.sub { padding-left: 16px; }
+.md .rule { border: 0; border-top: 1px solid var(--three-md-hairline); margin: 8px 0; }
+.md .tbl { border-collapse: collapse; margin: 8px 0; font-size: 12px; max-width: 100%; }
+.md .tbl th, .md .tbl td { border: 1px solid var(--three-md-hairline); padding: 4px 8px; text-align: left; vertical-align: top; }
+.md .tbl th { color: var(--three-md-text); font-weight: 700; background: var(--three-md-hairline); }
+.md .tbl td { color: var(--three-md-muted); }
 .md strong { color: var(--three-md-text); font-weight: 700; }
 .md em { font-style: italic; }
 .md code { font-family: inherit; background: var(--three-md-hairline); padding: 1px 5px; border-radius: 3px; color: var(--three-md-text); }
@@ -615,7 +646,15 @@ export class ThreeMDElement extends HTMLElement {
     this._axisEl.textContent = this._doc ? `axis = ${this._doc.axis}` : "";
     if (this._mode === "blend") {
       this._buildBlend();
-    } else {
+      // A document with no voxelizable ASCII art has nothing to show in blend, so
+      // fall back to the deck instead of an empty stage.
+      if (!this._voxels.length) {
+        this._mode = "stack";
+        this.setAttribute("data-mode", "stack");
+        if (this._hintEl) this._hintEl.textContent = HINTS.stack;
+      }
+    }
+    if (this._mode !== "blend") {
       this._planes.forEach((plane, idx) => {
         const el = document.createElement("div");
         el.className = "plane";
@@ -766,7 +805,7 @@ export class ThreeMDElement extends HTMLElement {
     else if (this._mode === "stack") { this._yaw = -18; this._pitch = 8; }
     else if (this._mode === "layers") { this._yaw = -22; this._pitch = 12; } // angle to see the stacked sheets
     else if (this._mode === "elevator") { this._yaw = -10; this._pitch = 6; } // mostly front, slight angle
-    else if (this._mode === "map") { this._yaw = 0; this._pitch = 32; this._zoom = -300; } // tilt + pull back to see the whole board
+    else if (this._mode === "map") { this._yaw = 0; this._pitch = 30; this._zoom = -540; } // tilt + pull back to see the whole board
     else { this._yaw = 0; this._pitch = 0; } // flat modes look head-on
   }
 
@@ -1023,21 +1062,21 @@ export class ThreeMDElement extends HTMLElement {
         const minX = Math.min(...xs), maxX = Math.max(...xs), minY = Math.min(...ys), maxY = Math.max(...ys);
         const rx = Math.max(maxX - minX, 1), ry = Math.max(maxY - minY, 1);
         posOf = (idx) => [
-          ((this._planes[idx].x || 0) - (minX + maxX) / 2) / rx * 420,
-          -((this._planes[idx].y || 0) - (minY + maxY) / 2) / ry * 300,
+          ((this._planes[idx].x || 0) - (minX + maxX) / 2) / rx * 360,
+          -((this._planes[idx].y || 0) - (minY + maxY) / 2) / ry * 250,
         ];
       } else {
         const cols = Math.max(1, Math.ceil(Math.sqrt(this._els.length)));
         const rows = Math.ceil(this._els.length / cols);
         posOf = (idx) => [
-          (idx % cols - (cols - 1) / 2) * 230,
-          (Math.floor(idx / cols) - (rows - 1) / 2) * 200,
+          (idx % cols - (cols - 1) / 2) * 175,
+          (Math.floor(idx / cols) - (rows - 1) / 2) * 150,
         ];
       }
       this._els.forEach((el, idx) => {
         const on = idx === fr;
         const [x, y] = posOf(idx);
-        el.style.transform = `translate3d(${x.toFixed(1)}px, ${y.toFixed(1)}px, ${on ? 30 : 0}px) scale(${on ? 1.04 : 0.86})`;
+        el.style.transform = `translate3d(${x.toFixed(1)}px, ${y.toFixed(1)}px, ${on ? 24 : 0}px) scale(${on ? 0.92 : 0.74})`;
         el.style.opacity = "1";
         el.style.zIndex = on ? "300" : String(100 + idx);
         el.classList.toggle("hot", on);

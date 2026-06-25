@@ -189,6 +189,22 @@ test.describe("<three-md> component", () => {
     expect(xs[0]).not.toBe(xs[1]);
   });
 
+  test("renders Markdown tables (not raw pipes)", async ({ page }) => {
+    await page.goto("/embed-example.html");
+    await page.waitForFunction(() => document.getElementById("inline")?.shadowRoot?.querySelectorAll(".plane").length === 3);
+    const r = await page.evaluate(() => {
+      const lab = document.getElementById("inline");
+      lab.setAttribute("mode", "single");
+      lab.setSource('---\n3md: 1.0\naxis: time\n---\n@plane z=0\n| Item | Cost |\n| --- | --- |\n| Potion | 6 |\n| Scroll | 3 |\n');
+      const t = lab.shadowRoot.querySelector(".md table.tbl");
+      return { hasTable: !!t, headers: t ? [...t.querySelectorAll("th")].map((x) => x.textContent) : [], rows: t ? t.querySelectorAll("tbody tr").length : 0, rawPipe: /\| Item \| Cost \|/.test(lab.shadowRoot.querySelector(".md").textContent) };
+    });
+    expect(r.hasTable).toBe(true);
+    expect(r.headers).toEqual(["Item", "Cost"]);
+    expect(r.rows).toBe(2);
+    expect(r.rawPipe).toBe(false);
+  });
+
   test("blend mode renders content as 3D voxels", async ({ page }) => {
     const errors = [];
     page.on("pageerror", (e) => errors.push(String(e)));
