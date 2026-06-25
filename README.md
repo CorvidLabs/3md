@@ -15,10 +15,10 @@ annotations. Space for a scene.
 **[viewer &amp; editor](https://corvidlabs.github.io/3md/viewer.html)** (paste any
 `.3md` and share a link), read the
 **[docs](https://corvidlabs.github.io/3md/docs.html)**, or
-**[browse 270 examples](https://corvidlabs.github.io/3md/gallery.html)** in the
-gallery (all of [`Examples/`](Examples), rendered live), or flip through the
-**[animated gallery](https://corvidlabs.github.io/3md/viewer.html?src=examples-gallery.3md)**
-where every example is a card showing its motion as a GIF.
+**[browse the curated animated gallery](https://corvidlabs.github.io/3md/gallery.html)**,
+or flip through the
+**[animated deck](https://corvidlabs.github.io/3md/viewer.html?src=examples-gallery.3md)**
+where the strongest examples appear as motion cards.
 
 This repo eats its own dog food: every doc here is also combined into one
 [`docs.3md`](docs.3md) (each Markdown file is a plane). GitHub can't preview
@@ -158,10 +158,11 @@ See [SPEC.md](SPEC.md) for the full grammar and conformance rules.
 
 ## Examples
 
-The [Examples/](Examples) directory holds all 270 example documents across 13
-axis types - from medical charts, weather, and file transfers to games, maps,
-and animations. Browse them all live in the
-[gallery viewer](https://corvidlabs.github.io/3md/gallery.html); a few highlights:
+The [Examples/](Examples) directory holds the source example documents across
+13 axis types - from medical charts, weather, and file transfers to games,
+maps, and animations. The
+[gallery viewer](https://corvidlabs.github.io/3md/gallery.html) highlights the
+curated animated set; a few source examples:
 
 - [`daily-planner.3md`](Examples/daily-planner.3md) - `axis: time`, one plane per day.
 - [`animation.3md`](Examples/animation.3md) - `axis: frame`, one plane per frame.

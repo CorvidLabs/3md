@@ -4,11 +4,11 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>3md gallery</title>
-<meta name="description" content="Browse every example .3md document, organized into categories. Tap a card to open it live and interactive." />
+<meta name="description" content="Browse curated animated .3md examples, organized into categories. Tap a card to open it live and interactive." />
 <link rel="icon" href="assets/favicon.svg" />
 <meta property="og:type" content="website" />
 <meta property="og:title" content="3md gallery" />
-<meta property="og:description" content="Browse every example .3md document by category. Games, animation, data, story, and more, each rendered live." />
+<meta property="og:description" content="Browse curated animated .3md examples by category. Games, animation, data, story, and more, each rendered live." />
 <meta property="og:url" content="https://corvidlabs.github.io/3md/gallery.html" />
 <meta property="og:image" content="https://corvidlabs.github.io/3md/social-preview.png" />
 <meta property="og:image:width" content="1280" />
@@ -80,7 +80,7 @@
   .card:hover{transform:translateY(-3px);border-color:var(--sheen);box-shadow:0 14px 30px var(--ink-12);text-decoration:none}
   .card:focus-visible{outline:2px solid var(--sheen);outline-offset:2px}
   .thumb{position:relative;aspect-ratio:4/3;background:var(--surface-strong);overflow:hidden;display:flex;align-items:center;justify-content:center}
-  .thumb img{width:100%;height:100%;object-fit:cover;display:block}
+  .thumb img{width:100%;height:100%;object-fit:contain;display:block;padding:8px;background:var(--surface-strong)}
   .thumb .ph{font-family:var(--font-mono);font-size:11px;color:var(--text-faint);padding:10px;text-align:center}
   .thumb .ax{position:absolute;left:8px;bottom:8px;font-family:var(--font-mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--paper);background:var(--ink-70);padding:3px 7px;border-radius:4px;backdrop-filter:blur(2px)}
   .cardbody{padding:11px 13px 13px;display:flex;flex-direction:column;gap:6px;flex:1}
@@ -147,7 +147,7 @@
   <header class="hero">
     <div class="eyebrow">the .3md gallery</div>
     <h1 class="wordmark" id="wordmark">examples<span class="z">.</span></h1>
-    <p class="tagline">Every example in the library, sorted into <em>categories</em>. Tap any card to open it live and interactive, or jump to the full viewer.</p>
+    <p class="tagline">A tight set of animated examples, sorted into <em>categories</em>. Tap any card to open it live and interactive, or jump to the full viewer.</p>
   </header>
 
   <div class="controls">
@@ -196,7 +196,7 @@
 </div>
 
 <script defer src="assets/theme.js"></script>
-<script type="module" src="assets/three-md.js?v=1.7.5"></script>
+<script type="module" src="assets/three-md.js?v=1.7.7"></script>
 <script>
 const CAT_COLORS = {
   Games:"#e0567a", Animation:"#e08a3c", Data:"#3c9ae0", Information:"#6c7a89",

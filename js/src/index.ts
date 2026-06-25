@@ -275,7 +275,9 @@ function collapse(lines: readonly string[]): string | null {
  * @returns The parsed number, or `null` when the text is not a finite decimal.
  */
 function parseFiniteDecimal(text: string): number | null {
-  const pattern = /^[+-]?(\d+\.?\d*|\.\d+)([eE][+-]?\d+)?$/;
+  // Non-ambiguous: \d+(?:\.\d*)? avoids the \d+...\d* overlap that lets a long
+  // run of digits backtrack polynomially (ReDoS) on a near-match.
+  const pattern = /^[+-]?(?:\d+(?:\.\d*)?|\.\d+)(?:[eE][+-]?\d+)?$/;
   if (!pattern.test(text)) {
     return null;
   }
@@ -621,7 +623,10 @@ export function links(document: Document): CrossPlaneLink[] {
   const targets = new Set<number>(document.planes.map((plane) => plane.z));
 
   for (const plane of document.planes) {
-    const pattern = /\[\[z=([^\]|]+)(?:\|([^\]]*))?\]\]/g;
+    // z is a short finite decimal; the link text is short. Bounded quantifiers
+    // make this provably linear (no polynomial backtracking - CodeQL clean).
+    // parseFiniteDecimal still validates the captured z value.
+    const pattern = /\[\[z=([-+0-9eE.]{1,40})(?:\|([^\]\n]{0,400}))?\]\]/g;
     let match: RegExpExecArray | null = pattern.exec(plane.body);
     while (match !== null) {
       const targetZ = parseFiniteDecimal(match[1] ?? "");

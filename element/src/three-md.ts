@@ -75,17 +75,28 @@ function esc(value: string): string {
     .replace(/>/g, "&gt;");
 }
 
+/** Escape for interpolation inside a double-quoted HTML attribute: also
+ * neutralizes quote characters so a value can never break out of the attribute
+ * (complete sanitization for the attribute sink). */
+function escAttr(value: string): string {
+  return esc(value).replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+}
+
 /** Inline Markdown on already-escaped text: code, bold, italic. */
 function inline(escaped: string): string {
   // Note: no `_italic_` rule - underscores are left alone so snake_case
   // identifiers (ship_to, acct_8821) render literally.
   return escaped
-    // Cross-plane links: [[z=2|text]] or [[z=2]] become clickable jumps.
-    .replace(/\[\[z=(-?\d+)(?:\|([^\]]*))?\]\]/g,
+    // Cross-plane links: [[z=2|text]] or [[z=1.5|text]] become clickable jumps.
+    // The z class matches the spec parser (decimals, sci-notation, +/-); bounded
+    // quantifiers keep it linear-time (ReDoS-safe).
+    .replace(/\[\[z=([-+0-9eE.]{1,40})(?:\|([^\]\n]{0,400}))?\]\]/g,
       (_m, z, text) => `<a class="xlink" part="link" data-z="${z}">${text || "z=" + z}</a>`)
-    // Markdown links to http(s): [text](url). (Not preceded by ! so images are left alone.)
-    .replace(/(^|[^!])\[([^\]]+)\]\((https?:\/\/[^)\s]+)\)/g,
-      (_m, pre, text, url) => `${pre}<a class="xlink" part="link" href="${url.replace(/"/g, "&quot;")}" target="_blank" rel="noopener">${text}</a>`)
+    // Markdown links to http(s): [text](url). (Not preceded by ! so images are
+    // left alone.) Only link URLs with no attribute-breaking characters; anything
+    // else stays plain text, so the href sink is provably safe.
+    .replace(/(^|[^!])\[([^\]]+)\]\((https?:\/\/[^)\s"'<>`]+)\)/g,
+      (_m, pre, text, url) => `${pre}<a class="xlink" part="link" href="${escAttr(url)}" target="_blank" rel="noopener">${text}</a>`)
     .replace(/`([^`]+)`/g, "<code>$1</code>")
     .replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>")
     .replace(/\*([^*]+)\*/g, "<em>$1</em>");
@@ -115,8 +126,11 @@ function parseLegend(raw: string | null | undefined): Record<string, string> {
     const key = [...rawKey][0]; // one source character
     const val = tok.slice(eq + 1).replace(/^["']|["']$/g, "");
     // An empty value (e.g. `.=`) blanks the character: it renders as a space, so
-    // a grid keeps its alignment but the character disappears.
-    if (key) map[key] = val === "" ? " " : val;
+    // a grid keeps its alignment but the character disappears. Values are HTML-
+    // escaped here because applyLegend substitutes them into already-escaped fence
+    // content that is later assigned to innerHTML: escaping at the single source
+    // makes the legend sink provably safe (no markup injection from frontmatter).
+    if (key) map[key] = val === "" ? " " : esc(val);
   }
   return map;
 }
@@ -175,9 +189,13 @@ function renderMarkdown(body: string, legend: Record<string, string> = {}): stri
     else if (/^!\[[^\]]*\]\([^)\s]+\)\s*$/.test(l.trim())) {
       // A Markdown image on its own line: ![alt](url). Renders images and GIFs.
       const m = l.trim().match(/^!\[([^\]]*)\]\(([^)\s]+)\)/);
-      const alt = m ? esc(m[1]) : "";
+      const alt = m ? escAttr(m[1]) : "";
       const url = m ? m[2] : "";
-      const safe = /^(https?:\/\/|\/|\.{0,2}\/|data:image\/)/i.test(url) ? esc(url).replace(/"/g, "&quot;") : "";
+      // Allowlisted scheme AND no characters that could break out of the quoted
+      // attribute. escAttr then fully neutralizes quotes/markup, so the sink is
+      // sanitized both by rejection and by complete attribute escaping.
+      const okUrl = /^(https?:\/\/|\/|\.{0,2}\/|data:image\/)/i.test(url) && !/["'<>`\s]/.test(url);
+      const safe = okUrl ? escAttr(url) : "";
       if (safe) out.push(`<img class="img" part="image" src="${safe}" alt="${alt}" loading="lazy">`);
     }
     else if (l.trim() !== "") out.push(`<div>${fmt(l)}</div>`);
@@ -254,11 +272,30 @@ const STYLES = `
    so long content is always reachable (the fixed -104px anchor clipped tall cards
    off the bottom). */
 :host([data-mode="stack"]) .plane.hot,
-:host([data-mode="layers"]) .plane.hot,
 :host([data-mode="elevator"]) .plane.hot,
 :host([data-mode="present"]) .plane.hot {
   top: 10px; bottom: 10px; height: auto; margin-top: 0; max-height: none; overflow-y: auto;
 }
+/* Layers: EVERY overlay (not just the focused one) is a centered, stage-height,
+   scrollable box so a layer of any length fits in frame; they sit perfectly
+   aligned, with depth + opacity (not a vertical fan) giving the stacked look. */
+:host([data-mode="layers"]) .plane {
+  top: 8px; bottom: 8px; height: auto; margin-top: 0; max-height: none; overflow-y: auto;
+}
+/* Map: each tile is a bounded, centered, scrollable card (margin-top matches half
+   the cap) so a tall tile stays on the board instead of spilling off the bottom. */
+:host([data-mode="map"]) .plane {
+  max-height: 180px; margin-top: -90px; overflow-y: auto;
+}
+/* Layers: aligned translucent overlays seen together (not one-at-a-time). */
+.layerchips { display: none; gap: 6px; flex-wrap: wrap; margin-top: 8px; }
+:host([data-mode="layers"]) .layerchips { display: flex; }
+.layerchip { font: inherit; font-size: 11px; color: var(--three-md-muted); background: var(--three-md-surface);
+  border: 1px solid var(--three-md-hairline); border-radius: 999px; padding: 4px 11px; cursor: pointer;
+  transition: color .15s, border-color .15s, opacity .15s; }
+.layerchip:hover { color: var(--three-md-text); border-color: var(--three-md-accent); }
+.layerchip[aria-pressed="true"] { color: var(--three-md-text); border-color: var(--three-md-accent); }
+.layerchip[aria-pressed="false"] { opacity: .45; text-decoration: line-through; }
 .plane.dim { opacity: .18; filter: saturate(.5); }
 .plane.hot { box-shadow: 0 0 0 2px var(--three-md-accent), 0 18px 44px rgba(0,0,0,.5); }
 /* Reader: the focused plane in single-card view fills the stage and scrolls its
@@ -374,6 +411,8 @@ export class ThreeMDElement extends HTMLElement {
   private _dragAxis: "x" | "y" | null = null;
   private _pointerId: number | null = null;
   private _pendingDrag = false;
+  private _hiddenLayers = new Set<number>(); // layers toggled off in layers view
+  private _chipsEl!: HTMLDivElement;
   private _keys = new Set<string>();
   private _camRaf: number | null = null;
   private _lastEmitted = -1;
@@ -409,8 +448,14 @@ export class ThreeMDElement extends HTMLElement {
     if (name === "src" && value) {
       void this._loadFromSrc(value);
     } else if (name === "mode") {
+      const wasBlend = this._mode === "blend";
       this._applyMode();
+      // blend renders voxels, every other mode renders plane cards: crossing that
+      // boundary needs a DOM rebuild, otherwise a dynamic switch into blend leaves
+      // stale cards and zero voxels (and a switch out leaves stale voxels).
+      if (wasBlend || this._mode === "blend") this._buildPlanes();
       this._resetCamera(); // each view has its own default camera
+      this._buildLayerChips(); // show/hide the layer toggles for this view
       this.render();
     } else if (name === "autoplay") {
       if (value !== null) this._startPlay(); else this._stopPlay();
@@ -518,6 +563,7 @@ export class ThreeMDElement extends HTMLElement {
     this._target = 0;
     this._resetCamera();
     this._keys.clear();
+    this._hiddenLayers.clear();
     if (this._camRaf != null) { cancelAnimationFrame(this._camRaf); this._camRaf = null; }
     this._dragAxis = null;
     this._dragging = false;
@@ -578,7 +624,8 @@ export class ThreeMDElement extends HTMLElement {
         <button class="navbtn loop" part="loop" type="button" aria-label="toggle loop" title="Loop playback" aria-pressed="true">⟲</button>
         <button class="navbtn fs" part="fullscreen" type="button" aria-label="fullscreen" title="Fullscreen">⛶</button>
       </div>
-      <div class="readout" part="readout"></div>`;
+      <div class="readout" part="readout"></div>
+      <div class="layerchips" part="layer-toggles"></div>`;
     this._root.appendChild(this._wrap);
 
     this._axisEl = this._wrap.querySelector(".axis")!;
@@ -586,6 +633,7 @@ export class ThreeMDElement extends HTMLElement {
     this._scene = this._wrap.querySelector(".scene")!;
     this._scrub = this._wrap.querySelector("input")!;
     this._readout = this._wrap.querySelector(".readout")!;
+    this._chipsEl = this._wrap.querySelector(".layerchips")!;
     this._hintEl = this._wrap.querySelector(".hint")!;
     this._playBtn = this._wrap.querySelector('[part="play"]')!;
 
@@ -669,7 +717,30 @@ export class ThreeMDElement extends HTMLElement {
     this._scrub.max = String(Math.max(0, this._planes.length - 1));
     this._scrub.value = "0";
     this._measureFrames();
+    this._buildLayerChips();
     this._updateReadout();
+  }
+
+  /** In layers view, a row of toggle chips shows/hides each overlay. */
+  private _buildLayerChips(): void {
+    if (!this._chipsEl) return;
+    this._chipsEl.innerHTML = "";
+    if (this._mode !== "layers") return;
+    this._planes.forEach((p, idx) => {
+      const chip = document.createElement("button");
+      chip.type = "button";
+      chip.className = "layerchip";
+      chip.setAttribute("part", "layer-toggle");
+      chip.textContent = p.label || `z${p.z}`;
+      chip.setAttribute("aria-pressed", String(!this._hiddenLayers.has(idx)));
+      chip.addEventListener("click", () => {
+        if (this._hiddenLayers.has(idx)) this._hiddenLayers.delete(idx);
+        else this._hiddenLayers.add(idx);
+        chip.setAttribute("aria-pressed", String(!this._hiddenLayers.has(idx)));
+        this.render();
+      });
+      this._chipsEl.appendChild(chip);
+    });
   }
 
   /**
@@ -972,6 +1043,8 @@ export class ThreeMDElement extends HTMLElement {
     }
 
     if (!this._els.length) return;
+    // Clear any per-layer pointer-event blocking; only layers view re-applies it.
+    if (m !== "layers") for (const el of this._els) el.style.pointerEvents = "";
 
     // Single-card view: one stationary card whose contents swap as you scrub.
     // No deck, no 3D - the other planes fade out and the focused one fades in.
@@ -1015,18 +1088,25 @@ export class ThreeMDElement extends HTMLElement {
     // depth; the focused one is opaque up front, the rest are translucent sheets
     // behind it. Orbit to see the layering. For annotations and overlays.
     if (m === "layers") {
+      // Overlays of one thing, seen TOGETHER: aligned (same x), shallow depth so
+      // you see through the stack; the focused layer is opaque, others ghosted;
+      // toggle chips hide/show each. This is what makes layers != a sequence deck.
       this._els.forEach((el, idx) => {
+        const hidden = this._hiddenLayers.has(idx);
         const d = idx - focus;
         const on = idx === fr;
-        el.style.transform = `translate3d(0px, ${(d * 10).toFixed(1)}px, ${(-Math.abs(d) * 80).toFixed(1)}px) scale(${on ? 1 : 0.97})`;
-        el.style.opacity = on ? "1" : Math.max(0.3, 1 - Math.abs(d) * 0.34).toFixed(2);
+        // Aligned overlays: no vertical fan (that pushed tall cards out of frame);
+        // depth (z) + opacity carry the stacked-sheet look, revealed when orbited.
+        el.style.transform = `translate3d(0px, 0px, ${(-Math.abs(d) * 45).toFixed(1)}px)`;
+        el.style.opacity = hidden ? "0" : (on ? "0.97" : "0.42");
         el.style.zIndex = on ? "300" : String(120 - Math.abs(fr - idx));
-        el.classList.toggle("hot", on);
+        el.style.pointerEvents = hidden ? "none" : "auto";
+        el.classList.toggle("hot", on && !hidden);
         el.classList.toggle("dim", false);
         el.classList.toggle("reader", false);
         el.classList.toggle("frame", false);
       });
-      this._scene.style.transform = this._cameraTransform(-160);
+      this._scene.style.transform = this._cameraTransform(-150);
       this._updateReadout();
       this._maybeEmit(fr);
       return;
@@ -1056,27 +1136,36 @@ export class ThreeMDElement extends HTMLElement {
     // board (so any coordinate range works); a doc without x/y is auto-gridded.
     if (m === "map") {
       const hasXY = this._planes.some((p) => p.x != null || p.y != null);
+      // Auto-grid slot for any plane that has no coordinates of its own.
+      const cols = Math.max(1, Math.ceil(Math.sqrt(this._els.length)));
+      const rows = Math.ceil(this._els.length / cols);
+      const gridPos = (idx: number): [number, number] => [
+        (idx % cols - (cols - 1) / 2) * 175,
+        (Math.floor(idx / cols) - (rows - 1) / 2) * 150,
+      ];
       let posOf: (idx: number) => [number, number];
       if (hasXY) {
-        const xs = this._planes.map((p) => p.x || 0), ys = this._planes.map((p) => p.y || 0);
-        const minX = Math.min(...xs), maxX = Math.max(...xs), minY = Math.min(...ys), maxY = Math.max(...ys);
+        // Only planes with EXPLICIT coordinates define the range, so a plane at
+        // (0,0) is honored. A plane missing x/y is NOT coerced to 0 (which would
+        // collapse every unpositioned card onto the origin) - it falls to the grid.
+        const xs = this._planes.filter((p) => p.x != null).map((p) => p.x as number);
+        const ys = this._planes.filter((p) => p.y != null).map((p) => p.y as number);
+        const minX = xs.length ? Math.min(...xs) : 0, maxX = xs.length ? Math.max(...xs) : 0;
+        const minY = ys.length ? Math.min(...ys) : 0, maxY = ys.length ? Math.max(...ys) : 0;
+        const cx = (minX + maxX) / 2, cy = (minY + maxY) / 2;
         const rx = Math.max(maxX - minX, 1), ry = Math.max(maxY - minY, 1);
-        posOf = (idx) => [
-          ((this._planes[idx].x || 0) - (minX + maxX) / 2) / rx * 360,
-          -((this._planes[idx].y || 0) - (minY + maxY) / 2) / ry * 250,
-        ];
+        posOf = (idx) => {
+          const p = this._planes[idx];
+          if (p.x == null && p.y == null) return gridPos(idx); // unpositioned -> grid
+          return [((p.x ?? cx) - cx) / rx * 360, -((p.y ?? cy) - cy) / ry * 250];
+        };
       } else {
-        const cols = Math.max(1, Math.ceil(Math.sqrt(this._els.length)));
-        const rows = Math.ceil(this._els.length / cols);
-        posOf = (idx) => [
-          (idx % cols - (cols - 1) / 2) * 175,
-          (Math.floor(idx / cols) - (rows - 1) / 2) * 150,
-        ];
+        posOf = gridPos;
       }
       this._els.forEach((el, idx) => {
         const on = idx === fr;
         const [x, y] = posOf(idx);
-        el.style.transform = `translate3d(${x.toFixed(1)}px, ${y.toFixed(1)}px, ${on ? 24 : 0}px) scale(${on ? 0.92 : 0.74})`;
+        el.style.transform = `translate3d(${x.toFixed(1)}px, ${y.toFixed(1)}px, ${on ? 12 : 0}px) scale(${on ? 0.9 : 0.74})`;
         el.style.opacity = "1";
         el.style.zIndex = on ? "300" : String(100 + idx);
         el.classList.toggle("hot", on);

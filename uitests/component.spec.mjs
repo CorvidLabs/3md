@@ -205,6 +205,28 @@ test.describe("<three-md> component", () => {
     expect(r.rawPipe).toBe(false);
   });
 
+  test("layers shows aligned overlays at once, with toggle chips", async ({ page }) => {
+    await page.goto("/embed-example.html");
+    await page.waitForFunction(() => document.getElementById("inline")?.shadowRoot?.querySelectorAll(".plane").length === 3);
+    const r = await page.evaluate(() => {
+      const lab = document.getElementById("inline");
+      lab.setAttribute("mode", "layers");
+      lab.setSource('---\n3md: 1.0\naxis: layer\n---\n@plane z=0 label="source"\nA\n@plane z=1 label="plain"\nB\n@plane z=2 label="legal"\nC\n');
+      const sr = lab.shadowRoot;
+      const planes = [...sr.querySelectorAll(".plane")];
+      const visible = planes.filter((p) => Number(getComputedStyle(p).opacity) > 0.1).length; // all overlays visible together
+      const aligned = new Set(planes.map((p) => Math.round(new DOMMatrix(getComputedStyle(p).transform).m41))).size === 1; // same x
+      const chips = sr.querySelectorAll(".layerchip").length;
+      // toggle the first layer off
+      sr.querySelector(".layerchip").click();
+      return { visible, aligned, chips, hiddenAfterToggle: lab._hiddenLayers.has(0) };
+    });
+    expect(r.visible).toBe(3);          // overlays seen together, not one-at-a-time
+    expect(r.aligned).toBe(true);       // stacked aligned (a deck would fan them in x)
+    expect(r.chips).toBe(3);
+    expect(r.hiddenAfterToggle).toBe(true);
+  });
+
   test("blend mode renders content as 3D voxels", async ({ page }) => {
     const errors = [];
     page.on("pageerror", (e) => errors.push(String(e)));
@@ -233,12 +255,15 @@ test.describe("<three-md> component", () => {
       lab.setAttribute("mode", "single");
       const s = lab.shadowRoot.querySelector("input[type=range]"); s.value = "1"; s.dispatchEvent(new Event("input", { bubbles: true }));
     });
-    await page.waitForTimeout(450); // let the opacity transition settle
+    // Wait until the opacity transition has actually settled, rather than a fixed
+    // timeout (which was flaky on slower CI/WebKit, sampling mid-fade).
+    await page.waitForFunction(() => {
+      const op = [...document.getElementById("inline").shadowRoot.querySelectorAll(".plane")].map((p) => Number(getComputedStyle(p).opacity));
+      return op[1] > 0.95 && op[0] < 0.02 && op[2] < 0.02;
+    }, { timeout: 4000 });
     const op = await page.evaluate(() =>
       [...document.getElementById("inline").shadowRoot.querySelectorAll(".plane")].map((p) => Number(getComputedStyle(p).opacity)));
-    // Only plane index 1 is visible; the others are faded out. Use a tolerance
-    // because opacity animates via a CSS transition and may not land on an exact
-    // 0 at the moment we sample it.
+    // Only plane index 1 is visible; the others are fully faded out once settled.
     expect(op[1]).toBeGreaterThan(0.95);
     expect(op[0]).toBeLessThan(0.05);
     expect(op[2]).toBeLessThan(0.05);
@@ -384,5 +409,91 @@ test.describe("<three-md> component", () => {
     }));
     expect(got.index).toBe(1);
     expect(got.z).toBe(1);
+  });
+
+  test("legend values cannot inject HTML (XSS sink is escaped)", async ({ page }) => {
+    const errors = [];
+    page.on("pageerror", (e) => errors.push(String(e)));
+    await page.goto("/embed-example.html");
+    await page.waitForFunction(() => document.getElementById("inline")?.shadowRoot?.querySelectorAll(".plane").length === 3);
+    const r = await page.evaluate(async () => {
+      const lab = document.getElementById("inline");
+      window.__xss = 0;
+      // Three independent code/markup-injection vectors through the legend value.
+      const vectors = [
+        "g=<details/open/ontoggle=window.__xss=1>",
+        "g=<iframe/src=javascript:window.__xss=1>",
+        "g=<img/src=x/onerror=window.__xss=1>",
+      ];
+      const out = [];
+      for (const leg of vectors) {
+        lab.removeAttribute("mode");
+        lab.setSource(`---\n3md: 1.0\naxis: time\nlegend: ${leg}\n---\n@plane z=0\n\`\`\`\nggg\n\`\`\`\n`);
+        await new Promise((res) => setTimeout(res, 60));
+        const html = lab.shadowRoot.querySelector(".md")?.innerHTML || "";
+        out.push({ hasIframe: /<iframe/i.test(html), hasImg: /<img/i.test(html), hasDetails: /<details/i.test(html) });
+      }
+      return { out, xss: window.__xss, iframes: lab.shadowRoot.querySelectorAll("iframe").length };
+    });
+    // No vector created a live element or fired script.
+    expect(r.xss).toBe(0);
+    expect(r.iframes).toBe(0);
+    for (const v of r.out) {
+      expect(v.hasIframe).toBe(false);
+      expect(v.hasImg).toBe(false);
+      expect(v.hasDetails).toBe(false);
+    }
+    expect(errors).toEqual([]);
+  });
+
+  test("cross-plane links work for decimal z (not just integers)", async ({ page }) => {
+    await page.goto("/embed-example.html");
+    await page.waitForFunction(() => document.getElementById("inline")?.shadowRoot?.querySelectorAll(".plane").length === 3);
+    const r = await page.evaluate(() => {
+      const lab = document.getElementById("inline");
+      lab.setAttribute("mode", "stack");
+      lab.setSource('---\n3md: 1.0\naxis: depth\n---\n@plane z=0\nGo [[z=1.5|to mid]] now.\n@plane z=1.5\nMid plane.\n@plane z=3\nDeep.\n');
+      const sr = lab.shadowRoot;
+      const link = sr.querySelector('.xlink[data-z="1.5"]');
+      const rawLeaks = /\[\[z=1\.5/.test(sr.querySelector(".md").textContent);
+      if (link) link.dispatchEvent(new MouseEvent("click", { bubbles: true }));
+      return { hasLink: !!link, rawLeaks, idx: lab.currentIndex };
+    });
+    expect(r.hasLink).toBe(true);     // decimal z rendered as a clickable link
+    expect(r.rawLeaks).toBe(false);   // not left as literal [[z=1.5|...]] text
+    expect(r.idx).toBe(1);            // clicking jumped to the z=1.5 plane (index 1)
+  });
+
+  test("switching into blend after load builds voxels (no empty stage)", async ({ page }) => {
+    await page.goto("/embed-example.html");
+    await page.waitForFunction(() => document.getElementById("inline")?.shadowRoot?.querySelectorAll(".plane").length === 3);
+    const r = await page.evaluate(async () => {
+      const lab = document.getElementById("inline");
+      lab.removeAttribute("mode"); // load in a card mode first
+      lab.setSource('---\n3md: 1.0\naxis: depth\n---\n@plane z=0\n```\n##\n##\n```\n@plane z=1\n```\n..\n##\n```\n');
+      await new Promise((res) => setTimeout(res, 60));
+      lab.setAttribute("mode", "blend"); // dynamic switch AFTER source is loaded
+      await new Promise((res) => setTimeout(res, 120));
+      return { voxels: lab.shadowRoot.querySelectorAll(".voxel").length };
+    });
+    expect(r.voxels).toBeGreaterThan(0);
+  });
+
+  test("map: unpositioned planes do not collapse onto explicit (0,0)", async ({ page }) => {
+    await page.goto("/embed-example.html");
+    await page.waitForFunction(() => document.getElementById("inline")?.shadowRoot?.querySelectorAll(".plane").length === 3);
+    const pts = await page.evaluate(() => {
+      const lab = document.getElementById("inline");
+      lab.setAttribute("mode", "map");
+      // One plane explicitly at the origin, two with no coordinates at all.
+      lab.setSource('---\n3md: 1.0\naxis: space\n---\n@plane z=0 x=0 y=0\norigin\n@plane z=1\nfloating one\n@plane z=2\nfloating two\n');
+      return [...lab.shadowRoot.querySelectorAll(".plane")].map((p) => {
+        const m = new DOMMatrix(getComputedStyle(p).transform);
+        return [Math.round(m.m41), Math.round(m.m42)];
+      });
+    });
+    // All three planes land at distinct board positions (none piled on the origin).
+    const uniq = new Set(pts.map((p) => p.join(","))).size;
+    expect(uniq).toBe(3);
   });
 });

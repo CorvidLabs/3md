@@ -1,0 +1,97 @@
+---
+3md: 1.0
+axis: layer
+title: Color Grading Layers - Night Market Still
+view: stack
+category: Creative
+---
+
+A color grade broken into visible layers. Each plane adds one adjustment so the
+final look has a trail of decisions behind it.
+
+@plane z=0 label="Base Plate"
+# Base Plate
+
+```
+┌──────────────────────────┐
+│  NIGHT MARKET FRAME 017  │
+│                          │
+│  sign glow: neutral      │
+│  shadows: flat gray      │
+│  skin: slightly cool     │
+│                          │
+│  [ ungraded source ]     │
+└──────────────────────────┘
+```
+
+- Exposure: balanced
+- White point: 5600K
+- Problem: the subject blends into the awnings
+
+@plane z=1 label="Contrast Curve"
+# Contrast Curve
+
+```
+Luma curve
+
+100 |                 *
+ 75 |            *
+ 50 |       *
+ 25 |    *
+  0 |_*________________
+      toe  mids  shoulder
+```
+
+- Lift blacks just above crush
+- Add a soft shoulder to protect neon signs
+- Subject now separates from the background
+
+@plane z=2 label="Neon Split"
+# Neon Split
+
+```
+Hue lanes
+
+cyan signs     ██████████ +18 sat
+magenta trim   ███████    +11 sat
+amber stalls   █████████  +15 warmth
+green spill    ██         -12 sat
+```
+
+The market should feel electric, not muddy. Green spill drops back so cyan and
+amber carry the frame.
+
+@plane z=3 label="Subject Mask"
+# Subject Mask
+
+```
+┌──────────────────────────┐
+│    background -5 sat      │
+│        ┌────────┐        │
+│        │ face   │ +0.4EV │
+│        │ coat   │ +12 tex│
+│        └────────┘        │
+│    foreground blur +6     │
+└──────────────────────────┘
+```
+
+- Face gets a small exposure lift
+- Coat texture rises so the silhouette reads
+- Foreground blur gets warmer bokeh
+
+@plane z=4 label="Final Look"
+# Final Look
+
+```
+┌──────────────────────────┐
+│  CYAN SIGNS  AMBER FOOD  │
+│                          │
+│        SUBJECT LIT       │
+│       coat edge clear    │
+│                          │
+│  cool rain, warm street  │
+└──────────────────────────┘
+```
+
+Final grade: cool city, warm human center. The stack makes the look reversible,
+reviewable, and easy to tune.

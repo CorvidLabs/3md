@@ -13,8 +13,11 @@ test("the component renders every gallery example cleanly", async ({ page }) => 
   await page.goto("/embed-example.html");
   await page.waitForFunction(() => document.getElementById("inline")?.shadowRoot?.querySelectorAll(".plane").length > 0);
 
+  // Validate the FULL corpus, not just the curated gallery: all-examples.json
+  // lists every example so render regressions are caught even though the public
+  // gallery only shows the curated set.
   const data = await page.evaluate(async () => {
-    const res = await fetch("gallery-data.json");
+    const res = await fetch("all-examples.json");
     return res.json();
   });
   expect(data.length).toBeGreaterThan(100);

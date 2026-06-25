@@ -1,21 +1,21 @@
 // Build web/examples-gallery.3md: one plane per example, each showing the
 // example's animated GIF (web/gifs/<slug>.gif) via 3md's image support. View it
 // in the viewer (viewer.html?src=examples-gallery.3md) to flip through animated
-// previews of every example. Run after the GIFs exist:
-//   node scripts/build-examples-gallery.mjs
+// previews of every curated animated example. Run after the GIFs exist:
+//   bun scripts/build-examples-gallery.mjs
 import { readFileSync, writeFileSync, existsSync } from "node:fs";
 
 const data = JSON.parse(readFileSync("web/gallery-data.json", "utf8"));
 let out = `---
 3md: 1.0
 axis: example
-title: 3md Examples Gallery (animated)
+title: 3md Curated Examples Gallery (animated)
 view: single
-note: each plane shows one example as an animated GIF; scrub to flip through them
+note: each plane shows one curated example as an animated GIF; scrub to flip through them
 ---
-Every example, captured in motion. Use the slider or arrows to step through; the
-"single card" view shows one at a time. Each frame is a real render of that
-example in the <three-md> component.
+Curated examples, captured in motion. Use the slider or arrows to step through;
+the "single card" view shows one at a time. Each frame is a real render of that
+example in the <three-md> component or a matching motion card.
 `;
 let z = 0;
 let skipped = 0;
