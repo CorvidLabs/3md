@@ -1284,31 +1284,35 @@ export class ThreeMDElement extends HTMLElement {
       });
       // 0.92 leaves headroom so a tilted/orbited board still stays inside the stage.
       const fit = Math.min(1, (stageW / 2 - 16) / halfW, (stageH / 2 - 16) / halfH) * 0.92;
-      // Focus-to-read: the focused tile pops to the board centre at full readable
-      // size (countering the fit-scale + camera tilt so it faces the viewer), while
-      // the rest dim into a board behind it. So a card is readable without zooming.
-      const pop = Math.min(2.6, 1 / fit);
+      // Place the board tiles (everything except the focused card).
       this._els.forEach((el, idx) => {
-        const on = idx === fr;
+        if (idx === fr) return;
         const [x, y] = posOf(idx);
-        if (on) {
-          el.style.transform = `translate3d(0px,0px,90px) rotateY(${(-this._yaw).toFixed(2)}deg) rotateX(${(-this._pitch).toFixed(2)}deg) scale(${pop.toFixed(3)})`;
-          el.style.opacity = "1";
-          el.style.zIndex = "500";
-          el.style.top = "0px"; el.style.bottom = "0px"; el.style.height = "max-content";
-          el.style.marginTop = "auto"; el.style.marginBottom = "auto";
-          el.style.maxHeight = Math.max(120, (stageH - 28) / pop).toFixed(0) + "px";
-        } else {
-          el.style.transform = `translate3d(${x.toFixed(1)}px, ${y.toFixed(1)}px, 0px) scale(0.72)`;
-          el.style.opacity = "0.4";
-          el.style.zIndex = String(100 + idx);
-          el.style.top = ""; el.style.bottom = ""; el.style.height = ""; el.style.marginTop = ""; el.style.marginBottom = ""; el.style.maxHeight = "";
-        }
-        el.classList.toggle("hot", on);
-        el.classList.toggle("dim", false); // board dimmed via inline opacity, no desaturate
+        el.style.transform = `translate3d(${x.toFixed(1)}px, ${y.toFixed(1)}px, 0px) scale(0.72)`;
+        el.style.opacity = "0.4";
+        el.style.zIndex = String(100 + idx);
+        el.style.top = ""; el.style.bottom = ""; el.style.height = ""; el.style.marginTop = ""; el.style.marginBottom = ""; el.style.maxHeight = "";
+        el.classList.toggle("hot", false);
+        el.classList.toggle("dim", false);
         el.classList.toggle("reader", false);
         el.classList.toggle("frame", false);
       });
+      // Focus-to-read: the focused tile pops to the board centre and is scaled so its
+      // WHOLE content fits the stage - every line readable, no scroll - countering the
+      // board's fit-scale and camera tilt so it faces the viewer. Board dims behind.
+      const hotEl = this._els[fr];
+      if (hotEl) {
+        hotEl.classList.add("hot");
+        hotEl.classList.toggle("dim", false); hotEl.classList.toggle("reader", false); hotEl.classList.toggle("frame", false);
+        hotEl.style.top = "0px"; hotEl.style.bottom = "0px"; hotEl.style.height = "max-content";
+        hotEl.style.maxHeight = "none"; hotEl.style.marginTop = "auto"; hotEl.style.marginBottom = "auto";
+        hotEl.style.transform = "none"; // measure natural content size first
+        const natH = Math.max(1, hotEl.offsetHeight), natW = Math.max(1, hotEl.offsetWidth);
+        const pop = Math.max(0.5, Math.min(2.6, (stageH - 22) / natH, (stageW - 22) / natW));
+        hotEl.style.transform = `translate3d(0px,0px,90px) rotateY(${(-this._yaw).toFixed(2)}deg) rotateX(${(-this._pitch).toFixed(2)}deg) scale(${pop.toFixed(3)})`;
+        hotEl.style.opacity = "1";
+        hotEl.style.zIndex = "500";
+      }
       this._scene.style.transform = `${this._cameraTransform(-120)} scale(${fit.toFixed(3)})`;
       this._updateReadout();
       this._maybeEmit(fr);
