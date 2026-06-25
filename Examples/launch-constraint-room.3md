@@ -1,0 +1,95 @@
+---
+3md: 1.0
+axis: console
+title: Launch Constraint Room
+view: present
+fps: 1
+category: Engineering
+---
+
+A launch decision compressed into console planes. Each station owns one slice of
+truth. The final plane is not a vote. It is a dependency graph becoming quiet.
+
+@plane z=0 label="Weather"
+# Weather
+
+| Rule | Limit | Current | State |
+|---|---:|---:|---|
+| Field mill | 1.0 kV/m | 0.4 | go |
+| Winds at 150 m | 19 kt | 12 kt | go |
+| Anvil cloud | clear | clear | go |
+
+Weather is green, but only for a 42 minute window.
+
+@plane z=1 label="Range"
+# Range
+
+| Asset | State |
+|---|---|
+| Radar 1 | go |
+| Radar 2 | go |
+| Flight corridor | clear |
+| Downrange ships | none in box |
+
+Range calls go.
+
+Constraint: if T zero slips past the weather window, range must re-clear.
+
+@plane z=2 label="Vehicle"
+# Vehicle
+
+```
+stage 1:  green
+stage 2:  green
+avionics: green
+thermal:  watching valve T2
+```
+
+Vehicle is go with one watch item.
+
+- Valve T2 remains inside family.
+- No recycle required.
+- Flight software hash matches signed load.
+
+@plane z=3 label="Ground"
+# Ground
+
+```
+LOX farm:     stable
+RP-1 system:  stable
+TEA-TEB:      armed
+strongback:   retract command ready
+```
+
+Ground is go.
+
+The pad is now less a place than a synchronized machine.
+
+@plane z=4 label="Director"
+# Director
+
+```
+weather  -> go
+range    -> go
+vehicle  -> go with watch
+ground   -> go
+
+poll result: GO
+```
+
+The word is small because the machine underneath it is large.
+
+Proceed to terminal count.
+
+@plane z=5 label="Terminal Count"
+# Terminal Count
+
+```
+T-10  terminal sequencer
+T-07  engine chill
+T-03  tanks press
+T-00  ignition
+T+01  commit
+```
+
+At T plus one, the stack stops being a plan and becomes evidence.
