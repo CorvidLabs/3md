@@ -1,0 +1,76 @@
+---
+3md: 1.0
+axis: path
+title: The Tea Shop at the End of the Lane
+category: Story
+byline: a tiny choose-your-path, by Juniper
+view: single
+---
+A four-minute story you steer yourself. Read a scene, then pick a door.
+Every choice is a [[z=1|cross-plane link]] that walks you to another plane.
+There is no wrong path, only different cups of tea.
+
+@plane z=0 label="The Lane"
+# The Lane
+
+Rain has just stopped. The lane smells of wet stone and woodsmoke, and at the
+very end a small shop glows amber through fogged glass. A hand-painted sign
+sways: **open, probably**.
+
+You walk up. There is a brass **knocker** shaped like a sleeping fox, and a
+door already left a finger's width **ajar**.
+
+- Lift the [[z=1|fox knocker]]
+- Slip through the [[z=2|open door]]
+
+@plane z=1 label="You Knock"
+# You lift the knocker
+
+It is warm, which knockers should not be. Before you can rap it twice the door
+opens itself, and a voice like steam says, *"Punctual. I like that."*
+
+Inside: shelves to the ceiling, every jar labeled in a language of smells.
+
+- Ask for [[z=3|"whatever I need"]]
+- Ask for [[z=4|"something brave"]]
+
+@plane z=2 label="You Enter"
+# You slip inside
+
+No one is here, but a single cup waits on the counter, still steaming, with a
+note: *"For the curious. Sit anywhere."*
+
+You sit. The chair sighs happily. The shop, you realize, has been **waiting**.
+
+- Drink before [[z=3|anyone notices]]
+- Wait, politely, for [[z=4|the owner]]
+
+@plane z=3 label="What You Need"
+# "Whatever I need"
+
+The shopkeeper, who is mostly silhouette and entirely kind, considers you for
+a long moment, then pours something pale gold.
+
+*"This one is honest,"* they warn. *"Drink slowly."*
+
+- [[z=5|Drink it]]
+
+@plane z=4 label="Something Brave"
+# "Something brave"
+
+A grin in the dark. *"Now we are talking."* They reach to the highest shelf,
+to a jar that hums, and measure three careful drops into roaring hot water.
+
+*"Bravery is mostly just the first sip,"* they say.
+
+- [[z=5|Take the first sip]]
+
+@plane z=5 label="The good cup"
+# The cup you needed
+
+It tastes like the afternoon you forgot you missed: sunlight on a kitchen
+table, a book you never finished, someone humming in the next room.
+
+You leave a coin you didn't know you had. The fox knocker winks.
+
+> Begin again from [[z=0|the lane]]?

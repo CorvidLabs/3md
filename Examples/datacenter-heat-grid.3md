@@ -1,0 +1,126 @@
+---
+3md: 1.0
+axis: hour
+legend: ".=· :=░ +=▒ #=▓ @=█"
+billboard: true
+title: Datacenter Heat - request load across a rack grid, hour by hour
+category: Data
+unit: normalized request load (0 cold .. 5 hot)
+columns: "24 racks (x)"
+rows: "12 aisles (y)"
+render: blend fuses the slices into a 3D heat volume; map lays the day out as a board; play scrubs the hours
+---
+A live heat field. Each @plane is one hour; each grid cell is one rack's
+normalized load. Cold cells are blank, then `.` `:` `+` `#` `@` climb from
+warm to scorching. The hotspot drifts rightward across the day and a second
+flare opens up in the top-left after noon. Scrub [[z=0|06:00]] to [[z=5|21:00]],
+or blend all six into one volume.
+
+@plane z=0 label="06:00" peak="2"
+# 06:00  (peak load 2/5)
+
+```
+                        
+                        
+                        
+                        
+                        
+    ...                 
+    .:.                 
+    ...                 
+                        
+                        
+                        
+                        
+```
+
+@plane z=1 label="09:00" peak="3"
+# 09:00  (peak load 3/5)
+
+```
+                        
+                        
+                        
+                        
+                        
+      ..:..             
+      .:+:.             
+      ..:..             
+                        
+                        
+                        
+                        
+```
+
+@plane z=2 label="12:00" peak="4"
+# 12:00  (peak load 4/5)
+
+```
+                        
+                        
+                        
+          ...           
+         .:::.          
+        .:+#+:.         
+         .:::.          
+          ...           
+                        
+                        
+                        
+                        
+```
+
+@plane z=3 label="15:00" peak="5"
+# 15:00  (peak load 5/5)
+
+```
+                        
+   ...                  
+  .:+:.                 
+   ...      ..:..       
+           .:+++:.      
+           .+#@#+.      
+           .:+++:.      
+            ..:..       
+                        
+                        
+                        
+                        
+```
+
+@plane z=4 label="18:00" peak="5"
+# 18:00  (peak load 5/5)
+
+```
+                        
+     ...                
+    .:+:.               
+     ...                
+               ..:..    
+              .:+++:.   
+              .+#@#+.   
+              .:+++:.   
+               ..:..    
+                        
+                        
+                        
+```
+
+@plane z=5 label="21:00" peak="4"
+# 21:00  (peak load 4/5)
+
+```
+                        
+       ...              
+      .:+:.             
+       ...              
+                        
+                   ...  
+                  .:::. 
+                  :+#+: 
+                  .:::. 
+                   ...  
+                        
+                        
+```
+

@@ -1,0 +1,113 @@
+---
+3md: 1.0
+axis: week
+view: single
+title: 12-Week Strength Mesocycle (4-day)
+category: Health
+lifts: squat / bench / deadlift / press
+deloads: weeks 4, 8, 12
+---
+A periodized program. Each plane is one training week; scrub Z to move through
+the block. Three phases of four weeks: accumulation, intensification, peaking,
+each capped by a [[z=3|deload]]. Loads are %1RM, effort is RPE.
+
+@plane z=0 label="Wk 1 - Accumulation"
+**Accumulation 1/3** - build volume, RPE 7
+
+- Mon - Squat 4x8 @70% · RDL 3x10
+- Tue - Bench 4x8 @70% · Row 4x10
+- Thu - Front Squat 3x8 · Leg curl 3x12
+- Fri - OHP 4x8 @68% · Pull-up 4x8
+
+@plane z=1 label="Wk 2 - Accumulation"
+**Accumulation 2/3** - more sets, RPE 8
+
+- Mon - Squat 5x8 @72% · RDL 4x10
+- Tue - Bench 5x8 @72% · Row 4x10
+- Thu - Front Squat 4x8 · Leg curl 4x12
+- Fri - OHP 5x8 @70% · Pull-up 4x10
+
+@plane z=2 label="Wk 3 - Accumulation"
+**Accumulation 3/3** - peak volume, RPE 9
+
+- Mon - Squat 5x10 @72% · RDL 4x12
+- Tue - Bench 5x10 @72% · Row 5x10
+- Thu - Front Squat 4x10 · Leg curl 4x15
+- Fri - OHP 5x10 @70% · Pull-up 5x10
+
+@plane z=3 label="Wk 4 - DELOAD"
+**Deload** - cut volume ~50%, RPE 5. Recover.
+
+- Mon - Squat 3x5 @60%
+- Tue - Bench 3x5 @60%
+- Thu - light technique work
+- Fri - OHP 3x5 @58%
+
+Next: [[z=4|intensification block]].
+
+@plane z=4 label="Wk 5 - Intensification"
+**Intensification 1/3** - load up, RPE 7
+
+- Mon - Squat 5x5 @78% · RDL 3x8
+- Tue - Bench 5x5 @78% · Row 4x8
+- Thu - Pause Squat 4x5 · Leg curl 3x10
+- Fri - OHP 5x5 @76% · Pull-up 4x6
+
+@plane z=5 label="Wk 6 - Intensification"
+**Intensification 2/3** - heavier, RPE 8
+
+- Mon - Squat 5x4 @82% · RDL 3x6
+- Tue - Bench 5x4 @82% · Row 4x6
+- Thu - Pause Squat 4x4 · Leg curl 3x10
+- Fri - OHP 5x4 @80% · Weighted pull-up 4x5
+
+@plane z=6 label="Wk 7 - Intensification"
+**Intensification 3/3** - top loads, RPE 9
+
+- Mon - Squat 4x3 @86% · RDL 3x5
+- Tue - Bench 4x3 @86% · Row 4x6
+- Thu - Pause Squat 3x3 · Leg curl 3x10
+- Fri - OHP 4x3 @84% · Weighted pull-up 4x4
+
+@plane z=7 label="Wk 8 - DELOAD"
+**Deload** - cut intensity, RPE 5. Prime for the peak.
+
+- Mon - Squat 3x4 @65%
+- Tue - Bench 3x4 @65%
+- Thu - light technique work
+- Fri - OHP 3x4 @63%
+
+Next: [[z=8|peaking block]].
+
+@plane z=8 label="Wk 9 - Peaking"
+**Peaking 1/3** - heavy triples, RPE 8
+
+- Mon - Squat 4x3 @88% · light RDL 2x6
+- Tue - Bench 4x3 @88% · Row 3x6
+- Thu - Deadlift 4x3 @85%
+- Fri - OHP 4x3 @86%
+
+@plane z=9 label="Wk 10 - Peaking"
+**Peaking 2/3** - doubles, RPE 9
+
+- Mon - Squat 3x2 @91%
+- Tue - Bench 3x2 @91% · Row 3x6
+- Thu - Deadlift 3x2 @89%
+- Fri - OHP 3x2 @89%
+
+@plane z=10 label="Wk 11 - Peaking"
+**Peaking 3/3** - openers, sharp and short
+
+- Mon - Squat singles @93-95%
+- Tue - Bench singles @93-95%
+- Thu - Deadlift singles @92-94%
+- Fri - rest / mobility
+
+@plane z=11 label="Wk 12 - TEST / DELOAD"
+**Test week** - work up to a new 1RM, then back off.
+
+- Mon - Squat: work to a daily max
+- Wed - Bench: work to a daily max
+- Fri - Deadlift: work to a daily max
+
+Then rest a week and restart at [[z=0|accumulation]] with the new maxes.

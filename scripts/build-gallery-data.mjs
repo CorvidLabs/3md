@@ -33,9 +33,10 @@ const RULES = [
 
 // A hand-picked set of standouts surfaced by the gallery's "Featured" filter.
 const FEATURED = new Set([
-  "bug-lifecycle", "dungeon-crawl-descent", "dungeon-run-log",
-  "game-tic-tac-toe", "gather-to-anneal", "hive-year",
-  "home-wedding-seating", "junction-interlocking", "life-song-structure",
+  "aegis-sensor-sweep", "bug-lifecycle", "datacenter-heat-grid",
+  "dungeon-crawl-descent", "dungeon-run-log", "game-tic-tac-toe",
+  "gather-to-anneal", "hive-year", "home-wedding-seating",
+  "incident-response-runbook", "junction-interlocking", "life-song-structure",
   "metro-zone-grid", "museum-of-the-anthropocene-walkthrough",
   "reef-tank-cross-section", "solar-system-depth-dive", "solar-system",
   "spanish-ser-vs-estar-flashcards", "suspension-bridge-load-path",

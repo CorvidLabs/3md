@@ -1,0 +1,83 @@
+---
+3md: 1.0
+axis: step
+title: API Gateway Outage - On-Call Runbook
+category: Engineering
+schema: runbook/1
+entrypoint: "0"
+resolved: "7"
+service: api-gateway
+severity: sev2
+view: single
+---
+One file, two readers. A human on-call follows the prose and clicks the branch
+that matches reality. A program parses the same planes as a decision graph and
+can dry-run, lint for dead ends, or drive an auto-remediation. Each [[z=N|...]]
+link is a branch; step 0 is the entrypoint, step 7 is resolution.
+
+@plane z=0 label="DETECT" kind=entry signal="5xx_rate>5%"
+# Detect
+
+PagerDuty fired: `5xx rate > 5% for 3m` on `api-gateway`. Open the dashboard and
+confirm it is real, not one bad host or a deploy still rolling.
+
+- error rate truly elevated -> [[z=1|TRIAGE]]
+- single host or already recovering -> [[z=7|RESOLVED]]
+
+@plane z=1 label="TRIAGE" kind=decision
+# Triage
+
+Find the blast radius. `kubectl get pods -n prod | grep -v Running` and pull the
+last deploy time. Decide the most likely cause.
+
+- a deploy shipped in the last 30m -> [[z=3|ROLLBACK]]
+- DB latency or connection errors in the logs -> [[z=2|DB_CHECK]]
+- cause unclear after 10m -> [[z=6|ESCALATE]]
+
+@plane z=2 label="DB_CHECK" kind=decision tool="psql"
+# Database check
+
+Check the primary: `SELECT count(*) FROM pg_stat_activity;`, replication lag,
+slow-query log.
+
+- DB is saturated or lagging -> [[z=4|MITIGATE_DB]]
+- DB looks healthy -> [[z=3|ROLLBACK]]
+
+@plane z=3 label="ROLLBACK" kind=action cmd="kubectl rollout undo"
+# Roll back the last deploy
+
+`kubectl rollout undo deploy/api-gateway -n prod`. Watch the error rate for 5m.
+
+- errors dropping -> [[z=5|VERIFY]]
+- no improvement -> [[z=6|ESCALATE]]
+
+@plane z=4 label="MITIGATE_DB" kind=action
+# Mitigate the database
+
+Kill long-running queries, fail over to the replica if the primary is wedged,
+then widen the connection pool.
+
+- recovered -> [[z=5|VERIFY]]
+- still degraded -> [[z=6|ESCALATE]]
+
+@plane z=5 label="VERIFY" kind=decision
+# Verify recovery
+
+Error rate under 1% for 5m, latency normal, the request queue drained.
+
+- all green -> [[z=7|RESOLVED]]
+- still red -> [[z=6|ESCALATE]]
+
+@plane z=6 label="ESCALATE" kind=action
+# Escalate
+
+Page the incident commander and the service owner. Post the timeline in
+`#incident`. Take the directed action, then re-verify.
+
+- mitigation applied -> [[z=5|VERIFY]]
+
+@plane z=7 label="RESOLVED" kind=terminal accept=true
+# Resolved
+
+Metrics stable. Close the incident, snapshot the timeline, schedule the
+postmortem. The on-call's job is done.
