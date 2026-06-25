@@ -80,8 +80,10 @@ function inline(escaped: string): string {
   // Note: no `_italic_` rule - underscores are left alone so snake_case
   // identifiers (ship_to, acct_8821) render literally.
   return escaped
-    // Cross-plane links: [[z=2|text]] or [[z=2]] become clickable jumps.
-    .replace(/\[\[z=(-?\d+)(?:\|([^\]]*))?\]\]/g,
+    // Cross-plane links: [[z=2|text]] or [[z=1.5|text]] become clickable jumps.
+    // The z class matches the spec parser (decimals, sci-notation, +/-); bounded
+    // quantifiers keep it linear-time (ReDoS-safe).
+    .replace(/\[\[z=([-+0-9eE.]{1,40})(?:\|([^\]\n]{0,400}))?\]\]/g,
       (_m, z, text) => `<a class="xlink" part="link" data-z="${z}">${text || "z=" + z}</a>`)
     // Markdown links to http(s): [text](url). (Not preceded by ! so images are
     // left alone.) Only link URLs with no attribute-breaking characters; anything
@@ -117,8 +119,11 @@ function parseLegend(raw: string | null | undefined): Record<string, string> {
     const key = [...rawKey][0]; // one source character
     const val = tok.slice(eq + 1).replace(/^["']|["']$/g, "");
     // An empty value (e.g. `.=`) blanks the character: it renders as a space, so
-    // a grid keeps its alignment but the character disappears.
-    if (key) map[key] = val === "" ? " " : val;
+    // a grid keeps its alignment but the character disappears. Values are HTML-
+    // escaped here because applyLegend substitutes them into already-escaped fence
+    // content that is later assigned to innerHTML: escaping at the single source
+    // makes the legend sink provably safe (no markup injection from frontmatter).
+    if (key) map[key] = val === "" ? " " : esc(val);
   }
   return map;
 }
@@ -424,7 +429,12 @@ export class ThreeMDElement extends HTMLElement {
     if (name === "src" && value) {
       void this._loadFromSrc(value);
     } else if (name === "mode") {
+      const wasBlend = this._mode === "blend";
       this._applyMode();
+      // blend renders voxels, every other mode renders plane cards: crossing that
+      // boundary needs a DOM rebuild, otherwise a dynamic switch into blend leaves
+      // stale cards and zero voxels (and a switch out leaves stale voxels).
+      if (wasBlend || this._mode === "blend") this._buildPlanes();
       this._resetCamera(); // each view has its own default camera
       this._buildLayerChips(); // show/hide the layer toggles for this view
       this.render();
@@ -1105,22 +1115,31 @@ export class ThreeMDElement extends HTMLElement {
     // board (so any coordinate range works); a doc without x/y is auto-gridded.
     if (m === "map") {
       const hasXY = this._planes.some((p) => p.x != null || p.y != null);
+      // Auto-grid slot for any plane that has no coordinates of its own.
+      const cols = Math.max(1, Math.ceil(Math.sqrt(this._els.length)));
+      const rows = Math.ceil(this._els.length / cols);
+      const gridPos = (idx: number): [number, number] => [
+        (idx % cols - (cols - 1) / 2) * 175,
+        (Math.floor(idx / cols) - (rows - 1) / 2) * 150,
+      ];
       let posOf: (idx: number) => [number, number];
       if (hasXY) {
-        const xs = this._planes.map((p) => p.x || 0), ys = this._planes.map((p) => p.y || 0);
-        const minX = Math.min(...xs), maxX = Math.max(...xs), minY = Math.min(...ys), maxY = Math.max(...ys);
+        // Only planes with EXPLICIT coordinates define the range, so a plane at
+        // (0,0) is honored. A plane missing x/y is NOT coerced to 0 (which would
+        // collapse every unpositioned card onto the origin) - it falls to the grid.
+        const xs = this._planes.filter((p) => p.x != null).map((p) => p.x as number);
+        const ys = this._planes.filter((p) => p.y != null).map((p) => p.y as number);
+        const minX = xs.length ? Math.min(...xs) : 0, maxX = xs.length ? Math.max(...xs) : 0;
+        const minY = ys.length ? Math.min(...ys) : 0, maxY = ys.length ? Math.max(...ys) : 0;
+        const cx = (minX + maxX) / 2, cy = (minY + maxY) / 2;
         const rx = Math.max(maxX - minX, 1), ry = Math.max(maxY - minY, 1);
-        posOf = (idx) => [
-          ((this._planes[idx].x || 0) - (minX + maxX) / 2) / rx * 360,
-          -((this._planes[idx].y || 0) - (minY + maxY) / 2) / ry * 250,
-        ];
+        posOf = (idx) => {
+          const p = this._planes[idx];
+          if (p.x == null && p.y == null) return gridPos(idx); // unpositioned -> grid
+          return [((p.x ?? cx) - cx) / rx * 360, -((p.y ?? cy) - cy) / ry * 250];
+        };
       } else {
-        const cols = Math.max(1, Math.ceil(Math.sqrt(this._els.length)));
-        const rows = Math.ceil(this._els.length / cols);
-        posOf = (idx) => [
-          (idx % cols - (cols - 1) / 2) * 175,
-          (Math.floor(idx / cols) - (rows - 1) / 2) * 150,
-        ];
+        posOf = gridPos;
       }
       this._els.forEach((el, idx) => {
         const on = idx === fr;
