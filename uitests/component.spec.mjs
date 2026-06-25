@@ -298,7 +298,12 @@ test.describe("<three-md> component", () => {
     const modes = await page.evaluate(() => {
       const el = document.getElementById("inline");
       const out = {};
-      for (const m of ["present", "single", "stack", "blend"]) { el.setAttribute("mode", m); out[m] = el.getAttribute("data-mode"); }
+      for (const m of ["present", "single", "stack"]) { el.setAttribute("mode", m); out[m] = el.getAttribute("data-mode"); }
+      // blend only resolves to blend for a doc with voxelizable ASCII art; a text
+      // doc falls back to the deck, so load real grid art before checking blend.
+      el.setAttribute("mode", "blend");
+      el.setSource('---\n3md: 1.0\naxis: depth\n---\n@plane z=0\n```\n##\n##\n```\n@plane z=1\n```\n.#\n#.\n```\n');
+      out.blend = el.getAttribute("data-mode");
       return out;
     });
     expect(modes).toEqual({ present: "present", single: "single", stack: "stack", blend: "blend" });

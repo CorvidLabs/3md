@@ -271,6 +271,25 @@ test.describe("viewer & editor (viewer.html)", () => {
     expect(ok.mode).toBe("stack");
   });
 
+  test("the blend (3D) mode option is disabled for non-voxel docs, enabled for ASCII art", async ({ page }) => {
+    await page.goto("/viewer.html");
+    await page.waitForFunction(() => document.getElementById("lab")?.shadowRoot !== undefined);
+    // Pure-text doc: blend disabled.
+    const txt = await page.evaluate(() => {
+      window.threeMd.set('---\n3md: 1.0\naxis: time\n---\n@plane z=0\n# Hi\njust prose\n');
+      return { disabled: document.getElementById("blendOpt").disabled, voxelizable: document.getElementById("lab").voxelizable };
+    });
+    expect(txt.voxelizable).toBe(false);
+    expect(txt.disabled).toBe(true);
+    // ASCII-art doc (a small grid): blend enabled.
+    const art = await page.evaluate(() => {
+      window.threeMd.set('---\n3md: 1.0\naxis: depth\n---\n@plane z=0\n```\n##  ##\n######\n##  ##\n```\n@plane z=1\n```\n.####.\n######\n.####.\n```\n');
+      return { disabled: document.getElementById("blendOpt").disabled, voxelizable: document.getElementById("lab").voxelizable };
+    });
+    expect(art.voxelizable).toBe(true);
+    expect(art.disabled).toBe(false);
+  });
+
   test("the agent schema lists error codes and the axis-to-mode map", async ({ page }) => {
     await page.goto("/viewer.html");
     const s = await page.evaluate(() => JSON.parse(document.getElementById("threemd-schema").textContent));

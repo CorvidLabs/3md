@@ -511,6 +511,12 @@ export class ThreeMDElement extends HTMLElement {
     return this._errorCode;
   }
 
+  /** Whether the document has voxelizable ASCII-art (so blend/3D mode is
+   * meaningful). False for pure-text docs, which blend cannot render usefully. */
+  get voxelizable(): boolean {
+    return this._planes.some((p) => this._gridOf(p.body) !== null);
+  }
+
   /** The index of the currently focused plane. */
   get currentIndex(): number {
     return Math.round(this._focus);
@@ -754,13 +760,15 @@ export class ThreeMDElement extends HTMLElement {
     this._voxels = [];
     this._axisEl.textContent = this._doc ? `axis = ${this._doc.axis}` : "";
     if (this._mode === "blend") {
-      this._buildBlend();
-      // A document with no voxelizable ASCII art has nothing to show in blend, so
-      // fall back to the deck instead of an empty stage.
-      if (!this._voxels.length) {
+      // Blend is only meaningful for docs with real voxelizable ASCII art. A
+      // pure-text doc would render as a garbled text cloud, so fall back to the
+      // deck instead (the viewer also hides the blend option when !voxelizable).
+      if (!this.voxelizable) {
         this._mode = "stack";
         this.setAttribute("data-mode", "stack");
         if (this._hintEl) this._hintEl.textContent = HINTS.stack;
+      } else {
+        this._buildBlend();
       }
     }
     if (this._mode !== "blend") {

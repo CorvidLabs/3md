@@ -242,7 +242,7 @@
         <option value="play">animation</option>
         <option value="single">reader</option>
         <option value="present">slides</option>
-        <option value="blend">3D object</option>
+        <option value="blend" id="blendOpt">3D object</option>
         <option value="map">map</option>
       </select>
       <button id="playBtn" class="btn" type="button">play</button>
@@ -441,10 +441,21 @@ See [[z=1|Tuesday]] for what's next.
       }
     }
 
+    const blendOpt = document.getElementById("blendOpt");
+    function updateBlendOption() {
+      // 3D/blend is only meaningful with voxelizable ASCII art; disable it otherwise
+      // so a text doc cannot be switched into a garbled voxel cloud.
+      const ok = !lab.error && lab.voxelizable;
+      blendOpt.disabled = !ok;
+      blendOpt.textContent = ok ? "3D object" : "3D object (needs ASCII art)";
+      if (!ok && modeSel.value === "blend") { modeSel.value = ""; lab.removeAttribute("mode"); }
+    }
+
     function render() {
       const src = ed.value;
       counts.textContent = src.split("\n").length + " lines, " + src.length + " chars";
       lab.setSource(src);
+      updateBlendOption();
       // An empty document is NOT an error: show a neutral prompt, no red, no errline.
       if (!src.trim()) {
         errLine = -1;
