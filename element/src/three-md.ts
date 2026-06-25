@@ -970,6 +970,13 @@ export class ThreeMDElement extends HTMLElement {
     if (!this._dragging) return;
     this._yaw += (e.clientX - this._lastX) * 0.4;
     this._pitch = Math.max(-85, Math.min(85, this._pitch - (e.clientY - this._lastY) * 0.3));
+    // Map is a board you tilt to read, not an object you flip: clamp its orbit so
+    // an extreme yaw+pitch pose can never swing a tile's edge off the stage.
+    // Other camera modes keep free 360 spin (cards/voxels are meant to be circled).
+    if (this._mode === "map") {
+      this._yaw = Math.max(-30, Math.min(30, this._yaw));
+      this._pitch = Math.max(12, Math.min(52, this._pitch));
+    }
     this._lastX = e.clientX;
     this._lastY = e.clientY;
     this.render(); // synchronous: works while rAF is paused
@@ -1139,6 +1146,12 @@ export class ThreeMDElement extends HTMLElement {
     // Map: a board you orbit. Cards are placed by their x/y, NORMALIZED to fit the
     // board (so any coordinate range works); a doc without x/y is auto-gridded.
     if (m === "map") {
+      // Authoritative orbit bound for map: clamp here (not only in the drag
+      // handler) so the board stays framed no matter how the pose was set. Yaw is
+      // the binding constraint - it swings back-row tiles up under the tilt - so
+      // it is held to a gentle range; the board is meant to be viewed near top-down.
+      this._yaw = Math.max(-30, Math.min(30, this._yaw));
+      this._pitch = Math.max(12, Math.min(52, this._pitch));
       const hasXY = this._planes.some((p) => p.x != null || p.y != null);
       // Auto-grid slot for any plane that has no coordinates of its own.
       const cols = Math.max(1, Math.ceil(Math.sqrt(this._els.length)));
@@ -1177,7 +1190,8 @@ export class ThreeMDElement extends HTMLElement {
         halfW = Math.max(halfW, Math.abs(x) + cw * 0.45); // 0.45 = half x max tile scale
         halfH = Math.max(halfH, Math.abs(y) + ch * 0.45);
       });
-      const fit = Math.min(1, (stageW / 2 - 16) / halfW, (stageH / 2 - 16) / halfH);
+      // 0.92 leaves headroom so a tilted/orbited board still stays inside the stage.
+      const fit = Math.min(1, (stageW / 2 - 16) / halfW, (stageH / 2 - 16) / halfH) * 0.92;
       this._els.forEach((el, idx) => {
         const on = idx === fr;
         const [x, y] = posOf(idx);

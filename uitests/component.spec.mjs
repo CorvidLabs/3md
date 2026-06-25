@@ -506,6 +506,30 @@ test.describe("<three-md> component", () => {
     }
   });
 
+  test("map orbit is clamped so an extreme pose never spills a tile off the stage", async ({ page }) => {
+    await page.goto("/embed-example.html");
+    await page.waitForFunction(() => document.getElementById("inline")?.shadowRoot?.querySelectorAll(".plane").length === 3);
+    const r = await page.evaluate(() => {
+      const lab = document.getElementById("inline");
+      const planes = Array.from({ length: 12 }, (_, i) => `@plane z=${i} x=${(i % 6) * 180} y=${Math.floor(i / 6) * 120}\nTile ${i}\n\`\`\`\n#### ####\n\`\`\`\n`).join("\n");
+      lab.setAttribute("mode", "map");
+      lab.setSource(`---\n3md: 1.0\naxis: space\n---\n${planes}`);
+      lab._yaw = 85; lab._pitch = 88; lab.render(); // force an extreme pose
+      const sr = lab.shadowRoot;
+      const stage = sr.querySelector(".stage").getBoundingClientRect();
+      let max = 0;
+      for (const el of sr.querySelectorAll(".plane")) {
+        if (Number(getComputedStyle(el).opacity) < 0.05) continue;
+        const h = el.getBoundingClientRect();
+        max = Math.max(max, stage.top - h.top, h.bottom - stage.bottom, stage.left - h.left, h.right - stage.right);
+      }
+      return { yaw: lab._yaw, pitch: lab._pitch, worst: Math.round(max) };
+    });
+    expect(Math.abs(r.yaw)).toBeLessThanOrEqual(30); // orbit clamped on render
+    expect(r.pitch).toBeLessThanOrEqual(52);
+    expect(r.worst, `worst overflow ${r.worst}px at extreme pose`).toBeLessThanOrEqual(12);
+  });
+
   test("map: unpositioned planes do not collapse onto explicit (0,0)", async ({ page }) => {
     await page.goto("/embed-example.html");
     await page.waitForFunction(() => document.getElementById("inline")?.shadowRoot?.querySelectorAll(".plane").length === 3);
