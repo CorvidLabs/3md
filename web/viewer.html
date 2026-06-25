@@ -92,7 +92,7 @@
   /* The primary share action is the ONLY filled-green element, lifted so it reads
      as the single most important control. */
   .btn.primary{background:var(--sheen);color:var(--paper);border-color:var(--sheen);font-weight:600;
-    box-shadow:0 1px 2px rgba(0,0,0,.12),0 3px 10px color-mix(in srgb,var(--sheen) 24%,transparent)}
+    box-shadow:0 1px 2px var(--ink-12),0 3px 10px color-mix(in srgb,var(--sheen) 24%,transparent)}
   .btn.primary:hover{background:var(--sheen-hover);border-color:var(--sheen-hover);color:var(--paper)}
   /* Authoring inserts are a tinted GROUP (neutral text, not green) so they read as
      a tier without competing with the primary's green fill. */
@@ -102,7 +102,16 @@
   #cursor,#counts{font-family:var(--code-font);font-size:11px}
   select.btn{padding-right:8px;max-width:240px}
   #example{max-width:min(260px,52vw)}
-  @media(max-width:560px){select.btn{max-width:46vw}}
+  /* Phone: buttons fill rows evenly and the primary share action becomes a full
+     width bar at the end, so the hierarchy survives instead of leaving the CTA
+     marooned on a half-empty row. */
+  @media(max-width:560px){
+    select.btn{max-width:46vw}
+    .toolbar{gap:7px}
+    .toolbar .btn:not(.primary):not(select){flex:1 1 auto;justify-content:center;text-align:center}
+    .toolbar .sep{display:none}
+    .toolbar .primary{order:99;width:100%;margin-left:0;padding:11px 12px}
+  }
   .toolbar label{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--text-faint)}
   .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:stretch}
   .grid>*{min-width:0}
