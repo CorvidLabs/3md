@@ -275,7 +275,9 @@ function collapse(lines: readonly string[]): string | null {
  * @returns The parsed number, or `null` when the text is not a finite decimal.
  */
 function parseFiniteDecimal(text: string): number | null {
-  const pattern = /^[+-]?(\d+\.?\d*|\.\d+)([eE][+-]?\d+)?$/;
+  // Non-ambiguous: \d+(?:\.\d*)? avoids the \d+...\d* overlap that lets a long
+  // run of digits backtrack polynomially (ReDoS) on a near-match.
+  const pattern = /^[+-]?(?:\d+(?:\.\d*)?|\.\d+)(?:[eE][+-]?\d+)?$/;
   if (!pattern.test(text)) {
     return null;
   }
@@ -621,7 +623,10 @@ export function links(document: Document): CrossPlaneLink[] {
   const targets = new Set<number>(document.planes.map((plane) => plane.z));
 
   for (const plane of document.planes) {
-    const pattern = /\[\[z=([^\]|]+)(?:\|([^\]]*))?\]\]/g;
+    // z is a finite decimal, so match only decimal characters (a single, tight
+    // char class is linear - it avoids the [^\]|]+ / [^\]]* overlap CodeQL flags
+    // as polynomial backtracking). parseFiniteDecimal still validates the value.
+    const pattern = /\[\[z=([-+0-9eE.]+)(?:\|([^\]\n]*))?\]\]/g;
     let match: RegExpExecArray | null = pattern.exec(plane.body);
     while (match !== null) {
       const targetZ = parseFiniteDecimal(match[1] ?? "");

@@ -85,7 +85,7 @@ function inline(escaped: string): string {
       (_m, z, text) => `<a class="xlink" part="link" data-z="${z}">${text || "z=" + z}</a>`)
     // Markdown links to http(s): [text](url). (Not preceded by ! so images are left alone.)
     .replace(/(^|[^!])\[([^\]]+)\]\((https?:\/\/[^)\s]+)\)/g,
-      (_m, pre, text, url) => `${pre}<a class="xlink" part="link" href="${url.replace(/"/g, "&quot;")}" target="_blank" rel="noopener">${text}</a>`)
+      (_m, pre, text, url) => `${pre}<a class="xlink" part="link" href="${url.replace(/"/g, "&quot;").replace(/'/g, "&#39;")}" target="_blank" rel="noopener">${text}</a>`)
     .replace(/`([^`]+)`/g, "<code>$1</code>")
     .replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>")
     .replace(/\*([^*]+)\*/g, "<em>$1</em>");
@@ -177,7 +177,7 @@ function renderMarkdown(body: string, legend: Record<string, string> = {}): stri
       const m = l.trim().match(/^!\[([^\]]*)\]\(([^)\s]+)\)/);
       const alt = m ? esc(m[1]) : "";
       const url = m ? m[2] : "";
-      const safe = /^(https?:\/\/|\/|\.{0,2}\/|data:image\/)/i.test(url) ? esc(url).replace(/"/g, "&quot;") : "";
+      const safe = /^(https?:\/\/|\/|\.{0,2}\/|data:image\/)/i.test(url) ? esc(url).replace(/"/g, "&quot;").replace(/'/g, "&#39;") : "";
       if (safe) out.push(`<img class="img" part="image" src="${safe}" alt="${alt}" loading="lazy">`);
     }
     else if (l.trim() !== "") out.push(`<div>${fmt(l)}</div>`);

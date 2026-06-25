@@ -255,12 +255,15 @@ test.describe("<three-md> component", () => {
       lab.setAttribute("mode", "single");
       const s = lab.shadowRoot.querySelector("input[type=range]"); s.value = "1"; s.dispatchEvent(new Event("input", { bubbles: true }));
     });
-    await page.waitForTimeout(450); // let the opacity transition settle
+    // Wait until the opacity transition has actually settled, rather than a fixed
+    // timeout (which was flaky on slower CI/WebKit, sampling mid-fade).
+    await page.waitForFunction(() => {
+      const op = [...document.getElementById("inline").shadowRoot.querySelectorAll(".plane")].map((p) => Number(getComputedStyle(p).opacity));
+      return op[1] > 0.95 && op[0] < 0.02 && op[2] < 0.02;
+    }, { timeout: 4000 });
     const op = await page.evaluate(() =>
       [...document.getElementById("inline").shadowRoot.querySelectorAll(".plane")].map((p) => Number(getComputedStyle(p).opacity)));
-    // Only plane index 1 is visible; the others are faded out. Use a tolerance
-    // because opacity animates via a CSS transition and may not land on an exact
-    // 0 at the moment we sample it.
+    // Only plane index 1 is visible; the others are fully faded out once settled.
     expect(op[1]).toBeGreaterThan(0.95);
     expect(op[0]).toBeLessThan(0.05);
     expect(op[2]).toBeLessThan(0.05);
