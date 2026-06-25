@@ -61,7 +61,7 @@ const HINTS: Record<Mode, string> = {
   stack: "drag to orbit · WASD / arrows move · scroll to zoom · slider scrubs Z",
   layers: "aligned overlays — drag to orbit the stack · slider brings a layer to front",
   elevator: "floors stacked vertically — drag to orbit · slider rides the floors",
-  map: "drag to orbit · WASD / arrows pan · scroll to zoom · click a card to focus",
+  map: "the full board · tap a tile to read it · tap empty space or Esc for the board · drag to orbit · scroll to zoom",
   blend: "drag to orbit the object · scroll to zoom",
   play: "animation — play / pause and loop in the controls",
   present: "arrows or space to advance slides",
@@ -305,8 +305,12 @@ const STYLES = `
 :host([data-mode="stack"]) .plane.hot,
 :host([data-mode="elevator"]) .plane.hot,
 :host([data-mode="present"]) .plane.hot {
-  top: 0; bottom: 0; height: max-content; max-height: calc(100% - 20px);
-  margin-top: auto; margin-bottom: auto; overflow-y: auto;
+  top: 0; bottom: 0; left: 0; right: 0; height: max-content; max-height: calc(100% - 20px);
+  margin: auto; overflow-y: auto;
+  /* Grow to fit WIDE content (grids, tables) up to a readable cap, so nothing is
+     clipped on the sides; prose still wraps at ~64ch. Auto margins centre it. */
+  width: max-content; min-width: min(var(--three-md-plane-width, 320px), 84%);
+  max-width: min(64ch, calc(100% - 20px));
 }
 /* Layers: EVERY overlay (not just the focused one) is a centered, stage-height,
    scrollable box so a layer of any length fits in frame; they sit perfectly
@@ -444,6 +448,8 @@ export class ThreeMDElement extends HTMLElement {
   private _zoom = 0;
 
   private _dragging = false;
+  private _mapOverview = true; // map shows the whole board until a tile is opened
+  private _downTarget: HTMLElement | null = null;
   private _lastX = 0;
   private _lastY = 0;
   private _dragStartX = 0;
@@ -798,7 +804,7 @@ export class ThreeMDElement extends HTMLElement {
         el.setAttribute("part", "plane");
         const tag = plane.label ? plane.label : `z ${plane.z}`;
         el.innerHTML = `<div class="ptag"><span>z = ${plane.z}</span><b>${esc(tag)}</b></div>${renderMarkdown(plane.body, this._legend)}`;
-        el.addEventListener("click", () => this._setTarget(idx));
+        el.addEventListener("click", () => { if (this._mode === "map") this._mapOverview = false; this._setTarget(idx); });
         this._scene.appendChild(el);
         this._els.push(el);
       });
@@ -967,6 +973,7 @@ export class ThreeMDElement extends HTMLElement {
   /** Reset orbit/pan/zoom to a sensible default for the active mode. */
   private _resetCamera(): void {
     this._panX = 0; this._panY = 0; this._zoom = 0;
+    this._mapOverview = true; // map opens on the full-board overview, nothing forced open
     if (this._mode === "blend") { this._yaw = -28; this._pitch = 14; }
     else if (this._mode === "stack") { this._yaw = -18; this._pitch = 8; }
     else if (this._mode === "layers") { this._yaw = -22; this._pitch = 12; } // angle to see the stacked sheets
@@ -1021,6 +1028,8 @@ export class ThreeMDElement extends HTMLElement {
     // animation): arrows/space/PageDn navigate planes.
     if (CAMERA_MODES.has(this._mode)) {
       const k = e.key.length === 1 ? e.key.toLowerCase() : e.key;
+      // Esc returns the map to its full-board overview (closes the read card).
+      if (k === "Escape" && this._mode === "map" && !this._mapOverview) { this._mapOverview = true; this.render(); e.preventDefault(); return; }
       // Discrete keys: zoom and stepping the focused plane.
       if (k === "+" || k === "=") { this._zoom = Math.min(600, this._zoom + 40); this.render(); e.preventDefault(); return; }
       if (k === "-" || k === "_") { this._zoom = Math.max(-400, this._zoom - 40); this.render(); e.preventDefault(); return; }
@@ -1039,7 +1048,15 @@ export class ThreeMDElement extends HTMLElement {
     else if (e.key === "ArrowLeft" || e.key === "ArrowDown" || e.key === "PageUp") { this._setTarget(Math.round(this._target) - 1); e.preventDefault(); }
   }
 
+  private _onPointerUpMap(wasDragging: boolean): void {
+    // A tap on the empty board (not on a tile) returns map to the full overview.
+    if (wasDragging || this._mode !== "map") return;
+    const onCard = !!this._downTarget?.closest?.(".plane");
+    if (!onCard && !this._mapOverview) { this._mapOverview = true; }
+  }
+
   private _onPointerDown(e: PointerEvent): void {
+    this._downTarget = e.target as HTMLElement;
     // Only the camera modes drag-to-orbit. Reader scrolls natively; slides and
     // animation navigate via the chrome. We do NOT capture the pointer yet: a tap
     // must stay a click so cross-plane links and plane cards still work. Orbit
@@ -1078,10 +1095,12 @@ export class ThreeMDElement extends HTMLElement {
   }
 
   private _onPointerUp(e: PointerEvent): void {
+    const wasDragging = this._dragging;
     this._pendingDrag = false;
     this._dragging = false;
     this._pointerId = null;
     try { this._stage.releasePointerCapture(e.pointerId); } catch { /* ignore */ }
+    this._onPointerUpMap(wasDragging);
     this.render();
   }
 
@@ -1308,34 +1327,44 @@ export class ThreeMDElement extends HTMLElement {
       });
       // 0.92 leaves headroom so a tilted/orbited board still stays inside the stage.
       const fit = Math.min(1, (stageW / 2 - 16) / halfW, (stageH / 2 - 16) / halfH) * 0.92;
-      // Place the board tiles (everything except the focused card).
-      this._els.forEach((el, idx) => {
-        if (idx === fr) return;
-        const [x, y] = posOf(idx);
-        el.style.transform = `translate3d(${x.toFixed(1)}px, ${y.toFixed(1)}px, 0px) scale(0.72)`;
-        el.style.opacity = "0.4";
-        el.style.zIndex = String(100 + idx);
-        el.style.top = ""; el.style.bottom = ""; el.style.height = ""; el.style.marginTop = ""; el.style.marginBottom = ""; el.style.maxHeight = "";
-        el.classList.toggle("hot", false);
-        el.classList.toggle("dim", false);
-        el.classList.toggle("reader", false);
-        el.classList.toggle("frame", false);
-      });
-      // Focus-to-read: the focused tile is lifted OUT of the 3D scene into the flat
-      // overlay (so it is never skewed by the board's tilt/perspective) and scaled so
-      // its WHOLE content fits the stage - every line readable, no scroll. Board dims
-      // behind. Clicks on the dimmed board still reach it (overlay is click-through).
-      const hotEl = this._els[fr];
-      if (hotEl) {
-        hotEl.classList.add("hot", "popped");
-        hotEl.classList.toggle("dim", false); hotEl.classList.toggle("reader", false); hotEl.classList.toggle("frame", false);
-        if (hotEl.parentNode !== this._detail) this._detail.appendChild(hotEl);
-        // Neutralize the board-tile positioning (inline beats the map .plane rule) and
-        // measure the flat card's natural size.
-        hotEl.style.cssText = "position:relative;margin:0;top:auto;left:auto;right:auto;bottom:auto;height:max-content;max-height:none;opacity:1;transform:none";
-        const natH = Math.max(1, hotEl.offsetHeight), natW = Math.max(1, hotEl.offsetWidth);
-        const pop = Math.max(0.6, Math.min(1.8, (stageH - 22) / natH, (stageW - 22) / natW));
-        hotEl.style.transform = `scale(${pop.toFixed(3)})`;
+      this.setAttribute("data-map-overview", String(this._mapOverview));
+      // Overview: the WHOLE board, every tile shown equally, nothing forced open
+      // (tap a tile to read it; tap empty space or Esc to come back here).
+      if (this._mapOverview) {
+        this._els.forEach((el, idx) => {
+          const [x, y] = posOf(idx);
+          el.style.transform = `translate3d(${x.toFixed(1)}px, ${y.toFixed(1)}px, 0px) scale(0.82)`;
+          el.style.opacity = "1";
+          el.style.zIndex = String(100 + idx);
+          el.style.top = ""; el.style.bottom = ""; el.style.height = ""; el.style.marginTop = ""; el.style.marginBottom = ""; el.style.maxHeight = "";
+          el.classList.toggle("hot", false);
+          el.classList.toggle("dim", false); el.classList.toggle("reader", false); el.classList.toggle("frame", false);
+        });
+      } else {
+        // Focus-to-read: board tiles dim, and the focused tile is lifted OUT of the 3D
+        // scene into the flat overlay (never skewed by the tilt) and scaled so its WHOLE
+        // content fits the stage - every line readable, no scroll.
+        this._els.forEach((el, idx) => {
+          if (idx === fr) return;
+          const [x, y] = posOf(idx);
+          el.style.transform = `translate3d(${x.toFixed(1)}px, ${y.toFixed(1)}px, 0px) scale(0.72)`;
+          el.style.opacity = "0.4";
+          el.style.zIndex = String(100 + idx);
+          el.style.top = ""; el.style.bottom = ""; el.style.height = ""; el.style.marginTop = ""; el.style.marginBottom = ""; el.style.maxHeight = "";
+          el.classList.toggle("hot", false); el.classList.toggle("dim", false); el.classList.toggle("reader", false); el.classList.toggle("frame", false);
+        });
+        const hotEl = this._els[fr];
+        if (hotEl) {
+          hotEl.classList.add("hot", "popped");
+          hotEl.classList.toggle("dim", false); hotEl.classList.toggle("reader", false); hotEl.classList.toggle("frame", false);
+          if (hotEl.parentNode !== this._detail) this._detail.appendChild(hotEl);
+          // Content-width (capped to a readable measure) so wide grids/tables are not
+          // clipped before we measure; pop then scales the whole card to fit the stage.
+          hotEl.style.cssText = "position:relative;margin:0;top:auto;left:auto;right:auto;bottom:auto;height:max-content;max-height:none;width:max-content;min-width:280px;max-width:64ch;opacity:1;transform:none";
+          const natH = Math.max(1, hotEl.offsetHeight), natW = Math.max(1, hotEl.offsetWidth);
+          const pop = Math.max(0.6, Math.min(1.8, (stageH - 22) / natH, (stageW - 22) / natW));
+          hotEl.style.transform = `scale(${pop.toFixed(3)})`;
+        }
       }
       this._scene.style.transform = `${this._cameraTransform(-120)} scale(${fit.toFixed(3)})`;
       this._updateReadout();
