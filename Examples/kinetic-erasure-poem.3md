@@ -1,0 +1,67 @@
+---
+3md: 1.0
+category: Story
+axis: frame
+view: play
+title: Forgetting
+poet: Quill
+note: A memory erodes one word at a time, falls silent, then rebuilds into the one image that stayed. Play it as a flipbook.
+---
+A poem that only works in motion. Each plane is one frame; play it and watch
+the sentence lose a word at a time until nothing is left, then watch a smaller,
+truer thing grow back in its place. The erasure is the poem.
+
+@plane z=0 label="remember"
+
+
+I remember all of it, that whole summer
+
+@plane z=1 label="remember"
+
+
+I remember all of it, that whole
+
+@plane z=2 label="remember"
+
+
+I remember all of it
+
+@plane z=3 label="remember"
+
+
+I remember all
+
+@plane z=4 label="remember"
+
+
+I remember
+
+@plane z=5 label="remember"
+
+
+I
+
+@plane z=6 label="silence"
+
+
+.
+
+@plane z=7 label="return"
+
+
+the
+
+@plane z=8 label="return"
+
+
+the light
+
+@plane z=9 label="return"
+
+
+the light, at least
+
+@plane z=10 label="return"
+
+
+the light, at least, stays

@@ -1,0 +1,95 @@
+---
+3md: 1.0
+category: Games
+axis: room
+title: The Hollow Below
+subtitle: a dungeon you play by clicking
+view: single
+start: "0"
+win: "6"
+---
+A dungeon crawl with no engine: every exit is a cross-plane link you click to
+move. Find the key, avoid the dark, reach the vault. Begin at [[z=0|the mouth of the cave]].
+
+@plane z=0 label="The Cave Mouth"
+# The Cave Mouth
+
+Cold air breathes up out of the dark. Your torch gutters. Two ways lead down.
+
+- Take the wide [[z=1|north corridor]]
+- Squeeze into the narrow [[z=2|side passage]]
+
+@plane z=1 label="North Corridor"
+# North Corridor
+
+Dripping stone. Bones, picked clean, in a corner. Ahead: a great **iron door**,
+its lock shaped like a snarling mouth. To the left, stairs spiral down.
+
+- Try the [[z=3|iron door]]
+- Descend the [[z=4|spiral stairs]]
+- Back to the [[z=2|side passage]]
+
+@plane z=2 label="Side Passage"
+# Side Passage
+
+Tight enough to scrape your shoulders. Half-buried in grit, something glints:
+a **rusty iron key**. You pocket it.
+
+- Return to the [[z=1|north corridor]]
+- Press on to the [[z=5|old crypt]]
+
+@plane z=3 label="The Iron Door"
+# The Iron Door
+
+The snarling lock waits. If you found the rusty key in the side passage, it
+turns with a scream of metal and the door swings wide.
+
+- I have the key: enter the [[z=6|treasure vault]]
+- No key? Go find it in the [[z=2|side passage]]
+
+@plane z=4 label="Spiral Stairs"
+# Spiral Stairs
+
+Down and down. The air turns wet. The steps end at a black underground river,
+and a half-rotted raft knocks against the bank.
+
+- Take the [[z=8|underground river]]
+- Climb back to the [[z=1|north corridor]]
+
+@plane z=5 label="The Old Crypt"
+# The Old Crypt
+
+Stone coffins, lids ajar. Something in the dark is breathing. A low arch leads
+on; the largest tomb tempts you to look inside.
+
+- Slip quietly past to the [[z=6|treasure vault]]
+- Pry open the [[z=7|great tomb]]
+
+@plane z=6 label="Treasure Vault  (WIN)"
+# The Treasure Vault
+
+Gold drowns the torchlight. A crown, a hundred coins, a sword that hums. You
+fill your pack and walk out richer than kings.
+
+**You win.**
+
+- Play again from the [[z=0|cave mouth]]
+
+@plane z=7 label="The Dark  (DEATH)"
+# The Dark Takes You
+
+Something vast uncoils. The torch goes out. The last thing you hear is your own
+heartbeat, and then not even that.
+
+**You died.**
+
+- Try again from the [[z=0|cave mouth]]
+
+@plane z=8 label="Underground River"
+# Underground River
+
+The raft holds. Two currents split the black water: one drifts toward a faint
+glow, the other into total dark.
+
+- Steer toward the glow and the [[z=6|treasure vault]]
+- Let the current pull you into the [[z=7|dark]]

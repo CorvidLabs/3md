@@ -1,0 +1,202 @@
+---
+3md: 1.0
+category: Information
+axis: scale
+view: single
+title: Powers of Ten - a fall through every order of magnitude
+subtitle: scrub Z to zoom from the cosmic web down to a single quark
+---
+The Z axis is magnification. Each plane is one big step inward, roughly an
+order of magnitude smaller than the last. Start at the largest structure we
+know and fall, scale by scale, all the way down to a speck inside a proton.
+Scrub from [[z=0|the cosmic web]] to [[z=12|a quark]].
+
+@plane z=0 label="10^27 m - the cosmic web"
+# The Cosmic Web
+
+The largest structure there is: galaxies strung along filaments of dark
+matter, with vast empty voids between. From here the whole observable
+universe is a single glittering froth.
+
+```
+ *   .      *        .
+   \   .--*--.   /  *
+ .--*-- the void --*--.
+   /   *--.--*   \   .
+ *     .      *      .
+```
+
+@plane z=1 label="10^21 m - a galaxy"
+# The Milky Way
+
+One bright knot on a filament resolves into a spiral: a hundred billion
+suns wound around a quiet, hungry center. Our entire night sky is a single
+arm of this pinwheel.
+
+```
+       . : * : .
+   . *  \\___//  * .
+  : * --( ***)-- * :
+   . *  //‾‾‾\\  * .
+       ' : * : '
+```
+
+@plane z=2 label="10^13 m - a star system"
+# The Solar System
+
+Zoom into one unremarkable star on one arm. Tiny worlds trace long ellipses
+around it. Nearly all of this picture is empty space; the planets are
+specks, the distances enormous.
+
+```
+        .         o
+   o        ( ) ·    ·   o
+        ·  ·    o
+              ·
+```
+
+@plane z=3 label="10^9 m - a star"
+# The Sun
+
+The central speck swells into a roiling sphere of plasma, a million Earths
+could fit inside. Its surface boils; loops of magnetic fire arc off the
+edge and fall back.
+
+```
+    .-~~~~~-.
+  /  ~ ~~ ~  \
+ | ~~  ()  ~~ |
+  \  ~~ ~ ~~ /
+    '-~~~~~-'
+```
+
+@plane z=4 label="10^7 m - a planet"
+# Earth
+
+The third speck out. A blue marble wrapped in a skin of air so thin that,
+at this scale, it would be a coat of varnish. Everything anyone has ever
+done happened on this dot.
+
+```
+     _.-''-._
+   .' o   ~~  '.
+  / ~~   land   \
+  | ocean   ~~  |
+   \  ~~  land  /
+    '._  ~~ _.'
+```
+
+@plane z=5 label="10^4 m - a city"
+# A City At Dawn
+
+Drop through the clouds: a grid of streets, rivers of early traffic,
+ten thousand windows catching the first light. Each square is a life,
+a kitchen, a kettle starting to whistle.
+
+```
+ ###  ##  ####  ##
+ ## ::## ::## ::##
+ ####  ##  ##  ####
+ ## ::## ::##::  ##
+```
+
+@plane z=6 label="10^0 m - a person"
+# One Meter
+
+A single person on a single street, looking up. This is the scale we live
+at, the only one that ever feels like home. Everything above is too big to
+hold; everything below, too small to see. We balance here in the middle.
+
+```
+      O
+     /|\
+      |
+     / \
+```
+
+@plane z=7 label="10^-4 m - skin"
+# The Surface
+
+Closer than eyes can focus. The smooth back of a hand becomes a landscape
+of ridges and dead, flaking plates, dotted with the open mouths of pores.
+You are, up close, mostly terrain.
+
+```
+~^~^~_~^~^~^~_~^~
+^~ () ~^~ () ~^~^
+~_~^~^~_~^~^~_~^~
+```
+
+@plane z=8 label="10^-5 m - a cell"
+# A Living Cell
+
+Into one pore, one cell. A wet, crowded city of its own: a nucleus at the
+center holding the instructions, machinery churning in the cytoplasm
+around it. Forty trillion of these are, right now, being you.
+
+```
+   .-‾‾‾‾‾‾-.
+  /  . o .   \
+ |  . (NUC) . |
+  \   . o .  /
+   '-______-'
+```
+
+@plane z=9 label="10^-8 m - DNA"
+# The Double Helix
+
+Inside the nucleus, the instructions themselves: two strands twisting
+around each other, rungs of paired letters. Two meters of this is coiled
+inside every cell, spelling the whole of you in four characters.
+
+```
+ A=T   .
+  \   /
+   T=A
+  /   \
+ C=G   '
+  \   /
+   G=C
+```
+
+@plane z=10 label="10^-10 m - an atom"
+# A Single Atom
+
+Down to one atom on one rung. A dense nucleus and a blur of electrons, but
+mostly, overwhelmingly, empty space. If the nucleus were a marble, the
+nearest electron would be a sand grain a kilometer away.
+
+```
+      . - .
+    /   o   \
+   |  (***)  |
+    \   o   /
+      ' - '
+```
+
+@plane z=11 label="10^-14 m - the nucleus"
+# The Nucleus
+
+Cross the empty kilometer to the marble. It splits into protons and
+neutrons, packed tight and humming with the strongest force there is, the
+one that holds everything heavier than hydrogen together.
+
+```
+   (p)(n)
+  (n)(p)(n)
+   (p)(n)
+```
+
+@plane z=12 label="10^-18 m - a quark"
+# A Quark
+
+Inside one proton, three quarks flicker in and out of being, bound by
+glue we can never pull apart. This is the floor, or the deepest floor we
+can see. From here, look back up: [[z=0|the cosmic web]] is only twelve
+steps away.
+
+```
+    q
+   / \
+  q---q
+```

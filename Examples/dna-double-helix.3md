@@ -1,0 +1,357 @@
+---
+3md: 1.0
+category: Creative
+axis: base
+legend: #=●
+billboard: true
+title: DNA Double Helix - depth is the strand
+molecule: B-form DNA (idealized)
+pairs: "20"
+twist: 36 degrees per base pair
+render: blend the rungs to fuse them into a twisting double helix you can orbit; play to climb the strand base by base
+---
+A double helix where the molecule's length is the Z axis. Each plane is one
+base-pair rung; the two sugar-phosphate backbones (#) rotate 36 degrees per
+step, so blending all 20 rungs reconstructs the spiral. Climb from
+[[z=0|the first pair]] to [[z=19|the last]].
+
+@plane z=0 label="bp 01 A-T"
+```
+
+
+
+
+
+
+ #    T     A    #
+
+
+
+
+
+
+```
+
+@plane z=1 label="bp 02 T-A"
+```
+
+
+
+   #
+
+      A
+
+            T
+
+               #
+
+
+
+```
+
+@plane z=2 label="bp 03 G-C"
+```
+
+       #
+
+
+        C
+
+
+
+          G
+
+
+           #
+
+```
+
+@plane z=3 label="bp 04 C-G"
+```
+
+           #
+
+
+          G
+
+
+
+        C
+
+
+       #
+
+```
+
+@plane z=4 label="bp 05 A-T"
+```
+
+
+
+               #
+
+            T
+
+      A
+
+   #
+
+
+
+```
+
+@plane z=5 label="bp 06 G-C"
+```
+
+
+
+
+
+
+ #    G     C    #
+
+
+
+
+
+
+```
+
+@plane z=6 label="bp 07 C-G"
+```
+
+
+
+   #
+
+      C
+
+            G
+
+               #
+
+
+
+```
+
+@plane z=7 label="bp 08 T-A"
+```
+
+       #
+
+
+        T
+
+
+
+          A
+
+
+           #
+
+```
+
+@plane z=8 label="bp 09 T-A"
+```
+
+           #
+
+
+          T
+
+
+
+        A
+
+
+       #
+
+```
+
+@plane z=9 label="bp 10 A-T"
+```
+
+
+
+               #
+
+            A
+
+      T
+
+   #
+
+
+
+```
+
+@plane z=10 label="bp 11 G-C"
+```
+
+
+
+
+
+
+ #    C     G    #
+
+
+
+
+
+
+```
+
+@plane z=11 label="bp 12 C-G"
+```
+
+
+
+   #
+
+      G
+
+            C
+
+               #
+
+
+
+```
+
+@plane z=12 label="bp 13 A-T"
+```
+
+       #
+
+
+        T
+
+
+
+          A
+
+
+           #
+
+```
+
+@plane z=13 label="bp 14 T-A"
+```
+
+           #
+
+
+          A
+
+
+
+        T
+
+
+       #
+
+```
+
+@plane z=14 label="bp 15 G-C"
+```
+
+
+
+               #
+
+            C
+
+      G
+
+   #
+
+
+
+```
+
+@plane z=15 label="bp 16 C-G"
+```
+
+
+
+
+
+
+ #    C     G    #
+
+
+
+
+
+
+```
+
+@plane z=16 label="bp 17 A-T"
+```
+
+
+
+   #
+
+      A
+
+            T
+
+               #
+
+
+
+```
+
+@plane z=17 label="bp 18 G-C"
+```
+
+       #
+
+
+        G
+
+
+
+          C
+
+
+           #
+
+```
+
+@plane z=18 label="bp 19 T-A"
+```
+
+           #
+
+
+          T
+
+
+
+        A
+
+
+       #
+
+```
+
+@plane z=19 label="bp 20 C-G"
+```
+
+
+
+               #
+
+            C
+
+      G
+
+   #
+
+
+
+```
+
