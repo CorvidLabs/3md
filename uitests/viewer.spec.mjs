@@ -245,23 +245,49 @@ test.describe("viewer & editor (viewer.html)", () => {
     expect(r.errlines).toBe(0); // no hard-error band
   });
 
-  test("an unrecognized axis is flagged (not silently mis-rendered)", async ({ page }) => {
+  test("axis lint warns on a TYPO but not on a valid free-string semantic axis", async ({ page }) => {
     await page.goto("/viewer.html");
     await page.waitForFunction(() => document.getElementById("lab")?.shadowRoot?.querySelectorAll(".plane").length > 0);
-    const r = await page.evaluate(() => {
-      const snap = window.threeMd.set('---\n3md: 1.0\naxis: animation\n---\n@plane z=0\nA\n');
-      return { snap, axisKnown: document.getElementById("validBadge").dataset.axisKnown, warnings: document.getElementById("validBadge").dataset.warnings, status: document.getElementById("status").textContent };
+    // A typo of a real mode ("stak" -> "stack") should warn with a suggestion.
+    const typo = await page.evaluate(() => {
+      const snap = window.threeMd.set('---\n3md: 1.0\naxis: stak\n---\n@plane z=0\nA\n');
+      return { snap, typo: document.getElementById("validBadge").dataset.axisTypo, warnings: document.getElementById("validBadge").dataset.warnings, status: document.getElementById("status").textContent };
     });
-    expect(r.snap.valid).toBe(true);        // still parses
-    expect(r.snap.axisKnown).toBe(false);   // but the axis is not recognized
-    expect(r.snap.mode).toBeTruthy();        // resolved render mode is exposed
-    expect(r.axisKnown).toBe("false");
-    expect(r.warnings).toBe("1");
-    expect(r.status.toLowerCase()).toContain("not recognized");
+    expect(typo.snap.axisKnown).toBe(false);
+    expect(typo.typo).toBe("stack");
+    expect(typo.warnings).toBe("1");
+    expect(typo.status.toLowerCase()).toContain("typo");
+    // A genuine semantic axis ("status") is valid usage: flagged for agents but NOT warned.
+    const semantic = await page.evaluate(() => {
+      const snap = window.threeMd.set('---\n3md: 1.0\naxis: status\n---\n@plane z=0\nA\n');
+      return { snap, axisKnown: document.getElementById("validBadge").dataset.axisKnown, warnings: document.getElementById("validBadge").dataset.warnings };
+    });
+    expect(semantic.snap.axisKnown).toBe(false); // exposed for agents
+    expect(semantic.snap.mode).toBeTruthy();      // resolved render mode exposed
+    expect(semantic.warnings).toBeUndefined();    // but no human warning
     // A known axis is clean.
     const ok = await page.evaluate(() => window.threeMd.set('---\n3md: 1.0\naxis: time\n---\n@plane z=0\nA\n'));
     expect(ok.axisKnown).toBe(true);
     expect(ok.mode).toBe("stack");
+  });
+
+  test("the blend (3D) mode option is disabled for non-voxel docs, enabled for ASCII art", async ({ page }) => {
+    await page.goto("/viewer.html");
+    await page.waitForFunction(() => document.getElementById("lab")?.shadowRoot !== undefined);
+    // Pure-text doc: blend disabled.
+    const txt = await page.evaluate(() => {
+      window.threeMd.set('---\n3md: 1.0\naxis: time\n---\n@plane z=0\n# Hi\njust prose\n');
+      return { disabled: document.getElementById("blendOpt").disabled, voxelizable: document.getElementById("lab").voxelizable };
+    });
+    expect(txt.voxelizable).toBe(false);
+    expect(txt.disabled).toBe(true);
+    // ASCII-art doc (a small grid): blend enabled.
+    const art = await page.evaluate(() => {
+      window.threeMd.set('---\n3md: 1.0\naxis: depth\n---\n@plane z=0\n```\n##  ##\n######\n##  ##\n```\n@plane z=1\n```\n.####.\n######\n.####.\n```\n');
+      return { disabled: document.getElementById("blendOpt").disabled, voxelizable: document.getElementById("lab").voxelizable };
+    });
+    expect(art.voxelizable).toBe(true);
+    expect(art.disabled).toBe(false);
   });
 
   test("the agent schema lists error codes and the axis-to-mode map", async ({ page }) => {

@@ -298,7 +298,12 @@ test.describe("<three-md> component", () => {
     const modes = await page.evaluate(() => {
       const el = document.getElementById("inline");
       const out = {};
-      for (const m of ["present", "single", "stack", "blend"]) { el.setAttribute("mode", m); out[m] = el.getAttribute("data-mode"); }
+      for (const m of ["present", "single", "stack"]) { el.setAttribute("mode", m); out[m] = el.getAttribute("data-mode"); }
+      // blend only resolves to blend for a doc with voxelizable ASCII art; a text
+      // doc falls back to the deck, so load real grid art before checking blend.
+      el.setAttribute("mode", "blend");
+      el.setSource('---\n3md: 1.0\naxis: depth\n---\n@plane z=0\n```\n##\n##\n```\n@plane z=1\n```\n.#\n#.\n```\n');
+      out.blend = el.getAttribute("data-mode");
       return out;
     });
     expect(modes).toEqual({ present: "present", single: "single", stack: "stack", blend: "blend" });
@@ -334,7 +339,7 @@ test.describe("<three-md> component", () => {
       const lab = document.getElementById("inline");
       lab.removeAttribute("mode");
       lab.setSource('---\n3md: 1.0\naxis: space\n---\n@plane z=0\nGo to [[z=2|the vault]].\n@plane z=1\nmid\n@plane z=2\nback to [[z=0|start]]\n');
-      const link = lab.shadowRoot.querySelector(".xlink");
+      const link = lab.shadowRoot.querySelector('.xlink[data-z="2"]');
       const text = link?.textContent;
       link.click();
       return { hasLink: !!link, text, indexAfter: lab.currentIndex };
@@ -479,6 +484,37 @@ test.describe("<three-md> component", () => {
     expect(r.voxels).toBeGreaterThan(0);
   });
 
+  test("blend voxels are the legend-mapped character glyphs, and billboard faces the camera", async ({ page }) => {
+    await page.goto("/embed-example.html");
+    await page.waitForFunction(() => document.getElementById("inline")?.shadowRoot);
+    const r = await page.evaluate(() => {
+      const lab = document.getElementById("inline");
+      lab.setAttribute("mode", "blend");
+      lab.setSource('---\n3md: 1.0\naxis: depth\nlegend: "#"=🧱 o=🟦\nbillboard: true\n---\n@plane z=0\n```\n#o#\n#o#\n```\n');
+      const vox = [...lab.shadowRoot.querySelectorAll(".voxel")];
+      return {
+        glyphs: [...new Set(vox.map((v) => v.textContent))].sort(),
+        billboard: vox.length > 0 && vox.every((v) => /rotateY/.test(v.style.transform)),
+        noGreenDots: vox.every((v) => getComputedStyle(v).borderRadius !== "50%"),
+      };
+    });
+    expect(r.glyphs).toEqual(["🟦", "🧱"]); // legend overrode the raw # and o
+    expect(r.billboard).toBe(true);
+    expect(r.noGreenDots).toBe(true);
+  });
+
+  test("without a legend, blend voxels show the raw characters", async ({ page }) => {
+    await page.goto("/embed-example.html");
+    await page.waitForFunction(() => document.getElementById("inline")?.shadowRoot);
+    const glyphs = await page.evaluate(() => {
+      const lab = document.getElementById("inline");
+      lab.setAttribute("mode", "blend");
+      lab.setSource('---\n3md: 1.0\naxis: depth\n---\n@plane z=0\n```\nAB\nBA\n```\n');
+      return [...new Set([...lab.shadowRoot.querySelectorAll(".voxel")].map((v) => v.textContent))].sort();
+    });
+    expect(glyphs).toEqual(["A", "B"]); // raw chars, no legend
+  });
+
   test("map and layers keep every tile inside the stage on all edges (many tiles)", async ({ page }) => {
     await page.goto("/embed-example.html");
     await page.waitForFunction(() => document.getElementById("inline")?.shadowRoot?.querySelectorAll(".plane").length === 3);
@@ -518,7 +554,8 @@ test.describe("<three-md> component", () => {
       const sr = lab.shadowRoot;
       const stage = sr.querySelector(".stage").getBoundingClientRect();
       let max = 0;
-      for (const el of sr.querySelectorAll(".plane")) {
+      // Board tiles only; the focused card is an intentional centered read overlay.
+      for (const el of sr.querySelectorAll(".plane:not(.hot)")) {
         if (Number(getComputedStyle(el).opacity) < 0.05) continue;
         const h = el.getBoundingClientRect();
         max = Math.max(max, stage.top - h.top, h.bottom - stage.bottom, stage.left - h.left, h.right - stage.right);
@@ -528,6 +565,72 @@ test.describe("<three-md> component", () => {
     expect(Math.abs(r.yaw)).toBeLessThanOrEqual(30); // orbit clamped on render
     expect(r.pitch).toBeLessThanOrEqual(52);
     expect(r.worst, `worst overflow ${r.worst}px at extreme pose`).toBeLessThanOrEqual(12);
+  });
+
+  test("map snaps coordinates to a non-overlapping grid (same x = column, same y = row)", async ({ page }) => {
+    await page.goto("/embed-example.html");
+    await page.waitForFunction(() => document.getElementById("inline")?.shadowRoot?.querySelectorAll(".plane").length === 3);
+    const r = await page.evaluate(() => {
+      const lab = document.getElementById("inline");
+      lab.setAttribute("mode", "map");
+      // 4 planes on a 2x2 coordinate grid.
+      lab.setSource('---\n3md: 1.0\naxis: space\n---\n@plane z=0 x=1 y=1\nA\n@plane z=1 x=1 y=2\nB\n@plane z=2 x=2 y=1\nC\n@plane z=3 x=2 y=2\nD\n');
+      // Board tiles only (the focused card pops to a centered read overlay).
+      const rects = [...lab.shadowRoot.querySelectorAll(".plane:not(.hot)")].map((e) => e.getBoundingClientRect());
+      const m = (e) => ({ x: Math.round(e.x + e.width / 2), y: Math.round(e.y + e.height / 2) });
+      const c = rects.map(m);
+      // no overlap
+      let overlap = 0;
+      for (let i = 0; i < rects.length; i++) for (let j = i + 1; j < rects.length; j++) {
+        const a = rects[i], b = rects[j];
+        const ox = Math.min(a.right, b.right) - Math.max(a.left, b.left);
+        const oy = Math.min(a.bottom, b.bottom) - Math.max(a.top, b.top);
+        if (ox > 0 && oy > 0) overlap = Math.max(overlap, Math.min(ox, oy));
+      }
+      // idx 0 is focused (excluded). Remaining board tiles: [x1y2, x2y1, x2y2].
+      // x2y1 & x2y2 share column x=2; x1y2 & x2y2 share row y=2.
+      return { overlap: Math.round(overlap), sameColX: Math.abs(c[1].x - c[2].x) < 6, sameRowY: Math.abs(c[0].y - c[2].y) < 6 };
+    });
+    expect(r.overlap).toBe(0);       // cells never overlap
+    expect(r.sameColX).toBe(true);   // same x => same column (same screen x)
+    expect(r.sameRowY).toBe(true);   // same y => same row (same screen y)
+  });
+
+  test("map: no-coordinate planes lay out in a clean non-overlapping grid", async ({ page }) => {
+    await page.goto("/embed-example.html");
+    await page.waitForFunction(() => document.getElementById("inline")?.shadowRoot?.querySelectorAll(".plane").length === 3);
+    const overlap = await page.evaluate(() => {
+      const lab = document.getElementById("inline");
+      lab.setAttribute("mode", "map");
+      lab.setSource('---\n3md: 1.0\naxis: space\n---\n' + Array.from({ length: 9 }, (_, i) => `@plane z=${i}\nCard ${i}`).join("\n"));
+      const rects = [...lab.shadowRoot.querySelectorAll(".plane:not(.hot)")].map((e) => e.getBoundingClientRect());
+      let worst = 0;
+      for (let i = 0; i < rects.length; i++) for (let j = i + 1; j < rects.length; j++) {
+        const a = rects[i], b = rects[j];
+        const ox = Math.min(a.right, b.right) - Math.max(a.left, b.left);
+        const oy = Math.min(a.bottom, b.bottom) - Math.max(a.top, b.top);
+        if (ox > 0 && oy > 0) worst = Math.max(worst, Math.min(ox, oy));
+      }
+      return Math.round(worst);
+    });
+    expect(overlap).toBe(0);
+  });
+
+  test("map: the focused card pops to a larger readable size than the board tiles", async ({ page }) => {
+    await page.goto("/embed-example.html");
+    await page.waitForFunction(() => document.getElementById("inline")?.shadowRoot?.querySelectorAll(".plane").length === 3);
+    const r = await page.evaluate(() => {
+      const lab = document.getElementById("inline");
+      lab.setAttribute("mode", "map");
+      lab.setSource('---\n3md: 1.0\naxis: space\n---\n@plane z=0 x=1 y=1\n# Table A\nSeat 1: Ana\nSeat 2: Ben\n@plane z=1 x=2 y=1\n# Table B\nSeat 1: Cal\n@plane z=2 x=1 y=2\n# Table C\nSeat 1: Dee\n');
+      lab.goTo(0);
+      const sr = lab.shadowRoot;
+      const hot = sr.querySelector(".plane.hot").getBoundingClientRect();
+      const tile = sr.querySelector(".plane:not(.hot)").getBoundingClientRect();
+      return { hotW: Math.round(hot.width), tileW: Math.round(tile.width) };
+    });
+    // The focused (read) card is clearly larger than a board tile.
+    expect(r.hotW).toBeGreaterThan(r.tileW * 1.2);
   });
 
   test("map: partially-positioned planes (only x or only y) do not pile up", async ({ page }) => {

@@ -204,6 +204,19 @@ function renderMarkdown(body: string, legend: Record<string, string> = {}): stri
   return `<div class="md" part="plane-body">${out.join("")}</div>`;
 }
 
+/** Uniform control-bar icons: one viewBox, one stroke weight, sized by CSS, so
+ * every button reads at the same optical size (the old unicode glyphs did not). */
+const SVG = (body: string, fill = false): string =>
+  `<svg viewBox="0 0 24 24" ${fill ? 'fill="currentColor" stroke="none"' : 'fill="none" stroke="currentColor" stroke-width="2"'} stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${body}</svg>`;
+const ICONS = {
+  prev: SVG('<path d="M15 5l-7 7 7 7"/>'),
+  next: SVG('<path d="M9 5l7 7-7 7"/>'),
+  play: SVG('<path d="M8 5.5v13l11-6.5z"/>', true),
+  pause: SVG('<path d="M9 5v14M15 5v14"/>'),
+  loop: SVG('<path d="M3.5 12a8.5 8.5 0 0 1 14.5-6M20.5 12a8.5 8.5 0 0 1-14.5 6"/><path d="M18 2.5V6h-3.5M6 21.5V18h3.5"/>'),
+  fullscreen: SVG('<path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/>'),
+};
+
 const STYLES = `
 :host {
   display: block;
@@ -243,6 +256,13 @@ const STYLES = `
 }
 .stage:active { cursor: grabbing; }
 .scene { position: absolute; inset: 0; transform-style: preserve-3d; }
+/* Flat 2D overlay for the focus-to-read card: lives OUTSIDE the perspective'd
+   scene so the read card is never skewed by the board's tilt. Clicks pass through
+   to the board behind, except on the card itself. */
+.detail { position: absolute; inset: 0; display: none; align-items: center; justify-content: center; pointer-events: none; z-index: 5; }
+:host([data-mode="map"]) .detail { display: flex; }
+.detail .plane.popped { pointer-events: auto; position: relative; inset: auto; left: auto; top: auto; right: auto; bottom: auto;
+  margin: 0; height: max-content; max-height: none; transform-origin: center center; }
 /* The hint sits BELOW the stage, never over the plane content. */
 .hint { margin: 8px 2px 0; font-size: 11px; color: var(--three-md-faint); }
 .fs { margin-left: auto; }
@@ -258,7 +278,8 @@ const STYLES = `
 :host(:fullscreen) .md .ph2 { font-size: clamp(15px, 1.7vw, 22px); }
 :host(:fullscreen) .md .code { font-size: clamp(12px, 1.2vw, 16px); }
 :host(:fullscreen) .ptag { font-size: clamp(11px, 1vw, 14px); }
-:host(:fullscreen) .navbtn { width: 44px; height: 40px; font-size: 16px; }
+:host(:fullscreen) .navbtn { width: 44px; height: 40px; }
+:host(:fullscreen) .navbtn svg { width: 18px; height: 18px; }
 /* Reader (single) and present become big centered slides. */
 :host(:fullscreen[data-mode="single"]) .plane.reader {
   width: min(70vw, 900px); max-width: min(70vw, 900px); padding: clamp(20px, 3vw, 44px);
@@ -278,13 +299,14 @@ const STYLES = `
   transition: opacity .3s, box-shadow .3s, filter .3s;
 }
 .plane.hot { overflow-y: auto; } /* the focused card can scroll long content */
-/* In card modes the focused card becomes a centered, full-height, scrollable box,
-   so long content is always reachable (the fixed -104px anchor clipped tall cards
-   off the bottom). */
+/* In card modes the focused card hugs its CONTENT (so a short plane is a small
+   card, not a big empty box), stays vertically centered via auto margins, and only
+   caps + scrolls when the content is genuinely taller than the stage. */
 :host([data-mode="stack"]) .plane.hot,
 :host([data-mode="elevator"]) .plane.hot,
 :host([data-mode="present"]) .plane.hot {
-  top: 10px; bottom: 10px; height: auto; margin-top: 0; max-height: none; overflow-y: auto;
+  top: 0; bottom: 0; height: max-content; max-height: calc(100% - 20px);
+  margin-top: auto; margin-bottom: auto; overflow-y: auto;
 }
 /* Layers: EVERY overlay (not just the focused one) is a centered, stage-height,
    scrollable box so a layer of any length fits in frame; they sit perfectly
@@ -360,15 +382,20 @@ const STYLES = `
 .md code { font-family: inherit; background: var(--three-md-hairline); padding: 1px 5px; border-radius: 3px; color: var(--three-md-text); }
 .grid { font-size: 16px; line-height: 1.25; letter-spacing: 3px; color: var(--three-md-faint); white-space: pre; max-width: 100%; overflow-x: auto; }
 .grid .dot { color: var(--three-md-accent); }
-.voxel { position: absolute; left: 50%; top: 50%; width: 8px; height: 8px; margin: -4px 0 0 -4px;
-  border-radius: 50%; background: var(--three-md-accent); opacity: .45;
-  box-shadow: 0 0 6px var(--three-md-accent); transition: opacity .2s; }
-.voxel.near { opacity: 1; width: 11px; height: 11px; margin: -5.5px 0 0 -5.5px; }
+/* A voxel IS its character glyph (legend-remapped): emoji/symbols render in full
+   colour, plain chars in the accent. Depth is cued by opacity (near = focused). */
+.voxel { position: absolute; left: 50%; top: 50%; width: 14px; height: 14px; margin: -7px 0 0 -7px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--three-md-mono, ui-monospace, "Spline Sans Mono", monospace);
+  font-size: 13px; line-height: 1; color: var(--three-md-accent); opacity: .4;
+  transition: opacity .2s; pointer-events: none; }
+.voxel.near { opacity: 1; }
 .floattext { position: absolute; left: 50%; top: 50%; font-size: 11px; line-height: 1.5;
   color: var(--three-md-faint); opacity: .5; white-space: pre; pointer-events: none; }
 /* nowrap so the button row never reflows and shifts under the cursor. */
 .controls { display: flex; align-items: center; gap: 8px; margin-top: 12px; flex-wrap: nowrap; }
-.navbtn { flex: 0 0 auto; font: inherit; font-size: 14px; color: var(--three-md-text); background: var(--three-md-surface); border: 1px solid var(--three-md-hairline); width: 38px; height: 34px; border-radius: 4px; cursor: pointer; }
+.navbtn { flex: 0 0 auto; display: inline-flex; align-items: center; justify-content: center; color: var(--three-md-text); background: var(--three-md-surface); border: 1px solid var(--three-md-hairline); width: 38px; height: 34px; border-radius: 4px; cursor: pointer; }
+.navbtn svg { width: 16px; height: 16px; display: block; }
 .navbtn:hover { border-color: var(--three-md-accent); color: var(--three-md-accent); }
 .navbtn.loop[aria-pressed="true"] { color: var(--three-md-accent); border-color: var(--three-md-accent); }
 .navbtn.loop[aria-pressed="false"] { opacity: .55; }
@@ -391,6 +418,7 @@ export class ThreeMDElement extends HTMLElement {
   private _root: ShadowRoot;
   private _scene!: HTMLDivElement;
   private _stage!: HTMLDivElement;
+  private _detail!: HTMLDivElement; // flat overlay (outside the 3D scene) for the focus-to-read card
   private _axisEl!: HTMLDivElement;
   private _scrub!: HTMLInputElement;
   private _readout!: HTMLDivElement;
@@ -401,6 +429,7 @@ export class ThreeMDElement extends HTMLElement {
   private _planes: readonly Plane[] = [];
   private _els: HTMLDivElement[] = [];
   private _voxels: HTMLDivElement[] = [];
+  private _billboard = false;
   private _mode: Mode = "stack";
   private _legend: Record<string, string> = {};
 
@@ -493,6 +522,12 @@ export class ThreeMDElement extends HTMLElement {
   /** The stable parser error code from the most recent failed load, or null. */
   get errorCode(): string | null {
     return this._errorCode;
+  }
+
+  /** Whether the document has voxelizable ASCII-art (so blend/3D mode is
+   * meaningful). False for pure-text docs, which blend cannot render usefully. */
+  get voxelizable(): boolean {
+    return this._planes.some((p) => this._gridOf(p.body) !== null);
   }
 
   /** The index of the currently focused plane. */
@@ -596,6 +631,8 @@ export class ThreeMDElement extends HTMLElement {
     this._doc = doc;
     this._planes = doc.planes;
     this._legend = parseLegend(doc.metadata?.legend);
+    const bb = String(doc.metadata?.billboard ?? "").toLowerCase();
+    this._billboard = bb === "true" || bb === "yes" || bb === "1";
     this._applyMode();
     this._stopPlay();
     // Reset all accumulated view state so each document starts fresh. Without
@@ -656,15 +693,16 @@ export class ThreeMDElement extends HTMLElement {
       <div class="axis" part="axis"></div>
       <div class="stage" part="stage">
         <div class="scene" part="scene"></div>
+        <div class="detail" part="detail"></div>
       </div>
       <div class="hint" part="hint">drag to orbit · WASD / arrows move · slider or ↑↓ scrub Z</div>
       <div class="controls" part="controls">
-        <button class="navbtn" part="prev" type="button" aria-label="previous plane">←</button>
+        <button class="navbtn" part="prev" type="button" aria-label="previous plane">${ICONS.prev}</button>
         <input type="range" part="scrubber" min="0" max="0" step="0.001" value="0" aria-label="scrub the Z axis" />
-        <button class="navbtn" part="next" type="button" aria-label="next plane">→</button>
-        <button class="navbtn" part="play" type="button" aria-label="play">▶</button>
-        <button class="navbtn loop" part="loop" type="button" aria-label="toggle loop" title="Loop playback" aria-pressed="true">⟲</button>
-        <button class="navbtn fs" part="fullscreen" type="button" aria-label="fullscreen" title="Fullscreen">⛶</button>
+        <button class="navbtn" part="next" type="button" aria-label="next plane">${ICONS.next}</button>
+        <button class="navbtn" part="play" type="button" aria-label="play">${ICONS.play}</button>
+        <button class="navbtn loop" part="loop" type="button" aria-label="toggle loop" title="Loop playback" aria-pressed="true">${ICONS.loop}</button>
+        <button class="navbtn fs" part="fullscreen" type="button" aria-label="fullscreen" title="Fullscreen">${ICONS.fullscreen}</button>
       </div>
       <div class="readout" part="readout"></div>
       <div class="layerchips" part="layer-toggles"></div>`;
@@ -673,6 +711,7 @@ export class ThreeMDElement extends HTMLElement {
     this._axisEl = this._wrap.querySelector(".axis")!;
     this._stage = this._wrap.querySelector(".stage")!;
     this._scene = this._wrap.querySelector(".scene")!;
+    this._detail = this._wrap.querySelector(".detail")!;
     this._scrub = this._wrap.querySelector("input")!;
     this._readout = this._wrap.querySelector(".readout")!;
     this._chipsEl = this._wrap.querySelector(".layerchips")!;
@@ -694,9 +733,10 @@ export class ThreeMDElement extends HTMLElement {
       this._loop = !this._loop;
       this._loopBtn.setAttribute("aria-pressed", String(this._loop));
     });
-    // Cross-plane links ([[z=N|text]]) jump to that plane. Capture so the click
-    // does not also trigger the plane card's select handler.
-    this._scene.addEventListener("click", (e) => {
+    // Cross-plane links ([[z=N|text]]) jump to that plane. Bound to the stage (not
+    // just the scene) so links on the focus-to-read overlay card also navigate.
+    // Capture so the click does not also trigger the plane card's select handler.
+    this._stage.addEventListener("click", (e) => {
       const link = (e.target as HTMLElement)?.closest?.(".xlink") as HTMLElement | null;
       if (!link) return;
       e.preventDefault();
@@ -721,6 +761,7 @@ export class ThreeMDElement extends HTMLElement {
   private _showError(message: string): void {
     if (!this._wrap) this._build();
     this._scene.innerHTML = "";
+    if (this._detail) this._detail.innerHTML = "";
     this._els = [];
     this._scene.style.transform = ""; // flat, not skewed by a stale camera pose
     if (this._axisEl) this._axisEl.textContent = "";
@@ -734,17 +775,20 @@ export class ThreeMDElement extends HTMLElement {
 
   private _buildPlanes(): void {
     this._scene.innerHTML = "";
+    if (this._detail) this._detail.innerHTML = ""; // drop any popped focus-to-read card
     this._els = [];
     this._voxels = [];
     this._axisEl.textContent = this._doc ? `axis = ${this._doc.axis}` : "";
     if (this._mode === "blend") {
-      this._buildBlend();
-      // A document with no voxelizable ASCII art has nothing to show in blend, so
-      // fall back to the deck instead of an empty stage.
-      if (!this._voxels.length) {
+      // Blend is only meaningful for docs with real voxelizable ASCII art. A
+      // pure-text doc would render as a garbled text cloud, so fall back to the
+      // deck instead (the viewer also hides the blend option when !voxelizable).
+      if (!this.voxelizable) {
         this._mode = "stack";
         this.setAttribute("data-mode", "stack");
         if (this._hintEl) this._hintEl.textContent = HINTS.stack;
+      } else {
+        this._buildBlend();
       }
     }
     if (this._mode !== "blend") {
@@ -835,7 +879,7 @@ export class ThreeMDElement extends HTMLElement {
   // fence, or when the block looks like code rather than ASCII art (a code
   // block such as JSON uses many distinct characters; art/games use a few), so
   // code never gets voxelized in blend view.
-  private _gridOf(body: string): { w: number; h: number; cells: boolean[][] } | null {
+  private _gridOf(body: string): { w: number; h: number; cells: boolean[][]; rows: string[] } | null {
     const lines = body.split("\n");
     const start = lines.findIndex((l) => l.startsWith("```"));
     if (start < 0) return null;
@@ -851,7 +895,7 @@ export class ThreeMDElement extends HTMLElement {
       for (let c = 0; c < w; c++) { const ch = r[c] ?? " "; out.push(ch !== " " && ch !== "."); }
       return out;
     });
-    return { w, h: rows.length, cells };
+    return { w, h: rows.length, cells, rows };
   }
 
   // Blended "object" view: drop the plane cards and place each plane's content
@@ -870,12 +914,18 @@ export class ThreeMDElement extends HTMLElement {
         for (let r = 0; r < g.h; r++) {
           for (let c = 0; c < g.w; c++) {
             if (!g.cells[r][c]) continue;
+            const raw = g.rows[r]?.[c] ?? "";
+            // Each cell IS its character: a legend remaps it (e.g. #->🧱), otherwise
+            // the raw glyph shows through. Emoji/symbols carry their own colour.
+            const glyph = this._legend[raw] ?? raw;
             const v = document.createElement("div");
             v.className = "voxel";
             v.setAttribute("part", "voxel");
             v.dataset.z = String(idx);
+            v.textContent = glyph;
             const x = (c - (W - 1) / 2) * CELL;
             const y = (r - (H - 1) / 2) * CELL;
+            v.dataset.tx = x.toFixed(1); v.dataset.ty = y.toFixed(1); v.dataset.tz = z.toFixed(1);
             v.style.transform = `translate3d(${x.toFixed(1)}px,${y.toFixed(1)}px,${z.toFixed(1)}px)`;
             this._scene.appendChild(v);
             this._voxels.push(v);
@@ -934,7 +984,7 @@ export class ThreeMDElement extends HTMLElement {
   private _startPlay(): void {
     if (this._playing || this._planes.length <= 1) return;
     this._playing = true;
-    if (this._playBtn) { this._playBtn.textContent = "⏸"; this._playBtn.setAttribute("aria-label", "pause"); }
+    if (this._playBtn) { this._playBtn.innerHTML = ICONS.pause; this._playBtn.setAttribute("aria-label", "pause"); }
     // Honor the document's fps metadata; clamp so playback stays watchable.
     // setInterval (not rAF) keeps animations running under iOS Low Power Mode.
     // Clamp playback to a calm, watchable range (about 1.5-7.5 fps) so animations
@@ -947,7 +997,7 @@ export class ThreeMDElement extends HTMLElement {
   private _stopPlay(): void {
     this._playing = false;
     if (this._playTimer) { clearInterval(this._playTimer); this._playTimer = null; }
-    if (this._playBtn) { this._playBtn.textContent = "▶"; this._playBtn.setAttribute("aria-label", "play"); }
+    if (this._playBtn) { this._playBtn.innerHTML = ICONS.play; this._playBtn.setAttribute("aria-label", "play"); }
   }
 
   private _togglePlay(): void {
@@ -1084,10 +1134,29 @@ export class ThreeMDElement extends HTMLElement {
     const focus = this._focus;
     const fr = Math.round(focus);
 
+    // Re-home any card that was popped into the flat detail overlay (map focus-to-
+    // read) back into the 3D scene before any mode renders, so every other mode sees
+    // a clean set of plane cards in the scene.
+    for (const el of this._els) {
+      if (el.parentNode === this._detail) {
+        el.classList.remove("popped");
+        el.removeAttribute("style");
+        this._scene.appendChild(el);
+      }
+    }
+
     // Blended object view: a static voxel/text cloud the user orbits freely.
     if (m === "blend") {
       if (!this._voxels.length) return;
       for (const v of this._voxels) v.classList.toggle("near", Number(v.dataset.z) === fr);
+      // Billboard (opt-in via `billboard: true`): each glyph counter-rotates the
+      // camera so it always faces the viewer (useful for emoji/character scenes).
+      if (this._billboard) {
+        for (const v of this._voxels) {
+          if (v.dataset.tx === undefined) continue;
+          v.style.transform = `translate3d(${v.dataset.tx}px,${v.dataset.ty}px,${v.dataset.tz}px) rotateY(${(-this._yaw).toFixed(2)}deg) rotateX(${(-this._pitch).toFixed(2)}deg)`;
+        }
+      }
       this._scene.style.transform = this._cameraTransform(-30);
       this._updateReadout();
       this._maybeEmit(fr);
@@ -1197,34 +1266,32 @@ export class ThreeMDElement extends HTMLElement {
       // it is held to a gentle range; the board is meant to be viewed near top-down.
       this._yaw = Math.max(-30, Math.min(30, this._yaw));
       this._pitch = Math.max(12, Math.min(52, this._pitch));
+      // Cards snap to GRID CELLS, not continuous positions: x/y are ranked among
+      // their distinct values so coordinates are predictable (same x -> same column,
+      // same y -> same row, adjacent numbers -> adjacent cells) and cells are wider
+      // than a card so tiles NEVER overlap unless two planes share the exact x AND y.
+      const cw = this._els[0]?.offsetWidth || 300, ch = this._els[0]?.offsetHeight || 180;
+      const COL_W = cw * 1.1, ROW_H = ch * 1.25; // > card size => guaranteed gap
       const hasXY = this._planes.some((p) => p.x != null || p.y != null);
-      // Auto-grid slot for any plane that has no coordinates of its own.
       const cols = Math.max(1, Math.ceil(Math.sqrt(this._els.length)));
       const rows = Math.ceil(this._els.length / cols);
+      // Auto-grid (reading order) for planes with no coordinates of their own.
       const gridPos = (idx: number): [number, number] => [
-        (idx % cols - (cols - 1) / 2) * 175,
-        (Math.floor(idx / cols) - (rows - 1) / 2) * 150,
+        (idx % cols - (cols - 1) / 2) * COL_W,
+        (Math.floor(idx / cols) - (rows - 1) / 2) * ROW_H,
       ];
       let posOf: (idx: number) => [number, number];
       if (hasXY) {
-        // Only planes with EXPLICIT coordinates define the range, so a plane at
-        // (0,0) is honored. A plane missing x/y is NOT coerced to 0 (which would
-        // collapse every unpositioned card onto the origin) - it falls to the grid.
-        const xs = this._planes.filter((p) => p.x != null).map((p) => p.x as number);
-        const ys = this._planes.filter((p) => p.y != null).map((p) => p.y as number);
-        const minX = xs.length ? Math.min(...xs) : 0, maxX = xs.length ? Math.max(...xs) : 0;
-        const minY = ys.length ? Math.min(...ys) : 0, maxY = ys.length ? Math.max(...ys) : 0;
-        const cx = (minX + maxX) / 2, cy = (minY + maxY) / 2;
-        const rx = Math.max(maxX - minX, 1), ry = Math.max(maxY - minY, 1);
+        const xVals = [...new Set(this._planes.filter((p) => p.x != null).map((p) => p.x as number))].sort((a, b) => a - b);
+        const yVals = [...new Set(this._planes.filter((p) => p.y != null).map((p) => p.y as number))].sort((a, b) => a - b);
+        const nCols = Math.max(1, xVals.length), nRows = Math.max(1, yVals.length);
         posOf = (idx) => {
           const p = this._planes[idx];
-          if (p.x == null && p.y == null) return gridPos(idx); // unpositioned -> grid
-          // A partially-positioned plane (only x OR only y) takes its missing axis
-          // from the grid slot, not the board centre, so such planes never pile up.
-          const g = gridPos(idx);
-          const px = p.x == null ? g[0] : ((p.x - cx) / rx * 360);
-          const py = p.y == null ? g[1] : -((p.y - cy) / ry * 250);
-          return [px, py];
+          if (p.x == null && p.y == null) return gridPos(idx); // unpositioned -> auto grid
+          // Rank each coordinate to its column/row; a missing axis sits in a trailing lane.
+          const col = p.x != null ? xVals.indexOf(p.x as number) : nCols;
+          const row = p.y != null ? yVals.indexOf(p.y as number) : nRows;
+          return [(col - (nCols - 1) / 2) * COL_W, (row - (nRows - 1) / 2) * ROW_H];
         };
       } else {
         posOf = gridPos;
@@ -1233,7 +1300,6 @@ export class ThreeMDElement extends HTMLElement {
       // no matter how many tiles or how wide the coordinate range (the user can
       // still wheel-zoom in). Without this, big boards spilled off the sides.
       const stageW = this._stage.clientWidth || 1, stageH = this._stage.clientHeight || 1;
-      const cw = this._els[0]?.offsetWidth || 300, ch = this._els[0]?.offsetHeight || 180;
       let halfW = cw / 2, halfH = ch / 2;
       this._els.forEach((el, idx) => {
         const [x, y] = posOf(idx);
@@ -1242,17 +1308,35 @@ export class ThreeMDElement extends HTMLElement {
       });
       // 0.92 leaves headroom so a tilted/orbited board still stays inside the stage.
       const fit = Math.min(1, (stageW / 2 - 16) / halfW, (stageH / 2 - 16) / halfH) * 0.92;
+      // Place the board tiles (everything except the focused card).
       this._els.forEach((el, idx) => {
-        const on = idx === fr;
+        if (idx === fr) return;
         const [x, y] = posOf(idx);
-        el.style.transform = `translate3d(${x.toFixed(1)}px, ${y.toFixed(1)}px, ${on ? 12 : 0}px) scale(${on ? 0.9 : 0.74})`;
-        el.style.opacity = "1";
-        el.style.zIndex = on ? "300" : String(100 + idx);
-        el.classList.toggle("hot", on);
+        el.style.transform = `translate3d(${x.toFixed(1)}px, ${y.toFixed(1)}px, 0px) scale(0.72)`;
+        el.style.opacity = "0.4";
+        el.style.zIndex = String(100 + idx);
+        el.style.top = ""; el.style.bottom = ""; el.style.height = ""; el.style.marginTop = ""; el.style.marginBottom = ""; el.style.maxHeight = "";
+        el.classList.toggle("hot", false);
         el.classList.toggle("dim", false);
         el.classList.toggle("reader", false);
         el.classList.toggle("frame", false);
       });
+      // Focus-to-read: the focused tile is lifted OUT of the 3D scene into the flat
+      // overlay (so it is never skewed by the board's tilt/perspective) and scaled so
+      // its WHOLE content fits the stage - every line readable, no scroll. Board dims
+      // behind. Clicks on the dimmed board still reach it (overlay is click-through).
+      const hotEl = this._els[fr];
+      if (hotEl) {
+        hotEl.classList.add("hot", "popped");
+        hotEl.classList.toggle("dim", false); hotEl.classList.toggle("reader", false); hotEl.classList.toggle("frame", false);
+        if (hotEl.parentNode !== this._detail) this._detail.appendChild(hotEl);
+        // Neutralize the board-tile positioning (inline beats the map .plane rule) and
+        // measure the flat card's natural size.
+        hotEl.style.cssText = "position:relative;margin:0;top:auto;left:auto;right:auto;bottom:auto;height:max-content;max-height:none;opacity:1;transform:none";
+        const natH = Math.max(1, hotEl.offsetHeight), natW = Math.max(1, hotEl.offsetWidth);
+        const pop = Math.max(0.6, Math.min(1.8, (stageH - 22) / natH, (stageW - 22) / natW));
+        hotEl.style.transform = `scale(${pop.toFixed(3)})`;
+      }
       this._scene.style.transform = `${this._cameraTransform(-120)} scale(${fit.toFixed(3)})`;
       this._updateReadout();
       this._maybeEmit(fr);
