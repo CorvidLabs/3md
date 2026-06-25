@@ -1,0 +1,150 @@
+---
+3md: 1.0
+axis: minute
+title: Reentry Blackout Window
+view: stack
+fps: 2
+category: Engineering
+---
+
+A spacecraft reentry told as a stack of six minutes. The Z axis is time, but the
+planes also move through heat, signal loss, and recovery.
+
+@plane z=0 label="T minus 02"
+# T minus 02
+
+```
+        EARTH LIMB
+  ~~~~~~~~~~~~~~~~~~~~~
+
+             capsule
+                v
+             [###]
+              / \
+
+altitude: 122 km
+speed:    7.7 km/s
+link:     green
+```
+
+- Guidance trims angle of attack to 6.4 degrees.
+- Cabin hears only fans, suit radios, and checklist cadence.
+- Plasma is not here yet. The air ahead is still mostly vacuum.
+
+Next: [[z=1|interface]].
+
+@plane z=1 label="Interface"
+# Entry Interface
+
+```
+  density: first bite
+
+             [###]
+            /|||||\
+           / ||||| \
+          /  |||||  \
+
+heat rate: rising
+g load:    0.8
+link:      green with noise
+```
+
+The vehicle is not flying through air so much as spending speed into it.
+
+| Channel | Reading |
+|---|---|
+| Inertial | locked |
+| Drag accel | climbing |
+| Heat shield | warming evenly |
+
+@plane z=2 label="Glow"
+# Orange Sheath
+
+```
+             . . . .
+          .  :::::  .
+        .   :[###]:   .
+          .  :::::  .
+             ' ' ' '
+
+heat rate:  peak soon
+g load:     2.6
+link:       packet loss
+```
+
+Ionized air wraps the capsule. The antennas are still talking, but every packet
+has to fight its way out.
+
+- Forward window: opaque orange
+- Roll rate: damped
+- Crew callout: "holding attitude"
+
+@plane z=3 label="Blackout"
+# Blackout
+
+```
+████████████████████████
+█                      █
+█       NO CARRIER      █
+█                      █
+████████████████████████
+
+heat rate:  peak
+g load:     4.1
+link:       lost
+```
+
+Ground sees telemetry become silence. Nothing is wrong yet. This is the planned
+quiet part, which somehow makes it harder to watch.
+
+Checklist:
+
+- [x] Attitude stable before loss
+- [x] Corridor confirmed
+- [ ] Wait for acquisition
+
+@plane z=4 label="Acquisition"
+# Acquisition of Signal
+
+```
+       carrier lock
+            |
+            v
+        [ . . . ]
+       [  ###  ]
+        [ . . . ]
+
+heat rate: falling
+g load:    2.2
+link:      weak but real
+```
+
+The first bit of signal returns as a thin line in the noise. Then voice.
+
+> "We read you."
+
+The room exhales in pieces.
+
+@plane z=5 label="Chute Armed"
+# Chute Armed
+
+```
+        drogue box: armed
+        main box:   inhibited
+
+             [###]
+              | |
+              | |
+
+altitude: 24 km
+speed:    subsonic soon
+link:     green
+```
+
+Reentry is no longer a flame problem. It is a sequence problem.
+
+- Drogues at target dynamic pressure.
+- Mains only after rate decay.
+- Recovery beacon remains quiet until splashdown.
+
+Back to [[z=0|the top of the corridor]].

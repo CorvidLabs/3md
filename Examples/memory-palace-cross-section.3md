@@ -1,0 +1,107 @@
+---
+3md: 1.0
+axis: room
+title: Memory Palace Cross Section
+view: map
+category: Creative
+---
+
+A memory palace that is both a map and a mnemonic. Each room has an x/y
+coordinate, and each plane is one place you can step into.
+
+@plane z=0 x=0 y=0 label="Foyer"
+# Foyer
+
+```
+      north
+        ^
+west <--+--> east
+        v
+      south
+```
+
+The foyer stores the rule: **location makes memory physical**.
+
+Routes:
+
+- [[z=1|Kitchen]] for sequence
+- [[z=2|Library]] for categories
+- [[z=3|Atrium]] for scale
+
+@plane z=1 x=-1 y=0 label="Kitchen"
+# Kitchen
+
+```
+[ pan ] [ pan ] [ pan ]
+  1       2       3
+```
+
+Use the kitchen for ordered processes. Each pan is a step, and the burner
+position tells you urgency.
+
+Example stack:
+
+1. Gather inputs
+2. Transform
+3. Plate the result
+
+@plane z=2 x=1 y=0 label="Library"
+# Library
+
+```
+BIO  DATA  LAW
+ART  MATH  OPS
+```
+
+Use the shelves for categories. Left to right is domain. Top to bottom is
+abstraction.
+
+The shelf labels become your index. The book position becomes your recall cue.
+
+@plane z=3 x=0 y=1 label="Atrium"
+# Atrium
+
+```
+      skylight
+    /         \
+   /    *      \
+  /             \
+ [ floor grid    ]
+```
+
+Use the atrium for big relationships. Anything too large for a shelf goes here:
+systems, maps, networks, arguments.
+
+The star marks the claim everything else orbits.
+
+@plane z=4 x=0 y=-1 label="Basement"
+# Basement
+
+```
+root causes
+-----------
+pressure
+constraint
+habit
+incentive
+```
+
+Use the basement for causes. If a fact keeps repeating across rooms, it belongs
+down here as structure.
+
+Cross-check:
+
+- [[z=1|Kitchen]] asks "what happens next?"
+- [[z=4|Basement]] asks "why does it keep happening?"
+
+@plane z=5 x=2 y=1 label="Roof"
+# Roof
+
+```
+wind map
+~~~~~~~~
+   idea drift ->
+```
+
+Use the roof for anything still uncertain. The point is not to store it forever.
+The point is to give it a place to move without wrecking the rooms below.
