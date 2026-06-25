@@ -111,7 +111,9 @@ function parseLegend(raw: string | null | undefined): Record<string, string> {
     const rawKey = tok.slice(0, eq).replace(/^["']|["']$/g, "");
     const key = [...rawKey][0]; // one source character
     const val = tok.slice(eq + 1).replace(/^["']|["']$/g, "");
-    if (key && val) map[key] = val;
+    // An empty value (e.g. `.=`) blanks the character: it renders as a space, so
+    // a grid keeps its alignment but the character disappears.
+    if (key) map[key] = val === "" ? " " : val;
   }
   return map;
 }
@@ -225,6 +227,15 @@ const STYLES = `
   transition: opacity .3s, box-shadow .3s, filter .3s;
 }
 .plane.hot { overflow-y: auto; } /* the focused card can scroll long content */
+/* In card modes the focused card becomes a centered, full-height, scrollable box,
+   so long content is always reachable (the fixed -104px anchor clipped tall cards
+   off the bottom). */
+:host([data-mode="stack"]) .plane.hot,
+:host([data-mode="layers"]) .plane.hot,
+:host([data-mode="elevator"]) .plane.hot,
+:host([data-mode="present"]) .plane.hot {
+  top: 10px; bottom: 10px; height: auto; margin-top: 0; max-height: none; overflow-y: auto;
+}
 .plane.dim { opacity: .18; filter: saturate(.5); }
 .plane.hot { box-shadow: 0 0 0 2px var(--three-md-accent), 0 18px 44px rgba(0,0,0,.5); }
 /* Reader: the focused plane in single-card view fills the stage and scrolls its
@@ -632,21 +643,31 @@ export class ThreeMDElement extends HTMLElement {
     this.style.removeProperty("--three-md-frame-h");
     this.style.removeProperty("--three-md-frame-scale");
     if (this._mode !== "play" || !this._els.length) return;
-    let w = 0, h = 0;
+    const sw = (this._stage?.clientWidth || 9999) - 24;
+    const sh = (this._stage?.clientHeight || 9999) - 24;
+    // Pass 1: the widest frame's natural (unwrapped) width. Pass 2: measure each
+    // frame's height AT that width, so wrapped text is accounted for and never
+    // clipped. The frame is sized to that content (its min size) and scaled to fit.
+    let w = 0;
     for (const el of this._els) {
       const save = el.style.cssText;
       el.classList.remove("frame");
       el.style.transform = "none"; el.style.opacity = "0";
-      el.style.width = "max-content"; el.style.height = "auto";
-      el.style.maxWidth = "none"; el.style.maxHeight = "none";
-      w = Math.max(w, el.offsetWidth); h = Math.max(h, el.offsetHeight);
+      el.style.width = "max-content"; el.style.height = "auto"; el.style.maxWidth = "none"; el.style.maxHeight = "none";
+      w = Math.max(w, el.offsetWidth);
       el.style.cssText = save;
     }
-    if (w <= 0 || h <= 0) return;
-    // The frame is the content's natural size; a scale shrinks it to fit the stage
-    // so the whole animation is visible with NO scrollbars and no clipping.
-    const sw = (this._stage?.clientWidth || 9999) - 24;
-    const sh = (this._stage?.clientHeight || 9999) - 24;
+    if (w <= 0) return;
+    let h = 0;
+    for (const el of this._els) {
+      const save = el.style.cssText;
+      el.classList.remove("frame");
+      el.style.transform = "none"; el.style.opacity = "0";
+      el.style.width = w + "px"; el.style.height = "auto"; el.style.maxWidth = "none"; el.style.maxHeight = "none";
+      h = Math.max(h, el.offsetHeight);
+      el.style.cssText = save;
+    }
+    if (h <= 0) return;
     const scale = Math.min(sw / w, sh / h, 1);
     this.style.setProperty("--three-md-frame-w", w + "px");
     this.style.setProperty("--three-md-frame-h", h + "px");
@@ -855,7 +876,12 @@ export class ThreeMDElement extends HTMLElement {
   private _onWheel(e: WheelEvent): void {
     if (!CAMERA_MODES.has(this._mode)) return; // reader/slides scroll natively
     e.preventDefault();
-    this._zoom = Math.max(-400, Math.min(600, this._zoom - e.deltaY * 0.5));
+    // Normalize line vs pixel deltas, and use a sensitivity strong enough that a
+    // trackpad two-finger scroll (tiny deltaY) zooms noticeably. Pinch (ctrlKey)
+    // gets a bigger step.
+    const unit = e.deltaMode === 1 ? 16 : e.deltaMode === 2 ? 400 : 1;
+    const factor = e.ctrlKey ? 6 : 2.2;
+    this._zoom = Math.max(-420, Math.min(720, this._zoom - e.deltaY * unit * factor));
     this.render();
   }
 
@@ -953,7 +979,7 @@ export class ThreeMDElement extends HTMLElement {
       this._els.forEach((el, idx) => {
         const d = idx - focus;
         const on = idx === fr;
-        el.style.transform = `translate3d(0px, ${(d * 10).toFixed(1)}px, ${(-Math.abs(d) * 80).toFixed(1)}px) scale(${on ? 1.02 : 0.97})`;
+        el.style.transform = `translate3d(0px, ${(d * 10).toFixed(1)}px, ${(-Math.abs(d) * 80).toFixed(1)}px) scale(${on ? 1 : 0.97})`;
         el.style.opacity = on ? "1" : Math.max(0.3, 1 - Math.abs(d) * 0.34).toFixed(2);
         el.style.zIndex = on ? "300" : String(120 - Math.abs(fr - idx));
         el.classList.toggle("hot", on);
@@ -973,7 +999,7 @@ export class ThreeMDElement extends HTMLElement {
       this._els.forEach((el, idx) => {
         const d = idx - focus;
         const on = idx === fr;
-        el.style.transform = `translate3d(0px, ${(d * 150).toFixed(1)}px, ${(-Math.abs(d) * 70).toFixed(1)}px) scale(${on ? 1.04 : 0.84})`;
+        el.style.transform = `translate3d(0px, ${(d * 150).toFixed(1)}px, ${(-Math.abs(d) * 70).toFixed(1)}px) scale(${on ? 1 : 0.84})`;
         el.style.opacity = Math.max(0.14, 1 - Math.abs(d) * 0.42).toFixed(2);
         el.style.zIndex = on ? "300" : String(120 - Math.abs(fr - idx));
         el.classList.toggle("hot", on);
@@ -1030,11 +1056,13 @@ export class ThreeMDElement extends HTMLElement {
       let x = 0, y = 0, z = 0, s = 1, o = 1, hot = false, dim = false;
       const d = idx - focus;
       if (m === "present") {
-        if (Math.abs(d) < 0.5) { z = 120; s = 1.18; hot = true; }
+        // Focused slide is NOT upscaled (that pushed long slides past the stage);
+        // it fills the capped card and scrolls if long.
+        if (Math.abs(d) < 0.5) { z = 0; s = 1; hot = true; }
         else { x = d * 70; z = -180 - Math.abs(d) * 50; s = 0.6; o = 0.22; dim = true; }
       } else { // stack (deck)
         z = -Math.abs(d) * 160; y = d * 26; x = d * 30;
-        if (idx === fr) { s = 1.05; hot = true; }
+        if (idx === fr) { s = 1; hot = true; } // focused fills a centered scrollable box
       }
       el.style.transform = `translate3d(${x}px,${y}px,${z}px) scale(${s.toFixed(3)})`;
       el.style.opacity = String(o);
