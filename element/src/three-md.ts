@@ -1242,34 +1242,32 @@ export class ThreeMDElement extends HTMLElement {
       // it is held to a gentle range; the board is meant to be viewed near top-down.
       this._yaw = Math.max(-30, Math.min(30, this._yaw));
       this._pitch = Math.max(12, Math.min(52, this._pitch));
+      // Cards snap to GRID CELLS, not continuous positions: x/y are ranked among
+      // their distinct values so coordinates are predictable (same x -> same column,
+      // same y -> same row, adjacent numbers -> adjacent cells) and cells are wider
+      // than a card so tiles NEVER overlap unless two planes share the exact x AND y.
+      const cw = this._els[0]?.offsetWidth || 300, ch = this._els[0]?.offsetHeight || 180;
+      const COL_W = cw * 1.1, ROW_H = ch * 1.25; // > card size => guaranteed gap
       const hasXY = this._planes.some((p) => p.x != null || p.y != null);
-      // Auto-grid slot for any plane that has no coordinates of its own.
       const cols = Math.max(1, Math.ceil(Math.sqrt(this._els.length)));
       const rows = Math.ceil(this._els.length / cols);
+      // Auto-grid (reading order) for planes with no coordinates of their own.
       const gridPos = (idx: number): [number, number] => [
-        (idx % cols - (cols - 1) / 2) * 175,
-        (Math.floor(idx / cols) - (rows - 1) / 2) * 150,
+        (idx % cols - (cols - 1) / 2) * COL_W,
+        (Math.floor(idx / cols) - (rows - 1) / 2) * ROW_H,
       ];
       let posOf: (idx: number) => [number, number];
       if (hasXY) {
-        // Only planes with EXPLICIT coordinates define the range, so a plane at
-        // (0,0) is honored. A plane missing x/y is NOT coerced to 0 (which would
-        // collapse every unpositioned card onto the origin) - it falls to the grid.
-        const xs = this._planes.filter((p) => p.x != null).map((p) => p.x as number);
-        const ys = this._planes.filter((p) => p.y != null).map((p) => p.y as number);
-        const minX = xs.length ? Math.min(...xs) : 0, maxX = xs.length ? Math.max(...xs) : 0;
-        const minY = ys.length ? Math.min(...ys) : 0, maxY = ys.length ? Math.max(...ys) : 0;
-        const cx = (minX + maxX) / 2, cy = (minY + maxY) / 2;
-        const rx = Math.max(maxX - minX, 1), ry = Math.max(maxY - minY, 1);
+        const xVals = [...new Set(this._planes.filter((p) => p.x != null).map((p) => p.x as number))].sort((a, b) => a - b);
+        const yVals = [...new Set(this._planes.filter((p) => p.y != null).map((p) => p.y as number))].sort((a, b) => a - b);
+        const nCols = Math.max(1, xVals.length), nRows = Math.max(1, yVals.length);
         posOf = (idx) => {
           const p = this._planes[idx];
-          if (p.x == null && p.y == null) return gridPos(idx); // unpositioned -> grid
-          // A partially-positioned plane (only x OR only y) takes its missing axis
-          // from the grid slot, not the board centre, so such planes never pile up.
-          const g = gridPos(idx);
-          const px = p.x == null ? g[0] : ((p.x - cx) / rx * 360);
-          const py = p.y == null ? g[1] : -((p.y - cy) / ry * 250);
-          return [px, py];
+          if (p.x == null && p.y == null) return gridPos(idx); // unpositioned -> auto grid
+          // Rank each coordinate to its column/row; a missing axis sits in a trailing lane.
+          const col = p.x != null ? xVals.indexOf(p.x as number) : nCols;
+          const row = p.y != null ? yVals.indexOf(p.y as number) : nRows;
+          return [(col - (nCols - 1) / 2) * COL_W, (row - (nRows - 1) / 2) * ROW_H];
         };
       } else {
         posOf = gridPos;
@@ -1278,7 +1276,6 @@ export class ThreeMDElement extends HTMLElement {
       // no matter how many tiles or how wide the coordinate range (the user can
       // still wheel-zoom in). Without this, big boards spilled off the sides.
       const stageW = this._stage.clientWidth || 1, stageH = this._stage.clientHeight || 1;
-      const cw = this._els[0]?.offsetWidth || 300, ch = this._els[0]?.offsetHeight || 180;
       let halfW = cw / 2, halfH = ch / 2;
       this._els.forEach((el, idx) => {
         const [x, y] = posOf(idx);
