@@ -169,6 +169,51 @@ test.describe("viewer & editor (viewer.html)", () => {
     expect(bad.stale).toBeNull();
   });
 
+  test("Tab does not trap keyboard focus (Esc then Tab leaves the editor)", async ({ page }) => {
+    await page.goto("/viewer.html");
+    await page.waitForFunction(() => document.getElementById("lab")?.shadowRoot?.querySelectorAll(".plane").length > 0);
+    await page.click("#editor");
+    // Plain Tab indents and keeps focus in the editor.
+    await page.keyboard.press("Tab");
+    expect(await page.evaluate(() => document.activeElement.id)).toBe("editor");
+    // Esc arms the escape; the next Tab moves focus OUT of the editor.
+    await page.keyboard.press("Escape");
+    await page.keyboard.press("Tab");
+    expect(await page.evaluate(() => document.activeElement.id)).not.toBe("editor");
+  });
+
+  test("agent API validates and reports structured state", async ({ page }) => {
+    await page.goto("/viewer.html");
+    await page.waitForFunction(() => document.getElementById("lab")?.shadowRoot?.querySelectorAll(".plane").length > 0);
+    const r = await page.evaluate(() => {
+      const good = window.threeMd.set('---\n3md: 1.0\naxis: space\n---\n@plane z=0\nA\n@plane z=1\nB\n');
+      const bad = window.threeMd.validate('axis: time\nno version key');
+      return { good, bad };
+    });
+    expect(r.good).toMatchObject({ valid: true, axis: "space", planes: 2 });
+    expect(r.bad.valid).toBe(false);
+    expect(r.bad.message).toBeTruthy();
+  });
+
+  test("the embedded agent schema marks axis optional, only 3md required", async ({ page }) => {
+    await page.goto("/viewer.html");
+    const schema = await page.evaluate(() => JSON.parse(document.getElementById("threemd-schema").textContent));
+    expect(Object.keys(schema.frontmatter.required)).toEqual(["3md"]);
+    expect(schema.frontmatter.optional.axis).toBeTruthy();
+  });
+
+  test("invalid doc clears stale plane/axis data on the badge", async ({ page }) => {
+    await page.goto("/viewer.html");
+    await page.waitForFunction(() => document.getElementById("lab")?.shadowRoot?.querySelectorAll(".plane").length > 0);
+    // start valid (badge has data-planes), then break it
+    await page.fill("#editor", "axis: time\nbroken no version");
+    await page.waitForTimeout(250);
+    const ds = await page.evaluate(() => ({ ...document.getElementById("validBadge").dataset }));
+    expect(ds.valid).toBe("false");
+    expect(ds.planes).toBeUndefined();
+    expect(ds.axis).toBeUndefined();
+  });
+
   test("an invalid document flags the offending line and the badge", async ({ page }) => {
     await page.goto("/viewer.html");
     await viewerReady(page);
