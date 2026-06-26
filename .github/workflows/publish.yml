@@ -1,9 +1,11 @@
 name: publish
 
-# Publishes the two npm packages to the public npm registry on each GitHub release:
-# @corvidlabs/threemd (the parser) and @corvidlabs/three-md-element (the
-# canonical <three-md> web component, which bundles the parser at build time).
-# Authenticates via npm Trusted Publishers (OIDC) — no NPM_TOKEN secret needed.
+# Publishes the two npm packages to the public npm registry on each GitHub
+# release: @corvidlabs/threemd (the parser) and @corvidlabs/three-md-element
+# (the canonical <three-md> web component, which bundles the parser at build
+# time). Authenticates via npm Trusted Publishers (OIDC) with provenance, so no
+# NPM_TOKEN secret is needed. OIDC publishing requires npm >= 11.5.1, which is
+# newer than the npm that ships with Node 20, so each job upgrades npm first.
 
 on:
   release:
@@ -29,6 +31,8 @@ jobs:
           node-version: "20"
           registry-url: "https://registry.npmjs.org"
           scope: "@corvidlabs"
+      - name: Upgrade npm for OIDC trusted publishing
+        run: npm install -g npm@latest && npm --version
       - run: bun install --frozen-lockfile
       - name: Sync package version to the release tag
         if: github.event_name == 'release'
@@ -55,6 +59,8 @@ jobs:
           node-version: "20"
           registry-url: "https://registry.npmjs.org"
           scope: "@corvidlabs"
+      - name: Upgrade npm for OIDC trusted publishing
+        run: npm install -g npm@latest && npm --version
       # Installs typescript for the .d.ts build. The bundle imports the parser
       # from source (../../js/src), so it needs no other dependency.
       - run: bun install
