@@ -125,7 +125,8 @@ import "@corvidlabs/three-md-element";
 | Attribute | Description |
 |-----------|-------------|
 | `src` | URL of a `.3md` file to fetch and render. |
-| `mode` | Override the render mode. One of `stack`, `play`, `layers`, `scene`, `parallax`, `present`, `elevator`. Defaults to a mode chosen from the document's `axis`. |
+| `mode` | Override the render mode. One of `stack`, `play`, `single`, `present`, `blend`, `map`, `layers`, `elevator`. Retired aliases such as `scene`, `parallax`, and `deck` are still accepted and mapped to current modes. Defaults to a mode chosen from the document's `axis`. |
+| `autoplay` | Start auto-advancing as soon as content loads. `mode="play"` also auto-runs. |
 
 Inline text content (the `.3md` source between the tags) is used when there is
 no `src`.
@@ -133,10 +134,17 @@ no `src`.
 ### Properties and methods
 
 - `document` - the parsed `Document`, or `null` before content loads.
+- `error` - the parse or load error from the most recent failed load, or `null`.
+- `errorLine` - the 1-based source line for parser errors when available.
+- `errorCode` - the stable parser error code when available.
+- `voxelizable` - whether the current document can render cleanly in `blend` mode.
 - `currentIndex` - the index of the focused plane.
 - `mode` - the active render mode.
+- `playing` - whether playback is running.
 - `goTo(index)` - focus a plane by index.
+- `toggleFullscreen()` - toggle fullscreen for the whole component.
 - `setSource(text)` - replace the rendered document with new 3md source.
+- `play()` / `pause()` - control auto-advancing playback.
 
 ### Events
 

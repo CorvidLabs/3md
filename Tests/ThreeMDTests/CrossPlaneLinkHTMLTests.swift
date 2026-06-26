@@ -50,6 +50,24 @@ final class CrossPlaneLinkHTMLTests: XCTestCase {
         XCTAssertTrue(html.contains("id=\"plane-z--2\""), "Expected id attribute for z=-2")
     }
 
+    func testPublicAnchorHelpersMatchRendererIds() throws {
+        let source = """
+            ---
+            3md: 0.1
+            ---
+            @plane z=1.5
+            body
+            """
+        let document = try parser.parse(source)
+        let plane = try XCTUnwrap(document.plane(atZ: 1.5))
+
+        XCTAssertEqual(ThreeMDAnchor.id(forZ: 1.5), "plane-z-1.5")
+        XCTAssertEqual(ThreeMDAnchor.href(forZ: 1.5), "#plane-z-1.5")
+        XCTAssertEqual(plane.anchorID, "plane-z-1.5")
+        XCTAssertEqual(document.anchorID(forZ: 1.5), "plane-z-1.5")
+        XCTAssertTrue(htmlRenderer.render(document).contains("id=\"\(plane.anchorID)\""))
+    }
+
     func testSectionIdPrecedesDataZ() throws {
         let source = """
             ---

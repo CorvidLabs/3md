@@ -22,6 +22,48 @@ public enum ParseError: Error, LocalizedError, Sendable, Equatable {
     /// Two planes shared the same `z` position.
     case duplicatePlane(z: Double)
 
+    // MARK: - Public Properties
+
+    /// Stable machine-readable error code matching the parser error case.
+    public var code: String {
+        switch self {
+        case .missingFrontmatter:
+            return "missingFrontmatter"
+        case .invalidFrontmatter:
+            return "invalidFrontmatter"
+        case .missingVersion:
+            return "missingVersion"
+        case .invalidPlaneDirective:
+            return "invalidPlaneDirective"
+        case .missingPlanePosition:
+            return "missingPlanePosition"
+        case .duplicatePlane:
+            return "duplicatePlane"
+        }
+    }
+
+    /// The 1-based source line associated with the error, when available.
+    public var line: Int? {
+        switch self {
+        case .invalidPlaneDirective(let line, _), .missingPlanePosition(let line):
+            return line
+        case .missingFrontmatter, .invalidFrontmatter, .missingVersion, .duplicatePlane:
+            return nil
+        }
+    }
+
+    /// Extra case-specific detail suitable for JSON diagnostics.
+    public var detail: String? {
+        switch self {
+        case .invalidFrontmatter(let detail), .invalidPlaneDirective(_, let detail):
+            return detail
+        case .duplicatePlane(let z):
+            return String(z)
+        case .missingFrontmatter, .missingVersion, .missingPlanePosition:
+            return nil
+        }
+    }
+
     // MARK: - LocalizedError
 
     /// A human-readable description of the parse failure.

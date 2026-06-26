@@ -1,6 +1,6 @@
 import { describe, expect, test } from "bun:test";
 
-import { parse, links, type CrossPlaneLink } from "../src/index.ts";
+import { danglingLinks, linkGraph, links, parse, type CrossPlaneLink } from "../src/index.ts";
 
 /** Parses 3md source and returns its extracted cross-plane links. */
 function extract(source: string): CrossPlaneLink[] {
@@ -70,5 +70,35 @@ describe("links()", () => {
 
   test("a document with no links returns an empty array", () => {
     expect(extract("---\n3md: 0.1\n---\n@plane z=0\njust text\n")).toEqual([]);
+  });
+
+  test("danglingLinks filters only missing targets", () => {
+    const document = parse(
+      "---\n3md: 0.1\n---\n@plane z=0\nok [[z=1]] missing [[z=99]]\n\n@plane z=1\nthere\n",
+    );
+
+    expect(danglingLinks(document)).toEqual([
+      { sourceZ: 0, targetZ: 99, text: null, targetExists: false },
+    ]);
+  });
+
+  test("linkGraph collapses repeated source-target pairs", () => {
+    const document = parse(
+      "---\n3md: 0.1\n---\n@plane z=0\n[[z=1]] and [[z=1|again]] and [[z=2]]\n\n@plane z=1\n[[z=2]]\n\n@plane z=2\ndone\n",
+    );
+
+    expect(linkGraph(document)).toEqual([
+      { sourceZ: 0, targetZ: 1, targetExists: true, count: 2 },
+      { sourceZ: 0, targetZ: 2, targetExists: true, count: 1 },
+      { sourceZ: 1, targetZ: 2, targetExists: true, count: 1 },
+    ]);
+  });
+
+  test("linkGraph keeps dangling edge status", () => {
+    const document = parse("---\n3md: 0.1\n---\n@plane z=0\n[[z=99]] and [[z=99|again]]\n");
+
+    expect(linkGraph(document)).toEqual([
+      { sourceZ: 0, targetZ: 99, targetExists: false, count: 2 },
+    ]);
   });
 });
