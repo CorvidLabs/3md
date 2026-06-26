@@ -560,7 +560,7 @@ function parseBody(lines: readonly string[], bodyStartLine: number): ParsedBody 
     }
     return {
       preamble: null,
-      planes: [{ z: 0, label: null, x: null, y: null, attributes: {}, body: preamble }],
+      planes: [{ z: 0, label: null, x: null, y: null, attributes: Object.create(null), body: preamble }],
     };
   }
   return { preamble, planes };
