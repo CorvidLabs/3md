@@ -364,7 +364,10 @@ function interpretFrontmatter(fields: readonly FrontmatterField[]): InterpretedF
   let version: string | null = null;
   let axis: Axis = "layer";
   let title: string | null = null;
-  const metadata: Record<string, string> = {};
+  // Null-prototype map: frontmatter keys come from an untrusted document, so a
+  // key like `__proto__` or `constructor` must land as plain data, never on the
+  // object's prototype. All keys are still preserved (parity with Swift/Rust).
+  const metadata: Record<string, string> = Object.create(null);
 
   for (const field of fields) {
     switch (field.key.toLowerCase()) {
@@ -394,7 +397,7 @@ function interpretFrontmatter(fields: readonly FrontmatterField[]): InterpretedF
 
 function parseDirective(trimmed: string, line: number): Record<string, string> {
   const remainder = trimWhitespace(trimmed.slice("@plane".length));
-  const result: Record<string, string> = {};
+  const result: Record<string, string> = Object.create(null); // untrusted keys, no prototype
 
   for (const token of tokenize(remainder, line)) {
     const separator = token.indexOf("=");
@@ -469,7 +472,7 @@ function makePlane(pending: PendingPlane): Plane {
   const labelRaw = attributes["label"];
   const label = labelRaw === undefined ? null : labelRaw;
 
-  const extras: Record<string, string> = {};
+  const extras: Record<string, string> = Object.create(null); // untrusted keys, no prototype
   for (const attributeKey of Object.keys(attributes)) {
     if (!RESERVED_PLANE_KEYS.has(attributeKey)) {
       const attributeValue = attributes[attributeKey];
@@ -557,7 +560,7 @@ function parseBody(lines: readonly string[], bodyStartLine: number): ParsedBody 
     }
     return {
       preamble: null,
-      planes: [{ z: 0, label: null, x: null, y: null, attributes: {}, body: preamble }],
+      planes: [{ z: 0, label: null, x: null, y: null, attributes: Object.create(null), body: preamble }],
     };
   }
   return { preamble, planes };
