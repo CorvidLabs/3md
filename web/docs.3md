@@ -3,11 +3,19 @@
 axis: doc
 title: 3md Project Documentation
 view: single
-note: every Markdown doc in the repo, combined into one navigable 3md file
+note: GENERATED. Open in the 3md viewer, do not read raw. Source = the .md files.
 generated: regenerate with scripts/build-docs-3md.mjs - edit the source docs, not this
 ---
-The whole documentation set as a single 3md document: each plane is one of the
-repo's docs. Scrub the Z axis to move between them. This is 3md used on itself.
+GENERATED FILE - do not read this raw, and do not edit it.
+
+This bundles every prose doc in the repo into one 3md file, one doc per plane,
+so they can be scrubbed in the 3md viewer (GitHub cannot preview .3md natively):
+
+    https://corvidlabs.github.io/3md/viewer.html?src=docs.3md
+
+As plain text this is just every doc concatenated end to end, which is hard to
+read on purpose. The source of truth is the individual .md files; edit those and
+regenerate with `node scripts/build-docs-3md.mjs`.
 
 @plane z=0 label="README" file="README.md"
 # 3md
@@ -108,10 +116,12 @@ viewer](https://corvidlabs.github.io/3md/viewer.html), or load the self-containe
 component bundle directly with `<script type="module" src=".../three-md.js">`.
 
 ```ts
-import { parse, serialize } from "@corvidlabs/threemd";
+import { danglingLinks, linkGraph, parse, serialize } from "@corvidlabs/threemd";
 
 const document = parse(source);
 console.log(document.axis); // "time"
+console.log(danglingLinks(document)); // unresolved [[z=N]] references
+console.log(linkGraph(document));     // compact source -> target edge list
 
 // Round trips back to text:
 const text = serialize(document);
@@ -141,6 +151,8 @@ print(document.axis)          // Axis(rawValue: "time")
 for plane in document.planesByZ {
     print(plane.label ?? "", plane.body)
 }
+print(document.danglingLinks()) // unresolved [[z=N]] references
+print(document.linkGraph())     // compact source -> target edge list
 
 // Round trips back to text:
 let text = Serializer().render(document)
@@ -154,8 +166,13 @@ The `threemd` CLI ships with the package and self-documents (run `threemd
 ```bash
 swift run threemd validate <file>   # parse a file; print "ok" or exit non-zero with the error
 swift run threemd info <file>       # print version, axis, title, and each plane's position
+swift run threemd links <file>      # list cross-plane links and dangling references
+swift run threemd check-links <file> # exit non-zero when any [[z=N]] target is missing
 swift run threemd html <file>       # render the document to HTML on stdout
 ```
+
+`validate`, `info`, `links`, and `check-links` also accept `--json` for CI,
+editor integrations, and other tooling.
 
 ## Format at a glance
 
@@ -199,6 +216,9 @@ fledge lanes run verify
 
 which runs the Swift format check, build, and tests plus the Rust crate. See
 [AGENTS.md](AGENTS.md) for the standing rules every contributor and agent follows.
+The same gate also checks TypeScript parser parity, generated web-component
+bundle drift, VS Code grammar tests, and spec-sync. Browser UI tests are exposed
+separately with `fledge lanes run ui`.
 
 Each implementation has its own tests (the Swift suite has 122 tests, the
 TypeScript suite 76), and all three implementations run the shared 43-vector
