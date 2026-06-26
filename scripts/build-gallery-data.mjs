@@ -32,15 +32,24 @@ const RULES = [
 ];
 
 // A hand-picked set of standouts surfaced by the gallery's "Featured" filter.
+// Weighted toward the genuinely useful and the most distinct, so the first
+// thing a visitor sees is the strongest, least repetitive cross-section.
 const FEATURED = new Set([
-  "aegis-sensor-sweep", "bug-lifecycle", "datacenter-heat-grid",
-  "dungeon-crawl-descent", "dungeon-run-log", "game-tic-tac-toe",
-  "gather-to-anneal", "hive-year", "home-wedding-seating",
-  "incident-response-runbook", "junction-interlocking", "life-song-structure",
-  "metro-zone-grid", "museum-of-the-anthropocene-walkthrough",
-  "reef-tank-cross-section", "solar-system-depth-dive", "solar-system",
-  "spanish-ser-vs-estar-flashcards", "suspension-bridge-load-path",
-  "whimsy-hollow-park-map",
+  "aegis-sensor-sweep", "bug-lifecycle", "cicd-pipeline-dag",
+  "conways-game-of-life", "data-db-migrations", "datacenter-heat-grid",
+  "dataset-card-orders", "dna-double-helix", "eta-2824-exploded",
+  "fallingwater-floor-by-floor", "first-aid", "incident-response-runbook",
+  "launch-constraint-room", "memory-palace-cross-section", "metro-zone-grid",
+  "powers-of-ten", "suspension-bridge-load-path", "threat-model",
+]);
+
+// Trimmed for repetition: the gallery had three dungeons, two solar systems,
+// and two launch/mission "go poll" rooms. Keep the most distinct of each
+// cluster (the playable dungeon, the depth-axis solar system, the constraint
+// room) and exclude the rest from the gallery. The files stay in the corpus.
+const EXCLUDE = new Set([
+  "dungeon-crawl-descent", "dungeon-run-log", "solar-system",
+  "mission-control-loop",
 ]);
 
 function categorize(slug, title, axis, declared) {
@@ -60,6 +69,7 @@ const counts = {};
 let skippedWithoutGif = 0;
 for (const f of files) {
   const slug = f.replace(/\.3md$/, "");
+  if (EXCLUDE.has(slug)) continue;
   if (!existsSync(`web/gifs/${slug}.gif`)) {
     skippedWithoutGif++;
     continue;
