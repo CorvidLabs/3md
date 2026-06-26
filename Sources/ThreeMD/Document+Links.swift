@@ -23,7 +23,54 @@ extension Document {
         return result
     }
 
+    /// Returns only links whose target plane does not exist.
+    ///
+    /// - Returns: Dangling cross-plane links in document order.
+    public func danglingLinks() -> [CrossPlaneLink] {
+        links().filter { !$0.targetExists }
+    }
+
+    /// Returns a compact directed graph of cross-plane references.
+    ///
+    /// Multiple links with the same source and target collapse into one edge
+    /// with an incremented count. The returned edges preserve the first time
+    /// each source-target pair appears in the document.
+    ///
+    /// - Returns: Cross-plane graph edges in first encounter order.
+    public func linkGraph() -> [CrossPlaneLinkEdge] {
+        var order: [(sourceZ: Double, targetZ: Double)] = []
+        var counts: [LinkGraphKey: Int] = [:]
+        var existence: [LinkGraphKey: Bool] = [:]
+
+        for link in links() {
+            let key = LinkGraphKey(sourceZ: link.sourceZ, targetZ: link.targetZ)
+            if counts[key] == nil {
+                order.append((sourceZ: link.sourceZ, targetZ: link.targetZ))
+                existence[key] = link.targetExists
+            }
+            counts[key, default: 0] += 1
+        }
+
+        return order.map { item in
+            let key = LinkGraphKey(sourceZ: item.sourceZ, targetZ: item.targetZ)
+            return CrossPlaneLinkEdge(
+                sourceZ: item.sourceZ,
+                targetZ: item.targetZ,
+                targetExists: existence[key] ?? false,
+                count: counts[key] ?? 0
+            )
+        }
+    }
+
     // MARK: - Private Helpers
+
+    /// Hashable key for a source-target pair in the cross-plane link graph.
+    private struct LinkGraphKey: Hashable {
+        /// Source plane Z position.
+        let sourceZ: Double
+        /// Target plane Z position.
+        let targetZ: Double
+    }
 
     /// Scans a single body string for `[[z=...]]` patterns and returns records.
     private func extractLinks(

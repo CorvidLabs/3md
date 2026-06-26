@@ -542,7 +542,7 @@ public struct MarkdownRenderer: Sendable {
         let endIndex = text.index(after: nextIndex)
         let formatted = targetZ.formatted3MD()
         let displayText = linkText.map { escape($0) } ?? "z=\(escape(formatted))"
-        let anchor = "<a href=\"#plane-z-\(escape(formatted))\">\(displayText)</a>"
+        let anchor = "<a href=\"\(escape(ThreeMDAnchor.href(forZ: targetZ)))\">\(displayText)</a>"
         return (anchor, endIndex)
     }
 

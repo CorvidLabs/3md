@@ -19,7 +19,7 @@ bun add @corvidlabs/threemd
 ## Usage
 
 ```ts
-import { parse, serialize } from "@corvidlabs/threemd";
+import { danglingLinks, linkGraph, parse, serialize } from "@corvidlabs/threemd";
 
 const source = `---
 3md: 0.1
@@ -37,6 +37,8 @@ title: My Week
 const document = parse(source);
 console.log(document.axis);            // "time"
 console.log(document.planes.length);   // 2
+console.log(danglingLinks(document));  // unresolved [[z=N]] references
+console.log(linkGraph(document));      // compact source -> target edge list
 
 // Round trips back to text:
 const text = serialize(document);

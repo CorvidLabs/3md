@@ -11,6 +11,17 @@ fmt = "swift-format format --in-place --recursive Sources Tests Package.swift"
 lint = "swift-format lint --strict --recursive Sources Tests Package.swift"
 build = "swift build"
 test = "swift test"
+element-bundle = "bun scripts/check-element-bundle.mjs"
+
+[tasks.editor]
+cmd = "bun install --frozen-lockfile && bun run test"
+dir = "editor/vscode"
+description = "VS Code grammar tests for 3md syntax highlighting and cross-plane links."
+
+[tasks.ui]
+cmd = "bun install --frozen-lockfile && bun run test"
+dir = "uitests"
+description = "Playwright UI suite for the web viewer, gallery, and custom element."
 
 [tasks.rust]
 cmd = "cargo fmt --check && cargo clippy --all-targets -- -D warnings && cargo test"
@@ -27,9 +38,13 @@ cmd = "fledge spec check"
 description = "spec-sync: every module spec matches its tracked source files."
 
 [lanes.verify]
-description = "The single CI gate: all three parser implementations (Swift, TypeScript, Rust) plus spec-sync."
-steps = ["lint", "build", "test", "js", "rust", "spec"]
+description = "The single CI gate: all three parser implementations, generated element bundle drift, editor grammar, and spec-sync."
+steps = ["lint", "build", "test", "js", "rust", "element-bundle", "editor", "spec"]
 
 [lanes.ci]
 description = "Alias for the verify gate."
-steps = ["lint", "build", "test", "js", "rust", "spec"]
+steps = ["lint", "build", "test", "js", "rust", "element-bundle", "editor", "spec"]
+
+[lanes.ui]
+description = "Browser UI suite for the published web surfaces."
+steps = ["ui"]

@@ -62,6 +62,23 @@ export interface CrossPlaneLink {
 }
 
 /**
+ * A summarized directed edge in a document's cross-plane link graph.
+ *
+ * Multiple `[[z=N]]` links from the same source plane to the same target plane
+ * collapse into one edge with an incremented `count`.
+ */
+export interface CrossPlaneLinkEdge {
+  /** The `z` position of the plane whose body contains the link. */
+  readonly sourceZ: number;
+  /** The target `z` position named by the link. */
+  readonly targetZ: number;
+  /** Whether a plane with `z === targetZ` exists in the document. */
+  readonly targetExists: boolean;
+  /** Number of links collapsed into this edge. */
+  readonly count: number;
+}
+
+/**
  * A parsed 3md document: Markdown extended along one free Z axis.
  */
 export interface Document {
@@ -647,6 +664,52 @@ export function links(document: Document): CrossPlaneLink[] {
   }
 
   return result;
+}
+
+/**
+ * Returns only cross-plane links whose target plane does not exist.
+ *
+ * @param document The document to scan.
+ * @returns Dangling cross-plane links in document order.
+ */
+export function danglingLinks(document: Document): CrossPlaneLink[] {
+  return links(document).filter((link) => !link.targetExists);
+}
+
+/**
+ * Returns a compact directed graph of cross-plane references.
+ *
+ * Multiple links with the same source and target collapse into one edge with an
+ * incremented count. The returned edges preserve the first time each
+ * source-target pair appears in the document.
+ *
+ * @param document The document to scan.
+ * @returns Cross-plane graph edges in first encounter order.
+ */
+export function linkGraph(document: Document): CrossPlaneLinkEdge[] {
+  const edges: CrossPlaneLinkEdge[] = [];
+  const indexByKey = new Map<string, number>();
+
+  for (const link of links(document)) {
+    const key = `${link.sourceZ}\u0000${link.targetZ}`;
+    const index = indexByKey.get(key);
+    if (index === undefined) {
+      indexByKey.set(key, edges.length);
+      edges.push({
+        sourceZ: link.sourceZ,
+        targetZ: link.targetZ,
+        targetExists: link.targetExists,
+        count: 1,
+      });
+    } else {
+      const existing = edges[index];
+      if (existing !== undefined) {
+        edges[index] = { ...existing, count: existing.count + 1 };
+      }
+    }
+  }
+
+  return edges;
 }
 
 /**

@@ -277,4 +277,70 @@ final class CrossPlaneLinkTests: XCTestCase {
         let document = try parser.parse(source)
         XCTAssertTrue(document.links().isEmpty)
     }
+
+    // MARK: - Diagnostics
+
+    func testDanglingLinksFiltersOnlyMissingTargets() throws {
+        let source = """
+            ---
+            3md: 0.1
+            ---
+            @plane z=0
+            ok [[z=1]] missing [[z=99]]
+
+            @plane z=1
+            there
+            """
+        let document = try parser.parse(source)
+        let result = document.danglingLinks()
+
+        XCTAssertEqual(result.count, 1)
+        let link = try XCTUnwrap(result.first)
+        XCTAssertEqual(link.sourceZ, 0)
+        XCTAssertEqual(link.targetZ, 99)
+        XCTAssertFalse(link.targetExists)
+    }
+
+    func testLinkGraphCollapsesRepeatedEdgesInEncounterOrder() throws {
+        let source = """
+            ---
+            3md: 0.1
+            ---
+            @plane z=0
+            [[z=1]] and [[z=1|again]] and [[z=2]]
+
+            @plane z=1
+            [[z=2]]
+
+            @plane z=2
+            done
+            """
+        let document = try parser.parse(source)
+        let result = document.linkGraph()
+
+        XCTAssertEqual(
+            result,
+            [
+                CrossPlaneLinkEdge(sourceZ: 0, targetZ: 1, targetExists: true, count: 2),
+                CrossPlaneLinkEdge(sourceZ: 0, targetZ: 2, targetExists: true, count: 1),
+                CrossPlaneLinkEdge(sourceZ: 1, targetZ: 2, targetExists: true, count: 1),
+            ]
+        )
+    }
+
+    func testLinkGraphKeepsDanglingEdgeStatus() throws {
+        let source = """
+            ---
+            3md: 0.1
+            ---
+            @plane z=0
+            [[z=99]] and [[z=99|again]]
+            """
+        let document = try parser.parse(source)
+
+        XCTAssertEqual(
+            document.linkGraph(),
+            [CrossPlaneLinkEdge(sourceZ: 0, targetZ: 99, targetExists: false, count: 2)]
+        )
+    }
 }

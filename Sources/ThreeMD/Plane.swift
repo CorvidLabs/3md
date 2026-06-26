@@ -52,4 +52,11 @@ public struct Plane: Sendable, Hashable, Codable {
         self.attributes = attributes
         self.body = body
     }
+
+    // MARK: - Public Methods
+
+    /// The stable HTML `id` used by ``HTMLRenderer`` for this plane.
+    public var anchorID: String {
+        ThreeMDAnchor.id(forZ: z)
+    }
 }

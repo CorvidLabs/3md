@@ -67,4 +67,11 @@ public struct Document: Sendable, Hashable, Codable {
     public func plane(atZ z: Double) -> Plane? {
         planes.first { $0.z == z }
     }
+
+    /// Returns the stable HTML `id` used by ``HTMLRenderer`` for a plane at `z`.
+    /// - Parameter z: The Z position to turn into an anchor ID.
+    /// - Returns: An anchor ID such as `"plane-z-1.5"`.
+    public func anchorID(forZ z: Double) -> String {
+        ThreeMDAnchor.id(forZ: z)
+    }
 }

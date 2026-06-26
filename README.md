@@ -96,10 +96,12 @@ viewer](https://corvidlabs.github.io/3md/viewer.html), or load the self-containe
 component bundle directly with `<script type="module" src=".../three-md.js">`.
 
 ```ts
-import { parse, serialize } from "@corvidlabs/threemd";
+import { danglingLinks, linkGraph, parse, serialize } from "@corvidlabs/threemd";
 
 const document = parse(source);
 console.log(document.axis); // "time"
+console.log(danglingLinks(document)); // unresolved [[z=N]] references
+console.log(linkGraph(document));     // compact source -> target edge list
 
 // Round trips back to text:
 const text = serialize(document);
@@ -129,6 +131,8 @@ print(document.axis)          // Axis(rawValue: "time")
 for plane in document.planesByZ {
     print(plane.label ?? "", plane.body)
 }
+print(document.danglingLinks()) // unresolved [[z=N]] references
+print(document.linkGraph())     // compact source -> target edge list
 
 // Round trips back to text:
 let text = Serializer().render(document)
@@ -142,8 +146,13 @@ The `threemd` CLI ships with the package and self-documents (run `threemd
 ```bash
 swift run threemd validate <file>   # parse a file; print "ok" or exit non-zero with the error
 swift run threemd info <file>       # print version, axis, title, and each plane's position
+swift run threemd links <file>      # list cross-plane links and dangling references
+swift run threemd check-links <file> # exit non-zero when any [[z=N]] target is missing
 swift run threemd html <file>       # render the document to HTML on stdout
 ```
+
+`validate`, `info`, `links`, and `check-links` also accept `--json` for CI,
+editor integrations, and other tooling.
 
 ## Format at a glance
 
@@ -187,6 +196,9 @@ fledge lanes run verify
 
 which runs the Swift format check, build, and tests plus the Rust crate. See
 [AGENTS.md](AGENTS.md) for the standing rules every contributor and agent follows.
+The same gate also checks TypeScript parser parity, generated web-component
+bundle drift, VS Code grammar tests, and spec-sync. Browser UI tests are exposed
+separately with `fledge lanes run ui`.
 
 Each implementation has its own tests (the Swift suite has 122 tests, the
 TypeScript suite 76), and all three implementations run the shared 43-vector

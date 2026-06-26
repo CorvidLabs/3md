@@ -7,10 +7,11 @@
 export type Mode =
   | "stack"
   | "play"
-  | "layers"
-  | "scene"
-  | "parallax"
+  | "single"
   | "present"
+  | "blend"
+  | "map"
+  | "layers"
   | "elevator";
 
 export interface ThreeMDPlane {
@@ -47,14 +48,30 @@ export declare class ThreeMDElement extends HTMLElement {
   static get observedAttributes(): string[];
   /** The parsed document, or null before content has loaded. */
   get document(): ThreeMDDocument | null;
+  /** The parse error from the most recent load, or null if it parsed cleanly. */
+  get error(): string | null;
+  /** The 1-based source line a parse error was attributed to, or null. */
+  get errorLine(): number | null;
+  /** The stable parser error code from the most recent failed load, or null. */
+  get errorCode(): string | null;
+  /** Whether the current document can render cleanly in blend/3D mode. */
+  get voxelizable(): boolean;
   /** The index of the currently focused plane. */
   get currentIndex(): number;
   /** The active render mode. */
   get mode(): Mode;
+  /** Whether playback is currently running. */
+  get playing(): boolean;
   /** Focus a plane by index, clamped to range. */
   goTo(index: number): void;
+  /** Toggle fullscreen for the element. */
+  toggleFullscreen(): void;
   /** Replace the rendered document with new 3md source text. */
   setSource(source: string): void;
+  /** Start auto-advancing through the planes. */
+  play(): void;
+  /** Stop auto-advancing. */
+  pause(): void;
   /** Apply the current state to the DOM synchronously. */
   render(): void;
   connectedCallback(): void;
