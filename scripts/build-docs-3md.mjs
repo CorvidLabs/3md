@@ -25,11 +25,19 @@ let out = `---
 axis: doc
 title: 3md Project Documentation
 view: single
-note: every Markdown doc in the repo, combined into one navigable 3md file
+note: GENERATED. Open in the 3md viewer, do not read raw. Source = the .md files.
 generated: regenerate with scripts/build-docs-3md.mjs - edit the source docs, not this
 ---
-The whole documentation set as a single 3md document: each plane is one of the
-repo's docs. Scrub the Z axis to move between them. This is 3md used on itself.
+GENERATED FILE - do not read this raw, and do not edit it.
+
+This bundles every prose doc in the repo into one 3md file, one doc per plane,
+so they can be scrubbed in the 3md viewer (GitHub cannot preview .3md natively):
+
+    https://corvidlabs.github.io/3md/viewer.html?src=docs.3md
+
+As plain text this is just every doc concatenated end to end, which is hard to
+read on purpose. The source of truth is the individual .md files; edit those and
+regenerate with \`node scripts/build-docs-3md.mjs\`.
 `;
 
 let z = 0;
