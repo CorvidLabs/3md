@@ -1,10 +1,9 @@
 name: publish
 
-# Publishes the two npm packages to GitHub Packages on each GitHub release:
+# Publishes the two npm packages to the public npm registry on each GitHub release:
 # @corvidlabs/threemd (the parser) and @corvidlabs/three-md-element (the
 # canonical <three-md> web component, which bundles the parser at build time).
-# The built-in GITHUB_TOKEN authenticates to npm.pkg.github.com, so no npm login
-# is needed.
+# Authenticates via npm Trusted Publishers (OIDC) — no NPM_TOKEN secret needed.
 
 on:
   release:
@@ -16,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-      packages: write
+      id-token: write
     defaults:
       run:
         working-directory: js
@@ -28,7 +27,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "20"
-          registry-url: "https://npm.pkg.github.com"
+          registry-url: "https://registry.npmjs.org"
           scope: "@corvidlabs"
       - run: bun install --frozen-lockfile
       - name: Sync package version to the release tag
@@ -36,15 +35,13 @@ jobs:
         run: npm version "${TAG#v}" --no-git-tag-version --allow-same-version
         env:
           TAG: ${{ github.event.release.tag_name }}
-      - run: npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - run: npm publish --provenance --access public
 
   element:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-      packages: write
+      id-token: write
     defaults:
       run:
         working-directory: element
@@ -56,7 +53,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "20"
-          registry-url: "https://npm.pkg.github.com"
+          registry-url: "https://registry.npmjs.org"
           scope: "@corvidlabs"
       # Installs typescript for the .d.ts build. The bundle imports the parser
       # from source (../../js/src), so it needs no other dependency.
@@ -67,6 +64,4 @@ jobs:
         env:
           TAG: ${{ github.event.release.tag_name }}
       # prepublishOnly builds dist (bundle + types) before publishing.
-      - run: npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - run: npm publish --provenance --access public
