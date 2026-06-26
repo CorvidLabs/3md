@@ -1,0 +1,98 @@
+name: Post-Release Formula Update
+
+# After a GitHub release is published, bump the `threemd` formula in
+# CorvidLabs/homebrew-tap to the new tag and the source-tarball sha256. The 3md
+# Swift CLI builds from source, so the only value that needs syncing is the sha
+# of the auto-generated source tarball, which exists as soon as the tag does.
+# This is the only correct moment to bump: before the release the tarball (and
+# thus its sha) does not exist.
+#
+# Security: every value derived from the release event flows through an `env:`
+# block before reaching a shell; direct `${{ }}` interpolation inside `run:` is
+# a code-injection sink and is avoided. The tag and sha are regex-validated.
+#
+# Requires a `TAP_GITHUB_TOKEN` secret with write access to homebrew-tap (the
+# same token fledge uses). Without it the job fails with a clear message.
+
+permissions:
+  contents: read
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Release tag to sync, e.g. v1.8.0"
+        required: true
+
+jobs:
+  update-formula:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Resolve release tag
+        id: tag
+        env:
+          EVENT_TAG: ${{ github.event.release.tag_name }}
+          INPUT_TAG: ${{ github.event.inputs.tag }}
+        run: |
+          set -euo pipefail
+          TAG="${EVENT_TAG:-$INPUT_TAG}"
+          if ! [[ "$TAG" =~ ^v[0-9]+\.[0-9]+\.[0-9]+([-+][0-9A-Za-z.-]+)?$ ]]; then
+            echo "::error::Refusing to run with non-semver tag '$TAG'"
+            exit 1
+          fi
+          echo "tag=$TAG" >> "$GITHUB_OUTPUT"
+
+      - name: Compute source-tarball sha256
+        id: sha
+        env:
+          TAG: ${{ steps.tag.outputs.tag }}
+          REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          URL="https://github.com/${REPO}/archive/refs/tags/${TAG}.tar.gz"
+          SHA="$(curl -fsSL "$URL" | sha256sum | awk '{print $1}')"
+          if ! [[ "$SHA" =~ ^[0-9a-f]{64}$ ]]; then
+            echo "::error::Invalid sha256 '$SHA' for $URL"
+            exit 1
+          fi
+          echo "sha256=$SHA" >> "$GITHUB_OUTPUT"
+
+      - name: Sync formula to homebrew-tap
+        env:
+          GH_TOKEN: ${{ secrets.TAP_GITHUB_TOKEN }}
+          TAG: ${{ steps.tag.outputs.tag }}
+          NEW_SHA: ${{ steps.sha.outputs.sha256 }}
+          REPO: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          if [ -z "${GH_TOKEN:-}" ]; then
+            echo "::error::TAP_GITHUB_TOKEN secret is required (write access to homebrew-tap)"
+            exit 1
+          fi
+          git clone "https://x-access-token:${GH_TOKEN}@github.com/CorvidLabs/homebrew-tap.git" tap
+          cd tap
+          python3 - <<'PY'
+          import os, re, sys, pathlib
+          tag = os.environ["TAG"]
+          sha = os.environ["NEW_SHA"]
+          repo = os.environ["REPO"]
+          url = f"https://github.com/{repo}/archive/refs/tags/{tag}.tar.gz"
+          p = pathlib.Path("Formula/threemd.rb")
+          src = p.read_text()
+          src, n_url = re.subn(r'(?m)^(\s*url\s+")[^"]*(")', rf'\g<1>{url}\g<2>', src, count=1)
+          src, n_sha = re.subn(r'(?m)^(\s*sha256\s+")[0-9a-fA-F]{64}(")', rf'\g<1>{sha}\g<2>', src, count=1)
+          if n_url != 1 or n_sha != 1:
+              sys.exit(f"Expected one url and one sha256 line (url={n_url}, sha={n_sha})")
+          p.write_text(src)
+          PY
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if git diff --quiet -- Formula/threemd.rb; then
+            echo "Formula/threemd.rb already at $TAG, nothing to do."
+            exit 0
+          fi
+          git add Formula/threemd.rb
+          git commit -m "threemd ${TAG#v}"
+          git push origin main
