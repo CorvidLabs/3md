@@ -8,7 +8,7 @@
   "repository": { "type": "git", "url": "git+https://github.com/CorvidLabs/3md.git", "directory": "element" },
   "homepage": "https://github.com/CorvidLabs/3md#readme",
   "bugs": { "url": "https://github.com/CorvidLabs/3md/issues" },
-  "publishConfig": { "registry": "https://npm.pkg.github.com" },
+  "publishConfig": { "access": "public" },
   "main": "./dist/three-md.js",
   "module": "./dist/three-md.js",
   "types": "./dist/three-md.d.ts",

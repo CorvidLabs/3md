@@ -1,10 +1,11 @@
 name: publish
 
-# Publishes the two npm packages to GitHub Packages on each GitHub release:
-# @corvidlabs/threemd (the parser) and @corvidlabs/three-md-element (the
-# canonical <three-md> web component, which bundles the parser at build time).
-# The built-in GITHUB_TOKEN authenticates to npm.pkg.github.com, so no npm login
-# is needed.
+# Publishes the two npm packages to the public npm registry on each GitHub
+# release: @corvidlabs/threemd (the parser) and @corvidlabs/three-md-element
+# (the canonical <three-md> web component, which bundles the parser at build
+# time). Authenticates via npm Trusted Publishers (OIDC) with provenance, so no
+# NPM_TOKEN secret is needed. OIDC publishing requires npm >= 11.5.1, which is
+# newer than the npm that ships with Node 20, so each job upgrades npm first.
 
 on:
   release:
@@ -16,7 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-      packages: write
+      id-token: write
     defaults:
       run:
         working-directory: js
@@ -28,23 +29,23 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "20"
-          registry-url: "https://npm.pkg.github.com"
+          registry-url: "https://registry.npmjs.org"
           scope: "@corvidlabs"
+      - name: Upgrade npm for OIDC trusted publishing
+        run: npm install -g npm@latest && npm --version
       - run: bun install --frozen-lockfile
       - name: Sync package version to the release tag
         if: github.event_name == 'release'
         run: npm version "${TAG#v}" --no-git-tag-version --allow-same-version
         env:
           TAG: ${{ github.event.release.tag_name }}
-      - run: npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - run: npm publish --provenance --access public
 
   element:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-      packages: write
+      id-token: write
     defaults:
       run:
         working-directory: element
@@ -56,8 +57,10 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "20"
-          registry-url: "https://npm.pkg.github.com"
+          registry-url: "https://registry.npmjs.org"
           scope: "@corvidlabs"
+      - name: Upgrade npm for OIDC trusted publishing
+        run: npm install -g npm@latest && npm --version
       # Installs typescript for the .d.ts build. The bundle imports the parser
       # from source (../../js/src), so it needs no other dependency.
       - run: bun install
@@ -67,6 +70,4 @@ jobs:
         env:
           TAG: ${{ github.event.release.tag_name }}
       # prepublishOnly builds dist (bundle + types) before publishing.
-      - run: npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - run: npm publish --provenance --access public
