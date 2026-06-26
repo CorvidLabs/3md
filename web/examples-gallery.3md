@@ -9,133 +9,367 @@ Curated examples, captured in motion. Use the slider or arrows to step through;
 the "single card" view shows one at a time. Each frame is a real render of that
 example in the <three-md> component or a matching motion card.
 
-@plane z=0 label="The Lifecycle of a Bug" slug="bug-lifecycle" axis="status"
+@plane z=0 label="AEGIS // sensor sweep" slug="aegis-sensor-sweep" axis="frame"
+## AEGIS // sensor sweep
+frame - aegis-sensor-sweep
+
+![AEGIS // sensor sweep](./gifs/aegis-sensor-sweep.gif)
+
+@plane z=1 label="Aurora Borealis" slug="aurora-borealis-flipbook" axis="frame"
+## Aurora Borealis
+frame - aurora-borealis-flipbook
+
+![Aurora Borealis](./gifs/aurora-borealis-flipbook.gif)
+
+@plane z=2 label="Helio Software Org Chart" slug="biz-org-chart" axis="layer"
+## Helio Software Org Chart
+layer - biz-org-chart
+
+![Helio Software Org Chart](./gifs/biz-org-chart.gif)
+
+@plane z=3 label="NVDA Weekly Watch" slug="biz-stock-watch" axis="time"
+## NVDA Weekly Watch
+time - biz-stock-watch
+
+![NVDA Weekly Watch](./gifs/biz-stock-watch.gif)
+
+@plane z=4 label="Box Breathing" slug="box-breathing-orb" axis="breath"
+## Box Breathing
+breath - box-breathing-orb
+
+![Box Breathing](./gifs/box-breathing-orb.gif)
+
+@plane z=5 label="The Lifecycle of a Bug" slug="bug-lifecycle" axis="status"
 ## The Lifecycle of a Bug
 status - bug-lifecycle
 
 ![The Lifecycle of a Bug](./gifs/bug-lifecycle.gif)
 
-@plane z=1 label="Chef Service Rush - Tickets to Pass" slug="chef-service-rush" axis="minute"
+@plane z=6 label="Chef Service Rush - Tickets to Pass" slug="chef-service-rush" axis="minute"
 ## Chef Service Rush - Tickets to Pass
 minute - chef-service-rush
 
 ![Chef Service Rush - Tickets to Pass](./gifs/chef-service-rush.gif)
 
-@plane z=2 label="Color Grading Layers - Night Market Still" slug="color-grading-layers" axis="layer"
+@plane z=7 label="Release Pipeline (CI/CD DAG)" slug="cicd-pipeline-dag" axis="job"
+## Release Pipeline (CI/CD DAG)
+job - cicd-pipeline-dag
+
+![Release Pipeline (CI/CD DAG)](./gifs/cicd-pipeline-dag.gif)
+
+@plane z=8 label="Simple Circuit Board Component Layout" slug="circuit-board" axis="space"
+## Simple Circuit Board Component Layout
+space - circuit-board
+
+![Simple Circuit Board Component Layout](./gifs/circuit-board.gif)
+
+@plane z=9 label="Color Grading Layers - Night Market Still" slug="color-grading-layers" axis="layer"
 ## Color Grading Layers - Night Market Still
 layer - color-grading-layers
 
 ![Color Grading Layers - Night Market Still](./gifs/color-grading-layers.gif)
 
-@plane z=3 label="Dungeon Crawl: The Descent" slug="dungeon-crawl-descent" axis="level"
-## Dungeon Crawl: The Descent
-level - dungeon-crawl-descent
+@plane z=10 label="Conway Spacetime - an R-pentomino, generation by generation" slug="conways-game-of-life" axis="generation"
+## Conway Spacetime - an R-pentomino, generation by generation
+generation - conways-game-of-life
 
-![Dungeon Crawl: The Descent](./gifs/dungeon-crawl-descent.gif)
+![Conway Spacetime - an R-pentomino, generation by generation](./gifs/conways-game-of-life.gif)
 
-@plane z=4 label="Dungeon Run #4471" slug="dungeon-run-log" axis="depth"
-## Dungeon Run #4471
-depth - dungeon-run-log
+@plane z=11 label="Pixel Corvid — Voxel Bird Ship" slug="corvid-voxel-ship" axis="depth"
+## Pixel Corvid — Voxel Bird Ship
+depth - corvid-voxel-ship
 
-![Dungeon Run #4471](./gifs/dungeon-run-log.gif)
+![Pixel Corvid — Voxel Bird Ship](./gifs/corvid-voxel-ship.gif)
 
-@plane z=5 label="Fault Tree Cascade - API Latency Incident" slug="fault-tree-cascade" axis="depth"
+@plane z=12 label="Database Migration Sequence" slug="data-db-migrations" axis="version"
+## Database Migration Sequence
+version - data-db-migrations
+
+![Database Migration Sequence](./gifs/data-db-migrations.gif)
+
+@plane z=13 label="Commit History for feature/auth-rework" slug="data-git-history" axis="time"
+## Commit History for feature/auth-rework
+time - data-git-history
+
+![Commit History for feature/auth-rework](./gifs/data-git-history.gif)
+
+@plane z=14 label="Datacenter Heat - request load across a rack grid, hour by hour" slug="datacenter-heat-grid" axis="hour"
+## Datacenter Heat - request load across a rack grid, hour by hour
+hour - datacenter-heat-grid
+
+![Datacenter Heat - request load across a rack grid, hour by hour](./gifs/datacenter-heat-grid.gif)
+
+@plane z=15 label="Dataset Card - orders (e-commerce fact table)" slug="dataset-card-orders" axis="field"
+## Dataset Card - orders (e-commerce fact table)
+field - dataset-card-orders
+
+![Dataset Card - orders (e-commerce fact table)](./gifs/dataset-card-orders.gif)
+
+@plane z=16 label="DNA Double Helix - depth is the strand" slug="dna-double-helix" axis="base"
+## DNA Double Helix - depth is the strand
+base - dna-double-helix
+
+![DNA Double Helix - depth is the strand](./gifs/dna-double-helix.gif)
+
+@plane z=17 label="TR-3MD // a groove you can orbit" slug="drum-machine-groove" axis="bar"
+## TR-3MD // a groove you can orbit
+bar - drum-machine-groove
+
+![TR-3MD // a groove you can orbit](./gifs/drum-machine-groove.gif)
+
+@plane z=18 label="The Hollow Below" slug="dungeon-text-crawl" axis="room"
+## The Hollow Below
+room - dungeon-text-crawl
+
+![The Hollow Below](./gifs/dungeon-text-crawl.gif)
+
+@plane z=19 label="The Periodic Table by Period" slug="edu-periodic-table-periods" axis="period"
+## The Periodic Table by Period
+period - edu-periodic-table-periods
+
+![The Periodic Table by Period](./gifs/edu-periodic-table-periods.gif)
+
+@plane z=20 label="ETA 2824-2 Movement — Layer by Layer" slug="eta-2824-exploded" axis="layer"
+## ETA 2824-2 Movement — Layer by Layer
+layer - eta-2824-exploded
+
+![ETA 2824-2 Movement — Layer by Layer](./gifs/eta-2824-exploded.gif)
+
+@plane z=21 label="Major Events in the Evolution of Life" slug="evolution-timeline" axis="time"
+## Major Events in the Evolution of Life
+time - evolution-timeline
+
+![Major Events in the Evolution of Life](./gifs/evolution-timeline.gif)
+
+@plane z=22 label="Fallingwater: Floor by Floor" slug="fallingwater-floor-by-floor" axis="floor"
+## Fallingwater: Floor by Floor
+floor - fallingwater-floor-by-floor
+
+![Fallingwater: Floor by Floor](./gifs/fallingwater-floor-by-floor.gif)
+
+@plane z=23 label="Fault Tree Cascade - API Latency Incident" slug="fault-tree-cascade" axis="depth"
 ## Fault Tree Cascade - API Latency Incident
 depth - fault-tree-cascade
 
 ![Fault Tree Cascade - API Latency Incident](./gifs/fault-tree-cascade.gif)
 
-@plane z=6 label="Tic-Tac-Toe, X Wins" slug="game-tic-tac-toe" axis="step"
+@plane z=24 label="Fireworks Burst" slug="fireworks" axis="frame"
+## Fireworks Burst
+frame - fireworks
+
+![Fireworks Burst](./gifs/fireworks.gif)
+
+@plane z=25 label="Adult CPR First Aid" slug="first-aid" axis="step"
+## Adult CPR First Aid
+step - first-aid
+
+![Adult CPR First Aid](./gifs/first-aid.gif)
+
+@plane z=26 label="Octahedron Slices" slug="game-3d-diamond" axis="depth"
+## Octahedron Slices
+depth - game-3d-diamond
+
+![Octahedron Slices](./gifs/game-3d-diamond.gif)
+
+@plane z=27 label="Snake" slug="game-snake" axis="frame"
+## Snake
+frame - game-snake
+
+![Snake](./gifs/game-snake.gif)
+
+@plane z=28 label="Tic-Tac-Toe, X Wins" slug="game-tic-tac-toe" axis="step"
 ## Tic-Tac-Toe, X Wins
 step - game-tic-tac-toe
 
 ![Tic-Tac-Toe, X Wins](./gifs/game-tic-tac-toe.gif)
 
-@plane z=7 label="Hand-Blown Vase: Gather to Anneal" slug="gather-to-anneal" axis="step"
+@plane z=29 label="Raised Bed Garden Layout (4 ft x 8 ft)" slug="garden-layout" axis="space"
+## Raised Bed Garden Layout (4 ft x 8 ft)
+space - garden-layout
+
+![Raised Bed Garden Layout (4 ft x 8 ft)](./gifs/garden-layout.gif)
+
+@plane z=30 label="Hand-Blown Vase: Gather to Anneal" slug="gather-to-anneal" axis="step"
 ## Hand-Blown Vase: Gather to Anneal
 step - gather-to-anneal
 
 ![Hand-Blown Vase: Gather to Anneal](./gifs/gather-to-anneal.gif)
 
-@plane z=8 label="A Year in the Hive" slug="hive-year" axis="season"
+@plane z=31 label="Senior Backend Engineer - Hiring Funnel" slug="hiring-pipeline" axis="status"
+## Senior Backend Engineer - Hiring Funnel
+status - hiring-pipeline
+
+![Senior Backend Engineer - Hiring Funnel](./gifs/hiring-pipeline.gif)
+
+@plane z=32 label="A Year in the Hive" slug="hive-year" axis="season"
 ## A Year in the Hive
 season - hive-year
 
 ![A Year in the Hive](./gifs/hive-year.gif)
 
-@plane z=9 label="Reception Seating Chart" slug="home-wedding-seating" axis="space"
+@plane z=33 label="BILLY Bookcase Assembly" slug="home-bookshelf-assembly" axis="step"
+## BILLY Bookcase Assembly
+step - home-bookshelf-assembly
+
+![BILLY Bookcase Assembly](./gifs/home-bookshelf-assembly.gif)
+
+@plane z=34 label="Reception Seating Chart" slug="home-wedding-seating" axis="space"
 ## Reception Seating Chart
 space - home-wedding-seating
 
 ![Reception Seating Chart](./gifs/home-wedding-seating.gif)
 
-@plane z=10 label="Welwyn North Interlocking — Down Fast to Platform 2" slug="junction-interlocking" axis="step"
+@plane z=35 label="API Gateway Outage - On-Call Runbook" slug="incident-response-runbook" axis="step"
+## API Gateway Outage - On-Call Runbook
+step - incident-response-runbook
+
+![API Gateway Outage - On-Call Runbook](./gifs/incident-response-runbook.gif)
+
+@plane z=36 label="Welwyn North Interlocking — Down Fast to Platform 2" slug="junction-interlocking" axis="step"
 ## Welwyn North Interlocking — Down Fast to Platform 2
 step - junction-interlocking
 
 ![Welwyn North Interlocking — Down Fast to Platform 2](./gifs/junction-interlocking.gif)
 
-@plane z=11 label="Wildflower Road - Song Chart" slug="life-song-structure" axis="section"
+@plane z=37 label="Forgetting" slug="kinetic-erasure-poem" axis="frame"
+## Forgetting
+frame - kinetic-erasure-poem
+
+![Forgetting](./gifs/kinetic-erasure-poem.gif)
+
+@plane z=38 label="Launch Constraint Room" slug="launch-constraint-room" axis="console"
+## Launch Constraint Room
+console - launch-constraint-room
+
+![Launch Constraint Room](./gifs/launch-constraint-room.gif)
+
+@plane z=39 label="The Anatomy of a Letterform" slug="letterform-anatomy" axis="layer"
+## The Anatomy of a Letterform
+layer - letterform-anatomy
+
+![The Anatomy of a Letterform](./gifs/letterform-anatomy.gif)
+
+@plane z=40 label="Wildflower Road - Song Chart" slug="life-song-structure" axis="section"
 ## Wildflower Road - Song Chart
 section - life-song-structure
 
 ![Wildflower Road - Song Chart](./gifs/life-song-structure.gif)
 
-@plane z=12 label="Metro Zone Grid" slug="metro-zone-grid" axis="layer"
+@plane z=41 label="Daily Medication Schedule" slug="medication-schedule" axis="time"
+## Daily Medication Schedule
+time - medication-schedule
+
+![Daily Medication Schedule](./gifs/medication-schedule.gif)
+
+@plane z=42 label="Memory Palace Cross Section" slug="memory-palace-cross-section" axis="room"
+## Memory Palace Cross Section
+room - memory-palace-cross-section
+
+![Memory Palace Cross Section](./gifs/memory-palace-cross-section.gif)
+
+@plane z=43 label="Metro Zone Grid" slug="metro-zone-grid" axis="layer"
 ## Metro Zone Grid
 layer - metro-zone-grid
 
 ![Metro Zone Grid](./gifs/metro-zone-grid.gif)
 
-@plane z=13 label="Mission Control Loop - TLI Go Poll" slug="mission-control-loop" axis="minute"
-## Mission Control Loop - TLI Go Poll
-minute - mission-control-loop
+@plane z=44 label="The Lunar Cycle, Phase by Phase" slug="moon-phases" axis="time"
+## The Lunar Cycle, Phase by Phase
+time - moon-phases
 
-![Mission Control Loop - TLI Go Poll](./gifs/mission-control-loop.gif)
+![The Lunar Cycle, Phase by Phase](./gifs/moon-phases.gif)
 
-@plane z=14 label="Museum of the Anthropocene" slug="museum-of-the-anthropocene-walkthrough" axis="room"
+@plane z=45 label="Museum of the Anthropocene" slug="museum-of-the-anthropocene-walkthrough" axis="room"
 ## Museum of the Anthropocene
 room - museum-of-the-anthropocene-walkthrough
 
 ![Museum of the Anthropocene](./gifs/museum-of-the-anthropocene-walkthrough.gif)
 
-@plane z=15 label="Reef Tank Cross-Section" slug="reef-tank-cross-section" axis="depth"
+@plane z=46 label="Swinging Pendulum" slug="pendulum" axis="frame"
+## Swinging Pendulum
+frame - pendulum
+
+![Swinging Pendulum](./gifs/pendulum.gif)
+
+@plane z=47 label="Perpetual Calendar: Layers of Time" slug="perpetual-calendar-depth" axis="depth"
+## Perpetual Calendar: Layers of Time
+depth - perpetual-calendar-depth
+
+![Perpetual Calendar: Layers of Time](./gifs/perpetual-calendar-depth.gif)
+
+@plane z=48 label="Powers of Ten - a fall through every order of magnitude" slug="powers-of-ten" axis="scale"
+## Powers of Ten - a fall through every order of magnitude
+scale - powers-of-ten
+
+![Powers of Ten - a fall through every order of magnitude](./gifs/powers-of-ten.gif)
+
+@plane z=49 label="Reef Tank Cross-Section" slug="reef-tank-cross-section" axis="depth"
 ## Reef Tank Cross-Section
 depth - reef-tank-cross-section
 
 ![Reef Tank Cross-Section](./gifs/reef-tank-cross-section.gif)
 
-@plane z=16 label="Solar System by Depth" slug="solar-system-depth-dive" axis="depth"
+@plane z=50 label="Reentry Blackout Window" slug="reentry-blackout-window" axis="minute"
+## Reentry Blackout Window
+minute - reentry-blackout-window
+
+![Reentry Blackout Window](./gifs/reentry-blackout-window.gif)
+
+@plane z=51 label="Seed Germination: Frame-by-Frame" slug="seed-germination-ascii-timelapse" axis="frame"
+## Seed Germination: Frame-by-Frame
+frame - seed-germination-ascii-timelapse
+
+![Seed Germination: Frame-by-Frame](./gifs/seed-germination-ascii-timelapse.gif)
+
+@plane z=52 label="Solar System by Depth" slug="solar-system-depth-dive" axis="depth"
 ## Solar System by Depth
 depth - solar-system-depth-dive
 
 ![Solar System by Depth](./gifs/solar-system-depth-dive.gif)
 
-@plane z=17 label="The Solar System by Distance" slug="solar-system" axis="space"
-## The Solar System by Distance
-space - solar-system
-
-![The Solar System by Distance](./gifs/solar-system.gif)
-
-@plane z=18 label="Ser vs. Estar: The One That Always Trips You Up" slug="spanish-ser-vs-estar-flashcards" axis="side"
+@plane z=53 label="Ser vs. Estar: The One That Always Trips You Up" slug="spanish-ser-vs-estar-flashcards" axis="side"
 ## Ser vs. Estar: The One That Always Trips You Up
 side - spanish-ser-vs-estar-flashcards
 
 ![Ser vs. Estar: The One That Always Trips You Up](./gifs/spanish-ser-vs-estar-flashcards.gif)
 
-@plane z=19 label="Supply Chain Port Map - Coffee Lot 42" slug="supply-chain-port-map" axis="layer"
+@plane z=54 label="12-Week Strength Mesocycle (4-day)" slug="strength-mesocycle-12wk" axis="week"
+## 12-Week Strength Mesocycle (4-day)
+week - strength-mesocycle-12wk
+
+![12-Week Strength Mesocycle (4-day)](./gifs/strength-mesocycle-12wk.gif)
+
+@plane z=55 label="Supply Chain Port Map - Coffee Lot 42" slug="supply-chain-port-map" axis="layer"
 ## Supply Chain Port Map - Coffee Lot 42
 layer - supply-chain-port-map
 
 ![Supply Chain Port Map - Coffee Lot 42](./gifs/supply-chain-port-map.gif)
 
-@plane z=20 label="Suspension Bridge: Load Path in Layers" slug="suspension-bridge-load-path" axis="layer"
+@plane z=56 label="Suspension Bridge: Load Path in Layers" slug="suspension-bridge-load-path" axis="layer"
 ## Suspension Bridge: Load Path in Layers
 layer - suspension-bridge-load-path
 
 ![Suspension Bridge: Load Path in Layers](./gifs/suspension-bridge-load-path.gif)
 
-@plane z=21 label="Whimsy Hollow Park Map" slug="whimsy-hollow-park-map" axis="layer"
+@plane z=57 label="The Tea Shop at the End of the Lane" slug="tea-shop-end-of-lane" axis="path"
+## The Tea Shop at the End of the Lane
+path - tea-shop-end-of-lane
+
+![The Tea Shop at the End of the Lane](./gifs/tea-shop-end-of-lane.gif)
+
+@plane z=58 label="Threat Model by Depth - Customer Records API" slug="threat-model" axis="depth"
+## Threat Model by Depth - Customer Records API
+depth - threat-model
+
+![Threat Model by Depth - Customer Records API](./gifs/threat-model.gif)
+
+@plane z=59 label="ASCII Walk Cycle" slug="walk-cycle" axis="frame"
+## ASCII Walk Cycle
+frame - walk-cycle
+
+![ASCII Walk Cycle](./gifs/walk-cycle.gif)
+
+@plane z=60 label="Whimsy Hollow Park Map" slug="whimsy-hollow-park-map" axis="layer"
 ## Whimsy Hollow Park Map
 layer - whimsy-hollow-park-map
 
