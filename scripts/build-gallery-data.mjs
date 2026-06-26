@@ -52,6 +52,11 @@ const EXCLUDE = new Set([
   "mission-control-loop",
 ]);
 
+// A featured example must also be in the gallery, so the two sets cannot overlap.
+for (const slug of FEATURED) {
+  if (EXCLUDE.has(slug)) throw new Error(`FEATURED and EXCLUDE both contain "${slug}"`);
+}
+
 function categorize(slug, title, axis, declared) {
   if (declared && CATEGORIES.includes(declared)) return declared;
   const hay = `${slug} ${title}`.toLowerCase();
