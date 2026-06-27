@@ -5,9 +5,15 @@
 
 # The example corpus is sample content, not source - keep it out of language stats.
 Examples/** linguist-documentation
-docs.3md linguist-documentation
-web/docs.3md linguist-documentation
-web/examples-gallery.3md linguist-documentation
+
+# The generated bundles concatenate every doc into one file. As Markdown, GitHub
+# renders them as a single condensed run-together wall (the `@plane`/`---` lines
+# do not map to headings). They are viewer artifacts, not meant to be read on
+# GitHub, so show them as plain text (readable source, banner first) and mark
+# them generated. The viewer still loads them fine.
+docs.3md linguist-generated linguist-language=Text
+web/docs.3md linguist-generated linguist-language=Text
+web/examples-gallery.3md linguist-generated linguist-language=Text
 
 # Generated/vendored artifacts: don't count toward language stats.
 web/gifs/** linguist-generated
