@@ -208,7 +208,7 @@ cross-implementation contract that keeps the parsers behaving identically.
 ## Status
 
 The format and spec are at version 1.0 (stable, frozen grammar). The latest
-release is v1.0.0. Older `3md: 0.1` documents remain valid: the parser is
+release is v1.8.1 (see the release badge above). Older `3md: 0.1` documents remain valid: the parser is
 version-lenient and never rejects a document by its version string.
 
 ## License
