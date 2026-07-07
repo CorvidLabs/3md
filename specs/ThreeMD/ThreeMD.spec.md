@@ -13,6 +13,9 @@ files:
   - Sources/ThreeMD/MarkdownRenderer.swift
   - Sources/ThreeMD/CrossPlaneLink.swift
   - Sources/ThreeMD/Document+Links.swift
+  - Sources/ThreeMD/CrossPlaneLinkEdge.swift
+  - Sources/ThreeMD/Double+ThreeMD.swift
+  - Sources/ThreeMD/ThreeMDAnchor.swift
   - js/src/index.ts
   - rust/src/lib.rs
 

@@ -9,6 +9,7 @@ Tests/
 uitests/
 conformance/
 js/test/
+rust/tests/
 
 # Interactive demo site (deployed to Pages) and examples.
 web/

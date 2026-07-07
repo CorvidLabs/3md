@@ -3,3 +3,4 @@ name = "3md"
 
 [specs]
 ThreeMD = "specs/ThreeMD/ThreeMD.spec.md"
+ThreeMDCLI = "specs/ThreeMDCLI/ThreeMDCLI.spec.md"
