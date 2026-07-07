@@ -18,6 +18,11 @@ concurrency:
   group: pages
   cancel-in-progress: true
 
+# Run the bundled Node-20 JavaScript actions on Node 24 to silence GitHub's
+# Node-20 end-of-life deprecation warnings.
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -26,7 +31,30 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # atlas reads git history for activity
       - uses: actions/configure-pages@v5
+
+      - name: Resolve pinned atlas commit (cache key)
+        id: atlasref
+        run: echo "sha=$(git ls-remote https://github.com/CorvidLabs/fledge-plugin-atlas v1 | cut -f1)" >> "$GITHUB_OUTPUT"
+
+      - name: Cache the fledge-atlas CLI
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cargo/bin/fledge-atlas
+            ~/.cargo/.crates.toml
+            ~/.cargo/.crates2.json
+          key: fledge-atlas-${{ runner.os }}-${{ steps.atlasref.outputs.sha }}
+
+      - name: Render atlas coverage badges
+        uses: CorvidLabs/fledge-plugin-atlas@v1
+        with:
+          path: .
+          output-dir: web/badges
+          components: "coverage langmix treemap sunburst"
+
       - uses: actions/upload-pages-artifact@v3
         with:
           path: web
