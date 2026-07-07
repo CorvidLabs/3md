@@ -1,0 +1,27 @@
+# Atlas coverage scope for 3md.
+#
+# The specs govern the library implementations, not the tests, the interactive
+# web demo (served on Pages), the examples, or generated build output. Keep
+# those out of the coverage denominator. Root-anchored subset of gitignore.
+
+# Tests and conformance fixtures.
+Tests/
+uitests/
+conformance/
+
+# Interactive demo site (deployed to Pages) and examples.
+web/
+Examples/
+
+# Docs and dev scripts.
+docs/
+scripts/
+
+# Build manifests / output / vendored.
+Package.swift
+.build/
+build/
+dist/
+node_modules/
+vendor/
+*.min.*

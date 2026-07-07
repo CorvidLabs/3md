@@ -1,6 +1,7 @@
 # 3md
 
 [![CI](https://github.com/CorvidLabs/3md/actions/workflows/trust.yml/badge.svg)](https://github.com/CorvidLabs/3md/actions/workflows/trust.yml)
+[![spec coverage](https://img.shields.io/endpoint?url=https://corvidlabs.github.io/3md/badges/coverage.json)](https://corvidlabs.github.io/3md/)
 [![Release](https://img.shields.io/github/v/release/CorvidLabs/3md?sort=semver)](https://github.com/CorvidLabs/3md/releases)
 [![License: MIT](https://img.shields.io/github/license/CorvidLabs/3md)](LICENSE)
 [![Live demo](https://img.shields.io/badge/demo-live-0E6F66)](https://corvidlabs.github.io/3md/)
