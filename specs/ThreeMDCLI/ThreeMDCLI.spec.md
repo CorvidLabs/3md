@@ -60,8 +60,9 @@ Then stdout prints the usage text and the command exits with 0
 
 | Error | When | Behavior |
 |-------|------|----------|
+| `missingSubcommand` | Subcommand argument is omitted | Prints full usage to stdout and exits 1 |
 | `unknownSubcommand` | Subcommand argument is not recognized | Prints error to stderr, usage to stdout, and exits 1 |
-| `missingFile` | File argument is omitted | Prints usage and exits 1 |
+| `missingFile` | Subcommand's file argument is omitted | Prints subcommand-specific usage line to stderr and exits 1 |
 | `fileNotFound` | File path does not exist on disk | Prints "threemd: file not found: '<path>'" to stderr and exits 1 |
 | `invalidEncoding` | File cannot be read as UTF-8 | Prints "threemd: cannot read '<path>' (is it valid UTF-8?)" to stderr and exits 1 |
 | `parseError` | File contains malformed 3md syntax | Exits 1, printing parser error details (or structured JSON if `--json` was passed) |
