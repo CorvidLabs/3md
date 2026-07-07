@@ -21,6 +21,7 @@ scripts/
 Package.swift
 .build/
 build/
+target/
 dist/
 node_modules/
 vendor/
