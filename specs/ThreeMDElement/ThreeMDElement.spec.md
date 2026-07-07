@@ -4,6 +4,7 @@ version: 1
 status: draft
 files:
   - element/src/three-md.ts
+  - element/three-md.d.ts
 
 db_tables: []
 depends_on: []
