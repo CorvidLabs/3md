@@ -33,6 +33,8 @@ ThreeMDCLI is the command-line interface tool for the 3md file format. It provid
 1. If no arguments or an unknown subcommand is specified, the CLI prints usage information to stderr/stdout and exits with code 1.
 2. When the `--json` flag is provided to `validate`, `info`, `links`, or `check-links`, all output is serialized as JSON to stdout.
 3. On any parsing or validation failure (or check-links failure with dangling links), the tool exits with code 1.
+4. Calling `threemd` with `--help`, `-h`, or `help` prints the usage summary to stdout and exits with code 0.
+5. Specifying a file path of `-` redirects the tool to read the source from standard input.
 
 ## Behavioral Examples
 
@@ -48,12 +50,20 @@ When "threemd check-links <file>" is called
 Then the command prints details of the dangling links to stderr and exits with 1
 ```
 
+```
+Given a request for help using "--help", "-h", or "help"
+When "threemd --help" is called
+Then stdout prints the usage text and the command exits with 0
+```
+
 ## Error Cases
 
 | Error | When | Behavior |
 |-------|------|----------|
 | `unknownSubcommand` | Subcommand argument is not recognized | Prints error to stderr, usage to stdout, and exits 1 |
 | `missingFile` | File argument is omitted | Prints usage and exits 1 |
+| `fileNotFound` | File path does not exist on disk | Prints "threemd: file not found: '<path>'" to stderr and exits 1 |
+| `invalidEncoding` | File cannot be read as UTF-8 | Prints "threemd: cannot read '<path>' (is it valid UTF-8?)" to stderr and exits 1 |
 | `parseError` | File contains malformed 3md syntax | Exits 1, printing parser error details (or structured JSON if `--json` was passed) |
 
 ## Dependencies
