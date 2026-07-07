@@ -4,10 +4,11 @@
 # web demo (served on Pages), the examples, or generated build output. Keep
 # those out of the coverage denominator. Root-anchored subset of gitignore.
 
-# Tests and conformance fixtures.
+# Tests and conformance fixtures (incl. the colocated JS test suite).
 Tests/
 uitests/
 conformance/
+js/test/
 
 # Interactive demo site (deployed to Pages) and examples.
 web/
