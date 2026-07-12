@@ -33,17 +33,13 @@ cmd = "bun install --frozen-lockfile && bun test"
 dir = "js"
 description = "TypeScript port: install and run the test suite (the shared conformance vectors)."
 
-[tasks.spec]
-cmd = "fledge spec check"
-description = "spec-sync: every module spec matches its tracked source files."
-
 [lanes.verify]
-description = "The single CI gate: all three parser implementations, generated element bundle drift, editor grammar, and spec-sync."
-steps = ["lint", "build", "test", "js", "rust", "element-bundle", "editor", "spec"]
+description = "Native verification for all three parser implementations, generated element bundle drift, and editor grammar. Trust runs SpecSync after this lane."
+steps = ["lint", "build", "test", "js", "rust", "element-bundle", "editor"]
 
 [lanes.ci]
-description = "Alias for the verify gate."
-steps = ["lint", "build", "test", "js", "rust", "element-bundle", "editor", "spec"]
+description = "Alias for the native verify lane."
+steps = ["lint", "build", "test", "js", "rust", "element-bundle", "editor"]
 
 [lanes.ui]
 description = "Browser UI suite for the published web surfaces."

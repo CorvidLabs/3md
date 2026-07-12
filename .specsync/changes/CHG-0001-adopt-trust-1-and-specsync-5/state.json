@@ -13,9 +13,15 @@
   "affected_paths": [
     ".github/workflows/trust.yml",
     ".specsync/",
+    ".claude/",
+    ".codex/",
+    ".cursor/",
+    ".gemini/",
     ".trust.toml",
     ".augur.toml",
-    "AGENTS.md"
+    "AGENTS.md",
+    "CLAUDE.md",
+    "fledge.toml"
   ],
   "no_spec_change": true,
   "no_spec_change_rationale": "Tooling policy migration; no product API or canonical module contract changes.",

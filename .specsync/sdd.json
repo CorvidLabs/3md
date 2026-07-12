@@ -43,7 +43,11 @@
     ".augur.toml",
     ".attest.json",
     "AGENTS.md",
-    "CLAUDE.md"
+    "CLAUDE.md",
+    ".claude/",
+    ".codex/",
+    ".cursor/",
+    ".gemini/"
   ],
   "ignored_paths": [
     ".specsync/",
