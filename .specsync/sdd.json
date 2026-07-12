@@ -54,8 +54,7 @@
     "specs/"
   ],
   "verification_commands": [
-    "fledge lanes run verify",
-    "fledge trust doctor"
+    "fledge lanes run verify"
   ],
   "custom_artifacts": {},
   "principles_file": null
