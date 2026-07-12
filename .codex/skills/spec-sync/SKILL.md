@@ -9,6 +9,14 @@ This project uses [spec-sync](https://github.com/CorvidLabs/spec-sync) for bidir
 
 ## Companion files
 
+Each canonical spec may have policy-selected companion files. Read and update the ones present; do not create empty companions only for ceremony:
+
+- **`tasks.md`** — Work items for this module. Check off tasks (`- [x]`) as you complete them. Add new tasks if you discover work needed.
+- **`requirements.md`** — Acceptance criteria and user stories. These are permanent invariants, not tasks — do not check them off. Update if requirements change.
+- **`context.md`** — Architectural decisions, key files, and current status. Update when you make design decisions or change what's in progress.
+- **`testing.md`** — Test strategy: automated test locations, manual QA checklists, and edge cases/boundary conditions.
+- **`design.md`** *(opt-in)* — Layout, component hierarchy, design tokens, and asset references. Present when `companions.design` is enabled in config.
+
 ## Verified SDD change lifecycle (5.0)
 
 For every meaningful source, test, public documentation, schema, or configuration change:
@@ -26,14 +34,6 @@ For every meaningful source, test, public documentation, schema, or configuratio
 Never invent or self-grant either human approval. If an approved definition changes, its digest
 becomes stale and must be approved again. `specsync check` validates canonical specs plus approved
 active deltas, requirement-to-test evidence, change coverage, and CI gates.
-
-Each canonical spec may have policy-selected companion files. Read and update the ones present; do not create empty companions only for ceremony:
-
-- **`tasks.md`** — Work items for this module. Check off tasks (`- [x]`) as you complete them. Add new tasks if you discover work needed.
-- **`requirements.md`** — Acceptance criteria and user stories. These are permanent invariants, not tasks — do not check them off. Update if requirements change.
-- **`context.md`** — Architectural decisions, key files, and current status. Update when you make design decisions or change what's in progress.
-- **`testing.md`** — Test strategy: automated test locations, manual QA checklists, and edge cases/boundary conditions.
-- **`design.md`** *(opt-in)* — Layout, component hierarchy, design tokens, and asset references. Present when `companions.design` is enabled in config.
 
 ## Before modifying any module
 
