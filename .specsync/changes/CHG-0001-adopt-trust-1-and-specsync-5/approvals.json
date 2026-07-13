@@ -27,6 +27,20 @@
       "timestamp": 1783973991,
       "digest": "174ccd0189f9b600f8f14088871b133f15bcab0570c991e16373ce5fca69f72b",
       "note": "Definition refreshed after final review: public documentation names Trust as the complete gate and README, CONTRIBUTING, and docs are governed meaningful paths."
+    },
+    {
+      "gate": "definition",
+      "actor": "user:0xLeif",
+      "timestamp": 1783974811,
+      "digest": "3e3993f3a310d989da0f46bf1d7643e8d7c3cfe201df57371fcb31e1c4b52116",
+      "note": "Definition refreshed after the complete corrected PR head passed Trust, browser UI, and all CodeQL checks."
+    },
+    {
+      "gate": "acceptance",
+      "actor": "user:0xLeif",
+      "timestamp": 1783974846,
+      "digest": "2514197b66c28890a33152e1f34edae858598990a6c2fcd0171df22d1715711c",
+      "note": "Accepted after native Swift, TypeScript, Rust, generated-bundle, and editor verification plus successful hosted Trust, browser UI, and CodeQL checks on the corrected PR head."
     }
   ]
 }

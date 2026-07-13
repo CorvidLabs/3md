@@ -10,4 +10,4 @@ artifact: tasks
 - [x] Commit the standard Trust policy and Augur configuration.
 - [x] Consolidate the CI workflow on Trust 1.0.0.
 - [x] Pass local strict validation and the repository verify lane.
-- [ ] Pass hosted pull-request checks.
+- [x] Pass hosted pull-request checks.
