@@ -40,6 +40,26 @@ jobs:
         with:
           bun-version: latest
 
+      # The lifecycle preserves this repository's pre-migration strict
+      # SpecSync check; Trust's composed contract step still owns the gate.
+      - name: Install SpecSync 5.0.1 for lifecycle verification
+        shell: bash
+        run: |
+          set -euo pipefail
+          archive="$RUNNER_TEMP/specsync-macos-aarch64.tar.gz"
+          checksum="$archive.sha256"
+          base="https://github.com/CorvidLabs/spec-sync/releases/download/v5.0.1"
+          curl -fsSL "$base/specsync-macos-aarch64.tar.gz" -o "$archive"
+          curl -fsSL "$base/specsync-macos-aarch64.tar.gz.sha256" -o "$checksum"
+          expected="$(awk '{print $1}' "$checksum")"
+          actual="$(shasum -a 256 "$archive" | awk '{print $1}')"
+          test "$actual" = "$expected"
+          mkdir -p "$RUNNER_TEMP/specsync-bin"
+          tar -xzf "$archive" -C "$RUNNER_TEMP/specsync-bin"
+          mv "$RUNNER_TEMP/specsync-bin/specsync-macos-aarch64" "$RUNNER_TEMP/specsync-bin/specsync"
+          chmod +x "$RUNNER_TEMP/specsync-bin/specsync"
+          echo "$RUNNER_TEMP/specsync-bin" >> "$GITHUB_PATH"
+
       # Unified lifecycle, contract, risk, and progressive provenance gate.
       - name: CorvidLabs Trust gate
         id: trust
