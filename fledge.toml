@@ -12,7 +12,6 @@ lint = "swift-format lint --strict --recursive Sources Tests Package.swift"
 build = "swift build"
 test = "swift test"
 element-bundle = "bun scripts/check-element-bundle.mjs"
-spec = "specsync check --strict --force --require-coverage 100"
 
 [tasks.editor]
 cmd = "bun install --frozen-lockfile && bun run test"
@@ -35,12 +34,12 @@ dir = "js"
 description = "TypeScript port: install and run the test suite (the shared conformance vectors)."
 
 [lanes.verify]
-description = "Native verification for all three parser implementations, generated element bundle drift, editor grammar, and the strict 100% SpecSync contract."
-steps = ["lint", "build", "test", "js", "rust", "element-bundle", "editor", "spec"]
+description = "Native verification for all three parser implementations, generated element bundle drift, and editor grammar. Trust runs SpecSync after this lane."
+steps = ["lint", "build", "test", "js", "rust", "element-bundle", "editor"]
 
 [lanes.ci]
-description = "Alias for the complete verify lane."
-steps = ["lint", "build", "test", "js", "rust", "element-bundle", "editor", "spec"]
+description = "Alias for the native verify lane."
+steps = ["lint", "build", "test", "js", "rust", "element-bundle", "editor"]
 
 [lanes.ui]
 description = "Browser UI suite for the published web surfaces."

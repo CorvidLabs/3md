@@ -60,6 +60,11 @@ jobs:
           chmod +x "$RUNNER_TEMP/specsync-bin/specsync"
           echo "$RUNNER_TEMP/specsync-bin" >> "$GITHUB_PATH"
 
+      # Preserve the former warning-as-error contract without placing SpecSync
+      # inside its own configured verification command.
+      - name: Strict SpecSync contract
+        run: specsync check --strict --force --require-coverage 100
+
       # Unified lifecycle, contract, risk, and progressive provenance gate.
       - name: CorvidLabs Trust gate
         id: trust
