@@ -1,8 +1,8 @@
 # fledge.toml - project task definitions and lanes
 # Detected project type: swift
 #
-# The single CI gate is the `verify` lane (see AGENTS.md). Run it with:
-#   fledge lanes run verify
+# Trust is the complete repository gate (see AGENTS.md). The `verify` lane is
+# its native implementation-verification component.
 
 [tasks]
 # swift format unifies formatting and linting. `fmt` fixes in place; `lint`

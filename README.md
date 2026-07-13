@@ -189,17 +189,19 @@ agreed) and for people (plain, readable, diffable text).
 
 ## Development
 
-This repo uses the CorvidLabs trust toolchain. The single gate is:
+This repo uses the CorvidLabs trust toolchain. Run the complete repository gate
+before calling a change done:
 
 ```bash
-fledge lanes run verify
+fledge trust verify
 ```
 
-which runs the Swift format check, build, and tests plus the Rust crate. See
+Trust validates the SpecSync contract, risk policy, and provenance posture, and
+composes the native `fledge lanes run verify` lane. That native lane runs the
+Swift format check, build, and tests plus the Rust crate, TypeScript parser
+parity, generated web-component bundle drift, and VS Code grammar tests. See
 [AGENTS.md](AGENTS.md) for the standing rules every contributor and agent follows.
-The same gate also checks TypeScript parser parity, generated web-component
-bundle drift, VS Code grammar tests, and spec-sync. Browser UI tests are exposed
-separately with `fledge lanes run ui`.
+Browser UI tests are exposed separately with `fledge lanes run ui`.
 
 Each implementation has its own tests (the Swift suite has 122 tests, the
 TypeScript suite 76), and all three implementations run the shared 43-vector

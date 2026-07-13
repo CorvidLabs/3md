@@ -20,6 +20,13 @@
       "timestamp": 1783971650,
       "digest": "77c9495b355f19a856d03e1a76f247c512f00beb33e011d66e068d839239351f",
       "note": "Definition re-approved after the complete local verification lane and strict 100% contract passed; hosted pull-request checks and closing acceptance remain pending."
+    },
+    {
+      "gate": "definition",
+      "actor": "user:0xLeif",
+      "timestamp": 1783973991,
+      "digest": "174ccd0189f9b600f8f14088871b133f15bcab0570c991e16373ce5fca69f72b",
+      "note": "Definition refreshed after final review: public documentation names Trust as the complete gate and README, CONTRIBUTING, and docs are governed meaningful paths."
     }
   ]
 }
