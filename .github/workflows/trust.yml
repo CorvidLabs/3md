@@ -42,7 +42,7 @@ jobs:
 
       # The lifecycle preserves this repository's pre-migration strict
       # SpecSync check; Trust's composed contract step still owns the gate.
-      - name: Install SpecSync 5.0.1 for lifecycle verification
+      - name: Install pinned lifecycle tools
         shell: bash
         run: |
           set -euo pipefail
@@ -58,6 +58,14 @@ jobs:
           tar -xzf "$archive" -C "$RUNNER_TEMP/specsync-bin"
           mv "$RUNNER_TEMP/specsync-bin/specsync-macos-aarch64" "$RUNNER_TEMP/specsync-bin/specsync"
           chmod +x "$RUNNER_TEMP/specsync-bin/specsync"
+          fledge="$RUNNER_TEMP/specsync-bin/fledge"
+          curl -fsSL \
+            "https://github.com/CorvidLabs/fledge/releases/download/v1.7.0/fledge-macos-aarch64" \
+            -o "$fledge"
+          expected_fledge="21d0916d52ef14e6d33e3967417773369e047a0311e66bbb1eecc8f69332a040"
+          actual_fledge="$(shasum -a 256 "$fledge" | awk '{print $1}')"
+          test "$actual_fledge" = "$expected_fledge"
+          chmod +x "$fledge"
           echo "$RUNNER_TEMP/specsync-bin" >> "$GITHUB_PATH"
 
       # Preserve the former warning-as-error contract without placing SpecSync
