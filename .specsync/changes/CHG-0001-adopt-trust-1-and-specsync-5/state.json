@@ -8,7 +8,7 @@
   "state": "implementing",
   "base_commit": "2a145766b9ecb83d96ee15aa453a65cc2125571f",
   "created_at": 1783826867,
-  "updated_at": 1783826959,
+  "updated_at": 1783971650,
   "affected_specs": [],
   "affected_paths": [
     ".github/workflows/trust.yml",
@@ -21,6 +21,8 @@
     ".augur.toml",
     "AGENTS.md",
     "CLAUDE.md",
+    "docs.3md",
+    "web/docs.3md",
     "fledge.toml"
   ],
   "no_spec_change": true,

@@ -1,6 +1,6 @@
 ---
 id: CHG-0002-assign-stable-requirement-ids
-state: implementing
+state: accepted
 type: documentation
 base_commit: 2a145766b9ecb83d96ee15aa453a65cc2125571f
 ---

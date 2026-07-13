@@ -32,7 +32,7 @@ requirement is numbered so tests and reviews can reference it directly.
 
 ### REQ-threemdelement-001
 
-The implementation SHALL satisfy this requirement.
+The element SHALL delegate 3md parsing to `@corvidlabs/threemd` and render the returned document model.
 
 Acceptance Criteria
 
@@ -44,7 +44,7 @@ Acceptance Criteria
 
 ### REQ-threemdelement-002
 
-The implementation SHALL satisfy this requirement.
+The element SHALL render either fetched `src` content or inline content and allow `setSource(text)` replacement.
 
 Acceptance Criteria
 
@@ -55,7 +55,7 @@ Acceptance Criteria
 
 ### REQ-threemdelement-003
 
-The implementation SHALL satisfy this requirement.
+Asynchronous source loading SHALL discard stale responses and render descriptive failures through the error part.
 
 Acceptance Criteria
 
@@ -66,7 +66,7 @@ Acceptance Criteria
 
 ### REQ-threemdelement-004
 
-The implementation SHALL satisfy this requirement.
+Blank or invalid source SHALL render the documented error message without building planes.
 
 Acceptance Criteria
 
@@ -76,7 +76,7 @@ Acceptance Criteria
 
 ### REQ-threemdelement-005
 
-The implementation SHALL satisfy this requirement.
+The element SHALL observe `src` and `mode` and reapply them after its DOM is available.
 
 Acceptance Criteria
 
@@ -87,7 +87,7 @@ Acceptance Criteria
 
 ### REQ-threemdelement-006
 
-The implementation SHALL satisfy this requirement.
+The element SHALL select a supported rendering mode from `mode`, axis aliases, or the document axis, defaulting to `stack`.
 
 Acceptance Criteria
 
@@ -100,7 +100,7 @@ Acceptance Criteria
 
 ### REQ-threemdelement-007
 
-The implementation SHALL satisfy this requirement.
+Plane layout SHALL derive true Z position from distance to focus so the focused plane remains frontmost.
 
 Acceptance Criteria
 
@@ -111,7 +111,7 @@ Acceptance Criteria
 
 ### REQ-threemdelement-008
 
-The implementation SHALL satisfy this requirement.
+`render()` SHALL synchronously apply all interaction state as the stage's single source of truth.
 
 Acceptance Criteria
 
@@ -122,7 +122,7 @@ Acceptance Criteria
 
 ### REQ-threemdelement-009
 
-The implementation SHALL satisfy this requirement.
+Animation frames SHALL provide only optional idle drift and SHALL NOT be required for correct interaction rendering.
 
 Acceptance Criteria
 
@@ -135,7 +135,7 @@ Acceptance Criteria
 
 ### REQ-threemdelement-010
 
-The implementation SHALL satisfy this requirement.
+The stage SHALL use one pointer-event path for mouse, touch, and pen drag interactions.
 
 Acceptance Criteria
 
@@ -146,7 +146,7 @@ Acceptance Criteria
 
 ### REQ-threemdelement-011
 
-The implementation SHALL satisfy this requirement.
+The element SHALL reserve touch gestures for the model and avoid horizontal overflow from 320px through 1440px.
 
 Acceptance Criteria
 
@@ -157,7 +157,7 @@ Acceptance Criteria
 
 ### REQ-threemdelement-012
 
-The implementation SHALL satisfy this requirement.
+The scrubber, step buttons, and arrow keys SHALL synchronously navigate the focused plane within range.
 
 Acceptance Criteria
 
@@ -168,7 +168,7 @@ Acceptance Criteria
 
 ### REQ-threemdelement-013
 
-The implementation SHALL satisfy this requirement.
+The public element API SHALL expose its document, current index, active mode, and clamped `goTo(index)` navigation.
 
 Acceptance Criteria
 
@@ -178,7 +178,7 @@ Acceptance Criteria
 
 ### REQ-threemdelement-014
 
-The implementation SHALL satisfy this requirement.
+A focus-index change SHALL emit one bubbling, composed `planechange` event containing the selected plane details.
 
 Acceptance Criteria
 
@@ -189,7 +189,7 @@ Acceptance Criteria
 
 ### REQ-threemdelement-015
 
-The implementation SHALL satisfy this requirement.
+Each plane SHALL render its tag and an HTML-escaped body using the documented limited Markdown subset.
 
 Acceptance Criteria
 
@@ -201,7 +201,7 @@ Acceptance Criteria
 
 ### REQ-threemdelement-016
 
-The implementation SHALL satisfy this requirement.
+The element SHALL use an open shadow root and expose theming through the documented custom properties and parts.
 
 Acceptance Criteria
 
@@ -215,7 +215,7 @@ Acceptance Criteria
 
 ### REQ-threemdelement-017
 
-The implementation SHALL satisfy this requirement.
+`<three-md>` SHALL work unchanged in plain HTML, React, Vue, Svelte, and Angular.
 
 Acceptance Criteria
 
@@ -225,7 +225,7 @@ Acceptance Criteria
 
 ### REQ-threemdelement-018
 
-The implementation SHALL satisfy this requirement.
+CI SHALL exercise the component's invariants and console cleanliness in Chromium and WebKit with Playwright.
 
 Acceptance Criteria
 
@@ -235,7 +235,7 @@ Acceptance Criteria
 
 ### REQ-threemdelement-019
 
-The implementation SHALL satisfy this requirement.
+The published element bundle SHALL include the parser so no separate parser script is required.
 
 Acceptance Criteria
 
@@ -244,7 +244,7 @@ Acceptance Criteria
 
 ### REQ-threemdelement-020
 
-The implementation SHALL satisfy this requirement.
+Component styles SHALL remain isolated inside the shadow root except for documented theming surfaces.
 
 Acceptance Criteria
 
@@ -254,7 +254,7 @@ Acceptance Criteria
 
 ### REQ-threemdelement-021
 
-The implementation SHALL satisfy this requirement.
+The element SHALL degrade gracefully when optional browser capabilities or external source loading are unavailable.
 
 Acceptance Criteria
 

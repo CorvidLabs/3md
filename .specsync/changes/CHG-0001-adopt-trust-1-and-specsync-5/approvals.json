@@ -6,6 +6,20 @@
       "timestamp": 1783826959,
       "digest": "79cfe2c4cd9797c14198de4d7f463d8f8b82125287963141c78c6d3b24157aec",
       "note": "Authorized by the user-approved CorvidLabs Trust 1 / SpecSync 5 rollout plan."
+    },
+    {
+      "gate": "definition",
+      "actor": "user:0xLeif",
+      "timestamp": 1783971616,
+      "digest": "706e408d448f153b152bddf0b13b85dd7c861f0d58642d32a9a06f30301c9e23",
+      "note": "Definition re-approved after reviewing the migration policy, all agent templates, generated documentation, and repository-specific requirement corrections; native and hosted closing evidence remain pending."
+    },
+    {
+      "gate": "definition",
+      "actor": "user:0xLeif",
+      "timestamp": 1783971650,
+      "digest": "77c9495b355f19a856d03e1a76f247c512f00beb33e011d66e068d839239351f",
+      "note": "Definition re-approved after the complete local verification lane and strict 100% contract passed; hosted pull-request checks and closing acceptance remain pending."
     }
   ]
 }

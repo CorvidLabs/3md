@@ -21,6 +21,7 @@ regenerate with `node scripts/build-docs-3md.mjs`.
 # 3md
 
 [![CI](https://github.com/CorvidLabs/3md/actions/workflows/trust.yml/badge.svg)](https://github.com/CorvidLabs/3md/actions/workflows/trust.yml)
+[![spec coverage](https://img.shields.io/endpoint?url=https%3A%2F%2Fcorvidlabs.github.io%2F3md%2Fbadges%2Fcoverage.json)](https://corvidlabs.github.io/3md/)
 [![Release](https://img.shields.io/github/v/release/CorvidLabs/3md?sort=semver)](https://github.com/CorvidLabs/3md/releases)
 [![License: MIT](https://img.shields.io/github/license/CorvidLabs/3md)](LICENSE)
 [![Live demo](https://img.shields.io/badge/demo-live-0E6F66)](https://corvidlabs.github.io/3md/)
@@ -228,7 +229,7 @@ cross-implementation contract that keeps the parsers behaving identically.
 ## Status
 
 The format and spec are at version 1.0 (stable, frozen grammar). The latest
-release is v1.0.0. Older `3md: 0.1` documents remain valid: the parser is
+release is v1.8.1 (see the release badge above). Older `3md: 0.1` documents remain valid: the parser is
 version-lenient and never rejects a document by its version string.
 
 ## License
@@ -802,16 +803,16 @@ descriptive generic names, 4-space indentation, 120-column lines. The formatter
 config in `.swift-format` enforces the mechanical parts.
 
 <!-- CorvidLabs trust toolchain: BEGIN (managed, do not edit inside) -->
-## CorvidLabs trust toolchain (standing rules)
+## CorvidLabs trust toolchain
 
-This repo is governed by four CLIs. Every session MUST use them; never bypass or weaken them.
+This repository uses one trust gate. Every session must use it and must not bypass or weaken it.
 
-- fledge: run `fledge lanes run verify` before calling any change done. It must pass.
-- spec-sync: when you change a module with a *.spec.md, update the spec, then `fledge spec check`. (skipped: <reason>, if content-only)
-- augur: `augur check --staged` before a commit; `augur check --range origin/main..HEAD` before merge. A block verdict is a hard stop, never auto-overridden.
-- attest: after a green lane, `attest sign --commit HEAD --reviewer agent:<id> --from-augur augur.json --tests-passed`.
+- Run `fledge trust verify` before calling a change complete.
+- Keep module specs synchronized with implementation changes.
+- Treat an Augur block verdict as a hard stop that must be surfaced and de-risked.
+- Record and verify provenance with Attest after the repository's verification lane passes.
+- Keep generated trust configuration and this managed block in place.
 
-CI enforces the same gate (.github/workflows/trust.yml) and fails if this block is missing. Brand rule: no em-dash characters in anything you write.
 <!-- CorvidLabs trust toolchain: END -->
 
 @plane z=7 label="PROOF" file="docs/PROOF.md"

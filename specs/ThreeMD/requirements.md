@@ -26,7 +26,7 @@ numbered so tests and reviews can reference it directly.
 
 ### REQ-threemd-001
 
-The implementation SHALL satisfy this requirement.
+`Parser.parse` SHALL require a complete frontmatter block and report missing or unclosed fences with typed parse errors.
 
 Acceptance Criteria
 
@@ -39,7 +39,7 @@ Acceptance Criteria
 
 ### REQ-threemd-002
 
-The implementation SHALL satisfy this requirement.
+Frontmatter SHALL declare a non-empty `3md` value that is stored as `Document.version`.
 
 Acceptance Criteria
 
@@ -50,7 +50,7 @@ Acceptance Criteria
 
 ### REQ-threemd-003
 
-The implementation SHALL satisfy this requirement.
+The parser SHALL read frontmatter as case-insensitive `key: value` pairs while rejecting malformed content lines.
 
 Acceptance Criteria
 
@@ -63,7 +63,7 @@ Acceptance Criteria
 
 ### REQ-threemd-004
 
-The implementation SHALL satisfy this requirement.
+The parser SHALL normalize the optional `axis` value and default it to `Axis.layer` when absent.
 
 Acceptance Criteria
 
@@ -75,7 +75,7 @@ Acceptance Criteria
 
 ### REQ-threemd-005
 
-The implementation SHALL satisfy this requirement.
+The parser SHALL map reserved frontmatter keys to document fields and preserve every other key in `Document.metadata`.
 
 Acceptance Criteria
 
@@ -86,7 +86,7 @@ Acceptance Criteria
 
 ### REQ-threemd-006
 
-The implementation SHALL satisfy this requirement.
+The parser SHALL recognize `@plane` directives and parse their quoted or unquoted `key=value` attributes.
 
 Acceptance Criteria
 
@@ -100,7 +100,7 @@ Acceptance Criteria
 
 ### REQ-threemd-007
 
-The implementation SHALL satisfy this requirement.
+Every explicit plane SHALL provide a numeric `z` attribute, including support for negative and decimal positions.
 
 Acceptance Criteria
 
@@ -112,7 +112,7 @@ Acceptance Criteria
 
 ### REQ-threemd-008
 
-The implementation SHALL satisfy this requirement.
+Plane directives SHALL parse optional numeric `x` and `y`, optional `label`, and preserve non-reserved attributes.
 
 Acceptance Criteria
 
@@ -125,7 +125,7 @@ Acceptance Criteria
 
 ### REQ-threemd-009
 
-The implementation SHALL satisfy this requirement.
+The parser SHALL assign trimmed Markdown bodies to their planes and preserve pre-plane Markdown as the document preamble.
 
 Acceptance Criteria
 
@@ -138,7 +138,7 @@ Acceptance Criteria
 
 ### REQ-threemd-010
 
-The implementation SHALL satisfy this requirement.
+A frontmatter document with non-empty content and no directive SHALL parse as one implicit plane at `z = 0`.
 
 Acceptance Criteria
 
@@ -150,7 +150,7 @@ Acceptance Criteria
 
 ### REQ-threemd-011
 
-The implementation SHALL satisfy this requirement.
+The parser SHALL reject duplicate plane `z` values with `ParseError.duplicatePlane(z:)`.
 
 Acceptance Criteria
 
@@ -159,7 +159,7 @@ Acceptance Criteria
 
 ### REQ-threemd-012
 
-The implementation SHALL satisfy this requirement.
+`Document` SHALL preserve source plane order while providing ascending-Z lookup and sorting helpers.
 
 Acceptance Criteria
 
@@ -170,7 +170,7 @@ Acceptance Criteria
 
 ### REQ-threemd-013
 
-The implementation SHALL satisfy this requirement.
+`Serializer.render` SHALL emit deterministic frontmatter, plane directives, attributes, and non-empty bodies.
 
 Acceptance Criteria
 
@@ -184,7 +184,7 @@ Acceptance Criteria
 
 ### REQ-threemd-014
 
-The implementation SHALL satisfy this requirement.
+Serialization output SHALL parse back to an equal document when content does not depend on quote escaping.
 
 Acceptance Criteria
 
@@ -193,7 +193,7 @@ Acceptance Criteria
 
 ### REQ-threemd-015
 
-The implementation SHALL satisfy this requirement.
+Parsing SHALL normalize Windows CRLF line endings to LF before processing.
 
 Acceptance Criteria
 
@@ -204,7 +204,7 @@ Acceptance Criteria
 
 ### REQ-threemd-016
 
-The implementation SHALL satisfy this requirement.
+The module SHALL build under Swift 6 strict concurrency for supported Apple platforms, Linux, and Windows.
 
 Acceptance Criteria
 
@@ -214,7 +214,7 @@ Acceptance Criteria
 
 ### REQ-threemd-017
 
-The implementation SHALL satisfy this requirement.
+Public model and service types SHALL provide the documented `Sendable`, value, coding, hashing, and error conformances.
 
 Acceptance Criteria
 
@@ -225,7 +225,7 @@ Acceptance Criteria
 
 ### REQ-threemd-018
 
-The implementation SHALL satisfy this requirement.
+Library code SHALL handle optionals and conversions without force unwraps, `try!`, or `as!`.
 
 Acceptance Criteria
 
@@ -235,7 +235,7 @@ Acceptance Criteria
 
 ### REQ-threemd-019
 
-The implementation SHALL satisfy this requirement.
+The ThreeMD module SHALL depend only on Foundation and no third-party packages.
 
 Acceptance Criteria
 
@@ -244,7 +244,7 @@ Acceptance Criteria
 
 ### REQ-threemd-020
 
-The implementation SHALL satisfy this requirement.
+Parsing SHALL be pure and serialization SHALL order metadata and extra attributes deterministically.
 
 Acceptance Criteria
 

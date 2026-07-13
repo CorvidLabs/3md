@@ -19,49 +19,49 @@ These requirements describe the ThreeMDCLI Swift executable target: the command-
 
 ### REQ-threemdcli-001
 
-The implementation SHALL satisfy this requirement.
+The executable SHALL accept the documented subcommands and return usage with exit code 1 for missing or unknown commands.
 
 Acceptance Criteria
 
 - The executable accepts one of the following subcommands as its first argument: `validate`, `info`, `html`, `links`, or `check-links`. Any other argument or a missing subcommand prints usage information and exits with code 1.
 ### REQ-threemdcli-002
 
-The implementation SHALL satisfy this requirement.
+`validate` SHALL parse the requested file, print `ok` on success, and report parse failures to stderr with exit code 1.
 
 Acceptance Criteria
 
 - Parses the specified file. Prints "ok" and exits 0 on success. On parsing failure, prints the error details to stderr and exits 1.
 ### REQ-threemdcli-003
 
-The implementation SHALL satisfy this requirement.
+`info` SHALL print document metadata and every plane's position, label, coordinates, and extra attributes.
 
 Acceptance Criteria
 
 - Prints metadata (version, axis, title, plane count) and each plane's properties (z, label, coordinates, extra attributes).
 ### REQ-threemdcli-004
 
-The implementation SHALL satisfy this requirement.
+`html` SHALL render the document to HTML on stdout.
 
 Acceptance Criteria
 
 - Renders the document to HTML and prints the output to stdout.
 ### REQ-threemdcli-005
 
-The implementation SHALL satisfy this requirement.
+`links` SHALL print every cross-plane link and the link graph representation.
 
 Acceptance Criteria
 
 - Extracts and prints all cross-plane links and the link graph representation.
 ### REQ-threemdcli-006
 
-The implementation SHALL satisfy this requirement.
+`check-links` SHALL fail with dangling-link details or print `ok` and exit successfully when all links resolve.
 
 Acceptance Criteria
 
 - Validates all cross-plane links. If there are dangling links, it prints details to stderr and exits with code 1. If all links resolve, it prints "ok" and exits 0.
 ### REQ-threemdcli-007
 
-The implementation SHALL satisfy this requirement.
+Supported inspection subcommands SHALL emit JSON on stdout when `--json` is supplied.
 
 Acceptance Criteria
 
@@ -71,21 +71,21 @@ Acceptance Criteria
 
 ### REQ-threemdcli-008
 
-The implementation SHALL satisfy this requirement.
+The CLI target SHALL depend only on the local `ThreeMD` target and Foundation.
 
 Acceptance Criteria
 
 - The CLI target depends only on the local `ThreeMD` library target and Foundation. No external package manager or CLI parsing library is used.
 ### REQ-threemdcli-009
 
-The implementation SHALL satisfy this requirement.
+The executable SHALL parse commands and start with minimal overhead.
 
 Acceptance Criteria
 
 - CommandLine parsing and execution are fast, with minimal startup overhead.
 ### REQ-threemdcli-010
 
-The implementation SHALL satisfy this requirement.
+The executable SHALL build cleanly under Swift 6 strict concurrency.
 
 Acceptance Criteria
 
