@@ -41,6 +41,13 @@
       "timestamp": 1783974846,
       "digest": "2514197b66c28890a33152e1f34edae858598990a6c2fcd0171df22d1715711c",
       "note": "Accepted after native Swift, TypeScript, Rust, generated-bundle, and editor verification plus successful hosted Trust, browser UI, and CodeQL checks on the corrected PR head."
+    },
+    {
+      "gate": "acceptance",
+      "actor": "user:0xLeif",
+      "timestamp": 1784013064,
+      "digest": "fb0b6266d5085ac27eda5e6341cb6e6c69dedba28d6bbcf227334ccf87408200",
+      "note": "Fresh closing approval after final governance corrections and full seven-step native verification; hosted checks are not claimed yet."
     }
   ],
   "reopenings": [
