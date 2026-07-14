@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "id": "CHG-0003-address-final-trust-and-sdd-governance-review-corrections",
+  "slug": "address-final-trust-and-sdd-governance-review-corrections",
+  "title": "Address final Trust and SDD governance review corrections",
+  "description": "Address final Trust and SDD governance review corrections",
+  "kind": "migration",
+  "state": "implementing",
+  "base_commit": "2458e7d2e607a8cd98448652821d515ed1f51bf9",
+  "created_at": 1783975947,
+  "updated_at": 1784012911,
+  "affected_specs": [],
+  "affected_paths": [
+    ".github/workflows/trust.yml",
+    ".specsync/sdd.json",
+    ".claude/skills/spec-sync/SKILL.md",
+    ".codex/skills/spec-sync/SKILL.md",
+    ".cursor/skills/spec-sync/SKILL.md",
+    ".gemini/skills/spec-sync/SKILL.md"
+  ],
+  "no_spec_change": true,
+  "no_spec_change_rationale": "Governance policy and generated-agent guidance corrections only; no product or canonical module behavior changes.",
+  "acceptance_criteria": [
+    "Trust runs for every governed public-documentation change; SDD policy and canonical spec edits require a covering change; all installed agent skills preserve multi-word interview answers; strict SpecSync and the complete Trust gate pass at 100%."
+  ],
+  "selected_artifacts": [
+    "context",
+    "requirements",
+    "plan",
+    "tasks",
+    "testing",
+    "docs"
+  ],
+  "dependencies": [],
+  "answers": {
+    "architecture_risk": "no",
+    "public_contract": "no"
+  }
+}

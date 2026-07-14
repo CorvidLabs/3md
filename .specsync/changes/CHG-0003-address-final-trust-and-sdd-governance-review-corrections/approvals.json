@@ -1,0 +1,19 @@
+{
+  "approvals": [
+    {
+      "gate": "definition",
+      "actor": "user:0xLeif",
+      "timestamp": 1783976028,
+      "digest": "2ce2d380b030b04d904a99189d4c5d2be5a18789bdddd7155f374f83daa0961d",
+      "note": "Definition reviewed after final-head comments; scope is limited to Trust path filters, SDD governance paths, and installed agent guidance."
+    },
+    {
+      "gate": "definition",
+      "actor": "user:0xLeif",
+      "timestamp": 1784012911,
+      "digest": "5bd9d4eddcff67d4e2ed60328ba2cf59b66e0a8a29627e72b6b08fd006d3f754",
+      "note": "Reapproved after replacing circular verification tasks with truthful completed configuration and preserving hosted checks as post-push evidence."
+    }
+  ],
+  "reopenings": []
+}

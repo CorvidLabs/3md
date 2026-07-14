@@ -14,7 +14,7 @@ This project uses [spec-sync](https://github.com/CorvidLabs/spec-sync) for bidir
 For every meaningful source, test, public documentation, schema, or configuration change:
 
 1. Run `specsync change new "<intent>" --json` and conduct the returned interview with the user.
-2. Use `specsync change answer <id> <question-id> <answer> --json` until no questions remain.
+2. Use `specsync change answer <id> <question-id> "<answer>" --json` until no questions remain.
 3. Complete the adaptively selected artifacts and semantic deltas. Requirements use stable
    `REQ-<module>-<number>` IDs, a normative SHALL statement, and acceptance criteria.
 4. Ask the user for the definition approval, then run `specsync change approve <id>`.

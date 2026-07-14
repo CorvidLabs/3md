@@ -38,8 +38,13 @@
     "web/",
     "scripts/",
     "README.md",
+    "ROADMAP.md",
+    "CHANGELOG.md",
+    "SECURITY.md",
     "CONTRIBUTING.md",
     "docs/",
+    "docs.3md",
+    "specs/",
     "SPEC.md",
     "fledge.toml",
     ".trust.toml",
@@ -52,10 +57,7 @@
     ".cursor/",
     ".gemini/"
   ],
-  "ignored_paths": [
-    ".specsync/",
-    "specs/"
-  ],
+  "ignored_paths": [],
   "verification_commands": [
     "fledge lanes run verify"
   ],

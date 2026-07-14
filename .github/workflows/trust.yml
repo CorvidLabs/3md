@@ -1,24 +1,15 @@
 name: trust
 
 on:
-  # Skip the gate for documentation-only changes (it has nothing code to verify).
-  # Anything that touches code, web/, specs/, SPEC.md, or conformance still runs.
+  # Public documentation is governed by SpecSync, so those changes run Trust.
   pull_request:
     paths-ignore:
-      - "README.md"
-      - "ROADMAP.md"
-      - "CONTRIBUTING.md"
-      - "docs/**"
       - "LICENSE"
       - "**/*.png"
       - ".github/ISSUE_TEMPLATE/**"
   push:
     branches: [main]
     paths-ignore:
-      - "README.md"
-      - "ROADMAP.md"
-      - "CONTRIBUTING.md"
-      - "docs/**"
       - "LICENSE"
       - "**/*.png"
       - ".github/ISSUE_TEMPLATE/**"
