@@ -42,5 +42,41 @@
       "digest": "2514197b66c28890a33152e1f34edae858598990a6c2fcd0171df22d1715711c",
       "note": "Accepted after native Swift, TypeScript, Rust, generated-bundle, and editor verification plus successful hosted Trust, browser UI, and CodeQL checks on the corrected PR head."
     }
+  ],
+  "reopenings": [
+    {
+      "schema_version": 1,
+      "change_id": "CHG-0001-adopt-trust-1-and-specsync-5",
+      "actor": "user:0xLeif",
+      "reason": "Authorized final governance review corrections changed delivery inputs after acceptance; refresh unchanged migration evidence with the full native lane.",
+      "timestamp": 1784012981,
+      "from_state": "accepted",
+      "to_state": "verifying",
+      "superseded_approval": {
+        "gate": "acceptance",
+        "actor": "user:0xLeif",
+        "timestamp": 1783974846,
+        "digest": "2514197b66c28890a33152e1f34edae858598990a6c2fcd0171df22d1715711c",
+        "note": "Accepted after native Swift, TypeScript, Rust, generated-bundle, and editor verification plus successful hosted Trust, browser UI, and CodeQL checks on the corrected PR head."
+      },
+      "prior_verification": {
+        "timestamp": 1783974833,
+        "commit": "6148c1f853c5f50269a84d005a4d474ce384b9f2",
+        "contract_digest": "3e3993f3a310d989da0f46bf1d7643e8d7c3cfe201df57371fcb31e1c4b52116",
+        "workspace_digest": "0b62c7bf6e4900e50e9406a10f9d176018528ed72e5fc53aaba17d7f9594fdb6",
+        "acceptance_input_digest": "cfc943b5b376e22b72c0c900d66b9f2b57c945e8e70a215a880fbf4cf0dbca34",
+        "passed": true,
+        "commands": [
+          {
+            "command": "fledge lanes run verify",
+            "success": true,
+            "exit_code": 0
+          }
+        ],
+        "requirement_ids": []
+      },
+      "stale_acceptance_input_digest": "cfc943b5b376e22b72c0c900d66b9f2b57c945e8e70a215a880fbf4cf0dbca34",
+      "current_acceptance_input_digest": "a6793c577723410186164e0e0d9a4e91892380830069ed60dfb3278c211e8740"
+    }
   ]
 }

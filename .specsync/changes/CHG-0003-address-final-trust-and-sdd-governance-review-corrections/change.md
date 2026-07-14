@@ -1,6 +1,6 @@
 ---
 id: CHG-0003-address-final-trust-and-sdd-governance-review-corrections
-state: implementing
+state: accepted
 type: migration
 base_commit: 2458e7d2e607a8cd98448652821d515ed1f51bf9
 ---

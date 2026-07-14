@@ -13,6 +13,13 @@
       "timestamp": 1784012911,
       "digest": "5bd9d4eddcff67d4e2ed60328ba2cf59b66e0a8a29627e72b6b08fd006d3f754",
       "note": "Reapproved after replacing circular verification tasks with truthful completed configuration and preserving hosted checks as post-push evidence."
+    },
+    {
+      "gate": "acceptance",
+      "actor": "user:0xLeif",
+      "timestamp": 1784012970,
+      "digest": "a02b2a8ea28461e6a5dbfe880389246f14291a0d72fb403709a616bab38bc6cb",
+      "note": "Closing approval after strict native verification passed all seven Swift, TypeScript, Rust, generated-bundle, and editor steps; hosted checks are not claimed yet."
     }
   ],
   "reopenings": []
