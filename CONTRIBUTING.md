@@ -19,14 +19,16 @@ conformance vector.**
 
 ## The gate
 
-One command runs everything (Swift format check, build, tests, and the Rust
-crate):
+Run the complete repository gate before calling any change done:
 
 ```bash
-fledge lanes run verify
+fledge trust verify
 ```
 
-Run it before calling any change done. Per language:
+Trust validates the SpecSync contract, risk policy, and provenance posture, and
+composes the native `fledge lanes run verify` lane. The native lane runs the
+Swift format check, build, tests, TypeScript parity, Rust crate, generated
+bundle drift, and editor checks. Per language:
 
 ```bash
 swift test                                   # Swift

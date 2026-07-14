@@ -30,86 +30,182 @@ requirement is numbered so tests and reviews can reference it directly.
 
 ### Functional Requirements
 
-- **FR-1 (Parsing is delegated).** The element does not parse 3md text. It calls
+### REQ-threemdelement-001
+
+The element SHALL delegate 3md parsing to `@corvidlabs/threemd` and render the returned document model.
+
+Acceptance Criteria
+
+- The element does not parse 3md text. It calls
   `parse` from `@corvidlabs/threemd` to turn source into a `Document` and reads
   `document.planes` and each plane's `z`, `x`, `y`, `label`, and `body`. The
   format grammar lives in `SPEC.md` and the shared parser; this element only
   renders the result.
 
-- **FR-2 (Source resolution).** On connect, if the `src` attribute is set the
+### REQ-threemdelement-002
+
+The element SHALL render either fetched `src` content or inline content and allow `setSource(text)` replacement.
+
+Acceptance Criteria
+
+- On connect, if the `src` attribute is set the
   element fetches that URL and renders the response text; otherwise it renders
   its inline text content. `setSource(text)` replaces the rendered document with
   new source at any time, building the DOM first if needed.
 
-- **FR-3 (`src` fetch and staleness).** Fetching `src` is asynchronous and
+### REQ-threemdelement-003
+
+Asynchronous source loading SHALL discard stale responses and render descriptive failures through the error part.
+
+Acceptance Criteria
+
+- Fetching `src` is asynchronous and
   guarded by a load token: each load increments the token, and a response whose
   token no longer matches the latest is discarded. A non-ok HTTP status or a
   rejected request renders the error part with a message naming the source.
 
-- **FR-4 (Empty and invalid source).** Blank source (after trim) renders the
+### REQ-threemdelement-004
+
+Blank or invalid source SHALL render the documented error message without building planes.
+
+Acceptance Criteria
+
+- Blank source (after trim) renders the
   error part with "No 3md source provided." When `parse` throws, the element
   renders the error part with "Invalid 3md: <message>" and builds no planes.
 
-- **FR-5 (Observed attributes).** `observedAttributes` is `["src", "mode"]`.
+### REQ-threemdelement-005
+
+The element SHALL observe `src` and `mode` and reapply them after its DOM is available.
+
+Acceptance Criteria
+
+- `observedAttributes` is `["src", "mode"]`.
   Changing `src` triggers a fetch and render; changing `mode` re-applies the mode
   and re-renders. Attribute changes before the element has built its DOM are
   ignored until connect.
 
-- **FR-6 (Mode selection).** The active `Mode` is one of `stack`, `play`,
+### REQ-threemdelement-006
+
+The element SHALL select a supported rendering mode from `mode`, axis aliases, or the document axis, defaulting to `stack`.
+
+Acceptance Criteria
+
+- The active `Mode` is one of `stack`, `play`,
   `layers`, `scene`, `parallax`, `present`, `elevator`. The `mode` attribute may
   be a `Mode` value or an axis name; an axis name (for example `time`, `frame`,
   `frames`, `layer`, `layers`, `depth`, `space`, `scene`, `slide`, `slides`,
   `deck`, `floor`, `floors`) maps to its mode. With no usable `mode` attribute,
   the mode is derived from `document.axis`, defaulting to `stack`.
 
-- **FR-7 (Focus-relative layout).** Each plane is positioned by its distance
+### REQ-threemdelement-007
+
+Plane layout SHALL derive true Z position from distance to focus so the focused plane remains frontmost.
+
+Acceptance Criteria
+
+- Each plane is positioned by its distance
   from the focus, `d = idx - focus`, so the focused plane is frontmost at the
   largest true Z. The layout MUST NOT pin a fixed plane to the front, because
   Safari paints by true Z and ignores `z-index` inside `preserve-3d`.
 
-- **FR-8 (Synchronous render).** `render()` applies all current state to the DOM
+### REQ-threemdelement-008
+
+`render()` SHALL synchronously apply all interaction state as the stage's single source of truth.
+
+Acceptance Criteria
+
+- `render()` applies all current state to the DOM
   synchronously and is the single source of truth for the stage. It is called on
   every interaction (scrub, drag, step, key, pointer up) and does not depend on
   `requestAnimationFrame`.
 
-- **FR-9 (Optional animation loop).** The `requestAnimationFrame` loop adds only
+### REQ-threemdelement-009
+
+Animation frames SHALL provide only optional idle drift and SHALL NOT be required for correct interaction rendering.
+
+Acceptance Criteria
+
+- The `requestAnimationFrame` loop adds only
   gentle idle drift and is progressive enhancement. Every value it produces is
   also produced by a direct interaction plus a synchronous `render()`, so the
   element stays fully correct and usable when rAF is throttled or never fires
   (iOS Low Power Mode). The loop is started on connect and cancelled on
   disconnect.
 
-- **FR-10 (Pointer interaction).** The stage handles `pointerdown`,
+### REQ-threemdelement-010
+
+The stage SHALL use one pointer-event path for mouse, touch, and pen drag interactions.
+
+Acceptance Criteria
+
+- The stage handles `pointerdown`,
   `pointermove`, `pointerup`, and `pointercancel` through one unified path for
   mouse, touch, and pen. A vertical drag moves the focus along Z; a horizontal
   drag orbits the scene. Pointer capture is attempted and failures are tolerated.
 
-- **FR-11 (Touch behavior and no overflow).** The stage sets
+### REQ-threemdelement-011
+
+The element SHALL reserve touch gestures for the model and avoid horizontal overflow from 320px through 1440px.
+
+Acceptance Criteria
+
+- The stage sets
   `touch-action: none` so a finger drives the model rather than scrolling the
   page. The element is `max-width: 100%` and `box-sizing: border-box` and MUST
   NOT overflow horizontally at any width from 320px to 1440px.
 
-- **FR-12 (Scrubber, buttons, and keys).** A range input scrubs the Z axis; its
+### REQ-threemdelement-012
+
+The scrubber, step buttons, and arrow keys SHALL synchronously navigate the focused plane within range.
+
+Acceptance Criteria
+
+- A range input scrubs the Z axis; its
   max is the last plane index. Prev and next buttons step the focus by one. Arrow
   keys step too: Right or Up advances, Left or Down retreats. Each of these snaps
   the focus to the target and renders synchronously.
 
-- **FR-13 (Read accessors).** `document` returns the parsed `Document` or `null`
+### REQ-threemdelement-013
+
+The public element API SHALL expose its document, current index, active mode, and clamped `goTo(index)` navigation.
+
+Acceptance Criteria
+
+- `document` returns the parsed `Document` or `null`
   before load. `currentIndex` returns the rounded focus index. `mode` returns the
   active `Mode`. `goTo(index)` focuses a plane by index, clamped to range.
 
-- **FR-14 (planechange event).** When the rounded focus index changes, the
+### REQ-threemdelement-014
+
+A focus-index change SHALL emit one bubbling, composed `planechange` event containing the selected plane details.
+
+Acceptance Criteria
+
+- When the rounded focus index changes, the
   element dispatches a single `planechange` `CustomEvent` whose detail is
   `{ index, z, label, plane }`. The event bubbles and is composed so it crosses
   the shadow boundary. It is not re-emitted while the focused index is unchanged.
 
-- **FR-15 (Plane rendering and Markdown subset).** Each plane renders a tag line
+### REQ-threemdelement-015
+
+Each plane SHALL render its tag and an HTML-escaped body using the documented limited Markdown subset.
+
+Acceptance Criteria
+
+- Each plane renders a tag line
   (its `z` and `label`, or `z <value>` when unlabeled) plus a body rendered with
   a deliberately small Markdown subset: headings, ordered and unordered list
   items, task items, blockquotes, inline code, bold, italic, and a fenced-block
   grid. All text is HTML-escaped before formatting.
 
-- **FR-16 (Shadow DOM, theming, and parts).** The element attaches an open
+### REQ-threemdelement-016
+
+The element SHALL use an open shadow root and expose theming through the documented custom properties and parts.
+
+Acceptance Criteria
+
+- The element attaches an open
   shadow root and isolates its styles there. It is themeable through CSS custom
   properties and exposes internals through `::part`: `wrap`, `axis`, `stage`,
   `arrow`, `scene`, `hint`, `controls`, `prev`, `scrubber`, `next`, `readout`,
@@ -117,22 +213,52 @@ requirement is numbered so tests and reviews can reference it directly.
 
 ### Non-Functional Requirements
 
-- **NFR-1 (Framework agnostic).** As a standard custom element, `<three-md>`
+### REQ-threemdelement-017
+
+`<three-md>` SHALL work unchanged in plain HTML, React, Vue, Svelte, and Angular.
+
+Acceptance Criteria
+
+- As a standard custom element, `<three-md>`
   works unchanged in plain HTML and in React, Vue, Svelte, and Angular. There is
   one tested renderer, not a per-app reimplementation.
 
-- **NFR-2 (Cross-browser tested).** The element is covered in CI by the Playwright
+### REQ-threemdelement-018
+
+CI SHALL exercise the component's invariants and console cleanliness in Chromium and WebKit with Playwright.
+
+Acceptance Criteria
+
+- The element is covered in CI by the Playwright
   suite under `uitests/`, run in both Chromium and WebKit, guarding the three
   invariants and a clean console.
 
-- **NFR-3 (Self-contained bundle).** The published bundle includes the parser, so
+### REQ-threemdelement-019
+
+The published element bundle SHALL include the parser so no separate parser script is required.
+
+Acceptance Criteria
+
+- The published bundle includes the parser, so
   loading the one module is enough; no separate parser script is required.
 
-- **NFR-4 (Style isolation).** All component styles live inside the shadow root
+### REQ-threemdelement-020
+
+Component styles SHALL remain isolated inside the shadow root except for documented theming surfaces.
+
+Acceptance Criteria
+
+- All component styles live inside the shadow root
   so the host page cannot leak in and the component cannot leak out, except
   through the documented custom properties and parts.
 
-- **NFR-5 (Resilience).** The element degrades gracefully: it tolerates absent
+### REQ-threemdelement-021
+
+The element SHALL degrade gracefully when optional browser capabilities or external source loading are unavailable.
+
+Acceptance Criteria
+
+- The element degrades gracefully: it tolerates absent
   pointer capture, a missing `requestAnimationFrame`, fetch failures, and invalid
   source, surfacing problems through the error part rather than throwing.
 

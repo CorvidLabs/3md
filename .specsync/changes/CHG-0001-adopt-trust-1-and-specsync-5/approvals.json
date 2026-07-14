@@ -1,0 +1,89 @@
+{
+  "approvals": [
+    {
+      "gate": "definition",
+      "actor": "user:0xLeif",
+      "timestamp": 1783826959,
+      "digest": "79cfe2c4cd9797c14198de4d7f463d8f8b82125287963141c78c6d3b24157aec",
+      "note": "Authorized by the user-approved CorvidLabs Trust 1 / SpecSync 5 rollout plan."
+    },
+    {
+      "gate": "definition",
+      "actor": "user:0xLeif",
+      "timestamp": 1783971616,
+      "digest": "706e408d448f153b152bddf0b13b85dd7c861f0d58642d32a9a06f30301c9e23",
+      "note": "Definition re-approved after reviewing the migration policy, all agent templates, generated documentation, and repository-specific requirement corrections; native and hosted closing evidence remain pending."
+    },
+    {
+      "gate": "definition",
+      "actor": "user:0xLeif",
+      "timestamp": 1783971650,
+      "digest": "77c9495b355f19a856d03e1a76f247c512f00beb33e011d66e068d839239351f",
+      "note": "Definition re-approved after the complete local verification lane and strict 100% contract passed; hosted pull-request checks and closing acceptance remain pending."
+    },
+    {
+      "gate": "definition",
+      "actor": "user:0xLeif",
+      "timestamp": 1783973991,
+      "digest": "174ccd0189f9b600f8f14088871b133f15bcab0570c991e16373ce5fca69f72b",
+      "note": "Definition refreshed after final review: public documentation names Trust as the complete gate and README, CONTRIBUTING, and docs are governed meaningful paths."
+    },
+    {
+      "gate": "definition",
+      "actor": "user:0xLeif",
+      "timestamp": 1783974811,
+      "digest": "3e3993f3a310d989da0f46bf1d7643e8d7c3cfe201df57371fcb31e1c4b52116",
+      "note": "Definition refreshed after the complete corrected PR head passed Trust, browser UI, and all CodeQL checks."
+    },
+    {
+      "gate": "acceptance",
+      "actor": "user:0xLeif",
+      "timestamp": 1783974846,
+      "digest": "2514197b66c28890a33152e1f34edae858598990a6c2fcd0171df22d1715711c",
+      "note": "Accepted after native Swift, TypeScript, Rust, generated-bundle, and editor verification plus successful hosted Trust, browser UI, and CodeQL checks on the corrected PR head."
+    },
+    {
+      "gate": "acceptance",
+      "actor": "user:0xLeif",
+      "timestamp": 1784013064,
+      "digest": "fb0b6266d5085ac27eda5e6341cb6e6c69dedba28d6bbcf227334ccf87408200",
+      "note": "Fresh closing approval after final governance corrections and full seven-step native verification; hosted checks are not claimed yet."
+    }
+  ],
+  "reopenings": [
+    {
+      "schema_version": 1,
+      "change_id": "CHG-0001-adopt-trust-1-and-specsync-5",
+      "actor": "user:0xLeif",
+      "reason": "Authorized final governance review corrections changed delivery inputs after acceptance; refresh unchanged migration evidence with the full native lane.",
+      "timestamp": 1784012981,
+      "from_state": "accepted",
+      "to_state": "verifying",
+      "superseded_approval": {
+        "gate": "acceptance",
+        "actor": "user:0xLeif",
+        "timestamp": 1783974846,
+        "digest": "2514197b66c28890a33152e1f34edae858598990a6c2fcd0171df22d1715711c",
+        "note": "Accepted after native Swift, TypeScript, Rust, generated-bundle, and editor verification plus successful hosted Trust, browser UI, and CodeQL checks on the corrected PR head."
+      },
+      "prior_verification": {
+        "timestamp": 1783974833,
+        "commit": "6148c1f853c5f50269a84d005a4d474ce384b9f2",
+        "contract_digest": "3e3993f3a310d989da0f46bf1d7643e8d7c3cfe201df57371fcb31e1c4b52116",
+        "workspace_digest": "0b62c7bf6e4900e50e9406a10f9d176018528ed72e5fc53aaba17d7f9594fdb6",
+        "acceptance_input_digest": "cfc943b5b376e22b72c0c900d66b9f2b57c945e8e70a215a880fbf4cf0dbca34",
+        "passed": true,
+        "commands": [
+          {
+            "command": "fledge lanes run verify",
+            "success": true,
+            "exit_code": 0
+          }
+        ],
+        "requirement_ids": []
+      },
+      "stale_acceptance_input_digest": "cfc943b5b376e22b72c0c900d66b9f2b57c945e8e70a215a880fbf4cf0dbca34",
+      "current_acceptance_input_digest": "a6793c577723410186164e0e0d9a4e91892380830069ed60dfb3278c211e8740"
+    }
+  ]
+}

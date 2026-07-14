@@ -21,6 +21,7 @@ regenerate with `node scripts/build-docs-3md.mjs`.
 # 3md
 
 [![CI](https://github.com/CorvidLabs/3md/actions/workflows/trust.yml/badge.svg)](https://github.com/CorvidLabs/3md/actions/workflows/trust.yml)
+[![spec coverage](https://img.shields.io/endpoint?url=https%3A%2F%2Fcorvidlabs.github.io%2F3md%2Fbadges%2Fcoverage.json)](https://corvidlabs.github.io/3md/)
 [![Release](https://img.shields.io/github/v/release/CorvidLabs/3md?sort=semver)](https://github.com/CorvidLabs/3md/releases)
 [![License: MIT](https://img.shields.io/github/license/CorvidLabs/3md)](LICENSE)
 [![Live demo](https://img.shields.io/badge/demo-live-0E6F66)](https://corvidlabs.github.io/3md/)
@@ -208,17 +209,19 @@ agreed) and for people (plain, readable, diffable text).
 
 ## Development
 
-This repo uses the CorvidLabs trust toolchain. The single gate is:
+This repo uses the CorvidLabs trust toolchain. Run the complete repository gate
+before calling a change done:
 
 ```bash
-fledge lanes run verify
+fledge trust verify
 ```
 
-which runs the Swift format check, build, and tests plus the Rust crate. See
+Trust validates the SpecSync contract, risk policy, and provenance posture, and
+composes the native `fledge lanes run verify` lane. That native lane runs the
+Swift format check, build, and tests plus the Rust crate, TypeScript parser
+parity, generated web-component bundle drift, and VS Code grammar tests. See
 [AGENTS.md](AGENTS.md) for the standing rules every contributor and agent follows.
-The same gate also checks TypeScript parser parity, generated web-component
-bundle drift, VS Code grammar tests, and spec-sync. Browser UI tests are exposed
-separately with `fledge lanes run ui`.
+Browser UI tests are exposed separately with `fledge lanes run ui`.
 
 Each implementation has its own tests (the Swift suite has 122 tests, the
 TypeScript suite 76), and all three implementations run the shared 43-vector
@@ -228,7 +231,7 @@ cross-implementation contract that keeps the parsers behaving identically.
 ## Status
 
 The format and spec are at version 1.0 (stable, frozen grammar). The latest
-release is v1.0.0. Older `3md: 0.1` documents remain valid: the parser is
+release is v1.8.1 (see the release badge above). Older `3md: 0.1` documents remain valid: the parser is
 version-lenient and never rejects a document by its version string.
 
 ## License
@@ -693,14 +696,16 @@ conformance vector.**
 
 ## The gate
 
-One command runs everything (Swift format check, build, tests, and the Rust
-crate):
+Run the complete repository gate before calling any change done:
 
 ```bash
-fledge lanes run verify
+fledge trust verify
 ```
 
-Run it before calling any change done. Per language:
+Trust validates the SpecSync contract, risk policy, and provenance posture, and
+composes the native `fledge lanes run verify` lane. The native lane runs the
+Swift format check, build, tests, TypeScript parity, Rust crate, generated
+bundle drift, and editor checks. Per language:
 
 ```bash
 swift test                                   # Swift
@@ -802,16 +807,16 @@ descriptive generic names, 4-space indentation, 120-column lines. The formatter
 config in `.swift-format` enforces the mechanical parts.
 
 <!-- CorvidLabs trust toolchain: BEGIN (managed, do not edit inside) -->
-## CorvidLabs trust toolchain (standing rules)
+## CorvidLabs trust toolchain
 
-This repo is governed by four CLIs. Every session MUST use them; never bypass or weaken them.
+This repository uses one trust gate. Every session must use it and must not bypass or weaken it.
 
-- fledge: run `fledge lanes run verify` before calling any change done. It must pass.
-- spec-sync: when you change a module with a *.spec.md, update the spec, then `fledge spec check`. (skipped: <reason>, if content-only)
-- augur: `augur check --staged` before a commit; `augur check --range origin/main..HEAD` before merge. A block verdict is a hard stop, never auto-overridden.
-- attest: after a green lane, `attest sign --commit HEAD --reviewer agent:<id> --from-augur augur.json --tests-passed`.
+- Run `fledge trust verify` before calling a change complete.
+- Keep module specs synchronized with implementation changes.
+- Treat an Augur block verdict as a hard stop that must be surfaced and de-risked.
+- Record and verify provenance with Attest after the repository's verification lane passes.
+- Keep generated trust configuration and this managed block in place.
 
-CI enforces the same gate (.github/workflows/trust.yml) and fails if this block is missing. Brand rule: no em-dash characters in anything you write.
 <!-- CorvidLabs trust toolchain: END -->
 
 @plane z=7 label="PROOF" file="docs/PROOF.md"
