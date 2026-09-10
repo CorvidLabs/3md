@@ -31,18 +31,16 @@ jobs:
         with:
           bun-version: latest
 
-      # Strict SpecSync contract uses the same 6.0.0-rc.12 binary Trust rc.4
-      # defaults to. 5.0.1 check still walks SDD (stale accepted CHG-0001/0003
-      # on trust.yml; CHG-0002 verification commit squashed) and runs
-      # `fledge lanes run verify` as a verification command. 6.x check is
-      # spec validation + coverage only; Trust owns lifecycle verify.
+      # Strict SpecSync contract uses the same 6.0.0 binary Trust 1.2.0
+      # defaults to. 6.x check is spec validation plus coverage only;
+      # Trust owns lifecycle verify.
       - name: Install pinned lifecycle tools
         shell: bash
         run: |
           set -euo pipefail
           archive="$RUNNER_TEMP/specsync-macos-aarch64.tar.gz"
           checksum="$archive.sha256"
-          base="https://github.com/CorvidLabs/spec-sync/releases/download/v6.0.0-rc.12"
+          base="https://github.com/CorvidLabs/spec-sync/releases/download/v6.0.0"
           curl -fsSL "$base/specsync-macos-aarch64.tar.gz" -o "$archive"
           curl -fsSL "$base/specsync-macos-aarch64.tar.gz.sha256" -o "$checksum"
           expected="$(awk '{print $1}' "$checksum")"
@@ -70,7 +68,7 @@ jobs:
       # Unified lifecycle, contract, risk, and progressive provenance gate.
       - name: CorvidLabs Trust gate
         id: trust
-        uses: CorvidLabs/trust@e0272543ad5c88ec75cea1e606cc2efa552af25b # v1.2.0-rc.4
+        uses: CorvidLabs/trust@fcc889f54d8b4892a81af463c5a0250e2be66fc5 # v1.2.0
 
       # Durability: fail if the standing rules block was removed.
       - name: Trust block present
