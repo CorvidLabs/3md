@@ -1,4 +1,4 @@
-# spec-sync v5 configuration
+# SpecSync 6.0.0 configuration
 # Docs: https://github.com/CorvidLabs/spec-sync
 
 specs_dir = "specs"
@@ -10,3 +10,6 @@ enforcement = "strict"
 
 [lifecycle]
 track_history = false
+
+[modules."ThreeMD"]
+owns = ["Tests/ThreeMDTests/", "Examples/", "SPEC.md", "README.md", "AGENTS.md", ".specsync/", "specs/ThreeMD/", ".github/workflows/trust.yml", ".trust.toml"]
