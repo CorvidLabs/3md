@@ -25,3 +25,7 @@ The earlier paragraph records the initial definition-time plan. The focused
 result above is later actual evidence, not a claim that the full repository
 lane or closing lifecycle gates have already passed. Peer agents are not human
 or Claude signer provenance; a SpecSync claim alone is not authenticated identity.
+
+## Actual merge-request follow-up
+
+The later source review found quadratic decimal rejection through the new storage entry point. ParserNumericTests and DocumentStorageDecimalTests now cover preserved finite decimal grammar on all three coordinates, malformed tokens, readable and checksummed-binary rejection within a coarse resource bound, and deterministic cancellation after preflight. All four focused tests pass. The repaired full native lane passes 180 Swift XCTest tests, 79 JavaScript tests and the existing Rust, bundle and editor checks; direct Trust 1.2.2 passes the unchanged progressive provenance gate. Signed Attest remains unsatisfied and no signer authority is invented. Root retains actual logs in the evidence directory and records the later scoped check/review/finalization separately.

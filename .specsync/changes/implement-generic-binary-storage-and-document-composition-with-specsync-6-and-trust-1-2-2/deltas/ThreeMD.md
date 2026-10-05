@@ -10,13 +10,20 @@ Acceptance Criteria
 - Apple LZFSE round-trips where available and fails explicitly where unsupported.
 - The new binary marker is disjoint from Rook's existing voxel-specific 3MDB marker.
 
+## MODIFIED
+
 ### REQUIREMENT REQ-ThreeMD-022
 Storage SHALL validate finite unique positions, serializable values, declared allocation limits, exact lengths, CRC32 integrity, full compression stream consumption and cooperative cancellation without partial output.
 
 Acceptance Criteria
 - Fixed header and CRC vectors are independently inspected.
 - Corrupt, truncated, trailing, concatenated, oversized, unsupported and cancelled inputs fail predictably.
+- Malformed decimal tokens within the byte limits are rejected with linear
+  lexical work. Cancellation detected after a failing text parse takes priority
+  over conversion of its `ParseError` to a storage validation failure.
 - Existing text-parser conformance vectors remain unchanged.
+
+## ADDED
 
 ### REQUIREMENT REQ-ThreeMD-023
 Composition SHALL store a root and unique named Document definitions with explicit in-memory references and validate every node, including unused definitions, for safe IDs, target existence, cycles, bounded depth, unique bytes, references and traversal occurrences.

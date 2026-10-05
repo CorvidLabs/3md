@@ -29,4 +29,12 @@ The new workflow-v2 scope has Leif's direct approval recorded by actual delegate
 
 CHG-0002 remains verifying: its original committed state contains verification.json but no verification-attempts.json. After the audited reopen, SpecSync 6 refuses a new attempt with `verification attempt history is missing`. The supported `migrate 5.0 --dry-run` reports all records unchanged and supplies no recovery. No history, state or approval was manually fabricated to bypass this guard.
 
-The pull request is a draft while closing SDD and permitted signed provenance remain open. A green implementation lane or progressive Trust gate does not imply those gates are complete. No merge, release or deployment is claimed.
+That earlier branch was published as a draft while closing SDD and permitted signed provenance remained open. Its original failed recovery evidence is preserved. A green implementation lane or progressive Trust gate does not imply a permitted signature.
+
+## Merge-request follow-up
+
+Leif subsequently instructed "merge al the prs". PR59 legitimately archived the main branch's historical changes and merged as `8b09724fc390236f52c873761247166048aef67e`. This branch integrates those archives unchanged; its separate prior reopenings, attempts and missing-ledger failure are retained under `pre-main-archive-integration/`. The legacy engine failure has not been rewritten into a passing attempt.
+
+The source review found quadratic decimal rejection through the new storage decoder. A linear ASCII scanner now preserves the existing sign/fraction/exponent grammar. Cancellation after a failing parse takes priority over storage error conversion. Four focused regressions pass; an isolated optimized probe rejects both readable and correct-CRC binary 4,096-digit failures in about 0.0009 seconds instead of 4.26 seconds.
+
+The repaired native seven-step lane passes all 180 Swift XCTest tests, 79 JavaScript tests, Rust conformance/docs, generated bundle drift and editor grammar. The retained follow-up Trust log records risk 32 and a passing existing progressive provenance gate. Strict signed Attest remains unsatisfied; no key, permitted reviewer or policy was changed. The actual scoped agent review and workflow-v2 finalization are still pending at this checkpoint. No release or deployment is authorized.

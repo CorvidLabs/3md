@@ -85,6 +85,49 @@
       "approved_delta_digests": {
         "ThreeMD": "7c9d6bd9717854e2f91e59433a7a377c6fcf2eba2aec0ed63c6e1b3f9a0fd63b"
       }
+    },
+    {
+      "gate": "definition",
+      "actor": "agent:codex-root",
+      "timestamp": 1791166295,
+      "digest": "4f548002617f0a693751cc4bf565d90ac34e11444d7f742481d4e114cfa73b58",
+      "note": "Leif directly authorized this scope and now instructed merging all related PRs. Refresh the definition for the bounded review repair: linear decimal rejection and cancellation precedence, with truthful later verification evidence. Existing grammar/features/policies are unchanged; this delegated agent claim is not human diff review or signer evidence.",
+      "approved_scope": {
+        "schema_version": 1,
+        "change_id": "implement-generic-binary-storage-and-document-composition-with-specsync-6-and-trust-1-2-2",
+        "title": "Implement generic binary storage and document composition with SpecSync 6 and Trust 1.2.2",
+        "description": "Implement generic binary storage and document composition with SpecSync 6 and Trust 1.2.2",
+        "kind": "feature",
+        "affected_specs": [
+          "ThreeMD"
+        ],
+        "affected_paths": [
+          ".github/workflows/trust.yml",
+          ".specsync/",
+          ".trust.toml",
+          "AGENTS.md",
+          "Examples/",
+          "README.md",
+          "SPEC.md",
+          "Sources/ThreeMD/",
+          "Tests/ThreeMDTests/",
+          "specs/"
+        ],
+        "no_spec_change": false,
+        "no_spec_change_rationale": null,
+        "acceptance_criteria": [
+          "General ThreeMD documents round-trip through bounded portable uncompressed binary and optional Apple LZFSE envelopes; named document composition stores shared definitions once and validates references without I/O; malformed, oversized, cyclic, cancelled or corrupt input fails without partial success; existing text conformance and Rook legacy format discrimination remain intact; strict SpecSync 6 workflow-v2 SDD and the immutable Trust 1.2.2 gate pass the existing native cross-language lane without weakening risk or provenance policies."
+        ],
+        "dependencies": [],
+        "supersedes": [],
+        "answers": {
+          "architecture_risk": "yes",
+          "public_contract": "yes"
+        }
+      },
+      "approved_delta_digests": {
+        "ThreeMD": "d8da082cf156d0e7e57bd67ccd82492cd794c7bcc07e94517777d1c5af8f6042"
+      }
     }
   ],
   "reopenings": []
