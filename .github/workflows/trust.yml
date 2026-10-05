@@ -1,5 +1,9 @@
 name: trust
 
+# Checkout, public release downloads, and local gates.
+permissions:
+  contents: read
+
 on:
   # Public documentation is governed by SpecSync, so those changes run Trust.
   pull_request:
