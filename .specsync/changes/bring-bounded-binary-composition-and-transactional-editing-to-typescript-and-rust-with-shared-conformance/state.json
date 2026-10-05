@@ -7,10 +7,11 @@
   "title": "Bring bounded binary composition and transactional editing to TypeScript and Rust with shared conformance",
   "description": "Bring bounded binary composition and transactional editing to TypeScript and Rust with shared conformance",
   "kind": "feature",
-  "state": "approved",
+  "state": "verifying",
+  "canonical_applied": true,
   "base_commit": "2dc2bd4cfb387bd3365b65b259c912b79bb0f962",
   "created_at": 1791208861,
-  "updated_at": 1791211227,
+  "updated_at": 1791212461,
   "affected_specs": [
     "ThreeMD"
   ],
