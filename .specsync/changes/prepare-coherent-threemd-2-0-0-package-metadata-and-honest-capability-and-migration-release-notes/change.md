@@ -1,6 +1,6 @@
 ---
 id: prepare-coherent-threemd-2-0-0-package-metadata-and-honest-capability-and-migration-release-notes
-state: approved
+state: implementing
 type: documentation
 base_commit: 9dfbdb649891a95f27e7590e9e6ddc72b9e58d08
 ---

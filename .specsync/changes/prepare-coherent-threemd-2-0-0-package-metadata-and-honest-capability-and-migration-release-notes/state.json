@@ -7,10 +7,11 @@
   "title": "Prepare coherent ThreeMD 2.0.0 package metadata and honest capability and migration release notes",
   "description": "Prepare coherent ThreeMD 2.0.0 package metadata and honest capability and migration release notes",
   "kind": "documentation",
-  "state": "approved",
+  "state": "verifying",
+  "canonical_applied": true,
   "base_commit": "9dfbdb649891a95f27e7590e9e6ddc72b9e58d08",
   "created_at": 1791220529,
-  "updated_at": 1791221264,
+  "updated_at": 1791221614,
   "affected_specs": [
     "ThreeMD",
     "ThreeMDElement"
