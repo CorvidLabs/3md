@@ -94,12 +94,13 @@ public struct Parser: Sendable {
                 lines = index + 1 < lines.endIndex ? Array(lines[(index + 1)...]) : []
                 return Frontmatter(fields: fields, bodyStartLine: index + 2)
             }
-            if !trimmed.isEmpty, !trimmed.hasPrefix("#") {
-                guard let separator = trimmed.firstIndex(of: ":") else {
+            if !trimmed.isEmpty, trimmed.utf8.first != 35 {
+                guard let separator = trimmed.unicodeScalars.firstIndex(of: ":") else {
                     throw ParseError.invalidFrontmatter("expected 'key: value', found '\(trimmed)'")
                 }
                 let key = String(trimmed[..<separator]).trimmingCharacters(in: .whitespaces)
-                let raw = String(trimmed[trimmed.index(after: separator)...]).trimmingCharacters(in: .whitespaces)
+                let raw = String(trimmed[trimmed.unicodeScalars.index(after: separator)...])
+                    .trimmingCharacters(in: .whitespaces)
                 fields.append((key: key, value: unquote(raw)))
             }
             index += 1
@@ -154,10 +155,10 @@ public struct Parser: Sendable {
             // block) is treated as body text, not a new plane.
             var isDirective = false
             if let open = fence {
-                if trimmed.hasPrefix(String(repeating: open, count: 3)) { fence = nil }
+                if trimmed.utf8.starts(with: String(repeating: open, count: 3).utf8) { fence = nil }
             } else if let opened = fenceCharacter(of: trimmed) {
                 fence = opened
-            } else if raw.first != " ", raw.first != "\t", firstToken(of: raw) == "@plane" {
+            } else if raw.utf8.first != 32, raw.utf8.first != 9, firstToken(of: raw) == "@plane" {
                 isDirective = true
             }
 
@@ -237,11 +238,13 @@ public struct Parser: Sendable {
     private func parseDirective(_ trimmed: String, line: Int) throws -> [String: String] {
         let remainder = String(trimmed.dropFirst("@plane".count)).trimmingCharacters(in: .whitespaces)
         return try tokenize(remainder, line: line).reduce(into: [:]) { result, token in
-            guard let separator = token.firstIndex(of: "=") else {
+            guard let separator = token.unicodeScalars.firstIndex(of: "=") else {
                 throw ParseError.invalidPlaneDirective(line: line, detail: "expected key=value, found '\(token)'")
             }
             let key = String(token[..<separator]).trimmingCharacters(in: .whitespaces).lowercased()
-            let value = unquote(String(token[token.index(after: separator)...]).trimmingCharacters(in: .whitespaces))
+            let value = unquote(
+                String(token[token.unicodeScalars.index(after: separator)...]).trimmingCharacters(in: .whitespaces)
+            )
             guard !key.isEmpty else {
                 throw ParseError.invalidPlaneDirective(line: line, detail: "empty attribute key in '\(token)'")
             }
@@ -252,7 +255,7 @@ public struct Parser: Sendable {
     // MARK: - Lexing Helpers
 
     private func firstToken(of line: String) -> String {
-        line.split(whereSeparator: { $0 == " " || $0 == "\t" }).first.map(String.init) ?? ""
+        line.unicodeScalars.split(whereSeparator: { $0 == " " || $0 == "\t" }).first.map(String.init) ?? ""
     }
 
     /// Splits a directive remainder into tokens, keeping quoted spans intact.
@@ -261,12 +264,12 @@ public struct Parser: Sendable {
     private func tokenize(_ input: String, line: Int) throws -> [String] {
         var tokens: [String] = []
         var current = ""
-        var activeQuote: Character?
+        var activeQuote: Unicode.Scalar?
         var escaped = false
 
-        for character in input {
+        for character in input.unicodeScalars {
             if let quote = activeQuote {
-                current.append(character)
+                current.unicodeScalars.append(character)
                 if escaped {
                     escaped = false
                 } else if character == "\\" {
@@ -276,14 +279,14 @@ public struct Parser: Sendable {
                 }
             } else if character == "\"" || character == "'" {
                 activeQuote = character
-                current.append(character)
+                current.unicodeScalars.append(character)
             } else if character == " " || character == "\t" {
                 if !current.isEmpty {
                     tokens.append(current)
                     current = ""
                 }
             } else {
-                current.append(character)
+                current.unicodeScalars.append(character)
             }
         }
         guard activeQuote == nil else {
@@ -294,9 +297,9 @@ public struct Parser: Sendable {
     }
 
     private func unquote(_ value: String) -> String {
-        guard value.count >= 2, let first = value.first, let last = value.last else { return value }
-        guard (first == "\"" && last == "\"") || (first == "'" && last == "'") else { return value }
-        return unescape(String(value.dropFirst().dropLast()))
+        guard value.utf8.count >= 2, let first = value.utf8.first, let last = value.utf8.last else { return value }
+        guard (first == 34 && last == 34) || (first == 39 && last == 39) else { return value }
+        return unescape(String(decoding: value.utf8.dropFirst().dropLast(), as: UTF8.self))
     }
 
     /// Reverses the serializer's backslash escaping, so `\\` becomes `\` and
@@ -305,14 +308,14 @@ public struct Parser: Sendable {
     private func unescape(_ value: String) -> String {
         var result = ""
         var escaping = false
-        for character in value {
+        for character in value.unicodeScalars {
             if escaping {
-                result.append(character)
+                result.unicodeScalars.append(character)
                 escaping = false
             } else if character == "\\" {
                 escaping = true
             } else {
-                result.append(character)
+                result.unicodeScalars.append(character)
             }
         }
         if escaping { result.append("\\") }
@@ -330,8 +333,8 @@ public struct Parser: Sendable {
     /// Returns the fence character if a trimmed line opens a fenced code block
     /// (three or more backticks or tildes), otherwise `nil`.
     private func fenceCharacter(of trimmed: String) -> Character? {
-        if trimmed.hasPrefix("```") { return "`" }
-        if trimmed.hasPrefix("~~~") { return "~" }
+        if trimmed.utf8.starts(with: "```".utf8) { return "`" }
+        if trimmed.utf8.starts(with: "~~~".utf8) { return "~" }
         return nil
     }
 

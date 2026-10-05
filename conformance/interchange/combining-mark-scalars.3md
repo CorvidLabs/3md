@@ -1,0 +1,13 @@
+---
+3md: "'́version'"
+axis: "'́custom'"
+title: "'́value'"
+double: "\"́value\""
+escape: "\\́value\\"
+leading: "́value"
+single: "'́value'"
+space: "a ́b"
+---
+
+@plane z=0 label="́label has spaces" literal="'́'" mark="́value" slash="\\́" symbol="\"́"
+# Literal combining marks

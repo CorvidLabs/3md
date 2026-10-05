@@ -1,5 +1,12 @@
+import Dispatch
 import Foundation
 import ThreeMD
+
+#if canImport(Darwin)
+import Darwin
+#elseif canImport(Glibc)
+import Glibc
+#endif
 
 private struct Catalog: Decodable {
     let schema: String
@@ -75,6 +82,11 @@ private final class InterchangeCoordinator {
                 arguments: []
             ),
         ]
+        try checkExactJSONRegression()
+        try await checkAdapterBounds(adapters[0])
+        #if canImport(Darwin) || canImport(Glibc)
+        try await checkWatchdog(executable)
+        #endif
         var producers: [[InterchangeResponse]] = []
         for adapter in adapters {
             let replies = try await exchange(cases.map(\.request), with: adapter, phase: "produce")
@@ -348,7 +360,8 @@ private final class InterchangeCoordinator {
         guard actual.staleRejected == true else { throw InterchangeFailure.invalid("\(label): stale patch accepted") }
     }
 
-    private func exchange(_ requests: [InterchangeRequest], with adapter: Adapter, phase: String) async throws
+    private func exchange(_ requests: [InterchangeRequest], with adapter: Adapter, phase: String, rawInput: Data? = nil)
+        async throws
         -> [InterchangeResponse]
     {
         let stem = temporary.appendingPathComponent("\(adapter.name)-\(phase)")
@@ -358,6 +371,7 @@ private final class InterchangeCoordinator {
             guard line.count <= 32 * 1024 * 1024 else { throw InterchangeFailure.invalid("Protocol request too large") }
             input.append(line); input.append(10)
         }
+        if let rawInput { input = rawInput }
         guard input.count <= maximumTranscriptBytes else {
             throw InterchangeFailure.invalid("Input transcript too large")
         }
@@ -376,30 +390,157 @@ private final class InterchangeCoordinator {
         process.currentDirectoryURL = root
         process.standardInput = inputHandle; process.standardOutput = outputHandle; process.standardError = errorHandle
         try process.run()
-        let deadline = Date().addingTimeInterval(120)
-        while process.isRunning {
-            if Date() >= deadline { process.terminate(); throw InterchangeFailure.invalid("\(adapter.name) timeout") }
-            let attributes = try FileManager.default.attributesOfItem(atPath: outputURL.path)
-            if let size = attributes[.size] as? NSNumber, size.intValue > maximumTranscriptBytes {
-                process.terminate(); throw InterchangeFailure.invalid("\(adapter.name) oversized output")
+        do {
+            let started = DispatchTime.now().uptimeNanoseconds
+            while process.isRunning {
+                guard DispatchTime.now().uptimeNanoseconds - started < 120_000_000_000 else {
+                    throw InterchangeFailure.invalid("\(adapter.name) timeout")
+                }
+                try transcriptBudget(outputURL, maximum: maximumTranscriptBytes)
+                try transcriptBudget(errorURL, maximum: 2 * 1024 * 1024)
+                try await Task.sleep(nanoseconds: 50_000_000)
             }
-            try await Task.sleep(nanoseconds: 50_000_000)
+        } catch {
+            try await stop(process)
+            throw error
         }
+        try transcriptBudget(outputURL, maximum: maximumTranscriptBytes)
+        try transcriptBudget(errorURL, maximum: 2 * 1024 * 1024)
         guard process.terminationStatus == 0 else {
-            let detail = try String(contentsOf: errorURL, encoding: .utf8)
-            throw InterchangeFailure.invalid("\(adapter.name) failed: \(detail.prefix(2000))")
+            let detailHandle = try FileHandle(forReadingFrom: errorURL)
+            defer { detailHandle.closeFile() }
+            let detail = String(decoding: detailHandle.readData(ofLength: 2000), as: UTF8.self)
+            throw InterchangeFailure.invalid("\(adapter.name) failed: \(detail)")
         }
         let output = try Data(contentsOf: outputURL)
         guard output.count <= maximumTranscriptBytes, output.last == 10 else {
             throw InterchangeFailure.invalid("\(adapter.name) incomplete/oversized transcript")
         }
-        let lines = output.split(separator: 10)
+        let lines = output.split(separator: 10, omittingEmptySubsequences: false).dropLast()
         guard lines.count == requests.count else {
             throw InterchangeFailure.invalid(
                 "\(adapter.name) silently skipped requests: \(lines.count)/\(requests.count)"
             )
         }
-        return try lines.map { try decoder.decode(InterchangeResponse.self, from: Data($0)) }
+        return try lines.map {
+            let data = Data($0)
+            try validateInterchangeJSON(data)
+            return try decoder.decode(InterchangeResponse.self, from: data)
+        }
+    }
+
+    private func transcriptBudget(_ url: URL, maximum: Int) throws {
+        let attributes = try FileManager.default.attributesOfItem(atPath: url.path)
+        guard let size = attributes[.size] as? NSNumber, size.intValue <= maximum else {
+            throw InterchangeFailure.invalid("Transcript exceeded budget: \(url.lastPathComponent)")
+        }
+    }
+
+    private func stop(_ process: Process) async throws {
+        guard process.isRunning else { return }
+        process.terminate()
+        let started = DispatchTime.now().uptimeNanoseconds
+        while process.isRunning, !Task.isCancelled, DispatchTime.now().uptimeNanoseconds - started < 250_000_000 {
+            try? await Task.sleep(nanoseconds: 10_000_000)
+        }
+        if process.isRunning {
+            #if canImport(Darwin) || canImport(Glibc)
+            _ = kill(process.processIdentifier, SIGKILL)
+            #else
+            throw InterchangeFailure.invalid("Development watchdog hard stop unavailable on this platform")
+            #endif
+        }
+        let killed = DispatchTime.now().uptimeNanoseconds
+        while process.isRunning, DispatchTime.now().uptimeNanoseconds - killed < 1_000_000_000 {
+            // Cancellation must not interrupt reaping the child it just stopped.
+            await Task.detached { try? await Task.sleep(nanoseconds: 10_000_000) }.value
+        }
+        guard !process.isRunning else {
+            throw InterchangeFailure.invalid("Development child failed to exit after kill")
+        }
+        process.waitUntilExit()
+    }
+
+    private func checkExactJSONRegression() throws {
+        try validateInterchangeJSON(Data("{\"metadata\":{\"e\\u0301\":\"last\"}}".utf8))
+        for source in ["{\"metadata\":{\"e\\u0301\":\"last\",\"é\":\"last\"}}", "{\"ok\":true,\"ok\":true}"] {
+            do {
+                try validateInterchangeJSON(Data(source.utf8))
+            } catch { continue }
+            throw InterchangeFailure.invalid("Exact semantic-key regression was not rejected")
+        }
+    }
+
+    private func checkAdapterBounds(_ adapter: Adapter) async throws {
+        let source = "---\n3md: 1.1\n---\n@plane z=0\n" + String(repeating: "x", count: 3 * 1024 * 1024) + "\n"
+        let replies = try await exchange(
+            [
+                .init(kind: "document", bytesHex: "zz"),
+                .init(kind: "document", bytesHex: Data(source.utf8).hex),
+                .init(kind: "document", bytesHex: Data("---\n3md: 1.1\n---\n".utf8).hex),
+            ],
+            with: adapter,
+            phase: "bounds"
+        )
+        guard replies.count == 3, replies[0].error == "adapterFailure", replies[1].error == "adapterFailure",
+            replies[2].ok
+        else {
+            throw InterchangeFailure.invalid("Swift protocol bounds/recovery regression")
+        }
+        let valid = InterchangeRequest(kind: "document", bytesHex: Data("---\n3md: 1.1\n---\n".utf8).hex)
+        var input = Data("{bad json}\n".utf8)
+        input.append(Data(repeating: 120, count: 32 * 1024 * 1024 + 1)); input.append(10)
+        input.append(try encoder.encode(valid)); input.append(10)
+        let inputReplies = try await exchange(
+            [valid, valid, valid],
+            with: adapter,
+            phase: "input-bounds",
+            rawInput: input
+        )
+        guard inputReplies[0].error == "adapterFailure", inputReplies[1].error == "adapterFailure", inputReplies[2].ok
+        else {
+            throw InterchangeFailure.invalid("Swift oversized/malformed request recovery regression")
+        }
+    }
+
+    private func checkWatchdog(_ executable: String) async throws {
+        let readyURL = temporary.appendingPathComponent("watchdog-ready.txt")
+        try Data().write(to: readyURL)
+        let ready = try FileHandle(forWritingTo: readyURL)
+        defer { ready.closeFile() }
+        let process = Process()
+        process.executableURL = URL(fileURLWithPath: executable)
+        process.arguments = ["--watchdog-probe"]
+        process.standardOutput = ready
+        try process.run()
+        do {
+            let started = DispatchTime.now().uptimeNanoseconds
+            while try Data(contentsOf: readyURL).isEmpty {
+                guard process.isRunning, DispatchTime.now().uptimeNanoseconds - started < 5_000_000_000 else {
+                    throw InterchangeFailure.invalid("Watchdog probe failed to become ready")
+                }
+                try await Task.sleep(nanoseconds: 10_000_000)
+            }
+            try await stop(process)
+            guard !process.isRunning else {
+                throw InterchangeFailure.invalid("Watchdog failed to reap TERM-resistant child")
+            }
+        } catch {
+            try await stop(process)
+            throw error
+        }
+        let adapter = Adapter(
+            name: "watchdog-stderr",
+            executable: executable,
+            arguments: ["--watchdog-probe", "--stderr-overflow"]
+        )
+        do {
+            _ = try await exchange([.init(kind: "document", bytesHex: "")], with: adapter, phase: "stderr-bounds")
+        } catch let failure as InterchangeFailure {
+            guard failure.description.contains("Transcript exceeded budget") else { throw failure }
+            return
+        }
+        throw InterchangeFailure.invalid("Watchdog failed to limit stderr")
     }
 
     private func read<Value: Decodable>(_ path: String) throws -> Value {
@@ -416,22 +557,63 @@ private final class InterchangeCoordinator {
     }
 }
 
-do {
-    if CommandLine.arguments.contains("--adapter") {
-        let decoder = JSONDecoder()
-        let encoder = JSONEncoder()
-        encoder.outputFormatting = [.sortedKeys]
-        while let line = readLine() {
-            guard line.utf8.count <= 32 * 1024 * 1024 else {
-                throw InterchangeFailure.invalid("Adapter input too large")
-            }
-            let request = try decoder.decode(InterchangeRequest.self, from: Data(line.utf8))
-            guard request.schema == "3md-interchange-1" else {
-                throw InterchangeFailure.invalid("Unknown protocol schema")
-            }
-            let response = try swiftInterchange(request)
-            print(String(decoding: try encoder.encode(response), as: UTF8.self))
+private func runSwiftAdapter() {
+    let maximum = 32 * 1024 * 1024
+    var line = Data()
+    var oversized = false
+    let decoder = JSONDecoder()
+    let encoder = JSONEncoder()
+    encoder.outputFormatting = [.sortedKeys]
+    func emit(_ input: Data?) {
+        var output = Data("{\"ok\":false,\"error\":\"adapterFailure\"}".utf8)
+        if let input {
+            do {
+                try validateInterchangeJSON(input)
+                let request = try decoder.decode(InterchangeRequest.self, from: input)
+                guard request.schema == "3md-interchange-1" else { throw InterchangeFailure.invalid("Unknown schema") }
+                let candidate = try encoder.encode(swiftInterchange(request))
+                if candidate.count <= maximum { output = candidate }
+            } catch { /* The bounded failure record preserves the next request. */  }
         }
+        output.append(10)
+        FileHandle.standardOutput.write(output)
+    }
+    while true {
+        let chunk = FileHandle.standardInput.readData(ofLength: 8192)
+        if chunk.isEmpty { break }
+        let fragments = chunk.split(separator: 10, omittingEmptySubsequences: false)
+        for (index, fragment) in fragments.enumerated() {
+            if !oversized {
+                if fragment.count > maximum - line.count {
+                    oversized = true; line.removeAll(keepingCapacity: false)
+                } else {
+                    line.append(contentsOf: fragment)
+                }
+            }
+            if index < fragments.count - 1 {
+                emit(oversized ? nil : line)
+                line.removeAll(keepingCapacity: true); oversized = false
+            }
+        }
+    }
+    if oversized || !line.isEmpty { emit(oversized ? nil : line) }
+}
+
+do {
+    if CommandLine.arguments.contains("--watchdog-probe") {
+        #if canImport(Darwin) || canImport(Glibc)
+        guard #available(macOS 10.15, *) else { throw InterchangeFailure.invalid("Watchdog probe runtime unavailable") }
+        signal(SIGTERM, SIG_IGN)
+        FileHandle.standardOutput.write(Data("ready\n".utf8))
+        if CommandLine.arguments.contains("--stderr-overflow") {
+            FileHandle.standardError.write(Data(repeating: 120, count: 2 * 1024 * 1024 + 1))
+        }
+        while true { try await Task.sleep(nanoseconds: 100_000_000) }
+        #else
+        throw InterchangeFailure.invalid("Watchdog probe unsupported")
+        #endif
+    } else if CommandLine.arguments.contains("--adapter") {
+        runSwiftAdapter()
     } else {
         guard #available(macOS 10.15, *) else {
             throw InterchangeFailure.invalid("Development gate needs macOS 10.15+")

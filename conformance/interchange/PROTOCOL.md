@@ -43,3 +43,11 @@ composition, parser and editing codes use the existing camel-case names.
 Unclassified adapter failures use adapterFailure and must fail the gate.
 Input requests and response lines are bounded to 32 MiB for this development
 tool. The coordinator enforces process deadlines and manifest completeness.
+Swift streams requests in bounded chunks, rejects malformed/oversized lines with
+adapterFailure and continues the next line. Oversized replies use the same
+bounded failure record. The coordinator rejects blank/extra/oversized reply
+lines and duplicate or Unicode-equivalent semantic JSON keys before dictionary
+decoding. File-backed process I/O avoids pipe deadlocks; stdout and stderr have
+separate budgets. Unix watchdogs terminate, escalate and reap owned children on
+timeout, cancellation or output overflow. Windows watchdog hard-stop behavior
+is not established by this development gate; library file codecs remain portable.

@@ -190,12 +190,12 @@ Acceptance Criteria
 
 ### REQ-threemd-014
 
-Serialization output SHALL parse back to an equal document when content does not depend on quote escaping.
+Serialization output SHALL parse back to an equal document for representable content, including lossless scalar quoting.
 
 Acceptance Criteria
 
-- Serializing a `Document` and parsing the result yields
-  an equal document, for content that does not rely on quote escaping.
+- Serializing a representable `Document` and parsing the result yields
+  an equal document, including literal apostrophes, quotes and scalar edge whitespace.
 
 ### REQ-threemd-015
 
@@ -270,17 +270,21 @@ materializes REQ-ThreeMD-021 through REQ-ThreeMD-025 from the approved delta.
   the frozen 1.0 text grammar and additive 1.1 storage/composition specification.
 - Frontmatter is parsed line-by-line as simple `key: value` pairs, not as full
   YAML. Nested structures, lists, and multi-line values are not supported.
-- Existing parser/serializer behavior stays unchanged. The new storage writer
-  additionally quotes every scalar and requires a faithful semantic round trip.
+- Existing parser signatures and frozen syntax stay unchanged. Narrow interchange
+  repairs align Unicode whitespace/source-key behavior and make legacy scalar
+  quoting faithful. The canonical writer quotes every scalar and requires a
+  faithful semantic round trip.
 - `z`, `x`, and `y` are parsed as `Double`, so they carry double-precision
   range and rounding.
 
 ## Out of Scope
 
-- Changes to the existing Markdown/HTML renderers or cross-plane link behavior.
+- Changes to the existing Markdown/HTML renderers. The TypeScript link extractor
+  is repaired to follow the existing shared grammar without arbitrary truncation.
 - External transclusion, inline model embeds, and application-specific placement,
   automatic flattening, voxel interpretation or timing behavior.
-- New binary/composition implementations in the TypeScript/Rust ports or viewer.
+- Hosted binary/composition viewer features. The libraries now have the approved
+  portable TypeScript/Rust implementations and a separate interchange gate.
 - Validation of axis semantics; the axis label is treated as free metadata.
 - Networking, file I/O, and any rendering or viewer behavior.
 
@@ -398,4 +402,3 @@ Acceptance Criteria
 - Existing parser/serializer APIs, conformance vectors, viewer behavior and historical archives remain unchanged. The generated web bundle may refresh deterministic compiler output from the new module graph; element/dist stays untouched.
 - Complete pinned Trust and strict SpecSync pass with actual scoped agent review and honest provenance limits.
 - PRs remain open for Leif and no release or Sculpt dependency migration occurs.
-

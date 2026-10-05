@@ -5,7 +5,7 @@ must run through the Swift, TypeScript and Rust adapters. Paths are relative to
 the repository root. Unknown kinds, missing files, duplicate IDs, omitted cases
 and unclassified errors fail the development gate.
 
-The catalog has 79 source cases: 46 valid and 33 invalid. It includes all 22 valid
+The catalog has 82 source cases: 49 valid and 33 invalid. It includes all 22 valid
 and 15 invalid legacy parser source fixtures. Their text files preserve the
 original JSON `source` bytes; their original parser contracts remain unchanged.
 Invalid source parsing is observed through storage and therefore reports the
@@ -22,6 +22,11 @@ custom axes, fences, preambles, empty documents and bodies, mixed coordinates,
 negative zero, shared graph definitions and valid unused nodes. Invalid cases
 cover namespaced identity errors, invalid unused graph nodes, strict JSON fields
 and binary header, length, checksum and UTF-8 failures.
+
+Combining-mark fixtures ensure ASCII quotes, escapes, field separators, token
+spaces and fence prefixes retain their scalar delimiter meaning even when a
+following Unicode mark joins the same grapheme. Original scalar bytes survive
+canonical, binary and legacy reimport.
 
 `canonicalFile` and `binaryFile` are independent checked-in byte anchors where
 present. Raw legacy source seeds can omit these anchors and still must agree
@@ -44,9 +49,9 @@ runs all suites and executes the same gate. Node and Rust must be installed.
 The separate development executable requires macOS 10.15+ when running on macOS;
 it does not change the library deployment baseline.
 
-The current finite gate has 423 requests: 79 catalog sources, 43 legacy JSON
-sources, 45 fixed numbers and 256 seeded finite-number samples. The 375 valid
-cases produce 16,848 imported outputs across nine pairs, including canonical,
+The current finite gate has 426 requests: 82 catalog sources, 43 legacy JSON
+sources, 45 fixed numbers and 256 seeded finite-number samples. The 378 valid
+cases produce 16,983 imported outputs across nine pairs, including canonical,
 binary, legacy where applicable, adopted and edited files. Forty-eight invalid
 requests require an exact failure code from each language. The driver writes
 its request/response transcripts and JSON receipt to an isolated temporary

@@ -121,6 +121,38 @@
       "sourceFile" : "conformance/interchange/axis-57.3md"
     },
     {
+      "formats" : [
+        "canonical",
+        "binary",
+        "legacy"
+      ],
+      "id" : "combining-mark-delimiters",
+      "kind" : "document",
+      "sourceFile" : "conformance/interchange/combining-mark-delimiters.3md"
+    },
+    {
+      "formats" : [
+        "canonical",
+        "binary",
+        "legacy"
+      ],
+      "id" : "combining-mark-fences",
+      "kind" : "document",
+      "sourceFile" : "conformance/interchange/combining-mark-fences.3md"
+    },
+    {
+      "binaryFile" : "conformance/interchange/combining-mark-scalars.3mdb",
+      "canonicalFile" : "conformance/interchange/combining-mark-scalars.3md",
+      "formats" : [
+        "canonical",
+        "binary",
+        "legacy"
+      ],
+      "id" : "combining-mark-scalars",
+      "kind" : "document",
+      "sourceFile" : "conformance/interchange/combining-mark-scalars.3md"
+    },
+    {
       "binaryFile" : "conformance/interchange/composition-empty-root.3mdb",
       "canonicalFile" : "conformance/interchange/composition-empty-root.3md",
       "formats" : [

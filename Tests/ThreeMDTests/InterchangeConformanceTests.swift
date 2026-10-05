@@ -8,7 +8,7 @@ final class InterchangeConformanceTests: XCTestCase {
         let catalog = try manifest()
         XCTAssertEqual(catalog.schema, "3md-interchange-catalog-1")
         XCTAssertEqual(catalog.numericVectors, "conformance/extensions/numeric-vectors.json")
-        XCTAssertEqual(catalog.cases.count, 79)
+        XCTAssertEqual(catalog.cases.count, 82)
         XCTAssertEqual(Set(catalog.cases.map(\.id)).count, catalog.cases.count)
         let legacyFiles = try FileManager.default.contentsOfDirectory(
             at: root.appendingPathComponent("conformance"),
@@ -45,7 +45,7 @@ final class InterchangeConformanceTests: XCTestCase {
 
     func testEveryValidCatalogSourceAndLegacyOutputPreserveExactCanonicalBytes() throws {
         let records = try manifest().cases.filter { $0.expectedError == nil }
-        XCTAssertEqual(records.count, 46)
+        XCTAssertEqual(records.count, 49)
         for record in records {
             let source = try data(record.sourceFile)
             let decoded = try DocumentStorageCodec.decode(source)
@@ -192,6 +192,93 @@ final class InterchangeConformanceTests: XCTestCase {
             }
             XCTAssertEqual(try DocumentStorageCodec.encode(document), original, record.id)
         }
+    }
+
+    func testScalarQuoteAndEscapeDelimitersPreserveAdjacentCombiningMarks() throws {
+        let values = ["'\u{301}value'", "\"\u{301}value\"", "\\\u{301}value\\", "a \u{301}b", "\u{301}value"]
+        for value in values {
+            let document = Document(
+                version: value,
+                axis: Axis(rawValue: "'\u{301}custom'"),
+                title: value,
+                metadata: ["value": value],
+                planes: [Plane(z: 0, label: value, attributes: ["value": value], body: "Text")]
+            )
+            let canonical = try DocumentStorageCodec.encode(document)
+            let legacy = Serializer().render(document)
+            let reparsed = try Parser().parse(legacy)
+            XCTAssertEqual(try DocumentStorageCodec.encode(reparsed), canonical)
+            XCTAssertEqual(reparsed.title.map { Array($0.utf8) }, Array(value.utf8))
+            XCTAssertEqual(reparsed.planes.first?.label.map { Array($0.utf8) }, Array(value.utf8))
+            XCTAssertEqual(try DocumentStorageCodec.decode(canonical), document)
+        }
+        let source = "---\n3md: 0.1\ntitle: '\u{301}title'\n---\n@plane z=0 value=\"\\\u{301}value\"\nText\n"
+        let document = try Parser().parse(source)
+        XCTAssertEqual(document.title.map { Array($0.utf8) }, Array("\u{301}title".utf8))
+        XCTAssertEqual(document.planes.first?.attributes["value"].map { Array($0.utf8) }, Array("\u{301}value".utf8))
+    }
+
+    func testScalarFieldSeparatorsAndSpaceTokensMatchBoundedPreflight() throws {
+        let source = try data("conformance/interchange/combining-mark-delimiters.3md")
+        let raw = try Parser().parse(String(decoding: source, as: UTF8.self))
+        XCTAssertEqual(try DocumentStorageCodec.decode(source), raw)
+        XCTAssertEqual(raw.metadata["meta"].map { Array($0.utf8) }, Array("\u{301}literal".utf8))
+        XCTAssertEqual(raw.title.map { Array($0.utf8) }, Array("\u{301}title ".utf8))
+        XCTAssertEqual(raw.planes.count, 2)
+        XCTAssertEqual(raw.planes.first?.attributes["glyph"], "\u{301}value")
+        XCTAssertEqual(raw.planes.last?.attributes["\u{301}glyph"], "thing")
+        let limits = try DocumentDecodeLimits(maximumPlanes: 1)
+        XCTAssertThrowsError(try DocumentStorageCodec.decode(source, limits: limits)) { error in
+            XCTAssertEqual(error as? DocumentStorageError, .tooManyPlanes)
+        }
+    }
+
+    func testASCIIFencePrefixesWithCombiningMarksKeepInnerDirectivesAsBody() throws {
+        let source = try data("conformance/interchange/combining-mark-fences.3md")
+        let raw = try Parser().parse(String(decoding: source, as: UTF8.self))
+        XCTAssertEqual(raw.planes.count, 1)
+        XCTAssertTrue(raw.planes.first?.body.contains("@plane z=99") == true)
+        XCTAssertTrue(raw.planes.first?.body.contains("@plane z=200") == true)
+        XCTAssertEqual(try DocumentStorageCodec.decode(source, limits: .init(maximumPlanes: 1)), raw)
+    }
+
+    func testStorageRejectsReservedASCIIDelimitersInsideCombiningGraphemes() throws {
+        let values = [
+            Document(version: "0.1", axis: .layer, metadata: ["hidden:\u{301}": "value"], planes: []),
+            Document(version: "0.1", axis: .layer, metadata: ["#\u{301}": "value"], planes: []),
+            Document(
+                version: "0.1",
+                axis: .layer,
+                planes: [Plane(z: 0, attributes: ["hidden=\u{301}": "value"], body: "Text")]
+            ),
+        ]
+        for value in values {
+            XCTAssertThrowsError(try DocumentStorageCodec.validate(value)) { error in
+                guard case .invalidDocument = error as? DocumentStorageError else {
+                    return XCTFail("Expected invalidDocument, got \(error)")
+                }
+            }
+        }
+    }
+
+    func testCombiningMarkEscapesChargeExactCanonicalUTF8OutputBytes() throws {
+        let source = try data("conformance/interchange/combining-mark-scalars.3md")
+        let document = try DocumentStorageCodec.decode(source)
+        let exact = try DocumentDecodeLimits(maximumDecodedBytes: source.count)
+        XCTAssertEqual(try DocumentStorageCodec.encode(document, limits: exact), source)
+        let short = try DocumentDecodeLimits(maximumDecodedBytes: source.count - 1)
+        XCTAssertThrowsError(try DocumentStorageCodec.encode(document, limits: short)) { error in
+            XCTAssertEqual(error as? DocumentStorageError, .oversizedOutput)
+        }
+        let binary = try data("conformance/interchange/combining-mark-scalars.3mdb")
+        let envelope = try DocumentDecodeLimits(
+            maximumEncodedBytes: binary.count,
+            maximumDecodedBytes: source.count
+        )
+        XCTAssertEqual(
+            try DocumentStorageCodec.encode(document, format: .binary(compression: .none), limits: envelope),
+            binary
+        )
     }
 
     func testSharedDAGAndUnusedDefinitionsSurviveAdoptionAndRootReplacement() throws {

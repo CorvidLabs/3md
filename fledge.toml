@@ -25,7 +25,7 @@ dir = "uitests"
 description = "Playwright UI suite for the web viewer, gallery, and custom element."
 
 [tasks.rust]
-cmd = "cargo fmt --check && cargo clippy --all-targets -- -D warnings && cargo test && cargo build --example interchange"
+cmd = "cargo fmt --check && cargo clippy --all-targets -- -D warnings && cargo test --all-targets && cargo test --doc && cargo build --example interchange"
 dir = "rust"
 description = "Rust crate: format check, clippy, and tests (runs the shared conformance vectors)."
 
