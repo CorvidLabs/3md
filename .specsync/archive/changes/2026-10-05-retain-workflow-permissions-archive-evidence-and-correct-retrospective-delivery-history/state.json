@@ -7,11 +7,11 @@
   "title": "Retain workflow permissions archive evidence and correct retrospective delivery history",
   "description": "Retain workflow permissions archive evidence and correct retrospective delivery history",
   "kind": "documentation",
-  "state": "verifying",
+  "state": "archived",
   "canonical_applied": true,
   "base_commit": "8b09724fc390236f52c873761247166048aef67e",
   "created_at": 1791168200,
-  "updated_at": 1791168710,
+  "updated_at": 1791168958,
   "affected_specs": [],
   "affected_paths": [
     "docs/evidence/workflow-permissions-archive/"

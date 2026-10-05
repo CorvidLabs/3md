@@ -1,0 +1,42 @@
+{
+  "timestamp": 1791168708,
+  "commit": "50d6a54ee5873c5659edb052b431bf300011597e",
+  "contract_digest": "55eaa93506a67689f5f7f3ea9d1e35fc93cbbed0199643a67508af66a723b592",
+  "execution_digest": "bcfa1eb1234a7146bf6c136a224af4b7b7a62f45d05d6e3cde9c855132e22dd2",
+  "workspace_digest": "d8c969b72f7c076cb869dd3460574177449baa0d68e5715f7afb5c58060e86f3",
+  "acceptance_input_digest": "944401fd1a9be401217cf868c09ed16d853cf49bf2921ffbda06cb72e7ba5d7d",
+  "acceptance_manifest": {
+    "schema_version": 1,
+    "entries": [
+      {
+        "path": "docs/evidence/workflow-permissions-archive/README.md",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "9e64e4c41340d561eeb53e7f450afacb95700cb48746b0d2d0957528000ca074",
+        "entry_digest": "cee761a0480270a8509074e3053018e0413b0cb64ce11b4e620f8a84cdc794dd",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "docs/evidence/workflow-permissions-archive/verification.json",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "3779543b719957e79b8589577a091673501131a10b64700c9138455f90e07077",
+        "entry_digest": "f93b92b73e1d45b43b0efc3ecab5482b3fc1119851d87054487f095be25b069c",
+        "owners": [
+          "@exact:delivery"
+        ]
+      }
+    ]
+  },
+  "passed": true,
+  "commands": [
+    {
+      "command": "specsync check (no spec in scope)",
+      "success": true,
+      "exit_code": 0
+    }
+  ],
+  "requirement_ids": []
+}

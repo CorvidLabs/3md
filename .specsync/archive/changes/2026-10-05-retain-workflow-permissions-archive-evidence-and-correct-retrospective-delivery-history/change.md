@@ -1,6 +1,6 @@
 ---
 id: retain-workflow-permissions-archive-evidence-and-correct-retrospective-delivery-history
-state: implementing
+state: archived
 type: documentation
 base_commit: 8b09724fc390236f52c873761247166048aef67e
 ---
