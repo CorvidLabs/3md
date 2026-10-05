@@ -1,0 +1,27 @@
+---
+3md: "0.1"
+axis: "layer"
+profile: "3md-composition-1"
+---
+
+@plane z=0 label="Composition"
+```json
+{
+  "entries": [
+    {
+      "id": "leaf",
+      "references": [],
+      "source": "---\n3md: \"0.1\"\naxis: \"layer\"\n---\n\n@plane z=0\nBody\n"
+    },
+    {
+      "id": "root",
+      "references": [
+        {"attributes": {"é": "first", "é": "last"}, "targetID": "leaf"}
+      ],
+      "source": "---\n3md: \"0.1\"\naxis: \"layer\"\n---\n\n@plane z=0\nBody\n"
+    }
+  ],
+  "rootID": "root",
+  "schema": "3md-composition-1"
+}
+```

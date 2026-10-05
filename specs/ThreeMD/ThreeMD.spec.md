@@ -1,6 +1,6 @@
 ---
 module: ThreeMD
-version: 4
+version: 6
 status: active
 files:
   - Sources/ThreeMD/Axis.swift
@@ -31,7 +31,18 @@ files:
   - Sources/ThreeMD/DocumentDiagnostics.swift
   - Sources/ThreeMD/FiniteDecimal.swift
   - js/src/index.ts
+  - js/src/portable.ts
+  - js/src/storage.ts
+  - js/src/composition.ts
+  - js/src/editing.ts
   - rust/src/lib.rs
+  - rust/src/storage.rs
+  - rust/src/composition.rs
+  - rust/src/editing.rs
+  - rust/src/diagnostics.rs
+  - Sources/ThreeMDInterop/Protocol.swift
+  - Sources/ThreeMDInterop/SwiftAdapter.swift
+  - Sources/ThreeMDInterop/main.swift
 db_tables: []
 depends_on: []
 ---
@@ -40,7 +51,7 @@ depends_on: []
 
 ## Purpose
 
-Additive editing APIs interpret optional namespaced identities, apply bounded exact-revision document/composition patches and report structured diagnostics. They are Swift-first and perform no external I/O. Existing raw parsing, z links and HTML anchors retain their semantics.
+Additive Swift, TypeScript and Rust APIs interpret optional namespaced identities, apply bounded exact-revision document/composition patches and report structured diagnostics. They perform no external I/O. Existing raw parsing, z links and HTML anchors retain their semantics.
 
 ThreeMD parses and serializes Markdown extended along one free Z axis. Its
 immutable documents preserve source order, free axis labels, metadata and opaque
@@ -48,11 +59,11 @@ Markdown bodies. SPEC.md owns the frozen text grammar and additive storage and
 composition formats.
 
 Swift, TypeScript and Rust retain their shared text-parser conformance contract.
-Swift additionally provides HTML/Markdown renderers, bounded general-document
-storage, and a validated self-contained library of named documents. The new
-storage and composition APIs are Swift-first; this does not claim implementation
-in the ports or hosted viewer. The interactive component is the separate
-ThreeMDElement module.
+Swift additionally provides HTML/Markdown renderers. All three libraries provide
+bounded general-document storage and a validated self-contained library of named
+documents. The ports support the uncompressed envelope and explicitly reject
+LZFSE backend requests. The interactive component remains the separate
+ThreeMDElement module; its hosted UI is not changed by this slice.
 
 ## Public API
 
@@ -262,6 +273,75 @@ are pure synchronous APIs; they never open paths or resolve URLs.
 | `DocumentDiagnostics` | Additive bounded source/document/composition inspection. |
 | `inspect` | Throwing source/document/composition overloads inspect storage, identity, positions and validated graph values; no legacy link extraction. |
 | `init` | Public Swift model/service constructors; policies and composition validation throw. |
+| `DocumentStorageErrorCode` | TypeScript typed stable storage failure names. |
+| `DocumentCompositionErrorCode` | TypeScript typed stable composition failure names. |
+| `DocumentDiagnosticCode` | TypeScript typed diagnostic names. |
+| `CancellationToken` | Rust cloneable shared atomic cancellation state with new, cancel and is_cancelled. |
+| `OperationOptions` | Rust explicit operation policy carrying optional cancellation; default leaves it absent. |
+| `with_cancellation` | Construct Rust operation options from a token. |
+| `is_cancelled` | Observe Rust cancellation flag. |
+| `cancel` | Mark a Rust token canceled; bounded operations report typed cancellation. |
+| `storage` | Rust pure general text/container codec module. |
+| `editing` | Rust immutable snapshots, identity adoption and atomic patches module. |
+| `CONTAINER_VERSION` | Rust general envelope version, 1. |
+| `HEADER_BYTE_COUNT` | Rust complete envelope header length, 40. |
+| `IDENTITY_ATTRIBUTE_KEY` | Rust namespaced identity key, 3md-id. |
+| `is_binary` | Rust complete binary magic predicate. |
+| `is_composition` | Rust composition profile discriminator. |
+| `is_valid_id` | Rust bounded composition definition ID predicate. |
+| `is_valid_identity` | Rust bounded editing identity predicate. |
+| `stable_id` | Rust Plane/DocumentReference namespaced identity accessor. |
+| `root_id` | Rust immutable graph root ID accessor. |
+| `root_entry` | Rust validated root definition accessor. |
+| `from_parts` | Rust snapshot reconstruction rejects forged document/revision pairs. |
+| `adopt_document` | Rust explicit deterministic missing plane identity adoption. |
+| `adopt_composition` | Rust explicit document/reference identity adoption with owner scopes. |
+| `apply_document_patch` | Rust staged ordered operations validate final value before publication. |
+| `apply_composition_patch` | Rust staged operations validate the entire resulting graph before publication. |
+| `inspect_source` | Rust bounded storage decode and structured diagnostic report. |
+| `inspect_document` | Rust bounded value-only identity/position diagnostics without invented lines. |
+| `inspect_composition` | Rust bounded graph identity diagnostics; no link extractor or resolver. |
+| `parse_failure` | Rust existing parser failure to source-line diagnostic adapter. |
+| `decode_document` | Rust strict composition profile Document decoder. |
+| `as_str` | Rust stable camel-case diagnostic code spelling. |
+| `DiagnosticCode` | Rust diagnostic code enum with stable shared names. |
+| `DiagnosticSeverity` | Rust error/warning enum. |
+| `new` | Rust model/policy/token constructors; graph/snapshot constructors validate before returning. |
+| `check` | Crate-internal Rust cancellation poll, not a root public API. |
+| `checkCancellation` | Internal TypeScript AbortSignal poll, not reexported by the package root. |
+| `InvalidUnicodeError` | Internal TypeScript invalid surrogate failure mapped to typed storage/edit errors. |
+| `utf8Length` | Internal checked UTF-8 work count with cancellation. |
+| `stringsEqual` | Internal exact dictionary comparison. |
+| `canonicalStrings` | Internal NFC-equivalent dictionary reconstruction retaining spelling. |
+| `canonicalKeys` | Internal TypeScript NFC scalar key ordering. |
+| `canonicalDocument` | Internal TypeScript canonical dictionary normalization. |
+| `documentsEqual` | Internal semantic document equality. |
+| `frozenStrings` | Internal TypeScript copied immutable string map. |
+| `frozenPlane` | Internal TypeScript copied immutable plane. |
+| `frozenDocument` | Internal TypeScript copied immutable document. |
+| `validID` | Internal TypeScript safe ASCII identifier check. |
+| `boundedInteger` | Internal TypeScript integer policy check. |
+| `canonicalNumber` | Internal TypeScript Swift-compatible finite decimal spelling. |
+| `BoundedTextWriter` | Internal TypeScript byte-budgeted canonical text accumulator. |
+| `frozenReference` | Internal TypeScript copied immutable reference. |
+| `frozenEntry` | Internal TypeScript copied immutable definition. |
+| `crc32` | Crate-internal Rust envelope checksum, not authenticity. |
+| `parse_data` | Crate-internal Rust bounded UTF-8/text decode and Unicode key reconstruction. |
+| `position_key` | Crate-internal Rust exact finite coordinate set key. |
+| `normalized_key` | Crate-internal Rust bounded NFC key normalization. |
+| `canonical_keys` | Crate-internal Rust normalized scalar key ordering. |
+| `canonical_number` | Crate-internal Rust Swift-compatible finite decimal spelling. |
+| `swift_double` | Crate-internal Rust shortest decimal formatter with Swift notation threshold and ties-to-even spelling. |
+| `trimFoundationWhitespace` | Internal TypeScript linear scan using the shared Foundation horizontal whitespace table. |
+| `isFoundationWhitespace` | Internal TypeScript shared horizontal whitespace predicate; no newline/BOM trimming. |
+| `parse_with_options` | Crate-internal Rust parser path with cooperative cancellation and normalized position-set checks. |
+| `canonical_data` | Crate-internal Rust budgeted canonical text encoding. |
+| `validate_graph` | Crate-internal Rust whole-library resource and target validation. |
+| `PayloadBudget` | Crate-internal Rust cumulative edit work counter. |
+| `charge` | Crate-internal checked payload byte accounting. |
+| `header` | Crate-internal header payload accounting. |
+| `make` | Crate-internal Rust report accumulation helper. |
+| `composition_error` | Crate-internal Rust graph error to diagnostic mapping. |
 
 ### Public initializer contracts
 
@@ -279,6 +359,14 @@ constructors take expectedRevision and ordered operations without executing them
 maximum-properties above; payload/diagnostic limits are positive. DocumentHeader captures a Document or explicitly takes
 version, axis and optional title/metadata/preamble. Diagnostic/report constructors retain the evidence supplied by callers.
 Codable editing transport is not a bounded streaming JSON reader: callers must cap untrusted wire bytes before decoding.
+
+### Portable surfaces
+
+Portable API contracts: TypeScript exports the analogous storage/composition/editing types through `js/src/index.ts`, with Uint8Array storage, named policy options and optional AbortSignal as the last argument. Its snapshots and graphs copy/freeze values, and fromJSON reconstructs and validates exact revision pairs. `stableID(value)` reads the namespaced attribute without altering existing Plane/Document interfaces. Rust exposes storage, composition, editing and diagnostics modules plus model/policy/error reexports. Operations accept policies and `OperationOptions`; private snapshot/graph fields use immutable accessors. New Rust canonical storage uses pinned unicode-normalization for NFC scalar ordering, rejects ambiguous canonically equivalent keys in direct BTreeMap values and reconstructs first-spelling/last-value behavior while decoding source. The interchange follow-up aligns existing Unicode whitespace and source-key grammar interpretation, and repairs lossless legacy scalar quoting. Public signatures and frozen syntax remain. Legacy spelling may vary while canonical bytes and reimported semantics agree. The development coordinator uses processes only in its separate executable target; the library remains pure.
+
+
+
+Cancellation is cooperative. JavaScript work is synchronous, so an AbortSignal dispatched on the same event loop cannot preempt it mid-call; callers can pre-cancel or schedule work and cancellation in their own execution context. No library worker or external service is created. Rust's shared atomic flag can be canceled from another thread. Both ports check bounded work and return no partial result.
 
 ## Invariants
 
@@ -349,7 +437,7 @@ errors retain their stable cases and metadata.
 - Swift Foundation for text, Data, JSON and localized errors.
 - Conditional Apple system Compression for optional LZFSE; no third-party Swift
   dependency or CryptoKit requirement. The original text surface stays portable.
-- Existing TypeScript/Rust text ports retain their original dependencies.
+- TypeScript adds no production dependency. Rust adds exact unicode-normalization 0.1.25 for new canonical key comparison, locked with its small dependencies. Existing text parsing/serialization behavior is unchanged.
 
 ## Change Log
 
@@ -361,3 +449,5 @@ errors retain their stable cases and metadata.
 | 2 | 2026-10-04 | Active exact export validation; additive bounded storage/composition with unchanged text conformance. Actual verification/publication belongs to the workflow-v2 change. |
 | 3 | 2026-10-05 | implement-generic-binary-storage-and-document-composition-with-specsync-6-and-trust-1-2-2: Implement generic binary storage and document composition with SpecSync 6 and Trust 1.2.2 |
 | 4 | 2026-10-05 | add-stable-document-identities-transactional-patches-and-diagnostics-for-release-preparation: Add stable document identities transactional patches and diagnostics for release preparation |
+| 5 | 2026-10-05 | bring-bounded-binary-composition-and-transactional-editing-to-typescript-and-rust-with-shared-conformance: Bring bounded binary composition and transactional editing to TypeScript and Rust with shared conformance |
+| 6 | 2026-10-05 | guarantee-portable-cross-language-document-and-composition-interchange-with-a-nine-pair-public-api-verification-matrix: Guarantee portable cross-language document and composition interchange with a nine-pair public API verification matrix |

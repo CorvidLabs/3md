@@ -1,0 +1,11 @@
+---
+3md: "0.1"
+axis: "layer"
+z: "ascii"
+é: "last"
+: "private"
+😀: "astral"
+---
+
+@plane z=0 3md-id="unicode-plane" q="ascii" é="last" ="private" 😀="astral"
+Unicode scalar ordering preserves original key spelling.

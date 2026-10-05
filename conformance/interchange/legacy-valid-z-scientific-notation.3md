@@ -1,0 +1,8 @@
+---
+3md: 0.1
+---
+@plane z=1e3
+big
+
+@plane z=2.5e-1
+small

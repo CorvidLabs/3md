@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "workflow_version": 2,
+  "workflow_origin_version": 2,
+  "id": "bring-bounded-binary-composition-and-transactional-editing-to-typescript-and-rust-with-shared-conformance",
+  "slug": "bring-bounded-binary-composition-and-transactional-editing-to-typescript-and-rust-with-shared-conformance",
+  "title": "Bring bounded binary composition and transactional editing to TypeScript and Rust with shared conformance",
+  "description": "Bring bounded binary composition and transactional editing to TypeScript and Rust with shared conformance",
+  "kind": "feature",
+  "state": "archived",
+  "canonical_applied": true,
+  "base_commit": "2dc2bd4cfb387bd3365b65b259c912b79bb0f962",
+  "created_at": 1791208861,
+  "updated_at": 1791212863,
+  "affected_specs": [
+    "ThreeMD"
+  ],
+  "affected_paths": [
+    "js/",
+    "rust/",
+    "conformance/",
+    "Tests/ThreeMDTests/",
+    "specs/ThreeMD/",
+    "SPEC.md",
+    "README.md",
+    "AGENTS.md",
+    "docs/EDITING-RELEASE.md",
+    "web/assets/three-md.js",
+    ".specsync/config.toml"
+  ],
+  "no_spec_change": false,
+  "no_spec_change_rationale": null,
+  "acceptance_criteria": [
+    "TypeScript and Rust implement portable uncompressed storage strict bounded composition stable identities exact-byte revisions atomic patches and structured diagnostics compatible with Swift; shared format vectors prove semantic and canonical compatibility while old parser conformance remains unchanged; unsupported LZFSE fails explicitly without a compression dependency; Rust uses exact pinned Unicode normalization solely for canonical key equivalence and order; generated web bundle may refresh deterministic output while viewer behavior remains unchanged and element/dist is untouched; limits and cooperative cancellation are tested with idiomatic APIs; the complete pinned Trust lane strict specs and actual scoped review pass; PRs stay open for Leif with no release or automatic Sculpt dependency update."
+  ],
+  "selected_artifacts": [
+    "context",
+    "requirements",
+    "plan",
+    "tasks",
+    "testing",
+    "docs",
+    "design",
+    "research"
+  ],
+  "dependencies": [],
+  "answers": {
+    "architecture_risk": "yes",
+    "public_contract": "yes"
+  }
+}

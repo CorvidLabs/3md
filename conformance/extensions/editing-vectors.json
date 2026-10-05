@@ -1,0 +1,824 @@
+{
+  "compositionAdoption" : {
+    "expected" : {
+      "entries" : [
+        {
+          "document" : {
+            "axis" : "layer",
+            "metadata" : {
+
+            },
+            "planes" : [
+              {
+                "attributes" : {
+                  "3md-id" : "leaf-plane",
+                  "id" : "opaque-leaf"
+                },
+                "body" : "Leaf body: café.",
+                "z" : 0
+              }
+            ],
+            "title" : "Leaf 🍃",
+            "version" : "0.1"
+          },
+          "id" : "leaf",
+          "references" : [
+
+          ]
+        },
+        {
+          "document" : {
+            "axis" : "time",
+            "metadata" : {
+              "note" : "Reusable"
+            },
+            "planes" : [
+              {
+                "attributes" : {
+                  "3md-id" : "other-plane"
+                },
+                "body" : "Other definition.",
+                "z" : 2
+              }
+            ],
+            "version" : "1.0"
+          },
+          "id" : "other",
+          "references" : [
+            {
+              "attributes" : {
+                "3md-id" : "left",
+                "id" : "opaque-other-instance"
+              },
+              "targetID" : "leaf"
+            }
+          ]
+        },
+        {
+          "document" : {
+            "axis" : "layer",
+            "metadata" : {
+              "Studio" : "Corvid 🐦",
+              "escaped" : "quote \" slash \\",
+              "opaque" : "001"
+            },
+            "planes" : [
+              {
+                "attributes" : {
+                  "3md-id" : "plane-main",
+                  "id" : "opaque-main",
+                  "material" : "teal 🟦"
+                },
+                "body" : "# Main\nShared snowman ☃ and a link [[z=1e-6|Next]].",
+                "label" : "Main 🧊",
+                "x" : 1e-07,
+                "y" : -0.5,
+                "z" : -2
+              },
+              {
+                "attributes" : {
+                  "3md-id" : "plane-next",
+                  "data" : "002",
+                  "id" : "ordinary-id"
+                },
+                "body" : "## Next\nQuoted \"text\" and path \\model.",
+                "label" : "Next",
+                "x" : 1000000000000000,
+                "y" : 1e+20,
+                "z" : 1e-06
+              }
+            ],
+            "preamble" : "# Workspace\nUnicode: café / café.",
+            "title" : "Glass café 🐦",
+            "version" : "1.0"
+          },
+          "id" : "root",
+          "references" : [
+            {
+              "attributes" : {
+                "3md-id" : "reference-1",
+                "binding" : "A",
+                "id" : "opaque-instance"
+              },
+              "targetID" : "leaf"
+            },
+            {
+              "attributes" : {
+                "3md-id" : "right",
+                "binding" : "B",
+                "rotation" : "90°"
+              },
+              "targetID" : "leaf"
+            },
+            {
+              "attributes" : {
+                "3md-id" : "nested",
+                "binding" : "C"
+              },
+              "targetID" : "other"
+            }
+          ]
+        }
+      ],
+      "rootID" : "root"
+    },
+    "input" : {
+      "entries" : [
+        {
+          "document" : {
+            "axis" : "layer",
+            "metadata" : {
+
+            },
+            "planes" : [
+              {
+                "attributes" : {
+                  "3md-id" : "leaf-plane",
+                  "id" : "opaque-leaf"
+                },
+                "body" : "Leaf body: café.",
+                "z" : 0
+              }
+            ],
+            "title" : "Leaf 🍃",
+            "version" : "0.1"
+          },
+          "id" : "leaf",
+          "references" : [
+
+          ]
+        },
+        {
+          "document" : {
+            "axis" : "time",
+            "metadata" : {
+              "note" : "Reusable"
+            },
+            "planes" : [
+              {
+                "attributes" : {
+                  "3md-id" : "other-plane"
+                },
+                "body" : "Other definition.",
+                "z" : 2
+              }
+            ],
+            "version" : "1.0"
+          },
+          "id" : "other",
+          "references" : [
+            {
+              "attributes" : {
+                "3md-id" : "left",
+                "id" : "opaque-other-instance"
+              },
+              "targetID" : "leaf"
+            }
+          ]
+        },
+        {
+          "document" : {
+            "axis" : "layer",
+            "metadata" : {
+              "Studio" : "Corvid 🐦",
+              "escaped" : "quote \" slash \\",
+              "opaque" : "001"
+            },
+            "planes" : [
+              {
+                "attributes" : {
+                  "3md-id" : "plane-main",
+                  "id" : "opaque-main",
+                  "material" : "teal 🟦"
+                },
+                "body" : "# Main\nShared snowman ☃ and a link [[z=1e-6|Next]].",
+                "label" : "Main 🧊",
+                "x" : 1e-07,
+                "y" : -0.5,
+                "z" : -2
+              },
+              {
+                "attributes" : {
+                  "3md-id" : "plane-next",
+                  "data" : "002",
+                  "id" : "ordinary-id"
+                },
+                "body" : "## Next\nQuoted \"text\" and path \\model.",
+                "label" : "Next",
+                "x" : 1000000000000000,
+                "y" : 1e+20,
+                "z" : 1e-06
+              }
+            ],
+            "preamble" : "# Workspace\nUnicode: café / café.",
+            "title" : "Glass café 🐦",
+            "version" : "1.0"
+          },
+          "id" : "root",
+          "references" : [
+            {
+              "attributes" : {
+                "binding" : "A",
+                "id" : "opaque-instance"
+              },
+              "targetID" : "leaf"
+            },
+            {
+              "attributes" : {
+                "3md-id" : "right",
+                "binding" : "B",
+                "rotation" : "90°"
+              },
+              "targetID" : "leaf"
+            },
+            {
+              "attributes" : {
+                "3md-id" : "nested",
+                "binding" : "C"
+              },
+              "targetID" : "other"
+            }
+          ]
+        }
+      ],
+      "rootID" : "root"
+    }
+  },
+  "compositionFixture" : "composition-instances",
+  "compositionTransactions" : [
+    {
+      "expected" : {
+        "entries" : [
+          {
+            "document" : {
+              "axis" : "layer",
+              "metadata" : {
+
+              },
+              "planes" : [
+                {
+                  "attributes" : {
+                    "3md-id" : "leaf-plane",
+                    "id" : "opaque-leaf"
+                  },
+                  "body" : "Leaf body: café.",
+                  "z" : 0
+                }
+              ],
+              "title" : "Leaf 🍃",
+              "version" : "0.1"
+            },
+            "id" : "leaf",
+            "references" : [
+
+            ]
+          },
+          {
+            "document" : {
+              "axis" : "time",
+              "metadata" : {
+                "note" : "Reusable"
+              },
+              "planes" : [
+                {
+                  "attributes" : {
+                    "3md-id" : "other-plane"
+                  },
+                  "body" : "Other definition.",
+                  "z" : 2
+                }
+              ],
+              "version" : "1.0"
+            },
+            "id" : "other",
+            "references" : [
+              {
+                "attributes" : {
+                  "3md-id" : "left",
+                  "id" : "opaque-other-instance"
+                },
+                "targetID" : "leaf"
+              }
+            ]
+          },
+          {
+            "document" : {
+              "axis" : "layer",
+              "metadata" : {
+                "Studio" : "Corvid 🐦",
+                "escaped" : "quote \" slash \\",
+                "opaque" : "001"
+              },
+              "planes" : [
+                {
+                  "attributes" : {
+                    "3md-id" : "plane-main",
+                    "id" : "opaque-main",
+                    "material" : "teal 🟦"
+                  },
+                  "body" : "# Main\nShared snowman ☃ and a link [[z=1e-6|Next]].",
+                  "label" : "Main 🧊",
+                  "x" : 1e-07,
+                  "y" : -0.5,
+                  "z" : -2
+                },
+                {
+                  "attributes" : {
+                    "3md-id" : "plane-next",
+                    "data" : "002",
+                    "id" : "ordinary-id"
+                  },
+                  "body" : "## Next\nQuoted \"text\" and path \\model.",
+                  "label" : "Next",
+                  "x" : 1000000000000000,
+                  "y" : 1e+20,
+                  "z" : 1e-06
+                }
+              ],
+              "preamble" : "# Workspace\nUnicode: café / café.",
+              "title" : "Glass café 🐦",
+              "version" : "1.0"
+            },
+            "id" : "root",
+            "references" : [
+              {
+                "attributes" : {
+                  "3md-id" : "right",
+                  "binding" : "B",
+                  "rotation" : "90°"
+                },
+                "targetID" : "leaf"
+              },
+              {
+                "attributes" : {
+                  "3md-id" : "nested",
+                  "binding" : "C"
+                },
+                "targetID" : "other"
+              },
+              {
+                "attributes" : {
+                  "3md-id" : "left",
+                  "binding" : "A",
+                  "id" : "opaque-instance"
+                },
+                "targetID" : "other"
+              }
+            ]
+          }
+        ],
+        "rootID" : "root"
+      },
+      "name" : "retarget-and-reorder-owner-instance",
+      "operations" : [
+        {
+          "id" : "left",
+          "kind" : "replaceReference",
+          "ownerID" : "root",
+          "reference" : {
+            "attributes" : {
+              "3md-id" : "left",
+              "binding" : "A",
+              "id" : "opaque-instance"
+            },
+            "targetID" : "other"
+          }
+        },
+        {
+          "id" : "left",
+          "kind" : "moveReference",
+          "ownerID" : "root",
+          "to" : 2
+        }
+      ]
+    },
+    {
+      "expected" : {
+        "entries" : [
+          {
+            "document" : {
+              "axis" : "layer",
+              "metadata" : {
+
+              },
+              "planes" : [
+                {
+                  "attributes" : {
+                    "3md-id" : "leaf-plane",
+                    "id" : "opaque-leaf"
+                  },
+                  "body" : "Leaf body: café.",
+                  "z" : 0
+                }
+              ],
+              "title" : "Leaf 🍃",
+              "version" : "0.1"
+            },
+            "id" : "leaf",
+            "references" : [
+
+            ]
+          },
+          {
+            "document" : {
+              "axis" : "time",
+              "metadata" : {
+                "note" : "Reusable"
+              },
+              "planes" : [
+                {
+                  "attributes" : {
+                    "3md-id" : "other-plane"
+                  },
+                  "body" : "Other definition.",
+                  "z" : 2
+                }
+              ],
+              "version" : "1.0"
+            },
+            "id" : "other",
+            "references" : [
+              {
+                "attributes" : {
+                  "3md-id" : "left",
+                  "id" : "opaque-other-instance"
+                },
+                "targetID" : "leaf"
+              }
+            ]
+          },
+          {
+            "document" : {
+              "axis" : "layer",
+              "metadata" : {
+                "Studio" : "Corvid 🐦",
+                "escaped" : "quote \" slash \\",
+                "opaque" : "001"
+              },
+              "planes" : [
+                {
+                  "attributes" : {
+                    "3md-id" : "plane-main",
+                    "id" : "opaque-main",
+                    "material" : "teal 🟦"
+                  },
+                  "body" : "# Main\nShared snowman ☃ and a link [[z=1e-6|Next]].",
+                  "label" : "Main 🧊",
+                  "x" : 1e-07,
+                  "y" : -0.5,
+                  "z" : -2
+                },
+                {
+                  "attributes" : {
+                    "3md-id" : "plane-next",
+                    "data" : "002",
+                    "id" : "ordinary-id"
+                  },
+                  "body" : "## Next\nQuoted \"text\" and path \\model.",
+                  "label" : "Next",
+                  "x" : 1000000000000000,
+                  "y" : 1e+20,
+                  "z" : 1e-06
+                }
+              ],
+              "preamble" : "# Workspace\nUnicode: café / café.",
+              "title" : "Glass café 🐦",
+              "version" : "1.0"
+            },
+            "id" : "root",
+            "references" : [
+              {
+                "attributes" : {
+                  "3md-id" : "left",
+                  "binding" : "A",
+                  "id" : "opaque-instance"
+                },
+                "targetID" : "leaf"
+              },
+              {
+                "attributes" : {
+                  "3md-id" : "nested",
+                  "binding" : "C"
+                },
+                "targetID" : "other"
+              }
+            ]
+          }
+        ],
+        "rootID" : "root"
+      },
+      "name" : "remove-one-repeated-target-instance",
+      "operations" : [
+        {
+          "id" : "right",
+          "kind" : "removeReference",
+          "ownerID" : "root"
+        }
+      ]
+    }
+  ],
+  "documentAdoption" : {
+    "expected" : {
+      "axis" : "layer",
+      "metadata" : {
+        "Studio" : "Corvid 🐦",
+        "escaped" : "quote \" slash \\",
+        "opaque" : "001"
+      },
+      "planes" : [
+        {
+          "attributes" : {
+            "3md-id" : "plane-main",
+            "id" : "opaque-main",
+            "material" : "teal 🟦"
+          },
+          "body" : "# Main\nShared snowman ☃ and a link [[z=1e-6|Next]].",
+          "label" : "Main 🧊",
+          "x" : 1e-07,
+          "y" : -0.5,
+          "z" : -2
+        },
+        {
+          "attributes" : {
+            "3md-id" : "plane-1",
+            "data" : "002",
+            "id" : "ordinary-id"
+          },
+          "body" : "## Next\nQuoted \"text\" and path \\model.",
+          "label" : "Next",
+          "x" : 1000000000000000,
+          "y" : 1e+20,
+          "z" : 1e-06
+        }
+      ],
+      "preamble" : "# Workspace\nUnicode: café / café.",
+      "title" : "Glass café 🐦",
+      "version" : "1.0"
+    },
+    "input" : {
+      "axis" : "layer",
+      "metadata" : {
+        "Studio" : "Corvid 🐦",
+        "escaped" : "quote \" slash \\",
+        "opaque" : "001"
+      },
+      "planes" : [
+        {
+          "attributes" : {
+            "3md-id" : "plane-main",
+            "id" : "opaque-main",
+            "material" : "teal 🟦"
+          },
+          "body" : "# Main\nShared snowman ☃ and a link [[z=1e-6|Next]].",
+          "label" : "Main 🧊",
+          "x" : 1e-07,
+          "y" : -0.5,
+          "z" : -2
+        },
+        {
+          "attributes" : {
+            "data" : "002",
+            "id" : "ordinary-id"
+          },
+          "body" : "## Next\nQuoted \"text\" and path \\model.",
+          "label" : "Next",
+          "x" : 1000000000000000,
+          "y" : 1e+20,
+          "z" : 1e-06
+        }
+      ],
+      "preamble" : "# Workspace\nUnicode: café / café.",
+      "title" : "Glass café 🐦",
+      "version" : "1.0"
+    }
+  },
+  "documentFixture" : "document-unicode",
+  "documentTransactions" : [
+    {
+      "expected" : {
+        "axis" : "layer",
+        "metadata" : {
+          "Studio" : "Corvid 🐦",
+          "escaped" : "quote \" slash \\",
+          "opaque" : "001"
+        },
+        "planes" : [
+          {
+            "attributes" : {
+              "3md-id" : "plane-main",
+              "id" : "opaque-main",
+              "material" : "teal 🟦"
+            },
+            "body" : "# Main\nShared snowman ☃ and a link [[z=1e-6|Next]].",
+            "label" : "Main 🧊",
+            "x" : 1e-07,
+            "y" : -0.5,
+            "z" : 1e-06
+          },
+          {
+            "attributes" : {
+              "3md-id" : "plane-next",
+              "data" : "002",
+              "id" : "ordinary-id"
+            },
+            "body" : "## Next\nQuoted \"text\" and path \\model.",
+            "label" : "Next",
+            "x" : 1000000000000000,
+            "y" : 1e+20,
+            "z" : -2
+          }
+        ],
+        "preamble" : "# Workspace\nUnicode: café / café.",
+        "title" : "Glass café 🐦",
+        "version" : "1.0"
+      },
+      "name" : "atomic-coordinate-swap",
+      "operations" : [
+        {
+          "id" : "plane-main",
+          "kind" : "replace",
+          "plane" : {
+            "attributes" : {
+              "3md-id" : "plane-main",
+              "id" : "opaque-main",
+              "material" : "teal 🟦"
+            },
+            "body" : "# Main\nShared snowman ☃ and a link [[z=1e-6|Next]].",
+            "label" : "Main 🧊",
+            "x" : 1e-07,
+            "y" : -0.5,
+            "z" : 1e-06
+          }
+        },
+        {
+          "id" : "plane-next",
+          "kind" : "replace",
+          "plane" : {
+            "attributes" : {
+              "3md-id" : "plane-next",
+              "data" : "002",
+              "id" : "ordinary-id"
+            },
+            "body" : "## Next\nQuoted \"text\" and path \\model.",
+            "label" : "Next",
+            "x" : 1000000000000000,
+            "y" : 1e+20,
+            "z" : -2
+          }
+        }
+      ]
+    },
+    {
+      "expected" : {
+        "axis" : "layer",
+        "metadata" : {
+          "Studio" : "Corvid 🐦",
+          "escaped" : "quote \" slash \\",
+          "opaque" : "001"
+        },
+        "planes" : [
+          {
+            "attributes" : {
+              "3md-id" : "plane-next",
+              "data" : "002",
+              "id" : "ordinary-id"
+            },
+            "body" : "## Next\nQuoted \"text\" and path \\model.",
+            "label" : "Next",
+            "x" : 1000000000000000,
+            "y" : 1e+20,
+            "z" : 1e-06
+          },
+          {
+            "attributes" : {
+              "3md-id" : "plane-main",
+              "id" : "opaque-main",
+              "material" : "teal 🟦"
+            },
+            "body" : "# Main\nShared snowman ☃ and a link [[z=1e-6|Next]].",
+            "label" : "Main 🧊",
+            "x" : 1e-07,
+            "y" : -0.5,
+            "z" : -2
+          }
+        ],
+        "preamble" : "# Workspace\nUnicode: café / café.",
+        "title" : "Glass café 🐦",
+        "version" : "1.0"
+      },
+      "name" : "source-order-change",
+      "operations" : [
+        {
+          "id" : "plane-next",
+          "kind" : "move",
+          "to" : 0
+        }
+      ]
+    }
+  ],
+  "failures" : [
+    {
+      "expectedCode" : "staleRevision",
+      "expectedPath" : "expectedRevision",
+      "expectedRevisionSuffix" : " ",
+      "name" : "stale-document-revision",
+      "operations" : [
+
+      ],
+      "scope" : "document"
+    },
+    {
+      "expectedCode" : "duplicatePosition",
+      "expectedPath" : "planes[1].z",
+      "name" : "final-coordinate-conflict",
+      "operations" : [
+        {
+          "id" : "plane-main",
+          "kind" : "replace",
+          "plane" : {
+            "attributes" : {
+              "3md-id" : "plane-main",
+              "id" : "opaque-main",
+              "material" : "teal 🟦"
+            },
+            "body" : "# Main\nShared snowman ☃ and a link [[z=1e-6|Next]].",
+            "label" : "Main 🧊",
+            "x" : 1e-07,
+            "y" : -0.5,
+            "z" : 1e-06
+          }
+        }
+      ],
+      "scope" : "document"
+    },
+    {
+      "expectedCode" : "identityChanged",
+      "expectedPath" : "operations[0]",
+      "name" : "changed-plane-identity",
+      "operations" : [
+        {
+          "id" : "plane-main",
+          "kind" : "replace",
+          "plane" : {
+            "attributes" : {
+              "3md-id" : "plane-next",
+              "data" : "002",
+              "id" : "ordinary-id"
+            },
+            "body" : "## Next\nQuoted \"text\" and path \\model.",
+            "label" : "Next",
+            "x" : 1000000000000000,
+            "y" : 1e+20,
+            "z" : 1e-06
+          }
+        }
+      ],
+      "scope" : "document"
+    },
+    {
+      "expectedCode" : "staleRevision",
+      "expectedPath" : "expectedRevision",
+      "expectedRevisionSuffix" : " ",
+      "name" : "stale-composition-revision",
+      "operations" : [
+
+      ],
+      "scope" : "composition"
+    },
+    {
+      "expectedCode" : "invalidComposition",
+      "expectedPath" : "entries[2]",
+      "name" : "final-reference-cycle",
+      "operations" : [
+        {
+          "id" : "left",
+          "kind" : "replaceReference",
+          "ownerID" : "root",
+          "reference" : {
+            "attributes" : {
+              "3md-id" : "left",
+              "binding" : "A",
+              "id" : "opaque-instance"
+            },
+            "targetID" : "root"
+          }
+        }
+      ],
+      "scope" : "composition"
+    },
+    {
+      "expectedCode" : "missingTarget",
+      "expectedPath" : "operations[0]",
+      "name" : "wrong-owner-reference-target",
+      "operations" : [
+        {
+          "id" : "right",
+          "kind" : "removeReference",
+          "ownerID" : "other"
+        }
+      ],
+      "scope" : "composition"
+    }
+  ],
+  "schema" : "3md-editing-semantic-fixtures-1"
+}

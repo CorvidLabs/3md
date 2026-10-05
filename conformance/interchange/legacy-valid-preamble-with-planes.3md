@@ -1,0 +1,12 @@
+---
+3md: 0.1
+axis: layer
+---
+The base layer is the source text.
+Higher layers are overlays.
+
+@plane z=0 label="the source"
+Section 4 body.
+
+@plane z=1 label="plain english" x=0 y=0
+You have 30 days.

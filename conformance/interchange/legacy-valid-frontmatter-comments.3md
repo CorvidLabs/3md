@@ -1,0 +1,13 @@
+---
+# this is a comment in frontmatter
+3md: "0.1"
+
+axis: 'layer'
+title: 'Quoted Title'
+# another comment
+note: "has spaces inside"
+---
+Preamble line.
+
+@plane z=0
+body

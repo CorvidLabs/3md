@@ -1,0 +1,16 @@
+{
+  "schema_version": 2,
+  "change_id": "guarantee-portable-cross-language-document-and-composition-interchange-with-a-nine-pair-public-api-verification-matrix",
+  "reviewer": "agent:codex-threemd-editing",
+  "provenance": {
+    "schema_version": 1,
+    "provider": "github_actions_check",
+    "required_check": "SpecSync scoped review"
+  },
+  "verdict": "pass",
+  "implementation_commit": "0eeb26a65421dd732dae37061a1e867d3d74d016",
+  "contract_digest": "b43bf1477bfdb02d7cd25d148e848ac06b385c82d0c8c335a472594f6a210849",
+  "execution_digest": "7da8503f0eee9dbeaba91f03b5f5eba4d5293797bab01d609b12104ba0b7a8d9",
+  "workspace_digest": "7a19c538c309646cd48be2c0e889da47ebe11908e47c4685b3c6884d6c661660",
+  "timestamp": 1791218321
+}

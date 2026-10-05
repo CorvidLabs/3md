@@ -1,0 +1,25 @@
+---
+3md: "0.1"
+axis: "layer"
+profile: "3md-composition-1"
+---
+
+@plane z=0 label="Composition"
+```json
+{
+  "entries": [
+    {
+      "id": "empty",
+      "references": [],
+      "source": "---\n3md: \"0.1\"\naxis: \"layer\"\n---\n"
+    },
+    {
+      "id": "unused",
+      "references": [],
+      "source": "---\n3md: \"0.1\"\naxis: \"space\"\ntitle: \"Leaf\"\n---\n\n@plane z=0\n# Reused leaf\n"
+    }
+  ],
+  "rootID": "empty",
+  "schema": "3md-composition-1"
+}
+```

@@ -2,7 +2,7 @@
 # Docs: https://github.com/CorvidLabs/spec-sync
 
 specs_dir = "specs"
-source_dirs = ["Sources"]
+source_dirs = ["Sources", "js/src", "rust/src"]
 exclude_dirs = []
 exclude_patterns = []
 required_sections = ["Purpose", "Public API", "Invariants", "Behavioral Examples", "Error Cases", "Dependencies", "Change Log"]
@@ -12,4 +12,4 @@ enforcement = "strict"
 track_history = false
 
 [modules."ThreeMD"]
-owns = ["Tests/ThreeMDTests/", "Examples/", "SPEC.md", "README.md", "AGENTS.md", ".specsync/", "specs/ThreeMD/", ".github/workflows/trust.yml", ".trust.toml", "docs/EDITING-RELEASE.md"]
+owns = ["Sources/ThreeMDInterop/", "Tests/ThreeMDTests/", "Examples/", "js/", "rust/", "conformance/", "scripts/", "Package.swift", "fledge.toml", "web/assets/three-md.js", "SPEC.md", "README.md", "AGENTS.md", ".specsync/", "specs/ThreeMD/", ".github/workflows/trust.yml", ".trust.toml", "docs/EDITING-RELEASE.md"]

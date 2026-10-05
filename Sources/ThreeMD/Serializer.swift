@@ -39,7 +39,9 @@ public struct Serializer: Sendable {
     // MARK: - Private Methods
 
     private func frontmatterLines(for document: Document) -> [String] {
-        var lines = ["---", "3md: \(document.version)", "axis: \(document.axis.rawValue)"]
+        var lines = [
+            "---", "3md: \(quoteIfNeeded(document.version))", "axis: \(quoteIfNeeded(document.axis.rawValue))",
+        ]
 
         if let title = document.title {
             lines.append("title: \(quoteIfNeeded(title))")
@@ -80,13 +82,16 @@ public struct Serializer: Sendable {
     /// double-quotes are escaped so the value round-trips through ``Parser``.
     private func quoteIfNeeded(_ value: String, forceQuote: Bool = false) -> String {
         let needsQuote =
-            forceQuote || value.contains(" ") || value.contains("\t")
-            || value.contains("\"") || value.contains("\\") || value.isEmpty
+            forceQuote || value.utf8.contains(32) || value.utf8.contains(9)
+            || value.utf8.contains(34) || value.utf8.contains(92) || value.isEmpty
+            || !value.utf8.elementsEqual(value.trimmingCharacters(in: .whitespaces).utf8)
+            || (value.utf8.count >= 2 && value.utf8.first == 39 && value.utf8.last == 39)
         guard needsQuote else { return value }
-        let escaped =
-            value
-            .replacingOccurrences(of: "\\", with: "\\\\")
-            .replacingOccurrences(of: "\"", with: "\\\"")
+        var escaped = ""
+        for scalar in value.unicodeScalars {
+            if scalar == "\\" || scalar == "\"" { escaped.unicodeScalars.append("\\") }
+            escaped.unicodeScalars.append(scalar)
+        }
         return "\"\(escaped)\""
     }
 }

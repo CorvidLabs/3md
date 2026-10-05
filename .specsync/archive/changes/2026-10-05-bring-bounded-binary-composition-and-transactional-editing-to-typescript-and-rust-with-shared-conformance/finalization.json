@@ -1,0 +1,12 @@
+{
+  "schema_version": 2,
+  "change_id": "bring-bounded-binary-composition-and-transactional-editing-to-typescript-and-rust-with-shared-conformance",
+  "implementation_commit": "edc4ca132484cd44afe8e7696ca6dddda93597b6",
+  "implementation_tree": "9ef6e825010e1d8b40f2b4f279aed28783a9fafd",
+  "contract_digest": "9a83eceb7aafebd35c95425e06041046068e2da77fa51997ba7ebea2ed6f5973",
+  "workspace_digest": "d1cead2f52315d83d7b282fd8fcca3958355e2119f7080998e1ba666ac74821f",
+  "closing_digest": "f939dfc6cb240665be0c523b791e32594b522a4606511be6389dde5479b3334d",
+  "review_digest": "40e388f5f48887e46d8f24fe522ed3e155d77cad73962463e26c7477596a465e",
+  "finalization_digest": "824ed016ae553d063b9b7329161300e529efe0262ef9c8d9d8aa298751fe8508",
+  "timestamp": 1791212840
+}
