@@ -1,6 +1,6 @@
 ---
 id: add-stable-document-identities-transactional-patches-and-diagnostics-for-release-preparation
-state: implementing
+state: archived
 type: feature
 base_commit: 0d345bb2ef7ec7cede572c24309761bec047301a
 ---

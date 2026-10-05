@@ -1,0 +1,12 @@
+{
+  "schema_version": 2,
+  "change_id": "add-stable-document-identities-transactional-patches-and-diagnostics-for-release-preparation",
+  "implementation_commit": "a89d0c401f7f6b749e9f2ec4982b7a0dc063776f",
+  "implementation_tree": "ac620f2a1b75cc9f80e285876faa69dca9a3d5c2",
+  "contract_digest": "204d562aa67182795ffae97fc5646853970dad4cf8c73eced6d4edc97b7d15cc",
+  "workspace_digest": "fb3a156c0e46b582a7ab028b714ac5618fd24ce63749a48ff4c4a03c7cfed5fe",
+  "closing_digest": "97506ed6e546ee934fd4e04254ea8c2a1fb74509bda2cba1c10fd4c4673509c9",
+  "review_digest": "6a0ca8790c3655a27996ca1b923aad3843810fa10b135739b5d09324c1ddba55",
+  "finalization_digest": "71c1d7b6628818b8acab95b196ff679ffce494466ffb1113c935d60ca8bd662a",
+  "timestamp": 1791208777
+}

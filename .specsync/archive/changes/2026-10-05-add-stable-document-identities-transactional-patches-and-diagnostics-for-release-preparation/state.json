@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "workflow_version": 2,
+  "workflow_origin_version": 2,
+  "id": "add-stable-document-identities-transactional-patches-and-diagnostics-for-release-preparation",
+  "slug": "add-stable-document-identities-transactional-patches-and-diagnostics-for-release-preparation",
+  "title": "Add stable document identities transactional patches and diagnostics for release preparation",
+  "description": "Add stable document identities transactional patches and diagnostics for release preparation",
+  "kind": "feature",
+  "state": "archived",
+  "canonical_applied": true,
+  "base_commit": "0d345bb2ef7ec7cede572c24309761bec047301a",
+  "created_at": 1791206240,
+  "updated_at": 1791208795,
+  "affected_specs": [
+    "ThreeMD"
+  ],
+  "affected_paths": [
+    "Sources/ThreeMD/",
+    "Tests/ThreeMDTests/",
+    "specs/ThreeMD/",
+    "SPEC.md",
+    "README.md",
+    "docs/EDITING-RELEASE.md",
+    ".specsync/config.toml"
+  ],
+  "no_spec_change": false,
+  "no_spec_change_rationale": null,
+  "acceptance_criteria": [
+    "Optional stable plane IDs survive text and binary round trips without changing existing parsing or z links; immutable Sendable typed patches apply atomically with bounded operation counts and exact revision preconditions; duplicate IDs invalid coordinates missing targets stale revisions and cancellation return structured diagnostics with no partial document; release docs publish Swift-first capabilities migration examples and a compatibility matrix; the full pinned Trust lane and strict SpecSync pass with actual evidence; feature PRs remain open for Leif to merge and no release is published."
+  ],
+  "selected_artifacts": [
+    "context",
+    "requirements",
+    "plan",
+    "tasks",
+    "testing",
+    "docs",
+    "design",
+    "research"
+  ],
+  "dependencies": [],
+  "answers": {
+    "architecture_risk": "yes",
+    "public_contract": "yes"
+  }
+}

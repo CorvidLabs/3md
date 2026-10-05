@@ -7,11 +7,11 @@
   "title": "Add stable document identities transactional patches and diagnostics for release preparation",
   "description": "Add stable document identities transactional patches and diagnostics for release preparation",
   "kind": "feature",
-  "state": "verifying",
+  "state": "accepted",
   "canonical_applied": true,
   "base_commit": "0d345bb2ef7ec7cede572c24309761bec047301a",
   "created_at": 1791206240,
-  "updated_at": 1791208714,
+  "updated_at": 1791208777,
   "affected_specs": [
     "ThreeMD"
   ],
