@@ -447,10 +447,23 @@ excessive depth, byte/count/occurrence overflow, and available task cancellation
 partial output. Lookup only returns a definition supplied in memory; source
 files may be removed after import without affecting the composition.
 
+### 12.3 Linked file authoring
+
+The optional ordinary-document metadata string `3md-files` is a strict JSON
+glyph-to-relative-filename ledger. A host explicitly supplies file bytes to the
+Swift, TypeScript or Rust file-composition API. Core performs no filesystem or
+network I/O. Recursive resolution deduplicates normalized paths and preserves
+generic document content, existing identities and nested self-contained graphs.
+Portable bundling removes the external ledger and writes the existing
+`3md-composition-1` profile, retaining glyph and source-file provenance attributes.
+The normative path, ordering, bounds and refusal contract is
+[FILE-COMPOSITION.md](docs/FILE-COMPOSITION.md). Existing parser grammar and
+container/profile versions do not change. Placement remains a host concern.
+
 ## 13. Open questions for later versions
 
 - Inline 3D model embeds, for example `@model src="scene.glb"`.
-- Explicit external transclusion and resolver policy.
+- Hosted/remote transclusion, filesystem watchers and linked-file editor policy.
 - Per-plane transition or timing hints for `frame`/`time` axes.
 - Hosted viewer adoption of the storage, composition and editing extensions.
 - A portable optional LZFSE backend for TypeScript and Rust.

@@ -1,0 +1,14 @@
+---
+3md: "1.1"
+axis: "space"
+title: "Tree"
+---
+
+@plane z=0 label="Tree" 3md-id="tree-front"
+```ascii
+  *
+ ***
+*****
+  |
+```
+

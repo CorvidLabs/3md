@@ -855,6 +855,11 @@ export {
   type DocumentCompositionErrorCode, type DocumentEntry, type DocumentReference,
 } from "./composition.js";
 export {
+  DocumentFileComposition, DocumentFileCompositionError,
+  type DocumentFileCompositionErrorCode, type DocumentFileSource, type DocumentFileReference,
+  type DocumentFileCompositionResult,
+} from "./file-composition.js";
+export {
   CompositionEditor, DocumentCompositionSnapshot, DocumentDiagnostics, DocumentEditError, DocumentEditLimits,
   DocumentEditor, DocumentIdentity, DocumentRevision, DocumentSnapshot, stableID,
   type CompositionEdit, type CompositionPatch, type DocumentDiagnostic, type DocumentDiagnosticCode,

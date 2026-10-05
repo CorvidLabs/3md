@@ -1,0 +1,14 @@
+---
+3md: "1.1"
+axis: "space"
+title: "House"
+---
+
+@plane z=0 label="Front" 3md-id="house-front"
+```ascii
+ /\\
+/  \\
+|[]|
+|__|
+```
+

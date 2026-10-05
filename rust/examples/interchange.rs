@@ -7,10 +7,11 @@ use threemd::editing::{
     self, CompositionEdit, CompositionPatch, DocumentCompositionSnapshot, DocumentEdit,
     DocumentEditLimits, DocumentPatch, DocumentSnapshot,
 };
+use threemd::file_composition::{self, DocumentFileCompositionError, DocumentFileSource};
 use threemd::storage::{
     self, DocumentCompression, DocumentDecodeLimits, DocumentStorageFormat, OperationOptions,
 };
-use threemd::{Document, Plane};
+use threemd::{Document, DocumentComposition, Plane};
 
 const MAXIMUM_LINE_BYTES: usize = 32 * 1024 * 1024;
 
@@ -19,6 +20,20 @@ const MAXIMUM_LINE_BYTES: usize = 32 * 1024 * 1024;
 struct Request {
     schema: String,
     kind: String,
+    bytes_hex: String,
+}
+
+#[derive(Deserialize)]
+#[serde(rename_all = "camelCase", deny_unknown_fields)]
+struct FileRequest {
+    root_path: String,
+    files: Vec<FileSourceRequest>,
+}
+
+#[derive(Deserialize)]
+#[serde(rename_all = "camelCase", deny_unknown_fields)]
+struct FileSourceRequest {
+    path: String,
     bytes_hex: String,
 }
 
@@ -185,22 +200,70 @@ fn composition_response(bytes: &[u8]) -> Result<Response, &'static str> {
     let limits = DocumentDecodeLimits::default();
     let graph_limits = DocumentCompositionLimits::default();
     let options = OperationOptions::default();
+    let graph = composition::decode(bytes, &graph_limits, &limits, &options)
+        .map_err(|error| error.code())?;
+    composition_graph_response(&graph)
+}
+
+fn file_error(error: DocumentFileCompositionError) -> &'static str {
+    match error {
+        DocumentFileCompositionError::InvalidPath(_)
+        | DocumentFileCompositionError::DuplicatePath(_) => "filePath",
+        DocumentFileCompositionError::InvalidLedger(_)
+        | DocumentFileCompositionError::InvalidGlyph(_) => "fileLedger",
+        DocumentFileCompositionError::MissingFile(_) => "missingFile",
+        DocumentFileCompositionError::InputLimit => "fileLimit",
+        other => other.code(),
+    }
+}
+
+fn files_response(bytes: &[u8]) -> Result<Response, &'static str> {
+    let request: FileRequest = serde_json::from_slice(bytes).map_err(|_| "adapterFailure")?;
+    let graph_limits = DocumentCompositionLimits::default();
+    if request.files.len() > graph_limits.maximum_definitions {
+        return Err("fileLimit");
+    }
+    let mut sources = Vec::with_capacity(request.files.len());
+    for source in request.files {
+        sources.push(DocumentFileSource {
+            path: source.path,
+            data: unhex(&source.bytes_hex)?,
+        });
+    }
+    let result = file_composition::resolve(
+        &request.root_path,
+        &sources,
+        &graph_limits,
+        &DocumentDecodeLimits::default(),
+        &OperationOptions::default(),
+    )
+    .map_err(file_error)?;
+    composition_graph_response(&result.composition)
+}
+
+fn composition_graph_response(graph: &DocumentComposition) -> Result<Response, &'static str> {
+    let limits = DocumentDecodeLimits::default();
+    let graph_limits = DocumentCompositionLimits::default();
+    let options = OperationOptions::default();
     let edit_limits = DocumentEditLimits::default();
-    let profile = storage::decode(bytes, &limits, &options).map_err(|error| error.code())?;
-    let graph = composition::decode_document(&profile, &graph_limits, &limits, &options)
+    let canonical = composition::encode(graph, &graph_limits, &limits, &options)
         .map_err(|error| error.code())?;
-    let canonical = composition::encode(&graph, &graph_limits, &limits, &options)
-        .map_err(|error| error.code())?;
-    let profile = composition::document(&graph, &graph_limits, &limits, &options)
+    let profile = composition::document(graph, &graph_limits, &limits, &options)
         .map_err(|error| error.code())?;
     let binary = storage::encode(
         &profile,
         DocumentStorageFormat::Binary(DocumentCompression::None),
-        &limits,
+        &DocumentDecodeLimits {
+            maximum_encoded_bytes: graph_limits.maximum_profile_bytes,
+            maximum_decoded_bytes: graph_limits.maximum_profile_bytes,
+            maximum_record_bytes: graph_limits.maximum_profile_bytes,
+            maximum_planes: 1,
+            ..DocumentDecodeLimits::default()
+        },
         &options,
     )
     .map_err(|error| error.code())?;
-    let adopted = editing::adopt_composition(&graph, &graph_limits, &limits, &options)
+    let adopted = editing::adopt_composition(graph, &graph_limits, &limits, &options)
         .map_err(|error| error.code())?;
     let snapshot = DocumentCompositionSnapshot::new(adopted, &graph_limits, &limits, &options)
         .map_err(|error| error.code())?;
@@ -283,6 +346,7 @@ fn response(line: &[u8]) -> Result<Response, &'static str> {
     match request.kind.as_str() {
         "document" => document_response(&bytes),
         "composition" => composition_response(&bytes),
+        "files" => files_response(&bytes),
         _ => Err("adapterFailure"),
     }
 }
@@ -430,5 +494,86 @@ mod tests {
         assert_eq!(binary.canonical_hex, text.canonical_hex);
         assert_eq!(binary.semantic, text.semantic);
         assert_eq!(binary.edited_hex, text.edited_hex);
+    }
+
+    #[test]
+    fn supplied_file_adapter_emits_reopenable_composition_outputs() {
+        let root = b"---\n3md: 0.1\n3md-files: '{\"1\":\"child.3md\"}'\n---\n@plane z=0\n1\n";
+        let child = b"---\n3md: 0.1\n---\n@plane z=0 3md-id=kept\nChild\n";
+        let input = serde_json::to_vec(&json!({"rootPath":"root.3md", "files":[
+            {"path":"root.3md", "bytesHex":hex(root)},
+            {"path":"child.3md", "bytesHex":hex(child)},
+        ]}))
+        .unwrap();
+        let output = files_response(&input).unwrap();
+        assert!(output.stale_rejected);
+        assert!(output.legacy_hex.is_none());
+        assert!(output.raw_canonical_hex.is_none());
+        assert_ne!(output.edited_hex, output.adopted_hex);
+        assert_eq!(
+            output.semantic["entries"][0]["document"]["planes"][0]["attributes"]["3md-id"],
+            "kept"
+        );
+        for bytes in [&output.canonical_hex, &output.binary_hex] {
+            let reopened = composition_response(&unhex(bytes).unwrap()).unwrap();
+            assert_eq!(reopened.semantic, output.semantic);
+            assert_eq!(reopened.canonical_hex, output.canonical_hex);
+            assert_eq!(reopened.edited_hex, output.edited_hex);
+        }
+        let request = serde_json::to_vec(
+            &json!({"schema":"3md-interchange-1", "kind":"files", "bytesHex":hex(&input)}),
+        )
+        .unwrap();
+        assert_eq!(
+            response(&request).unwrap().canonical_hex,
+            output.canonical_hex
+        );
+    }
+
+    #[test]
+    fn supplied_file_adapter_rejects_malformed_protocol_and_maps_core_errors() {
+        for input in [
+            r#"{"rootPath":"root","rootPath":"other","files":[]}"#,
+            r#"{"rootPath":"root","files":[],"unknown":0}"#,
+            r#"{"rootPath":"root","files":[{"path":"root","bytesHex":"","unknown":0}]}"#,
+            r#"{"rootPath":"root","files":[{"path":"root","\u0070ath":"other","bytesHex":""}]}"#,
+            r#"{"rootPath":"root","files":[{"path":"root","bytesHex":"FF"}]}"#,
+        ] {
+            assert!(
+                matches!(files_response(input.as_bytes()), Err("adapterFailure")),
+                "{input}"
+            );
+        }
+        let input = |root: &str, source: &str| {
+            serde_json::to_vec(&json!({"rootPath":root, "files":[{"path":"root", "bytesHex":hex(source.as_bytes())}]})).unwrap()
+        };
+        assert!(matches!(
+            files_response(&input("/root", "")),
+            Err("filePath")
+        ));
+        assert!(matches!(
+            files_response(&input("missing", "")),
+            Err("missingFile")
+        ));
+        assert!(matches!(
+            files_response(&input("root", "---\n3md: 0.1\n3md-files: '[]'\n---\n")),
+            Err("fileLedger")
+        ));
+        assert!(matches!(
+            files_response(&input(
+                "root",
+                "---\n3md: 0.1\n3md-files: '{\"1\":\"root\"}'\n---\n"
+            )),
+            Err("cycle")
+        ));
+        assert!(matches!(
+            files_response(&input("root", "invalid")),
+            Err("invalidText")
+        ));
+        let sources: Vec<_> = (0..1025)
+            .map(|index| json!({"path":format!("file-{index}"),"bytesHex":""}))
+            .collect();
+        let oversized = serde_json::to_vec(&json!({"rootPath":"root", "files":sources})).unwrap();
+        assert!(matches!(files_response(&oversized), Err("fileLimit")));
     }
 }

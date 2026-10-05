@@ -8,6 +8,7 @@ internal func swiftInterchange(_ request: InterchangeRequest) throws -> Intercha
         switch request.kind {
         case "document": return try documentInterchange(data)
         case "composition": return try compositionInterchange(data)
+        case "files": return try filesInterchange(data)
         default: return InterchangeResponse(ok: false, error: "adapterFailure")
         }
     } catch {
@@ -64,12 +65,41 @@ private func documentInterchange(_ data: Data) throws -> InterchangeResponse {
 }
 
 private func compositionInterchange(_ data: Data) throws -> InterchangeResponse {
-    let envelope = try DocumentStorageCodec.decode(data)
-    let composition = try DocumentCompositionCodec.decode(envelope)
+    let composition = try DocumentCompositionCodec.decode(data)
+    return try compositionResponse(composition)
+}
+
+private func filesInterchange(_ data: Data) throws -> InterchangeResponse {
+    try validateInterchangeJSON(data)
+    let value = try JSONDecoder().decode(JSONValue.self, from: data)
+    guard case .object(let manifest) = value,
+        Set(manifest.keys) == ["rootPath", "files"],
+        let rootValue = manifest["rootPath"], case .string(let rootPath) = rootValue,
+        let filesValue = manifest["files"], case .array(let files) = filesValue
+    else { throw InterchangeAdapterError.invalidFilesRequest }
+    let sources = try files.map { value -> DocumentFileSource in
+        guard case .object(let file) = value,
+            Set(file.keys) == ["path", "bytesHex"],
+            let pathValue = file["path"], case .string(let path) = pathValue,
+            let bytesValue = file["bytesHex"], case .string(let bytesHex) = bytesValue
+        else { throw InterchangeAdapterError.invalidFilesRequest }
+        return DocumentFileSource(path: path, data: try Data(hex: bytesHex))
+    }
+    let result = try DocumentFileComposition.resolve(rootPath: rootPath, sources: sources)
+    return try compositionResponse(result.composition)
+}
+
+private func compositionResponse(_ composition: DocumentComposition) throws -> InterchangeResponse {
     let canonical = try DocumentCompositionCodec.encode(composition)
     let binary = try DocumentStorageCodec.encode(
         DocumentCompositionCodec.document(for: composition),
-        format: .binary(compression: .none)
+        format: .binary(compression: .none),
+        limits: DocumentDecodeLimits(
+            maximumEncodedBytes: DocumentCompositionLimits.standard.maximumProfileBytes,
+            maximumDecodedBytes: DocumentCompositionLimits.standard.maximumProfileBytes,
+            maximumPlanes: 1,
+            maximumRecordBytes: DocumentCompositionLimits.standard.maximumProfileBytes
+        )
     )
     let adopted = try DocumentIdentity.adopt(composition)
     let snapshot = try DocumentCompositionSnapshot(adopted)
@@ -183,12 +213,20 @@ private func coordinateBits(_ value: Double) -> String {
     return String(repeating: "0", count: 16 - digits.count) + digits
 }
 
-private enum InterchangeAdapterError: Error { case missingAdoptedIdentity }
+private enum InterchangeAdapterError: Error { case missingAdoptedIdentity, invalidFilesRequest }
 
 private func interchangeErrorCode(_ error: any Error) -> String {
     if let error = error as? DocumentEditError { return error.diagnostic.code.rawValue }
     if let error = error as? ParseError { return error.code }
     if #available(macOS 10.15, iOS 13, tvOS 13, watchOS 6, *), error is CancellationError { return "cancelled" }
+    if let error = error as? DocumentFileCompositionError {
+        switch error {
+        case .invalidPath, .duplicatePath: return "filePath"
+        case .invalidLedger, .invalidGlyph: return "fileLedger"
+        case .missingFile: return "missingFile"
+        case .inputLimit: return "fileLimit"
+        }
+    }
     if let error = error as? DocumentStorageError {
         switch error {
         case .invalidLimits: return "invalidLimits"

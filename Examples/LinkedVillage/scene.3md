@@ -1,0 +1,13 @@
+---
+3md: "1.1"
+axis: "space"
+title: "Linked village"
+3md-files: "{\"1\":\"models/house.3md\",\"2\":\"models/tree.3md\",\"3\":\"models/tower.3md\",\"4\":\"models/house.3md\"}"
+---
+
+@plane z=0 label="Village"
+```ascii
+..2..3..2..
+.1.....4...
+```
+

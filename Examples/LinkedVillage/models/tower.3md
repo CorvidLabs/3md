@@ -1,0 +1,15 @@
+---
+3md: "1.1"
+axis: "space"
+title: "Tower"
+3md-files: "{\"T\":\"tree.3md\"}"
+---
+
+@plane z=0 label="Tower" 3md-id="tower-front"
+```ascii
+|_|_|
+|   |
+| []|
+|___| T
+```
+

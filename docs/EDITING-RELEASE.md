@@ -127,3 +127,20 @@ state their implementation/fixture authorship and complementary peer coverage;
 these are technical agent records, not human approval or permitted signatures.
 The new scope's official verification, finalization and publication retain their
 own exact commit records. Historical receipts remain unchanged.
+
+## Linked authoring and portable bundling
+
+The preparation now includes a host-supplied file ledger in all three ports, defined by [FILE-COMPOSITION.md](FILE-COMPOSITION.md). The libraries resolve explicit bytes, not disk paths. An ordinary document can map `1` and `2` to child filenames without a separate module registry. Re-resolving after child edits refreshes the linked graph; bundling embeds shared definitions once in the existing composition profile and removes the external ledger. The bundle then needs no source folder.
+
+```swift
+let linked = try DocumentFileComposition.resolve(
+    rootPath: "scene.3md",
+    sources: [DocumentFileSource(path: "scene.3md", data: parentBytes),
+              DocumentFileSource(path: "models/tree.3md", data: treeBytes)]
+)
+let portable = try DocumentCompositionCodec.encode(linked.composition)
+```
+
+TypeScript uses `DocumentFileComposition.resolve(rootPath, sources)` with Uint8Array bytes and optional policies/AbortSignal. Rust uses `file_composition::resolve(root_path, sources, composition_limits, document_limits, options)`. All preserve generic Markdown and axes; placement/rendering remains the host's responsibility. See [LinkedVillage](../Examples/LinkedVillage/README.md) for nested and repeated file examples and the explicit development bundle command. Apple LZFSE remains optional; mandatory cross-language binary is uncompressed.
+
+This additive authoring contract does not implement remote fetching, filesystem watchers, automatic user-file migration or arbitrary spatial rendering in Sculpt. Native app insertion is a separate bounded feature. No 2.0 tag or package publication is claimed by this preparation.

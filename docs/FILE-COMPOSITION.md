@@ -14,6 +14,7 @@ Paths normalize to NFC, are case sensitive, and use POSIX slashes. Reject absolu
 Ledger values must be strings. Reject duplicate JSON keys including escaped spellings, malformed JSON and glyphs outside single printable ASCII. Order ledger references by glyph. Filename ordering is Unicode scalar order, never locale or UTF-16 order.
 
 ## Discovery and bundling
+Before NFC normalization or indexing, the sum of original supplied-path UTF-8 bytes plus rootPath MUST fit maximumProfileBytes. Standalone resolvePath checks combined source and owner UTF-8 bytes against the standard document maximumRecordBytes (8 MiB). ledger JSON uses that same standalone record bound. These failures are inputLimit. Path scanning checks cancellation cooperatively.
 Only reachable files decode. Supplied source count is bounded by maximumDefinitions before indexing, and aggregate reachable encoded bytes by maximumProfileBytes. Ordinary documents contribute local entry root; an existing composition contributes ALL its entries, including unused entries. Scan every embedded document ledger relative to its containing file.
 Canonical paths deduplicate sources. Bound depth, definitions, references and traversal work, check cancellation, refuse file/graph cycles and return no partial results.
 After discovery sort by normalized path scalar order, then local ID ASCII order; assign file-000000, file-000001 etc. Remap existing references and retain their order, attributes and optional stable identities. Append ledger edges in glyph order with attributes glyph and source-file (normalized project-relative path). Do not invent a stable reference ID.
@@ -25,4 +26,3 @@ Development interchange kind files has bytesHex containing UTF-8 JSON `{"rootPat
 
 ## Verification
 Test simple, nested, repeated and refreshed children; text/binary children; nested bundles; identities/opaque attributes; duplicate basenames in different folders; Unicode and valid parent-relative paths; missing files; invalid paths/aliases; duplicate JSON keys; malformed ledger; cycles; lowered policies; cancellation. Shared Swift/TS/Rust inputs and all nine writer/reader pairs must pass. Complete Trust is required. Portable output must reopen without source files.
-

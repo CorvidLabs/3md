@@ -118,7 +118,10 @@ private final class InterchangeCoordinator {
                             id: item.id,
                             producer: adapters[producerIndex].name,
                             format: format,
-                            request: .init(kind: item.request.kind, bytesHex: hex),
+                            request: .init(
+                                kind: item.request.kind == "files" ? "composition" : item.request.kind,
+                                bytesHex: hex
+                            ),
                             expected: reply,
                             compareOriginal: format != "adopted" && format != "edited"
                         )
@@ -270,6 +273,19 @@ private final class InterchangeCoordinator {
                     throw InterchangeFailure.invalid("Invalid format coverage \(item.id)")
                 }
             }
+        }
+        for fixture in try FileInterchangeCases.make() {
+            cases.append(
+                CheckCase(
+                    id: fixture.id,
+                    request: .init(kind: "files", bytesHex: fixture.bytes.hex),
+                    formats: fixture.expectedError == nil ? ["canonical", "binary"] : [],
+                    expectedCanonical: nil,
+                    expectedBinary: nil,
+                    expectedError: fixture.expectedError,
+                    expectedZBits: nil
+                )
+            )
         }
         return cases
     }
@@ -615,6 +631,11 @@ do {
         #else
         throw InterchangeFailure.invalid("Watchdog probe unsupported")
         #endif
+    } else if CommandLine.arguments.contains("--bundle") {
+        guard #available(macOS 10.15.4, *) else {
+            throw InterchangeFailure.invalid("File bundling needs macOS 10.15.4+")
+        }
+        try FileBundleHost.run(Array(CommandLine.arguments.dropFirst()))
     } else if CommandLine.arguments.contains("--adapter") {
         runSwiftAdapter()
     } else {
