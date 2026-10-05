@@ -1,8 +1,8 @@
 # ThreeMD
 
-## ADDED Requirements
+## ADDED
 
-### REQ-ThreeMD-030
+### REQUIREMENT REQ-ThreeMD-030
 
 TypeScript and Rust SHALL expose bounded general-document uncompressed binary and self-contained composition APIs compatible with the Swift format.
 
@@ -11,7 +11,7 @@ Acceptance Criteria
 - Unsupported compression is explicit; LZFSE is unavailable without a platform backend.
 - Composition validates strict duplicate-aware JSON, all definitions and graph budgets without external I/O.
 
-### REQ-ThreeMD-031
+### REQUIREMENT REQ-ThreeMD-031
 
 TypeScript and Rust SHALL expose namespaced stable identities, exact canonical-byte revision snapshots, atomic typed patches and bounded structured diagnostics.
 
@@ -21,7 +21,7 @@ Acceptance Criteria
 - Exact stale revisions, budgets and cooperative cancellation reject safely.
 - Diagnostics retain actual line/path evidence and preflight work before expensive validation.
 
-### REQ-ThreeMD-032
+### REQUIREMENT REQ-ThreeMD-032
 
 All language implementations SHALL share verified portable extension vectors and accurate capability contracts while preserving existing text conformance.
 

@@ -1,4 +1,47 @@
 {
-  "approvals": [],
+  "approvals": [
+    {
+      "gate": "definition",
+      "actor": "agent:codex-root",
+      "timestamp": 1791209010,
+      "digest": "96274ffa80061127142af784058ae397eab2b748da42cd0a52b72f85911a80b0",
+      "note": "Executing agent records the new bounded port scope under Leif direct instruction to update all ThreeMD languages and fan out. This is delegated preparation authority, not a claim that Leif reviewed an implementation diff or an independent human review. Leif retains merge and release authority.",
+      "approved_scope": {
+        "schema_version": 1,
+        "change_id": "bring-bounded-binary-composition-and-transactional-editing-to-typescript-and-rust-with-shared-conformance",
+        "title": "Bring bounded binary composition and transactional editing to TypeScript and Rust with shared conformance",
+        "description": "Bring bounded binary composition and transactional editing to TypeScript and Rust with shared conformance",
+        "kind": "feature",
+        "affected_specs": [
+          "ThreeMD"
+        ],
+        "affected_paths": [
+          ".specsync/config.toml",
+          "README.md",
+          "SPEC.md",
+          "Tests/ThreeMDTests/",
+          "conformance/",
+          "docs/EDITING-RELEASE.md",
+          "js/",
+          "rust/",
+          "specs/ThreeMD/"
+        ],
+        "no_spec_change": false,
+        "no_spec_change_rationale": null,
+        "acceptance_criteria": [
+          "TypeScript and Rust implement portable uncompressed storage strict bounded composition stable identities exact-byte revisions atomic patches and structured diagnostics compatible with Swift; shared format vectors prove semantic and canonical compatibility while old parser conformance remains unchanged; unsupported LZFSE fails explicitly without new runtime dependencies; limits and cooperative cancellation are tested with idiomatic APIs; the complete pinned Trust lane strict specs and actual scoped review pass; PRs stay open for Leif with no release or automatic Sculpt dependency update."
+        ],
+        "dependencies": [],
+        "supersedes": [],
+        "answers": {
+          "architecture_risk": "yes",
+          "public_contract": "yes"
+        }
+      },
+      "approved_delta_digests": {
+        "ThreeMD": "497dcad7c888af2c5640ae600647c4fe407634caa5a3e3830f5a92d24de33c5f"
+      }
+    }
+  ],
   "reopenings": []
 }
