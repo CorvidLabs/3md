@@ -125,21 +125,33 @@ public enum DocumentDiagnostics {
         documentLimits: DocumentDecodeLimits = .standard
     ) throws -> DocumentDiagnosticReport {
         try DocumentStorageCancellation.check()
-        // Validate caller-lowered graph policies and charge source work before collecting diagnostics.
+        // Cheap count checks and payload charging precede source serialization and graph reconstruction.
+        guard composition.entries.count <= compositionLimits.maximumDefinitions else {
+            throw DocumentCompositionError.tooManyDefinitions
+        }
+        var budget = EditingPayloadBudget(maximumBytes: limits.maximumDiagnosticBytes)
+        try budget.charge(composition.rootID)
+        var referenceCount = 0
+        for entry in composition.entries {
+            try DocumentStorageCancellation.check()
+            guard entry.references.count <= compositionLimits.maximumReferences - referenceCount else {
+                throw DocumentCompositionError.tooManyReferences
+            }
+            referenceCount += entry.references.count
+            guard entry.document.planes.count <= documentLimits.maximumPlanes else {
+                throw DocumentStorageError.tooManyPlanes
+            }
+            try budget.charge(entry.id); try budget.document(entry.document)
+            for reference in entry.references {
+                try budget.charge(reference.targetID); try budget.attributes(reference.attributes)
+            }
+        }
         _ = try DocumentComposition(
             rootID: composition.rootID,
             entries: composition.entries,
             limits: compositionLimits,
             documentLimits: documentLimits
         )
-        var budget = EditingPayloadBudget(maximumBytes: limits.maximumDiagnosticBytes)
-        try budget.charge(composition.rootID)
-        for entry in composition.entries {
-            try budget.charge(entry.id); try budget.document(entry.document)
-            for reference in entry.references {
-                try budget.charge(reference.targetID); try budget.attributes(reference.attributes)
-            }
-        }
         var diagnostics: [DocumentDiagnostic] = []
         for (entryIndex, entry) in composition.entries.enumerated() {
             try DocumentStorageCancellation.check()

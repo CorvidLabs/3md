@@ -253,7 +253,7 @@ are pure synchronous APIs; they never open paths or resolve URLs.
 | `invalidComposition` | Final graph failed validation. |
 | `operationLimit` | Patch exceeds operation count policy. |
 | `payloadLimit` | Expected revision, operand or diagnostic work exceeds policy. |
-| `parseFailure` | DocumentDiagnostics.parseFailure(_:) preserves existing ParseError code/line/detail in structured form. |
+| `parseFailure` | DocumentDiagnostics.parseFailure(_:) maps existing parser failure to generic code, actual sourceLine and localized message. |
 | `DocumentEditError` | Equatable, Sendable, LocalizedError failed transaction carrying one structured diagnostic. |
 | `diagnostic` | Structured failed-operation evidence. |
 | `DocumentDiagnosticReport` | Equatable, Codable, Sendable deterministic issues with truncation evidence. |

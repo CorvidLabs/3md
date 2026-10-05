@@ -84,6 +84,65 @@ final class DocumentDiagnosticTests: XCTestCase {
         }
     }
 
+    func testCompositionDiagnosticBudgetRejectsBeforeExpensiveGraphSourceValidation() throws {
+        let document = Document(
+            version: "0.1",
+            axis: .layer,
+            planes: [.init(z: 0, body: String(repeating: "x", count: 256))]
+        )
+        let composition = try DocumentComposition(rootID: "root", entries: [.init(id: "root", document: document)])
+        let graphLimits = try DocumentCompositionLimits(maximumDefinitionBytes: 8)
+        XCTAssertThrowsError(
+            try DocumentDiagnostics.inspect(
+                composition,
+                limits: .init(maximumDiagnosticBytes: 64),
+                compositionLimits: graphLimits
+            )
+        ) { error in
+            XCTAssertEqual((error as? DocumentEditError)?.diagnostic.code, .payloadLimit)
+        }
+        XCTAssertThrowsError(try DocumentDiagnostics.inspect(composition, compositionLimits: graphLimits)) { error in
+            XCTAssertEqual(error as? DocumentCompositionError, .definitionBytesExceeded)
+        }
+    }
+
+    func testCompositionDiagnosticPreflightStillEnforcesCheapCountPolicies() throws {
+        let document = Document(version: "0.1", axis: .layer, planes: [.init(z: 0, body: "Body")])
+        let composition = try DocumentComposition(
+            rootID: "root",
+            entries: [
+                .init(id: "leaf", document: document),
+                .init(id: "root", document: document, references: [.init(targetID: "leaf")]),
+            ]
+        )
+        XCTAssertThrowsError(
+            try DocumentDiagnostics.inspect(composition, compositionLimits: .init(maximumDefinitions: 1))
+        ) { error in
+            XCTAssertEqual(error as? DocumentCompositionError, .tooManyDefinitions)
+        }
+        XCTAssertThrowsError(
+            try DocumentDiagnostics.inspect(composition, compositionLimits: .init(maximumReferences: 0))
+        ) { error in
+            XCTAssertEqual(error as? DocumentCompositionError, .tooManyReferences)
+        }
+    }
+
+    func testCancelledCompositionDiagnosticsDoNotBeginPreflightOrGraphValidation() async throws {
+        let document = Document(version: "0.1", axis: .layer, planes: [.init(z: 0, body: "Body")])
+        let composition = try DocumentComposition(rootID: "root", entries: [.init(id: "root", document: document)])
+        let task = Task {
+            withUnsafeCurrentTask { $0?.cancel() }
+            return try DocumentDiagnostics.inspect(
+                composition,
+                limits: .init(maximumDiagnosticBytes: 1),
+                compositionLimits: .init(maximumDefinitionBytes: 1)
+            )
+        }
+        do { _ = try await task.value; XCTFail("Expected cancellation") } catch is CancellationError {} catch {
+            XCTFail("\(error)")
+        }
+    }
+
     func testHostileLinkPrefixesDoNotTriggerLegacyRegexDuringDiagnostics() throws {
         let body = String(repeating: "[[z=", count: 30_000)
         let document = Document(version: "0.1", axis: .layer, planes: [.init(z: 0, body: body)])
