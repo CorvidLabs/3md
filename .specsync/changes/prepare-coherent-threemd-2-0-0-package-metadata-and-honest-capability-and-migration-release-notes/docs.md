@@ -5,7 +5,7 @@ artifact: docs
 
 # Docs
 
-Update CHANGELOG with prepared, unreleased 2.0.0 notes and README with truthful current-source capability and installation boundaries. Correct stale zero-dependency and registry prose using the checked-in manifests/workflows, without claiming a live package is published. Include element/README.md for its registry instructions and editor/vscode/README.md for the prepared VSIX filename; these surface documentation corrections change no workflow or runtime.
+Update CHANGELOG with prepared, unreleased 2.0.0 notes and README with truthful current-source capability and installation boundaries. Correct stale zero-dependency and registry prose using the checked-in manifests/workflows, without claiming a live package is published. Include element/README.md for its registry instructions, editor/vscode/README.md for the prepared VSIX filename and js/README.md for the current three-library capabilities and finite conformance claim; these surface documentation corrections change no workflow or runtime.
 
 Add docs/RELEASE-2.0.0.md with synchronized package metadata, unchanged text/container/profile contracts, migration guidance, full library versus viewer/highlighting capability matrix and a concrete release checklist. Point docs/EDITING-RELEASE.md at 2.0.0, preserve its historical receipts and qualify older merge/adoption status.
 

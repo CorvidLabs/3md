@@ -10,7 +10,7 @@
   "state": "approved",
   "base_commit": "9dfbdb649891a95f27e7590e9e6ddc72b9e58d08",
   "created_at": 1791220529,
-  "updated_at": 1791220828,
+  "updated_at": 1791221264,
   "affected_specs": [
     "ThreeMD",
     "ThreeMDElement"
@@ -22,6 +22,7 @@
     "docs/EDITING-RELEASE.md",
     "docs/RELEASE-2.0.0.md",
     "js/package.json",
+    "js/README.md",
     "element/package.json",
     "element/README.md",
     "editor/vscode/package.json",
