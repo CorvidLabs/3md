@@ -1,0 +1,76 @@
+{
+  "approvals": [
+    {
+      "gate": "definition",
+      "actor": "user:0xLeif",
+      "timestamp": 1783976028,
+      "digest": "2ce2d380b030b04d904a99189d4c5d2be5a18789bdddd7155f374f83daa0961d",
+      "note": "Definition reviewed after final-head comments; scope is limited to Trust path filters, SDD governance paths, and installed agent guidance."
+    },
+    {
+      "gate": "definition",
+      "actor": "user:0xLeif",
+      "timestamp": 1784012911,
+      "digest": "5bd9d4eddcff67d4e2ed60328ba2cf59b66e0a8a29627e72b6b08fd006d3f754",
+      "note": "Reapproved after replacing circular verification tasks with truthful completed configuration and preserving hosted checks as post-push evidence."
+    },
+    {
+      "gate": "acceptance",
+      "actor": "user:0xLeif",
+      "timestamp": 1784012970,
+      "digest": "a02b2a8ea28461e6a5dbfe880389246f14291a0d72fb403709a616bab38bc6cb",
+      "note": "Closing approval after strict native verification passed all seven Swift, TypeScript, Rust, generated-bundle, and editor steps; hosted checks are not claimed yet."
+    },
+    {
+      "gate": "definition",
+      "actor": "user:0xLeif",
+      "timestamp": 1791163180,
+      "digest": "7fe9d71efbc0db4ee3f3a61c456c09dd9a300e1b72981dacf66b90b565c67936",
+      "note": "Normalized compatible definition evidence during explicit acceptance",
+      "approved_delta_digests": {}
+    },
+    {
+      "gate": "acceptance",
+      "actor": "user:0xLeif",
+      "timestamp": 1791163180,
+      "digest": "985ff0276491e7751cc532bcfa70ae5778ceb5f2507410afa22942ea9e2b610a",
+      "note": "Audited reopen after trust.yml set permissions.contents to read. Directed with the SpecSync 6 SDD for PR 57."
+    }
+  ],
+  "reopenings": [
+    {
+      "schema_version": 1,
+      "change_id": "CHG-0003-address-final-trust-and-sdd-governance-review-corrections",
+      "actor": "user:0xLeif",
+      "reason": "trust.yml now sets permissions.contents to read, so the accepted delivery input no longer matches the tree.",
+      "timestamp": 1791162661,
+      "from_state": "accepted",
+      "to_state": "verifying",
+      "superseded_approval": {
+        "gate": "acceptance",
+        "actor": "user:0xLeif",
+        "timestamp": 1784012970,
+        "digest": "a02b2a8ea28461e6a5dbfe880389246f14291a0d72fb403709a616bab38bc6cb",
+        "note": "Closing approval after strict native verification passed all seven Swift, TypeScript, Rust, generated-bundle, and editor steps; hosted checks are not claimed yet."
+      },
+      "prior_verification": {
+        "timestamp": 1784012957,
+        "commit": "765abbf6be3919262f3fb885ed36439afafc5c5b",
+        "contract_digest": "5bd9d4eddcff67d4e2ed60328ba2cf59b66e0a8a29627e72b6b08fd006d3f754",
+        "workspace_digest": "96b757577179b0b7c087eebd3f8e96ac148ea0abce4320e96d43696c31a9255f",
+        "acceptance_input_digest": "c00a57191dd6a175286195a6217702c871180367d7d53ad5091b975b5619ee2e",
+        "passed": true,
+        "commands": [
+          {
+            "command": "fledge lanes run verify",
+            "success": true,
+            "exit_code": 0
+          }
+        ],
+        "requirement_ids": []
+      },
+      "stale_acceptance_input_digest": "c00a57191dd6a175286195a6217702c871180367d7d53ad5091b975b5619ee2e",
+      "current_acceptance_input_digest": "a77211b4d98c3771ee76d38e7121f9a313993bb257a2586246bade8f0bfb672e"
+    }
+  ]
+}

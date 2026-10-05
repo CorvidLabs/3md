@@ -7,11 +7,11 @@
   "title": "Limit GITHUB_TOKEN to contents read in the UI, trust, and cargo-publish workflows",
   "description": "Limit GITHUB_TOKEN to contents read in the UI, trust, and cargo-publish workflows",
   "kind": "bug_fix",
-  "state": "verifying",
+  "state": "archived",
   "canonical_applied": true,
   "base_commit": "fb70a0c9c9ab41c93c882514b8af2ca760626fb2",
   "created_at": 1791162394,
-  "updated_at": 1791162502,
+  "updated_at": 1791162971,
   "affected_specs": [],
   "affected_paths": [
     ".github/workflows/ui.yml",

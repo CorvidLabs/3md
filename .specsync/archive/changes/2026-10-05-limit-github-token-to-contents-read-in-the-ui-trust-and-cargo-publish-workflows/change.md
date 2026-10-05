@@ -1,6 +1,6 @@
 ---
 id: limit-github-token-to-contents-read-in-the-ui-trust-and-cargo-publish-workflows
-state: implementing
+state: archived
 type: bug_fix
 base_commit: fb70a0c9c9ab41c93c882514b8af2ca760626fb2
 ---

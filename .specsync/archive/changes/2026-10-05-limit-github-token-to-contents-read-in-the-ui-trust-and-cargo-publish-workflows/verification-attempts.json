@@ -80,6 +80,78 @@
         }
       ],
       "requirement_ids": []
+    },
+    {
+      "timestamp": 1791162500,
+      "commit": "777427d6c89dd55eead16a3d46e4e97894ef2a6f",
+      "contract_digest": "b150befa4d04d5d7eb90b2e21ee993ca589ecf37c8406ec295b2e1f81320f49a",
+      "execution_digest": "14488918b63500c46970de19358144d0662ad3ce39f9236b48329da2c5f5e14b",
+      "workspace_digest": "36ebd3f70317b1e364c96adcf5303133d840cc764c05a3244496e24b202cc57e",
+      "acceptance_input_digest": "e996652497c85213e8ae06c9263f5cd0a1f19f1a50879f67f2ebe73540cb3747",
+      "acceptance_manifest": {
+        "schema_version": 1,
+        "entries": [
+          {
+            "path": ".github/workflows/cargo-publish.yml",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "4b77964492a9b4589ed2f8098b0b5736522ec58f7e476399c716baf3c953caca",
+            "entry_digest": "13438f081e86ba3c9a1e24a9cadc863a5644a1e3a0d64d8a756e13065a337d05",
+            "owners": [
+              "@exact:delivery"
+            ]
+          },
+          {
+            "path": ".github/workflows/trust.yml",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "da776bfeeb02cae165895113b5ccf67cde87d619fa57389cdf7e292b87e71aaa",
+            "entry_digest": "55787b1eb20f9868416b55cc111e7d145fac0834ff0bfc49d973070cd1318652",
+            "owners": [
+              "@exact:delivery"
+            ]
+          },
+          {
+            "path": ".github/workflows/ui.yml",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "ab0804b7ec314ee4c6d677a55665a008dc11c3eedbc0b5cf662f00dcc89cdee3",
+            "entry_digest": "f84643dc6033b6cdc539182a8b5ecb1a36be309a1b771b68af7b1d5fe17d5add",
+            "owners": [
+              "@exact:delivery"
+            ]
+          },
+          {
+            "path": ".specsync/adoption-report.json",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "df4f4ba992bb9e1b08e9376e385d06d60b6b32da851efcff3d1bec9074c2bcb1",
+            "entry_digest": "b238023a2b07d3a63175d776e5f4b5b53dda6d33606c90905ff75dc5b097b6fb",
+            "owners": [
+              "@exact:delivery"
+            ]
+          },
+          {
+            "path": ".specsync/workflow-v2-baseline.json",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "e40fd50e61f9da53eb68a36d052ce37bb326055cd461c570002c52f25ac0cc9e",
+            "entry_digest": "206f19c8d399d968ebe19b0fbc0375236938a7876c30f6720a03cb1d3b6dcc24",
+            "owners": [
+              "@exact:delivery"
+            ]
+          }
+        ]
+      },
+      "passed": true,
+      "commands": [
+        {
+          "command": "specsync check (no spec in scope)",
+          "success": true,
+          "exit_code": 0
+        }
+      ],
+      "requirement_ids": []
     }
   ]
 }
