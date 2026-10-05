@@ -5,9 +5,10 @@ artifact: tasks
 
 # Tasks
 
-- [ ] Swift API, tests and adapter.
-- [ ] TypeScript and Rust APIs, tests and adapters.
-- [ ] Shared cases and nine-pair portable bundles.
-- [ ] Complete Trust on final implementation.
-- [ ] Current specs/examples/release docs and scoped review.
-- [ ] Permitted lifecycle and feature PR publication.
+- [x] Swift API, tests and adapter.
+- [x] TypeScript and Rust APIs, tests and adapters.
+- [x] Shared cases and nine-pair portable bundles.
+- [x] Complete Trust on implementation tip ad17806.
+- [x] Current specs/examples/release docs and complementary source review repairs.
+
+Closing milestones: the official scoped review, additional Claude review, lifecycle finalization and feature PR publication remain separately tracked. They follow verification and are not prerequisites for the check that records it.

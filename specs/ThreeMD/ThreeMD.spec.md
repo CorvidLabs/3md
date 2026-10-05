@@ -1,6 +1,6 @@
 ---
 module: ThreeMD
-version: 7
+version: 8
 status: active
 files:
   - Sources/ThreeMD/Axis.swift
@@ -485,3 +485,4 @@ errors retain their stable cases and metadata.
 | 4 | 2026-10-05 | add-stable-document-identities-transactional-patches-and-diagnostics-for-release-preparation: Add stable document identities transactional patches and diagnostics for release preparation |
 | 5 | 2026-10-05 | bring-bounded-binary-composition-and-transactional-editing-to-typescript-and-rust-with-shared-conformance: Bring bounded binary composition and transactional editing to TypeScript and Rust with shared conformance |
 | 6 | 2026-10-05 | guarantee-portable-cross-language-document-and-composition-interchange-with-a-nine-pair-public-api-verification-matrix: Guarantee portable cross-language document and composition interchange with a nine-pair public API verification matrix |
+| 8 | 2026-10-05 | add-linked-file-composition-with-a-glyph-ledger-recursive-supplied-file-resolution-and-portable-self-contained-bundling: Add linked file composition with a glyph ledger recursive supplied-file resolution and portable self-contained bundling in all three languages |
