@@ -78,3 +78,7 @@ After publication, dependency adoption and explicit file migration require seman
 - Publish a version/tag only under a later direct release instruction from Leif.
 
 Indexed partial reads, portable material/timing profiles and a full animation timeline are later milestones. They are not promised by this release preparation.
+
+## Prepared implementation evidence
+
+Product tip `0018a3c96d849ffb5966a9dd270b43b7d63541a6` passed the pinned complete Trust lane: 222 Swift tests, 79 JavaScript tests, Rust conformance/doc tests, element drift and editor grammar. Forced strict SpecSync covers all 28 files and 200 ThreeMD exports with zero warnings. Scoped agent review passed after a diagnostic-budget ordering correction. The existing soft provenance policy reports degradation without a permitted signature; neither a human implementation approval nor a release is claimed.
