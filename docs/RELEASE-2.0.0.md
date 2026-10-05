@@ -153,6 +153,17 @@ does not close the signed-provenance gap.
 
 ## Before a later release
 
+The metadata implementation at `87f7d96f9aecdf8932d285515e9786358a60e9e5`
+passed the complete pinned Trust lane in 70.080 seconds: 244 Swift tests,
+141 TypeScript tests, 31 Rust tests and three doctests, package typechecking/builds,
+all 426 interchange cases and 16,983 imported outputs, bundle drift and editor
+grammar. Forced strict SpecSync passed with zero warnings and 41/41 source
+files, 11,900/11,900 lines and 269/269 core exports. Existing draft CLI/element
+spec limits remain explicit. Root's scoped metadata review confirms matching
+versions, preserved file-format contracts and unchanged source/workflow/policy
+bytes. This is technical agent review, not independent human approval or a
+permitted signature. Final closure and publication retain their own commit pins.
+
 Focused preparation checks confirmed valid JSON manifests with matching 2.0.0
 versions, Swift Package Manager manifest loading, locked offline Cargo metadata
 and the crate's package file list. Scripts-disabled npm dry runs confirmed both
