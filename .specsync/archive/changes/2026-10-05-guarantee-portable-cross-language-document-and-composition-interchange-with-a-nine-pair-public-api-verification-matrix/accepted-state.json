@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "workflow_version": 2,
+  "workflow_origin_version": 2,
+  "id": "guarantee-portable-cross-language-document-and-composition-interchange-with-a-nine-pair-public-api-verification-matrix",
+  "slug": "guarantee-portable-cross-language-document-and-composition-interchange-with-a-nine-pair-public-api-verification-matrix",
+  "title": "Guarantee portable cross-language document and composition interchange with a nine-pair public API verification matrix",
+  "description": "Guarantee portable cross-language document and composition interchange with a nine-pair public API verification matrix",
+  "kind": "bug_fix",
+  "state": "accepted",
+  "canonical_applied": true,
+  "base_commit": "f44ba6704050752155c6324fc43854db35daac24",
+  "created_at": 1791214950,
+  "updated_at": 1791218343,
+  "affected_specs": [
+    "ThreeMD"
+  ],
+  "affected_paths": [
+    "Sources/ThreeMD/",
+    "Tests/ThreeMDTests/",
+    "js/",
+    "rust/",
+    "conformance/",
+    "scripts/",
+    "Package.swift",
+    "fledge.toml",
+    ".specsync/config.toml",
+    "specs/ThreeMD/",
+    "SPEC.md",
+    "README.md",
+    "AGENTS.md",
+    "docs/EDITING-RELEASE.md",
+    "web/assets/three-md.js",
+    "Sources/ThreeMDInterop/"
+  ],
+  "no_spec_change": false,
+  "no_spec_change_rationale": null,
+  "acceptance_criteria": [
+    "Every Swift TypeScript and Rust producer exports interoperable readable text canonical text uncompressed binary and self-contained composition data that every consumer imports without losing supported values. A permanent bounded public-API matrix covers all nine producer-consumer pairings exact canonical bytes semantics numeric bit patterns Unicode and escaping stable identities revisions and graph preservation, with hostile input cases and every fixture mandatory. Resolve actual legacy parse/serialization compatibility defects without changing parser APIs or the frozen text grammar. Make JS typechecking declaration builds and Node package execution part of verification. Optional Apple LZFSE remains an explicitly documented capability pending the separate user compression choice; no claim that unsupported compressed input is portable. Existing archives and element/dist stay unchanged, no release merge main push or automatic Sculpt dependency update."
+  ],
+  "selected_artifacts": [
+    "context",
+    "testing",
+    "tasks",
+    "design",
+    "docs",
+    "requirements",
+    "research",
+    "plan"
+  ],
+  "dependencies": [],
+  "answers": {
+    "architecture_risk": "yes",
+    "public_contract": "yes"
+  }
+}

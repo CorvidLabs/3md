@@ -1,6 +1,6 @@
 ---
 id: guarantee-portable-cross-language-document-and-composition-interchange-with-a-nine-pair-public-api-verification-matrix
-state: verifying
+state: archived
 type: bug_fix
 base_commit: f44ba6704050752155c6324fc43854db35daac24
 ---

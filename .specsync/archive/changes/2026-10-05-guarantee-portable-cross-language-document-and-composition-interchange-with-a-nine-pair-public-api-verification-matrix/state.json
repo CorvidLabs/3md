@@ -7,11 +7,11 @@
   "title": "Guarantee portable cross-language document and composition interchange with a nine-pair public API verification matrix",
   "description": "Guarantee portable cross-language document and composition interchange with a nine-pair public API verification matrix",
   "kind": "bug_fix",
-  "state": "verifying",
+  "state": "archived",
   "canonical_applied": true,
   "base_commit": "f44ba6704050752155c6324fc43854db35daac24",
   "created_at": 1791214950,
-  "updated_at": 1791217842,
+  "updated_at": 1791218365,
   "affected_specs": [
     "ThreeMD"
   ],
