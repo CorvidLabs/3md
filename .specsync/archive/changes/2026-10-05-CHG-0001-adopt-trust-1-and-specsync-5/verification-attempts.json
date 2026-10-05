@@ -17,10 +17,10 @@
       "requirement_ids": []
     },
     {
-      "timestamp": 1791160092,
-      "commit": "0e9f81ab6c8c104f3f2856f8b9760fd520a05f5b",
+      "timestamp": 1791162676,
+      "commit": "777427d6c89dd55eead16a3d46e4e97894ef2a6f",
       "contract_digest": "1d2ba924f80d9b4e3f780440209d5f6d58c937a5746ac8e42f7d5a958ff6c07d",
-      "workspace_digest": "30437a58fec4326e1275ca670a546704991f48205e3e04d3ed35ba159a919249",
+      "workspace_digest": "36ebd3f70317b1e364c96adcf5303133d840cc764c05a3244496e24b202cc57e",
       "passed": true,
       "commands": [
         {
@@ -32,11 +32,11 @@
       "requirement_ids": []
     },
     {
-      "timestamp": 1791160092,
-      "commit": "0e9f81ab6c8c104f3f2856f8b9760fd520a05f5b",
+      "timestamp": 1791162676,
+      "commit": "777427d6c89dd55eead16a3d46e4e97894ef2a6f",
       "contract_digest": "1d2ba924f80d9b4e3f780440209d5f6d58c937a5746ac8e42f7d5a958ff6c07d",
-      "workspace_digest": "30437a58fec4326e1275ca670a546704991f48205e3e04d3ed35ba159a919249",
-      "acceptance_input_digest": "91e495f4757e405565fdca841238adb803681ed3145e9b781fecd7fa3506fc70",
+      "workspace_digest": "36ebd3f70317b1e364c96adcf5303133d840cc764c05a3244496e24b202cc57e",
+      "acceptance_input_digest": "7c41af5e96609d59dde4ca22026236a5501e2b53b7c5be378855e0fc31224400",
       "acceptance_manifest": {
         "schema_version": 1,
         "entries": [
@@ -154,8 +154,8 @@
             "path": ".github/workflows/trust.yml",
             "kind": "file",
             "mode": 33188,
-            "payload_digest": "422edf51b3d995383f92a026ac6df991786a4765013ff22bd18a49a201bdea3d",
-            "entry_digest": "5fa7246d8b310aef65b3f4330044a9d7534c34e70c10ae1cc2ecbadf1fffd8a1",
+            "payload_digest": "da776bfeeb02cae165895113b5ccf67cde87d619fa57389cdf7e292b87e71aaa",
+            "entry_digest": "55787b1eb20f9868416b55cc111e7d145fac0834ff0bfc49d973070cd1318652",
             "owners": [
               "@exact:delivery"
             ]
@@ -174,8 +174,8 @@
             "path": ".specsync/adoption-report.json",
             "kind": "file",
             "mode": 33188,
-            "payload_digest": "cf373fefda420b317277828039411f122cd75328300a720bef6301b7d7404cf2",
-            "entry_digest": "b8a456983661df292759aa28279d3a92938aa11e38f9977081ac90ad2f24039b",
+            "payload_digest": "df4f4ba992bb9e1b08e9376e385d06d60b6b32da851efcff3d1bec9074c2bcb1",
+            "entry_digest": "b238023a2b07d3a63175d776e5f4b5b53dda6d33606c90905ff75dc5b097b6fb",
             "owners": [
               "@exact:delivery"
             ]
@@ -184,8 +184,8 @@
             "path": ".specsync/config.toml",
             "kind": "file",
             "mode": 33188,
-            "payload_digest": "8014c56f4adf26cae6148c5ae52629b8957eb91f9844dee1f5c03b8b2e700146",
-            "entry_digest": "c64ea4207345bafd9a122b3b9e0a5d02685aff838c6a6f07ae57424927af12f3",
+            "payload_digest": "8d7431e20240dbc13c14d2b36ec6fee22256db558a4d85e73244041825fb476b",
+            "entry_digest": "7e8feda54acc7c21f7795b4d1efa237a52db9596f1ef05b2904f82154194172d",
             "owners": [
               "@exact:delivery"
             ]
@@ -214,8 +214,8 @@
             "path": ".specsync/version",
             "kind": "file",
             "mode": 33188,
-            "payload_digest": "54ef76332b31df830699e9d4138396885ab72bae260a034a81ff02bf32d8e90a",
-            "entry_digest": "fd86a4bab1b64a09087e3b8803b739cba3d4b154c0209c9245d9018cfd088f20",
+            "payload_digest": "23b6867924dfeb9cf532753438dc919669bf93ad88215e11c15630a4acbf4299",
+            "entry_digest": "339b5f88be30302336707baa5dab61fd4b324d04e495d3bb772cf893fb4f73bc",
             "owners": [
               "@exact:delivery"
             ]
@@ -244,8 +244,8 @@
             "path": "AGENTS.md",
             "kind": "file",
             "mode": 33188,
-            "payload_digest": "4470948cded6c73e665786bb15ce5e8a064d5575ee6516eabf40897241242994",
-            "entry_digest": "38c6a1e73d1916acab1f715b761cc8eb17b4a90a368f7f2a78ded88ae341d39d",
+            "payload_digest": "31fc9ad73bacd83524a5be5ee90b134223eb107f29eb46cfb1dd6e83f524bab5",
+            "entry_digest": "0599ece92c042cc3b66e1e41cf42fa5676865e411e1477b1b69f38dc3df50663",
             "owners": [
               "@exact:delivery"
             ]
@@ -274,8 +274,8 @@
             "path": "README.md",
             "kind": "file",
             "mode": 33188,
-            "payload_digest": "fddadf11596b6a6c486457f9a1ca4867640ef9f02910be00e2c968a752b2289d",
-            "entry_digest": "644071612486f90399cf754fe8e66b9257cc2a232c0f47d6a0ddddf0588506d4",
+            "payload_digest": "28d19912181fb5bf9b1c266d9e533993da0a7197516425d3995f90acfab345dc",
+            "entry_digest": "d479595c5d8e4414c2070be839a979b2a8d41f9f7a30a71954c9c22c8d827789",
             "owners": [
               "@exact:delivery"
             ]

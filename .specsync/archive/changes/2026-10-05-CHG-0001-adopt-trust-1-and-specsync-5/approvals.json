@@ -51,18 +51,18 @@
     },
     {
       "gate": "definition",
-      "actor": "agent:codex-root",
-      "timestamp": 1791160178,
+      "actor": "user:0xLeif",
+      "timestamp": 1791163100,
       "digest": "1d2ba924f80d9b4e3f780440209d5f6d58c937a5746ac8e42f7d5a958ff6c07d",
       "note": "Normalized compatible definition evidence during explicit acceptance",
       "approved_delta_digests": {}
     },
     {
       "gate": "acceptance",
-      "actor": "agent:codex-root",
-      "timestamp": 1791160178,
-      "digest": "83164d5e9f766d98e321ab225af7720560da58590615806f925a5fda04117a4c",
-      "note": "Delegated refresh of current delivery inputs under Leif approval. Current native lane and Trust 1.2.2 passed, with existing progressive provenance reported degraded. Original evidence is preserved; no human or Claude reviewer or signer claim."
+      "actor": "user:0xLeif",
+      "timestamp": 1791163100,
+      "digest": "e96780628521be8b3c44d3cb0cf0cb0f012d22c03160a02dc12cae53a14b60c4",
+      "note": "Audited reopen after trust.yml set permissions.contents to read. Directed with the SpecSync 6 SDD for PR 57."
     }
   ],
   "reopenings": [
@@ -103,9 +103,9 @@
     {
       "schema_version": 1,
       "change_id": "CHG-0001-adopt-trust-1-and-specsync-5",
-      "actor": "agent:codex-root",
-      "reason": "Leif authorized current full SDD maintenance. The immutable Trust upgrade changes the exact workflow delivery input; preserve historical acceptance and append a fresh verification under the actual delegated agent identity, without a human diff-review claim.",
-      "timestamp": 1791159883,
+      "actor": "user:0xLeif",
+      "reason": "trust.yml now sets permissions.contents to read, so the accepted delivery input no longer matches the tree.",
+      "timestamp": 1791162618,
       "from_state": "accepted",
       "to_state": "verifying",
       "superseded_approval": {
@@ -132,7 +132,7 @@
         "requirement_ids": []
       },
       "stale_acceptance_input_digest": "a6793c577723410186164e0e0d9a4e91892380830069ed60dfb3278c211e8740",
-      "current_acceptance_input_digest": "98fcd68da5f8f4a458225e0976ad44ed296ca9f86e52681bf5a4cfdbfabcdc12"
+      "current_acceptance_input_digest": "10e8661e5cad393d6554ff34eef8f40bc36893271a4ec7cac3324abc991ac084"
     }
   ]
 }

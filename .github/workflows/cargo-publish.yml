@@ -5,6 +5,10 @@ name: cargo-publish
 # (crates.io > Account Settings > API Tokens). Until that secret exists the job
 # will fail at the publish step; nothing else is affected.
 
+# Checkout only. crates.io auth uses the CRATES_IO_TOKEN secret.
+permissions:
+  contents: read
+
 on:
   release:
     types: [published]

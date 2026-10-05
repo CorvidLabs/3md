@@ -1,0 +1,18 @@
+{
+  "approvals": [
+    {
+      "gate": "definition",
+      "actor": "user:0xLeif",
+      "timestamp": 1783827254,
+      "digest": "dcb9541b9bbaef2158d04f0776225b9150255a95bc679f8dbaa7a26311efc798",
+      "note": "Authorized by the user-approved CorvidLabs Trust 1 / SpecSync 5 rollout plan."
+    },
+    {
+      "gate": "acceptance",
+      "actor": "user:0xLeif",
+      "timestamp": 1783971636,
+      "digest": "abc820de8a00833febd046960277b09ea308674755c6aaf828889982b7e3d39c",
+      "note": "Accepted after line-by-line review replaced every tautological generated statement with the exact existing repository behavior and the complete Swift, JavaScript, Rust, bundle, editor, and strict 100% SpecSync lane passed."
+    }
+  ]
+}

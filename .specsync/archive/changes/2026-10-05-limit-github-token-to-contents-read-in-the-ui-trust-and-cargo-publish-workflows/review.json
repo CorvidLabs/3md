@@ -1,0 +1,16 @@
+{
+  "schema_version": 2,
+  "change_id": "limit-github-token-to-contents-read-in-the-ui-trust-and-cargo-publish-workflows",
+  "reviewer": "agent:grok",
+  "provenance": {
+    "schema_version": 1,
+    "provider": "github_actions_check",
+    "required_check": "SpecSync scoped review"
+  },
+  "verdict": "pass",
+  "implementation_commit": "777427d6c89dd55eead16a3d46e4e97894ef2a6f",
+  "contract_digest": "b150befa4d04d5d7eb90b2e21ee993ca589ecf37c8406ec295b2e1f81320f49a",
+  "execution_digest": "14488918b63500c46970de19358144d0662ad3ce39f9236b48329da2c5f5e14b",
+  "workspace_digest": "36ebd3f70317b1e364c96adcf5303133d840cc764c05a3244496e24b202cc57e",
+  "timestamp": 1791162513
+}

@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "id": "CHG-0002-assign-stable-requirement-ids",
+  "slug": "assign-stable-requirement-ids",
+  "title": "Assign stable requirement IDs",
+  "description": "Assign stable requirement IDs",
+  "kind": "documentation",
+  "state": "accepted",
+  "base_commit": "2a145766b9ecb83d96ee15aa453a65cc2125571f",
+  "created_at": 1783827126,
+  "updated_at": 1783971636,
+  "affected_specs": [],
+  "affected_paths": [
+    "specs/"
+  ],
+  "no_spec_change": true,
+  "no_spec_change_rationale": "Add stable identifiers to existing requirement statements without changing their semantics.",
+  "acceptance_criteria": [
+    "Every durable requirement has a unique REQ ID; existing requirement semantics remain unchanged; SpecSync strict validation passes"
+  ],
+  "selected_artifacts": [
+    "context",
+    "docs"
+  ],
+  "dependencies": [],
+  "answers": {
+    "architecture_risk": "no",
+    "public_contract": "no"
+  }
+}
