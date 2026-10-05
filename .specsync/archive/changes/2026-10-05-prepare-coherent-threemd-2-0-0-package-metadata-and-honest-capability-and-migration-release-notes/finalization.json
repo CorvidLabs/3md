@@ -1,0 +1,12 @@
+{
+  "schema_version": 2,
+  "change_id": "prepare-coherent-threemd-2-0-0-package-metadata-and-honest-capability-and-migration-release-notes",
+  "implementation_commit": "1eb8ed2a3dd1b5db3c4b9cb64e38c451f7b8c44b",
+  "implementation_tree": "c99a7990e2aca2cc50e03bcaa3bbf106d39f7eee",
+  "contract_digest": "fdd56664d10303f053524abeda693623804297286022c7db12f24e4786e04006",
+  "workspace_digest": "a03123bde638918b82b7a34c0abd0980cd26af79404519891c9158172bb4d5c2",
+  "closing_digest": "003bdda2ccc222c1ba48e008a1e47c417b30280eeeb13e955c3f6cccfceac6c5",
+  "review_digest": "e68e36018fa7cc4a417b4affe6184754c2042b15c8a90c93e6434ff588456638",
+  "finalization_digest": "3c793f8c22c3d5cc69abaaf3e072efef78444d26f76bca6f7c73b5e169609450",
+  "timestamp": 1791221677
+}

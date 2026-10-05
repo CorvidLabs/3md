@@ -1,0 +1,252 @@
+{
+  "timestamp": 1791221617,
+  "commit": "1eb8ed2a3dd1b5db3c4b9cb64e38c451f7b8c44b",
+  "contract_digest": "fdd56664d10303f053524abeda693623804297286022c7db12f24e4786e04006",
+  "execution_digest": "d96dbc6d033d89db9b858ff1e53e5fd3e63ab106c5c1f199c3013916a8ef90e0",
+  "workspace_digest": "a03123bde638918b82b7a34c0abd0980cd26af79404519891c9158172bb4d5c2",
+  "acceptance_input_digest": "5e5fd365d702889f236ffe1b456d9b0c8fa0037f9d0fca6031dd0157606e994a",
+  "acceptance_manifest": {
+    "schema_version": 1,
+    "entries": [
+      {
+        "path": "AGENTS.md",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "dbfe11d346d8731ef108383ebd2165c137de3fe98463ac6cd8a7088f98c82b9b",
+        "entry_digest": "b44c936d6de85d1120e546097590a0ad13a6b9a23da87428d0e958c9c8e1c15b",
+        "owners": [
+          "ThreeMD"
+        ]
+      },
+      {
+        "path": "CHANGELOG.md",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "c86e3f2e4334ad9cc3125be2e69697bbb6742d046aea4a33cb4da519478dc295",
+        "entry_digest": "ad1c18de5d4dce655a577bf70f55b9831d7fcf62480467f09b1884b7c6fa7d76",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "README.md",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "6c27dc4be1da1a5b6d3220ed5b8b4f99fc30f71f884cadc89a7c1f30d694cb3d",
+        "entry_digest": "85cde774d84f3b00c788f76990c431260514451a0d5cdf3256186d93533e7a52",
+        "owners": [
+          "ThreeMD"
+        ]
+      },
+      {
+        "path": "docs/EDITING-RELEASE.md",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "437a2d2d463dfce441741d52449d2c1be06d3a46b4cfe64cee49e19ee3f37b39",
+        "entry_digest": "baedcffeb8fb87e0450efa4cd224be46fa423187dcfc465d5a18bbb9d55b9dec",
+        "owners": [
+          "ThreeMD"
+        ]
+      },
+      {
+        "path": "docs/RELEASE-2.0.0.md",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "0e67dd7d4e15519ca845afdf242f9a1a5c925573a15ce7d8a2900846812db366",
+        "entry_digest": "a513d2f95bdafa232efff7279cb7a7dda608930b083de177eee6d39c012d1c4b",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "editor/vscode/README.md",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "30f7a48c93ba5966a0d190c3e78c6c5c491ef43129e145183025d0ef1f2615f8",
+        "entry_digest": "5bd97f5c53f8f3f2f272ef44ed32d0ffc1c68c65cb09b43a50b544d6ae26f408",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "editor/vscode/package.json",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "795d53daa1d24307122793af08e5bf1767afc3b32db7a6db137b77258d0c89fd",
+        "entry_digest": "c2c6352b9c35913be8aef8784929b6ed2bf8c9dd4aef4b4c9d6c595632e1ea13",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "element/README.md",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "2c3bdbad7a64292e6cd3ef84f7c40c9b8014de9cbb1215b810039017af5a5d22",
+        "entry_digest": "a7026c33d0afd91214a7a70076089124e84636e281566dbafade1440c42227df",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "element/package.json",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "4dcab46a81bfa3de2d06fb2a13769739dd41b7533abcf8dad92067efeb7b92ed",
+        "entry_digest": "abaafe8bf073446d21862d6b5d960af2bea92218053dbd43a185e5586c09bc34",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "js/README.md",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "491292b8a46a5a48e78b8daba99355efe634521a343c9a20651acb4118d50df1",
+        "entry_digest": "619e472ddecaca849172d6e04f39aa1abfeb8e4c2abb897923eb419eef93ccc2",
+        "owners": [
+          "ThreeMD"
+        ]
+      },
+      {
+        "path": "js/package.json",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "120153eb96630e01da8feca4d5413415647a89ece64f5699588b0c8ca0662791",
+        "entry_digest": "654df17f8c8a9f96883848e2e2333c9e17eeb2f3deed21cb30a893786ba8ef08",
+        "owners": [
+          "ThreeMD"
+        ]
+      },
+      {
+        "path": "rust/Cargo.lock",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "8899ed45c9b83e25dafdd1788307dd00ab21daad7b040f2bae522fe64e59615c",
+        "entry_digest": "7dfb03028f45193ed5dff85dfd6c9a7cff0c38371a15096e502a426f0dd018b6",
+        "owners": [
+          "ThreeMD"
+        ]
+      },
+      {
+        "path": "rust/Cargo.toml",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "171cd32dea358bc6652d79506373d3f65ed1fff2ec9898844cfc9f7f2194d475",
+        "entry_digest": "af93368a442163111484d3f3d056927052927acfea0f6b05ffee767c63e2148c",
+        "owners": [
+          "ThreeMD"
+        ]
+      },
+      {
+        "path": "specs/ThreeMD/ThreeMD.spec.md",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "2d8fa60446e0e80598c3092143d8a23c0f1898818ff757722ef3c2dce3c839c6",
+        "entry_digest": "58a02d0274f3297590d91a1067b0ebb5d955651ec0559081ec4e269439c0451a",
+        "owners": [
+          "ThreeMD"
+        ]
+      },
+      {
+        "path": "specs/ThreeMD/context.md",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "e2dd8543c2c3373dd6d7bdffa0a4530c725da3c6954cc087ac96689b420d7af9",
+        "entry_digest": "488741a2341d94cc062f337d40a5521693beb9c39eee08cae87b86381f8e1c73",
+        "owners": [
+          "ThreeMD"
+        ]
+      },
+      {
+        "path": "specs/ThreeMD/requirements.md",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "92c0551b9c01bb48fd90bf96a9aa334905ce92f1e679cc7fd7bceea060ae81ae",
+        "entry_digest": "a2a769d732188be3ccf7c02b7040d2e638e699102f040cf6637d699900dc0fed",
+        "owners": [
+          "ThreeMD"
+        ]
+      },
+      {
+        "path": "specs/ThreeMD/tasks.md",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "9764f36441dd07f5ac719346c72c09e83e2afdd0543be2569e18954c9ab5e903",
+        "entry_digest": "9c3747c84319ed7506789965e3686a46a4aaf1820a52af9acdd7b2f45896954a",
+        "owners": [
+          "ThreeMD"
+        ]
+      },
+      {
+        "path": "specs/ThreeMD/testing.md",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "fa08d61ce136ee4d66abc5d1525cd2ec4a51b5e09ec7d4b2c9f7026f56a44a58",
+        "entry_digest": "6abe3dd24d99a5c424b9e434c1ef2dfde2a07634e5550fc78789e92a3ee5a179",
+        "owners": [
+          "ThreeMD"
+        ]
+      },
+      {
+        "path": "specs/ThreeMDElement/ThreeMDElement.spec.md",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "027e12d4a48a0b7b857f5fc43fb75f9c0d738fefdc28dd19af0973be7c662a39",
+        "entry_digest": "cc506b3cbe118a23c5bca1e7efbe468d6a39cf901b30097824787546ba373494",
+        "owners": [
+          "ThreeMDElement"
+        ]
+      },
+      {
+        "path": "specs/ThreeMDElement/context.md",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "d11a69cc53b0e568dea1c7d6a74c0da448e320e22f8f628382d40ba9837be5bb",
+        "entry_digest": "247f848c058687618d00ea24e07d75cd04e9b7b83b8c614f138f93ab92fd4527",
+        "owners": [
+          "ThreeMDElement"
+        ]
+      },
+      {
+        "path": "specs/ThreeMDElement/requirements.md",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "0cd62d900abd73d60e65ce071ff1bfeaa2c3afb9217c3e6cc524d7f35372668c",
+        "entry_digest": "4d5aad238c05fb3cf66e9c20ef6ce527cace6a1afeaf1c141aad846f9164222a",
+        "owners": [
+          "ThreeMDElement"
+        ]
+      },
+      {
+        "path": "specs/ThreeMDElement/tasks.md",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "fe9de98e92cedf78c7256ad5a502a4e0fbfc1d499fc390e37cea55b1794c7cf3",
+        "entry_digest": "c02f04a23c42a4e7e678f37a16e835e1b5aa2fd3f12ce0a7891a84fb70a2685b",
+        "owners": [
+          "ThreeMDElement"
+        ]
+      },
+      {
+        "path": "specs/ThreeMDElement/testing.md",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "b7f70de40aadc2cb1a4cfca5d67838f9517bfd89ea19013c4f7ce0d542249efd",
+        "entry_digest": "f4d15f6caa4f34bae0095b8685f81576702675eb33d9a2eb8aaafda6e7ed0d44",
+        "owners": [
+          "ThreeMDElement"
+        ]
+      }
+    ]
+  },
+  "passed": true,
+  "commands": [
+    {
+      "command": "specsync check --spec ThreeMD --spec ThreeMDElement --strict",
+      "success": true,
+      "exit_code": 0
+    }
+  ],
+  "requirement_ids": []
+}

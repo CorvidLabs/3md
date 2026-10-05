@@ -1,5 +1,28 @@
 # Changelog
 
+## [v2.0.0] - Unreleased
+
+Prepared package metadata only. No 2.0.0 tag or published package is claimed.
+
+### Library capabilities
+
+- General readable and uncompressed binary document storage across Swift, TypeScript and Rust, with bounded decoding and deterministic canonical output.
+- Self-contained reusable-document composition with validated references, shared definitions and bounded acyclic graphs.
+- Optional namespaced plane and reference identities, immutable snapshots, exact canonical revisions, transactional typed patches and structured diagnostics.
+- Cooperative cancellation and explicit work limits. Library APIs leave file and network access to their host.
+- Public-API interchange checks across all nine writer-reader pairs, including legacy text, canonical text, uncompressed containers, composition and imported identity edits.
+- Compatibility repairs for Unicode scalars, whitespace, quoted metadata and canonical numeric spelling found by cross-language round trips.
+
+### Compatibility and release boundaries
+
+- Package 2.0.0 retains frozen text grammar 1.0, binary container version 1 and composition profile `3md-composition-1`. Existing parser/serializer signatures and ordinary `id` attributes remain supported.
+- Swift's optional LZFSE backend requires Apple Compression. TypeScript and Rust return an explicit unsupported-backend error; uncompressed storage is the portable contract.
+- Rust adds the pinned `unicode-normalization =0.1.25` runtime dependency for canonical key equivalence and ordering. Swift and TypeScript introduce no runtime package dependency.
+- Element and VSCode package versions align to 2.0.0. The element remains a text renderer; VSCode remains syntax highlighting only. They do not expose the new binary/composition editing APIs as UI.
+- Runtime evidence currently comes from macOS. Linux/Windows execution and a permitted signed attestation remain release gaps. Finite conformance tests do not prove exhaustive parity.
+
+See [release preparation and migration](docs/RELEASE-2.0.0.md) for capability, adoption and publication checks.
+
 ## [v1.0.0] - 2026-06-23
 
 ### Other
@@ -50,4 +73,3 @@
 - Fix web demo: scene z=0 fallback, scope arrow keys, honor fps (ebe937b)
 - Add interactive web demo and fill in spec companions and docs (9e1ce42)
 - Add 3md: Markdown with a Z axis, plus the CorvidLabs trust toolchain (46e4b57)
-

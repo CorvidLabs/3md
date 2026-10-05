@@ -1,22 +1,22 @@
 # ThreeMD editing release preparation
 
-Status: unreleased feature preparation. Leif will merge the prepared PRs. No tag, package publication or deployment is part of this work.
+Status: 2.0.0 package preparation. The combined feature tree has landed on main. No tag, package publication or deployment is part of this work. The current package/migration checklist is [RELEASE-2.0.0.md](RELEASE-2.0.0.md); historical implementation receipts below retain their original commits.
 
 ## Release scope
 
-The proposed next compatible library release is 1.9.0, subject to the final API compatibility audit. The package version, frozen 1.0 text grammar, binary container version and composition profile version are separate contracts. Existing documents and source APIs stay supported.
+The prepared next package release is 2.0.0. The package version, frozen 1.0 text grammar, binary container version 1 and composition profile version `3md-composition-1` are separate contracts. Existing documents and parser/serializer signatures stay supported.
 
-The release combines the landed binary/composition foundation in PR58 with additive stable identities, typed document/composition patches and structured diagnostics in PR61, plus portable TypeScript and Rust implementations in its follow-up. PR58 and PR60 have landed. PR61 was reconciled against main with passing GitHub checks. The portable follow-up is stacked on PR61 and must be reconciled and verified after it lands. Existing archive records are preserved.
+The release combines the binary/composition foundation in PR58 with stable identities, typed document/composition patches and structured diagnostics in PR61, portable TypeScript/Rust implementations in PR62 and public-API interchange in PR63. PR63 landed in PR62, PR62 landed in PR61, and Leif merged PR61 into main at `9dfbdb649891a95f27e7590e9e6ddc72b9e58d08`. The landed tree is byte-identical to feature tip `20d1ed4f04333e18c36a50a44bf10e1b0e9b72e6`. Existing archive records are preserved and do not pretend that feature evidence was originally collected on the squash commit.
 
 ## Capability matrix
 
 | Capability | Swift | TypeScript | Rust |
 | --- | --- | --- | --- |
 | Existing 1.0 text parsing and serialization | Existing shared conformance | Existing shared conformance | Existing shared conformance |
-| General uncompressed binary container | Landed PR58, unreleased | Portable follow-up, unreleased | Portable follow-up, unreleased |
+| General uncompressed binary container | Implemented, unreleased | Implemented, unreleased | Implemented, unreleased |
 | Apple LZFSE binary compression | Conditional Apple backend | Explicit compressionUnavailable | Explicit compressionUnavailable |
-| Self-contained composition graph/codec | Landed PR58, unreleased | Portable follow-up, unreleased | Portable follow-up, unreleased |
-| Identity-aware snapshots, patches and diagnostics | PR61, unreleased | Portable follow-up, unreleased | Portable follow-up, unreleased |
+| Self-contained composition graph/codec | Implemented, unreleased | Implemented, unreleased | Implemented, unreleased |
+| Identity-aware snapshots, patches and diagnostics | Implemented, unreleased | Implemented, unreleased | Implemented, unreleased |
 
 Uncompressed storage is the portable baseline. Unsupported compression is an explicit failure. Shared extension fixtures independently check exact canonical document/profile/envelope bytes, finite-number formatting, Unicode key ordering, identity adoption, revision guards, atomic edits and diagnostic codes/paths in all three libraries. These are separate from the unchanged legacy parser vectors. Leif explicitly authorized TypeScript and Rust implementation in this follow-up; Sculpt remains Swift-only.
 
@@ -87,9 +87,9 @@ Rust exposes `storage`, `composition`, `editing` and `diagnostics` modules. `sto
 
 ## Sculpt integration boundary
 
-Sculpt's shared-model editing uses its existing validated sculpture/reference values and ThreeMD 1.8.1 until a separately verified upstream version is published. Its current voxel `.3mdb`, `ascii-composition-1` and `ascii-world-1` schemas remain app-specific. The general binary container is a different discriminated format; identical filename suffixes do not make these payloads interchangeable.
+Before this release preparation, Sculpt's shared-model editing used its existing validated sculpture/reference values and ThreeMD 1.8.1. Leif's current request authorizes a separately implemented and verified adoption of the landed source. This library metadata change does not establish completion of that app stream. Sculpt's voxel `.3mdb`, `ascii-composition-1` and `ascii-world-1` schemas remain app-specific. The general binary container is a different discriminated format; identical filename suffixes do not make these payloads interchangeable.
 
-After publication, dependency adoption and explicit file migration require semantic equivalence and legacy-reader regression checks. Existing files are not rewritten automatically. Current Sculpt PRs do not use an untagged dependency or claim support for the new generic container.
+Dependency adoption and explicit file migration require semantic equivalence and legacy-reader regression checks. Existing files are not rewritten automatically. Any temporary source pin must name an actual verified upstream commit; a release pin requires the corresponding tag to exist. App-specific storage is not silently relabeled as the generic container.
 
 ## Release checklist
 
@@ -98,7 +98,9 @@ After publication, dependency adoption and explicit file migration require seman
 - Verify cross-platform unsupported-compression behavior and publish the capability matrix.
 - Record scoped agent review accurately and preserve the unsigned provenance limitation under the existing policy.
 - Finalize only the new feature scope and retain its implementation evidence through publication.
-- Merge PR61 before the portable follow-up, reconcile its resulting tree, and repeat required exact-tip release checks.
+- The related feature PRs have landed; repeat required exact-tip release checks for the new metadata preparation.
+- Preserve the Linux/Windows execution and permitted-signed-attestation gaps until separately established. Current macOS interchange evidence does not close them.
+- Build/check distributable JS, element, Rust and VSCode packages before later publication; this metadata slice does not rebuild `element/dist/`.
 - Publish a version/tag only under a later direct release instruction from Leif.
 
 Indexed partial reads, portable material/timing profiles and a full animation timeline are later milestones. They are not promised by this release preparation.

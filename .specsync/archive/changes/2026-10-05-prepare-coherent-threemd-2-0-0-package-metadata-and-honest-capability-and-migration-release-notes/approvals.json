@@ -1,0 +1,143 @@
+{
+  "approvals": [
+    {
+      "gate": "definition",
+      "actor": "agent:codex-threemd-editing",
+      "timestamp": 1791220708,
+      "digest": "b2a6861c80cae00d1d632dda34e726900eb8a1cdaf0699e04cd4aa4fd1315edd",
+      "note": "Acting under Leif direct request to prep2.0.0, with root confirming this versions and documentation scope. This is an agent definition approval under user authorization. It is not a claim that Leif reviewed this diff, an independent human review, authenticated author proof or a permitted signature. No package publication, tag, deploy, workflow or policy change is approved.",
+      "approved_scope": {
+        "schema_version": 1,
+        "change_id": "prepare-coherent-threemd-2-0-0-package-metadata-and-honest-capability-and-migration-release-notes",
+        "title": "Prepare coherent ThreeMD 2.0.0 package metadata and honest capability and migration release notes",
+        "description": "Prepare coherent ThreeMD 2.0.0 package metadata and honest capability and migration release notes",
+        "kind": "documentation",
+        "affected_specs": [
+          "ThreeMD",
+          "ThreeMDElement"
+        ],
+        "affected_paths": [
+          "AGENTS.md",
+          "CHANGELOG.md",
+          "README.md",
+          "docs/EDITING-RELEASE.md",
+          "docs/RELEASE-2.0.0.md",
+          "editor/vscode/package.json",
+          "element/package.json",
+          "js/package.json",
+          "rust/Cargo.lock",
+          "rust/Cargo.toml"
+        ],
+        "no_spec_change": true,
+        "no_spec_change_rationale": "Only package version declarations and current release documentation change. The existing ThreeMD, CLI and element behavior, public API, text grammar, binary/profile versions, runtime policies, conformance fixtures and canonical requirements are unchanged.",
+        "acceptance_criteria": [
+          "All JS library, element, VSCode and Rust package manifests plus Rust root lock declare 2.0.0; Swift remains tag-versioned. Prepared release notes accurately distinguish package version from unchanged text1.0, binary1 and composition3md-composition-1 contracts. Migration documents legacy compatibility, optional Apple LZFSE, platform and signed-provenance gaps, app-specific Sculpt formats and a separately verified dependency adoption. Source, fixture, element/dist, archived lifecycle and workflow/policy bytes stay unchanged. Focused manifest/lock/package inspections pass and root runs the exact-tip pinned Trust lane before closure. No tag, publication, deploy or policy changes occur."
+        ],
+        "dependencies": [],
+        "supersedes": [],
+        "answers": {
+          "architecture_risk": "no",
+          "public_contract": "no"
+        }
+      },
+      "approved_delta_digests": {}
+    },
+    {
+      "gate": "definition",
+      "actor": "agent:codex-threemd-editing",
+      "timestamp": 1791220828,
+      "digest": "ef0d3ab134cbfb0b8ad655f138ed60073aec4370ab2092ad4aebf7b6aed78d1f",
+      "note": "Narrow pre-implementation amendment adds element/README.md and editor/vscode/README.md to correct stale registry instructions and VSIX version. The first approval and actual main base remain in append-only evidence. Acting under Leif direct2.0.0 preparation authorization, not human diff review or permitted signature. Runtime, policies, publishing actions and old archives remain unchanged.",
+      "approved_scope": {
+        "schema_version": 1,
+        "change_id": "prepare-coherent-threemd-2-0-0-package-metadata-and-honest-capability-and-migration-release-notes",
+        "title": "Prepare coherent ThreeMD 2.0.0 package metadata and honest capability and migration release notes",
+        "description": "Prepare coherent ThreeMD 2.0.0 package metadata and honest capability and migration release notes",
+        "kind": "documentation",
+        "affected_specs": [
+          "ThreeMD",
+          "ThreeMDElement"
+        ],
+        "affected_paths": [
+          "AGENTS.md",
+          "CHANGELOG.md",
+          "README.md",
+          "docs/EDITING-RELEASE.md",
+          "docs/RELEASE-2.0.0.md",
+          "editor/vscode/README.md",
+          "editor/vscode/package.json",
+          "element/README.md",
+          "element/package.json",
+          "js/package.json",
+          "rust/Cargo.lock",
+          "rust/Cargo.toml"
+        ],
+        "no_spec_change": true,
+        "no_spec_change_rationale": "Only package version declarations and current release documentation change. The existing ThreeMD, CLI and element behavior, public API, text grammar, binary/profile versions, runtime policies, conformance fixtures and canonical requirements are unchanged.",
+        "acceptance_criteria": [
+          "All JS library, element, VSCode and Rust package manifests plus Rust root lock declare 2.0.0; Swift remains tag-versioned. Prepared release notes accurately distinguish package version from unchanged text1.0, binary1 and composition3md-composition-1 contracts. Migration documents legacy compatibility, optional Apple LZFSE, platform and signed-provenance gaps, app-specific Sculpt formats and a separately verified dependency adoption. Source, fixture, element/dist, archived lifecycle and workflow/policy bytes stay unchanged. Focused manifest/lock/package inspections pass and root runs the exact-tip pinned Trust lane before closure. No tag, publication, deploy or policy changes occur."
+        ],
+        "dependencies": [],
+        "supersedes": [],
+        "answers": {
+          "architecture_risk": "no",
+          "public_contract": "no"
+        }
+      },
+      "approved_delta_digests": {}
+    },
+    {
+      "gate": "definition",
+      "actor": "agent:codex-threemd-editing",
+      "timestamp": 1791221264,
+      "digest": "fdd56664d10303f053524abeda693623804297286022c7db12f24e4786e04006",
+      "note": "Narrow documentation amendment adds js/README.md so packaged library documentation describes portable storage, composition and edits with honest finite conformance evidence. Prior approvals remain. Agent acts under Leif direct release preparation authorization, not human diff review or permitted signature. Source and publishing authority unchanged.",
+      "approved_scope": {
+        "schema_version": 1,
+        "change_id": "prepare-coherent-threemd-2-0-0-package-metadata-and-honest-capability-and-migration-release-notes",
+        "title": "Prepare coherent ThreeMD 2.0.0 package metadata and honest capability and migration release notes",
+        "description": "Prepare coherent ThreeMD 2.0.0 package metadata and honest capability and migration release notes",
+        "kind": "documentation",
+        "affected_specs": [
+          "ThreeMD",
+          "ThreeMDElement"
+        ],
+        "affected_paths": [
+          "AGENTS.md",
+          "CHANGELOG.md",
+          "README.md",
+          "docs/EDITING-RELEASE.md",
+          "docs/RELEASE-2.0.0.md",
+          "editor/vscode/README.md",
+          "editor/vscode/package.json",
+          "element/README.md",
+          "element/package.json",
+          "js/README.md",
+          "js/package.json",
+          "rust/Cargo.lock",
+          "rust/Cargo.toml"
+        ],
+        "no_spec_change": true,
+        "no_spec_change_rationale": "Only package version declarations and current release documentation change. The existing ThreeMD, CLI and element behavior, public API, text grammar, binary/profile versions, runtime policies, conformance fixtures and canonical requirements are unchanged.",
+        "acceptance_criteria": [
+          "All JS library, element, VSCode and Rust package manifests plus Rust root lock declare 2.0.0; Swift remains tag-versioned. Prepared release notes accurately distinguish package version from unchanged text1.0, binary1 and composition3md-composition-1 contracts. Migration documents legacy compatibility, optional Apple LZFSE, platform and signed-provenance gaps, app-specific Sculpt formats and a separately verified dependency adoption. Source, fixture, element/dist, archived lifecycle and workflow/policy bytes stay unchanged. Focused manifest/lock/package inspections pass and root runs the exact-tip pinned Trust lane before closure. No tag, publication, deploy or policy changes occur."
+        ],
+        "dependencies": [],
+        "supersedes": [],
+        "answers": {
+          "architecture_risk": "no",
+          "public_contract": "no"
+        }
+      },
+      "approved_delta_digests": {}
+    },
+    {
+      "gate": "finalization",
+      "actor": "specsync:finalization",
+      "timestamp": 1791221677,
+      "digest": "003bdda2ccc222c1ba48e008a1e47c417b30280eeeb13e955c3f6cccfceac6c5",
+      "note": "Same-PR finalization closing digest"
+    }
+  ],
+  "reopenings": []
+}
