@@ -1,0 +1,1593 @@
+Building for debugging...
+[0/12] /private/tmp/3md-binary-composition-20261004/.build/arm64-apple-macosx/debug/3mdPackageTests.derived/runner.swift
+[1/12] Write sources
+[2/12] Write threemd-entitlement.plist
+[4/12] Write sources
+[6/12] Write swift-version--58304C5D6DBC2206.txt
+[8/33] Compiling ThreeMD ParseError.swift
+[9/33] Compiling ThreeMD Serializer.swift
+[10/33] Compiling ThreeMD Double+ThreeMD.swift
+[11/33] Compiling ThreeMD Plane.swift
+[12/33] Compiling ThreeMD MarkdownRenderer.swift
+[13/33] Compiling ThreeMD DocumentCompositionLimits.swift
+[14/33] Compiling ThreeMD DocumentStorage.swift
+[15/33] Compiling ThreeMD Parser.swift
+[16/33] Compiling ThreeMD HTMLRenderer.swift
+[17/33] Compiling ThreeMD DocumentCompositionJSON.swift
+/private/tmp/3md-binary-composition-20261004/Sources/ThreeMD/DocumentCompositionJSON.swift:70:17: error: 'Task' is only available in macOS 10.15 or newer
+ 58 | 
+ 59 | /// A bounded writer avoids allocating an oversized escaped JSON result before checking its size.
+ 60 | internal enum DocumentCompositionJSON {
+    |               `- note: add '@available' attribute to enclosing enum
+ 61 |     static func encode(
+    |                 `- note: add '@available' attribute to enclosing static method
+ 62 |         rootID: String,
+ 63 |         entries: [DocumentEntry],
+    :
+ 68 |         try writer.append("{\n  \"entries\": [")
+ 69 |         for (index, entry) in entries.sorted(by: { $0.id < $1.id }).enumerated() {
+ 70 |             try Task.checkCancellation()
+    |                 |- error: 'Task' is only available in macOS 10.15 or newer
+    |                 `- note: add 'if #available' version check
+ 71 |             try writer.append(index == 0 ? "\n" : ",\n")
+ 72 |             try writer.append("    {\n      \"id\": ")
+
+/private/tmp/3md-binary-composition-20261004/Sources/ThreeMD/DocumentCompositionJSON.swift:70:22: error: 'checkCancellation()' is only available in macOS 10.15 or newer
+ 58 | 
+ 59 | /// A bounded writer avoids allocating an oversized escaped JSON result before checking its size.
+ 60 | internal enum DocumentCompositionJSON {
+    |               `- note: add '@available' attribute to enclosing enum
+ 61 |     static func encode(
+    |                 `- note: add '@available' attribute to enclosing static method
+ 62 |         rootID: String,
+ 63 |         entries: [DocumentEntry],
+    :
+ 68 |         try writer.append("{\n  \"entries\": [")
+ 69 |         for (index, entry) in entries.sorted(by: { $0.id < $1.id }).enumerated() {
+ 70 |             try Task.checkCancellation()
+    |                      |- error: 'checkCancellation()' is only available in macOS 10.15 or newer
+    |                      `- note: add 'if #available' version check
+ 71 |             try writer.append(index == 0 ? "\n" : ",\n")
+ 72 |             try writer.append("    {\n      \"id\": ")
+
+/private/tmp/3md-binary-composition-20261004/Sources/ThreeMD/DocumentCompositionJSON.swift:98:13: error: 'Task' is only available in macOS 10.15 or newer
+ 58 | 
+ 59 | /// A bounded writer avoids allocating an oversized escaped JSON result before checking its size.
+ 60 | internal enum DocumentCompositionJSON {
+    |               `- note: add '@available' attribute to enclosing enum
+ 61 |     static func encode(
+    |                 `- note: add '@available' attribute to enclosing static method
+ 62 |         rootID: String,
+ 63 |         entries: [DocumentEntry],
+    :
+ 96 |         try writer.string(rootID)
+ 97 |         try writer.append(",\n  \"schema\": \"3md-composition-1\"\n}")
+ 98 |         try Task.checkCancellation()
+    |             |- error: 'Task' is only available in macOS 10.15 or newer
+    |             `- note: add 'if #available' version check
+ 99 |         return writer.data
+100 |     }
+
+/private/tmp/3md-binary-composition-20261004/Sources/ThreeMD/DocumentCompositionJSON.swift:98:18: error: 'checkCancellation()' is only available in macOS 10.15 or newer
+ 58 | 
+ 59 | /// A bounded writer avoids allocating an oversized escaped JSON result before checking its size.
+ 60 | internal enum DocumentCompositionJSON {
+    |               `- note: add '@available' attribute to enclosing enum
+ 61 |     static func encode(
+    |                 `- note: add '@available' attribute to enclosing static method
+ 62 |         rootID: String,
+ 63 |         entries: [DocumentEntry],
+    :
+ 96 |         try writer.string(rootID)
+ 97 |         try writer.append(",\n  \"schema\": \"3md-composition-1\"\n}")
+ 98 |         try Task.checkCancellation()
+    |                  |- error: 'checkCancellation()' is only available in macOS 10.15 or newer
+    |                  `- note: add 'if #available' version check
+ 99 |         return writer.data
+100 |     }
+
+/private/tmp/3md-binary-composition-20261004/Sources/ThreeMD/DocumentCompositionJSON.swift:106:13: error: 'Task' is only available in macOS 10.15 or newer
+ 58 | 
+ 59 | /// A bounded writer avoids allocating an oversized escaped JSON result before checking its size.
+ 60 | internal enum DocumentCompositionJSON {
+    |               `- note: add '@available' attribute to enclosing enum
+ 61 |     static func encode(
+ 62 |         rootID: String,
+    :
+100 |     }
+101 | 
+102 |     static func decode(_ data: Data, limits: DocumentCompositionLimits) throws -> DocumentCompositionManifest {
+    |                 `- note: add '@available' attribute to enclosing static method
+103 |         guard data.count <= limits.maximumProfileBytes else { throw DocumentCompositionError.profileBytesExceeded }
+104 |         var scanner = Scanner(bytes: Array(data), limits: limits)
+105 |         try scanner.scan()
+106 |         try Task.checkCancellation()
+    |             |- error: 'Task' is only available in macOS 10.15 or newer
+    |             `- note: add 'if #available' version check
+107 |         do {
+108 |             return try JSONDecoder().decode(DocumentCompositionManifest.self, from: data)
+
+/private/tmp/3md-binary-composition-20261004/Sources/ThreeMD/DocumentCompositionJSON.swift:106:18: error: 'checkCancellation()' is only available in macOS 10.15 or newer
+ 58 | 
+ 59 | /// A bounded writer avoids allocating an oversized escaped JSON result before checking its size.
+ 60 | internal enum DocumentCompositionJSON {
+    |               `- note: add '@available' attribute to enclosing enum
+ 61 |     static func encode(
+ 62 |         rootID: String,
+    :
+100 |     }
+101 | 
+102 |     static func decode(_ data: Data, limits: DocumentCompositionLimits) throws -> DocumentCompositionManifest {
+    |                 `- note: add '@available' attribute to enclosing static method
+103 |         guard data.count <= limits.maximumProfileBytes else { throw DocumentCompositionError.profileBytesExceeded }
+104 |         var scanner = Scanner(bytes: Array(data), limits: limits)
+105 |         try scanner.scan()
+106 |         try Task.checkCancellation()
+    |                  |- error: 'checkCancellation()' is only available in macOS 10.15 or newer
+    |                  `- note: add 'if #available' version check
+107 |         do {
+108 |             return try JSONDecoder().decode(DocumentCompositionManifest.self, from: data)
+
+/private/tmp/3md-binary-composition-20261004/Sources/ThreeMD/DocumentCompositionJSON.swift:137:54: error: 'Task' is only available in macOS 10.15 or newer
+114 |     }
+115 | 
+116 |     private struct Writer {
+    |                    `- note: add '@available' attribute to enclosing struct
+117 |         let maximumBytes: Int
+118 |         var data = Data()
+    :
+131 |         mutating func string(_ text: String) throws { try string(Data(text.utf8)) }
+132 | 
+133 |         mutating func string(_ bytes: Data) throws {
+    |                       `- note: add '@available' attribute to enclosing instance method
+134 |             try append("\"")
+135 |             var run = bytes.startIndex
+136 |             for index in bytes.indices {
+137 |                 if index.isMultiple(of: 4_096) { try Task.checkCancellation() }
+    |                                                      |- error: 'Task' is only available in macOS 10.15 or newer
+    |                                                      `- note: add 'if #available' version check
+138 |                 let escape: String?
+139 |                 switch bytes[index] {
+
+/private/tmp/3md-binary-composition-20261004/Sources/ThreeMD/DocumentCompositionJSON.swift:137:59: error: 'checkCancellation()' is only available in macOS 10.15 or newer
+114 |     }
+115 | 
+116 |     private struct Writer {
+    |                    `- note: add '@available' attribute to enclosing struct
+117 |         let maximumBytes: Int
+118 |         var data = Data()
+    :
+131 |         mutating func string(_ text: String) throws { try string(Data(text.utf8)) }
+132 | 
+133 |         mutating func string(_ bytes: Data) throws {
+    |                       `- note: add '@available' attribute to enclosing instance method
+134 |             try append("\"")
+135 |             var run = bytes.startIndex
+136 |             for index in bytes.indices {
+137 |                 if index.isMultiple(of: 4_096) { try Task.checkCancellation() }
+    |                                                           |- error: 'checkCancellation()' is only available in macOS 10.15 or newer
+    |                                                           `- note: add 'if #available' version check
+138 |                 let escape: String?
+139 |                 switch bytes[index] {
+
+/private/tmp/3md-binary-composition-20261004/Sources/ThreeMD/DocumentCompositionJSON.swift:176:17: error: 'Task' is only available in macOS 10.15 or newer
+160 | 
+161 |     /// Foundation decoders discard duplicate keys. Scan before decoding and bound record allocations.
+162 |     private struct Scanner {
+    |                    `- note: add '@available' attribute to enclosing struct
+163 |         let bytes: [UInt8]
+164 |         let limits: DocumentCompositionLimits
+    :
+173 |         }
+174 | 
+175 |         mutating func value(depth: Int) throws {
+    |                       `- note: add '@available' attribute to enclosing instance method
+176 |             try Task.checkCancellation()
+    |                 |- error: 'Task' is only available in macOS 10.15 or newer
+    |                 `- note: add 'if #available' version check
+177 |             guard depth <= 12 else { throw invalid("excessive JSON nesting") }
+178 |             try whitespace()
+
+/private/tmp/3md-binary-composition-20261004/Sources/ThreeMD/DocumentCompositionJSON.swift:176:22: error: 'checkCancellation()' is only available in macOS 10.15 or newer
+160 | 
+161 |     /// Foundation decoders discard duplicate keys. Scan before decoding and bound record allocations.
+162 |     private struct Scanner {
+    |                    `- note: add '@available' attribute to enclosing struct
+163 |         let bytes: [UInt8]
+164 |         let limits: DocumentCompositionLimits
+    :
+173 |         }
+174 | 
+175 |         mutating func value(depth: Int) throws {
+    |                       `- note: add '@available' attribute to enclosing instance method
+176 |             try Task.checkCancellation()
+    |                      |- error: 'checkCancellation()' is only available in macOS 10.15 or newer
+    |                      `- note: add 'if #available' version check
+177 |             guard depth <= 12 else { throw invalid("excessive JSON nesting") }
+178 |             try whitespace()
+
+/private/tmp/3md-binary-composition-20261004/Sources/ThreeMD/DocumentCompositionJSON.swift:241:54: error: 'Task' is only available in macOS 10.15 or newer
+160 | 
+161 |     /// Foundation decoders discard duplicate keys. Scan before decoding and bound record allocations.
+162 |     private struct Scanner {
+    |                    `- note: add '@available' attribute to enclosing struct
+163 |         let bytes: [UInt8]
+164 |         let limits: DocumentCompositionLimits
+    :
+235 |         }
+236 | 
+237 |         mutating func string(isKey: Bool) throws -> String? {
+    |                       `- note: add '@available' attribute to enclosing instance method
+238 |             guard consume(34) else { throw invalid("JSON key must be a string") }
+239 |             let start = index - 1
+240 |             while index < bytes.count {
+241 |                 if index.isMultiple(of: 4_096) { try Task.checkCancellation() }
+    |                                                      |- error: 'Task' is only available in macOS 10.15 or newer
+    |                                                      `- note: add 'if #available' version check
+242 |                 let byte = bytes[index]
+243 |                 index += 1
+
+/private/tmp/3md-binary-composition-20261004/Sources/ThreeMD/DocumentCompositionJSON.swift:241:59: error: 'checkCancellation()' is only available in macOS 10.15 or newer
+160 | 
+161 |     /// Foundation decoders discard duplicate keys. Scan before decoding and bound record allocations.
+162 |     private struct Scanner {
+    |                    `- note: add '@available' attribute to enclosing struct
+163 |         let bytes: [UInt8]
+164 |         let limits: DocumentCompositionLimits
+    :
+235 |         }
+236 | 
+237 |         mutating func string(isKey: Bool) throws -> String? {
+    |                       `- note: add '@available' attribute to enclosing instance method
+238 |             guard consume(34) else { throw invalid("JSON key must be a string") }
+239 |             let start = index - 1
+240 |             while index < bytes.count {
+241 |                 if index.isMultiple(of: 4_096) { try Task.checkCancellation() }
+    |                                                           |- error: 'checkCancellation()' is only available in macOS 10.15 or newer
+    |                                                           `- note: add 'if #available' version check
+242 |                 let byte = bytes[index]
+243 |                 index += 1
+
+/private/tmp/3md-binary-composition-20261004/Sources/ThreeMD/DocumentCompositionJSON.swift:284:54: error: 'Task' is only available in macOS 10.15 or newer
+160 | 
+161 |     /// Foundation decoders discard duplicate keys. Scan before decoding and bound record allocations.
+162 |     private struct Scanner {
+    |                    `- note: add '@available' attribute to enclosing struct
+163 |         let bytes: [UInt8]
+164 |         let limits: DocumentCompositionLimits
+    :
+280 |         }
+281 | 
+282 |         mutating func whitespace() throws {
+    |                       `- note: add '@available' attribute to enclosing instance method
+283 |             while index < bytes.count, [UInt8(32), 9, 10, 13].contains(bytes[index]) {
+284 |                 if index.isMultiple(of: 4_096) { try Task.checkCancellation() }
+    |                                                      |- error: 'Task' is only available in macOS 10.15 or newer
+    |                                                      `- note: add 'if #available' version check
+285 |                 index += 1
+286 |             }
+
+/private/tmp/3md-binary-composition-20261004/Sources/ThreeMD/DocumentCompositionJSON.swift:284:59: error: 'checkCancellation()' is only available in macOS 10.15 or newer
+160 | 
+161 |     /// Foundation decoders discard duplicate keys. Scan before decoding and bound record allocations.
+162 |     private struct Scanner {
+    |                    `- note: add '@available' attribute to enclosing struct
+163 |         let bytes: [UInt8]
+164 |         let limits: DocumentCompositionLimits
+    :
+280 |         }
+281 | 
+282 |         mutating func whitespace() throws {
+    |                       `- note: add '@available' attribute to enclosing instance method
+283 |             while index < bytes.count, [UInt8(32), 9, 10, 13].contains(bytes[index]) {
+284 |                 if index.isMultiple(of: 4_096) { try Task.checkCancellation() }
+    |                                                           |- error: 'checkCancellation()' is only available in macOS 10.15 or newer
+    |                                                           `- note: add 'if #available' version check
+285 |                 index += 1
+286 |             }
+[18/33] Compiling ThreeMD DocumentCompositionCodec.swift
+/private/tmp/3md-binary-composition-20261004/Sources/ThreeMD/DocumentCompositionCodec.swift:41:13: error: 'Task' is only available in macOS 10.15 or newer
+  2 | 
+  3 | /// A versioned text profile using an ordinary Document envelope. It resolves no external resources.
+  4 | public enum DocumentCompositionCodec {
+    |             `- note: add '@available' attribute to enclosing enum
+  5 |     /// Converts a composition to a document that can also be passed to `DocumentStorageCodec` for binary storage.
+  6 |     public static func document(
+    :
+ 12 |     }
+ 13 | 
+ 14 |     private static func profile(
+    |                         `- note: add '@available' attribute to enclosing static method
+ 15 |         for composition: DocumentComposition,
+ 16 |         limits: DocumentCompositionLimits,
+    :
+ 39 |         )
+ 40 |         let data = try DocumentStorageCodec.encode(document, format: .text, limits: profileLimits(limits))
+ 41 |         try Task.checkCancellation()
+    |             |- error: 'Task' is only available in macOS 10.15 or newer
+    |             `- note: add 'if #available' version check
+ 42 |         return (document, data)
+ 43 |     }
+
+/private/tmp/3md-binary-composition-20261004/Sources/ThreeMD/DocumentCompositionCodec.swift:41:18: error: 'checkCancellation()' is only available in macOS 10.15 or newer
+  2 | 
+  3 | /// A versioned text profile using an ordinary Document envelope. It resolves no external resources.
+  4 | public enum DocumentCompositionCodec {
+    |             `- note: add '@available' attribute to enclosing enum
+  5 |     /// Converts a composition to a document that can also be passed to `DocumentStorageCodec` for binary storage.
+  6 |     public static func document(
+    :
+ 12 |     }
+ 13 | 
+ 14 |     private static func profile(
+    |                         `- note: add '@available' attribute to enclosing static method
+ 15 |         for composition: DocumentComposition,
+ 16 |         limits: DocumentCompositionLimits,
+    :
+ 39 |         )
+ 40 |         let data = try DocumentStorageCodec.encode(document, format: .text, limits: profileLimits(limits))
+ 41 |         try Task.checkCancellation()
+    |                  |- error: 'checkCancellation()' is only available in macOS 10.15 or newer
+    |                  `- note: add 'if #available' version check
+ 42 |         return (document, data)
+ 43 |     }
+
+/private/tmp/3md-binary-composition-20261004/Sources/ThreeMD/DocumentCompositionCodec.swift:60:13: error: 'Task' is only available in macOS 10.15 or newer
+  2 | 
+  3 | /// A versioned text profile using an ordinary Document envelope. It resolves no external resources.
+  4 | public enum DocumentCompositionCodec {
+    |             `- note: add '@available' attribute to enclosing enum
+  5 |     /// Converts a composition to a document that can also be passed to `DocumentStorageCodec` for binary storage.
+  6 |     public static func document(
+    :
+ 53 | 
+ 54 |     /// Reads either bounded text or a generic Document storage envelope containing this profile.
+ 55 |     public static func decode(
+    |                        `- note: add '@available' attribute to enclosing static method
+ 56 |         _ data: Data,
+ 57 |         limits: DocumentCompositionLimits = .standard,
+ 58 |         documentLimits: DocumentDecodeLimits = .standard
+ 59 |     ) throws -> DocumentComposition {
+ 60 |         try Task.checkCancellation()
+    |             |- error: 'Task' is only available in macOS 10.15 or newer
+    |             `- note: add 'if #available' version check
+ 61 |         guard data.count <= limits.maximumProfileBytes else { throw DocumentCompositionError.profileBytesExceeded }
+ 62 |         let document = try DocumentStorageCodec.decode(data, limits: profileLimits(limits))
+
+/private/tmp/3md-binary-composition-20261004/Sources/ThreeMD/DocumentCompositionCodec.swift:60:18: error: 'checkCancellation()' is only available in macOS 10.15 or newer
+  2 | 
+  3 | /// A versioned text profile using an ordinary Document envelope. It resolves no external resources.
+  4 | public enum DocumentCompositionCodec {
+    |             `- note: add '@available' attribute to enclosing enum
+  5 |     /// Converts a composition to a document that can also be passed to `DocumentStorageCodec` for binary storage.
+  6 |     public static func document(
+    :
+ 53 | 
+ 54 |     /// Reads either bounded text or a generic Document storage envelope containing this profile.
+ 55 |     public static func decode(
+    |                        `- note: add '@available' attribute to enclosing static method
+ 56 |         _ data: Data,
+ 57 |         limits: DocumentCompositionLimits = .standard,
+ 58 |         documentLimits: DocumentDecodeLimits = .standard
+ 59 |     ) throws -> DocumentComposition {
+ 60 |         try Task.checkCancellation()
+    |                  |- error: 'checkCancellation()' is only available in macOS 10.15 or newer
+    |                  `- note: add 'if #available' version check
+ 61 |         guard data.count <= limits.maximumProfileBytes else { throw DocumentCompositionError.profileBytesExceeded }
+ 62 |         let document = try DocumentStorageCodec.decode(data, limits: profileLimits(limits))
+
+/private/tmp/3md-binary-composition-20261004/Sources/ThreeMD/DocumentCompositionCodec.swift:72:13: error: 'Task' is only available in macOS 10.15 or newer
+  2 | 
+  3 | /// A versioned text profile using an ordinary Document envelope. It resolves no external resources.
+  4 | public enum DocumentCompositionCodec {
+    |             `- note: add '@available' attribute to enclosing enum
+  5 |     /// Converts a composition to a document that can also be passed to `DocumentStorageCodec` for binary storage.
+  6 |     public static func document(
+    :
+ 65 | 
+ 66 |     /// Decodes an already supplied profile document. Every definition, including unused ones, is validated.
+ 67 |     public static func decode(
+    |                        `- note: add '@available' attribute to enclosing static method
+ 68 |         _ document: Document,
+ 69 |         limits: DocumentCompositionLimits = .standard,
+ 70 |         documentLimits: DocumentDecodeLimits = .standard
+ 71 |     ) throws -> DocumentComposition {
+ 72 |         try Task.checkCancellation()
+    |             |- error: 'Task' is only available in macOS 10.15 or newer
+    |             `- note: add 'if #available' version check
+ 73 |         try DocumentStorageCodec.validate(document, limits: profileLimits(limits))
+ 74 |         guard document.metadata["profile"] == "3md-composition-1" else {
+
+/private/tmp/3md-binary-composition-20261004/Sources/ThreeMD/DocumentCompositionCodec.swift:72:18: error: 'checkCancellation()' is only available in macOS 10.15 or newer
+  2 | 
+  3 | /// A versioned text profile using an ordinary Document envelope. It resolves no external resources.
+  4 | public enum DocumentCompositionCodec {
+    |             `- note: add '@available' attribute to enclosing enum
+  5 |     /// Converts a composition to a document that can also be passed to `DocumentStorageCodec` for binary storage.
+  6 |     public static func document(
+    :
+ 65 | 
+ 66 |     /// Decodes an already supplied profile document. Every definition, including unused ones, is validated.
+ 67 |     public static func decode(
+    |                        `- note: add '@available' attribute to enclosing static method
+ 68 |         _ document: Document,
+ 69 |         limits: DocumentCompositionLimits = .standard,
+ 70 |         documentLimits: DocumentDecodeLimits = .standard
+ 71 |     ) throws -> DocumentComposition {
+ 72 |         try Task.checkCancellation()
+    |                  |- error: 'checkCancellation()' is only available in macOS 10.15 or newer
+    |                  `- note: add 'if #available' version check
+ 73 |         try DocumentStorageCodec.validate(document, limits: profileLimits(limits))
+ 74 |         guard document.metadata["profile"] == "3md-composition-1" else {
+
+/private/tmp/3md-binary-composition-20261004/Sources/ThreeMD/DocumentCompositionCodec.swift:94:17: error: 'Task' is only available in macOS 10.15 or newer
+  2 | 
+  3 | /// A versioned text profile using an ordinary Document envelope. It resolves no external resources.
+  4 | public enum DocumentCompositionCodec {
+    |             `- note: add '@available' attribute to enclosing enum
+  5 |     /// Converts a composition to a document that can also be passed to `DocumentStorageCodec` for binary storage.
+  6 |     public static func document(
+    :
+ 65 | 
+ 66 |     /// Decodes an already supplied profile document. Every definition, including unused ones, is validated.
+ 67 |     public static func decode(
+    |                        `- note: add '@available' attribute to enclosing static method
+ 68 |         _ document: Document,
+ 69 |         limits: DocumentCompositionLimits = .standard,
+    :
+ 92 |         entries.reserveCapacity(manifest.entries.count)
+ 93 |         for entry in manifest.entries {
+ 94 |             try Task.checkCancellation()
+    |                 |- error: 'Task' is only available in macOS 10.15 or newer
+    |                 `- note: add 'if #available' version check
+ 95 |             guard entry.source.utf8.count <= limits.maximumDefinitionBytes - totalBytes else {
+ 96 |                 throw DocumentCompositionError.definitionBytesExceeded
+
+/private/tmp/3md-binary-composition-20261004/Sources/ThreeMD/DocumentCompositionCodec.swift:94:22: error: 'checkCancellation()' is only available in macOS 10.15 or newer
+  2 | 
+  3 | /// A versioned text profile using an ordinary Document envelope. It resolves no external resources.
+  4 | public enum DocumentCompositionCodec {
+    |             `- note: add '@available' attribute to enclosing enum
+  5 |     /// Converts a composition to a document that can also be passed to `DocumentStorageCodec` for binary storage.
+  6 |     public static func document(
+    :
+ 65 | 
+ 66 |     /// Decodes an already supplied profile document. Every definition, including unused ones, is validated.
+ 67 |     public static func decode(
+    |                        `- note: add '@available' attribute to enclosing static method
+ 68 |         _ document: Document,
+ 69 |         limits: DocumentCompositionLimits = .standard,
+    :
+ 92 |         entries.reserveCapacity(manifest.entries.count)
+ 93 |         for entry in manifest.entries {
+ 94 |             try Task.checkCancellation()
+    |                      |- error: 'checkCancellation()' is only available in macOS 10.15 or newer
+    |                      `- note: add 'if #available' version check
+ 95 |             guard entry.source.utf8.count <= limits.maximumDefinitionBytes - totalBytes else {
+ 96 |                 throw DocumentCompositionError.definitionBytesExceeded
+[19/33] Compiling ThreeMD DocumentStorageCodec.swift
+/private/tmp/3md-binary-composition-20261004/Sources/ThreeMD/DocumentStorageCodec.swift:49:17: error: 'Task' is only available in macOS 10.15 or newer
+  8 | /// CRC covers header bytes 0..<36 followed by encoded payload; it excludes the checksum field.
+  9 | /// CRC detects corruption, not authorship. This magic is distinct from Rook's older voxel-specific `3MDB` format.
+ 10 | public enum DocumentStorageCodec {
+    |             `- note: add '@available' attribute to enclosing enum
+ 11 |     public static let containerVersion: UInt16 = 1
+ 12 |     public static let headerByteCount = 40
+    :
+ 19 |     }
+ 20 | 
+ 21 |     public static func encode(
+    |                        `- note: add '@available' attribute to enclosing static method
+ 22 |         _ document: Document,
+ 23 |         format: DocumentStorageFormat = .text,
+    :
+ 47 |             append(checksum, to: &header)
+ 48 |             header.append(payload)
+ 49 |             try Task.checkCancellation()
+    |                 |- error: 'Task' is only available in macOS 10.15 or newer
+    |                 `- note: add 'if #available' version check
+ 50 |             return header
+ 51 |         }
+
+/private/tmp/3md-binary-composition-20261004/Sources/ThreeMD/DocumentStorageCodec.swift:49:22: error: 'checkCancellation()' is only available in macOS 10.15 or newer
+  8 | /// CRC covers header bytes 0..<36 followed by encoded payload; it excludes the checksum field.
+  9 | /// CRC detects corruption, not authorship. This magic is distinct from Rook's older voxel-specific `3MDB` format.
+ 10 | public enum DocumentStorageCodec {
+    |             `- note: add '@available' attribute to enclosing enum
+ 11 |     public static let containerVersion: UInt16 = 1
+ 12 |     public static let headerByteCount = 40
+    :
+ 19 |     }
+ 20 | 
+ 21 |     public static func encode(
+    |                        `- note: add '@available' attribute to enclosing static method
+ 22 |         _ document: Document,
+ 23 |         format: DocumentStorageFormat = .text,
+    :
+ 47 |             append(checksum, to: &header)
+ 48 |             header.append(payload)
+ 49 |             try Task.checkCancellation()
+    |                      |- error: 'checkCancellation()' is only available in macOS 10.15 or newer
+    |                      `- note: add 'if #available' version check
+ 50 |             return header
+ 51 |         }
+
+/private/tmp/3md-binary-composition-20261004/Sources/ThreeMD/DocumentStorageCodec.swift:55:13: error: 'Task' is only available in macOS 10.15 or newer
+  8 | /// CRC covers header bytes 0..<36 followed by encoded payload; it excludes the checksum field.
+  9 | /// CRC detects corruption, not authorship. This magic is distinct from Rook's older voxel-specific `3MDB` format.
+ 10 | public enum DocumentStorageCodec {
+    |             `- note: add '@available' attribute to enclosing enum
+ 11 |     public static let containerVersion: UInt16 = 1
+ 12 |     public static let headerByteCount = 40
+    :
+ 52 |     }
+ 53 | 
+ 54 |     public static func decode(_ data: Data, limits: DocumentDecodeLimits = .standard) throws -> Document {
+    |                        `- note: add '@available' attribute to enclosing static method
+ 55 |         try Task.checkCancellation()
+    |             |- error: 'Task' is only available in macOS 10.15 or newer
+    |             `- note: add 'if #available' version check
+ 56 |         guard data.count <= limits.maximumEncodedBytes else { throw DocumentStorageError.oversizedInput }
+ 57 |         guard isBinary(data) else { return try DocumentStorageValidation.parse(data, limits: limits) }
+
+/private/tmp/3md-binary-composition-20261004/Sources/ThreeMD/DocumentStorageCodec.swift:55:18: error: 'checkCancellation()' is only available in macOS 10.15 or newer
+  8 | /// CRC covers header bytes 0..<36 followed by encoded payload; it excludes the checksum field.
+  9 | /// CRC detects corruption, not authorship. This magic is distinct from Rook's older voxel-specific `3MDB` format.
+ 10 | public enum DocumentStorageCodec {
+    |             `- note: add '@available' attribute to enclosing enum
+ 11 |     public static let containerVersion: UInt16 = 1
+ 12 |     public static let headerByteCount = 40
+    :
+ 52 |     }
+ 53 | 
+ 54 |     public static func decode(_ data: Data, limits: DocumentDecodeLimits = .standard) throws -> Document {
+    |                        `- note: add '@available' attribute to enclosing static method
+ 55 |         try Task.checkCancellation()
+    |                  |- error: 'checkCancellation()' is only available in macOS 10.15 or newer
+    |                  `- note: add 'if #available' version check
+ 56 |         guard data.count <= limits.maximumEncodedBytes else { throw DocumentStorageError.oversizedInput }
+ 57 |         guard isBinary(data) else { return try DocumentStorageValidation.parse(data, limits: limits) }
+
+/private/tmp/3md-binary-composition-20261004/Sources/ThreeMD/DocumentStorageCodec.swift:117:55: error: 'Task' is only available in macOS 10.15 or newer
+102 | }
+103 | 
+104 | internal enum DocumentStorageChecksum {
+    |               `- note: add '@available' attribute to enclosing enum
+105 |     private static let table: [UInt32] = (0..<256).map { value in
+106 |         var crc = UInt32(value)
+    :
+111 |     /// CRC-32/ISO-HDLC: reflected polynomial 0xEDB88320, init/final xor 0xFFFFFFFF.
+112 |     /// The standard check value for ASCII `123456789` is 0xCBF43926.
+113 |     static func checksum(header: Data, payload: Data) throws -> UInt32 {
+    |                 `- note: add '@available' attribute to enclosing static method
+114 |         var crc: UInt32 = 0xFFFF_FFFF
+115 |         for data in [header, payload] {
+116 |             for (index, byte) in data.enumerated() {
+117 |                 if index.isMultiple(of: 65_536) { try Task.checkCancellation() }
+    |                                                       |- error: 'Task' is only available in macOS 10.15 or newer
+    |                                                       `- note: add 'if #available' version check
+118 |                 crc = (crc >> 8) ^ table[Int((crc ^ UInt32(byte)) & 0xFF)]
+119 |             }
+
+/private/tmp/3md-binary-composition-20261004/Sources/ThreeMD/DocumentStorageCodec.swift:117:60: error: 'checkCancellation()' is only available in macOS 10.15 or newer
+102 | }
+103 | 
+104 | internal enum DocumentStorageChecksum {
+    |               `- note: add '@available' attribute to enclosing enum
+105 |     private static let table: [UInt32] = (0..<256).map { value in
+106 |         var crc = UInt32(value)
+    :
+111 |     /// CRC-32/ISO-HDLC: reflected polynomial 0xEDB88320, init/final xor 0xFFFFFFFF.
+112 |     /// The standard check value for ASCII `123456789` is 0xCBF43926.
+113 |     static func checksum(header: Data, payload: Data) throws -> UInt32 {
+    |                 `- note: add '@available' attribute to enclosing static method
+114 |         var crc: UInt32 = 0xFFFF_FFFF
+115 |         for data in [header, payload] {
+116 |             for (index, byte) in data.enumerated() {
+117 |                 if index.isMultiple(of: 65_536) { try Task.checkCancellation() }
+    |                                                            |- error: 'checkCancellation()' is only available in macOS 10.15 or newer
+    |                                                            `- note: add 'if #available' version check
+118 |                 crc = (crc >> 8) ^ table[Int((crc ^ UInt32(byte)) & 0xFF)]
+119 |             }
+[20/33] Compiling ThreeMD DocumentStorageValidation.swift
+/private/tmp/3md-binary-composition-20261004/Sources/ThreeMD/DocumentStorageValidation.swift:5:13: error: 'Task' is only available in macOS 10.15 or newer
+  1 | import Foundation
+  2 | 
+  3 | internal enum DocumentStorageValidation {
+    |               `- note: add '@available' attribute to enclosing enum
+  4 |     static func parse(_ data: Data, limits: DocumentDecodeLimits) throws -> Document {
+    |                 `- note: add '@available' attribute to enclosing static method
+  5 |         try Task.checkCancellation()
+    |             |- error: 'Task' is only available in macOS 10.15 or newer
+    |             `- note: add 'if #available' version check
+  6 |         guard data.count <= limits.maximumDecodedBytes else { throw DocumentStorageError.oversizedOutput }
+  7 |         var lines = 1
+
+/private/tmp/3md-binary-composition-20261004/Sources/ThreeMD/DocumentStorageValidation.swift:5:18: error: 'checkCancellation()' is only available in macOS 10.15 or newer
+  1 | import Foundation
+  2 | 
+  3 | internal enum DocumentStorageValidation {
+    |               `- note: add '@available' attribute to enclosing enum
+  4 |     static func parse(_ data: Data, limits: DocumentDecodeLimits) throws -> Document {
+    |                 `- note: add '@available' attribute to enclosing static method
+  5 |         try Task.checkCancellation()
+    |                  |- error: 'checkCancellation()' is only available in macOS 10.15 or newer
+    |                  `- note: add 'if #available' version check
+  6 |         guard data.count <= limits.maximumDecodedBytes else { throw DocumentStorageError.oversizedOutput }
+  7 |         var lines = 1
+
+/private/tmp/3md-binary-composition-20261004/Sources/ThreeMD/DocumentStorageValidation.swift:10:51: error: 'Task' is only available in macOS 10.15 or newer
+  1 | import Foundation
+  2 | 
+  3 | internal enum DocumentStorageValidation {
+    |               `- note: add '@available' attribute to enclosing enum
+  4 |     static func parse(_ data: Data, limits: DocumentDecodeLimits) throws -> Document {
+    |                 `- note: add '@available' attribute to enclosing static method
+  5 |         try Task.checkCancellation()
+  6 |         guard data.count <= limits.maximumDecodedBytes else { throw DocumentStorageError.oversizedOutput }
+    :
+  8 |         var record = 0
+  9 |         for (index, byte) in data.enumerated() {
+ 10 |             if index.isMultiple(of: 65_536) { try Task.checkCancellation() }
+    |                                                   |- error: 'Task' is only available in macOS 10.15 or newer
+    |                                                   `- note: add 'if #available' version check
+ 11 |             if byte == 10 {
+ 12 |                 lines += 1
+
+/private/tmp/3md-binary-composition-20261004/Sources/ThreeMD/DocumentStorageValidation.swift:10:56: error: 'checkCancellation()' is only available in macOS 10.15 or newer
+  1 | import Foundation
+  2 | 
+  3 | internal enum DocumentStorageValidation {
+    |               `- note: add '@available' attribute to enclosing enum
+  4 |     static func parse(_ data: Data, limits: DocumentDecodeLimits) throws -> Document {
+    |                 `- note: add '@available' attribute to enclosing static method
+  5 |         try Task.checkCancellation()
+  6 |         guard data.count <= limits.maximumDecodedBytes else { throw DocumentStorageError.oversizedOutput }
+    :
+  8 |         var record = 0
+  9 |         for (index, byte) in data.enumerated() {
+ 10 |             if index.isMultiple(of: 65_536) { try Task.checkCancellation() }
+    |                                                        |- error: 'checkCancellation()' is only available in macOS 10.15 or newer
+    |                                                        `- note: add 'if #available' version check
+ 11 |             if byte == 10 {
+ 12 |                 lines += 1
+
+/private/tmp/3md-binary-composition-20261004/Sources/ThreeMD/DocumentStorageValidation.swift:26:13: error: 'Task' is only available in macOS 10.15 or newer
+  1 | import Foundation
+  2 | 
+  3 | internal enum DocumentStorageValidation {
+    |               `- note: add '@available' attribute to enclosing enum
+  4 |     static func parse(_ data: Data, limits: DocumentDecodeLimits) throws -> Document {
+    |                 `- note: add '@available' attribute to enclosing static method
+  5 |         try Task.checkCancellation()
+  6 |         guard data.count <= limits.maximumDecodedBytes else { throw DocumentStorageError.oversizedOutput }
+    :
+ 24 |             throw DocumentStorageError.invalidText(error)
+ 25 |         }
+ 26 |         try Task.checkCancellation()
+    |             |- error: 'Task' is only available in macOS 10.15 or newer
+    |             `- note: add 'if #available' version check
+ 27 |         try validateRecords(document, limits: limits)
+ 28 |         return document
+
+/private/tmp/3md-binary-composition-20261004/Sources/ThreeMD/DocumentStorageValidation.swift:26:18: error: 'checkCancellation()' is only available in macOS 10.15 or newer
+  1 | import Foundation
+  2 | 
+  3 | internal enum DocumentStorageValidation {
+    |               `- note: add '@available' attribute to enclosing enum
+  4 |     static func parse(_ data: Data, limits: DocumentDecodeLimits) throws -> Document {
+    |                 `- note: add '@available' attribute to enclosing static method
+  5 |         try Task.checkCancellation()
+  6 |         guard data.count <= limits.maximumDecodedBytes else { throw DocumentStorageError.oversizedOutput }
+    :
+ 24 |             throw DocumentStorageError.invalidText(error)
+ 25 |         }
+ 26 |         try Task.checkCancellation()
+    |                  |- error: 'checkCancellation()' is only available in macOS 10.15 or newer
+    |                  `- note: add 'if #available' version check
+ 27 |         try validateRecords(document, limits: limits)
+ 28 |         return document
+
+/private/tmp/3md-binary-composition-20261004/Sources/ThreeMD/DocumentStorageValidation.swift:32:13: error: 'Task' is only available in macOS 10.15 or newer
+  1 | import Foundation
+  2 | 
+  3 | internal enum DocumentStorageValidation {
+    |               `- note: add '@available' attribute to enclosing enum
+  4 |     static func parse(_ data: Data, limits: DocumentDecodeLimits) throws -> Document {
+  5 |         try Task.checkCancellation()
+    :
+ 29 |     }
+ 30 | 
+ 31 |     static func canonicalData(_ document: Document, limits: DocumentDecodeLimits) throws -> Data {
+    |                 `- note: add '@available' attribute to enclosing static method
+ 32 |         try Task.checkCancellation()
+    |             |- error: 'Task' is only available in macOS 10.15 or newer
+    |             `- note: add 'if #available' version check
+ 33 |         try validateRecords(document, limits: limits)
+ 34 |         guard !document.version.isEmpty else {
+
+/private/tmp/3md-binary-composition-20261004/Sources/ThreeMD/DocumentStorageValidation.swift:32:18: error: 'checkCancellation()' is only available in macOS 10.15 or newer
+  1 | import Foundation
+  2 | 
+  3 | internal enum DocumentStorageValidation {
+    |               `- note: add '@available' attribute to enclosing enum
+  4 |     static func parse(_ data: Data, limits: DocumentDecodeLimits) throws -> Document {
+  5 |         try Task.checkCancellation()
+    :
+ 29 |     }
+ 30 | 
+ 31 |     static func canonicalData(_ document: Document, limits: DocumentDecodeLimits) throws -> Data {
+    |                 `- note: add '@available' attribute to enclosing static method
+ 32 |         try Task.checkCancellation()
+    |                  |- error: 'checkCancellation()' is only available in macOS 10.15 or newer
+    |                  `- note: add 'if #available' version check
+ 33 |         try validateRecords(document, limits: limits)
+ 34 |         guard !document.version.isEmpty else {
+
+/private/tmp/3md-binary-composition-20261004/Sources/ThreeMD/DocumentStorageValidation.swift:39:17: error: 'Task' is only available in macOS 10.15 or newer
+  1 | import Foundation
+  2 | 
+  3 | internal enum DocumentStorageValidation {
+    |               `- note: add '@available' attribute to enclosing enum
+  4 |     static func parse(_ data: Data, limits: DocumentDecodeLimits) throws -> Document {
+  5 |         try Task.checkCancellation()
+    :
+ 29 |     }
+ 30 | 
+ 31 |     static func canonicalData(_ document: Document, limits: DocumentDecodeLimits) throws -> Data {
+    |                 `- note: add '@available' attribute to enclosing static method
+ 32 |         try Task.checkCancellation()
+ 33 |         try validateRecords(document, limits: limits)
+    :
+ 37 |         var seen: Set<Double> = []
+ 38 |         for plane in document.planes {
+ 39 |             try Task.checkCancellation()
+    |                 |- error: 'Task' is only available in macOS 10.15 or newer
+    |                 `- note: add 'if #available' version check
+ 40 |             guard plane.z.isFinite, plane.x?.isFinite != false, plane.y?.isFinite != false else {
+ 41 |                 throw DocumentStorageError.invalidDocument("Plane coordinates must be finite.")
+
+/private/tmp/3md-binary-composition-20261004/Sources/ThreeMD/DocumentStorageValidation.swift:39:22: error: 'checkCancellation()' is only available in macOS 10.15 or newer
+  1 | import Foundation
+  2 | 
+  3 | internal enum DocumentStorageValidation {
+    |               `- note: add '@available' attribute to enclosing enum
+  4 |     static func parse(_ data: Data, limits: DocumentDecodeLimits) throws -> Document {
+  5 |         try Task.checkCancellation()
+    :
+ 29 |     }
+ 30 | 
+ 31 |     static func canonicalData(_ document: Document, limits: DocumentDecodeLimits) throws -> Data {
+    |                 `- note: add '@available' attribute to enclosing static method
+ 32 |         try Task.checkCancellation()
+ 33 |         try validateRecords(document, limits: limits)
+    :
+ 37 |         var seen: Set<Double> = []
+ 38 |         for plane in document.planes {
+ 39 |             try Task.checkCancellation()
+    |                      |- error: 'checkCancellation()' is only available in macOS 10.15 or newer
+    |                      `- note: add 'if #available' version check
+ 40 |             guard plane.z.isFinite, plane.x?.isFinite != false, plane.y?.isFinite != false else {
+ 41 |                 throw DocumentStorageError.invalidDocument("Plane coordinates must be finite.")
+
+/private/tmp/3md-binary-composition-20261004/Sources/ThreeMD/DocumentStorageValidation.swift:61:17: error: 'Task' is only available in macOS 10.15 or newer
+  1 | import Foundation
+  2 | 
+  3 | internal enum DocumentStorageValidation {
+    |               `- note: add '@available' attribute to enclosing enum
+  4 |     static func parse(_ data: Data, limits: DocumentDecodeLimits) throws -> Document {
+  5 |         try Task.checkCancellation()
+    :
+ 29 |     }
+ 30 | 
+ 31 |     static func canonicalData(_ document: Document, limits: DocumentDecodeLimits) throws -> Data {
+    |                 `- note: add '@available' attribute to enclosing static method
+ 32 |         try Task.checkCancellation()
+ 33 |         try validateRecords(document, limits: limits)
+    :
+ 59 |         }
+ 60 |         for key in document.metadata.keys.sorted() {
+ 61 |             try Task.checkCancellation()
+    |                 |- error: 'Task' is only available in macOS 10.15 or newer
+    |                 `- note: add 'if #available' version check
+ 62 |             guard !["3md", "axis", "title"].contains(key.lowercased()), !key.contains(":"),
+ 63 |                 !key.trimmingCharacters(in: .whitespaces).hasPrefix("#")
+
+/private/tmp/3md-binary-composition-20261004/Sources/ThreeMD/DocumentStorageValidation.swift:61:22: error: 'checkCancellation()' is only available in macOS 10.15 or newer
+  1 | import Foundation
+  2 | 
+  3 | internal enum DocumentStorageValidation {
+    |               `- note: add '@available' attribute to enclosing enum
+  4 |     static func parse(_ data: Data, limits: DocumentDecodeLimits) throws -> Document {
+  5 |         try Task.checkCancellation()
+    :
+ 29 |     }
+ 30 | 
+ 31 |     static func canonicalData(_ document: Document, limits: DocumentDecodeLimits) throws -> Data {
+    |                 `- note: add '@available' attribute to enclosing static method
+ 32 |         try Task.checkCancellation()
+ 33 |         try validateRecords(document, limits: limits)
+    :
+ 59 |         }
+ 60 |         for key in document.metadata.keys.sorted() {
+ 61 |             try Task.checkCancellation()
+    |                      |- error: 'checkCancellation()' is only available in macOS 10.15 or newer
+    |                      `- note: add 'if #available' version check
+ 62 |             guard !["3md", "axis", "title"].contains(key.lowercased()), !key.contains(":"),
+ 63 |                 !key.trimmingCharacters(in: .whitespaces).hasPrefix("#")
+
+/private/tmp/3md-binary-composition-20261004/Sources/ThreeMD/DocumentStorageValidation.swift:75:17: error: 'Task' is only available in macOS 10.15 or newer
+  1 | import Foundation
+  2 | 
+  3 | internal enum DocumentStorageValidation {
+    |               `- note: add '@available' attribute to enclosing enum
+  4 |     static func parse(_ data: Data, limits: DocumentDecodeLimits) throws -> Document {
+  5 |         try Task.checkCancellation()
+    :
+ 29 |     }
+ 30 | 
+ 31 |     static func canonicalData(_ document: Document, limits: DocumentDecodeLimits) throws -> Data {
+    |                 `- note: add '@available' attribute to enclosing static method
+ 32 |         try Task.checkCancellation()
+ 33 |         try validateRecords(document, limits: limits)
+    :
+ 73 |         if let preamble = document.preamble { try writer.line(); try writer.line(preamble) }
+ 74 |         for plane in document.planes {
+ 75 |             try Task.checkCancellation()
+    |                 |- error: 'Task' is only available in macOS 10.15 or newer
+    |                 `- note: add 'if #available' version check
+ 76 |             try writer.line()
+ 77 |             try writer.append("@plane z=\(plane.z.formatted3MD())")
+
+/private/tmp/3md-binary-composition-20261004/Sources/ThreeMD/DocumentStorageValidation.swift:75:22: error: 'checkCancellation()' is only available in macOS 10.15 or newer
+  1 | import Foundation
+  2 | 
+  3 | internal enum DocumentStorageValidation {
+    |               `- note: add '@available' attribute to enclosing enum
+  4 |     static func parse(_ data: Data, limits: DocumentDecodeLimits) throws -> Document {
+  5 |         try Task.checkCancellation()
+    :
+ 29 |     }
+ 30 | 
+ 31 |     static func canonicalData(_ document: Document, limits: DocumentDecodeLimits) throws -> Data {
+    |                 `- note: add '@available' attribute to enclosing static method
+ 32 |         try Task.checkCancellation()
+ 33 |         try validateRecords(document, limits: limits)
+    :
+ 73 |         if let preamble = document.preamble { try writer.line(); try writer.line(preamble) }
+ 74 |         for plane in document.planes {
+ 75 |             try Task.checkCancellation()
+    |                      |- error: 'checkCancellation()' is only available in macOS 10.15 or newer
+    |                      `- note: add 'if #available' version check
+ 76 |             try writer.line()
+ 77 |             try writer.append("@plane z=\(plane.z.formatted3MD())")
+
+/private/tmp/3md-binary-composition-20261004/Sources/ThreeMD/DocumentStorageValidation.swift:82:21: error: 'Task' is only available in macOS 10.15 or newer
+  1 | import Foundation
+  2 | 
+  3 | internal enum DocumentStorageValidation {
+    |               `- note: add '@available' attribute to enclosing enum
+  4 |     static func parse(_ data: Data, limits: DocumentDecodeLimits) throws -> Document {
+  5 |         try Task.checkCancellation()
+    :
+ 29 |     }
+ 30 | 
+ 31 |     static func canonicalData(_ document: Document, limits: DocumentDecodeLimits) throws -> Data {
+    |                 `- note: add '@available' attribute to enclosing static method
+ 32 |         try Task.checkCancellation()
+ 33 |         try validateRecords(document, limits: limits)
+    :
+ 80 |             if let y = plane.y { try writer.append(" y=\(y.formatted3MD())") }
+ 81 |             for key in plane.attributes.keys.sorted() {
+ 82 |                 try Task.checkCancellation()
+    |                     |- error: 'Task' is only available in macOS 10.15 or newer
+    |                     `- note: add 'if #available' version check
+ 83 |                 guard !["z", "x", "y", "label"].contains(key.lowercased()), key == key.lowercased(), !key.contains("=")
+ 84 |                 else {
+
+/private/tmp/3md-binary-composition-20261004/Sources/ThreeMD/DocumentStorageValidation.swift:82:26: error: 'checkCancellation()' is only available in macOS 10.15 or newer
+  1 | import Foundation
+  2 | 
+  3 | internal enum DocumentStorageValidation {
+    |               `- note: add '@available' attribute to enclosing enum
+  4 |     static func parse(_ data: Data, limits: DocumentDecodeLimits) throws -> Document {
+  5 |         try Task.checkCancellation()
+    :
+ 29 |     }
+ 30 | 
+ 31 |     static func canonicalData(_ document: Document, limits: DocumentDecodeLimits) throws -> Data {
+    |                 `- note: add '@available' attribute to enclosing static method
+ 32 |         try Task.checkCancellation()
+ 33 |         try validateRecords(document, limits: limits)
+    :
+ 80 |             if let y = plane.y { try writer.append(" y=\(y.formatted3MD())") }
+ 81 |             for key in plane.attributes.keys.sorted() {
+ 82 |                 try Task.checkCancellation()
+    |                          |- error: 'checkCancellation()' is only available in macOS 10.15 or newer
+    |                          `- note: add 'if #available' version check
+ 83 |                 guard !["z", "x", "y", "label"].contains(key.lowercased()), key == key.lowercased(), !key.contains("=")
+ 84 |                 else {
+
+/private/tmp/3md-binary-composition-20261004/Sources/ThreeMD/DocumentStorageValidation.swift:110:13: error: 'Task' is only available in macOS 10.15 or newer
+  1 | import Foundation
+  2 | 
+  3 | internal enum DocumentStorageValidation {
+    |               `- note: add '@available' attribute to enclosing enum
+  4 |     static func parse(_ data: Data, limits: DocumentDecodeLimits) throws -> Document {
+  5 |         try Task.checkCancellation()
+    :
+ 29 |     }
+ 30 | 
+ 31 |     static func canonicalData(_ document: Document, limits: DocumentDecodeLimits) throws -> Data {
+    |                 `- note: add '@available' attribute to enclosing static method
+ 32 |         try Task.checkCancellation()
+ 33 |         try validateRecords(document, limits: limits)
+    :
+108 |             )
+109 |         }
+110 |         try Task.checkCancellation()
+    |             |- error: 'Task' is only available in macOS 10.15 or newer
+    |             `- note: add 'if #available' version check
+111 |         return data
+112 |     }
+
+/private/tmp/3md-binary-composition-20261004/Sources/ThreeMD/DocumentStorageValidation.swift:110:18: error: 'checkCancellation()' is only available in macOS 10.15 or newer
+  1 | import Foundation
+  2 | 
+  3 | internal enum DocumentStorageValidation {
+    |               `- note: add '@available' attribute to enclosing enum
+  4 |     static func parse(_ data: Data, limits: DocumentDecodeLimits) throws -> Document {
+  5 |         try Task.checkCancellation()
+    :
+ 29 |     }
+ 30 | 
+ 31 |     static func canonicalData(_ document: Document, limits: DocumentDecodeLimits) throws -> Data {
+    |                 `- note: add '@available' attribute to enclosing static method
+ 32 |         try Task.checkCancellation()
+ 33 |         try validateRecords(document, limits: limits)
+    :
+108 |             )
+109 |         }
+110 |         try Task.checkCancellation()
+    |                  |- error: 'checkCancellation()' is only available in macOS 10.15 or newer
+    |                  `- note: add 'if #available' version check
+111 |         return data
+112 |     }
+
+/private/tmp/3md-binary-composition-20261004/Sources/ThreeMD/DocumentStorageValidation.swift:133:53: error: 'Task' is only available in macOS 10.15 or newer
+  1 | import Foundation
+  2 | 
+  3 | internal enum DocumentStorageValidation {
+    |               `- note: add '@available' attribute to enclosing enum
+  4 |     static func parse(_ data: Data, limits: DocumentDecodeLimits) throws -> Document {
+  5 |         try Task.checkCancellation()
+    :
+112 |     }
+113 | 
+114 |     private static func validateRecords(_ document: Document, limits: DocumentDecodeLimits) throws {
+    |                         `- note: add '@available' attribute to enclosing static method
+115 |         guard document.planes.count <= limits.maximumPlanes else { throw DocumentStorageError.tooManyPlanes }
+116 |         // Charge a conservative lower bound before sorting keys or constructing serialized records.
+    :
+131 |         try scalar(document.axis.rawValue)
+132 |         if let title = document.title { try scalar(title) }
+133 |         for (key, value) in document.metadata { try Task.checkCancellation(); try scalar(key); try scalar(value) }
+    |                                                     |- error: 'Task' is only available in macOS 10.15 or newer
+    |                                                     `- note: add 'if #available' version check
+134 |         if let preamble = document.preamble {
+135 |             guard preamble.utf8.count <= limits.maximumRecordBytes else { throw DocumentStorageError.oversizedRecord }
+
+/private/tmp/3md-binary-composition-20261004/Sources/ThreeMD/DocumentStorageValidation.swift:133:58: error: 'checkCancellation()' is only available in macOS 10.15 or newer
+  1 | import Foundation
+  2 | 
+  3 | internal enum DocumentStorageValidation {
+    |               `- note: add '@available' attribute to enclosing enum
+  4 |     static func parse(_ data: Data, limits: DocumentDecodeLimits) throws -> Document {
+  5 |         try Task.checkCancellation()
+    :
+112 |     }
+113 | 
+114 |     private static func validateRecords(_ document: Document, limits: DocumentDecodeLimits) throws {
+    |                         `- note: add '@available' attribute to enclosing static method
+115 |         guard document.planes.count <= limits.maximumPlanes else { throw DocumentStorageError.tooManyPlanes }
+116 |         // Charge a conservative lower bound before sorting keys or constructing serialized records.
+    :
+131 |         try scalar(document.axis.rawValue)
+132 |         if let title = document.title { try scalar(title) }
+133 |         for (key, value) in document.metadata { try Task.checkCancellation(); try scalar(key); try scalar(value) }
+    |                                                          |- error: 'checkCancellation()' is only available in macOS 10.15 or newer
+    |                                                          `- note: add 'if #available' version check
+134 |         if let preamble = document.preamble {
+135 |             guard preamble.utf8.count <= limits.maximumRecordBytes else { throw DocumentStorageError.oversizedRecord }
+
+/private/tmp/3md-binary-composition-20261004/Sources/ThreeMD/DocumentStorageValidation.swift:139:17: error: 'Task' is only available in macOS 10.15 or newer
+  1 | import Foundation
+  2 | 
+  3 | internal enum DocumentStorageValidation {
+    |               `- note: add '@available' attribute to enclosing enum
+  4 |     static func parse(_ data: Data, limits: DocumentDecodeLimits) throws -> Document {
+  5 |         try Task.checkCancellation()
+    :
+112 |     }
+113 | 
+114 |     private static func validateRecords(_ document: Document, limits: DocumentDecodeLimits) throws {
+    |                         `- note: add '@available' attribute to enclosing static method
+115 |         guard document.planes.count <= limits.maximumPlanes else { throw DocumentStorageError.tooManyPlanes }
+116 |         // Charge a conservative lower bound before sorting keys or constructing serialized records.
+    :
+137 |         }
+138 |         for plane in document.planes {
+139 |             try Task.checkCancellation()
+    |                 |- error: 'Task' is only available in macOS 10.15 or newer
+    |                 `- note: add 'if #available' version check
+140 |             guard plane.body.utf8.count <= limits.maximumRecordBytes else { throw DocumentStorageError.oversizedRecord }
+141 |             try charge(plane.body)
+
+/private/tmp/3md-binary-composition-20261004/Sources/ThreeMD/DocumentStorageValidation.swift:139:22: error: 'checkCancellation()' is only available in macOS 10.15 or newer
+  1 | import Foundation
+  2 | 
+  3 | internal enum DocumentStorageValidation {
+    |               `- note: add '@available' attribute to enclosing enum
+  4 |     static func parse(_ data: Data, limits: DocumentDecodeLimits) throws -> Document {
+  5 |         try Task.checkCancellation()
+    :
+112 |     }
+113 | 
+114 |     private static func validateRecords(_ document: Document, limits: DocumentDecodeLimits) throws {
+    |                         `- note: add '@available' attribute to enclosing static method
+115 |         guard document.planes.count <= limits.maximumPlanes else { throw DocumentStorageError.tooManyPlanes }
+116 |         // Charge a conservative lower bound before sorting keys or constructing serialized records.
+    :
+137 |         }
+138 |         for plane in document.planes {
+139 |             try Task.checkCancellation()
+    |                      |- error: 'checkCancellation()' is only available in macOS 10.15 or newer
+    |                      `- note: add 'if #available' version check
+140 |             guard plane.body.utf8.count <= limits.maximumRecordBytes else { throw DocumentStorageError.oversizedRecord }
+141 |             try charge(plane.body)
+
+/private/tmp/3md-binary-composition-20261004/Sources/ThreeMD/DocumentStorageValidation.swift:143:56: error: 'Task' is only available in macOS 10.15 or newer
+  1 | import Foundation
+  2 | 
+  3 | internal enum DocumentStorageValidation {
+    |               `- note: add '@available' attribute to enclosing enum
+  4 |     static func parse(_ data: Data, limits: DocumentDecodeLimits) throws -> Document {
+  5 |         try Task.checkCancellation()
+    :
+112 |     }
+113 | 
+114 |     private static func validateRecords(_ document: Document, limits: DocumentDecodeLimits) throws {
+    |                         `- note: add '@available' attribute to enclosing static method
+115 |         guard document.planes.count <= limits.maximumPlanes else { throw DocumentStorageError.tooManyPlanes }
+116 |         // Charge a conservative lower bound before sorting keys or constructing serialized records.
+    :
+141 |             try charge(plane.body)
+142 |             if let label = plane.label { try scalar(label) }
+143 |             for (key, value) in plane.attributes { try Task.checkCancellation(); try scalar(key); try scalar(value) }
+    |                                                        |- error: 'Task' is only available in macOS 10.15 or newer
+    |                                                        `- note: add 'if #available' version check
+144 |         }
+145 |     }
+
+/private/tmp/3md-binary-composition-20261004/Sources/ThreeMD/DocumentStorageValidation.swift:143:61: error: 'checkCancellation()' is only available in macOS 10.15 or newer
+  1 | import Foundation
+  2 | 
+  3 | internal enum DocumentStorageValidation {
+    |               `- note: add '@available' attribute to enclosing enum
+  4 |     static func parse(_ data: Data, limits: DocumentDecodeLimits) throws -> Document {
+  5 |         try Task.checkCancellation()
+    :
+112 |     }
+113 | 
+114 |     private static func validateRecords(_ document: Document, limits: DocumentDecodeLimits) throws {
+    |                         `- note: add '@available' attribute to enclosing static method
+115 |         guard document.planes.count <= limits.maximumPlanes else { throw DocumentStorageError.tooManyPlanes }
+116 |         // Charge a conservative lower bound before sorting keys or constructing serialized records.
+    :
+141 |             try charge(plane.body)
+142 |             if let label = plane.label { try scalar(label) }
+143 |             for (key, value) in plane.attributes { try Task.checkCancellation(); try scalar(key); try scalar(value) }
+    |                                                             |- error: 'checkCancellation()' is only available in macOS 10.15 or newer
+    |                                                             `- note: add 'if #available' version check
+144 |         }
+145 |     }
+
+/private/tmp/3md-binary-composition-20261004/Sources/ThreeMD/DocumentStorageValidation.swift:157:17: error: 'Task' is only available in macOS 10.15 or newer
+  1 | import Foundation
+  2 | 
+  3 | internal enum DocumentStorageValidation {
+    |               `- note: add '@available' attribute to enclosing enum
+  4 |     static func parse(_ data: Data, limits: DocumentDecodeLimits) throws -> Document {
+  5 |         try Task.checkCancellation()
+    :
+146 | 
+147 |     /// Mirrors only frontmatter/fence/directive boundaries, preserving the existing parser's version and duplicate-key rules.
+148 |     private static func preflightPlanes(_ source: String, limits: DocumentDecodeLimits) throws {
+    |                         `- note: add '@available' attribute to enclosing static method
+149 |         var normalized = source.replacingOccurrences(of: "\r\n", with: "\n")
+150 |         if normalized.hasPrefix("\u{FEFF}") { normalized.removeFirst() }
+    :
+155 |         var recordBytes = 0
+156 |         for raw in normalized.split(separator: "\n", omittingEmptySubsequences: false) {
+157 |             try Task.checkCancellation()
+    |                 |- error: 'Task' is only available in macOS 10.15 or newer
+    |                 `- note: add 'if #available' version check
+158 |             let trimmed = raw.trimmingCharacters(in: .whitespaces)
+159 |             if !started { if trimmed == "---" { started = true }; continue }
+
+/private/tmp/3md-binary-composition-20261004/Sources/ThreeMD/DocumentStorageValidation.swift:157:22: error: 'checkCancellation()' is only available in macOS 10.15 or newer
+  1 | import Foundation
+  2 | 
+  3 | internal enum DocumentStorageValidation {
+    |               `- note: add '@available' attribute to enclosing enum
+  4 |     static func parse(_ data: Data, limits: DocumentDecodeLimits) throws -> Document {
+  5 |         try Task.checkCancellation()
+    :
+146 | 
+147 |     /// Mirrors only frontmatter/fence/directive boundaries, preserving the existing parser's version and duplicate-key rules.
+148 |     private static func preflightPlanes(_ source: String, limits: DocumentDecodeLimits) throws {
+    |                         `- note: add '@available' attribute to enclosing static method
+149 |         var normalized = source.replacingOccurrences(of: "\r\n", with: "\n")
+150 |         if normalized.hasPrefix("\u{FEFF}") { normalized.removeFirst() }
+    :
+155 |         var recordBytes = 0
+156 |         for raw in normalized.split(separator: "\n", omittingEmptySubsequences: false) {
+157 |             try Task.checkCancellation()
+    |                      |- error: 'checkCancellation()' is only available in macOS 10.15 or newer
+    |                      `- note: add 'if #available' version check
+158 |             let trimmed = raw.trimmingCharacters(in: .whitespaces)
+159 |             if !started { if trimmed == "---" { started = true }; continue }
+
+/private/tmp/3md-binary-composition-20261004/Sources/ThreeMD/DocumentStorageValidation.swift:193:13: error: 'Task' is only available in macOS 10.15 or newer
+186 | 
+187 | /// Appends only after checking the remaining byte budget; no interpolated record can exceed that budget first.
+188 | private struct BoundedDocumentWriter {
+    |                `- note: add '@available' attribute to enclosing struct
+189 |     let maximumBytes: Int
+190 |     private(set) var data = Data()
+191 | 
+192 |     mutating func append(_ value: String) throws {
+    |                   `- note: add '@available' attribute to enclosing instance method
+193 |         try Task.checkCancellation()
+    |             |- error: 'Task' is only available in macOS 10.15 or newer
+    |             `- note: add 'if #available' version check
+194 |         guard value.utf8.count <= maximumBytes - data.count else { throw DocumentStorageError.oversizedOutput }
+195 |         data.append(contentsOf: value.utf8)
+
+/private/tmp/3md-binary-composition-20261004/Sources/ThreeMD/DocumentStorageValidation.swift:193:18: error: 'checkCancellation()' is only available in macOS 10.15 or newer
+186 | 
+187 | /// Appends only after checking the remaining byte budget; no interpolated record can exceed that budget first.
+188 | private struct BoundedDocumentWriter {
+    |                `- note: add '@available' attribute to enclosing struct
+189 |     let maximumBytes: Int
+190 |     private(set) var data = Data()
+191 | 
+192 |     mutating func append(_ value: String) throws {
+    |                   `- note: add '@available' attribute to enclosing instance method
+193 |         try Task.checkCancellation()
+    |                  |- error: 'checkCancellation()' is only available in macOS 10.15 or newer
+    |                  `- note: add 'if #available' version check
+194 |         guard value.utf8.count <= maximumBytes - data.count else { throw DocumentStorageError.oversizedOutput }
+195 |         data.append(contentsOf: value.utf8)
+
+/private/tmp/3md-binary-composition-20261004/Sources/ThreeMD/DocumentStorageValidation.swift:207:51: error: 'Task' is only available in macOS 10.15 or newer
+186 | 
+187 | /// Appends only after checking the remaining byte budget; no interpolated record can exceed that budget first.
+188 | private struct BoundedDocumentWriter {
+    |                `- note: add '@available' attribute to enclosing struct
+189 |     let maximumBytes: Int
+190 |     private(set) var data = Data()
+    :
+202 |     }
+203 | 
+204 |     mutating func quoted(_ value: String) throws {
+    |                   `- note: add '@available' attribute to enclosing instance method
+205 |         var count = 2
+206 |         for (index, byte) in value.utf8.enumerated() {
+207 |             if index.isMultiple(of: 65_536) { try Task.checkCancellation() }
+    |                                                   |- error: 'Task' is only available in macOS 10.15 or newer
+    |                                                   `- note: add 'if #available' version check
+208 |             count += byte == 34 || byte == 92 ? 2 : 1
+209 |             guard count <= maximumBytes - data.count else { throw DocumentStorageError.oversizedOutput }
+
+/private/tmp/3md-binary-composition-20261004/Sources/ThreeMD/DocumentStorageValidation.swift:207:56: error: 'checkCancellation()' is only available in macOS 10.15 or newer
+186 | 
+187 | /// Appends only after checking the remaining byte budget; no interpolated record can exceed that budget first.
+188 | private struct BoundedDocumentWriter {
+    |                `- note: add '@available' attribute to enclosing struct
+189 |     let maximumBytes: Int
+190 |     private(set) var data = Data()
+    :
+202 |     }
+203 | 
+204 |     mutating func quoted(_ value: String) throws {
+    |                   `- note: add '@available' attribute to enclosing instance method
+205 |         var count = 2
+206 |         for (index, byte) in value.utf8.enumerated() {
+207 |             if index.isMultiple(of: 65_536) { try Task.checkCancellation() }
+    |                                                        |- error: 'checkCancellation()' is only available in macOS 10.15 or newer
+    |                                                        `- note: add 'if #available' version check
+208 |             count += byte == 34 || byte == 92 ? 2 : 1
+209 |             guard count <= maximumBytes - data.count else { throw DocumentStorageError.oversizedOutput }
+[21/33] Compiling ThreeMD DocumentStorageCompression.swift
+/private/tmp/3md-binary-composition-20261004/Sources/ThreeMD/DocumentStorageCompression.swift:9:13: error: 'Task' is only available in macOS 10.15 or newer
+  5 | #endif
+  6 | 
+  7 | internal enum DocumentStorageCompression {
+    |               `- note: add '@available' attribute to enclosing enum
+  8 |     static func encode(_ data: Data, compression: DocumentCompression, maximumBytes: Int) throws -> Data {
+    |                 `- note: add '@available' attribute to enclosing static method
+  9 |         try Task.checkCancellation()
+    |             |- error: 'Task' is only available in macOS 10.15 or newer
+    |             `- note: add 'if #available' version check
+ 10 |         switch compression {
+ 11 |         case .none:
+
+/private/tmp/3md-binary-composition-20261004/Sources/ThreeMD/DocumentStorageCompression.swift:9:18: error: 'checkCancellation()' is only available in macOS 10.15 or newer
+  5 | #endif
+  6 | 
+  7 | internal enum DocumentStorageCompression {
+    |               `- note: add '@available' attribute to enclosing enum
+  8 |     static func encode(_ data: Data, compression: DocumentCompression, maximumBytes: Int) throws -> Data {
+    |                 `- note: add '@available' attribute to enclosing static method
+  9 |         try Task.checkCancellation()
+    |                  |- error: 'checkCancellation()' is only available in macOS 10.15 or newer
+    |                  `- note: add 'if #available' version check
+ 10 |         switch compression {
+ 11 |         case .none:
+
+/private/tmp/3md-binary-composition-20261004/Sources/ThreeMD/DocumentStorageCompression.swift:24:13: error: 'Task' is only available in macOS 10.15 or newer
+  5 | #endif
+  6 | 
+  7 | internal enum DocumentStorageCompression {
+    |               `- note: add '@available' attribute to enclosing enum
+  8 |     static func encode(_ data: Data, compression: DocumentCompression, maximumBytes: Int) throws -> Data {
+  9 |         try Task.checkCancellation()
+    :
+ 21 |     }
+ 22 | 
+ 23 |     static func decode(_ data: Data, compression: DocumentCompression, expectedBytes: Int) throws -> Data {
+    |                 `- note: add '@available' attribute to enclosing static method
+ 24 |         try Task.checkCancellation()
+    |             |- error: 'Task' is only available in macOS 10.15 or newer
+    |             `- note: add 'if #available' version check
+ 25 |         switch compression {
+ 26 |         case .none:
+
+/private/tmp/3md-binary-composition-20261004/Sources/ThreeMD/DocumentStorageCompression.swift:24:18: error: 'checkCancellation()' is only available in macOS 10.15 or newer
+  5 | #endif
+  6 | 
+  7 | internal enum DocumentStorageCompression {
+    |               `- note: add '@available' attribute to enclosing enum
+  8 |     static func encode(_ data: Data, compression: DocumentCompression, maximumBytes: Int) throws -> Data {
+  9 |         try Task.checkCancellation()
+    :
+ 21 |     }
+ 22 | 
+ 23 |     static func decode(_ data: Data, compression: DocumentCompression, expectedBytes: Int) throws -> Data {
+    |                 `- note: add '@available' attribute to enclosing static method
+ 24 |         try Task.checkCancellation()
+    |                  |- error: 'checkCancellation()' is only available in macOS 10.15 or newer
+    |                  `- note: add 'if #available' version check
+ 25 |         switch compression {
+ 26 |         case .none:
+
+/private/tmp/3md-binary-composition-20261004/Sources/ThreeMD/DocumentStorageCompression.swift:77:21: error: 'Task' is only available in macOS 10.15 or newer
+  5 | #endif
+  6 | 
+  7 | internal enum DocumentStorageCompression {
+    |               `- note: add '@available' attribute to enclosing enum
+  8 |     static func encode(_ data: Data, compression: DocumentCompression, maximumBytes: Int) throws -> Data {
+  9 |         try Task.checkCancellation()
+    :
+ 40 |     /// This detects concatenated streams even when the Compression API consumes source through read-ahead.
+ 41 |     /// See Apple's format definitions: https://github.com/lzfse/lzfse/blob/master/src/lzfse_internal.h.
+ 42 |     private static func transcode(
+    |                         `- note: add '@available' attribute to enclosing static method
+ 43 |         _ data: Data,
+ 44 |         operation: compression_stream_operation,
+    :
+ 75 |             var output = Data(capacity: min(chunkSize, maximumBytes))
+ 76 |             while true {
+ 77 |                 try Task.checkCancellation()
+    |                     |- error: 'Task' is only available in macOS 10.15 or newer
+    |                     `- note: add 'if #available' version check
+ 78 |                 stream.dst_ptr = destination
+ 79 |                 stream.dst_size = chunkSize
+
+/private/tmp/3md-binary-composition-20261004/Sources/ThreeMD/DocumentStorageCompression.swift:77:26: error: 'checkCancellation()' is only available in macOS 10.15 or newer
+  5 | #endif
+  6 | 
+  7 | internal enum DocumentStorageCompression {
+    |               `- note: add '@available' attribute to enclosing enum
+  8 |     static func encode(_ data: Data, compression: DocumentCompression, maximumBytes: Int) throws -> Data {
+  9 |         try Task.checkCancellation()
+    :
+ 40 |     /// This detects concatenated streams even when the Compression API consumes source through read-ahead.
+ 41 |     /// See Apple's format definitions: https://github.com/lzfse/lzfse/blob/master/src/lzfse_internal.h.
+ 42 |     private static func transcode(
+    |                         `- note: add '@available' attribute to enclosing static method
+ 43 |         _ data: Data,
+ 44 |         operation: compression_stream_operation,
+    :
+ 75 |             var output = Data(capacity: min(chunkSize, maximumBytes))
+ 76 |             while true {
+ 77 |                 try Task.checkCancellation()
+    |                          |- error: 'checkCancellation()' is only available in macOS 10.15 or newer
+    |                          `- note: add 'if #available' version check
+ 78 |                 stream.dst_ptr = destination
+ 79 |                 stream.dst_size = chunkSize
+
+/private/tmp/3md-binary-composition-20261004/Sources/ThreeMD/DocumentStorageCompression.swift:95:25: error: 'Task' is only available in macOS 10.15 or newer
+  5 | #endif
+  6 | 
+  7 | internal enum DocumentStorageCompression {
+    |               `- note: add '@available' attribute to enclosing enum
+  8 |     static func encode(_ data: Data, compression: DocumentCompression, maximumBytes: Int) throws -> Data {
+  9 |         try Task.checkCancellation()
+    :
+ 40 |     /// This detects concatenated streams even when the Compression API consumes source through read-ahead.
+ 41 |     /// See Apple's format definitions: https://github.com/lzfse/lzfse/blob/master/src/lzfse_internal.h.
+ 42 |     private static func transcode(
+    |                         `- note: add '@available' attribute to enclosing static method
+ 43 |         _ data: Data,
+ 44 |         operation: compression_stream_operation,
+    :
+ 93 |                         throw DocumentStorageError.lengthMismatch
+ 94 |                     }
+ 95 |                     try Task.checkCancellation()
+    |                         |- error: 'Task' is only available in macOS 10.15 or newer
+    |                         `- note: add 'if #available' version check
+ 96 |                     return output
+ 97 |                 case COMPRESSION_STATUS_OK:
+
+/private/tmp/3md-binary-composition-20261004/Sources/ThreeMD/DocumentStorageCompression.swift:95:30: error: 'checkCancellation()' is only available in macOS 10.15 or newer
+  5 | #endif
+  6 | 
+  7 | internal enum DocumentStorageCompression {
+    |               `- note: add '@available' attribute to enclosing enum
+  8 |     static func encode(_ data: Data, compression: DocumentCompression, maximumBytes: Int) throws -> Data {
+  9 |         try Task.checkCancellation()
+    :
+ 40 |     /// This detects concatenated streams even when the Compression API consumes source through read-ahead.
+ 41 |     /// See Apple's format definitions: https://github.com/lzfse/lzfse/blob/master/src/lzfse_internal.h.
+ 42 |     private static func transcode(
+    |                         `- note: add '@available' attribute to enclosing static method
+ 43 |         _ data: Data,
+ 44 |         operation: compression_stream_operation,
+    :
+ 93 |                         throw DocumentStorageError.lengthMismatch
+ 94 |                     }
+ 95 |                     try Task.checkCancellation()
+    |                              |- error: 'checkCancellation()' is only available in macOS 10.15 or newer
+    |                              `- note: add 'if #available' version check
+ 96 |                     return output
+ 97 |                 case COMPRESSION_STATUS_OK:
+[22/34] Compiling ThreeMD CrossPlaneLinkEdge.swift
+[23/34] Compiling ThreeMD Document.swift
+[24/34] Compiling ThreeMD Axis.swift
+[25/34] Compiling ThreeMD CrossPlaneLink.swift
+[26/34] Emitting module ThreeMD
+[27/34] Compiling ThreeMD Document+Links.swift
+[28/34] Compiling ThreeMD DocumentComposition.swift
+/private/tmp/3md-binary-composition-20261004/Sources/ThreeMD/DocumentComposition.swift:67:13: error: 'Task' is only available in macOS 10.15 or newer
+ 53 | }
+ 54 | 
+ 55 | internal enum DocumentCompositionValidation {
+    |               `- note: add '@available' attribute to enclosing enum
+ 56 |     internal struct Result {
+ 57 |         let root: DocumentEntry
+    :
+ 59 |     }
+ 60 | 
+ 61 |     internal static func validate(
+    |                          `- note: add '@available' attribute to enclosing static method
+ 62 |         rootID: String,
+ 63 |         entries: [DocumentEntry],
+    :
+ 65 |         documentLimits: DocumentDecodeLimits
+ 66 |     ) throws -> Result {
+ 67 |         try Task.checkCancellation()
+    |             |- error: 'Task' is only available in macOS 10.15 or newer
+    |             `- note: add 'if #available' version check
+ 68 |         guard validID(rootID) else { throw DocumentCompositionError.invalidID(rootID) }
+ 69 |         guard entries.count <= limits.maximumDefinitions else { throw DocumentCompositionError.tooManyDefinitions }
+
+/private/tmp/3md-binary-composition-20261004/Sources/ThreeMD/DocumentComposition.swift:67:18: error: 'checkCancellation()' is only available in macOS 10.15 or newer
+ 53 | }
+ 54 | 
+ 55 | internal enum DocumentCompositionValidation {
+    |               `- note: add '@available' attribute to enclosing enum
+ 56 |     internal struct Result {
+ 57 |         let root: DocumentEntry
+    :
+ 59 |     }
+ 60 | 
+ 61 |     internal static func validate(
+    |                          `- note: add '@available' attribute to enclosing static method
+ 62 |         rootID: String,
+ 63 |         entries: [DocumentEntry],
+    :
+ 65 |         documentLimits: DocumentDecodeLimits
+ 66 |     ) throws -> Result {
+ 67 |         try Task.checkCancellation()
+    |                  |- error: 'checkCancellation()' is only available in macOS 10.15 or newer
+    |                  `- note: add 'if #available' version check
+ 68 |         guard validID(rootID) else { throw DocumentCompositionError.invalidID(rootID) }
+ 69 |         guard entries.count <= limits.maximumDefinitions else { throw DocumentCompositionError.tooManyDefinitions }
+
+/private/tmp/3md-binary-composition-20261004/Sources/ThreeMD/DocumentComposition.swift:75:17: error: 'Task' is only available in macOS 10.15 or newer
+ 53 | }
+ 54 | 
+ 55 | internal enum DocumentCompositionValidation {
+    |               `- note: add '@available' attribute to enclosing enum
+ 56 |     internal struct Result {
+ 57 |         let root: DocumentEntry
+    :
+ 59 |     }
+ 60 | 
+ 61 |     internal static func validate(
+    |                          `- note: add '@available' attribute to enclosing static method
+ 62 |         rootID: String,
+ 63 |         entries: [DocumentEntry],
+    :
+ 73 |         var sourceBytes = 0
+ 74 |         for (index, entry) in entries.enumerated() {
+ 75 |             try Task.checkCancellation()
+    |                 |- error: 'Task' is only available in macOS 10.15 or newer
+    |                 `- note: add 'if #available' version check
+ 76 |             guard validID(entry.id) else { throw DocumentCompositionError.invalidID(entry.id) }
+ 77 |             guard indices.updateValue(index, forKey: entry.id) == nil else {
+
+/private/tmp/3md-binary-composition-20261004/Sources/ThreeMD/DocumentComposition.swift:75:22: error: 'checkCancellation()' is only available in macOS 10.15 or newer
+ 53 | }
+ 54 | 
+ 55 | internal enum DocumentCompositionValidation {
+    |               `- note: add '@available' attribute to enclosing enum
+ 56 |     internal struct Result {
+ 57 |         let root: DocumentEntry
+    :
+ 59 |     }
+ 60 | 
+ 61 |     internal static func validate(
+    |                          `- note: add '@available' attribute to enclosing static method
+ 62 |         rootID: String,
+ 63 |         entries: [DocumentEntry],
+    :
+ 73 |         var sourceBytes = 0
+ 74 |         for (index, entry) in entries.enumerated() {
+ 75 |             try Task.checkCancellation()
+    |                      |- error: 'checkCancellation()' is only available in macOS 10.15 or newer
+    |                      `- note: add 'if #available' version check
+ 76 |             guard validID(entry.id) else { throw DocumentCompositionError.invalidID(entry.id) }
+ 77 |             guard indices.updateValue(index, forKey: entry.id) == nil else {
+
+/private/tmp/3md-binary-composition-20261004/Sources/ThreeMD/DocumentComposition.swift:85:21: error: 'Task' is only available in macOS 10.15 or newer
+ 53 | }
+ 54 | 
+ 55 | internal enum DocumentCompositionValidation {
+    |               `- note: add '@available' attribute to enclosing enum
+ 56 |     internal struct Result {
+ 57 |         let root: DocumentEntry
+    :
+ 59 |     }
+ 60 | 
+ 61 |     internal static func validate(
+    |                          `- note: add '@available' attribute to enclosing static method
+ 62 |         rootID: String,
+ 63 |         entries: [DocumentEntry],
+    :
+ 83 |             referenceCount += entry.references.count
+ 84 |             for reference in entry.references {
+ 85 |                 try Task.checkCancellation()
+    |                     |- error: 'Task' is only available in macOS 10.15 or newer
+    |                     `- note: add 'if #available' version check
+ 86 |                 guard validID(reference.targetID) else { throw DocumentCompositionError.invalidID(reference.targetID) }
+ 87 |                 guard reference.attributes.count <= limits.maximumReferenceAttributes else {
+
+/private/tmp/3md-binary-composition-20261004/Sources/ThreeMD/DocumentComposition.swift:85:26: error: 'checkCancellation()' is only available in macOS 10.15 or newer
+ 53 | }
+ 54 | 
+ 55 | internal enum DocumentCompositionValidation {
+    |               `- note: add '@available' attribute to enclosing enum
+ 56 |     internal struct Result {
+ 57 |         let root: DocumentEntry
+    :
+ 59 |     }
+ 60 | 
+ 61 |     internal static func validate(
+    |                          `- note: add '@available' attribute to enclosing static method
+ 62 |         rootID: String,
+ 63 |         entries: [DocumentEntry],
+    :
+ 83 |             referenceCount += entry.references.count
+ 84 |             for reference in entry.references {
+ 85 |                 try Task.checkCancellation()
+    |                          |- error: 'checkCancellation()' is only available in macOS 10.15 or newer
+    |                          `- note: add 'if #available' version check
+ 86 |                 guard validID(reference.targetID) else { throw DocumentCompositionError.invalidID(reference.targetID) }
+ 87 |                 guard reference.attributes.count <= limits.maximumReferenceAttributes else {
+
+/private/tmp/3md-binary-composition-20261004/Sources/ThreeMD/DocumentComposition.swift:131:21: error: 'Task' is only available in macOS 10.15 or newer
+ 53 | }
+ 54 | 
+ 55 | internal enum DocumentCompositionValidation {
+    |               `- note: add '@available' attribute to enclosing enum
+ 56 |     internal struct Result {
+ 57 |         let root: DocumentEntry
+    :
+ 59 |     }
+ 60 | 
+ 61 |     internal static func validate(
+    |                          `- note: add '@available' attribute to enclosing static method
+ 62 |         rootID: String,
+ 63 |         entries: [DocumentEntry],
+    :
+129 |         for entry in entries {
+130 |             for reference in entry.references {
+131 |                 try Task.checkCancellation()
+    |                     |- error: 'Task' is only available in macOS 10.15 or newer
+    |                     `- note: add 'if #available' version check
+132 |                 guard indices[reference.targetID] != nil else {
+133 |                     throw DocumentCompositionError.missingTarget(from: entry.id, target: reference.targetID)
+
+/private/tmp/3md-binary-composition-20261004/Sources/ThreeMD/DocumentComposition.swift:131:26: error: 'checkCancellation()' is only available in macOS 10.15 or newer
+ 53 | }
+ 54 | 
+ 55 | internal enum DocumentCompositionValidation {
+    |               `- note: add '@available' attribute to enclosing enum
+ 56 |     internal struct Result {
+ 57 |         let root: DocumentEntry
+    :
+ 59 |     }
+ 60 | 
+ 61 |     internal static func validate(
+    |                          `- note: add '@available' attribute to enclosing static method
+ 62 |         rootID: String,
+ 63 |         entries: [DocumentEntry],
+    :
+129 |         for entry in entries {
+130 |             for reference in entry.references {
+131 |                 try Task.checkCancellation()
+    |                          |- error: 'checkCancellation()' is only available in macOS 10.15 or newer
+    |                          `- note: add 'if #available' version check
+132 |                 guard indices[reference.targetID] != nil else {
+133 |                     throw DocumentCompositionError.missingTarget(from: entry.id, target: reference.targetID)
+
+/private/tmp/3md-binary-composition-20261004/Sources/ThreeMD/DocumentComposition.swift:171:17: error: 'Task' is only available in macOS 10.15 or newer
+151 |     }
+152 | 
+153 |     private struct Graph {
+    |                    `- note: add '@available' attribute to enclosing struct
+154 |         let entries: [DocumentEntry]
+155 |         let indices: [String: Int]
+    :
+168 |         }
+169 | 
+170 |         mutating func visit(_ index: Int, activeDepth: Int) throws {
+    |                       `- note: add '@available' attribute to enclosing instance method
+171 |             try Task.checkCancellation()
+    |                 |- error: 'Task' is only available in macOS 10.15 or newer
+    |                 `- note: add 'if #available' version check
+172 |             if states[index] == 1 { throw DocumentCompositionError.cycle(entries[index].id) }
+173 |             if states[index] == 2 { return }
+
+/private/tmp/3md-binary-composition-20261004/Sources/ThreeMD/DocumentComposition.swift:171:22: error: 'checkCancellation()' is only available in macOS 10.15 or newer
+151 |     }
+152 | 
+153 |     private struct Graph {
+    |                    `- note: add '@available' attribute to enclosing struct
+154 |         let entries: [DocumentEntry]
+155 |         let indices: [String: Int]
+    :
+168 |         }
+169 | 
+170 |         mutating func visit(_ index: Int, activeDepth: Int) throws {
+    |                       `- note: add '@available' attribute to enclosing instance method
+171 |             try Task.checkCancellation()
+    |                      |- error: 'checkCancellation()' is only available in macOS 10.15 or newer
+    |                      `- note: add 'if #available' version check
+172 |             if states[index] == 1 { throw DocumentCompositionError.cycle(entries[index].id) }
+173 |             if states[index] == 2 { return }
+[29/34] Compiling ThreeMD ThreeMDAnchor.swift
+error: fatalError

@@ -139,6 +139,80 @@ print(document.linkGraph())     // compact source -> target edge list
 let text = Serializer().render(document)
 ```
 
+## Binary storage and reusable documents
+
+This branch adds Swift APIs for bounded general-document storage and
+self-contained composition. These additions have not been released yet. The
+existing text parsers, command-line tool and hosted viewer retain their current
+text behavior; the TypeScript and Rust ports do not yet expose these new APIs.
+
+```swift
+import ThreeMD
+
+let document = try Parser().parse(source)
+let binary = try DocumentStorageCodec.encode(
+    document, format: .binary(compression: .none)
+)
+let restored = try DocumentStorageCodec.decode(binary)
+
+// Optional on platforms with Apple's Compression framework:
+let compressed = try DocumentStorageCodec.encode(
+    document, format: .binary(compression: .lzfse)
+)
+```
+
+The general `.3mdb` container holds canonical UTF-8 3md text with explicit
+lengths and a corruption checksum. Its magic is `3mdbin\r\n`; it is separate
+from Sculpt/Rook's older voxel-specific `3MDB` container. Defaults cap encoded
+and decoded data at 64 MiB, with limits for records, planes and physical lines.
+Unavailable compression, malformed headers, excess limits and cancellation
+produce errors. CRC detects corruption and does not authenticate content.
+
+Composition preserves a library of named documents and ordered references:
+
+```swift
+let root = Document(version: "0.1", axis: .layer, planes: [
+    Plane(z: 0, body: "# Collection")
+])
+let composition = try DocumentComposition(rootID: "root", entries: [
+    DocumentEntry(id: "root", document: root, references: [
+        DocumentReference(targetID: "chapter", attributes: ["role": "first"]),
+        DocumentReference(targetID: "chapter", attributes: ["role": "again"])
+    ]),
+    DocumentEntry(id: "chapter", document: document)
+])
+let text = try DocumentCompositionCodec.encode(composition)
+let reloaded = try DocumentCompositionCodec.decode(text)
+
+// The profile is itself a normal Document, so binary storage also works.
+let profile = try DocumentCompositionCodec.document(for: composition)
+let binaryComposition = try DocumentStorageCodec.encode(
+    profile, format: .binary(compression: .none)
+)
+```
+
+Each definition is saved once. All references resolve inside the supplied
+library, with checked IDs, targets, cycles, depth and work limits, including
+unused definitions. Documents keep their own axes; attributes have no built-in
+voxel or layout meaning. The library performs no file reads, URL resolution or
+automatic flattening. See [SPEC.md](SPEC.md#11-general-document-storage) for the
+binary layout and [the composition profile](SPEC.md#12-self-contained-document-composition).
+
+The package keeps its existing deployment baseline. These synchronous APIs
+check cooperative task cancellation on macOS 10.15, iOS 13, tvOS 13, watchOS 6
+and later, and supported non-Apple platforms. On earlier Apple runtimes that
+check is a no-op; storage and validation remain synchronous and available.
+
+Actual canonical fixtures are in [Examples/Extensions](Examples/README.md#storage-and-composition-fixtures):
+[readable canopy](Examples/Extensions/canopy.3md),
+[portable binary canopy](Examples/Extensions/canopy.3mdb),
+[readable shared grove](Examples/Extensions/shared-grove.3md), and
+[portable binary shared grove](Examples/Extensions/shared-grove.3mdb).
+The fixture directory also includes LZFSE variants and a byte/hash manifest.
+The public Swift APIs generated all six documents and decoded them back to
+equal values. This demonstrates storage and references, without promising
+automatic character-to-model expansion or hosted viewer support.
+
 ## Command-line tool
 
 The `threemd` CLI ships with the package and self-documents (run `threemd
@@ -203,15 +277,17 @@ parity, generated web-component bundle drift, and VS Code grammar tests. See
 [AGENTS.md](AGENTS.md) for the standing rules every contributor and agent follows.
 Browser UI tests are exposed separately with `fledge lanes run ui`.
 
-Each implementation has its own tests (the Swift suite has 122 tests, the
-TypeScript suite 76), and all three implementations run the shared 43-vector
+Each implementation has its own tests, and all three implementations run the shared 43-vector
 conformance suite in [conformance/](conformance), which is the
 cross-implementation contract that keeps the parsers behaving identically.
 
 ## Status
 
-The format and spec are at version 1.0 (stable, frozen grammar). The latest
-release is v1.8.1 (see the release badge above). Older `3md: 0.1` documents remain valid: the parser is
+The 1.0 text grammar remains frozen. Specification 1.1 adds independently
+versioned binary storage and composition without changing that grammar. The new
+Swift APIs on this branch are awaiting the complete repository verification
+and publication workflow; they are not a published release. The release badge
+reflects published tags. Older `3md: 0.1` documents remain valid: the parser is
 version-lenient and never rejects a document by its version string.
 
 ## License

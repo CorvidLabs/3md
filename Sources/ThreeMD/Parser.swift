@@ -324,8 +324,35 @@ public struct Parser: Sendable {
     /// values that overflow to infinity are rejected, so the Swift and
     /// TypeScript parsers agree on the numeric grammar.
     private func parseFiniteDecimal(_ raw: String) -> Double? {
-        let pattern = "^[+-]?([0-9]+\\.?[0-9]*|\\.[0-9]+)([eE][+-]?[0-9]+)?$"
-        guard raw.range(of: pattern, options: .regularExpression) != nil else { return nil }
+        // Scan each ASCII byte once. Adjacent variable-length digit groups in a
+        // regular expression can backtrack quadratically on a long invalid suffix.
+        var bytes = raw.utf8.makeIterator()
+        var byte = bytes.next()
+        if byte == 43 || byte == 45 { byte = bytes.next() }
+        var mantissaDigits = false
+        while let current = byte, (48...57).contains(current) {
+            mantissaDigits = true
+            byte = bytes.next()
+        }
+        if byte == 46 {
+            byte = bytes.next()
+            while let current = byte, (48...57).contains(current) {
+                mantissaDigits = true
+                byte = bytes.next()
+            }
+        }
+        guard mantissaDigits else { return nil }
+        if byte == 69 || byte == 101 {
+            byte = bytes.next()
+            if byte == 43 || byte == 45 { byte = bytes.next() }
+            var exponentDigits = false
+            while let current = byte, (48...57).contains(current) {
+                exponentDigits = true
+                byte = bytes.next()
+            }
+            guard exponentDigits else { return nil }
+        }
+        guard byte == nil else { return nil }
         guard let value = Double(raw), value.isFinite else { return nil }
         return value
     }

@@ -1,0 +1,27 @@
+---
+3md: "0.1"
+axis: "layer"
+profile: "3md-composition-1"
+---
+
+@plane z=0 label="Composition"
+```json
+{
+  "entries": [
+    {
+      "id": "canopy",
+      "references": [],
+      "source": "---\n3md: \"1.0\"\naxis: \"space\"\ntitle: \"Reusable canopy\"\nmaterial: \"mint\"\n---\n\n@plane z=0\n.#\n##\n\n@plane z=1\n##\n.#\n"
+    },
+    {
+      "id": "grove",
+      "references": [
+        {"attributes": {"binding": "A"}, "targetID": "canopy"}
+      ],
+      "source": "---\n3md: \"1.0\"\naxis: \"space\"\ntitle: \"Shared grove\"\nsemantics: \"application-defined character bindings\"\n---\n\n@plane z=0\nA.A\n.A.\n"
+    }
+  ],
+  "rootID": "grove",
+  "schema": "3md-composition-1"
+}
+```

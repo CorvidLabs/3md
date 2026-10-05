@@ -1,0 +1,17 @@
+{
+  "verification": {
+    "commands": [
+      {
+        "command": "specsync check (no spec in scope)",
+        "exit_code": 0,
+        "success": true
+      }
+    ],
+    "commit": "0e9f81ab6c8c104f3f2856f8b9760fd520a05f5b",
+    "contract_digest": "1d2ba924f80d9b4e3f780440209d5f6d58c937a5746ac8e42f7d5a958ff6c07d",
+    "passed": true,
+    "requirement_ids": [],
+    "timestamp": 1791160092,
+    "workspace_digest": "30437a58fec4326e1275ca670a546704991f48205e3e04d3ed35ba159a919249"
+  }
+}

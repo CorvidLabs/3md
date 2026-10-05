@@ -1,0 +1,668 @@
+▶️ Lane: verify — Native verification for all three parser implementations, generated element bundle drift, and editor grammar. Trust runs SpecSync after this lane.
+  ▶️ Running task: lint
+  ✔ Step 1 done (190ms)
+  ▶️ Running task: build
+[0/1] Planning build
+Building for debugging...
+[0/3] Write swift-version--58304C5D6DBC2206.txt
+Build complete! (0.18s)
+  ✔ Step 2 done (1.190s)
+  ▶️ Running task: test
+[0/1] Planning build
+Building for debugging...
+[0/4] Write swift-version--58304C5D6DBC2206.txt
+Build complete! (0.18s)
+Test Suite 'All tests' started at 2026-10-04 18:26:33.302.
+Test Suite '3mdPackageTests.xctest' started at 2026-10-04 18:26:33.304.
+Test Suite 'ConformanceTests' started at 2026-10-04 18:26:33.304.
+Test Case '-[ThreeMDTests.ConformanceTests testConformanceVectors]' started.
+Test Case '-[ThreeMDTests.ConformanceTests testConformanceVectors]' passed (0.008 seconds).
+Test Suite 'ConformanceTests' passed at 2026-10-04 18:26:33.312.
+	 Executed 1 test, with 0 failures (0 unexpected) in 0.008 (0.008) seconds
+Test Suite 'CrossPlaneLinkHTMLTests' started at 2026-10-04 18:26:33.312.
+Test Case '-[ThreeMDTests.CrossPlaneLinkHTMLTests testAnchorHrefMatchesSectionId]' started.
+Test Case '-[ThreeMDTests.CrossPlaneLinkHTMLTests testAnchorHrefMatchesSectionId]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.CrossPlaneLinkHTMLTests testCrossPlaneAnchorDecimalTarget]' started.
+Test Case '-[ThreeMDTests.CrossPlaneLinkHTMLTests testCrossPlaneAnchorDecimalTarget]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.CrossPlaneLinkHTMLTests testCrossPlaneAnchorDefaultTextIsEscaped]' started.
+Test Case '-[ThreeMDTests.CrossPlaneLinkHTMLTests testCrossPlaneAnchorDefaultTextIsEscaped]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.CrossPlaneLinkHTMLTests testCrossPlaneAnchorEmptyText]' started.
+Test Case '-[ThreeMDTests.CrossPlaneLinkHTMLTests testCrossPlaneAnchorEmptyText]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.CrossPlaneLinkHTMLTests testCrossPlaneAnchorNegativeTarget]' started.
+Test Case '-[ThreeMDTests.CrossPlaneLinkHTMLTests testCrossPlaneAnchorNegativeTarget]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.CrossPlaneLinkHTMLTests testCrossPlaneAnchorNoText]' started.
+Test Case '-[ThreeMDTests.CrossPlaneLinkHTMLTests testCrossPlaneAnchorNoText]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.CrossPlaneLinkHTMLTests testCrossPlaneAnchorScientificNotation]' started.
+Test Case '-[ThreeMDTests.CrossPlaneLinkHTMLTests testCrossPlaneAnchorScientificNotation]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.CrossPlaneLinkHTMLTests testCrossPlaneAnchorTextIsEscaped]' started.
+Test Case '-[ThreeMDTests.CrossPlaneLinkHTMLTests testCrossPlaneAnchorTextIsEscaped]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.CrossPlaneLinkHTMLTests testCrossPlaneAnchorWithText]' started.
+Test Case '-[ThreeMDTests.CrossPlaneLinkHTMLTests testCrossPlaneAnchorWithText]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.CrossPlaneLinkHTMLTests testHexTargetNotRenderedAsAnchor]' started.
+Test Case '-[ThreeMDTests.CrossPlaneLinkHTMLTests testHexTargetNotRenderedAsAnchor]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.CrossPlaneLinkHTMLTests testInfTargetNotRenderedAsAnchor]' started.
+Test Case '-[ThreeMDTests.CrossPlaneLinkHTMLTests testInfTargetNotRenderedAsAnchor]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.CrossPlaneLinkHTMLTests testInvalidTargetNotRenderedAsAnchor]' started.
+Test Case '-[ThreeMDTests.CrossPlaneLinkHTMLTests testInvalidTargetNotRenderedAsAnchor]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.CrossPlaneLinkHTMLTests testPublicAnchorHelpersMatchRendererIds]' started.
+Test Case '-[ThreeMDTests.CrossPlaneLinkHTMLTests testPublicAnchorHelpersMatchRendererIds]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.CrossPlaneLinkHTMLTests testSectionHasIdAttribute]' started.
+Test Case '-[ThreeMDTests.CrossPlaneLinkHTMLTests testSectionHasIdAttribute]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.CrossPlaneLinkHTMLTests testSectionIdForDecimalZ]' started.
+Test Case '-[ThreeMDTests.CrossPlaneLinkHTMLTests testSectionIdForDecimalZ]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.CrossPlaneLinkHTMLTests testSectionIdForNegativeZ]' started.
+Test Case '-[ThreeMDTests.CrossPlaneLinkHTMLTests testSectionIdForNegativeZ]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.CrossPlaneLinkHTMLTests testSectionIdPrecedesDataZ]' started.
+Test Case '-[ThreeMDTests.CrossPlaneLinkHTMLTests testSectionIdPrecedesDataZ]' passed (0.000 seconds).
+Test Suite 'CrossPlaneLinkHTMLTests' passed at 2026-10-04 18:26:33.317.
+	 Executed 17 tests, with 0 failures (0 unexpected) in 0.004 (0.005) seconds
+Test Suite 'CrossPlaneLinkTests' started at 2026-10-04 18:26:33.317.
+Test Case '-[ThreeMDTests.CrossPlaneLinkTests testBasicLinkNoText]' started.
+Test Case '-[ThreeMDTests.CrossPlaneLinkTests testBasicLinkNoText]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.CrossPlaneLinkTests testDanglingLinksFiltersOnlyMissingTargets]' started.
+Test Case '-[ThreeMDTests.CrossPlaneLinkTests testDanglingLinksFiltersOnlyMissingTargets]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.CrossPlaneLinkTests testDanglingLinkTargetExistsFalse]' started.
+Test Case '-[ThreeMDTests.CrossPlaneLinkTests testDanglingLinkTargetExistsFalse]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.CrossPlaneLinkTests testDecimalTarget]' started.
+Test Case '-[ThreeMDTests.CrossPlaneLinkTests testDecimalTarget]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.CrossPlaneLinkTests testDocumentWithNoLinksReturnsEmpty]' started.
+Test Case '-[ThreeMDTests.CrossPlaneLinkTests testDocumentWithNoLinksReturnsEmpty]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.CrossPlaneLinkTests testHexTargetIgnored]' started.
+Test Case '-[ThreeMDTests.CrossPlaneLinkTests testHexTargetIgnored]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.CrossPlaneLinkTests testLinkGraphCollapsesRepeatedEdgesInEncounterOrder]' started.
+Test Case '-[ThreeMDTests.CrossPlaneLinkTests testLinkGraphCollapsesRepeatedEdgesInEncounterOrder]' passed (0.001 seconds).
+Test Case '-[ThreeMDTests.CrossPlaneLinkTests testLinkGraphKeepsDanglingEdgeStatus]' started.
+Test Case '-[ThreeMDTests.CrossPlaneLinkTests testLinkGraphKeepsDanglingEdgeStatus]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.CrossPlaneLinkTests testLinksAcrossMultiplePlanesInSourceOrder]' started.
+Test Case '-[ThreeMDTests.CrossPlaneLinkTests testLinksAcrossMultiplePlanesInSourceOrder]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.CrossPlaneLinkTests testLinkWithEmptyText]' started.
+Test Case '-[ThreeMDTests.CrossPlaneLinkTests testLinkWithEmptyText]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.CrossPlaneLinkTests testLinkWithText]' started.
+Test Case '-[ThreeMDTests.CrossPlaneLinkTests testLinkWithText]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.CrossPlaneLinkTests testMultipleLinksLeftToRight]' started.
+Test Case '-[ThreeMDTests.CrossPlaneLinkTests testMultipleLinksLeftToRight]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.CrossPlaneLinkTests testNanTargetIgnored]' started.
+Test Case '-[ThreeMDTests.CrossPlaneLinkTests testNanTargetIgnored]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.CrossPlaneLinkTests testNegativeDecimalTarget]' started.
+Test Case '-[ThreeMDTests.CrossPlaneLinkTests testNegativeDecimalTarget]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.CrossPlaneLinkTests testNonDecimalTargetIgnored]' started.
+Test Case '-[ThreeMDTests.CrossPlaneLinkTests testNonDecimalTargetIgnored]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.CrossPlaneLinkTests testOrdinaryMarkdownLinkNotExtracted]' started.
+Test Case '-[ThreeMDTests.CrossPlaneLinkTests testOrdinaryMarkdownLinkNotExtracted]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.CrossPlaneLinkTests testScientificNotationTarget]' started.
+Test Case '-[ThreeMDTests.CrossPlaneLinkTests testScientificNotationTarget]' passed (0.000 seconds).
+Test Suite 'CrossPlaneLinkTests' passed at 2026-10-04 18:26:33.322.
+	 Executed 17 tests, with 0 failures (0 unexpected) in 0.004 (0.005) seconds
+Test Suite 'DocumentCompositionCodecTests' started at 2026-10-04 18:26:33.322.
+Test Case '-[ThreeMDTests.DocumentCompositionCodecTests testCanonicalProfileStoresSharedDefinitionOnceAndIsOrderIndependent]' started.
+Test Case '-[ThreeMDTests.DocumentCompositionCodecTests testCanonicalProfileStoresSharedDefinitionOnceAndIsOrderIndependent]' passed (0.005 seconds).
+Test Case '-[ThreeMDTests.DocumentCompositionCodecTests testCheckedInGrovePreservesItsSingleCanopyDefinitionAndBindingAcrossFormats]' started.
+Test Case '-[ThreeMDTests.DocumentCompositionCodecTests testCheckedInGrovePreservesItsSingleCanopyDefinitionAndBindingAcrossFormats]' passed (0.007 seconds).
+Test Case '-[ThreeMDTests.DocumentCompositionCodecTests testJSONAllocationPreflightRejectsExcessiveArraysNestingAndTrailingBytes]' started.
+Test Case '-[ThreeMDTests.DocumentCompositionCodecTests testJSONAllocationPreflightRejectsExcessiveArraysNestingAndTrailingBytes]' passed (0.001 seconds).
+Test Case '-[ThreeMDTests.DocumentCompositionCodecTests testProfileAndDefinitionBytePoliciesBoundBothReaderAndWriter]' started.
+Test Case '-[ThreeMDTests.DocumentCompositionCodecTests testProfileAndDefinitionBytePoliciesBoundBothReaderAndWriter]' passed (0.002 seconds).
+Test Case '-[ThreeMDTests.DocumentCompositionCodecTests testProfileUsesGenericPortableBinaryEnvelopeWithoutAnotherFormat]' started.
+Test Case '-[ThreeMDTests.DocumentCompositionCodecTests testProfileUsesGenericPortableBinaryEnvelopeWithoutAnotherFormat]' passed (0.003 seconds).
+Test Case '-[ThreeMDTests.DocumentCompositionCodecTests testReaderRejectsDuplicateDefinitionIDsAndUnusedMissingReferences]' started.
+Test Case '-[ThreeMDTests.DocumentCompositionCodecTests testReaderRejectsDuplicateDefinitionIDsAndUnusedMissingReferences]' passed (0.002 seconds).
+Test Case '-[ThreeMDTests.DocumentCompositionCodecTests testReaderRejectsDuplicateJSONKeysIncludingEscapedSpelling]' started.
+Test Case '-[ThreeMDTests.DocumentCompositionCodecTests testReaderRejectsDuplicateJSONKeysIncludingEscapedSpelling]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.DocumentCompositionCodecTests testReaderRejectsInvalidUnusedDefinitionsAndDoesNotLoadSourcePaths]' started.
+Test Case '-[ThreeMDTests.DocumentCompositionCodecTests testReaderRejectsInvalidUnusedDefinitionsAndDoesNotLoadSourcePaths]' passed (0.001 seconds).
+Test Case '-[ThreeMDTests.DocumentCompositionCodecTests testReaderRejectsUnknownManifestEntryAndReferenceKeys]' started.
+Test Case '-[ThreeMDTests.DocumentCompositionCodecTests testReaderRejectsUnknownManifestEntryAndReferenceKeys]' passed (0.001 seconds).
+Test Case '-[ThreeMDTests.DocumentCompositionCodecTests testReaderRequiresExactEnvelopeAndVersionedManifest]' started.
+Test Case '-[ThreeMDTests.DocumentCompositionCodecTests testReaderRequiresExactEnvelopeAndVersionedManifest]' passed (0.001 seconds).
+Test Case '-[ThreeMDTests.DocumentCompositionCodecTests testReferenceAttributesPreserveControlsQuotesAndUnicodeWithoutBreakingFences]' started.
+Test Case '-[ThreeMDTests.DocumentCompositionCodecTests testReferenceAttributesPreserveControlsQuotesAndUnicodeWithoutBreakingFences]' passed (0.001 seconds).
+Test Suite 'DocumentCompositionCodecTests' passed at 2026-10-04 18:26:33.346.
+	 Executed 11 tests, with 0 failures (0 unexpected) in 0.023 (0.024) seconds
+Test Suite 'DocumentCompositionTests' started at 2026-10-04 18:26:33.346.
+Test Case '-[ThreeMDTests.DocumentCompositionTests testCanceledConstructionAndStorageStayDistinctFromValidationErrors]' started.
+Test Case '-[ThreeMDTests.DocumentCompositionTests testCanceledConstructionAndStorageStayDistinctFromValidationErrors]' passed (0.002 seconds).
+Test Case '-[ThreeMDTests.DocumentCompositionTests testCyclesAreRejectedInRootAndUnusedNodes]' started.
+Test Case '-[ThreeMDTests.DocumentCompositionTests testCyclesAreRejectedInRootAndUnusedNodes]' passed (0.001 seconds).
+Test Case '-[ThreeMDTests.DocumentCompositionTests testDefinitionDepthAndReferenceBudgetsHaveExactBoundarySemantics]' started.
+Test Case '-[ThreeMDTests.DocumentCompositionTests testDefinitionDepthAndReferenceBudgetsHaveExactBoundarySemantics]' passed (0.001 seconds).
+Test Case '-[ThreeMDTests.DocumentCompositionTests testDefinitionDocumentPolicyIsIndependentOfCompositionPolicy]' started.
+Test Case '-[ThreeMDTests.DocumentCompositionTests testDefinitionDocumentPolicyIsIndependentOfCompositionPolicy]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.DocumentCompositionTests testEveryDefinitionIsValidatedEvenWhenUnused]' started.
+Test Case '-[ThreeMDTests.DocumentCompositionTests testEveryDefinitionIsValidatedEvenWhenUnused]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.DocumentCompositionTests testIDsAreCaseSensitiveAndNeverFileOrNetworkLocations]' started.
+Test Case '-[ThreeMDTests.DocumentCompositionTests testIDsAreCaseSensitiveAndNeverFileOrNetworkLocations]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.DocumentCompositionTests testMissingRootMissingTargetAndDuplicateDefinitionsAreRejected]' started.
+Test Case '-[ThreeMDTests.DocumentCompositionTests testMissingRootMissingTargetAndDuplicateDefinitionsAreRejected]' passed (0.001 seconds).
+Test Case '-[ThreeMDTests.DocumentCompositionTests testOccurrenceBudgetCountsSharedReferencesWithoutMaterializingThem]' started.
+Test Case '-[ThreeMDTests.DocumentCompositionTests testOccurrenceBudgetCountsSharedReferencesWithoutMaterializingThem]' passed (0.002 seconds).
+Test Case '-[ThreeMDTests.DocumentCompositionTests testReferenceAttributesAreOpaqueUnicodeDataWithCountAndByteLimits]' started.
+Test Case '-[ThreeMDTests.DocumentCompositionTests testReferenceAttributesAreOpaqueUnicodeDataWithCountAndByteLimits]' passed (0.001 seconds).
+Test Case '-[ThreeMDTests.DocumentCompositionTests testResourceLimitsCannotBeRaisedBeyondAbsoluteBounds]' started.
+Test Case '-[ThreeMDTests.DocumentCompositionTests testResourceLimitsCannotBeRaisedBeyondAbsoluteBounds]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.DocumentCompositionTests testSharedNestedDefinitionsPreserveAxesMetadataAndReferenceOrder]' started.
+Test Case '-[ThreeMDTests.DocumentCompositionTests testSharedNestedDefinitionsPreserveAxesMetadataAndReferenceOrder]' passed (0.003 seconds).
+Test Case '-[ThreeMDTests.DocumentCompositionTests testUniqueSourceByteBudgetCountsEachDefinitionOnce]' started.
+Test Case '-[ThreeMDTests.DocumentCompositionTests testUniqueSourceByteBudgetCountsEachDefinitionOnce]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.DocumentCompositionTests testUnusedDepthAndOccurrenceBudgetsAreAlsoEnforced]' started.
+Test Case '-[ThreeMDTests.DocumentCompositionTests testUnusedDepthAndOccurrenceBudgetsAreAlsoEnforced]' passed (0.000 seconds).
+Test Suite 'DocumentCompositionTests' passed at 2026-10-04 18:26:33.360.
+	 Executed 13 tests, with 0 failures (0 unexpected) in 0.012 (0.013) seconds
+Test Suite 'DocumentStorageBoundsTests' started at 2026-10-04 18:26:33.360.
+Test Case '-[ThreeMDTests.DocumentStorageBoundsTests testCanceledTasksCannotReturnPartiallyEncodedOrDecodedDocuments]' started.
+Test Case '-[ThreeMDTests.DocumentStorageBoundsTests testCanceledTasksCannotReturnPartiallyEncodedOrDecodedDocuments]' passed (0.001 seconds).
+Test Case '-[ThreeMDTests.DocumentStorageBoundsTests testCombinedScalarAndDirectiveBytesCannotBypassTheOutputBound]' started.
+Test Case '-[ThreeMDTests.DocumentStorageBoundsTests testCombinedScalarAndDirectiveBytesCannotBypassTheOutputBound]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.DocumentStorageBoundsTests testLimitsArePositiveAndHaveAbsoluteCeilings]' started.
+Test Case '-[ThreeMDTests.DocumentStorageBoundsTests testLimitsArePositiveAndHaveAbsoluteCeilings]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.DocumentStorageBoundsTests testPhysicalLinesAreBoundedBeforeParsingEvenForBlankInputs]' started.
+Test Case '-[ThreeMDTests.DocumentStorageBoundsTests testPhysicalLinesAreBoundedBeforeParsingEvenForBlankInputs]' passed (0.009 seconds).
+Test Case '-[ThreeMDTests.DocumentStorageBoundsTests testPlanePreflightIgnoresDirectivesInsideBothKindsOfFences]' started.
+Test Case '-[ThreeMDTests.DocumentStorageBoundsTests testPlanePreflightIgnoresDirectivesInsideBothKindsOfFences]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.DocumentStorageBoundsTests testRecordBoundIncludesWholePlaneBodiesAndEscapedScalarLines]' started.
+Test Case '-[ThreeMDTests.DocumentStorageBoundsTests testRecordBoundIncludesWholePlaneBodiesAndEscapedScalarLines]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.DocumentStorageBoundsTests testTextAndPortableBinaryAcceptExactByteBounds]' started.
+Test Case '-[ThreeMDTests.DocumentStorageBoundsTests testTextAndPortableBinaryAcceptExactByteBounds]' passed (0.001 seconds).
+Test Suite 'DocumentStorageBoundsTests' passed at 2026-10-04 18:26:33.372.
+	 Executed 7 tests, with 0 failures (0 unexpected) in 0.012 (0.013) seconds
+Test Suite 'DocumentStorageCompressionTests' started at 2026-10-04 18:26:33.372.
+Test Case '-[ThreeMDTests.DocumentStorageCompressionTests testAppleLZFSECompressionIsDeterministicAndRoundTripsGeneralText]' started.
+Test Case '-[ThreeMDTests.DocumentStorageCompressionTests testAppleLZFSECompressionIsDeterministicAndRoundTripsGeneralText]' passed (0.150 seconds).
+Test Case '-[ThreeMDTests.DocumentStorageCompressionTests testCanceledCompressionAndDecompressionRemainCancellationErrors]' started.
+Test Case '-[ThreeMDTests.DocumentStorageCompressionTests testCanceledCompressionAndDecompressionRemainCancellationErrors]' passed (0.018 seconds).
+Test Case '-[ThreeMDTests.DocumentStorageCompressionTests testDeclaredOutputSizeCannotTruncateOrGrowDecompression]' started.
+Test Case '-[ThreeMDTests.DocumentStorageCompressionTests testDeclaredOutputSizeCannotTruncateOrGrowDecompression]' passed (0.099 seconds).
+Test Case '-[ThreeMDTests.DocumentStorageCompressionTests testEveryTruncationAndMalformedCompressionPayloadFailsWithoutPartialResults]' started.
+Test Case '-[ThreeMDTests.DocumentStorageCompressionTests testEveryTruncationAndMalformedCompressionPayloadFailsWithoutPartialResults]' passed (0.005 seconds).
+Test Case '-[ThreeMDTests.DocumentStorageCompressionTests testLargeFirstStreamDrainsMultipleChunksBeforeFinalMarkerAndRejectsConcatenation]' started.
+Test Case '-[ThreeMDTests.DocumentStorageCompressionTests testLargeFirstStreamDrainsMultipleChunksBeforeFinalMarkerAndRejectsConcatenation]' passed (0.099 seconds).
+Test Case '-[ThreeMDTests.DocumentStorageCompressionTests testLZFSERejectsTrailingAndConcatenatedStreamsWithValidChecksums]' started.
+Test Case '-[ThreeMDTests.DocumentStorageCompressionTests testLZFSERejectsTrailingAndConcatenatedStreamsWithValidChecksums]' passed (0.001 seconds).
+Test Suite 'DocumentStorageCompressionTests' passed at 2026-10-04 18:26:33.743.
+	 Executed 6 tests, with 0 failures (0 unexpected) in 0.370 (0.371) seconds
+Test Suite 'DocumentStorageTests' started at 2026-10-04 18:26:33.743.
+Test Case '-[ThreeMDTests.DocumentStorageTests testAllHeaderFieldsAndCorruptionAreChecked]' started.
+Test Case '-[ThreeMDTests.DocumentStorageTests testAllHeaderFieldsAndCorruptionAreChecked]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.DocumentStorageTests testBinaryDecodeHandlesDataSlices]' started.
+Test Case '-[ThreeMDTests.DocumentStorageTests testBinaryDecodeHandlesDataSlices]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.DocumentStorageTests testCheckedInCompressedCanopyRoundTripsToItsReadableDocument]' started.
+Test Case '-[ThreeMDTests.DocumentStorageTests testCheckedInCompressedCanopyRoundTripsToItsReadableDocument]' passed (0.001 seconds).
+Test Case '-[ThreeMDTests.DocumentStorageTests testCheckedInExtensionManifestDescribesTheActualSixArtifacts]' started.
+Test Case '-[ThreeMDTests.DocumentStorageTests testCheckedInExtensionManifestDescribesTheActualSixArtifacts]' passed (0.001 seconds).
+Test Case '-[ThreeMDTests.DocumentStorageTests testCheckedInPortableCanopyRoundTripsToItsReadableDocument]' started.
+Test Case '-[ThreeMDTests.DocumentStorageTests testCheckedInPortableCanopyRoundTripsToItsReadableDocument]' passed (0.001 seconds).
+Test Case '-[ThreeMDTests.DocumentStorageTests testContainerPayloadMustBeValidUTF8AndThreeMDText]' started.
+Test Case '-[ThreeMDTests.DocumentStorageTests testContainerPayloadMustBeValidUTF8AndThreeMDText]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.DocumentStorageTests testDirectDocumentValidationRejectsLossyOrAmbiguousSerialization]' started.
+Test Case '-[ThreeMDTests.DocumentStorageTests testDirectDocumentValidationRejectsLossyOrAmbiguousSerialization]' passed (0.001 seconds).
+Test Case '-[ThreeMDTests.DocumentStorageTests testGeneralDocumentsPreserveUnicodeCustomAxesAndFractionalPositions]' started.
+Test Case '-[ThreeMDTests.DocumentStorageTests testGeneralDocumentsPreserveUnicodeCustomAxesAndFractionalPositions]' passed (0.003 seconds).
+Test Case '-[ThreeMDTests.DocumentStorageTests testPortableContainerFixedVector]' started.
+Test Case '-[ThreeMDTests.DocumentStorageTests testPortableContainerFixedVector]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.DocumentStorageTests testStorageDoesNotChangeExistingTextGrammarOrSerializer]' started.
+Test Case '-[ThreeMDTests.DocumentStorageTests testStorageDoesNotChangeExistingTextGrammarOrSerializer]' passed (0.000 seconds).
+Test Suite 'DocumentStorageTests' passed at 2026-10-04 18:26:33.751.
+	 Executed 10 tests, with 0 failures (0 unexpected) in 0.007 (0.008) seconds
+Test Suite 'HTMLRendererTests' started at 2026-10-04 18:26:33.751.
+Test Case '-[ThreeMDTests.HTMLRendererTests testAmpersandEscaped]' started.
+Test Case '-[ThreeMDTests.HTMLRendererTests testAmpersandEscaped]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.HTMLRendererTests testAxisEmittedInMeta]' started.
+Test Case '-[ThreeMDTests.HTMLRendererTests testAxisEmittedInMeta]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.HTMLRendererTests testBodyRenderedAsMarkdown]' started.
+Test Case '-[ThreeMDTests.HTMLRendererTests testBodyRenderedAsMarkdown]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.HTMLRendererTests testDecimalZInDataAttribute]' started.
+Test Case '-[ThreeMDTests.HTMLRendererTests testDecimalZInDataAttribute]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.HTMLRendererTests testDoubleQuoteEscaped]' started.
+Test Case '-[ThreeMDTests.HTMLRendererTests testDoubleQuoteEscaped]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.HTMLRendererTests testLabelRenderedAsHeading]' started.
+Test Case '-[ThreeMDTests.HTMLRendererTests testLabelRenderedAsHeading]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.HTMLRendererTests testLabelSpecialCharsEscaped]' started.
+Test Case '-[ThreeMDTests.HTMLRendererTests testLabelSpecialCharsEscaped]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.HTMLRendererTests testLessThanEscaped]' started.
+Test Case '-[ThreeMDTests.HTMLRendererTests testLessThanEscaped]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.HTMLRendererTests testMissingTitleFallsBackToDefault]' started.
+Test Case '-[ThreeMDTests.HTMLRendererTests testMissingTitleFallsBackToDefault]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.HTMLRendererTests testOutputContainsHeadAndBody]' started.
+Test Case '-[ThreeMDTests.HTMLRendererTests testOutputContainsHeadAndBody]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.HTMLRendererTests testOutputIsStandaloneHTML]' started.
+Test Case '-[ThreeMDTests.HTMLRendererTests testOutputIsStandaloneHTML]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.HTMLRendererTests testPlaneCountMatchesSections]' started.
+Test Case '-[ThreeMDTests.HTMLRendererTests testPlaneCountMatchesSections]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.HTMLRendererTests testPreambleRenderedInSection]' started.
+Test Case '-[ThreeMDTests.HTMLRendererTests testPreambleRenderedInSection]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.HTMLRendererTests testSectionCarriesAriaLabel]' started.
+Test Case '-[ThreeMDTests.HTMLRendererTests testSectionCarriesAriaLabel]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.HTMLRendererTests testSectionCarriesDataZ]' started.
+Test Case '-[ThreeMDTests.HTMLRendererTests testSectionCarriesDataZ]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.HTMLRendererTests testSingleQuoteEscaped]' started.
+Test Case '-[ThreeMDTests.HTMLRendererTests testSingleQuoteEscaped]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.HTMLRendererTests testTitleEmittedInH1]' started.
+Test Case '-[ThreeMDTests.HTMLRendererTests testTitleEmittedInH1]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.HTMLRendererTests testTitleEmittedInTitleElement]' started.
+Test Case '-[ThreeMDTests.HTMLRendererTests testTitleEmittedInTitleElement]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.HTMLRendererTests testTitleSpecialCharsEscaped]' started.
+Test Case '-[ThreeMDTests.HTMLRendererTests testTitleSpecialCharsEscaped]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.HTMLRendererTests testVersionEmittedInMeta]' started.
+Test Case '-[ThreeMDTests.HTMLRendererTests testVersionEmittedInMeta]' passed (0.000 seconds).
+Test Suite 'HTMLRendererTests' passed at 2026-10-04 18:26:33.757.
+	 Executed 20 tests, with 0 failures (0 unexpected) in 0.005 (0.006) seconds
+Test Suite 'MarkdownRendererTests' started at 2026-10-04 18:26:33.757.
+Test Case '-[ThreeMDTests.MarkdownRendererTests testAmpersandInParagraphIsEscaped]' started.
+Test Case '-[ThreeMDTests.MarkdownRendererTests testAmpersandInParagraphIsEscaped]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.MarkdownRendererTests testBlankLineSeparatesParagraphs]' started.
+Test Case '-[ThreeMDTests.MarkdownRendererTests testBlankLineSeparatesParagraphs]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.MarkdownRendererTests testBlockquote]' started.
+Test Case '-[ThreeMDTests.MarkdownRendererTests testBlockquote]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.MarkdownRendererTests testBoldDoubleAsterisk]' started.
+Test Case '-[ThreeMDTests.MarkdownRendererTests testBoldDoubleAsterisk]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.MarkdownRendererTests testBoldDoubleUnderscore]' started.
+Test Case '-[ThreeMDTests.MarkdownRendererTests testBoldDoubleUnderscore]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.MarkdownRendererTests testBoldMidSentence]' started.
+Test Case '-[ThreeMDTests.MarkdownRendererTests testBoldMidSentence]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.MarkdownRendererTests testCheckedTaskItemLowercase]' started.
+Test Case '-[ThreeMDTests.MarkdownRendererTests testCheckedTaskItemLowercase]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.MarkdownRendererTests testCheckedTaskItemUppercase]' started.
+Test Case '-[ThreeMDTests.MarkdownRendererTests testCheckedTaskItemUppercase]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.MarkdownRendererTests testDoubleQuoteInParagraphIsEscaped]' started.
+Test Case '-[ThreeMDTests.MarkdownRendererTests testDoubleQuoteInParagraphIsEscaped]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.MarkdownRendererTests testFencedCodeBlock]' started.
+Test Case '-[ThreeMDTests.MarkdownRendererTests testFencedCodeBlock]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.MarkdownRendererTests testFencedCodeBlockEscapesHTML]' started.
+Test Case '-[ThreeMDTests.MarkdownRendererTests testFencedCodeBlockEscapesHTML]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.MarkdownRendererTests testFencedCodeBlockPreservesMarkdownLookingContent]' started.
+Test Case '-[ThreeMDTests.MarkdownRendererTests testFencedCodeBlockPreservesMarkdownLookingContent]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.MarkdownRendererTests testFencedCodeBlockWithLanguage]' started.
+Test Case '-[ThreeMDTests.MarkdownRendererTests testFencedCodeBlockWithLanguage]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.MarkdownRendererTests testH1]' started.
+Test Case '-[ThreeMDTests.MarkdownRendererTests testH1]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.MarkdownRendererTests testH2]' started.
+Test Case '-[ThreeMDTests.MarkdownRendererTests testH2]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.MarkdownRendererTests testH3]' started.
+Test Case '-[ThreeMDTests.MarkdownRendererTests testH3]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.MarkdownRendererTests testH4]' started.
+Test Case '-[ThreeMDTests.MarkdownRendererTests testH4]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.MarkdownRendererTests testH5]' started.
+Test Case '-[ThreeMDTests.MarkdownRendererTests testH5]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.MarkdownRendererTests testH6]' started.
+Test Case '-[ThreeMDTests.MarkdownRendererTests testH6]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.MarkdownRendererTests testHeadingFollowedByParagraph]' started.
+Test Case '-[ThreeMDTests.MarkdownRendererTests testHeadingFollowedByParagraph]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.MarkdownRendererTests testHeadingRequiresSpaceAfterHash]' started.
+Test Case '-[ThreeMDTests.MarkdownRendererTests testHeadingRequiresSpaceAfterHash]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.MarkdownRendererTests testInlineCode]' started.
+Test Case '-[ThreeMDTests.MarkdownRendererTests testInlineCode]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.MarkdownRendererTests testInlineCodeDoesNotRenderMarkdown]' started.
+Test Case '-[ThreeMDTests.MarkdownRendererTests testInlineCodeDoesNotRenderMarkdown]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.MarkdownRendererTests testInlineCodeEscapesHTML]' started.
+Test Case '-[ThreeMDTests.MarkdownRendererTests testInlineCodeEscapesHTML]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.MarkdownRendererTests testItalicAsterisk]' started.
+Test Case '-[ThreeMDTests.MarkdownRendererTests testItalicAsterisk]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.MarkdownRendererTests testItalicUnderscore]' started.
+Test Case '-[ThreeMDTests.MarkdownRendererTests testItalicUnderscore]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.MarkdownRendererTests testLessThanInParagraphIsEscaped]' started.
+Test Case '-[ThreeMDTests.MarkdownRendererTests testLessThanInParagraphIsEscaped]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.MarkdownRendererTests testLink]' started.
+Test Case '-[ThreeMDTests.MarkdownRendererTests testLink]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.MarkdownRendererTests testLinkHrefIsEscaped]' started.
+Test Case '-[ThreeMDTests.MarkdownRendererTests testLinkHrefIsEscaped]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.MarkdownRendererTests testLinkTextIsEscaped]' started.
+Test Case '-[ThreeMDTests.MarkdownRendererTests testLinkTextIsEscaped]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.MarkdownRendererTests testMultiLineBlockquote]' started.
+Test Case '-[ThreeMDTests.MarkdownRendererTests testMultiLineBlockquote]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.MarkdownRendererTests testMultiLineParagraphJoinsWithSpace]' started.
+Test Case '-[ThreeMDTests.MarkdownRendererTests testMultiLineParagraphJoinsWithSpace]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.MarkdownRendererTests testOrderedList]' started.
+Test Case '-[ThreeMDTests.MarkdownRendererTests testOrderedList]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.MarkdownRendererTests testParagraphWithBoldAndLink]' started.
+Test Case '-[ThreeMDTests.MarkdownRendererTests testParagraphWithBoldAndLink]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.MarkdownRendererTests testSingleLineParagraph]' started.
+Test Case '-[ThreeMDTests.MarkdownRendererTests testSingleLineParagraph]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.MarkdownRendererTests testSingleQuoteInParagraphIsEscaped]' started.
+Test Case '-[ThreeMDTests.MarkdownRendererTests testSingleQuoteInParagraphIsEscaped]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.MarkdownRendererTests testUncheckedTaskItem]' started.
+Test Case '-[ThreeMDTests.MarkdownRendererTests testUncheckedTaskItem]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.MarkdownRendererTests testUnorderedListAsterisk]' started.
+Test Case '-[ThreeMDTests.MarkdownRendererTests testUnorderedListAsterisk]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.MarkdownRendererTests testUnorderedListDash]' started.
+Test Case '-[ThreeMDTests.MarkdownRendererTests testUnorderedListDash]' passed (0.000 seconds).
+Test Suite 'MarkdownRendererTests' passed at 2026-10-04 18:26:33.766.
+	 Executed 39 tests, with 0 failures (0 unexpected) in 0.006 (0.009) seconds
+Test Suite 'ParseErrorMetadataTests' started at 2026-10-04 18:26:33.766.
+Test Case '-[ThreeMDTests.ParseErrorMetadataTests testDuplicatePlaneMetadata]' started.
+Test Case '-[ThreeMDTests.ParseErrorMetadataTests testDuplicatePlaneMetadata]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.ParseErrorMetadataTests testInvalidDirectiveMetadata]' started.
+Test Case '-[ThreeMDTests.ParseErrorMetadataTests testInvalidDirectiveMetadata]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.ParseErrorMetadataTests testMissingVersionCode]' started.
+Test Case '-[ThreeMDTests.ParseErrorMetadataTests testMissingVersionCode]' passed (0.000 seconds).
+Test Suite 'ParseErrorMetadataTests' passed at 2026-10-04 18:26:33.767.
+	 Executed 3 tests, with 0 failures (0 unexpected) in 0.000 (0.001) seconds
+Test Suite 'ParserTests' started at 2026-10-04 18:26:33.767.
+Test Case '-[ThreeMDTests.ParserTests testAxisDefaultsToLayer]' started.
+Test Case '-[ThreeMDTests.ParserTests testAxisDefaultsToLayer]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.ParserTests testAxisRawValueNormalized]' started.
+Test Case '-[ThreeMDTests.ParserTests testAxisRawValueNormalized]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.ParserTests testDecimalZValue]' started.
+Test Case '-[ThreeMDTests.ParserTests testDecimalZValue]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.ParserTests testDuplicatePositionThrows]' started.
+Test Case '-[ThreeMDTests.ParserTests testDuplicatePositionThrows]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.ParserTests testEmptyDocumentProducesNoPlanes]' started.
+Test Case '-[ThreeMDTests.ParserTests testEmptyDocumentProducesNoPlanes]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.ParserTests testFrontmatterIgnoresCommentLines]' started.
+Test Case '-[ThreeMDTests.ParserTests testFrontmatterIgnoresCommentLines]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.ParserTests testFrontmatterStripsQuotedValues]' started.
+Test Case '-[ThreeMDTests.ParserTests testFrontmatterStripsQuotedValues]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.ParserTests testInvalidDirectiveTokenThrows]' started.
+Test Case '-[ThreeMDTests.ParserTests testInvalidDirectiveTokenThrows]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.ParserTests testKnownAxesMatchSpec]' started.
+Test Case '-[ThreeMDTests.ParserTests testKnownAxesMatchSpec]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.ParserTests testLeadingBlankLinesBeforeFrontmatter]' started.
+Test Case '-[ThreeMDTests.ParserTests testLeadingBlankLinesBeforeFrontmatter]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.ParserTests testMissingFrontmatterThrows]' started.
+Test Case '-[ThreeMDTests.ParserTests testMissingFrontmatterThrows]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.ParserTests testMissingPlanePositionThrows]' started.
+Test Case '-[ThreeMDTests.ParserTests testMissingPlanePositionThrows]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.ParserTests testMissingVersionThrows]' started.
+Test Case '-[ThreeMDTests.ParserTests testMissingVersionThrows]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.ParserTests testNegativeZValue]' started.
+Test Case '-[ThreeMDTests.ParserTests testNegativeZValue]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.ParserTests testNonNumericPositionThrows]' started.
+Test Case '-[ThreeMDTests.ParserTests testNonNumericPositionThrows]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.ParserTests testNonNumericXThrows]' started.
+Test Case '-[ThreeMDTests.ParserTests testNonNumericXThrows]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.ParserTests testNonNumericYThrows]' started.
+Test Case '-[ThreeMDTests.ParserTests testNonNumericYThrows]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.ParserTests testParseErrorDescriptions]' started.
+Test Case '-[ThreeMDTests.ParserTests testParseErrorDescriptions]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.ParserTests testParsesFrontmatter]' started.
+Test Case '-[ThreeMDTests.ParserTests testParsesFrontmatter]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.ParserTests testParsesMultiplePlanes]' started.
+Test Case '-[ThreeMDTests.ParserTests testParsesMultiplePlanes]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.ParserTests testParsesPlaneCoordinatesAndAttributes]' started.
+Test Case '-[ThreeMDTests.ParserTests testParsesPlaneCoordinatesAndAttributes]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.ParserTests testPlainMarkdownBecomesSinglePlane]' started.
+Test Case '-[ThreeMDTests.ParserTests testPlainMarkdownBecomesSinglePlane]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.ParserTests testPlaneAtZReturnsNilForMissingPosition]' started.
+Test Case '-[ThreeMDTests.ParserTests testPlaneAtZReturnsNilForMissingPosition]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.ParserTests testPlaneBodyTrimsLeadingAndTrailingBlanks]' started.
+Test Case '-[ThreeMDTests.ParserTests testPlaneBodyTrimsLeadingAndTrailingBlanks]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.ParserTests testPlanesByZAreSorted]' started.
+Test Case '-[ThreeMDTests.ParserTests testPlanesByZAreSorted]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.ParserTests testPreambleBeforeFirstPlane]' started.
+Test Case '-[ThreeMDTests.ParserTests testPreambleBeforeFirstPlane]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.ParserTests testReservedAttributeKeysNotInExtras]' started.
+Test Case '-[ThreeMDTests.ParserTests testReservedAttributeKeysNotInExtras]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.ParserTests testRoundTripThroughSerializer]' started.
+Test Case '-[ThreeMDTests.ParserTests testRoundTripThroughSerializer]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.ParserTests testRoundTripWithMetadataAndAttributes]' started.
+Test Case '-[ThreeMDTests.ParserTests testRoundTripWithMetadataAndAttributes]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.ParserTests testRoundTripWithPreamble]' started.
+Test Case '-[ThreeMDTests.ParserTests testRoundTripWithPreamble]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.ParserTests testUnclosedFrontmatterThrows]' started.
+Test Case '-[ThreeMDTests.ParserTests testUnclosedFrontmatterThrows]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.ParserTests testWindowsLineEndingsNormalized]' started.
+Test Case '-[ThreeMDTests.ParserTests testWindowsLineEndingsNormalized]' passed (0.000 seconds).
+Test Suite 'ParserTests' passed at 2026-10-04 18:26:33.774.
+	 Executed 32 tests, with 0 failures (0 unexpected) in 0.006 (0.008) seconds
+Test Suite '3mdPackageTests.xctest' passed at 2026-10-04 18:26:33.774.
+	 Executed 176 tests, with 0 failures (0 unexpected) in 0.457 (0.471) seconds
+Test Suite 'All tests' passed at 2026-10-04 18:26:33.775.
+	 Executed 176 tests, with 0 failures (0 unexpected) in 0.457 (0.472) seconds
+◇ Test run started.
+↳ Testing Library Version: 1902
+↳ Target Platform: arm64e-apple-macos14.0
+✔ Test run with 0 tests in 0 suites passed after 0.001 seconds.
+  ✔ Step 3 done (1.274s)
+  ▶️ Running task: js
+bun install v1.4.0 (34cbb9a40)
+
++ @types/bun@1.3.14
++ typescript@5.9.3
+
+5 packages installed [34.00ms]
+bun test v1.4.0 (34cbb9a40)
+
+test/conformance.test.ts:
+(pass) conformance vectors > at least one valid and one invalid vector exist [0.09ms]
+(pass) conformance vectors > invalid-duplicate-plane.json: two planes sharing the same z value are rejected [0.92ms]
+(pass) conformance vectors > invalid-duplicate-z-decimal-forms.json: z=0 and z=0.0 are the same position [0.07ms]
+(pass) conformance vectors > invalid-frontmatter-no-colon.json: frontmatter line without a colon separator is rejected [0.02ms]
+(pass) conformance vectors > invalid-frontmatter-unclosed.json: frontmatter block that is never closed is rejected [0.01ms]
+(pass) conformance vectors > invalid-missing-frontmatter.json: document without a frontmatter fence is rejected
+(pass) conformance vectors > invalid-missing-plane-position.json: a plane directive with no z attribute is rejected [0.05ms]
+(pass) conformance vectors > invalid-missing-version.json: frontmatter without the 3md version key is rejected [0.01ms]
+(pass) conformance vectors > invalid-plane-token-no-equals.json: a plane attribute token with no equals sign is rejected (Swift throws; it is not skipped) [0.05ms]
+(pass) conformance vectors > invalid-plane-x-not-number.json: a plane directive whose x is not a number is rejected [0.03ms]
+(pass) conformance vectors > invalid-plane-z-not-number.json: a plane directive whose z is not a number is rejected [0.04ms]
+(pass) conformance vectors > invalid-unterminated-quote.json: an unterminated quote in a directive is rejected [0.01ms]
+(pass) conformance vectors > invalid-z-hex.json: hex z is rejected so Swift and TS agree [0.02ms]
+(pass) conformance vectors > invalid-z-infinity.json: z=inf is rejected (non-finite) [0.01ms]
+(pass) conformance vectors > invalid-z-nan.json: z=nan is rejected (non-finite, also closes the NaN dedup bypass) [0.01ms]
+(pass) conformance vectors > invalid-z-thousands-separator.json: thousands separators are rejected [0.01ms]
+(pass) conformance vectors > links-basic.json: a [[z=N]] reference resolves to the source z, target z, and existence [0.19ms]
+(pass) conformance vectors > links-dangling.json: a reference to a missing plane is reported with targetExists false [0.03ms]
+(pass) conformance vectors > links-decimal-target.json: a decimal target z is matched against a decimal plane z [0.02ms]
+(pass) conformance vectors > links-invalid-ignored.json: non-finite targets and ordinary Markdown links are not cross-plane links [0.01ms]
+(pass) conformance vectors > links-multiple.json: multiple links in one body are returned left to right [0.02ms]
+(pass) conformance vectors > links-with-text.json: a [[z=N|text]] reference captures the link text [0.02ms]
+(pass) conformance vectors > valid-attribute-numeric-stays-string.json: non z/x/y attributes stay strings, not coerced [0.04ms]
+(pass) conformance vectors > valid-axis-default.json: axis defaults to layer when omitted [0.03ms]
+(pass) conformance vectors > valid-axis-lowercased.json: axis value is trimmed and lowercased [0.04ms]
+(pass) conformance vectors > valid-bom.json: a leading UTF-8 BOM is stripped before parsing [0.04ms]
+(pass) conformance vectors > valid-code-block-directive-safe.json: a @plane line inside a fenced code block stays body text [0.02ms]
+(pass) conformance vectors > valid-coordinates-attributes.json: coordinates, label, and extra attributes are captured [0.11ms]
+(pass) conformance vectors > valid-crlf.json: CRLF line endings are normalized to LF [0.05ms]
+(pass) conformance vectors > valid-decimal-negative-z.json: z accepts negative and decimal values and keeps source order [0.02ms]
+(pass) conformance vectors > valid-empty-body.json: frontmatter only with no body yields no planes [0.01ms]
+(pass) conformance vectors > valid-empty-plane-body.json: a plane directive with no following content has an empty body
+(pass) conformance vectors > valid-escaped-quote-label.json: escaped quotes inside a quoted label round-trip
+(pass) conformance vectors > valid-frontmatter-comments.json: frontmatter skips comment and blank lines and strips quotes [0.03ms]
+(pass) conformance vectors > valid-indented-directive-is-body.json: an indented @plane is body, not a directive [0.03ms]
+(pass) conformance vectors > valid-leading-blank-lines.json: leading blank lines before the frontmatter fence are allowed
+(pass) conformance vectors > valid-metadata-key-case-preserved.json: non-reserved frontmatter keys keep their case [0.02ms]
+(pass) conformance vectors > valid-multi-plane.json: valid multi-plane document with title, metadata, and preamble [0.04ms]
+(pass) conformance vectors > valid-plane-prefix-not-directive.json: @planex is not a directive; the doc is single-plane shorthand
+(pass) conformance vectors > valid-preamble-with-planes.json: preamble is preserved when planes follow and quoted attribute keeps spaces [0.02ms]
+(pass) conformance vectors > valid-repeated-directive-key-last-wins.json: a repeated directive key takes the last value [0.01ms]
+(pass) conformance vectors > valid-single-plane-shorthand.json: single-plane shorthand wraps body at z=0 when no directives
+(pass) conformance vectors > valid-version-1-0.json: the 1.0 format marker parses, with version reported as 1.0 [0.01ms]
+(pass) conformance vectors > valid-z-scientific-notation.json: scientific notation in z parses as a decimal [0.01ms]
+(pass) round trip: parse -> serialize -> parse > valid-attribute-numeric-stays-string.json: non z/x/y attributes stay strings, not coerced [0.23ms]
+(pass) round trip: parse -> serialize -> parse > valid-axis-default.json: axis defaults to layer when omitted [0.04ms]
+(pass) round trip: parse -> serialize -> parse > valid-axis-lowercased.json: axis value is trimmed and lowercased [0.02ms]
+(pass) round trip: parse -> serialize -> parse > valid-bom.json: a leading UTF-8 BOM is stripped before parsing [0.01ms]
+(pass) round trip: parse -> serialize -> parse > valid-code-block-directive-safe.json: a @plane line inside a fenced code block stays body text [0.01ms]
+(pass) round trip: parse -> serialize -> parse > valid-coordinates-attributes.json: coordinates, label, and extra attributes are captured [0.09ms]
+(pass) round trip: parse -> serialize -> parse > valid-crlf.json: CRLF line endings are normalized to LF [0.05ms]
+(pass) round trip: parse -> serialize -> parse > valid-decimal-negative-z.json: z accepts negative and decimal values and keeps source order [0.02ms]
+(pass) round trip: parse -> serialize -> parse > valid-empty-body.json: frontmatter only with no body yields no planes
+(pass) round trip: parse -> serialize -> parse > valid-empty-plane-body.json: a plane directive with no following content has an empty body [0.01ms]
+(pass) round trip: parse -> serialize -> parse > valid-escaped-quote-label.json: escaped quotes inside a quoted label round-trip [0.01ms]
+(pass) round trip: parse -> serialize -> parse > valid-frontmatter-comments.json: frontmatter skips comment and blank lines and strips quotes [0.03ms]
+(pass) round trip: parse -> serialize -> parse > valid-indented-directive-is-body.json: an indented @plane is body, not a directive [0.01ms]
+(pass) round trip: parse -> serialize -> parse > valid-leading-blank-lines.json: leading blank lines before the frontmatter fence are allowed [0.02ms]
+(pass) round trip: parse -> serialize -> parse > valid-metadata-key-case-preserved.json: non-reserved frontmatter keys keep their case [0.01ms]
+(pass) round trip: parse -> serialize -> parse > valid-multi-plane.json: valid multi-plane document with title, metadata, and preamble [0.04ms]
+(pass) round trip: parse -> serialize -> parse > valid-plane-prefix-not-directive.json: @planex is not a directive; the doc is single-plane shorthand [0.01ms]
+(pass) round trip: parse -> serialize -> parse > valid-preamble-with-planes.json: preamble is preserved when planes follow and quoted attribute keeps spaces [0.06ms]
+(pass) round trip: parse -> serialize -> parse > valid-repeated-directive-key-last-wins.json: a repeated directive key takes the last value [0.03ms]
+(pass) round trip: parse -> serialize -> parse > valid-single-plane-shorthand.json: single-plane shorthand wraps body at z=0 when no directives [0.58ms]
+(pass) round trip: parse -> serialize -> parse > valid-version-1-0.json: the 1.0 format marker parses, with version reported as 1.0 [0.07ms]
+(pass) round trip: parse -> serialize -> parse > valid-z-scientific-notation.json: scientific notation in z parses as a decimal [0.23ms]
+
+test/links.test.ts:
+(pass) links() > basic reference resolves source, target, and existence [0.10ms]
+(pass) links() > captures optional link text [0.02ms]
+(pass) links() > present-but-empty link text is the empty string [0.03ms]
+(pass) links() > multiple links in one body are returned left to right [0.03ms]
+(pass) links() > links across planes follow source order [0.02ms]
+(pass) links() > dangling reference reports targetExists false [0.01ms]
+(pass) links() > decimal target matches a decimal plane z [0.02ms]
+(pass) links() > non-finite and non-link sequences are ignored [0.01ms]
+(pass) links() > signed and exponent targets parse as finite decimals [0.01ms]
+(pass) links() > a document with no links returns an empty array [0.01ms]
+(pass) links() > danglingLinks filters only missing targets [0.04ms]
+(pass) links() > linkGraph collapses repeated source-target pairs [0.08ms]
+(pass) links() > linkGraph keeps dangling edge status [0.03ms]
+
+ 79 pass
+ 0 fail
+ 110 expect() calls
+Ran 79 tests across 2 files. [20.00ms]
+  ✔ Step 4 done (77ms)
+  ▶️ Running task: rust
+   Compiling proc-macro2 v1.0.106
+   Compiling quote v1.0.46
+   Compiling unicode-ident v1.0.24
+   Compiling serde_core v1.0.228
+   Compiling zmij v1.0.21
+   Compiling serde v1.0.228
+   Compiling serde_json v1.0.150
+    Checking memchr v2.8.2
+    Checking itoa v1.0.18
+    Checking threemd v1.0.0 (/private/tmp/3md-binary-composition-20261004/rust)
+   Compiling syn v2.0.118
+   Compiling serde_derive v1.0.228
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 5.76s
+   Compiling memchr v2.8.2
+   Compiling itoa v1.0.18
+   Compiling threemd v1.0.0 (/private/tmp/3md-binary-composition-20261004/rust)
+   Compiling serde_core v1.0.228
+   Compiling zmij v1.0.21
+   Compiling serde v1.0.228
+   Compiling serde_json v1.0.150
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.01s
+     Running unittests src/lib.rs (target/debug/deps/threemd-a4ad2ad10a8939cd)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/conformance.rs (target/debug/deps/conformance-2a3ece2600050d2e)
+
+running 1 test
+test conformance_vectors_pass ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests threemd
+
+running 3 tests
+test src/lib.rs - axis (line 34) ... ok
+test src/lib.rs - (line 12) ... ok
+test src/lib.rs - ParseError::code (line 145) ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.82s
+
+  ✔ Step 5 done (17.051s)
+  ▶️ Running task: element-bundle
+Bundled 2 modules in 7ms
+
+  three-md.js  46.58 KB  (entry point)
+
+element bundle is current
+  ✔ Step 6 done (40ms)
+  ▶️ Running task: editor
+bun install v1.4.0 (34cbb9a40)
+
++ @vscode/vsce@2.32.0
++ vscode-tmgrammar-test@0.1.3
+
+183 packages installed [866.00ms]
+$ vscode-tmgrammar-test -g syntaxes/3md.tmLanguage.json -g syntaxes/3md-links.injection.json -g tests/grammars/markdown.tmLanguage.json "tests/*.3md"
+grammar not found for "source.yaml"
+grammar not found for "text.html.derivative"
+grammar not found for "source.css"
+grammar not found for "text.html.basic"
+grammar not found for "source.ini"
+grammar not found for "source.java"
+grammar not found for "source.lua"
+grammar not found for "source.makefile"
+grammar not found for "source.perl"
+grammar not found for "source.r"
+grammar not found for "source.ruby"
+grammar not found for "source.php"
+grammar not found for "source.sql"
+grammar not found for "source.asp.vb.net"
+grammar not found for "text.xml"
+grammar not found for "text.xml.xsl"
+grammar not found for "source.batchfile"
+grammar not found for "source.clojure"
+grammar not found for "source.coffee"
+grammar not found for "source.c"
+grammar not found for "source.cpp"
+grammar not found for "source.diff"
+grammar not found for "source.dockerfile"
+grammar not found for "text.git-commit"
+grammar not found for "text.git-rebase"
+grammar not found for "source.go"
+grammar not found for "source.groovy"
+grammar not found for "text.pug"
+grammar not found for "source.ignore"
+grammar not found for "source.js"
+grammar not found for "source.js.regexp"
+grammar not found for "source.json"
+grammar not found for "source.json.comments"
+grammar not found for "source.json.lines"
+grammar not found for "source.css.less"
+grammar not found for "source.objc"
+grammar not found for "source.swift"
+grammar not found for "source.css.scss"
+grammar not found for "source.perl.6"
+grammar not found for "source.powershell"
+grammar not found for "source.python"
+grammar not found for "source.julia"
+grammar not found for "source.regexp.python"
+grammar not found for "source.rust"
+grammar not found for "source.scala"
+grammar not found for "source.shell"
+grammar not found for "source.ts"
+grammar not found for "source.tsx"
+grammar not found for "source.cs"
+grammar not found for "source.fsharp"
+grammar not found for "source.dart"
+grammar not found for "text.html.handlebars"
+grammar not found for "text.log"
+grammar not found for "source.erlang"
+grammar not found for "source.elixir"
+grammar not found for "text.tex.latex"
+grammar not found for "text.bibtex"
+grammar not found for "source.twig"
+grammar not found for "source.yang"
+grammar not found for "source.abap"
+grammar not found for "source.rst"
+✓ tests/cross-plane-link.3md run successfuly.
+✓ tests/frontmatter.3md run successfuly.
+✓ tests/markdown-body.3md run successfuly.
+✓ tests/plane-directive.3md run successfuly.
+  ✔ Step 7 done (1.315s)
+✅ Lane verify completed (7 steps in 21.140s)
+⊘ Skipped 2 unchanged spec(s) (use --force/--no-cache to re-validate all)
+  ℹ Cache: /private/tmp/3md-binary-composition-20261004/.specsync/hashes.json
+
+  ⚠ specs/ThreeMD/ThreeMD.spec.md: requirements changed — spec may need re-validation
+  ℹ specs/ThreeMD/ThreeMD.spec.md: companion file updated (hash refreshed)
+
+  Review the affected specs directly or ask your coding agent to update them.
+
+
+specs/ThreeMD/ThreeMD.spec.md
+  ✓ Frontmatter valid
+  ✓ All source files exist
+  ✓ All required sections present
+  ✓ 132/132 exports documented
+  ✓ All dependency specs exist
+
+3 specs checked: 3 passed, 1 warning(s), 0 failed
+File coverage: 22/22 (100%)
+LOC coverage:  3379/3379 (100%)
+augur: config: loaded ./.augur.toml
+augur gate · proceed (risk 32)
+From https://github.com/CorvidLabs/3md
+ * [new ref]         refs/notes/attest -> refs/notes/attest
+trust range: origin/main..HEAD
+== lifecycle ==
+== contract ==
+== risk ==
+== provenance ==
+provenance degraded: policy is not satisfied
+== atlas: off (Atlas publication was not enabled during adoption) ==
+trust gate passed (progressive provenance)

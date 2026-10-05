@@ -19,6 +19,10 @@ numbered so tests and reviews can reference it directly.
   report exactly what went wrong and where.
 - As a tool author, I want to know what the Z axis means and how planes are
   ordered so I can lay a document out correctly.
+- As a developer, I want bounded general-document binary storage without
+  changing the existing text grammar or application-specific readers.
+- As a developer, I want a self-contained library of reusable named documents
+  with explicit references, safe graph validation and no automatic external I/O.
 
 ## Acceptance Criteria
 
@@ -108,7 +112,9 @@ Acceptance Criteria
   attribute. A directive with no `z` throws
   `ParseError.missingPlanePosition(line:)`. A `z` value that does not parse as a
   `Double` throws `ParseError.invalidPlaneDirective(line:detail:)`. Numbers may
-  be integer or decimal and may be negative.
+  be integer or decimal and may be negative. ASCII decimal validation scans
+  linearly and retains optional signs, fractions and exponents; malformed
+  suffixes cannot cause regular-expression backtracking.
 
 ### REQ-threemd-008
 
@@ -252,24 +258,76 @@ Acceptance Criteria
   input always yields the same `Document`. Serialization is deterministic,
   ordering metadata and extra attributes alphabetically so output is stable.
 
+The original text-surface requirements above retain their stable IDs. The
+approved storage/composition delta adds separately versioned Swift APIs; its
+optional system Compression use does not introduce a third-party package or
+change the portable text-parser dependency contract. The workflow-v2 check
+materializes REQ-ThreeMD-021 through REQ-ThreeMD-025 from the approved delta.
+
 ## Constraints
 
 - The format definition in `SPEC.md` is authoritative; this module implements
-  version 0.1 (draft) of that format.
+  the frozen 1.0 text grammar and additive 1.1 storage/composition specification.
 - Frontmatter is parsed line-by-line as simple `key: value` pairs, not as full
   YAML. Nested structures, lists, and multi-line values are not supported.
-- Quote handling is limited to a single matching pair of surrounding single or
-  double quotes. Round-trip equivalence is only guaranteed for content that does
-  not rely on quote escaping.
+- Existing parser/serializer behavior stays unchanged. The new storage writer
+  additionally quotes every scalar and requires a faithful semantic round trip.
 - `z`, `x`, and `y` are parsed as `Double`, so they carry double-precision
   range and rounding.
 
 ## Out of Scope
 
-- Markdown parsing or rendering of plane bodies; bodies are carried as opaque
-  text.
-- Format extensions listed as open questions in `SPEC.md`, including inline 3D
-  model embeds, cross-plane links and transclusion, per-plane transition or
-  timing hints, and any binary or compressed container.
+- Changes to the existing Markdown/HTML renderers or cross-plane link behavior.
+- External transclusion, inline model embeds, and application-specific placement,
+  automatic flattening, voxel interpretation or timing behavior.
+- New binary/composition implementations in the TypeScript/Rust ports or viewer.
 - Validation of axis semantics; the axis label is treated as free metadata.
 - Networking, file I/O, and any rendering or viewer behavior.
+
+### REQ-ThreeMD-021
+
+The ThreeMD library SHALL round-trip general Document values through a separately versioned binary envelope with portable uncompressed storage and optional conditional Apple LZFSE while retaining existing text grammar and Parser/Serializer behavior.
+
+Acceptance Criteria
+- General Unicode, mixed-axis, metadata and finite-coordinate documents round-trip through uncompressed binary and text storage.
+- Apple LZFSE round-trips where available and fails explicitly where unsupported.
+- The new binary marker is disjoint from Rook's existing voxel-specific 3MDB marker.
+
+### REQ-ThreeMD-022
+
+Storage SHALL validate finite unique positions, serializable values, declared allocation limits, exact lengths, CRC32 integrity, full compression stream consumption and cooperative cancellation without partial output.
+
+Acceptance Criteria
+- Fixed header and CRC vectors are independently inspected.
+- Corrupt, truncated, trailing, concatenated, oversized, unsupported and cancelled inputs fail predictably.
+- Malformed decimal tokens within the byte limits are rejected with linear
+  lexical work. Cancellation detected after a failing text parse takes priority
+  over conversion of its `ParseError` to a storage validation failure.
+- Existing text-parser conformance vectors remain unchanged.
+
+### REQ-ThreeMD-023
+
+Composition SHALL store a root and unique named Document definitions with explicit in-memory references and validate every node, including unused definitions, for safe IDs, target existence, cycles, bounded depth, unique bytes, references and traversal occurrences.
+
+Acceptance Criteria
+- Repeated and nested references serialize one definition per ID and preserve generic attributes and mixed axes.
+- Missing targets, duplicate IDs, unused-node cycles, depth/byte/reference/occurrence overflow and cancellation fail without partial results.
+- Resolution continues after imported original files are removed and never reads filesystem or network paths.
+
+### REQ-ThreeMD-024
+
+The composition codec SHALL use existing 3md syntax and a strict versioned JSON manifest without imposing voxel interpretation or automatic flattening, and its profile Document SHALL also be supported by binary storage.
+
+Acceptance Criteria
+- Unknown and duplicate JSON fields and invalid outer-profile structure are rejected.
+- Canonical profile round-trips preserve root, definitions and reference order.
+- A composition profile survives generic binary wrapping with all referenced definitions intact.
+
+### REQ-ThreeMD-025
+
+Meaningful changes SHALL remain governed by SpecSync 6.0.0 workflow-v2 definition and actual later verification/review/finalization evidence, with immutable Trust 1.2.2 retaining the existing verification lane and risk/provenance policies.
+
+Acceptance Criteria
+- The recorded definition accurately cites Leif's direct scope approval with a delegated agent actor and no claim of human implementation review.
+- Strict SpecSync coverage and the existing cross-language native checks are executed by the root verification lane.
+- Managed agent rules are updated only with Trust adopt; historical evidence is not fabricated or rewritten, and unavailable signer authority is reported without weakening Attest policy.

@@ -1,0 +1,12 @@
+{
+  "schema_version": 2,
+  "change_id": "implement-generic-binary-storage-and-document-composition-with-specsync-6-and-trust-1-2-2",
+  "implementation_commit": "7405db4bf4a21b94e257e957a22067979194ed15",
+  "implementation_tree": "f67520a308cb80bf8ced46b5ec9d1ce94e2f2412",
+  "contract_digest": "4f548002617f0a693751cc4bf565d90ac34e11444d7f742481d4e114cfa73b58",
+  "workspace_digest": "8d6853f25d4b7024ef9d9be9fc6c8c8db4519e70445fe9441d40cee7a65c806d",
+  "closing_digest": "f427db070c0b691ff952137d904b9ac728e9999066bb0694ae65ae9df341ba22",
+  "review_digest": "92d499b5e88c30bdb1877d954b720eb50fdef26f303dd71edf20888eba69f0c6",
+  "finalization_digest": "b2d171b87ef3d9f2dac403cf60278efeac8b9cc013a6286460f6ea9139acdeee",
+  "timestamp": 1791166655
+}

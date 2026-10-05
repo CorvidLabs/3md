@@ -1,0 +1,35 @@
+{
+  "report": {
+    "checked_changes": 4,
+    "enabled": true,
+    "errors": [
+      "CHG-0001-adopt-trust-1-and-specsync-5: accepted change verification is stale for current delivery inputs: exact-only delivery input `.github/workflows/trust.yml` changed after acceptance and requires an audited reopen; run `specsync change reopen CHG-0001-adopt-trust-1-and-specsync-5` to re-verify the accepted change, or supersede it from a later change under a module granted the path by `owns` in `.specsync/config.toml`",
+      "CHG-0002-assign-stable-requirement-ids: accepted change verification is stale for current delivery inputs: exact-only delivery input `specs/ThreeMD/ThreeMD.spec.md` changed after acceptance and requires an audited reopen; run `specsync change reopen CHG-0002-assign-stable-requirement-ids` to re-verify the accepted change, or supersede it from a later change under a module granted the path by `owns` in `.specsync/config.toml`",
+      "CHG-0003-address-final-trust-and-sdd-governance-review-corrections: accepted change verification is stale for current delivery inputs: exact-only delivery input `.github/workflows/trust.yml` changed after acceptance and requires an audited reopen; run `specsync change reopen CHG-0003-address-final-trust-and-sdd-governance-review-corrections` to re-verify the accepted change, or supersede it from a later change under a module granted the path by `owns` in `.specsync/config.toml`"
+    ],
+    "terminal_evidence": [
+      {
+        "evidence": {
+          "reason": "exact-only delivery input `.github/workflows/trust.yml` changed after acceptance and requires an audited reopen; run `specsync change reopen CHG-0001-adopt-trust-1-and-specsync-5` to re-verify the accepted change, or supersede it from a later change under a module granted the path by `owns` in `.specsync/config.toml`",
+          "validity": "stale"
+        },
+        "id": "CHG-0001-adopt-trust-1-and-specsync-5"
+      },
+      {
+        "evidence": {
+          "reason": "exact-only delivery input `specs/ThreeMD/ThreeMD.spec.md` changed after acceptance and requires an audited reopen; run `specsync change reopen CHG-0002-assign-stable-requirement-ids` to re-verify the accepted change, or supersede it from a later change under a module granted the path by `owns` in `.specsync/config.toml`",
+          "validity": "stale"
+        },
+        "id": "CHG-0002-assign-stable-requirement-ids"
+      },
+      {
+        "evidence": {
+          "reason": "exact-only delivery input `.github/workflows/trust.yml` changed after acceptance and requires an audited reopen; run `specsync change reopen CHG-0003-address-final-trust-and-sdd-governance-review-corrections` to re-verify the accepted change, or supersede it from a later change under a module granted the path by `owns` in `.specsync/config.toml`",
+          "validity": "stale"
+        },
+        "id": "CHG-0003-address-final-trust-and-sdd-governance-review-corrections"
+      }
+    ],
+    "warnings": []
+  }
+}

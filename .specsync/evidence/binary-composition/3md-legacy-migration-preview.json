@@ -1,0 +1,13 @@
+{
+  "dry_run": true,
+  "failed": [],
+  "mode": "5.0",
+  "repaired": [],
+  "status": "ok",
+  "unchanged": [
+    "CHG-0001-adopt-trust-1-and-specsync-5",
+    "CHG-0002-assign-stable-requirement-ids",
+    "CHG-0003-address-final-trust-and-sdd-governance-review-corrections",
+    "implement-generic-binary-storage-and-document-composition-with-specsync-6-and-trust-1-2-2"
+  ]
+}

@@ -1,0 +1,2557 @@
+{
+  "calibration" : {
+    "confidence" : 0.3016533333333334,
+    "incidentCommits" : 17,
+    "totalCommits" : 112
+  },
+  "excludedPaths" : [
+
+  ],
+  "files" : [
+    {
+      "path" : "README.md",
+      "riskScore" : 24.77856853333334,
+      "signals" : [
+        {
+          "detail" : "no sensitive paths",
+          "name" : "sensitivity",
+          "risk" : 0,
+          "weight" : 0.2024
+        },
+        {
+          "detail" : "tests changed alongside",
+          "name" : "test-gap",
+          "risk" : 0.15,
+          "weight" : 0.1656
+        },
+        {
+          "detail" : "28 recent commits touched this file",
+          "name" : "churn",
+          "risk" : 0.7,
+          "weight" : 0.138
+        },
+        {
+          "detail" : "usually changes with 'web/index.html' (12x), which is absent",
+          "name" : "coupling",
+          "risk" : 0.6,
+          "weight" : 0.1196
+        },
+        {
+          "detail" : "84 lines touched",
+          "name" : "diff-shape",
+          "risk" : 0.21,
+          "weight" : 0.1104
+        },
+        {
+          "detail" : "2 authors",
+          "name" : "ownership",
+          "risk" : 0.1,
+          "weight" : 0.092
+        },
+        {
+          "detail" : "implicated in past reverts/hotfixes (calibration 0.30)",
+          "name" : "incident",
+          "risk" : 0.2413226666666667,
+          "weight" : 0.092
+        },
+        {
+          "detail" : "no CODEOWNERS file",
+          "name" : "codeowners",
+          "risk" : 0,
+          "weight" : 0.08
+        }
+      ]
+    },
+    {
+      "path" : ".github/workflows/trust.yml",
+      "riskScore" : 18.1838,
+      "signals" : [
+        {
+          "detail" : "matches sensitive category 'ci'",
+          "name" : "sensitivity",
+          "risk" : 0.6,
+          "weight" : 0.2024
+        },
+        {
+          "detail" : "tests changed alongside",
+          "name" : "test-gap",
+          "risk" : 0.15,
+          "weight" : 0.1656
+        },
+        {
+          "detail" : "7 recent commits touched this file",
+          "name" : "churn",
+          "risk" : 0.175,
+          "weight" : 0.138
+        },
+        {
+          "detail" : "no broken co-change pattern",
+          "name" : "coupling",
+          "risk" : 0,
+          "weight" : 0.1196
+        },
+        {
+          "detail" : "8 lines touched",
+          "name" : "diff-shape",
+          "risk" : 0.02,
+          "weight" : 0.1104
+        },
+        {
+          "detail" : "3 authors",
+          "name" : "ownership",
+          "risk" : 0.1,
+          "weight" : 0.092
+        },
+        {
+          "detail" : "no incident history",
+          "name" : "incident",
+          "risk" : 0,
+          "weight" : 0.092
+        },
+        {
+          "detail" : "no CODEOWNERS file",
+          "name" : "codeowners",
+          "risk" : 0,
+          "weight" : 0.08
+        }
+      ]
+    },
+    {
+      "path" : "Sources/ThreeMD/DocumentCompositionJSON.swift",
+      "riskScore" : 13.441200000000004,
+      "signals" : [
+        {
+          "detail" : "no sensitive paths",
+          "name" : "sensitivity",
+          "risk" : 0,
+          "weight" : 0.2024
+        },
+        {
+          "detail" : "tests changed alongside",
+          "name" : "test-gap",
+          "risk" : 0.15,
+          "weight" : 0.1656
+        },
+        {
+          "detail" : "0 recent commits touched this file",
+          "name" : "churn",
+          "risk" : 0,
+          "weight" : 0.138
+        },
+        {
+          "detail" : "no broken co-change pattern",
+          "name" : "coupling",
+          "risk" : 0,
+          "weight" : 0.1196
+        },
+        {
+          "detail" : "297 lines touched",
+          "name" : "diff-shape",
+          "risk" : 0.7425,
+          "weight" : 0.1104
+        },
+        {
+          "detail" : "new/untracked file",
+          "name" : "ownership",
+          "risk" : 0.3,
+          "weight" : 0.092
+        },
+        {
+          "detail" : "no incident history",
+          "name" : "incident",
+          "risk" : 0,
+          "weight" : 0.092
+        },
+        {
+          "detail" : "no CODEOWNERS file",
+          "name" : "codeowners",
+          "risk" : 0,
+          "weight" : 0.08
+        }
+      ]
+    },
+    {
+      "path" : "SPEC.md",
+      "riskScore" : 12.188368533333334,
+      "signals" : [
+        {
+          "detail" : "no sensitive paths",
+          "name" : "sensitivity",
+          "risk" : 0,
+          "weight" : 0.2024
+        },
+        {
+          "detail" : "file is a test",
+          "name" : "test-gap",
+          "risk" : 0,
+          "weight" : 0.1656
+        },
+        {
+          "detail" : "7 recent commits touched this file",
+          "name" : "churn",
+          "risk" : 0.175,
+          "weight" : 0.138
+        },
+        {
+          "detail" : "no broken co-change pattern",
+          "name" : "coupling",
+          "risk" : 0,
+          "weight" : 0.1196
+        },
+        {
+          "detail" : "157 lines touched",
+          "name" : "diff-shape",
+          "risk" : 0.3925,
+          "weight" : 0.1104
+        },
+        {
+          "detail" : "single author (bus-factor)",
+          "name" : "ownership",
+          "risk" : 0.35,
+          "weight" : 0.092
+        },
+        {
+          "detail" : "implicated in past reverts/hotfixes (calibration 0.30)",
+          "name" : "incident",
+          "risk" : 0.2413226666666667,
+          "weight" : 0.092
+        },
+        {
+          "detail" : "no CODEOWNERS file",
+          "name" : "codeowners",
+          "risk" : 0,
+          "weight" : 0.08
+        }
+      ]
+    },
+    {
+      "path" : "specs/ThreeMD/testing.md",
+      "riskScore" : 11.5,
+      "signals" : [
+        {
+          "detail" : "no sensitive paths",
+          "name" : "sensitivity",
+          "risk" : 0,
+          "weight" : 0.2024
+        },
+        {
+          "detail" : "file is a test",
+          "name" : "test-gap",
+          "risk" : 0,
+          "weight" : 0.1656
+        },
+        {
+          "detail" : "2 recent commits touched this file",
+          "name" : "churn",
+          "risk" : 0.05,
+          "weight" : 0.138
+        },
+        {
+          "detail" : "no broken co-change pattern",
+          "name" : "coupling",
+          "risk" : 0,
+          "weight" : 0.1196
+        },
+        {
+          "detail" : "275 lines touched",
+          "name" : "diff-shape",
+          "risk" : 0.6875,
+          "weight" : 0.1104
+        },
+        {
+          "detail" : "single author (bus-factor)",
+          "name" : "ownership",
+          "risk" : 0.35,
+          "weight" : 0.092
+        },
+        {
+          "detail" : "no incident history",
+          "name" : "incident",
+          "risk" : 0,
+          "weight" : 0.092
+        },
+        {
+          "detail" : "no CODEOWNERS file",
+          "name" : "codeowners",
+          "risk" : 0,
+          "weight" : 0.08
+        }
+      ]
+    },
+    {
+      "path" : "Sources/ThreeMD/DocumentStorageValidation.swift",
+      "riskScore" : 11.3436,
+      "signals" : [
+        {
+          "detail" : "no sensitive paths",
+          "name" : "sensitivity",
+          "risk" : 0,
+          "weight" : 0.2024
+        },
+        {
+          "detail" : "tests changed alongside",
+          "name" : "test-gap",
+          "risk" : 0.15,
+          "weight" : 0.1656
+        },
+        {
+          "detail" : "0 recent commits touched this file",
+          "name" : "churn",
+          "risk" : 0,
+          "weight" : 0.138
+        },
+        {
+          "detail" : "no broken co-change pattern",
+          "name" : "coupling",
+          "risk" : 0,
+          "weight" : 0.1196
+        },
+        {
+          "detail" : "221 lines touched",
+          "name" : "diff-shape",
+          "risk" : 0.5525,
+          "weight" : 0.1104
+        },
+        {
+          "detail" : "new/untracked file",
+          "name" : "ownership",
+          "risk" : 0.3,
+          "weight" : 0.092
+        },
+        {
+          "detail" : "no incident history",
+          "name" : "incident",
+          "risk" : 0,
+          "weight" : 0.092
+        },
+        {
+          "detail" : "no CODEOWNERS file",
+          "name" : "codeowners",
+          "risk" : 0,
+          "weight" : 0.08
+        }
+      ]
+    },
+    {
+      "path" : "Sources/ThreeMD/DocumentComposition.swift",
+      "riskScore" : 11.040000000000001,
+      "signals" : [
+        {
+          "detail" : "no sensitive paths",
+          "name" : "sensitivity",
+          "risk" : 0,
+          "weight" : 0.2024
+        },
+        {
+          "detail" : "tests changed alongside",
+          "name" : "test-gap",
+          "risk" : 0.15,
+          "weight" : 0.1656
+        },
+        {
+          "detail" : "0 recent commits touched this file",
+          "name" : "churn",
+          "risk" : 0,
+          "weight" : 0.138
+        },
+        {
+          "detail" : "no broken co-change pattern",
+          "name" : "coupling",
+          "risk" : 0,
+          "weight" : 0.1196
+        },
+        {
+          "detail" : "210 lines touched",
+          "name" : "diff-shape",
+          "risk" : 0.525,
+          "weight" : 0.1104
+        },
+        {
+          "detail" : "new/untracked file",
+          "name" : "ownership",
+          "risk" : 0.3,
+          "weight" : 0.092
+        },
+        {
+          "detail" : "no incident history",
+          "name" : "incident",
+          "risk" : 0,
+          "weight" : 0.092
+        },
+        {
+          "detail" : "no CODEOWNERS file",
+          "name" : "codeowners",
+          "risk" : 0,
+          "weight" : 0.08
+        }
+      ]
+    },
+    {
+      "path" : "Tests/ThreeMDTests/DocumentStorageTests.swift",
+      "riskScore" : 10.8192,
+      "signals" : [
+        {
+          "detail" : "no sensitive paths",
+          "name" : "sensitivity",
+          "risk" : 0,
+          "weight" : 0.2024
+        },
+        {
+          "detail" : "file is a test",
+          "name" : "test-gap",
+          "risk" : 0,
+          "weight" : 0.1656
+        },
+        {
+          "detail" : "0 recent commits touched this file",
+          "name" : "churn",
+          "risk" : 0,
+          "weight" : 0.138
+        },
+        {
+          "detail" : "no broken co-change pattern",
+          "name" : "coupling",
+          "risk" : 0,
+          "weight" : 0.1196
+        },
+        {
+          "detail" : "292 lines touched",
+          "name" : "diff-shape",
+          "risk" : 0.73,
+          "weight" : 0.1104
+        },
+        {
+          "detail" : "new/untracked file",
+          "name" : "ownership",
+          "risk" : 0.3,
+          "weight" : 0.092
+        },
+        {
+          "detail" : "no incident history",
+          "name" : "incident",
+          "risk" : 0,
+          "weight" : 0.092
+        },
+        {
+          "detail" : "no CODEOWNERS file",
+          "name" : "codeowners",
+          "risk" : 0,
+          "weight" : 0.08
+        }
+      ]
+    },
+    {
+      "path" : "specs/ThreeMD/ThreeMD.spec.md",
+      "riskScore" : 10.8146,
+      "signals" : [
+        {
+          "detail" : "no sensitive paths",
+          "name" : "sensitivity",
+          "risk" : 0,
+          "weight" : 0.2024
+        },
+        {
+          "detail" : "file is a test",
+          "name" : "test-gap",
+          "risk" : 0,
+          "weight" : 0.1656
+        },
+        {
+          "detail" : "5 recent commits touched this file",
+          "name" : "churn",
+          "risk" : 0.125,
+          "weight" : 0.138
+        },
+        {
+          "detail" : "no broken co-change pattern",
+          "name" : "coupling",
+          "risk" : 0,
+          "weight" : 0.1196
+        },
+        {
+          "detail" : "296 lines touched",
+          "name" : "diff-shape",
+          "risk" : 0.74,
+          "weight" : 0.1104
+        },
+        {
+          "detail" : "2 authors",
+          "name" : "ownership",
+          "risk" : 0.1,
+          "weight" : 0.092
+        },
+        {
+          "detail" : "no incident history",
+          "name" : "incident",
+          "risk" : 0,
+          "weight" : 0.092
+        },
+        {
+          "detail" : "no CODEOWNERS file",
+          "name" : "codeowners",
+          "risk" : 0,
+          "weight" : 0.08
+        }
+      ]
+    },
+    {
+      "path" : "Tests/ThreeMDTests/DocumentCompositionTests.swift",
+      "riskScore" : 10.5708,
+      "signals" : [
+        {
+          "detail" : "no sensitive paths",
+          "name" : "sensitivity",
+          "risk" : 0,
+          "weight" : 0.2024
+        },
+        {
+          "detail" : "file is a test",
+          "name" : "test-gap",
+          "risk" : 0,
+          "weight" : 0.1656
+        },
+        {
+          "detail" : "0 recent commits touched this file",
+          "name" : "churn",
+          "risk" : 0,
+          "weight" : 0.138
+        },
+        {
+          "detail" : "no broken co-change pattern",
+          "name" : "coupling",
+          "risk" : 0,
+          "weight" : 0.1196
+        },
+        {
+          "detail" : "283 lines touched",
+          "name" : "diff-shape",
+          "risk" : 0.7075,
+          "weight" : 0.1104
+        },
+        {
+          "detail" : "new/untracked file",
+          "name" : "ownership",
+          "risk" : 0.3,
+          "weight" : 0.092
+        },
+        {
+          "detail" : "no incident history",
+          "name" : "incident",
+          "risk" : 0,
+          "weight" : 0.092
+        },
+        {
+          "detail" : "no CODEOWNERS file",
+          "name" : "codeowners",
+          "risk" : 0,
+          "weight" : 0.08
+        }
+      ]
+    },
+    {
+      "path" : "Tests/ThreeMDTests/DocumentCompositionCodecTests.swift",
+      "riskScore" : 9.522000000000002,
+      "signals" : [
+        {
+          "detail" : "no sensitive paths",
+          "name" : "sensitivity",
+          "risk" : 0,
+          "weight" : 0.2024
+        },
+        {
+          "detail" : "file is a test",
+          "name" : "test-gap",
+          "risk" : 0,
+          "weight" : 0.1656
+        },
+        {
+          "detail" : "0 recent commits touched this file",
+          "name" : "churn",
+          "risk" : 0,
+          "weight" : 0.138
+        },
+        {
+          "detail" : "no broken co-change pattern",
+          "name" : "coupling",
+          "risk" : 0,
+          "weight" : 0.1196
+        },
+        {
+          "detail" : "245 lines touched",
+          "name" : "diff-shape",
+          "risk" : 0.6125,
+          "weight" : 0.1104
+        },
+        {
+          "detail" : "new/untracked file",
+          "name" : "ownership",
+          "risk" : 0.3,
+          "weight" : 0.092
+        },
+        {
+          "detail" : "no incident history",
+          "name" : "incident",
+          "risk" : 0,
+          "weight" : 0.092
+        },
+        {
+          "detail" : "no CODEOWNERS file",
+          "name" : "codeowners",
+          "risk" : 0,
+          "weight" : 0.08
+        }
+      ]
+    },
+    {
+      "path" : "Sources/ThreeMD/DocumentCompositionCodec.swift",
+      "riskScore" : 9.328800000000001,
+      "signals" : [
+        {
+          "detail" : "no sensitive paths",
+          "name" : "sensitivity",
+          "risk" : 0,
+          "weight" : 0.2024
+        },
+        {
+          "detail" : "tests changed alongside",
+          "name" : "test-gap",
+          "risk" : 0.15,
+          "weight" : 0.1656
+        },
+        {
+          "detail" : "0 recent commits touched this file",
+          "name" : "churn",
+          "risk" : 0,
+          "weight" : 0.138
+        },
+        {
+          "detail" : "no broken co-change pattern",
+          "name" : "coupling",
+          "risk" : 0,
+          "weight" : 0.1196
+        },
+        {
+          "detail" : "148 lines touched",
+          "name" : "diff-shape",
+          "risk" : 0.37,
+          "weight" : 0.1104
+        },
+        {
+          "detail" : "new/untracked file",
+          "name" : "ownership",
+          "risk" : 0.3,
+          "weight" : 0.092
+        },
+        {
+          "detail" : "no incident history",
+          "name" : "incident",
+          "risk" : 0,
+          "weight" : 0.092
+        },
+        {
+          "detail" : "no CODEOWNERS file",
+          "name" : "codeowners",
+          "risk" : 0,
+          "weight" : 0.08
+        }
+      ]
+    },
+    {
+      "path" : "specs/ThreeMD/context.md",
+      "riskScore" : 9.236800000000002,
+      "signals" : [
+        {
+          "detail" : "no sensitive paths",
+          "name" : "sensitivity",
+          "risk" : 0,
+          "weight" : 0.2024
+        },
+        {
+          "detail" : "file is a test",
+          "name" : "test-gap",
+          "risk" : 0,
+          "weight" : 0.1656
+        },
+        {
+          "detail" : "2 recent commits touched this file",
+          "name" : "churn",
+          "risk" : 0.05,
+          "weight" : 0.138
+        },
+        {
+          "detail" : "no broken co-change pattern",
+          "name" : "coupling",
+          "risk" : 0,
+          "weight" : 0.1196
+        },
+        {
+          "detail" : "193 lines touched",
+          "name" : "diff-shape",
+          "risk" : 0.4825,
+          "weight" : 0.1104
+        },
+        {
+          "detail" : "single author (bus-factor)",
+          "name" : "ownership",
+          "risk" : 0.35,
+          "weight" : 0.092
+        },
+        {
+          "detail" : "no incident history",
+          "name" : "incident",
+          "risk" : 0,
+          "weight" : 0.092
+        },
+        {
+          "detail" : "no CODEOWNERS file",
+          "name" : "codeowners",
+          "risk" : 0,
+          "weight" : 0.08
+        }
+      ]
+    },
+    {
+      "path" : "Sources/ThreeMD/DocumentStorage.swift",
+      "riskScore" : 9.052800000000001,
+      "signals" : [
+        {
+          "detail" : "no sensitive paths",
+          "name" : "sensitivity",
+          "risk" : 0,
+          "weight" : 0.2024
+        },
+        {
+          "detail" : "tests changed alongside",
+          "name" : "test-gap",
+          "risk" : 0.15,
+          "weight" : 0.1656
+        },
+        {
+          "detail" : "0 recent commits touched this file",
+          "name" : "churn",
+          "risk" : 0,
+          "weight" : 0.138
+        },
+        {
+          "detail" : "no broken co-change pattern",
+          "name" : "coupling",
+          "risk" : 0,
+          "weight" : 0.1196
+        },
+        {
+          "detail" : "138 lines touched",
+          "name" : "diff-shape",
+          "risk" : 0.345,
+          "weight" : 0.1104
+        },
+        {
+          "detail" : "new/untracked file",
+          "name" : "ownership",
+          "risk" : 0.3,
+          "weight" : 0.092
+        },
+        {
+          "detail" : "no incident history",
+          "name" : "incident",
+          "risk" : 0,
+          "weight" : 0.092
+        },
+        {
+          "detail" : "no CODEOWNERS file",
+          "name" : "codeowners",
+          "risk" : 0,
+          "weight" : 0.08
+        }
+      ]
+    },
+    {
+      "path" : "Sources/ThreeMD/DocumentStorageCodec.swift",
+      "riskScore" : 8.942400000000001,
+      "signals" : [
+        {
+          "detail" : "no sensitive paths",
+          "name" : "sensitivity",
+          "risk" : 0,
+          "weight" : 0.2024
+        },
+        {
+          "detail" : "tests changed alongside",
+          "name" : "test-gap",
+          "risk" : 0.15,
+          "weight" : 0.1656
+        },
+        {
+          "detail" : "0 recent commits touched this file",
+          "name" : "churn",
+          "risk" : 0,
+          "weight" : 0.138
+        },
+        {
+          "detail" : "no broken co-change pattern",
+          "name" : "coupling",
+          "risk" : 0,
+          "weight" : 0.1196
+        },
+        {
+          "detail" : "134 lines touched",
+          "name" : "diff-shape",
+          "risk" : 0.335,
+          "weight" : 0.1104
+        },
+        {
+          "detail" : "new/untracked file",
+          "name" : "ownership",
+          "risk" : 0.3,
+          "weight" : 0.092
+        },
+        {
+          "detail" : "no incident history",
+          "name" : "incident",
+          "risk" : 0,
+          "weight" : 0.092
+        },
+        {
+          "detail" : "no CODEOWNERS file",
+          "name" : "codeowners",
+          "risk" : 0,
+          "weight" : 0.08
+        }
+      ]
+    },
+    {
+      "path" : "Sources/ThreeMD/DocumentCompositionLimits.swift",
+      "riskScore" : 8.4456,
+      "signals" : [
+        {
+          "detail" : "no sensitive paths",
+          "name" : "sensitivity",
+          "risk" : 0,
+          "weight" : 0.2024
+        },
+        {
+          "detail" : "tests changed alongside",
+          "name" : "test-gap",
+          "risk" : 0.15,
+          "weight" : 0.1656
+        },
+        {
+          "detail" : "0 recent commits touched this file",
+          "name" : "churn",
+          "risk" : 0,
+          "weight" : 0.138
+        },
+        {
+          "detail" : "no broken co-change pattern",
+          "name" : "coupling",
+          "risk" : 0,
+          "weight" : 0.1196
+        },
+        {
+          "detail" : "116 lines touched",
+          "name" : "diff-shape",
+          "risk" : 0.29,
+          "weight" : 0.1104
+        },
+        {
+          "detail" : "new/untracked file",
+          "name" : "ownership",
+          "risk" : 0.3,
+          "weight" : 0.092
+        },
+        {
+          "detail" : "no incident history",
+          "name" : "incident",
+          "risk" : 0,
+          "weight" : 0.092
+        },
+        {
+          "detail" : "no CODEOWNERS file",
+          "name" : "codeowners",
+          "risk" : 0,
+          "weight" : 0.08
+        }
+      ]
+    },
+    {
+      "path" : "Sources/ThreeMD/DocumentStorageCompression.swift",
+      "riskScore" : 8.3628,
+      "signals" : [
+        {
+          "detail" : "no sensitive paths",
+          "name" : "sensitivity",
+          "risk" : 0,
+          "weight" : 0.2024
+        },
+        {
+          "detail" : "tests changed alongside",
+          "name" : "test-gap",
+          "risk" : 0.15,
+          "weight" : 0.1656
+        },
+        {
+          "detail" : "0 recent commits touched this file",
+          "name" : "churn",
+          "risk" : 0,
+          "weight" : 0.138
+        },
+        {
+          "detail" : "no broken co-change pattern",
+          "name" : "coupling",
+          "risk" : 0,
+          "weight" : 0.1196
+        },
+        {
+          "detail" : "113 lines touched",
+          "name" : "diff-shape",
+          "risk" : 0.2825,
+          "weight" : 0.1104
+        },
+        {
+          "detail" : "new/untracked file",
+          "name" : "ownership",
+          "risk" : 0.3,
+          "weight" : 0.092
+        },
+        {
+          "detail" : "no incident history",
+          "name" : "incident",
+          "risk" : 0,
+          "weight" : 0.092
+        },
+        {
+          "detail" : "no CODEOWNERS file",
+          "name" : "codeowners",
+          "risk" : 0,
+          "weight" : 0.08
+        }
+      ]
+    },
+    {
+      "path" : "Tests/ThreeMDTests/DocumentStorageBoundsTests.swift",
+      "riskScore" : 7.948800000000002,
+      "signals" : [
+        {
+          "detail" : "no sensitive paths",
+          "name" : "sensitivity",
+          "risk" : 0,
+          "weight" : 0.2024
+        },
+        {
+          "detail" : "file is a test",
+          "name" : "test-gap",
+          "risk" : 0,
+          "weight" : 0.1656
+        },
+        {
+          "detail" : "0 recent commits touched this file",
+          "name" : "churn",
+          "risk" : 0,
+          "weight" : 0.138
+        },
+        {
+          "detail" : "no broken co-change pattern",
+          "name" : "coupling",
+          "risk" : 0,
+          "weight" : 0.1196
+        },
+        {
+          "detail" : "188 lines touched",
+          "name" : "diff-shape",
+          "risk" : 0.47,
+          "weight" : 0.1104
+        },
+        {
+          "detail" : "new/untracked file",
+          "name" : "ownership",
+          "risk" : 0.3,
+          "weight" : 0.092
+        },
+        {
+          "detail" : "no incident history",
+          "name" : "incident",
+          "risk" : 0,
+          "weight" : 0.092
+        },
+        {
+          "detail" : "no CODEOWNERS file",
+          "name" : "codeowners",
+          "risk" : 0,
+          "weight" : 0.08
+        }
+      ]
+    },
+    {
+      "path" : "Examples/README.md",
+      "riskScore" : 7.222000000000002,
+      "signals" : [
+        {
+          "detail" : "no sensitive paths",
+          "name" : "sensitivity",
+          "risk" : 0,
+          "weight" : 0.2024
+        },
+        {
+          "detail" : "tests changed alongside",
+          "name" : "test-gap",
+          "risk" : 0.15,
+          "weight" : 0.1656
+        },
+        {
+          "detail" : "2 recent commits touched this file",
+          "name" : "churn",
+          "risk" : 0.05,
+          "weight" : 0.138
+        },
+        {
+          "detail" : "no broken co-change pattern",
+          "name" : "coupling",
+          "risk" : 0,
+          "weight" : 0.1196
+        },
+        {
+          "detail" : "30 lines touched",
+          "name" : "diff-shape",
+          "risk" : 0.075,
+          "weight" : 0.1104
+        },
+        {
+          "detail" : "single author (bus-factor)",
+          "name" : "ownership",
+          "risk" : 0.35,
+          "weight" : 0.092
+        },
+        {
+          "detail" : "no incident history",
+          "name" : "incident",
+          "risk" : 0,
+          "weight" : 0.092
+        },
+        {
+          "detail" : "no CODEOWNERS file",
+          "name" : "codeowners",
+          "risk" : 0,
+          "weight" : 0.08
+        }
+      ]
+    },
+    {
+      "path" : "Tests/ThreeMDTests/DocumentStorageCompressionTests.swift",
+      "riskScore" : 6.679200000000001,
+      "signals" : [
+        {
+          "detail" : "no sensitive paths",
+          "name" : "sensitivity",
+          "risk" : 0,
+          "weight" : 0.2024
+        },
+        {
+          "detail" : "file is a test",
+          "name" : "test-gap",
+          "risk" : 0,
+          "weight" : 0.1656
+        },
+        {
+          "detail" : "0 recent commits touched this file",
+          "name" : "churn",
+          "risk" : 0,
+          "weight" : 0.138
+        },
+        {
+          "detail" : "no broken co-change pattern",
+          "name" : "coupling",
+          "risk" : 0,
+          "weight" : 0.1196
+        },
+        {
+          "detail" : "142 lines touched",
+          "name" : "diff-shape",
+          "risk" : 0.355,
+          "weight" : 0.1104
+        },
+        {
+          "detail" : "new/untracked file",
+          "name" : "ownership",
+          "risk" : 0.3,
+          "weight" : 0.092
+        },
+        {
+          "detail" : "no incident history",
+          "name" : "incident",
+          "risk" : 0,
+          "weight" : 0.092
+        },
+        {
+          "detail" : "no CODEOWNERS file",
+          "name" : "codeowners",
+          "risk" : 0,
+          "weight" : 0.08
+        }
+      ]
+    },
+    {
+      "path" : "Examples/Extensions/canopy.3mdb",
+      "riskScore" : 6.624000000000002,
+      "signals" : [
+        {
+          "detail" : "no sensitive paths",
+          "name" : "sensitivity",
+          "risk" : 0,
+          "weight" : 0.2024
+        },
+        {
+          "detail" : "binary asset, not unit-testable",
+          "name" : "test-gap",
+          "risk" : 0.1,
+          "weight" : 0.1656
+        },
+        {
+          "detail" : "0 recent commits touched this file",
+          "name" : "churn",
+          "risk" : 0,
+          "weight" : 0.138
+        },
+        {
+          "detail" : "no broken co-change pattern",
+          "name" : "coupling",
+          "risk" : 0,
+          "weight" : 0.1196
+        },
+        {
+          "detail" : "0 lines touched",
+          "name" : "diff-shape",
+          "risk" : 0.2,
+          "weight" : 0.1104
+        },
+        {
+          "detail" : "new/untracked file",
+          "name" : "ownership",
+          "risk" : 0.3,
+          "weight" : 0.092
+        },
+        {
+          "detail" : "no incident history",
+          "name" : "incident",
+          "risk" : 0,
+          "weight" : 0.092
+        },
+        {
+          "detail" : "no CODEOWNERS file",
+          "name" : "codeowners",
+          "risk" : 0,
+          "weight" : 0.08
+        }
+      ]
+    },
+    {
+      "path" : "Examples/Extensions/canopy.lzfse.3mdb",
+      "riskScore" : 6.624000000000002,
+      "signals" : [
+        {
+          "detail" : "no sensitive paths",
+          "name" : "sensitivity",
+          "risk" : 0,
+          "weight" : 0.2024
+        },
+        {
+          "detail" : "binary asset, not unit-testable",
+          "name" : "test-gap",
+          "risk" : 0.1,
+          "weight" : 0.1656
+        },
+        {
+          "detail" : "0 recent commits touched this file",
+          "name" : "churn",
+          "risk" : 0,
+          "weight" : 0.138
+        },
+        {
+          "detail" : "no broken co-change pattern",
+          "name" : "coupling",
+          "risk" : 0,
+          "weight" : 0.1196
+        },
+        {
+          "detail" : "0 lines touched",
+          "name" : "diff-shape",
+          "risk" : 0.2,
+          "weight" : 0.1104
+        },
+        {
+          "detail" : "new/untracked file",
+          "name" : "ownership",
+          "risk" : 0.3,
+          "weight" : 0.092
+        },
+        {
+          "detail" : "no incident history",
+          "name" : "incident",
+          "risk" : 0,
+          "weight" : 0.092
+        },
+        {
+          "detail" : "no CODEOWNERS file",
+          "name" : "codeowners",
+          "risk" : 0,
+          "weight" : 0.08
+        }
+      ]
+    },
+    {
+      "path" : "Examples/Extensions/shared-grove.3mdb",
+      "riskScore" : 6.624000000000002,
+      "signals" : [
+        {
+          "detail" : "no sensitive paths",
+          "name" : "sensitivity",
+          "risk" : 0,
+          "weight" : 0.2024
+        },
+        {
+          "detail" : "binary asset, not unit-testable",
+          "name" : "test-gap",
+          "risk" : 0.1,
+          "weight" : 0.1656
+        },
+        {
+          "detail" : "0 recent commits touched this file",
+          "name" : "churn",
+          "risk" : 0,
+          "weight" : 0.138
+        },
+        {
+          "detail" : "no broken co-change pattern",
+          "name" : "coupling",
+          "risk" : 0,
+          "weight" : 0.1196
+        },
+        {
+          "detail" : "0 lines touched",
+          "name" : "diff-shape",
+          "risk" : 0.2,
+          "weight" : 0.1104
+        },
+        {
+          "detail" : "new/untracked file",
+          "name" : "ownership",
+          "risk" : 0.3,
+          "weight" : 0.092
+        },
+        {
+          "detail" : "no incident history",
+          "name" : "incident",
+          "risk" : 0,
+          "weight" : 0.092
+        },
+        {
+          "detail" : "no CODEOWNERS file",
+          "name" : "codeowners",
+          "risk" : 0,
+          "weight" : 0.08
+        }
+      ]
+    },
+    {
+      "path" : "Examples/Extensions/shared-grove.lzfse.3mdb",
+      "riskScore" : 6.624000000000002,
+      "signals" : [
+        {
+          "detail" : "no sensitive paths",
+          "name" : "sensitivity",
+          "risk" : 0,
+          "weight" : 0.2024
+        },
+        {
+          "detail" : "binary asset, not unit-testable",
+          "name" : "test-gap",
+          "risk" : 0.1,
+          "weight" : 0.1656
+        },
+        {
+          "detail" : "0 recent commits touched this file",
+          "name" : "churn",
+          "risk" : 0,
+          "weight" : 0.138
+        },
+        {
+          "detail" : "no broken co-change pattern",
+          "name" : "coupling",
+          "risk" : 0,
+          "weight" : 0.1196
+        },
+        {
+          "detail" : "0 lines touched",
+          "name" : "diff-shape",
+          "risk" : 0.2,
+          "weight" : 0.1104
+        },
+        {
+          "detail" : "new/untracked file",
+          "name" : "ownership",
+          "risk" : 0.3,
+          "weight" : 0.092
+        },
+        {
+          "detail" : "no incident history",
+          "name" : "incident",
+          "risk" : 0,
+          "weight" : 0.092
+        },
+        {
+          "detail" : "no CODEOWNERS file",
+          "name" : "codeowners",
+          "risk" : 0,
+          "weight" : 0.08
+        }
+      ]
+    },
+    {
+      "path" : "specs/ThreeMD/tasks.md",
+      "riskScore" : 6.532,
+      "signals" : [
+        {
+          "detail" : "no sensitive paths",
+          "name" : "sensitivity",
+          "risk" : 0,
+          "weight" : 0.2024
+        },
+        {
+          "detail" : "file is a test",
+          "name" : "test-gap",
+          "risk" : 0,
+          "weight" : 0.1656
+        },
+        {
+          "detail" : "2 recent commits touched this file",
+          "name" : "churn",
+          "risk" : 0.05,
+          "weight" : 0.138
+        },
+        {
+          "detail" : "no broken co-change pattern",
+          "name" : "coupling",
+          "risk" : 0,
+          "weight" : 0.1196
+        },
+        {
+          "detail" : "95 lines touched",
+          "name" : "diff-shape",
+          "risk" : 0.2375,
+          "weight" : 0.1104
+        },
+        {
+          "detail" : "single author (bus-factor)",
+          "name" : "ownership",
+          "risk" : 0.35,
+          "weight" : 0.092
+        },
+        {
+          "detail" : "no incident history",
+          "name" : "incident",
+          "risk" : 0,
+          "weight" : 0.092
+        },
+        {
+          "detail" : "no CODEOWNERS file",
+          "name" : "codeowners",
+          "risk" : 0,
+          "weight" : 0.08
+        }
+      ]
+    },
+    {
+      "path" : "Examples/Extensions/manifest.json",
+      "riskScore" : 6.2928000000000015,
+      "signals" : [
+        {
+          "detail" : "no sensitive paths",
+          "name" : "sensitivity",
+          "risk" : 0,
+          "weight" : 0.2024
+        },
+        {
+          "detail" : "tests changed alongside",
+          "name" : "test-gap",
+          "risk" : 0.15,
+          "weight" : 0.1656
+        },
+        {
+          "detail" : "0 recent commits touched this file",
+          "name" : "churn",
+          "risk" : 0,
+          "weight" : 0.138
+        },
+        {
+          "detail" : "no broken co-change pattern",
+          "name" : "coupling",
+          "risk" : 0,
+          "weight" : 0.1196
+        },
+        {
+          "detail" : "38 lines touched",
+          "name" : "diff-shape",
+          "risk" : 0.095,
+          "weight" : 0.1104
+        },
+        {
+          "detail" : "new/untracked file",
+          "name" : "ownership",
+          "risk" : 0.3,
+          "weight" : 0.092
+        },
+        {
+          "detail" : "no incident history",
+          "name" : "incident",
+          "risk" : 0,
+          "weight" : 0.092
+        },
+        {
+          "detail" : "no CODEOWNERS file",
+          "name" : "codeowners",
+          "risk" : 0,
+          "weight" : 0.08
+        }
+      ]
+    },
+    {
+      "path" : "Examples/Extensions/shared-grove.3md",
+      "riskScore" : 5.989200000000001,
+      "signals" : [
+        {
+          "detail" : "no sensitive paths",
+          "name" : "sensitivity",
+          "risk" : 0,
+          "weight" : 0.2024
+        },
+        {
+          "detail" : "tests changed alongside",
+          "name" : "test-gap",
+          "risk" : 0.15,
+          "weight" : 0.1656
+        },
+        {
+          "detail" : "0 recent commits touched this file",
+          "name" : "churn",
+          "risk" : 0,
+          "weight" : 0.138
+        },
+        {
+          "detail" : "no broken co-change pattern",
+          "name" : "coupling",
+          "risk" : 0,
+          "weight" : 0.1196
+        },
+        {
+          "detail" : "27 lines touched",
+          "name" : "diff-shape",
+          "risk" : 0.0675,
+          "weight" : 0.1104
+        },
+        {
+          "detail" : "new/untracked file",
+          "name" : "ownership",
+          "risk" : 0.3,
+          "weight" : 0.092
+        },
+        {
+          "detail" : "no incident history",
+          "name" : "incident",
+          "risk" : 0,
+          "weight" : 0.092
+        },
+        {
+          "detail" : "no CODEOWNERS file",
+          "name" : "codeowners",
+          "risk" : 0,
+          "weight" : 0.08
+        }
+      ]
+    },
+    {
+      "path" : "Examples/Extensions/canopy.3md",
+      "riskScore" : 5.6304,
+      "signals" : [
+        {
+          "detail" : "no sensitive paths",
+          "name" : "sensitivity",
+          "risk" : 0,
+          "weight" : 0.2024
+        },
+        {
+          "detail" : "tests changed alongside",
+          "name" : "test-gap",
+          "risk" : 0.15,
+          "weight" : 0.1656
+        },
+        {
+          "detail" : "0 recent commits touched this file",
+          "name" : "churn",
+          "risk" : 0,
+          "weight" : 0.138
+        },
+        {
+          "detail" : "no broken co-change pattern",
+          "name" : "coupling",
+          "risk" : 0,
+          "weight" : 0.1196
+        },
+        {
+          "detail" : "14 lines touched",
+          "name" : "diff-shape",
+          "risk" : 0.035,
+          "weight" : 0.1104
+        },
+        {
+          "detail" : "new/untracked file",
+          "name" : "ownership",
+          "risk" : 0.3,
+          "weight" : 0.092
+        },
+        {
+          "detail" : "no incident history",
+          "name" : "incident",
+          "risk" : 0,
+          "weight" : 0.092
+        },
+        {
+          "detail" : "no CODEOWNERS file",
+          "name" : "codeowners",
+          "risk" : 0,
+          "weight" : 0.08
+        }
+      ]
+    },
+    {
+      "path" : "AGENTS.md",
+      "riskScore" : 5.0048,
+      "signals" : [
+        {
+          "detail" : "no sensitive paths",
+          "name" : "sensitivity",
+          "risk" : 0,
+          "weight" : 0.2024
+        },
+        {
+          "detail" : "tests changed alongside",
+          "name" : "test-gap",
+          "risk" : 0.15,
+          "weight" : 0.1656
+        },
+        {
+          "detail" : "2 recent commits touched this file",
+          "name" : "churn",
+          "risk" : 0.05,
+          "weight" : 0.138
+        },
+        {
+          "detail" : "no broken co-change pattern",
+          "name" : "coupling",
+          "risk" : 0,
+          "weight" : 0.1196
+        },
+        {
+          "detail" : "33 lines touched",
+          "name" : "diff-shape",
+          "risk" : 0.0825,
+          "weight" : 0.1104
+        },
+        {
+          "detail" : "2 authors",
+          "name" : "ownership",
+          "risk" : 0.1,
+          "weight" : 0.092
+        },
+        {
+          "detail" : "no incident history",
+          "name" : "incident",
+          "risk" : 0,
+          "weight" : 0.092
+        },
+        {
+          "detail" : "no CODEOWNERS file",
+          "name" : "codeowners",
+          "risk" : 0,
+          "weight" : 0.08
+        }
+      ]
+    },
+    {
+      "path" : ".specsync/changes/implement-generic-binary-storage-and-document-composition-with-specsync-6-and-trust-1-2-2/approvals.json",
+      "riskScore" : 4.7518,
+      "signals" : [
+        {
+          "detail" : "no sensitive paths",
+          "name" : "sensitivity",
+          "risk" : 0,
+          "weight" : 0.2024
+        },
+        {
+          "detail" : "file is a test",
+          "name" : "test-gap",
+          "risk" : 0,
+          "weight" : 0.1656
+        },
+        {
+          "detail" : "1 recent commits touched this file",
+          "name" : "churn",
+          "risk" : 0.025,
+          "weight" : 0.138
+        },
+        {
+          "detail" : "no broken co-change pattern",
+          "name" : "coupling",
+          "risk" : 0,
+          "weight" : 0.1196
+        },
+        {
+          "detail" : "43 lines touched",
+          "name" : "diff-shape",
+          "risk" : 0.1075,
+          "weight" : 0.1104
+        },
+        {
+          "detail" : "single author (bus-factor)",
+          "name" : "ownership",
+          "risk" : 0.35,
+          "weight" : 0.092
+        },
+        {
+          "detail" : "no incident history",
+          "name" : "incident",
+          "risk" : 0,
+          "weight" : 0.092
+        },
+        {
+          "detail" : "no CODEOWNERS file",
+          "name" : "codeowners",
+          "risk" : 0,
+          "weight" : 0.08
+        }
+      ]
+    },
+    {
+      "path" : ".specsync/changes/CHG-0003-address-final-trust-and-sdd-governance-review-corrections/approvals.json",
+      "riskScore" : 4.586200000000001,
+      "signals" : [
+        {
+          "detail" : "no sensitive paths",
+          "name" : "sensitivity",
+          "risk" : 0,
+          "weight" : 0.2024
+        },
+        {
+          "detail" : "file is a test",
+          "name" : "test-gap",
+          "risk" : 0,
+          "weight" : 0.1656
+        },
+        {
+          "detail" : "1 recent commits touched this file",
+          "name" : "churn",
+          "risk" : 0.025,
+          "weight" : 0.138
+        },
+        {
+          "detail" : "no broken co-change pattern",
+          "name" : "coupling",
+          "risk" : 0,
+          "weight" : 0.1196
+        },
+        {
+          "detail" : "37 lines touched",
+          "name" : "diff-shape",
+          "risk" : 0.0925,
+          "weight" : 0.1104
+        },
+        {
+          "detail" : "single author (bus-factor)",
+          "name" : "ownership",
+          "risk" : 0.35,
+          "weight" : 0.092
+        },
+        {
+          "detail" : "no incident history",
+          "name" : "incident",
+          "risk" : 0,
+          "weight" : 0.092
+        },
+        {
+          "detail" : "no CODEOWNERS file",
+          "name" : "codeowners",
+          "risk" : 0,
+          "weight" : 0.08
+        }
+      ]
+    },
+    {
+      "path" : ".specsync/changes/CHG-0002-assign-stable-requirement-ids/approvals.json",
+      "riskScore" : 4.558600000000001,
+      "signals" : [
+        {
+          "detail" : "no sensitive paths",
+          "name" : "sensitivity",
+          "risk" : 0,
+          "weight" : 0.2024
+        },
+        {
+          "detail" : "file is a test",
+          "name" : "test-gap",
+          "risk" : 0,
+          "weight" : 0.1656
+        },
+        {
+          "detail" : "1 recent commits touched this file",
+          "name" : "churn",
+          "risk" : 0.025,
+          "weight" : 0.138
+        },
+        {
+          "detail" : "no broken co-change pattern",
+          "name" : "coupling",
+          "risk" : 0,
+          "weight" : 0.1196
+        },
+        {
+          "detail" : "36 lines touched",
+          "name" : "diff-shape",
+          "risk" : 0.09,
+          "weight" : 0.1104
+        },
+        {
+          "detail" : "single author (bus-factor)",
+          "name" : "ownership",
+          "risk" : 0.35,
+          "weight" : 0.092
+        },
+        {
+          "detail" : "no incident history",
+          "name" : "incident",
+          "risk" : 0,
+          "weight" : 0.092
+        },
+        {
+          "detail" : "no CODEOWNERS file",
+          "name" : "codeowners",
+          "risk" : 0,
+          "weight" : 0.08
+        }
+      ]
+    },
+    {
+      "path" : ".specsync/changes/CHG-0001-adopt-trust-1-and-specsync-5/approvals.json",
+      "riskScore" : 4.5034,
+      "signals" : [
+        {
+          "detail" : "no sensitive paths",
+          "name" : "sensitivity",
+          "risk" : 0,
+          "weight" : 0.2024
+        },
+        {
+          "detail" : "file is a test",
+          "name" : "test-gap",
+          "risk" : 0,
+          "weight" : 0.1656
+        },
+        {
+          "detail" : "1 recent commits touched this file",
+          "name" : "churn",
+          "risk" : 0.025,
+          "weight" : 0.138
+        },
+        {
+          "detail" : "no broken co-change pattern",
+          "name" : "coupling",
+          "risk" : 0,
+          "weight" : 0.1196
+        },
+        {
+          "detail" : "34 lines touched",
+          "name" : "diff-shape",
+          "risk" : 0.085,
+          "weight" : 0.1104
+        },
+        {
+          "detail" : "single author (bus-factor)",
+          "name" : "ownership",
+          "risk" : 0.35,
+          "weight" : 0.092
+        },
+        {
+          "detail" : "no incident history",
+          "name" : "incident",
+          "risk" : 0,
+          "weight" : 0.092
+        },
+        {
+          "detail" : "no CODEOWNERS file",
+          "name" : "codeowners",
+          "risk" : 0,
+          "weight" : 0.08
+        }
+      ]
+    },
+    {
+      "path" : ".specsync/changes/implement-generic-binary-storage-and-document-composition-with-specsync-6-and-trust-1-2-2/tasks.md",
+      "riskScore" : 4.282600000000001,
+      "signals" : [
+        {
+          "detail" : "no sensitive paths",
+          "name" : "sensitivity",
+          "risk" : 0,
+          "weight" : 0.2024
+        },
+        {
+          "detail" : "file is a test",
+          "name" : "test-gap",
+          "risk" : 0,
+          "weight" : 0.1656
+        },
+        {
+          "detail" : "1 recent commits touched this file",
+          "name" : "churn",
+          "risk" : 0.025,
+          "weight" : 0.138
+        },
+        {
+          "detail" : "no broken co-change pattern",
+          "name" : "coupling",
+          "risk" : 0,
+          "weight" : 0.1196
+        },
+        {
+          "detail" : "26 lines touched",
+          "name" : "diff-shape",
+          "risk" : 0.065,
+          "weight" : 0.1104
+        },
+        {
+          "detail" : "single author (bus-factor)",
+          "name" : "ownership",
+          "risk" : 0.35,
+          "weight" : 0.092
+        },
+        {
+          "detail" : "no incident history",
+          "name" : "incident",
+          "risk" : 0,
+          "weight" : 0.092
+        },
+        {
+          "detail" : "no CODEOWNERS file",
+          "name" : "codeowners",
+          "risk" : 0,
+          "weight" : 0.08
+        }
+      ]
+    },
+    {
+      "path" : ".specsync/changes/implement-generic-binary-storage-and-document-composition-with-specsync-6-and-trust-1-2-2/testing.md",
+      "riskScore" : 3.9790000000000005,
+      "signals" : [
+        {
+          "detail" : "no sensitive paths",
+          "name" : "sensitivity",
+          "risk" : 0,
+          "weight" : 0.2024
+        },
+        {
+          "detail" : "file is a test",
+          "name" : "test-gap",
+          "risk" : 0,
+          "weight" : 0.1656
+        },
+        {
+          "detail" : "1 recent commits touched this file",
+          "name" : "churn",
+          "risk" : 0.025,
+          "weight" : 0.138
+        },
+        {
+          "detail" : "no broken co-change pattern",
+          "name" : "coupling",
+          "risk" : 0,
+          "weight" : 0.1196
+        },
+        {
+          "detail" : "15 lines touched",
+          "name" : "diff-shape",
+          "risk" : 0.0375,
+          "weight" : 0.1104
+        },
+        {
+          "detail" : "single author (bus-factor)",
+          "name" : "ownership",
+          "risk" : 0.35,
+          "weight" : 0.092
+        },
+        {
+          "detail" : "no incident history",
+          "name" : "incident",
+          "risk" : 0,
+          "weight" : 0.092
+        },
+        {
+          "detail" : "no CODEOWNERS file",
+          "name" : "codeowners",
+          "risk" : 0,
+          "weight" : 0.08
+        }
+      ]
+    },
+    {
+      "path" : "specs/ThreeMD/requirements.md",
+      "riskScore" : 3.9146000000000005,
+      "signals" : [
+        {
+          "detail" : "no sensitive paths",
+          "name" : "sensitivity",
+          "risk" : 0,
+          "weight" : 0.2024
+        },
+        {
+          "detail" : "file is a test",
+          "name" : "test-gap",
+          "risk" : 0,
+          "weight" : 0.1656
+        },
+        {
+          "detail" : "3 recent commits touched this file",
+          "name" : "churn",
+          "risk" : 0.075,
+          "weight" : 0.138
+        },
+        {
+          "detail" : "no broken co-change pattern",
+          "name" : "coupling",
+          "risk" : 0,
+          "weight" : 0.1196
+        },
+        {
+          "detail" : "71 lines touched",
+          "name" : "diff-shape",
+          "risk" : 0.1775,
+          "weight" : 0.1104
+        },
+        {
+          "detail" : "2 authors",
+          "name" : "ownership",
+          "risk" : 0.1,
+          "weight" : 0.092
+        },
+        {
+          "detail" : "no incident history",
+          "name" : "incident",
+          "risk" : 0,
+          "weight" : 0.092
+        },
+        {
+          "detail" : "no CODEOWNERS file",
+          "name" : "codeowners",
+          "risk" : 0,
+          "weight" : 0.08
+        }
+      ]
+    },
+    {
+      "path" : ".specsync/changes/CHG-0002-assign-stable-requirement-ids/state.json",
+      "riskScore" : 3.7030000000000007,
+      "signals" : [
+        {
+          "detail" : "no sensitive paths",
+          "name" : "sensitivity",
+          "risk" : 0,
+          "weight" : 0.2024
+        },
+        {
+          "detail" : "file is a test",
+          "name" : "test-gap",
+          "risk" : 0,
+          "weight" : 0.1656
+        },
+        {
+          "detail" : "1 recent commits touched this file",
+          "name" : "churn",
+          "risk" : 0.025,
+          "weight" : 0.138
+        },
+        {
+          "detail" : "no broken co-change pattern",
+          "name" : "coupling",
+          "risk" : 0,
+          "weight" : 0.1196
+        },
+        {
+          "detail" : "5 lines touched",
+          "name" : "diff-shape",
+          "risk" : 0.0125,
+          "weight" : 0.1104
+        },
+        {
+          "detail" : "single author (bus-factor)",
+          "name" : "ownership",
+          "risk" : 0.35,
+          "weight" : 0.092
+        },
+        {
+          "detail" : "no incident history",
+          "name" : "incident",
+          "risk" : 0,
+          "weight" : 0.092
+        },
+        {
+          "detail" : "no CODEOWNERS file",
+          "name" : "codeowners",
+          "risk" : 0,
+          "weight" : 0.08
+        }
+      ]
+    },
+    {
+      "path" : ".specsync/changes/implement-generic-binary-storage-and-document-composition-with-specsync-6-and-trust-1-2-2/state.json",
+      "riskScore" : 3.7030000000000007,
+      "signals" : [
+        {
+          "detail" : "no sensitive paths",
+          "name" : "sensitivity",
+          "risk" : 0,
+          "weight" : 0.2024
+        },
+        {
+          "detail" : "file is a test",
+          "name" : "test-gap",
+          "risk" : 0,
+          "weight" : 0.1656
+        },
+        {
+          "detail" : "1 recent commits touched this file",
+          "name" : "churn",
+          "risk" : 0.025,
+          "weight" : 0.138
+        },
+        {
+          "detail" : "no broken co-change pattern",
+          "name" : "coupling",
+          "risk" : 0,
+          "weight" : 0.1196
+        },
+        {
+          "detail" : "5 lines touched",
+          "name" : "diff-shape",
+          "risk" : 0.0125,
+          "weight" : 0.1104
+        },
+        {
+          "detail" : "single author (bus-factor)",
+          "name" : "ownership",
+          "risk" : 0.35,
+          "weight" : 0.092
+        },
+        {
+          "detail" : "no incident history",
+          "name" : "incident",
+          "risk" : 0,
+          "weight" : 0.092
+        },
+        {
+          "detail" : "no CODEOWNERS file",
+          "name" : "codeowners",
+          "risk" : 0,
+          "weight" : 0.08
+        }
+      ]
+    },
+    {
+      "path" : ".specsync/changes/CHG-0001-adopt-trust-1-and-specsync-5/state.json",
+      "riskScore" : 3.6754000000000007,
+      "signals" : [
+        {
+          "detail" : "no sensitive paths",
+          "name" : "sensitivity",
+          "risk" : 0,
+          "weight" : 0.2024
+        },
+        {
+          "detail" : "file is a test",
+          "name" : "test-gap",
+          "risk" : 0,
+          "weight" : 0.1656
+        },
+        {
+          "detail" : "1 recent commits touched this file",
+          "name" : "churn",
+          "risk" : 0.025,
+          "weight" : 0.138
+        },
+        {
+          "detail" : "no broken co-change pattern",
+          "name" : "coupling",
+          "risk" : 0,
+          "weight" : 0.1196
+        },
+        {
+          "detail" : "4 lines touched",
+          "name" : "diff-shape",
+          "risk" : 0.01,
+          "weight" : 0.1104
+        },
+        {
+          "detail" : "single author (bus-factor)",
+          "name" : "ownership",
+          "risk" : 0.35,
+          "weight" : 0.092
+        },
+        {
+          "detail" : "no incident history",
+          "name" : "incident",
+          "risk" : 0,
+          "weight" : 0.092
+        },
+        {
+          "detail" : "no CODEOWNERS file",
+          "name" : "codeowners",
+          "risk" : 0,
+          "weight" : 0.08
+        }
+      ]
+    },
+    {
+      "path" : ".specsync/changes/CHG-0003-address-final-trust-and-sdd-governance-review-corrections/state.json",
+      "riskScore" : 3.6754000000000007,
+      "signals" : [
+        {
+          "detail" : "no sensitive paths",
+          "name" : "sensitivity",
+          "risk" : 0,
+          "weight" : 0.2024
+        },
+        {
+          "detail" : "file is a test",
+          "name" : "test-gap",
+          "risk" : 0,
+          "weight" : 0.1656
+        },
+        {
+          "detail" : "1 recent commits touched this file",
+          "name" : "churn",
+          "risk" : 0.025,
+          "weight" : 0.138
+        },
+        {
+          "detail" : "no broken co-change pattern",
+          "name" : "coupling",
+          "risk" : 0,
+          "weight" : 0.1196
+        },
+        {
+          "detail" : "4 lines touched",
+          "name" : "diff-shape",
+          "risk" : 0.01,
+          "weight" : 0.1104
+        },
+        {
+          "detail" : "single author (bus-factor)",
+          "name" : "ownership",
+          "risk" : 0.35,
+          "weight" : 0.092
+        },
+        {
+          "detail" : "no incident history",
+          "name" : "incident",
+          "risk" : 0,
+          "weight" : 0.092
+        },
+        {
+          "detail" : "no CODEOWNERS file",
+          "name" : "codeowners",
+          "risk" : 0,
+          "weight" : 0.08
+        }
+      ]
+    },
+    {
+      "path" : ".specsync/changes/CHG-0001-adopt-trust-1-and-specsync-5/change.md",
+      "riskScore" : 3.6202000000000005,
+      "signals" : [
+        {
+          "detail" : "no sensitive paths",
+          "name" : "sensitivity",
+          "risk" : 0,
+          "weight" : 0.2024
+        },
+        {
+          "detail" : "file is a test",
+          "name" : "test-gap",
+          "risk" : 0,
+          "weight" : 0.1656
+        },
+        {
+          "detail" : "1 recent commits touched this file",
+          "name" : "churn",
+          "risk" : 0.025,
+          "weight" : 0.138
+        },
+        {
+          "detail" : "no broken co-change pattern",
+          "name" : "coupling",
+          "risk" : 0,
+          "weight" : 0.1196
+        },
+        {
+          "detail" : "2 lines touched",
+          "name" : "diff-shape",
+          "risk" : 0.005,
+          "weight" : 0.1104
+        },
+        {
+          "detail" : "single author (bus-factor)",
+          "name" : "ownership",
+          "risk" : 0.35,
+          "weight" : 0.092
+        },
+        {
+          "detail" : "no incident history",
+          "name" : "incident",
+          "risk" : 0,
+          "weight" : 0.092
+        },
+        {
+          "detail" : "no CODEOWNERS file",
+          "name" : "codeowners",
+          "risk" : 0,
+          "weight" : 0.08
+        }
+      ]
+    },
+    {
+      "path" : ".specsync/changes/CHG-0002-assign-stable-requirement-ids/change.md",
+      "riskScore" : 3.6202000000000005,
+      "signals" : [
+        {
+          "detail" : "no sensitive paths",
+          "name" : "sensitivity",
+          "risk" : 0,
+          "weight" : 0.2024
+        },
+        {
+          "detail" : "file is a test",
+          "name" : "test-gap",
+          "risk" : 0,
+          "weight" : 0.1656
+        },
+        {
+          "detail" : "1 recent commits touched this file",
+          "name" : "churn",
+          "risk" : 0.025,
+          "weight" : 0.138
+        },
+        {
+          "detail" : "no broken co-change pattern",
+          "name" : "coupling",
+          "risk" : 0,
+          "weight" : 0.1196
+        },
+        {
+          "detail" : "2 lines touched",
+          "name" : "diff-shape",
+          "risk" : 0.005,
+          "weight" : 0.1104
+        },
+        {
+          "detail" : "single author (bus-factor)",
+          "name" : "ownership",
+          "risk" : 0.35,
+          "weight" : 0.092
+        },
+        {
+          "detail" : "no incident history",
+          "name" : "incident",
+          "risk" : 0,
+          "weight" : 0.092
+        },
+        {
+          "detail" : "no CODEOWNERS file",
+          "name" : "codeowners",
+          "risk" : 0,
+          "weight" : 0.08
+        }
+      ]
+    },
+    {
+      "path" : ".specsync/changes/CHG-0003-address-final-trust-and-sdd-governance-review-corrections/change.md",
+      "riskScore" : 3.6202000000000005,
+      "signals" : [
+        {
+          "detail" : "no sensitive paths",
+          "name" : "sensitivity",
+          "risk" : 0,
+          "weight" : 0.2024
+        },
+        {
+          "detail" : "file is a test",
+          "name" : "test-gap",
+          "risk" : 0,
+          "weight" : 0.1656
+        },
+        {
+          "detail" : "1 recent commits touched this file",
+          "name" : "churn",
+          "risk" : 0.025,
+          "weight" : 0.138
+        },
+        {
+          "detail" : "no broken co-change pattern",
+          "name" : "coupling",
+          "risk" : 0,
+          "weight" : 0.1196
+        },
+        {
+          "detail" : "2 lines touched",
+          "name" : "diff-shape",
+          "risk" : 0.005,
+          "weight" : 0.1104
+        },
+        {
+          "detail" : "single author (bus-factor)",
+          "name" : "ownership",
+          "risk" : 0.35,
+          "weight" : 0.092
+        },
+        {
+          "detail" : "no incident history",
+          "name" : "incident",
+          "risk" : 0,
+          "weight" : 0.092
+        },
+        {
+          "detail" : "no CODEOWNERS file",
+          "name" : "codeowners",
+          "risk" : 0,
+          "weight" : 0.08
+        }
+      ]
+    },
+    {
+      "path" : ".specsync/changes/implement-generic-binary-storage-and-document-composition-with-specsync-6-and-trust-1-2-2/change.md",
+      "riskScore" : 3.6202000000000005,
+      "signals" : [
+        {
+          "detail" : "no sensitive paths",
+          "name" : "sensitivity",
+          "risk" : 0,
+          "weight" : 0.2024
+        },
+        {
+          "detail" : "file is a test",
+          "name" : "test-gap",
+          "risk" : 0,
+          "weight" : 0.1656
+        },
+        {
+          "detail" : "1 recent commits touched this file",
+          "name" : "churn",
+          "risk" : 0.025,
+          "weight" : 0.138
+        },
+        {
+          "detail" : "no broken co-change pattern",
+          "name" : "coupling",
+          "risk" : 0,
+          "weight" : 0.1196
+        },
+        {
+          "detail" : "2 lines touched",
+          "name" : "diff-shape",
+          "risk" : 0.005,
+          "weight" : 0.1104
+        },
+        {
+          "detail" : "single author (bus-factor)",
+          "name" : "ownership",
+          "risk" : 0.35,
+          "weight" : 0.092
+        },
+        {
+          "detail" : "no incident history",
+          "name" : "incident",
+          "risk" : 0,
+          "weight" : 0.092
+        },
+        {
+          "detail" : "no CODEOWNERS file",
+          "name" : "codeowners",
+          "risk" : 0,
+          "weight" : 0.08
+        }
+      ]
+    },
+    {
+      "path" : ".specsync/changes/implement-generic-binary-storage-and-document-composition-with-specsync-6-and-trust-1-2-2/verification-attempts.json",
+      "riskScore" : 3.5052000000000008,
+      "signals" : [
+        {
+          "detail" : "no sensitive paths",
+          "name" : "sensitivity",
+          "risk" : 0,
+          "weight" : 0.2024
+        },
+        {
+          "detail" : "file is a test",
+          "name" : "test-gap",
+          "risk" : 0,
+          "weight" : 0.1656
+        },
+        {
+          "detail" : "0 recent commits touched this file",
+          "name" : "churn",
+          "risk" : 0,
+          "weight" : 0.138
+        },
+        {
+          "detail" : "no broken co-change pattern",
+          "name" : "coupling",
+          "risk" : 0,
+          "weight" : 0.1196
+        },
+        {
+          "detail" : "27 lines touched",
+          "name" : "diff-shape",
+          "risk" : 0.0675,
+          "weight" : 0.1104
+        },
+        {
+          "detail" : "new/untracked file",
+          "name" : "ownership",
+          "risk" : 0.3,
+          "weight" : 0.092
+        },
+        {
+          "detail" : "no incident history",
+          "name" : "incident",
+          "risk" : 0,
+          "weight" : 0.092
+        },
+        {
+          "detail" : "no CODEOWNERS file",
+          "name" : "codeowners",
+          "risk" : 0,
+          "weight" : 0.08
+        }
+      ]
+    },
+    {
+      "path" : ".specsync/changes/implement-generic-binary-storage-and-document-composition-with-specsync-6-and-trust-1-2-2/verification.json",
+      "riskScore" : 3.367200000000001,
+      "signals" : [
+        {
+          "detail" : "no sensitive paths",
+          "name" : "sensitivity",
+          "risk" : 0,
+          "weight" : 0.2024
+        },
+        {
+          "detail" : "file is a test",
+          "name" : "test-gap",
+          "risk" : 0,
+          "weight" : 0.1656
+        },
+        {
+          "detail" : "0 recent commits touched this file",
+          "name" : "churn",
+          "risk" : 0,
+          "weight" : 0.138
+        },
+        {
+          "detail" : "no broken co-change pattern",
+          "name" : "coupling",
+          "risk" : 0,
+          "weight" : 0.1196
+        },
+        {
+          "detail" : "22 lines touched",
+          "name" : "diff-shape",
+          "risk" : 0.055,
+          "weight" : 0.1104
+        },
+        {
+          "detail" : "new/untracked file",
+          "name" : "ownership",
+          "risk" : 0.3,
+          "weight" : 0.092
+        },
+        {
+          "detail" : "no incident history",
+          "name" : "incident",
+          "risk" : 0,
+          "weight" : 0.092
+        },
+        {
+          "detail" : "no CODEOWNERS file",
+          "name" : "codeowners",
+          "risk" : 0,
+          "weight" : 0.08
+        }
+      ]
+    },
+    {
+      "path" : ".specsync/version",
+      "riskScore" : 1.6652000000000005,
+      "signals" : [
+        {
+          "detail" : "no sensitive paths",
+          "name" : "sensitivity",
+          "risk" : 0,
+          "weight" : 0.2024
+        },
+        {
+          "detail" : "file is a test",
+          "name" : "test-gap",
+          "risk" : 0,
+          "weight" : 0.1656
+        },
+        {
+          "detail" : "2 recent commits touched this file",
+          "name" : "churn",
+          "risk" : 0.05,
+          "weight" : 0.138
+        },
+        {
+          "detail" : "no broken co-change pattern",
+          "name" : "coupling",
+          "risk" : 0,
+          "weight" : 0.1196
+        },
+        {
+          "detail" : "2 lines touched",
+          "name" : "diff-shape",
+          "risk" : 0.005,
+          "weight" : 0.1104
+        },
+        {
+          "detail" : "2 authors",
+          "name" : "ownership",
+          "risk" : 0.1,
+          "weight" : 0.092
+        },
+        {
+          "detail" : "no incident history",
+          "name" : "incident",
+          "risk" : 0,
+          "weight" : 0.092
+        },
+        {
+          "detail" : "no CODEOWNERS file",
+          "name" : "codeowners",
+          "risk" : 0,
+          "weight" : 0.08
+        }
+      ]
+    }
+  ],
+  "riskScore" : 33.66567120567376,
+  "scope" : "staged",
+  "thresholds" : {
+    "block" : 65,
+    "review" : 35
+  },
+  "verdict" : "proceed"
+}

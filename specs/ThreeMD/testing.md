@@ -4,166 +4,131 @@ spec: ThreeMD.spec.md
 
 ## Test Plan
 
-The ThreeMD module is covered by a single XCTest suite, `ParserTests`, in
-`Tests/ThreeMDTests/ParserTests.swift`. It exercises the parser end to end
-against the behavior described in `SPEC.md`, plus the serializer and the small
-value types (`Axis`, `ParseError`). At the time of writing the suite holds 32
-test methods.
+Tests assert public behavior and independent format/graph evidence. The existing
+Swift text-parser, renderers, links, anchors, diagnostics and conformance suites
+remain in Tests/ThreeMDTests. The TypeScript and Rust ports continue to run the
+shared text vectors; new APIs do not claim parity in those ports.
 
-### How to run
+DocumentStorageTests.swift, DocumentStorageBoundsTests.swift and
+DocumentStorageCompressionTests.swift cover the new general storage boundary.
+ParserNumericTests.swift preserves the accepted finite ASCII decimal grammar
+for every coordinate. DocumentStorageDecimalTests.swift covers long malformed
+decimals in readable and correctly checksummed binary input, plus deterministic
+cancellation after preflight when the parser fails.
+DocumentCompositionTests.swift and DocumentCompositionCodecTests.swift cover
+the graph and readable profile. Presence of tests is not a passing receipt;
+root records actual results against the implemented revision.
 
-The suite runs through the standard Swift toolchain:
+## Storage Verification
 
-```
-swift test
-```
+- Round-trip Unicode, mixed axes, metadata, finite coordinates, literal quotes
+  and backslashes in text, uncompressed binary and conditional LZFSE.
+- Inspect the exact 40-byte header, little-endian fields and independently
+  calculated CRC, including the standard 123456789 check vector.
+- Reject truncated, corrupt, trailing, concatenated, wrong-version/kind/flags,
+  nonzero-reserved and unknown-compression containers.
+- Verify decoded-byte declarations are bounded before allocation, plus lowered
+  limits for input/output, records, lines and planes.
+- Reject a 4 KiB decimal with an invalid suffix through readable input and an
+  otherwise valid binary envelope without quadratic backtracking. Preserve
+  optional signs, fractions and exponents and reject nonfinite/non-ASCII forms.
+- Reject nonfinite coordinates, repeated Z, reserved-key collisions and direct
+  values that cannot round-trip faithfully.
+- On platforms without Compression, verify explicit unavailability rather than
+  silently changing the requested format.
+- Verify task cancellation propagates without a partial result on supported
+  concurrency runtimes. Cancellation checks use an availability guard for
+  macOS 10.15/iOS 13/tvOS 13/watchOS 6 and later; earlier Apple runtimes no-op
+  that check without raising the package deployment baseline.
+  A synchronous internal parser injection cancels its current task immediately
+  before a real parse failure, proving cancellation takes priority without
+  timing races or a public API change.
 
-The canonical CI gate is the `verify` lane defined in `fledge.toml`. It runs the
-format check, the build, and the tests in order:
+## Composition Verification
 
-```
+- Preserve repeated and nested references with one source per ID, ordered
+  reference attributes, Unicode and mixed document axes.
+- Inspect canonical sorted definition output and reload the profile through the
+  existing text parser and generic binary storage.
+- Remove imported original files and retain in-memory lookup, proving the
+  library performs no automatic external resolution.
+- Reject unsafe/duplicate IDs, missing root/targets, cycles including unused
+  nodes, depth, unique-byte/reference/occurrence and per-reference attribute
+  excesses.
+- Reject malformed/noncanonical outer documents, unknown and duplicate JSON
+  fields (including escaped aliases), oversized/deep JSON and unsupported schemas.
+- Assert available task cancellation remains distinct from validation failures.
+
+## Canonical Extension Fixtures
+
+Examples/Extensions contains canopy and shared-grove in readable text,
+portable uncompressed binary and optional Apple LZFSE binary. The actual Swift
+generator encoded all six files, decoded them back to equal Document or
+DocumentComposition values, and wrote manifest.json with exact bytes/SHA256.
+The focused new test run passed 43 XCTest methods according to root's actual
+receipt. This is focused storage/graph evidence; the retained complete native
+lane and closing lifecycle checks remain separate.
+
+The canopy is a small ordinary space-axis document. The grove has one reusable
+canopy definition and an opaque A character binding in its root document.
+ThreeMD stores that declared reference without interpreting the characters as
+placements, and binary wrapping preserves the same complete profile.
+
+## Required Repository Gates
+
+Use SpecSync 6.0.0 and Fledge 1.7.2. Trust must report 1.2.2 and be the isolated
+latest plugin when the machine's installed plugin registry resolves an older
+version. The authoritative workflow pins Trust's immutable release commit.
+
+```text
+specsync check --strict --force --require-coverage 100
 fledge lanes run verify
+fledge trust verify
+specsync change check implement-generic-binary-storage-and-document-composition-with-specsync-6-and-trust-1-2-2
 ```
 
-The `verify` lane is `lint` then `build` then `test`, where `lint` is
-`swift-format lint --strict`, `build` is `swift build`, and `test` is
-`swift test`. The `ci` lane is an alias for the same three steps. Run
-`fledge introspect` or check `fledge.toml` if the task list changes.
+The verify lane retains Swift format/build/tests, TypeScript tests, Rust
+format/clippy/tests, generated web-component drift and VS Code grammar tests.
+Browser UI checks are a separate existing lane; no new web behavior is added.
+SpecSync check is structural contract validation, not a product-test runner.
 
-### Approach
+Root owns the shared verification lane, preserves failed attempts, records
+actual definition/implementation/review/finalization stages, and publishes the
+authorized feature PR. Existing Attest identities and keys stay unchanged;
+scope approval is not an independent human review or trusted signature.
+The new full lane, strict contract and closing lifecycle evidence are pending
+until root supplies actual receipts.
 
-The suite follows a few consistent patterns:
+## Lifecycle prerequisite order
 
-- **Inline-source fixtures.** Every test builds its `.3md` input as a Swift
-  multi-line string literal inside the test method and feeds it to a shared
-  `Parser()` instance. There are no on-disk fixture files; the input and the
-  expected result sit side by side so each test reads as a self-contained
-  example.
-- **Error assertions per `ParseError` case.** Failure paths are checked with
-  `XCTAssertThrowsError`. Where the error case is simple the test compares it
-  directly with `XCTAssertEqual(error as? ParseError, .someCase)`; where the
-  case carries positional payload (`line:`) it uses a `guard case` pattern match
-  and `XCTFail` on mismatch, so the assertion does not depend on the exact line
-  number.
-- **Round-trip equality.** Several tests parse a document, render it with
-  `Serializer()`, parse the rendered text again, and assert the reparsed
-  `Document` equals the original (or that specific fields survive). This relies
-  on `Document` and `Plane` being `Equatable` via their `Hashable` conformance.
+SpecSync 6 requires every prerequisite checkbox complete before change check.
+Later review, publication and finalization belong to explicit pending milestones,
+not checked-off promises. Task prose and requirement-evidence additions change
+the definition digest; root must append an actual approval refresh with its own
+agent claim before checking this scheduling correction. The feature scope and
+approved semantic delta remain unchanged.
 
-### Coverage inventory
+Root then runs the retained full native lane and pinned Trust gate, materializes
+and checks the named change, and commits the real implementation/evidence as
+required by the tool. A committed implementation and fresh verification are
+prerequisites for scoped review. The workflow-v2 finalization command requires
+current scoped review, then archives on the existing PR before any merge; its
+handoff is not merge or release authority.
 
-Grouped by area, with the asserting behavior of each test.
+Three existing accepted workflow-v1 records are preserved:
+CHG-0001-adopt-trust-1-and-specsync-5,
+CHG-0002-assign-stable-requirement-ids, and
+CHG-0003-address-final-trust-and-sdd-governance-review-corrections.
+The workflow-v2 cutoff establishes their historical eligibility, not a blanket
+waiver for changed delivery inputs. Root's actual audit determines whether any
+accepted record is stale. If stale, use the tool's audited reopen and fresh
+verification/closing acceptance path, preserving the old definition and evidence
+history. Legacy records use accept then archive; finalize explicitly refuses
+workflow-v1. Exact semantic-successor obligations must be declared before
+approval, not silently inserted into the approved current change.
 
-#### Frontmatter
-
-- `testParsesFrontmatter` - parses `3md`, `axis`, `title`, and an extra key, and
-  checks the extra key lands in `metadata`.
-- `testMissingFrontmatterThrows` - plain Markdown with no `---` block throws
-  `.missingFrontmatter`.
-- `testMissingVersionThrows` - frontmatter without a `3md` key throws
-  `.missingVersion`.
-- `testUnclosedFrontmatterThrows` - a `---` block that is never closed throws
-  `.invalidFrontmatter`.
-- `testAxisDefaultsToLayer` - omitting `axis` yields `Axis.layer`.
-- `testFrontmatterIgnoresCommentLines` - lines beginning with `#` inside the
-  frontmatter are skipped.
-- `testFrontmatterStripsQuotedValues` - a double-quoted `title` value has its
-  quotes stripped.
-- `testLeadingBlankLinesBeforeFrontmatter` - blank lines before the opening
-  `---` are tolerated.
-
-#### Planes, coordinates, and attributes
-
-- `testParsesMultiplePlanes` - two `@plane` directives produce two planes with
-  correct `z`, `label`, and trimmed bodies.
-- `testParsesPlaneCoordinatesAndAttributes` - parses decimal `z`, integer `x`,
-  negative `y`, and two extra attributes (`color`, quoted `note`).
-- `testNegativeZValue` - `z=-1` parses as `-1`.
-- `testDecimalZValue` - `z=0.5` parses as `0.5`.
-- `testPlaneBodyTrimsLeadingAndTrailingBlanks` - surrounding blank lines are
-  trimmed from a plane body.
-- `testReservedAttributeKeysNotInExtras` - `z`, `x`, `y`, and `label` are not
-  duplicated into the `attributes` dictionary; a non-reserved key is.
-
-#### Single-plane shorthand
-
-- `testPlainMarkdownBecomesSinglePlane` - frontmatter with no `@plane`
-  directives yields exactly one plane at `z=0` whose body is the whole content,
-  and a nil preamble.
-- `testEmptyDocumentProducesNoPlanes` - frontmatter with no body yields no
-  planes and a nil preamble.
-
-#### Preamble
-
-- `testPreambleBeforeFirstPlane` - Markdown before the first `@plane` is captured
-  as `document.preamble`, separate from the first plane's body.
-
-#### Error cases
-
-Each maps to one `ParseError` case from `SPEC.md` section 6:
-
-- `testMissingPlanePositionThrows` - `@plane` with no `z` throws
-  `.missingPlanePosition`.
-- `testNonNumericPositionThrows` - `z=soon` throws `.invalidPlaneDirective`.
-- `testNonNumericXThrows` - `x=left` throws `.invalidPlaneDirective`.
-- `testNonNumericYThrows` - `y=top` throws `.invalidPlaneDirective`.
-- `testDuplicatePositionThrows` - two planes at the same `z` throw
-  `.duplicatePlane(z:)`, checked with the exact value.
-- `testInvalidDirectiveTokenThrows` - a bare token with no `=` on a directive
-  throws `.invalidPlaneDirective`.
-- `testParseErrorDescriptions` - every `ParseError` case returns a non-nil
-  `errorDescription`.
-
-#### Lookups and sorting
-
-- `testPlanesByZAreSorted` - `document.planesByZ` returns planes ordered by
-  ascending `z` regardless of source order, and `plane(atZ:)` finds the right
-  body.
-- `testPlaneAtZReturnsNilForMissingPosition` - `plane(atZ:)` returns nil for a
-  `z` that is not present.
-
-#### CRLF normalization
-
-- `testWindowsLineEndingsNormalized` - a source using `\r\n` line endings parses
-  correctly, with the plane body recovered as `"body"`.
-
-#### Axis normalization
-
-- `testAxisRawValueNormalized` - `Axis(rawValue:)` trims whitespace and
-  lowercases, so `"  TIME  "` becomes `"time"`.
-- `testKnownAxesMatchSpec` - the five named axes (`time`, `depth`, `layer`,
-  `frame`, `space`) carry the raw values from the spec.
-
-#### Round-trip
-
-- `testRoundTripThroughSerializer` - parse, render, reparse, and assert the
-  reparsed `Document` equals the original (multi-plane with title and labels).
-- `testRoundTripWithMetadataAndAttributes` - extra frontmatter metadata (`fps`)
-  and a plane `label` survive a round trip; the body contains a fenced code
-  block.
-- `testRoundTripWithPreamble` - a document preamble survives a round trip.
-
-### Gaps and future test ideas
-
-The suite is behavior-focused and intentionally narrow. Known gaps:
-
-- **Property-based / fuzz parsing.** There is no randomized or generative
-  testing. A fuzzer that throws arbitrary byte sequences and arbitrary but
-  well-formed directives at `Parser.parse` would harden the lexer (`tokenize`,
-  `unquote`) and surface crashes or unexpected throws the inline fixtures miss.
-- **Performance on large documents.** There are no measurements. Documents with
-  many thousands of planes or very large bodies are untested; an XCTest
-  `measure` block or a benchmark would catch quadratic regressions in body
-  accumulation or sorting.
-- **Shared conformance vectors.** Tests assert against this implementation's
-  behavior, not against a portable suite of `.3md` input/expected-output
-  fixtures that other implementations could also run. Extracting such a vector
-  set would let the spec be validated independently of the Swift parser.
-- **Quote-escaping round trips.** `SPEC.md` section 7 scopes round-trip
-  guarantees to content that does not rely on quote escaping, and the serializer
-  does escape embedded double quotes, but no test round-trips a value containing
-  an embedded quote. That edge is currently unverified.
-- **Single-quoted directive values and mixed quoting.** The tokenizer accepts
-  single quotes, but the tests only exercise double-quoted attribute values.
-- **Codable round trips.** `Document`, `Plane`, and `Axis` are `Codable`, but no
-  test encodes and decodes them.
+Reviewer labels in SpecSync are stable claims, not authenticated identities.
+Actual peer review can be described as peer-agent evidence. It does not satisfy
+an independent human claim or an Attest trusted-signer policy by relabelling the
+agent as human or Claude. Unavailable provenance authority remains a reported
+limitation while the configured policy stays intact.

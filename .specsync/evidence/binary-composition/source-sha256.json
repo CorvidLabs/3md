@@ -1,0 +1,225 @@
+{
+  "files" : [
+    {
+      "bytes" : 111,
+      "path" : "Examples\/Extensions\/canopy.3md",
+      "sha256" : "3447bf19d65569e848f2681136c9fa765312d3dba358ee98e98baeaac1a6b4ae"
+    },
+    {
+      "bytes" : 151,
+      "path" : "Examples\/Extensions\/canopy.3mdb",
+      "sha256" : "8d96e13ae83b8bee2bd8254d75874189fde80f7fa56438cf791e86f4b61cc8ed"
+    },
+    {
+      "bytes" : 163,
+      "path" : "Examples\/Extensions\/canopy.lzfse.3mdb",
+      "sha256" : "5aefcb0352ec2ae70a49496bc3d842a40edd957061ff67f9b5c326ed8ec167f3"
+    },
+    {
+      "bytes" : 1195,
+      "path" : "Examples\/Extensions\/manifest.json",
+      "sha256" : "8e148de367b2429f7dc6b3fe5763858bdb516915f13f4e8c33e8843ef3789bcd"
+    },
+    {
+      "bytes" : 685,
+      "path" : "Examples\/Extensions\/shared-grove.3md",
+      "sha256" : "064ab2b6e48ff8c87a31307a5ac93b61e3fcff22571f7510f67f7ca870bb0fa6"
+    },
+    {
+      "bytes" : 725,
+      "path" : "Examples\/Extensions\/shared-grove.3mdb",
+      "sha256" : "74dfce55fcc332b4227ff195849e04c04efc633bd89aef517ecb1a78b9331f12"
+    },
+    {
+      "bytes" : 481,
+      "path" : "Examples\/Extensions\/shared-grove.lzfse.3mdb",
+      "sha256" : "54b03cfb8c3c829986bf0fca7442c48d6ce85c6b73abeb0d0df52e3befc5782f"
+    },
+    {
+      "bytes" : 923,
+      "path" : "Package.swift",
+      "sha256" : "97495f0dc10c2ce6369ac0556b17719eb619b6146622efb54ef370242cd43eab"
+    },
+    {
+      "bytes" : 21391,
+      "path" : "SPEC.md",
+      "sha256" : "5a26074c095572635a4e9a9a04b510bccff4075e85683e23155f6d651a73be86"
+    },
+    {
+      "bytes" : 10497,
+      "path" : "Sources\/CLI\/main.swift",
+      "sha256" : "ab28e61871e4d7ad42ad0e1b64660161217f0d5f4dc2cbd9c3697160e0a2f7bd"
+    },
+    {
+      "bytes" : 1596,
+      "path" : "Sources\/ThreeMD\/Axis.swift",
+      "sha256" : "2b2f7cd300a83ff29ae8e41b0047feb2a145dc5045975ba885ff649bc3e825ce"
+    },
+    {
+      "bytes" : 1711,
+      "path" : "Sources\/ThreeMD\/CrossPlaneLink.swift",
+      "sha256" : "3eb6b119775eb7165b5415e7c8ab071b305d8b8b3f2074e1d1c00ae77ba0f955"
+    },
+    {
+      "bytes" : 1301,
+      "path" : "Sources\/ThreeMD\/CrossPlaneLinkEdge.swift",
+      "sha256" : "afb1afa4d30d457fd5d2eb5c6e6ca829924629e27e752b633fcf0ea6287027dd"
+    },
+    {
+      "bytes" : 4789,
+      "path" : "Sources\/ThreeMD\/Document+Links.swift",
+      "sha256" : "ab85ffcced7061ceb6af19fd109e4d9ef146ed380517d864b6916f3097362734"
+    },
+    {
+      "bytes" : 2509,
+      "path" : "Sources\/ThreeMD\/Document.swift",
+      "sha256" : "2308433c7a8c82acbe49749cb23b7020807b5ee022b8e8b01726b38af59342e7"
+    },
+    {
+      "bytes" : 10340,
+      "path" : "Sources\/ThreeMD\/DocumentComposition.swift",
+      "sha256" : "e3772ca92f8bb886071510653a8d1cb3ebdc82780f368059437559921364d406"
+    },
+    {
+      "bytes" : 7003,
+      "path" : "Sources\/ThreeMD\/DocumentCompositionCodec.swift",
+      "sha256" : "246dc55a35d05847a04b510b0ae410cb0f4fecdf2697e6f6b42240a7651eb1c9"
+    },
+    {
+      "bytes" : 12498,
+      "path" : "Sources\/ThreeMD\/DocumentCompositionJSON.swift",
+      "sha256" : "7ce038bf1ab51f71a60a48e1dac535306c129fed8d4bf694e698aed7994beedd"
+    },
+    {
+      "bytes" : 6184,
+      "path" : "Sources\/ThreeMD\/DocumentCompositionLimits.swift",
+      "sha256" : "aa780deeabd1a910a739769155c1d8d319736d9a19d776d57eab716b31a136c7"
+    },
+    {
+      "bytes" : 7347,
+      "path" : "Sources\/ThreeMD\/DocumentStorage.swift",
+      "sha256" : "2c98adb876554937bbe743c3b6174725ee21890b116e4d1cdc10a00b456e1b92"
+    },
+    {
+      "bytes" : 7276,
+      "path" : "Sources\/ThreeMD\/DocumentStorageCodec.swift",
+      "sha256" : "0d056d3995db5c38f3e57ec9812ce2bd34832681dd7363001da43b263b24b4ac"
+    },
+    {
+      "bytes" : 5003,
+      "path" : "Sources\/ThreeMD\/DocumentStorageCompression.swift",
+      "sha256" : "02b9b7540473233bd6e8208ac21f59b19e6a7f2371c6fb74f3a480769f14802e"
+    },
+    {
+      "bytes" : 10459,
+      "path" : "Sources\/ThreeMD\/DocumentStorageValidation.swift",
+      "sha256" : "de5ea3cbfc0a26816f5f1eaa86d56b6d98df2446c2fb21ca47175f4b6d4fa319"
+    },
+    {
+      "bytes" : 522,
+      "path" : "Sources\/ThreeMD\/Double+ThreeMD.swift",
+      "sha256" : "30b70d217c1a27bc8a3277cb69ab0ce4cca48510ce3a7c880a222d814f61a96b"
+    },
+    {
+      "bytes" : 4432,
+      "path" : "Sources\/ThreeMD\/HTMLRenderer.swift",
+      "sha256" : "3c22081efd127ae604ffbde538915dad50eadc5dac04539b5730c583e4f0c5e4"
+    },
+    {
+      "bytes" : 23798,
+      "path" : "Sources\/ThreeMD\/MarkdownRenderer.swift",
+      "sha256" : "55aa619de6841ede744066c8076b4d30a14334715f847af3f0f062e4520340d0"
+    },
+    {
+      "bytes" : 2972,
+      "path" : "Sources\/ThreeMD\/ParseError.swift",
+      "sha256" : "b200c24afc62a2ca857246a328e79515c417e7ced5ab612750dea7cda165db97"
+    },
+    {
+      "bytes" : 13578,
+      "path" : "Sources\/ThreeMD\/Parser.swift",
+      "sha256" : "35058f365df32558e0919a91561abb69d57e8ca6f4da6dfe326971fc7653f49c"
+    },
+    {
+      "bytes" : 1911,
+      "path" : "Sources\/ThreeMD\/Plane.swift",
+      "sha256" : "a275e4844e7fa062ba2210441bef3e8ed971134e2ea53eecd1d97b279ba75f21"
+    },
+    {
+      "bytes" : 3016,
+      "path" : "Sources\/ThreeMD\/Serializer.swift",
+      "sha256" : "9f912e4a0f35c362c33ba2f36c812a40fc986cc75c4fa0b5eb463465b761823b"
+    },
+    {
+      "bytes" : 926,
+      "path" : "Sources\/ThreeMD\/ThreeMDAnchor.swift",
+      "sha256" : "e959b0487b490cc6592ef2b834e90f88395f4bf21ed54828e2a2c3722e0bb610"
+    },
+    {
+      "bytes" : 5709,
+      "path" : "Tests\/ThreeMDTests\/ConformanceTests.swift",
+      "sha256" : "e1f8345a4ebd56428834c20bd78eb6b059930566c0e07fc746b47b497a01e29e"
+    },
+    {
+      "bytes" : 6573,
+      "path" : "Tests\/ThreeMDTests\/CrossPlaneLinkHTMLTests.swift",
+      "sha256" : "2e4876d672a2112483aac8d05b28a3f803dd136b91a6563fe6526e6d509a05c4"
+    },
+    {
+      "bytes" : 8587,
+      "path" : "Tests\/ThreeMDTests\/CrossPlaneLinkTests.swift",
+      "sha256" : "ee9ba8e83b1257159ed5f06e4500a1c6618db666737c4d0496dd0c28b7950549"
+    },
+    {
+      "bytes" : 12139,
+      "path" : "Tests\/ThreeMDTests\/DocumentCompositionCodecTests.swift",
+      "sha256" : "2515b2fb36afa067dbb845ce5f30f9303564c34963d15001280499bd05194975"
+    },
+    {
+      "bytes" : 12866,
+      "path" : "Tests\/ThreeMDTests\/DocumentCompositionTests.swift",
+      "sha256" : "78e8366f9c0f0bd540d021473fde07f1955015fde7b6eb34c30eefcfeb23ec4f"
+    },
+    {
+      "bytes" : 9200,
+      "path" : "Tests\/ThreeMDTests\/DocumentStorageBoundsTests.swift",
+      "sha256" : "65db4829420533613d7791e9ad8f26e79a0319886e1d7acd1d47379897ac733a"
+    },
+    {
+      "bytes" : 7390,
+      "path" : "Tests\/ThreeMDTests\/DocumentStorageCompressionTests.swift",
+      "sha256" : "ec6d12e8cf442fdff28f8f9434b4107adc52ec00952b593139fc1ab17ce23362"
+    },
+    {
+      "bytes" : 14504,
+      "path" : "Tests\/ThreeMDTests\/DocumentStorageTests.swift",
+      "sha256" : "811c00477b1bce643cded7aa2a454875e99ec228cbedfc636cb34402f1e5249f"
+    },
+    {
+      "bytes" : 7426,
+      "path" : "Tests\/ThreeMDTests\/HTMLRendererTests.swift",
+      "sha256" : "f8349f3d6aba96fac430ad03d035060123170c9265eb721e907fe5d53e41022d"
+    },
+    {
+      "bytes" : 8896,
+      "path" : "Tests\/ThreeMDTests\/MarkdownRendererTests.swift",
+      "sha256" : "837dd57237f2b24dd4bc9d56f3dc8d20dee00c424b2d12be5b022edfe3e1975e"
+    },
+    {
+      "bytes" : 888,
+      "path" : "Tests\/ThreeMDTests\/ParseErrorMetadataTests.swift",
+      "sha256" : "7bc3af503e42fd99427b3c233b4efda47b2f5216985df5a3a7b389c3ac05fcba"
+    },
+    {
+      "bytes" : 13084,
+      "path" : "Tests\/ThreeMDTests\/ParserTests.swift",
+      "sha256" : "a51c22360464b1e7faddb9aecec5ef445e97a830853a17f6e026fe9ad6fc437d"
+    },
+    {
+      "bytes" : 15481,
+      "path" : "specs\/ThreeMD\/ThreeMD.spec.md",
+      "sha256" : "bb67b1f07d647025ca3743ca38b75c8768cc69ecd1433a1f5e7e95cc28b62ecb"
+    }
+  ],
+  "implementationCommit" : "0e9f81ab6c8c104f3f2856f8b9760fd520a05f5b"
+}
