@@ -19,13 +19,17 @@ each copy. Shipping the renderer as one component fixes that at the root.
 
 ## Install
 
-Published to GitHub Packages. Point the `@corvidlabs` scope at the GitHub
-registry once (in a project or user `.npmrc`), then install:
+The current repository publication workflow targets public npm. Install an
+available published version with:
 
 ```bash
-echo "@corvidlabs:registry=https://npm.pkg.github.com" >> .npmrc
 bun add @corvidlabs/three-md-element
 ```
+
+The prepared package version is 2.0.0; this metadata does not claim publication.
+An older `@corvidlabs` scope mapped to GitHub Packages must be changed when
+adopting a release published to npm. The element remains a text renderer, with
+no binary-file or composition editor. See the [release guide](../docs/RELEASE-2.0.0.md).
 
 The published package is a single self-contained module (the parser is bundled
 in, no other dependency), so you can also vendor `dist/three-md.js` and load it

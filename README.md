@@ -50,13 +50,14 @@ cross-platform Swift parser; a TypeScript port in [`js/`](js); and a Rust crate
 in [`rust/`](rust)), and a shared cross-implementation conformance suite
 ([conformance/](conformance)) that all three pass.
 
-The next unreleased preparation also adds general `.3mdb` storage, self-contained
+The prepared 2.0.0 library adds general `.3mdb` storage, self-contained
 document composition, stable optional identities, atomic revision-checked edits
 and structured diagnostics in Swift, TypeScript and Rust. The uncompressed
 container and shared extension fixtures are portable. LZFSE is available only
 through Swift's conditional Apple backend; the ports return an explicit
 unsupported-backend error. These library APIs perform no file or network I/O.
-See the [capability matrix and release boundaries](docs/EDITING-RELEASE.md).
+No 2.0.0 release is claimed yet. See the [release preparation and migration
+guide](docs/RELEASE-2.0.0.md) and [editing capability matrix](docs/EDITING-RELEASE.md).
 
 Cross-language file interchange is verified by a development gate: each Swift,
 TypeScript and Rust writer feeds every reader, for all nine pairings. It checks
@@ -78,7 +79,7 @@ text a depth dimension of its own.
 
 ### Swift Package Manager
 
-Add the package to your `Package.swift`:
+For the existing 1.x package line, add the package to your `Package.swift`:
 
 ```swift
 .package(url: "https://github.com/CorvidLabs/3md", from: "1.0.0")
@@ -90,22 +91,27 @@ Then depend on the `ThreeMD` library product:
 .product(name: "ThreeMD", package: "3md")
 ```
 
+The prepared 2.0.0 APIs require a separately published `v2.0.0` tag before
+using `from: "2.0.0"`. Source-checkout testing does not publish that tag.
+
 ### JavaScript / TypeScript
 
-A faithful TypeScript port of the Swift parser is published to GitHub Packages,
-alongside the [`<three-md>` web component](element/) (`@corvidlabs/three-md-element`).
+A TypeScript library lives in [`js/`](js), alongside the
+[`<three-md>` web component](element/) (`@corvidlabs/three-md-element`).
 All three implementations (Swift, TypeScript, and the Rust crate in [`rust/`](rust))
 are kept in sync by the shared conformance suite ([conformance/](conformance)).
 
-GitHub Packages requires a GitHub token to install (even for public packages),
-so point the `@corvidlabs` scope at the registry and add a token in a project or
-user `.npmrc`, then install:
+The current [publication workflow](.github/workflows/publish.yml) targets the
+public npm registry. Install an available published version with:
 
 ```bash
-echo "@corvidlabs:registry=https://npm.pkg.github.com" >> .npmrc
-echo "//npm.pkg.github.com/:_authToken=YOUR_GITHUB_TOKEN" >> .npmrc
 bun add @corvidlabs/threemd
 ```
+
+Prepared 2.0.0 metadata does not establish registry availability. If an older
+installation maps `@corvidlabs` to GitHub Packages, update that scope when
+adopting a release published to npm. The web component retains text rendering;
+the library exports the new storage, composition and editing APIs.
 
 No install needed just to use it: try the hosted [editor and
 viewer](https://corvidlabs.github.io/3md/viewer.html), or load the self-contained
@@ -125,12 +131,16 @@ const text = serialize(document);
 
 ### Rust
 
-The [`threemd`](https://crates.io/crates/threemd) crate is published on crates.io
-with zero runtime dependencies:
+The [`threemd`](https://crates.io/crates/threemd) crate's publication workflow
+targets crates.io. Install an available published version with:
 
 ```bash
 cargo add threemd
 ```
+
+The prepared 2.0.0 crate pins `unicode-normalization =0.1.25` as its runtime
+dependency. Its serde/serde_json dependencies are development-only. Release
+metadata here does not establish that 2.0.0 is available on crates.io.
 
 ```rust
 let document = threemd::parse(source)?;
@@ -139,12 +149,12 @@ println!("{}", document.axis); // "time"
 
 ## Library usage
 
-Unreleased editing preparation adds optional stable plane/reference identities,
+Prepared 2.0.0 adds optional stable plane/reference identities,
 immutable revision-checked document/composition patches and structured
-diagnostics above the existing parser. These APIs are Swift-first additions;
-existing TypeScript/Rust text conformance does not imply support for the new
-binary, composition or editing APIs. See the [release scope and capability
-matrix](docs/EDITING-RELEASE.md). Existing releases do not contain these APIs.
+diagnostics above the existing parser in Swift, TypeScript and Rust. General
+uncompressed binary and composition APIs are implemented in all three. See the
+[release scope and capability matrix](docs/EDITING-RELEASE.md). Existing
+published releases do not contain these prepared APIs.
 
 ```swift
 import ThreeMD

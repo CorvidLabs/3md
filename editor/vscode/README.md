@@ -22,11 +22,15 @@ or a language server.
 
 ## Install from a `.vsix`
 
-Build the package (see below) or grab a prebuilt `.vsix`, then:
+Build the prepared 2.0.0 package (see below), then:
 
 ```sh
-code --install-extension threemd-0.1.0.vsix
+code --install-extension threemd-2.0.0.vsix
 ```
+
+This version alignment does not add binary/composition editing, a preview or a
+language server. No Marketplace publication or prebuilt 2.0.0 VSIX is claimed.
+See the [release guide](../../docs/RELEASE-2.0.0.md).
 
 ## Development
 

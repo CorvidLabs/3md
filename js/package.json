@@ -1,7 +1,7 @@
 {
   "name": "@corvidlabs/threemd",
-  "version": "1.0.0",
-  "description": "Parser and serializer for the 3md format: Markdown with a Z axis.",
+  "version": "2.0.0",
+  "description": "3md parsing, portable binary storage, composition and transactional editing: Markdown with a Z axis.",
   "type": "module",
   "license": "MIT",
   "keywords": ["3md", "markdown", "parser", "serializer", "z-axis", "file-format", "corvidlabs"],
