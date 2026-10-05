@@ -112,3 +112,16 @@ That receipt is PR61's historical Swift-first implementation. Portable follow-up
 Actual scoped agent review passed after reproducing Unicode key equivalence/order, NaN diagnostic classification, forged TypeScript policy objects, large-number canonical formatting and quadratic whitespace trimming; the ports carry focused regressions. Trust passed with the unchanged soft provenance degradation, not a permitted signature or independent human approval. Only the derived web bundle is refreshed with unchanged element source and the existing drift gate. Its parser helper retains behavior with bounded linear trimming, and new root exports change deterministic minifier allocation. Element/dist is untouched. This does not add a hosted binary/composition editor.
 
 A separate deterministic probe compares 100,000 finite IEEE754 samples from Swift with each port's actual storage output; both repaired writers have zero mismatches. This is additional sampled evidence, not exhaustive proof over all floating-point values. The TypeScript whitespace probe uses nine-sample medians: bounded decoding is 0.076 ms at 4,000 spaces, 0.142 ms at 16,000 and 6.510 ms at 1,000,000. Those local measurements qualify the regression repair, not a runtime latency guarantee. Semantic tests separately preserve interior spaces/tabs and verify text/binary round trips.
+
+The interchange follow-up's complete pinned Trust lane passed at source
+`55efdaab7efd2a12e78f3602af35c7e7b08322c0`: 244 Swift tests, 141 TypeScript
+tests, 31 Rust tests and three doctests, required package typechecking/build,
+bundle drift and editor grammar. Its 426-case public-API matrix passes all nine
+producer/consumer pairs with 16,983 imported outputs. The final catalog guard at
+`6b6be79eeda12b7ff20b5a06b2c2470a94de0eee` also passes that matrix and the
+bounded protocol/watchdog regressions. Three actual agent reviews found and
+closed scalar Unicode, exact-key comparison and supervision defects. Reviewers
+state their implementation/fixture authorship and complementary peer coverage;
+these are technical agent records, not human approval or permitted signatures.
+The new scope's official verification, finalization and publication retain their
+own exact commit records. Historical receipts remain unchanged.
