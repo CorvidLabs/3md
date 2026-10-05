@@ -1,0 +1,36 @@
+---
+3md: "0.1"
+axis: "layer"
+profile: "3md-composition-1"
+---
+
+@plane z=0 label="Composition"
+```json
+{
+  "entries": [
+    {
+      "id": "leaf",
+      "references": [],
+      "source": "---\n3md: \"0.1\"\naxis: \"layer\"\ntitle: \"Leaf 🍃\"\n---\n\n@plane z=0 3md-id=\"leaf-plane\" id=\"opaque-leaf\"\nLeaf body: café.\n"
+    },
+    {
+      "id": "other",
+      "references": [
+        {"attributes": {"3md-id": "left", "id": "opaque-other-instance"}, "targetID": "leaf"}
+      ],
+      "source": "---\n3md: \"1.0\"\naxis: \"time\"\nnote: \"Reusable\"\n---\n\n@plane z=2 3md-id=\"other-plane\"\nOther definition.\n"
+    },
+    {
+      "id": "root",
+      "references": [
+        {"attributes": {"3md-id": "left", "binding": "A", "id": "opaque-instance"}, "targetID": "leaf"},
+        {"attributes": {"3md-id": "right", "binding": "B", "rotation": "90°"}, "targetID": "leaf"},
+        {"attributes": {"3md-id": "nested", "binding": "C"}, "targetID": "other"}
+      ],
+      "source": "---\n3md: \"1.0\"\naxis: \"layer\"\ntitle: \"Glass café 🐦\"\nStudio: \"Corvid 🐦\"\nescaped: \"quote \\\" slash \\\\\"\nopaque: \"001\"\n---\n\n# Workspace\nUnicode: café / café.\n\n@plane z=-2 label=\"Main 🧊\" x=1e-07 y=-0.5 3md-id=\"plane-main\" id=\"opaque-main\" material=\"teal 🟦\"\n# Main\nShared snowman ☃ and a link [[z=1e-6|Next]].\n\n@plane z=1e-06 label=\"Next\" x=1000000000000000.0 y=1e+20 3md-id=\"plane-next\" data=\"002\" id=\"ordinary-id\"\n## Next\nQuoted \"text\" and path \\model.\n"
+    }
+  ],
+  "rootID": "root",
+  "schema": "3md-composition-1"
+}
+```

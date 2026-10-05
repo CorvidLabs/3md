@@ -50,6 +50,14 @@ cross-platform Swift parser; a TypeScript port in [`js/`](js); and a Rust crate
 in [`rust/`](rust)), and a shared cross-implementation conformance suite
 ([conformance/](conformance)) that all three pass.
 
+The next unreleased preparation also adds general `.3mdb` storage, self-contained
+document composition, stable optional identities, atomic revision-checked edits
+and structured diagnostics in Swift, TypeScript and Rust. The uncompressed
+container and shared extension fixtures are portable. LZFSE is available only
+through Swift's conditional Apple backend; the ports return an explicit
+unsupported-backend error. These library APIs perform no file or network I/O.
+See the [capability matrix and release boundaries](docs/EDITING-RELEASE.md).
+
 ## Why
 
 Markdown is two dimensional. Plenty of documents are not: a planner moves

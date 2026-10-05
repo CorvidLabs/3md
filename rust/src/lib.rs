@@ -21,6 +21,28 @@
 
 use std::collections::BTreeMap;
 
+pub mod composition;
+pub mod diagnostics;
+pub mod editing;
+pub mod storage;
+
+pub use composition::{
+    DocumentComposition, DocumentCompositionError, DocumentCompositionLimits, DocumentEntry,
+    DocumentReference,
+};
+pub use diagnostics::{
+    DiagnosticCode, DiagnosticSeverity, DocumentDiagnostic, DocumentDiagnosticReport,
+    DocumentEditError,
+};
+pub use editing::{
+    CompositionEdit, CompositionPatch, DocumentCompositionSnapshot, DocumentEdit,
+    DocumentEditLimits, DocumentHeader, DocumentPatch, DocumentRevision, DocumentSnapshot,
+};
+pub use storage::{
+    CancellationToken, DocumentCompression, DocumentDecodeLimits, DocumentStorageError,
+    DocumentStorageFormat, OperationOptions,
+};
+
 // MARK: - Types
 
 /// Normalizes a raw axis identifier the way the Swift `Axis` type does: leading

@@ -1,0 +1,35 @@
+{
+  "compression" : "none",
+  "editingVectors" : "editing-vectors.json",
+  "fixtures" : [
+    {
+      "binaryBytes" : 505,
+      "binaryFile" : "document-unicode.3mdb",
+      "expectedFile" : "document-unicode.json",
+      "kind" : "document",
+      "name" : "document-unicode",
+      "sourceBytes" : 465,
+      "sourceFile" : "document-unicode.3md"
+    },
+    {
+      "binaryBytes" : 1618,
+      "binaryFile" : "composition-instances.3mdb",
+      "expectedFile" : "composition-instances.json",
+      "kind" : "composition",
+      "name" : "composition-instances",
+      "sourceBytes" : 1578,
+      "sourceFile" : "composition-instances.3md"
+    }
+  ],
+  "numericVectors" : "numeric-vectors.json",
+  "schema" : "3md-extension-fixtures-1",
+  "unicodeFixtures" : {
+    "compositionDuplicateError" : "invalidProfile",
+    "compositionDuplicateFile" : "unicode-composition-duplicate.3md",
+    "documentBinaryFile" : "unicode-key-order.3mdb",
+    "documentExpectedFile" : "unicode-key-order.json",
+    "documentSourceFile" : "unicode-key-order.3md",
+    "sourceCollisionExpectedFile" : "unicode-source-collision.json",
+    "sourceCollisionFile" : "unicode-source-collision.3md"
+  }
+}

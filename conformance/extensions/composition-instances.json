@@ -1,0 +1,122 @@
+{
+  "entries" : [
+    {
+      "document" : {
+        "axis" : "layer",
+        "metadata" : {
+
+        },
+        "planes" : [
+          {
+            "attributes" : {
+              "3md-id" : "leaf-plane",
+              "id" : "opaque-leaf"
+            },
+            "body" : "Leaf body: café.",
+            "z" : 0
+          }
+        ],
+        "title" : "Leaf 🍃",
+        "version" : "0.1"
+      },
+      "id" : "leaf",
+      "references" : [
+
+      ]
+    },
+    {
+      "document" : {
+        "axis" : "time",
+        "metadata" : {
+          "note" : "Reusable"
+        },
+        "planes" : [
+          {
+            "attributes" : {
+              "3md-id" : "other-plane"
+            },
+            "body" : "Other definition.",
+            "z" : 2
+          }
+        ],
+        "version" : "1.0"
+      },
+      "id" : "other",
+      "references" : [
+        {
+          "attributes" : {
+            "3md-id" : "left",
+            "id" : "opaque-other-instance"
+          },
+          "targetID" : "leaf"
+        }
+      ]
+    },
+    {
+      "document" : {
+        "axis" : "layer",
+        "metadata" : {
+          "Studio" : "Corvid 🐦",
+          "escaped" : "quote \" slash \\",
+          "opaque" : "001"
+        },
+        "planes" : [
+          {
+            "attributes" : {
+              "3md-id" : "plane-main",
+              "id" : "opaque-main",
+              "material" : "teal 🟦"
+            },
+            "body" : "# Main\nShared snowman ☃ and a link [[z=1e-6|Next]].",
+            "label" : "Main 🧊",
+            "x" : 1e-07,
+            "y" : -0.5,
+            "z" : -2
+          },
+          {
+            "attributes" : {
+              "3md-id" : "plane-next",
+              "data" : "002",
+              "id" : "ordinary-id"
+            },
+            "body" : "## Next\nQuoted \"text\" and path \\model.",
+            "label" : "Next",
+            "x" : 1000000000000000,
+            "y" : 1e+20,
+            "z" : 1e-06
+          }
+        ],
+        "preamble" : "# Workspace\nUnicode: café / café.",
+        "title" : "Glass café 🐦",
+        "version" : "1.0"
+      },
+      "id" : "root",
+      "references" : [
+        {
+          "attributes" : {
+            "3md-id" : "left",
+            "binding" : "A",
+            "id" : "opaque-instance"
+          },
+          "targetID" : "leaf"
+        },
+        {
+          "attributes" : {
+            "3md-id" : "right",
+            "binding" : "B",
+            "rotation" : "90°"
+          },
+          "targetID" : "leaf"
+        },
+        {
+          "attributes" : {
+            "3md-id" : "nested",
+            "binding" : "C"
+          },
+          "targetID" : "other"
+        }
+      ]
+    }
+  ],
+  "rootID" : "root"
+}

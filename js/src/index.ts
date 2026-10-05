@@ -9,6 +9,8 @@
 // exactly, including its error behavior. The cross-language conformance vectors
 // in conformance/ pin that behavior down.
 
+import { trimASCIIWhitespace } from "./portable.js";
+
 // MARK: - Types
 
 /**
@@ -145,7 +147,7 @@ const RESERVED_PLANE_KEYS: ReadonlySet<string> = new Set(["z", "x", "y", "label"
  * already split on newlines, so only horizontal whitespace is relevant.
  */
 function trimWhitespace(value: string): string {
-  return value.replace(/^[ \t]+/, "").replace(/[ \t]+$/, "");
+  return trimASCIIWhitespace(value);
 }
 
 /**
@@ -807,3 +809,19 @@ export function serialize(document: Document): string {
 
   return lines.join("\n") + "\n";
 }
+
+// Optional portable layers. The frozen text parser and serializer above remain unchanged.
+export {
+  DocumentCompression, DocumentDecodeLimits, DocumentStorageCodec, DocumentStorageError, DocumentStorageFormat,
+  type DocumentStorageErrorCode,
+} from "./storage.js";
+export {
+  DocumentComposition, DocumentCompositionCodec, DocumentCompositionError, DocumentCompositionLimits,
+  type DocumentCompositionErrorCode, type DocumentEntry, type DocumentReference,
+} from "./composition.js";
+export {
+  CompositionEditor, DocumentCompositionSnapshot, DocumentDiagnostics, DocumentEditError, DocumentEditLimits,
+  DocumentEditor, DocumentIdentity, DocumentRevision, DocumentSnapshot, stableID,
+  type CompositionEdit, type CompositionPatch, type DocumentDiagnostic, type DocumentDiagnosticCode,
+  type DocumentDiagnosticReport, type DocumentEdit, type DocumentHeader, type DocumentPatch,
+} from "./editing.js";

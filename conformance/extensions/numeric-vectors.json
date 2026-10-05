@@ -1,0 +1,230 @@
+{
+  "schema" : "3md-canonical-numbers-1",
+  "vectors" : [
+    {
+      "bitPattern" : "0000000000000000",
+      "formatted" : "0",
+      "name" : "zero"
+    },
+    {
+      "bitPattern" : "8000000000000000",
+      "formatted" : "0",
+      "name" : "negative-zero"
+    },
+    {
+      "bitPattern" : "3ff0000000000000",
+      "formatted" : "1",
+      "name" : "one"
+    },
+    {
+      "bitPattern" : "c045000000000000",
+      "formatted" : "-42",
+      "name" : "negative-integer"
+    },
+    {
+      "bitPattern" : "3fb999999999999a",
+      "formatted" : "0.1",
+      "name" : "fraction-0.1"
+    },
+    {
+      "bitPattern" : "3fb999999999999b",
+      "formatted" : "0.10000000000000002",
+      "name" : "fraction-0.1-next-up"
+    },
+    {
+      "bitPattern" : "3eb0c6f7a0b5ed8d",
+      "formatted" : "1e-06",
+      "name" : "fraction-1e-6"
+    },
+    {
+      "bitPattern" : "3e7ad7f29abcaf48",
+      "formatted" : "1e-07",
+      "name" : "fraction-1e-7"
+    },
+    {
+      "bitPattern" : "be7ad7f29abcaf48",
+      "formatted" : "-1e-07",
+      "name" : "negative-fraction-1e-7"
+    },
+    {
+      "bitPattern" : "42d6bcc41e900000",
+      "formatted" : "100000000000000",
+      "name" : "integer-1e14"
+    },
+    {
+      "bitPattern" : "430c6bf526340000",
+      "formatted" : "1000000000000000.0",
+      "name" : "integer-1e15"
+    },
+    {
+      "bitPattern" : "4341c37937e08000",
+      "formatted" : "1e+16",
+      "name" : "integer-1e16"
+    },
+    {
+      "bitPattern" : "4415af1d78b58c40",
+      "formatted" : "1e+20",
+      "name" : "integer-1e20"
+    },
+    {
+      "bitPattern" : "444b1ae4d6e2ef50",
+      "formatted" : "1e+21",
+      "name" : "integer-1e21"
+    },
+    {
+      "bitPattern" : "c44b1ae4d6e2ef50",
+      "formatted" : "-1e+21",
+      "name" : "negative-integer-1e21"
+    },
+    {
+      "bitPattern" : "430c6bf52633ffff",
+      "formatted" : "999999999999999.9",
+      "name" : "integer-threshold-next-down"
+    },
+    {
+      "bitPattern" : "430c6bf526340001",
+      "formatted" : "1000000000000000.1",
+      "name" : "integer-threshold-next-up"
+    },
+    {
+      "bitPattern" : "2b2bff2ee48e0530",
+      "formatted" : "1e-100",
+      "name" : "tiny-1e-100"
+    },
+    {
+      "bitPattern" : "000730d67819e8d2",
+      "formatted" : "1e-308",
+      "name" : "tiny-1e-308"
+    },
+    {
+      "bitPattern" : "0010000000000000",
+      "formatted" : "2.2250738585072014e-308",
+      "name" : "least-normal"
+    },
+    {
+      "bitPattern" : "0000000000000001",
+      "formatted" : "5e-324",
+      "name" : "least-subnormal"
+    },
+    {
+      "bitPattern" : "8000000000000001",
+      "formatted" : "-5e-324",
+      "name" : "negative-least-subnormal"
+    },
+    {
+      "bitPattern" : "000fffffffffffff",
+      "formatted" : "2.225073858507201e-308",
+      "name" : "greatest-subnormal"
+    },
+    {
+      "bitPattern" : "7fefffffffffffff",
+      "formatted" : "1.7976931348623157e+308",
+      "name" : "greatest-finite"
+    },
+    {
+      "bitPattern" : "ffefffffffffffff",
+      "formatted" : "-1.7976931348623157e+308",
+      "name" : "negative-greatest-finite"
+    },
+    {
+      "bitPattern" : "be2bead3593f1cb2",
+      "formatted" : "-3.25e-09",
+      "name" : "negative-exponent-padding"
+    },
+    {
+      "bitPattern" : "41e836e210000000",
+      "formatted" : "3250000000",
+      "name" : "positive-exponent-padding"
+    },
+    {
+      "bitPattern" : "42dc12218377de60",
+      "formatted" : "123456789012345.5",
+      "name" : "fraction-high-precision"
+    },
+    {
+      "bitPattern" : "3ff0000000000001",
+      "formatted" : "1.0000000000000002",
+      "name" : "next-after-one"
+    },
+    {
+      "bitPattern" : "433fffffffffffff",
+      "formatted" : "9007199254740991.0",
+      "name" : "safe-integer-threshold-next-down"
+    },
+    {
+      "bitPattern" : "4340000000000000",
+      "formatted" : "9007199254740992.0",
+      "name" : "safe-integer-threshold"
+    },
+    {
+      "bitPattern" : "4340000000000001",
+      "formatted" : "9.007199254740994e+15",
+      "name" : "safe-integer-threshold-next-up"
+    },
+    {
+      "bitPattern" : "c340000000000001",
+      "formatted" : "-9.007199254740994e+15",
+      "name" : "negative-safe-integer-threshold-next-down"
+    },
+    {
+      "bitPattern" : "c340000000000000",
+      "formatted" : "-9007199254740992.0",
+      "name" : "negative-safe-integer-threshold"
+    },
+    {
+      "bitPattern" : "c33fffffffffffff",
+      "formatted" : "-9007199254740991.0",
+      "name" : "negative-safe-integer-threshold-next-up"
+    },
+    {
+      "bitPattern" : "4341c37937e07fff",
+      "formatted" : "9.999999999999998e+15",
+      "name" : "integer-1e16-next-down"
+    },
+    {
+      "bitPattern" : "4341c37937e08001",
+      "formatted" : "1.0000000000000002e+16",
+      "name" : "integer-1e16-next-up"
+    },
+    {
+      "bitPattern" : "c341c37937e08000",
+      "formatted" : "-1e+16",
+      "name" : "negative-integer-1e16"
+    },
+    {
+      "bitPattern" : "c341c37937e08001",
+      "formatted" : "-1.0000000000000002e+16",
+      "name" : "negative-integer-1e16-next-down"
+    },
+    {
+      "bitPattern" : "c341c37937e07fff",
+      "formatted" : "-9.999999999999998e+15",
+      "name" : "negative-integer-1e16-next-up"
+    },
+    {
+      "bitPattern" : "43416d53a3924758",
+      "formatted" : "9.810561196134064e+15",
+      "name" : "safe-integer-exponent-sample"
+    },
+    {
+      "bitPattern" : "c3416d53a3924758",
+      "formatted" : "-9.810561196134064e+15",
+      "name" : "negative-safe-integer-exponent-sample"
+    },
+    {
+      "bitPattern" : "c30345dafa96cd52",
+      "formatted" : "-678103920859562.2",
+      "name" : "negative-decimal-tie-one-digit"
+    },
+    {
+      "bitPattern" : "42efbda3f10a8034",
+      "formatted" : "279194878104577.62",
+      "name" : "decimal-tie-two-digits"
+    },
+    {
+      "bitPattern" : "430d57798162e67a",
+      "formatted" : "1032369212251343.2",
+      "name" : "decimal-tie-large-one-digit"
+    }
+  ]
+}

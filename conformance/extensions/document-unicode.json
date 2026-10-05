@@ -1,0 +1,37 @@
+{
+  "axis" : "layer",
+  "metadata" : {
+    "Studio" : "Corvid 🐦",
+    "escaped" : "quote \" slash \\",
+    "opaque" : "001"
+  },
+  "planes" : [
+    {
+      "attributes" : {
+        "3md-id" : "plane-main",
+        "id" : "opaque-main",
+        "material" : "teal 🟦"
+      },
+      "body" : "# Main\nShared snowman ☃ and a link [[z=1e-6|Next]].",
+      "label" : "Main 🧊",
+      "x" : 1e-07,
+      "y" : -0.5,
+      "z" : -2
+    },
+    {
+      "attributes" : {
+        "3md-id" : "plane-next",
+        "data" : "002",
+        "id" : "ordinary-id"
+      },
+      "body" : "## Next\nQuoted \"text\" and path \\model.",
+      "label" : "Next",
+      "x" : 1000000000000000,
+      "y" : 1e+20,
+      "z" : 1e-06
+    }
+  ],
+  "preamble" : "# Workspace\nUnicode: café / café.",
+  "title" : "Glass café 🐦",
+  "version" : "1.0"
+}

@@ -6,19 +6,23 @@ Status: unreleased feature preparation. Leif will merge the prepared PRs. No tag
 
 The proposed next compatible library release is 1.9.0, subject to the final API compatibility audit. The package version, frozen 1.0 text grammar, binary container version and composition profile version are separate contracts. Existing documents and source APIs stay supported.
 
-The release combines the binary/composition foundation in PR58 with additive stable identities, typed document/composition patches and structured diagnostics. The editing PR is stacked on PR58 and should follow it in the merge order. PR60's historical evidence repair is an independent documentation/lifecycle change. Existing archive records are preserved.
+The release combines the landed binary/composition foundation in PR58 with additive stable identities, typed document/composition patches and structured diagnostics in PR61, plus portable TypeScript and Rust implementations in its follow-up. PR58 and PR60 have landed. PR61 was reconciled against main with passing GitHub checks. The portable follow-up is stacked on PR61 and must be reconciled and verified after it lands. Existing archive records are preserved.
 
 ## Capability matrix
 
 | Capability | Swift | TypeScript | Rust |
 | --- | --- | --- | --- |
 | Existing 1.0 text parsing and serialization | Existing shared conformance | Existing shared conformance | Existing shared conformance |
-| General uncompressed binary container | PR58, unreleased | Not implemented | Not implemented |
-| Apple LZFSE binary compression | PR58, conditional Apple backend | Not implemented | Not implemented |
-| Self-contained composition graph/codec | PR58, unreleased | Not implemented | Not implemented |
-| Identity-aware snapshots, patches and diagnostics | This preparation, unreleased | Not implemented | Not implemented |
+| General uncompressed binary container | Landed PR58, unreleased | Portable follow-up, unreleased | Portable follow-up, unreleased |
+| Apple LZFSE binary compression | Conditional Apple backend | Explicit compressionUnavailable | Explicit compressionUnavailable |
+| Self-contained composition graph/codec | Landed PR58, unreleased | Portable follow-up, unreleased | Portable follow-up, unreleased |
+| Identity-aware snapshots, patches and diagnostics | PR61, unreleased | Portable follow-up, unreleased | Portable follow-up, unreleased |
 
-Uncompressed storage is the portable baseline. Unsupported compression is an explicit failure. Text compatibility tests for the other readers do not establish binary, composition or editing feature parity. The existing JavaScript/Rust checks remain in the complete verification lane; authored implementation for this slice is Swift only.
+Uncompressed storage is the portable baseline. Unsupported compression is an explicit failure. Shared extension fixtures independently check exact canonical document/profile/envelope bytes, finite-number formatting, Unicode key ordering, identity adoption, revision guards, atomic edits and diagnostic codes/paths in all three libraries. These are separate from the unchanged legacy parser vectors. Leif explicitly authorized TypeScript and Rust implementation in this follow-up; Sculpt remains Swift-only.
+
+TypeScript copies and freezes snapshot values and accepts an optional AbortSignal. Rust snapshots and compositions expose immutable accessors; operations take explicit OperationOptions with an optional cloneable CancellationToken. Swift continues its task cancellation checks where concurrency is available. Cancellation is cooperative during bounded work and never yields a partial published result.
+
+New canonical storage uses Swift-compatible finite-number spelling and NFC scalar key comparison while preserving original key spelling. Text decoding retains the first spelling and last assigned value of canonically equivalent metadata/attribute keys. Strict composition JSON rejects equivalent duplicate keys. Rust direct BTreeMap values containing equivalent distinct spellings are ambiguous without insertion history and are rejected; use the bounded decoder or supply NFC-unique keys. Rust pins unicode-normalization 0.1.25 for this comparison. Public port parse/serialize bodies and their text behavior remain unchanged. A private TypeScript whitespace helper is made linear after review reproduced quadratic work on otherwise valid bounded input.
 
 ## Stable identities
 
@@ -61,6 +65,20 @@ let updated = try DocumentEditor.apply(patch, to: snapshot)
 
 The example assumes the Ideas plane already carries `3md-id="ideas"`. Adoption of an unnamed plane assigns a deterministic `plane-N` ID instead of deriving identity from its label.
 
+The TypeScript root exports the analogous classes, using `Uint8Array` for storage and `kind` for typed operations:
+
+```typescript
+const bytes = DocumentStorageCodec.encode(document,
+  DocumentStorageFormat.binary(DocumentCompression.None));
+const snapshot = new DocumentSnapshot(DocumentIdentity.adopt(document));
+const updated = DocumentEditor.apply({
+  expectedRevision: snapshot.revision,
+  operations: [{ kind: "move", id: "ideas", to: 0 }],
+}, snapshot);
+```
+
+Rust exposes `storage`, `composition`, `editing` and `diagnostics` modules. `storage::encode/decode` take explicit policies and `OperationOptions`; `editing::adopt_document`, `DocumentSnapshot::new` and `editing::apply_document_patch` provide the same staged workflow. Snapshots expose `document()/composition()/revision()` accessors. Rust `from_parts` and TypeScript `fromJSON` reject altered source/revision pairs. Typed transport helpers do not replace a bounded untrusted-wire reader: hosts limit input bytes before generic JSON decoding.
+
 ## Sculpt integration boundary
 
 Sculpt's shared-model editing uses its existing validated sculpture/reference values and ThreeMD 1.8.1 until a separately verified upstream version is published. Its current voxel `.3mdb`, `ascii-composition-1` and `ascii-world-1` schemas remain app-specific. The general binary container is a different discriminated format; identical filename suffixes do not make these payloads interchangeable.
@@ -69,12 +87,12 @@ After publication, dependency adoption and explicit file migration require seman
 
 ## Release checklist
 
-- Complete the new feature's Swift semantic tests and existing text conformance unchanged.
+- Complete all three libraries' semantic tests and shared extension fixtures with existing text conformance unchanged.
 - Run the pinned complete Trust lane and forced strict SpecSync validation on the actual product tip.
 - Verify cross-platform unsupported-compression behavior and publish the capability matrix.
 - Record scoped agent review accurately and preserve the unsigned provenance limitation under the existing policy.
 - Finalize only the new feature scope and retain its implementation evidence through publication.
-- Merge PR58 before the stacked editing PR, reconcile the resulting tree, and repeat required exact-tip release checks.
+- Merge PR61 before the portable follow-up, reconcile its resulting tree, and repeat required exact-tip release checks.
 - Publish a version/tag only under a later direct release instruction from Leif.
 
 Indexed partial reads, portable material/timing profiles and a full animation timeline are later milestones. They are not promised by this release preparation.
@@ -82,3 +100,7 @@ Indexed partial reads, portable material/timing profiles and a full animation ti
 ## Prepared implementation evidence
 
 Product tip `0018a3c96d849ffb5966a9dd270b43b7d63541a6` passed the pinned complete Trust lane: 222 Swift tests, 79 JavaScript tests, Rust conformance/doc tests, element drift and editor grammar. Forced strict SpecSync covers all 28 files and 200 ThreeMD exports with zero warnings. Scoped agent review passed after a diagnostic-budget ordering correction. The existing soft provenance policy reports degradation without a permitted signature; neither a human implementation approval nor a release is claimed.
+
+That receipt is PR61's historical Swift-first implementation. Portable follow-up verification is recorded separately after its final source review and complete Trust run. Review has reproduced Unicode key equivalence/order, NaN diagnostic classification, forged TypeScript policy objects, large-number canonical formatting and quadratic whitespace trimming; the ports carry focused regressions. Only the derived web bundle is refreshed with unchanged element source and the existing drift gate. Its parser helper retains behavior with bounded linear trimming, and new root exports change deterministic minifier allocation. Element/dist is untouched. This does not add a hosted binary/composition editor.
+
+A separate deterministic probe compares 100,000 finite IEEE754 samples from Swift with each port's actual storage output; both repaired writers have zero mismatches. This is additional sampled evidence, not exhaustive proof over all floating-point values. The TypeScript whitespace probe uses nine-sample medians: bounded decoding is 0.076 ms at 4,000 spaces, 0.142 ms at 16,000 and 6.510 ms at 1,000,000. Those local measurements qualify the regression repair, not a runtime latency guarantee. Semantic tests separately preserve interior spaces/tabs and verify text/binary round trips.
