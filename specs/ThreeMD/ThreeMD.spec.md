@@ -1,6 +1,6 @@
 ---
 module: ThreeMD
-version: 5
+version: 6
 status: active
 files:
   - Sources/ThreeMD/Axis.swift
@@ -450,3 +450,4 @@ errors retain their stable cases and metadata.
 | 3 | 2026-10-05 | implement-generic-binary-storage-and-document-composition-with-specsync-6-and-trust-1-2-2: Implement generic binary storage and document composition with SpecSync 6 and Trust 1.2.2 |
 | 4 | 2026-10-05 | add-stable-document-identities-transactional-patches-and-diagnostics-for-release-preparation: Add stable document identities transactional patches and diagnostics for release preparation |
 | 5 | 2026-10-05 | bring-bounded-binary-composition-and-transactional-editing-to-typescript-and-rust-with-shared-conformance: Bring bounded binary composition and transactional editing to TypeScript and Rust with shared conformance |
+| 6 | 2026-10-05 | guarantee-portable-cross-language-document-and-composition-interchange-with-a-nine-pair-public-api-verification-matrix: Guarantee portable cross-language document and composition interchange with a nine-pair public API verification matrix |
