@@ -1,0 +1,12 @@
+---
+3md: "0.1"
+axis: "space"
+title: "Café"
+z: "é"
+é: "decomposed é"
+: "private"
+😀: "🦜"
+---
+
+@plane z=1e-07 label="é" x=0 y=-1.5 é="valué"
+NFC and NFD stay authored.

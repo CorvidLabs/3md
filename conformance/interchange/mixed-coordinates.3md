@@ -1,0 +1,13 @@
+---
+3md: "0.1"
+axis: "space"
+---
+
+@plane z=-2.5 x=1.25 y=0
+Negative
+
+@plane z=0 x=-1e-07
+Zero
+
+@plane z=9007199254740992.0 y=1e+21
+Threshold

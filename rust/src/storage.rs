@@ -1,5 +1,5 @@
 //! Bounded canonical text and portable version 1 binary document storage.
-use crate::{parse, Document, ParseError};
+use crate::{Document, ParseError};
 use std::collections::{BTreeMap, BTreeSet};
 use std::sync::{
     atomic::{AtomicBool, Ordering},
@@ -333,10 +333,7 @@ pub(crate) fn parse_data(
     }
     let source = std::str::from_utf8(data).map_err(|_| DocumentStorageError::InvalidUtf8)?;
     preflight_planes(source, limits, options)?;
-    let parsed = parse(source);
-    options.check()?;
-    let mut document = parsed.map_err(DocumentStorageError::InvalidText)?;
-    apply_source_key_semantics(&mut document, source, options)?;
+    let document = crate::parse_with_options(source, options)?;
     validate_records(&document, limits, options)?;
     Ok(document)
 }
@@ -352,7 +349,7 @@ fn preflight_planes(
         (false, false, None, 0, 0);
     for raw in normalized.split('\n') {
         options.check()?;
-        let trimmed = raw.trim_matches([' ', '\t']);
+        let trimmed = crate::trim_whitespace(raw);
         if !started {
             if trimmed == "---" {
                 started = true;
@@ -489,104 +486,6 @@ pub(crate) fn canonical_keys<'a>(
     Ok(keys.into_values().collect())
 }
 
-/// The legacy parser stays unchanged. New bounded decoding reconstructs source-order
-/// dictionary semantics so Unicode aliases keep the first spelling and last value.
-fn apply_source_key_semantics(
-    document: &mut Document,
-    source: &str,
-    options: &OperationOptions,
-) -> Result<(), DocumentStorageError> {
-    let normalized = source.replace("\r\n", "\n");
-    let source = normalized.strip_prefix('\u{feff}').unwrap_or(&normalized);
-    let mut started = false;
-    let mut body = false;
-    let mut fence = None;
-    let mut plane_index = 0;
-    let mut metadata = BTreeMap::new();
-    let mut metadata_keys = BTreeMap::new();
-    for (offset, raw) in source.split('\n').enumerate() {
-        options.check()?;
-        let trimmed = raw.trim_matches([' ', '\t']);
-        if !started {
-            if trimmed == "---" {
-                started = true;
-            }
-            continue;
-        }
-        if !body {
-            if trimmed == "---" {
-                body = true;
-                continue;
-            }
-            if trimmed.is_empty() || trimmed.starts_with('#') {
-                continue;
-            }
-            if let Some((key, value)) = trimmed.split_once(':') {
-                let key = key.trim_matches([' ', '\t']);
-                if ["3md", "axis", "title"].contains(&key.to_lowercase().as_str()) {
-                    continue;
-                }
-                let normalized = normalized_key(key, options)?;
-                let original = metadata_keys
-                    .entry(normalized)
-                    .or_insert_with(|| key.to_owned());
-                metadata.insert(
-                    original.clone(),
-                    crate::unquote(value.trim_matches([' ', '\t'])),
-                );
-            }
-            continue;
-        }
-        if let Some(open) = fence {
-            if (open == '`' && trimmed.starts_with("```"))
-                || (open == '~' && trimmed.starts_with("~~~"))
-            {
-                fence = None;
-            }
-            continue;
-        }
-        if trimmed.starts_with("```") {
-            fence = Some('`');
-            continue;
-        }
-        if trimmed.starts_with("~~~") {
-            fence = Some('~');
-            continue;
-        }
-        if raw.starts_with([' ', '\t']) || crate::first_token(raw) != "@plane" {
-            continue;
-        }
-        let mut attributes = BTreeMap::new();
-        let mut keys = BTreeMap::new();
-        for token in crate::tokenize(
-            trimmed["@plane".len()..].trim_matches([' ', '\t']),
-            offset + 1,
-        )
-        .map_err(DocumentStorageError::InvalidText)?
-        {
-            options.check()?;
-            if let Some((key, value)) = token.split_once('=') {
-                let key = key.trim_matches([' ', '\t']).to_lowercase();
-                if ["z", "x", "y", "label"].contains(&key.as_str()) {
-                    continue;
-                }
-                let normalized = normalized_key(&key, options)?;
-                let original = keys.entry(normalized).or_insert(key);
-                attributes.insert(
-                    original.clone(),
-                    crate::unquote(value.trim_matches([' ', '\t'])),
-                );
-            }
-        }
-        if let Some(plane) = document.planes.get_mut(plane_index) {
-            plane.attributes = attributes;
-        }
-        plane_index += 1;
-    }
-    document.metadata = metadata;
-    Ok(())
-}
-
 /// Storage-only shortest decimal spelling, leaving the legacy serializer unchanged.
 pub(crate) fn canonical_number(value: f64) -> String {
     if value == value.round() && value.abs() < 1e15 {
@@ -682,7 +581,7 @@ pub(crate) fn canonical_data(
         let lowered = key.to_lowercase();
         if ["3md", "axis", "title"].contains(&lowered.as_str())
             || key.contains(':')
-            || key.trim_matches([' ', '\t']).starts_with('#')
+            || crate::trim_whitespace(key).starts_with('#')
         {
             return Err(DocumentStorageError::InvalidDocument(
                 "Metadata keys cannot shadow reserved fields or comments.".into(),

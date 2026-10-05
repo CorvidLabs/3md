@@ -1,0 +1,9 @@
+---
+3md: 0.1
+axis: frame
+---
+@plane z=0 label="frame-0"
+first
+
+@plane z=1 label="frame-1"
+second

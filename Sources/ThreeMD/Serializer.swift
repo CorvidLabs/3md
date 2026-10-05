@@ -39,7 +39,9 @@ public struct Serializer: Sendable {
     // MARK: - Private Methods
 
     private func frontmatterLines(for document: Document) -> [String] {
-        var lines = ["---", "3md: \(document.version)", "axis: \(document.axis.rawValue)"]
+        var lines = [
+            "---", "3md: \(quoteIfNeeded(document.version))", "axis: \(quoteIfNeeded(document.axis.rawValue))",
+        ]
 
         if let title = document.title {
             lines.append("title: \(quoteIfNeeded(title))")
@@ -82,6 +84,8 @@ public struct Serializer: Sendable {
         let needsQuote =
             forceQuote || value.contains(" ") || value.contains("\t")
             || value.contains("\"") || value.contains("\\") || value.isEmpty
+            || !value.utf8.elementsEqual(value.trimmingCharacters(in: .whitespaces).utf8)
+            || (value.count >= 2 && value.first == "'" && value.last == "'")
         guard needsQuote else { return value }
         let escaped =
             value

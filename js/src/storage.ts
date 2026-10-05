@@ -1,5 +1,5 @@
 import { parse, ParseError, type Document } from "./index.js";
-import { boundedInteger, canonicalDocument, canonicalKeys, checkCancellation, documentsEqual, InvalidUnicodeError, trimASCIIWhitespace, utf8Length } from "./portable.js";
+import { boundedInteger, canonicalDocument, canonicalKeys, checkCancellation, documentsEqual, InvalidUnicodeError, trimFoundationWhitespace, utf8Length } from "./portable.js";
 
 /** Identifiers in the independently versioned general-document envelope. */
 export enum DocumentCompression { None = 0, Lzfse = 1 }
@@ -151,7 +151,7 @@ function preflightPlanes(source: string, limits: DocumentDecodeLimits, signal?: 
   let record = 0;
   for (const raw of normalized.split("\n")) {
     checkCancellation(signal);
-    const trimmed = trimASCIIWhitespace(raw, signal);
+    const trimmed = trimFoundationWhitespace(raw, signal);
     if (!started) { if (trimmed === "---") started = true; continue; }
     if (!body) { if (trimmed === "---") body = true; continue; }
     let directive = false;

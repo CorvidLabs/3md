@@ -58,6 +58,13 @@ through Swift's conditional Apple backend; the ports return an explicit
 unsupported-backend error. These library APIs perform no file or network I/O.
 See the [capability matrix and release boundaries](docs/EDITING-RELEASE.md).
 
+Cross-language file interchange is verified by a development gate: each Swift,
+TypeScript and Rust writer feeds every reader, for all nine pairings. It checks
+canonical text, uncompressed binary, composition references and imported edits.
+The [interchange catalog](conformance/interchange/README.md) states the cases,
+exact-byte checks and platform exceptions. This does not claim portable LZFSE
+or a shared JSON snapshot/patch transport.
+
 ## Why
 
 Markdown is two dimensional. Plenty of documents are not: a planner moves

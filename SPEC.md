@@ -348,19 +348,23 @@ Errors return no partial document or encoded payload.
 Direct `Document` values must have finite coordinates, unique plane positions,
 and fields representable by the existing text grammar. The new storage writer
 quotes every scalar and validates a semantic parse round trip. It preserves
-literal quotes and backslashes without changing the existing serializer. Values
+literal quotes and backslashes. Legacy scalar quoting is also repaired for
+representable values that would otherwise lose apostrophes or edge whitespace. Values
 that would change through text serialization, including reserved-key collisions
 or significant unrepresentable whitespace, are rejected explicitly.
 
 Canonical extension writers compare dictionary keys by NFC-normalized Unicode
-scalar order and preserve original spelling. Bounded text decoding retains the
+scalar order and preserve original spelling. Raw and bounded text decoding retain the
 first spelling and last assigned value of equivalent keys, matching Swift's
 dictionary semantics. Strict composition JSON rejects equivalent duplicate
 keys. A direct Rust map with both equivalent spellings has no insertion history
 and is rejected rather than selecting an arbitrary value. Canonical numeric
 spelling is verified by shared IEEE754 fixtures, including the exact `2^53`
-boundary. These rules belong to the additive storage/editing layer and do not
-alter the existing text parser or legacy serializer contract.
+boundary. Signed zero normalizes to zero in canonical output, as in the existing
+text contract; its sign bit is not stored. Compatibility repairs align the ports'
+interpretation of existing whitespace and quoting grammar without new syntax or
+changed parser signatures. Legacy numeric spelling may differ when it parses
+to the same finite value; canonical storage spelling is exact across languages.
 
 The API is synchronous and pure, and the package's existing deployment baseline
 is unchanged. A caller may run it in a Swift task away from the UI actor.

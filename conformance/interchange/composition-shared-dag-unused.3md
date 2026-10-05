@@ -1,0 +1,43 @@
+---
+3md: "0.1"
+axis: "layer"
+profile: "3md-composition-1"
+---
+
+@plane z=0 label="Composition"
+```json
+{
+  "entries": [
+    {
+      "id": "branch",
+      "references": [
+        {"attributes": {}, "targetID": "leaf"}
+      ],
+      "source": "---\n3md: \"0.1\"\naxis: \"space\"\ntitle: \"Leaf\"\n---\n\n@plane z=0\n# Reused leaf\n"
+    },
+    {
+      "id": "leaf",
+      "references": [],
+      "source": "---\n3md: \"0.1\"\naxis: \"space\"\ntitle: \"Leaf\"\n---\n\n@plane z=0\n# Reused leaf\n"
+    },
+    {
+      "id": "root",
+      "references": [
+        {"attributes": {}, "targetID": "branch"},
+        {"attributes": {}, "targetID": "leaf"},
+        {"attributes": {"3md-id": "again", "id": "opaque"}, "targetID": "leaf"}
+      ],
+      "source": "---\n3md: \"0.1\"\naxis: \"space\"\ntitle: \"Leaf\"\n---\n\n@plane z=0\n# Reused leaf\n"
+    },
+    {
+      "id": "unused",
+      "references": [
+        {"attributes": {}, "targetID": "leaf"}
+      ],
+      "source": "---\n3md: \"0.1\"\naxis: \"layer\"\n---\n"
+    }
+  ],
+  "rootID": "root",
+  "schema": "3md-composition-1"
+}
+```

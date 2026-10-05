@@ -1,0 +1,802 @@
+{
+  "cases" : [
+    {
+      "binaryFile" : "conformance/interchange/axis-48.3mdb",
+      "canonicalFile" : "conformance/interchange/axis-48.3md",
+      "formats" : [
+        "canonical",
+        "binary",
+        "legacy"
+      ],
+      "id" : "axis-48",
+      "kind" : "document",
+      "sourceFile" : "conformance/interchange/axis-48.3md"
+    },
+    {
+      "binaryFile" : "conformance/interchange/axis-49.3mdb",
+      "canonicalFile" : "conformance/interchange/axis-49.3md",
+      "formats" : [
+        "canonical",
+        "binary",
+        "legacy"
+      ],
+      "id" : "axis-49",
+      "kind" : "document",
+      "sourceFile" : "conformance/interchange/axis-49.3md"
+    },
+    {
+      "binaryFile" : "conformance/interchange/axis-50.3mdb",
+      "canonicalFile" : "conformance/interchange/axis-50.3md",
+      "formats" : [
+        "canonical",
+        "binary",
+        "legacy"
+      ],
+      "id" : "axis-50",
+      "kind" : "document",
+      "sourceFile" : "conformance/interchange/axis-50.3md"
+    },
+    {
+      "binaryFile" : "conformance/interchange/axis-51.3mdb",
+      "canonicalFile" : "conformance/interchange/axis-51.3md",
+      "formats" : [
+        "canonical",
+        "binary",
+        "legacy"
+      ],
+      "id" : "axis-51",
+      "kind" : "document",
+      "sourceFile" : "conformance/interchange/axis-51.3md"
+    },
+    {
+      "binaryFile" : "conformance/interchange/axis-52.3mdb",
+      "canonicalFile" : "conformance/interchange/axis-52.3md",
+      "formats" : [
+        "canonical",
+        "binary",
+        "legacy"
+      ],
+      "id" : "axis-52",
+      "kind" : "document",
+      "sourceFile" : "conformance/interchange/axis-52.3md"
+    },
+    {
+      "binaryFile" : "conformance/interchange/axis-53.3mdb",
+      "canonicalFile" : "conformance/interchange/axis-53.3md",
+      "formats" : [
+        "canonical",
+        "binary",
+        "legacy"
+      ],
+      "id" : "axis-53",
+      "kind" : "document",
+      "sourceFile" : "conformance/interchange/axis-53.3md"
+    },
+    {
+      "binaryFile" : "conformance/interchange/axis-54.3mdb",
+      "canonicalFile" : "conformance/interchange/axis-54.3md",
+      "formats" : [
+        "canonical",
+        "binary",
+        "legacy"
+      ],
+      "id" : "axis-54",
+      "kind" : "document",
+      "sourceFile" : "conformance/interchange/axis-54.3md"
+    },
+    {
+      "binaryFile" : "conformance/interchange/axis-55.3mdb",
+      "canonicalFile" : "conformance/interchange/axis-55.3md",
+      "formats" : [
+        "canonical",
+        "binary",
+        "legacy"
+      ],
+      "id" : "axis-55",
+      "kind" : "document",
+      "sourceFile" : "conformance/interchange/axis-55.3md"
+    },
+    {
+      "binaryFile" : "conformance/interchange/axis-56.3mdb",
+      "canonicalFile" : "conformance/interchange/axis-56.3md",
+      "formats" : [
+        "canonical",
+        "binary",
+        "legacy"
+      ],
+      "id" : "axis-56",
+      "kind" : "document",
+      "sourceFile" : "conformance/interchange/axis-56.3md"
+    },
+    {
+      "binaryFile" : "conformance/interchange/axis-57.3mdb",
+      "canonicalFile" : "conformance/interchange/axis-57.3md",
+      "formats" : [
+        "canonical",
+        "binary",
+        "legacy"
+      ],
+      "id" : "axis-57",
+      "kind" : "document",
+      "sourceFile" : "conformance/interchange/axis-57.3md"
+    },
+    {
+      "binaryFile" : "conformance/interchange/composition-empty-root.3mdb",
+      "canonicalFile" : "conformance/interchange/composition-empty-root.3md",
+      "formats" : [
+        "canonical",
+        "binary"
+      ],
+      "id" : "composition-empty-root",
+      "kind" : "composition",
+      "sourceFile" : "conformance/interchange/composition-empty-root.3md"
+    },
+    {
+      "binaryFile" : "conformance/interchange/composition-shared-dag-unused.3mdb",
+      "canonicalFile" : "conformance/interchange/composition-shared-dag-unused.3md",
+      "formats" : [
+        "canonical",
+        "binary"
+      ],
+      "id" : "composition-shared-dag-unused",
+      "kind" : "composition",
+      "sourceFile" : "conformance/interchange/composition-shared-dag-unused.3md"
+    },
+    {
+      "binaryFile" : "conformance/interchange/empty-document.3mdb",
+      "canonicalFile" : "conformance/interchange/empty-document.3md",
+      "formats" : [
+        "canonical",
+        "binary",
+        "legacy"
+      ],
+      "id" : "empty-document",
+      "kind" : "document",
+      "sourceFile" : "conformance/interchange/empty-document.3md"
+    },
+    {
+      "binaryFile" : "conformance/interchange/empty-planes.3mdb",
+      "canonicalFile" : "conformance/interchange/empty-planes.3md",
+      "formats" : [
+        "canonical",
+        "binary",
+        "legacy"
+      ],
+      "id" : "empty-planes",
+      "kind" : "document",
+      "sourceFile" : "conformance/interchange/empty-planes.3md"
+    },
+    {
+      "binaryFile" : "conformance/extensions/composition-instances.3mdb",
+      "canonicalFile" : "conformance/extensions/composition-instances.3md",
+      "formats" : [
+        "canonical",
+        "binary"
+      ],
+      "id" : "extension-composition-instances",
+      "kind" : "composition",
+      "sourceFile" : "conformance/extensions/composition-instances.3md"
+    },
+    {
+      "binaryFile" : "conformance/extensions/document-unicode.3mdb",
+      "canonicalFile" : "conformance/extensions/document-unicode.3md",
+      "formats" : [
+        "canonical",
+        "binary",
+        "legacy"
+      ],
+      "id" : "extension-document-unicode",
+      "kind" : "document",
+      "sourceFile" : "conformance/extensions/document-unicode.3md"
+    },
+    {
+      "binaryFile" : "conformance/extensions/unicode-key-order.3mdb",
+      "canonicalFile" : "conformance/extensions/unicode-key-order.3md",
+      "formats" : [
+        "canonical",
+        "binary",
+        "legacy"
+      ],
+      "id" : "extension-unicode-key-order",
+      "kind" : "document",
+      "sourceFile" : "conformance/extensions/unicode-key-order.3md"
+    },
+    {
+      "formats" : [
+        "canonical",
+        "binary",
+        "legacy"
+      ],
+      "id" : "extension-unicode-source-collision",
+      "kind" : "document",
+      "sourceFile" : "conformance/extensions/unicode-source-collision.3md"
+    },
+    {
+      "binaryFile" : "conformance/interchange/fences-and-directives.3mdb",
+      "canonicalFile" : "conformance/interchange/fences-and-directives.3md",
+      "formats" : [
+        "canonical",
+        "binary",
+        "legacy"
+      ],
+      "id" : "fences-and-directives",
+      "kind" : "document",
+      "sourceFile" : "conformance/interchange/fences-and-directives.3md"
+    },
+    {
+      "expectedError" : "checksumMismatch",
+      "formats" : [
+
+      ],
+      "id" : "invalid-binary-checksum",
+      "kind" : "document",
+      "sourceFile" : "conformance/interchange/invalid-binary-checksum.3mdb"
+    },
+    {
+      "expectedError" : "unsupportedCompression",
+      "formats" : [
+
+      ],
+      "id" : "invalid-binary-compression",
+      "kind" : "document",
+      "sourceFile" : "conformance/interchange/invalid-binary-compression.3mdb"
+    },
+    {
+      "expectedError" : "unsupportedFlags",
+      "formats" : [
+
+      ],
+      "id" : "invalid-binary-flags",
+      "kind" : "document",
+      "sourceFile" : "conformance/interchange/invalid-binary-flags.3mdb"
+    },
+    {
+      "expectedError" : "unsupportedPayloadKind",
+      "formats" : [
+
+      ],
+      "id" : "invalid-binary-kind",
+      "kind" : "document",
+      "sourceFile" : "conformance/interchange/invalid-binary-kind.3mdb"
+    },
+    {
+      "expectedError" : "nonzeroReserved",
+      "formats" : [
+
+      ],
+      "id" : "invalid-binary-reserved",
+      "kind" : "document",
+      "sourceFile" : "conformance/interchange/invalid-binary-reserved.3mdb"
+    },
+    {
+      "expectedError" : "unsupportedVersion",
+      "formats" : [
+
+      ],
+      "id" : "invalid-binary-version",
+      "kind" : "document",
+      "sourceFile" : "conformance/interchange/invalid-binary-version.3mdb"
+    },
+    {
+      "expectedError" : "duplicateIdentity",
+      "formats" : [
+
+      ],
+      "id" : "invalid-duplicate-identities",
+      "kind" : "document",
+      "sourceFile" : "conformance/interchange/invalid-duplicate-identities.3md"
+    },
+    {
+      "expectedError" : "invalidProfile",
+      "formats" : [
+
+      ],
+      "id" : "invalid-equivalent-json-keys",
+      "kind" : "composition",
+      "sourceFile" : "conformance/extensions/unicode-composition-duplicate.3md"
+    },
+    {
+      "expectedError" : "duplicateID",
+      "formats" : [
+
+      ],
+      "id" : "invalid-graph-duplicate-id",
+      "kind" : "composition",
+      "sourceFile" : "conformance/interchange/invalid-graph-duplicate-id.3md"
+    },
+    {
+      "expectedError" : "missingRoot",
+      "formats" : [
+
+      ],
+      "id" : "invalid-graph-missing-root",
+      "kind" : "composition",
+      "sourceFile" : "conformance/interchange/invalid-graph-missing-root.3md"
+    },
+    {
+      "expectedError" : "invalidUTF8",
+      "formats" : [
+
+      ],
+      "id" : "invalid-invalid-utf8",
+      "kind" : "document",
+      "sourceFile" : "conformance/interchange/invalid-invalid-utf8.3mdb"
+    },
+    {
+      "expectedError" : "invalidProfile",
+      "formats" : [
+
+      ],
+      "id" : "invalid-profile-unknown-key",
+      "kind" : "composition",
+      "sourceFile" : "conformance/interchange/invalid-profile-unknown-key.3md"
+    },
+    {
+      "expectedError" : "duplicateIdentity",
+      "formats" : [
+
+      ],
+      "id" : "invalid-reference-identity",
+      "kind" : "composition",
+      "sourceFile" : "conformance/interchange/invalid-reference-identity.3md"
+    },
+    {
+      "expectedError" : "invalidContainer",
+      "formats" : [
+
+      ],
+      "id" : "invalid-truncated-header",
+      "kind" : "document",
+      "sourceFile" : "conformance/interchange/invalid-truncated-header.3mdb"
+    },
+    {
+      "expectedError" : "lengthMismatch",
+      "formats" : [
+
+      ],
+      "id" : "invalid-truncated-payload",
+      "kind" : "document",
+      "sourceFile" : "conformance/interchange/invalid-truncated-payload.3mdb"
+    },
+    {
+      "expectedError" : "invalidIdentity",
+      "formats" : [
+
+      ],
+      "id" : "invalid-unsafe-identity",
+      "kind" : "document",
+      "sourceFile" : "conformance/interchange/invalid-unsafe-identity.3md"
+    },
+    {
+      "expectedError" : "cycle",
+      "formats" : [
+
+      ],
+      "id" : "invalid-unused-cycle",
+      "kind" : "composition",
+      "sourceFile" : "conformance/interchange/invalid-unused-cycle.3md"
+    },
+    {
+      "expectedError" : "missingTarget",
+      "formats" : [
+
+      ],
+      "id" : "invalid-unused-missing-target",
+      "kind" : "composition",
+      "sourceFile" : "conformance/interchange/invalid-unused-missing-target.3md"
+    },
+    {
+      "expectedError" : "invalidText",
+      "formats" : [
+
+      ],
+      "id" : "legacy-invalid-duplicate-plane",
+      "kind" : "document",
+      "sourceFile" : "conformance/interchange/legacy-invalid-duplicate-plane.3md"
+    },
+    {
+      "expectedError" : "invalidText",
+      "formats" : [
+
+      ],
+      "id" : "legacy-invalid-duplicate-z-decimal-forms",
+      "kind" : "document",
+      "sourceFile" : "conformance/interchange/legacy-invalid-duplicate-z-decimal-forms.3md"
+    },
+    {
+      "expectedError" : "invalidText",
+      "formats" : [
+
+      ],
+      "id" : "legacy-invalid-frontmatter-no-colon",
+      "kind" : "document",
+      "sourceFile" : "conformance/interchange/legacy-invalid-frontmatter-no-colon.3md"
+    },
+    {
+      "expectedError" : "invalidText",
+      "formats" : [
+
+      ],
+      "id" : "legacy-invalid-frontmatter-unclosed",
+      "kind" : "document",
+      "sourceFile" : "conformance/interchange/legacy-invalid-frontmatter-unclosed.3md"
+    },
+    {
+      "expectedError" : "invalidText",
+      "formats" : [
+
+      ],
+      "id" : "legacy-invalid-missing-frontmatter",
+      "kind" : "document",
+      "sourceFile" : "conformance/interchange/legacy-invalid-missing-frontmatter.3md"
+    },
+    {
+      "expectedError" : "invalidText",
+      "formats" : [
+
+      ],
+      "id" : "legacy-invalid-missing-plane-position",
+      "kind" : "document",
+      "sourceFile" : "conformance/interchange/legacy-invalid-missing-plane-position.3md"
+    },
+    {
+      "expectedError" : "invalidText",
+      "formats" : [
+
+      ],
+      "id" : "legacy-invalid-missing-version",
+      "kind" : "document",
+      "sourceFile" : "conformance/interchange/legacy-invalid-missing-version.3md"
+    },
+    {
+      "expectedError" : "invalidText",
+      "formats" : [
+
+      ],
+      "id" : "legacy-invalid-plane-token-no-equals",
+      "kind" : "document",
+      "sourceFile" : "conformance/interchange/legacy-invalid-plane-token-no-equals.3md"
+    },
+    {
+      "expectedError" : "invalidText",
+      "formats" : [
+
+      ],
+      "id" : "legacy-invalid-plane-x-not-number",
+      "kind" : "document",
+      "sourceFile" : "conformance/interchange/legacy-invalid-plane-x-not-number.3md"
+    },
+    {
+      "expectedError" : "invalidText",
+      "formats" : [
+
+      ],
+      "id" : "legacy-invalid-plane-z-not-number",
+      "kind" : "document",
+      "sourceFile" : "conformance/interchange/legacy-invalid-plane-z-not-number.3md"
+    },
+    {
+      "expectedError" : "invalidText",
+      "formats" : [
+
+      ],
+      "id" : "legacy-invalid-unterminated-quote",
+      "kind" : "document",
+      "sourceFile" : "conformance/interchange/legacy-invalid-unterminated-quote.3md"
+    },
+    {
+      "expectedError" : "invalidText",
+      "formats" : [
+
+      ],
+      "id" : "legacy-invalid-z-hex",
+      "kind" : "document",
+      "sourceFile" : "conformance/interchange/legacy-invalid-z-hex.3md"
+    },
+    {
+      "expectedError" : "invalidText",
+      "formats" : [
+
+      ],
+      "id" : "legacy-invalid-z-infinity",
+      "kind" : "document",
+      "sourceFile" : "conformance/interchange/legacy-invalid-z-infinity.3md"
+    },
+    {
+      "expectedError" : "invalidText",
+      "formats" : [
+
+      ],
+      "id" : "legacy-invalid-z-nan",
+      "kind" : "document",
+      "sourceFile" : "conformance/interchange/legacy-invalid-z-nan.3md"
+    },
+    {
+      "expectedError" : "invalidText",
+      "formats" : [
+
+      ],
+      "id" : "legacy-invalid-z-thousands-separator",
+      "kind" : "document",
+      "sourceFile" : "conformance/interchange/legacy-invalid-z-thousands-separator.3md"
+    },
+    {
+      "formats" : [
+        "canonical",
+        "binary",
+        "legacy"
+      ],
+      "id" : "legacy-valid-attribute-numeric-stays-string",
+      "kind" : "document",
+      "sourceFile" : "conformance/interchange/legacy-valid-attribute-numeric-stays-string.3md"
+    },
+    {
+      "formats" : [
+        "canonical",
+        "binary",
+        "legacy"
+      ],
+      "id" : "legacy-valid-axis-default",
+      "kind" : "document",
+      "sourceFile" : "conformance/interchange/legacy-valid-axis-default.3md"
+    },
+    {
+      "formats" : [
+        "canonical",
+        "binary",
+        "legacy"
+      ],
+      "id" : "legacy-valid-axis-lowercased",
+      "kind" : "document",
+      "sourceFile" : "conformance/interchange/legacy-valid-axis-lowercased.3md"
+    },
+    {
+      "formats" : [
+        "canonical",
+        "binary",
+        "legacy"
+      ],
+      "id" : "legacy-valid-bom",
+      "kind" : "document",
+      "sourceFile" : "conformance/interchange/legacy-valid-bom.3md"
+    },
+    {
+      "formats" : [
+        "canonical",
+        "binary",
+        "legacy"
+      ],
+      "id" : "legacy-valid-code-block-directive-safe",
+      "kind" : "document",
+      "sourceFile" : "conformance/interchange/legacy-valid-code-block-directive-safe.3md"
+    },
+    {
+      "formats" : [
+        "canonical",
+        "binary",
+        "legacy"
+      ],
+      "id" : "legacy-valid-coordinates-attributes",
+      "kind" : "document",
+      "sourceFile" : "conformance/interchange/legacy-valid-coordinates-attributes.3md"
+    },
+    {
+      "formats" : [
+        "canonical",
+        "binary",
+        "legacy"
+      ],
+      "id" : "legacy-valid-crlf",
+      "kind" : "document",
+      "sourceFile" : "conformance/interchange/legacy-valid-crlf.3md"
+    },
+    {
+      "formats" : [
+        "canonical",
+        "binary",
+        "legacy"
+      ],
+      "id" : "legacy-valid-decimal-negative-z",
+      "kind" : "document",
+      "sourceFile" : "conformance/interchange/legacy-valid-decimal-negative-z.3md"
+    },
+    {
+      "formats" : [
+        "canonical",
+        "binary",
+        "legacy"
+      ],
+      "id" : "legacy-valid-empty-body",
+      "kind" : "document",
+      "sourceFile" : "conformance/interchange/legacy-valid-empty-body.3md"
+    },
+    {
+      "formats" : [
+        "canonical",
+        "binary",
+        "legacy"
+      ],
+      "id" : "legacy-valid-empty-plane-body",
+      "kind" : "document",
+      "sourceFile" : "conformance/interchange/legacy-valid-empty-plane-body.3md"
+    },
+    {
+      "formats" : [
+        "canonical",
+        "binary",
+        "legacy"
+      ],
+      "id" : "legacy-valid-escaped-quote-label",
+      "kind" : "document",
+      "sourceFile" : "conformance/interchange/legacy-valid-escaped-quote-label.3md"
+    },
+    {
+      "formats" : [
+        "canonical",
+        "binary",
+        "legacy"
+      ],
+      "id" : "legacy-valid-frontmatter-comments",
+      "kind" : "document",
+      "sourceFile" : "conformance/interchange/legacy-valid-frontmatter-comments.3md"
+    },
+    {
+      "formats" : [
+        "canonical",
+        "binary",
+        "legacy"
+      ],
+      "id" : "legacy-valid-indented-directive-is-body",
+      "kind" : "document",
+      "sourceFile" : "conformance/interchange/legacy-valid-indented-directive-is-body.3md"
+    },
+    {
+      "formats" : [
+        "canonical",
+        "binary",
+        "legacy"
+      ],
+      "id" : "legacy-valid-leading-blank-lines",
+      "kind" : "document",
+      "sourceFile" : "conformance/interchange/legacy-valid-leading-blank-lines.3md"
+    },
+    {
+      "formats" : [
+        "canonical",
+        "binary",
+        "legacy"
+      ],
+      "id" : "legacy-valid-metadata-key-case-preserved",
+      "kind" : "document",
+      "sourceFile" : "conformance/interchange/legacy-valid-metadata-key-case-preserved.3md"
+    },
+    {
+      "formats" : [
+        "canonical",
+        "binary",
+        "legacy"
+      ],
+      "id" : "legacy-valid-multi-plane",
+      "kind" : "document",
+      "sourceFile" : "conformance/interchange/legacy-valid-multi-plane.3md"
+    },
+    {
+      "formats" : [
+        "canonical",
+        "binary",
+        "legacy"
+      ],
+      "id" : "legacy-valid-plane-prefix-not-directive",
+      "kind" : "document",
+      "sourceFile" : "conformance/interchange/legacy-valid-plane-prefix-not-directive.3md"
+    },
+    {
+      "formats" : [
+        "canonical",
+        "binary",
+        "legacy"
+      ],
+      "id" : "legacy-valid-preamble-with-planes",
+      "kind" : "document",
+      "sourceFile" : "conformance/interchange/legacy-valid-preamble-with-planes.3md"
+    },
+    {
+      "formats" : [
+        "canonical",
+        "binary",
+        "legacy"
+      ],
+      "id" : "legacy-valid-repeated-directive-key-last-wins",
+      "kind" : "document",
+      "sourceFile" : "conformance/interchange/legacy-valid-repeated-directive-key-last-wins.3md"
+    },
+    {
+      "formats" : [
+        "canonical",
+        "binary",
+        "legacy"
+      ],
+      "id" : "legacy-valid-single-plane-shorthand",
+      "kind" : "document",
+      "sourceFile" : "conformance/interchange/legacy-valid-single-plane-shorthand.3md"
+    },
+    {
+      "formats" : [
+        "canonical",
+        "binary",
+        "legacy"
+      ],
+      "id" : "legacy-valid-version-1-0",
+      "kind" : "document",
+      "sourceFile" : "conformance/interchange/legacy-valid-version-1-0.3md"
+    },
+    {
+      "formats" : [
+        "canonical",
+        "binary",
+        "legacy"
+      ],
+      "id" : "legacy-valid-z-scientific-notation",
+      "kind" : "document",
+      "sourceFile" : "conformance/interchange/legacy-valid-z-scientific-notation.3md"
+    },
+    {
+      "binaryFile" : "conformance/interchange/mixed-coordinates.3mdb",
+      "canonicalFile" : "conformance/interchange/mixed-coordinates.3md",
+      "formats" : [
+        "canonical",
+        "binary",
+        "legacy"
+      ],
+      "id" : "mixed-coordinates",
+      "kind" : "document",
+      "sourceFile" : "conformance/interchange/mixed-coordinates.3md"
+    },
+    {
+      "formats" : [
+        "canonical",
+        "binary",
+        "legacy"
+      ],
+      "id" : "nfc-source-keys",
+      "kind" : "document",
+      "sourceFile" : "conformance/interchange/nfc-source-keys.3md"
+    },
+    {
+      "binaryFile" : "conformance/interchange/scalar-quoting.3mdb",
+      "canonicalFile" : "conformance/interchange/scalar-quoting.3md",
+      "formats" : [
+        "canonical",
+        "binary",
+        "legacy"
+      ],
+      "id" : "scalar-quoting",
+      "kind" : "document",
+      "sourceFile" : "conformance/interchange/scalar-quoting.3md"
+    },
+    {
+      "binaryFile" : "conformance/interchange/unicode-exact-values.3mdb",
+      "canonicalFile" : "conformance/interchange/unicode-exact-values.3md",
+      "formats" : [
+        "canonical",
+        "binary",
+        "legacy"
+      ],
+      "id" : "unicode-exact-values",
+      "kind" : "document",
+      "sourceFile" : "conformance/interchange/unicode-exact-values.3md"
+    },
+    {
+      "formats" : [
+        "canonical",
+        "binary",
+        "legacy"
+      ],
+      "id" : "whitespace-crlf-bom",
+      "kind" : "document",
+      "sourceFile" : "conformance/interchange/whitespace-crlf-bom.3md"
+    }
+  ],
+  "numericVectors" : "conformance/extensions/numeric-vectors.json",
+  "schema" : "3md-interchange-catalog-1"
+}

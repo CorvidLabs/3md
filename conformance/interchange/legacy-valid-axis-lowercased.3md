@@ -1,0 +1,6 @@
+---
+3md: 0.1
+axis:   Frame  
+---
+@plane z=0
+body

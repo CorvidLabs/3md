@@ -40,6 +40,9 @@ files:
   - rust/src/composition.rs
   - rust/src/editing.rs
   - rust/src/diagnostics.rs
+  - Sources/ThreeMDInterop/Protocol.swift
+  - Sources/ThreeMDInterop/SwiftAdapter.swift
+  - Sources/ThreeMDInterop/main.swift
 db_tables: []
 depends_on: []
 ---
@@ -329,7 +332,9 @@ are pure synchronous APIs; they never open paths or resolve URLs.
 | `canonical_keys` | Crate-internal Rust normalized scalar key ordering. |
 | `canonical_number` | Crate-internal Rust Swift-compatible finite decimal spelling. |
 | `swift_double` | Crate-internal Rust shortest decimal formatter with Swift notation threshold and ties-to-even spelling. |
-| `trimASCIIWhitespace` | Internal TypeScript linear ASCII space/tab edge scan; preserves legacy trimming behavior. |
+| `trimFoundationWhitespace` | Internal TypeScript linear scan using the shared Foundation horizontal whitespace table. |
+| `isFoundationWhitespace` | Internal TypeScript shared horizontal whitespace predicate; no newline/BOM trimming. |
+| `parse_with_options` | Crate-internal Rust parser path with cooperative cancellation and normalized position-set checks. |
 | `canonical_data` | Crate-internal Rust budgeted canonical text encoding. |
 | `validate_graph` | Crate-internal Rust whole-library resource and target validation. |
 | `PayloadBudget` | Crate-internal Rust cumulative edit work counter. |
@@ -357,7 +362,7 @@ Codable editing transport is not a bounded streaming JSON reader: callers must c
 
 ### Portable surfaces
 
-Portable API contracts: TypeScript exports the analogous storage/composition/editing types through `js/src/index.ts`, with Uint8Array storage, named policy options and optional AbortSignal as the last argument. Its snapshots and graphs copy/freeze values, and fromJSON reconstructs and validates exact revision pairs. `stableID(value)` reads the namespaced attribute without altering existing Plane/Document interfaces. Rust exposes storage, composition, editing and diagnostics modules plus model/policy/error reexports. Operations accept policies and `OperationOptions`; private snapshot/graph fields use immutable accessors. New Rust canonical storage uses pinned unicode-normalization for NFC scalar ordering, rejects ambiguous canonically equivalent keys in direct BTreeMap values and reconstructs first-spelling/last-value behavior while bounded-decoding source. Public port parser/serializer bodies and text behavior stay unchanged; a private TypeScript whitespace helper is repaired to use linear scanning.
+Portable API contracts: TypeScript exports the analogous storage/composition/editing types through `js/src/index.ts`, with Uint8Array storage, named policy options and optional AbortSignal as the last argument. Its snapshots and graphs copy/freeze values, and fromJSON reconstructs and validates exact revision pairs. `stableID(value)` reads the namespaced attribute without altering existing Plane/Document interfaces. Rust exposes storage, composition, editing and diagnostics modules plus model/policy/error reexports. Operations accept policies and `OperationOptions`; private snapshot/graph fields use immutable accessors. New Rust canonical storage uses pinned unicode-normalization for NFC scalar ordering, rejects ambiguous canonically equivalent keys in direct BTreeMap values and reconstructs first-spelling/last-value behavior while decoding source. The interchange follow-up aligns existing Unicode whitespace and source-key grammar interpretation, and repairs lossless legacy scalar quoting. Public signatures and frozen syntax remain. Legacy spelling may vary while canonical bytes and reimported semantics agree. The development coordinator uses processes only in its separate executable target; the library remains pure.
 
 
 

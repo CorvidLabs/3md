@@ -1,0 +1,8 @@
+---
+3md: 0.1
+---
+@plane z=1.5
+first
+
+@plane z=-2
+second

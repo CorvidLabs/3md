@@ -12,4 +12,4 @@ enforcement = "strict"
 track_history = false
 
 [modules."ThreeMD"]
-owns = ["Tests/ThreeMDTests/", "Examples/", "js/", "rust/", "conformance/", "web/assets/three-md.js", "SPEC.md", "README.md", "AGENTS.md", ".specsync/", "specs/ThreeMD/", ".github/workflows/trust.yml", ".trust.toml", "docs/EDITING-RELEASE.md"]
+owns = ["Sources/ThreeMDInterop/", "Tests/ThreeMDTests/", "Examples/", "js/", "rust/", "conformance/", "scripts/", "Package.swift", "fledge.toml", "web/assets/three-md.js", "SPEC.md", "README.md", "AGENTS.md", ".specsync/", "specs/ThreeMD/", ".github/workflows/trust.yml", ".trust.toml", "docs/EDITING-RELEASE.md"]
