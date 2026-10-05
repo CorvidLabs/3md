@@ -1,4 +1,4 @@
-# Lesson bundle — limit-github-token-to-contents-read-in-the-ui-trust-and-cargo-publish-workflows
+# Lesson bundle: limit-github-token-to-contents-read-in-the-ui-trust-and-cargo-publish-workflows
 
 Material for folding this change's lessons into the affected specs' `context.md`.
 Synthesise from what actually happened below; do not restate the change description.
