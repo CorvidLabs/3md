@@ -22,7 +22,13 @@ Uncompressed storage is the portable baseline. Unsupported compression is an exp
 
 TypeScript copies and freezes snapshot values and accepts an optional AbortSignal. Rust snapshots and compositions expose immutable accessors; operations take explicit OperationOptions with an optional cloneable CancellationToken. Swift continues its task cancellation checks where concurrency is available. Cancellation is cooperative during bounded work and never yields a partial published result.
 
-New canonical storage uses Swift-compatible finite-number spelling and NFC scalar key comparison while preserving original key spelling. Text decoding retains the first spelling and last assigned value of canonically equivalent metadata/attribute keys. Strict composition JSON rejects equivalent duplicate keys. Rust direct BTreeMap values containing equivalent distinct spellings are ambiguous without insertion history and are rejected; use the bounded decoder or supply NFC-unique keys. Rust pins unicode-normalization 0.1.25 for this comparison. Public port parse/serialize bodies and their text behavior remain unchanged. A private TypeScript whitespace helper is made linear after review reproduced quadratic work on otherwise valid bounded input.
+New canonical storage uses Swift-compatible finite-number spelling and NFC scalar key comparison while preserving original key spelling. Text decoding retains the first spelling and last assigned value of canonically equivalent metadata/attribute keys. Strict composition JSON rejects equivalent duplicate keys. Rust direct BTreeMap values containing equivalent distinct spellings are ambiguous without insertion history and are rejected; use the bounded decoder or supply NFC-unique keys. Rust pins unicode-normalization 0.1.25 for this comparison. The portable follow-up originally retained legacy parser bodies. The interchange follow-up repairs Unicode whitespace/source-key interpretation and scalar quoting where round trips revealed data loss. Parser signatures and frozen syntax remain. Legacy numeric spelling may differ, but reimport must preserve semantics. Signed zero normalizes to zero under the existing canonical wire contract.
+
+## Cross-language file interchange
+
+The `verify` lane now requires JavaScript typechecking, distributable JavaScript/declaration builds and a Node public-package runtime check. `swift run threemd-interchange` drives all nine Swift/TypeScript/Rust writer-reader pairs after JavaScript and Rust adapters are built. The mandatory [catalog](../conformance/interchange/README.md) covers fixed wire goldens, legacy vectors, Unicode/quoting and generated finite coordinates, composition graphs, imported identity edits and rejected hostile inputs. The development JSON-lines protocol is not a public snapshot/patch interchange format.
+
+This gate establishes passing declared cases at the tested commit. It does not prove every possible input, all operating systems or optional Apple LZFSE support in the other ports. Swift rendering helpers, idiomatic coding surfaces and browser viewer features remain separate capabilities. Direct Rust maps with ambiguous Unicode-equivalent keys remain an explicit validation error; source decoding has portable reconstruction semantics.
 
 ## Stable identities
 
@@ -106,3 +112,16 @@ That receipt is PR61's historical Swift-first implementation. Portable follow-up
 Actual scoped agent review passed after reproducing Unicode key equivalence/order, NaN diagnostic classification, forged TypeScript policy objects, large-number canonical formatting and quadratic whitespace trimming; the ports carry focused regressions. Trust passed with the unchanged soft provenance degradation, not a permitted signature or independent human approval. Only the derived web bundle is refreshed with unchanged element source and the existing drift gate. Its parser helper retains behavior with bounded linear trimming, and new root exports change deterministic minifier allocation. Element/dist is untouched. This does not add a hosted binary/composition editor.
 
 A separate deterministic probe compares 100,000 finite IEEE754 samples from Swift with each port's actual storage output; both repaired writers have zero mismatches. This is additional sampled evidence, not exhaustive proof over all floating-point values. The TypeScript whitespace probe uses nine-sample medians: bounded decoding is 0.076 ms at 4,000 spaces, 0.142 ms at 16,000 and 6.510 ms at 1,000,000. Those local measurements qualify the regression repair, not a runtime latency guarantee. Semantic tests separately preserve interior spaces/tabs and verify text/binary round trips.
+
+The interchange follow-up's complete pinned Trust lane passed at source
+`55efdaab7efd2a12e78f3602af35c7e7b08322c0`: 244 Swift tests, 141 TypeScript
+tests, 31 Rust tests and three doctests, required package typechecking/build,
+bundle drift and editor grammar. Its 426-case public-API matrix passes all nine
+producer/consumer pairs with 16,983 imported outputs. The final catalog guard at
+`6b6be79eeda12b7ff20b5a06b2c2470a94de0eee` also passes that matrix and the
+bounded protocol/watchdog regressions. Three actual agent reviews found and
+closed scalar Unicode, exact-key comparison and supervision defects. Reviewers
+state their implementation/fixture authorship and complementary peer coverage;
+these are technical agent records, not human approval or permitted signatures.
+The new scope's official verification, finalization and publication retain their
+own exact commit records. Historical receipts remain unchanged.

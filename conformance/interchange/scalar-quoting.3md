@@ -1,0 +1,12 @@
+---
+3md: "'v2'"
+axis: "'custom'"
+title: "'quoted'"
+edge-space: " both "
+empty: ""
+escaped: "one\\two\"three"
+literal: "'quoted'"
+---
+
+@plane z=0 label="quote \" and \\ and '" id="opaque" path="C:\\models\\one"
+# Scalars

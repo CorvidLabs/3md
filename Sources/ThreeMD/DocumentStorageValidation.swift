@@ -64,8 +64,8 @@ internal enum DocumentStorageValidation {
         }
         for key in document.metadata.keys.sorted() {
             try DocumentStorageCancellation.check()
-            guard !["3md", "axis", "title"].contains(key.lowercased()), !key.contains(":"),
-                !key.trimmingCharacters(in: .whitespaces).hasPrefix("#")
+            guard !["3md", "axis", "title"].contains(key.lowercased()), !key.utf8.contains(58),
+                key.trimmingCharacters(in: .whitespaces).utf8.first != 35
             else {
                 throw DocumentStorageError.invalidDocument("Metadata keys cannot shadow reserved fields or comments.")
             }
@@ -85,7 +85,8 @@ internal enum DocumentStorageValidation {
             if let y = plane.y { try writer.append(" y=\(y.formatted3MD())") }
             for key in plane.attributes.keys.sorted() {
                 try DocumentStorageCancellation.check()
-                guard !["z", "x", "y", "label"].contains(key.lowercased()), key == key.lowercased(), !key.contains("=")
+                guard !["z", "x", "y", "label"].contains(key.lowercased()), key == key.lowercased(),
+                    !key.utf8.contains(61)
                 else {
                     throw DocumentStorageError.invalidDocument(
                         "Attribute keys must be lowercase and cannot shadow coordinates or labels."
@@ -169,12 +170,14 @@ internal enum DocumentStorageValidation {
             if !body { if trimmed == "---" { body = true }; continue }
             var directive = false
             if let open = fence {
-                if trimmed.hasPrefix(String(repeating: open, count: 3)) { fence = nil }
-            } else if trimmed.hasPrefix("```") {
+                if trimmed.utf8.starts(with: String(repeating: open, count: 3).utf8) { fence = nil }
+            } else if trimmed.utf8.starts(with: "```".utf8) {
                 fence = "`"
-            } else if trimmed.hasPrefix("~~~") {
+            } else if trimmed.utf8.starts(with: "~~~".utf8) {
                 fence = "~"
-            } else if raw == "@plane" || raw.hasPrefix("@plane ") || raw.hasPrefix("@plane\t") {
+            } else if raw == "@plane" || raw.utf8.starts(with: "@plane ".utf8)
+                || raw.utf8.starts(with: "@plane\t".utf8)
+            {
                 directive = true
             }
             if directive {
@@ -218,9 +221,13 @@ private struct BoundedDocumentWriter {
             guard count <= maximumBytes - data.count else { throw DocumentStorageError.oversizedOutput }
         }
         guard count <= maximumBytes - data.count else { throw DocumentStorageError.oversizedOutput }
+        data.reserveCapacity(data.count + count)
         data.append(34)
-        let escaped = value.replacingOccurrences(of: "\\", with: "\\\\").replacingOccurrences(of: "\"", with: "\\\"")
-        data.append(contentsOf: escaped.utf8)
+        for (index, byte) in value.utf8.enumerated() {
+            if index.isMultiple(of: 65_536) { try DocumentStorageCancellation.check() }
+            if byte == 34 || byte == 92 { data.append(92) }
+            data.append(byte)
+        }
         data.append(34)
     }
 }

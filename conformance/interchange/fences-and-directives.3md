@@ -1,0 +1,20 @@
+---
+3md: "0.1"
+axis: "depth"
+---
+
+# Read first
+
+Preamble.
+
+@plane z=4
+```text
+@plane z=100
+```
+~~~swift
+@plane z=-99
+~~~
+    @plane z=7
+@plane-ish is text
+
+@plane z=-2 label="Empty"

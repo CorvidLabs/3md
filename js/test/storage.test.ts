@@ -162,6 +162,6 @@ describe("bounded portable storage", () => {
     expect(Object.keys(decoded.metadata)).toEqual(["e\u0301"]);
     expect(decoded.metadata["e\u0301"]).toBe("last");
     expect(Object.keys(decoded.planes[0]?.attributes ?? {})).toEqual(["e\u0301"]);
-    expect(Object.keys(parse('---\n3md: 1\ne\u0301: first\né: last\n---\n').metadata)).toEqual(["e\u0301", "é"]);
+    expect(Object.keys(parse('---\n3md: 1\ne\u0301: first\né: last\n---\n').metadata)).toEqual(["e\u0301"]);
   });
 });

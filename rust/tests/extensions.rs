@@ -295,9 +295,9 @@ fn swift_unicode_key_order_and_source_collision_semantics_match() {
         storage::decode(&encode(&decoded), &limits(), &options()).unwrap(),
         decoded
     );
-    // The legacy raw parser retains its established raw-key behavior.
+    // Raw and bounded parsing now share Swift's source-order key semantics.
     let raw = parse(std::str::from_utf8(&collision).unwrap()).unwrap();
-    assert!(raw.metadata.contains_key("é"));
+    assert_eq!(raw, decoded);
     assert!(raw.metadata.contains_key("e\u{301}"));
     assert_eq!(
         composition::decode(

@@ -114,14 +114,18 @@ final class DocumentStorageTests: XCTestCase {
         }
     }
 
-    func testStorageDoesNotChangeExistingTextGrammarOrSerializer() throws {
+    func testStorageRetainsTextGrammarAndLegacySerializerPreservesLiteralQuotes() throws {
         let source = "---\n3md: 9.5\ncustom: first\ncustom: last\n---\n@plane z=0 custom=first custom=last\nbody\n"
         let existing = try Parser().parse(source)
         XCTAssertEqual(try DocumentStorageCodec.decode(Data(source.utf8)), existing)
         XCTAssertEqual(existing.metadata["custom"], "last")
         XCTAssertEqual(existing.planes.first?.attributes["custom"], "last")
         let document = Document(version: "1.0", axis: .layer, title: "'quoted'", planes: [])
-        XCTAssertTrue(Serializer().render(document).contains("title: 'quoted'"))
+        let legacy = Serializer().render(document)
+        XCTAssertTrue(legacy.contains("title: \"'quoted'\"\n"))
+        let reparsed = try Parser().parse(legacy)
+        XCTAssertEqual(reparsed, document)
+        XCTAssertEqual(reparsed.title.map { Array($0.utf8) }, document.title.map { Array($0.utf8) })
         XCTAssertTrue(
             String(decoding: try DocumentStorageCodec.encode(document), as: UTF8.self).contains("title: \"'quoted'\"")
         )

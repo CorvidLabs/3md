@@ -9,6 +9,13 @@ label and ordered Markdown planes without assigning application semantics to
 their content. The original text grammar remains frozen and shared between
 Swift, TypeScript and Rust through the existing conformance fixtures.
 
+The current interchange follow-up adds a Swift development coordinator and
+language adapters that exercise every writer/reader pair. It repairs existing
+Unicode whitespace/source-key interpretation and lossless scalar quoting without
+new grammar or parser signatures. Canonical bytes are exact across languages;
+legacy text must preserve its representable semantics. Signed zero normalizes
+to zero. Optional Apple compression is distinct from portable storage.
+
 The Swift target also contains the existing HTML and Markdown renderers. This
 change adds bounded general Document storage and named-document composition.
 They do not introduce voxel grids, assets, placement transforms, file resolvers,
@@ -27,7 +34,7 @@ commands or claim implementation in the language ports or viewer.
 - CRC-32 checks corruption, not authenticity. Explicit lengths, flags and
   resource limits prevent ambiguous or unbounded decoding.
 - A new canonical storage writer quotes all scalar values and checks semantic
-  round trips. Parser and Serializer are left unchanged.
+  round trips. Narrow legacy compatibility repairs preserve their APIs and syntax.
 - Composition stores each named Document once, preserving each axis and opaque
   reference attributes. IDs resolve solely within the supplied library.
 - Validation covers unused definitions as well as the root, preventing hidden
@@ -50,7 +57,11 @@ DocumentComposition.swift owns the graph/value model and graph validation.
 DocumentCompositionLimits.swift owns policies and typed failures.
 DocumentCompositionCodec.swift owns the profile boundary.
 DocumentCompositionJSON.swift owns bounded strict manifest scanning/writing.
-All new feature implementation is Swift.
+The original foundation implementation is Swift. Portable storage/composition
+and editing now also exist in TypeScript and Rust. Sources/ThreeMDInterop owns
+the development-only coordinator/protocol/Swift adapter; js/scripts and the Rust
+example own the corresponding adapters. Process/file I/O is in development
+tools only, outside the ThreeMD library.
 
 ## Governance
 

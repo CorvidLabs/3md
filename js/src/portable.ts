@@ -5,20 +5,26 @@ export function checkCancellation(signal?: AbortSignal): void {
   signal?.throwIfAborted();
 }
 
-/** Linear ASCII space/tab trimming, including near-matches with a long interior whitespace run. */
-export function trimASCIIWhitespace(value: string, signal?: AbortSignal): string {
+/** Foundation CharacterSet.whitespaces, pinned independently of JavaScript's trim and Unicode regex tables. */
+export function isFoundationWhitespace(unit: number): boolean {
+  return unit === 0x0009 || unit === 0x0020 || unit === 0x00a0 || unit === 0x1680 ||
+    (unit >= 0x2000 && unit <= 0x200b) || unit === 0x202f || unit === 0x205f || unit === 0x3000;
+}
+
+/** Linear trimming preserves the frozen Foundation whitespace behavior on every runtime. */
+export function trimFoundationWhitespace(value: string, signal?: AbortSignal): string {
   let start = 0;
   let end = value.length;
   while (start < end) {
     if (start % 4096 === 0) checkCancellation(signal);
     const unit = value.charCodeAt(start);
-    if (unit !== 32 && unit !== 9) break;
+    if (!isFoundationWhitespace(unit)) break;
     start += 1;
   }
   while (end > start) {
     if (end % 4096 === 0) checkCancellation(signal);
     const unit = value.charCodeAt(end - 1);
-    if (unit !== 32 && unit !== 9) break;
+    if (!isFoundationWhitespace(unit)) break;
     end -= 1;
   }
   return start === 0 && end === value.length ? value : value.slice(start, end);

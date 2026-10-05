@@ -1,0 +1,12 @@
+﻿	
+
+---
+3md: "0.1"
+axis: " SpAcE "
+title: " edge "
+---
+
+@plane	z=-0	label="Hello"
+	
+# Body
+	

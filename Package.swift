@@ -6,6 +6,7 @@ let package = Package(
     products: [
         .library(name: "ThreeMD", targets: ["ThreeMD"]),
         .executable(name: "threemd", targets: ["ThreeMDCLI"]),
+        .executable(name: "threemd-interchange", targets: ["ThreeMDInterop"]),
     ],
     targets: [
         .target(
@@ -29,6 +30,11 @@ let package = Package(
             swiftSettings: [
                 .enableExperimentalFeature("StrictConcurrency")
             ]
+        ),
+        .executableTarget(
+            name: "ThreeMDInterop",
+            dependencies: ["ThreeMD"],
+            path: "Sources/ThreeMDInterop"
         ),
     ]
 )

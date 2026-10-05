@@ -78,6 +78,25 @@ Leif will merge the prepared PRs. This work does not merge them, push main,
 publish a version, tag a release or deploy. Sculpt remains Swift-only with
 ThreeMD 1.8.1 until separately verified dependency adoption is authorized.
 
+## Mandatory file interchange
+
+Leif directly requested that all supported languages import/export each other's
+files. The new SpecSync 6 scope requires a Swift development coordinator driving
+the public Swift, built TypeScript package in Node, and Rust adapters. Every
+catalog case and all nine writer/reader pairs are mandatory for canonical text,
+portable uncompressed binary and self-contained composition. Identity adoption,
+imported edits and exact revisions are tested on those same files. Existing
+signed-zero normalization remains explicit. LZFSE is still optional Apple-only.
+
+Repair confirmed Unicode trimming, source-key reconstruction and scalar quoting
+defects without changing the frozen grammar or parser signatures. Orchestration
+is Swift; test adapters use the library language. The coordinator may start
+development processes; the ThreeMD library remains pure without file/network
+I/O or process execution. Run the complete lane once through root, including
+JavaScript typechecking/declaration build and Node runtime interchange. Preserve
+archives, old conformance fixtures, signer policies and element/dist. This scope
+does not authorize merging, releasing, pushing main or a Sculpt dependency bump.
+
 <!-- CorvidLabs trust toolchain: BEGIN (managed, do not edit inside) -->
 ## CorvidLabs trust toolchain
 
