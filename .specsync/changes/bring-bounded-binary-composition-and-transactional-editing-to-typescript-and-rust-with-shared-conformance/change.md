@@ -1,6 +1,6 @@
 ---
 id: bring-bounded-binary-composition-and-transactional-editing-to-typescript-and-rust-with-shared-conformance
-state: implementing
+state: verifying
 type: feature
 base_commit: 2dc2bd4cfb387bd3365b65b259c912b79bb0f962
 ---
