@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "workflow_version": 2,
+  "workflow_origin_version": 2,
+  "id": "prepare-coherent-threemd-2-0-0-package-metadata-and-honest-capability-and-migration-release-notes",
+  "slug": "prepare-coherent-threemd-2-0-0-package-metadata-and-honest-capability-and-migration-release-notes",
+  "title": "Prepare coherent ThreeMD 2.0.0 package metadata and honest capability and migration release notes",
+  "description": "Prepare coherent ThreeMD 2.0.0 package metadata and honest capability and migration release notes",
+  "kind": "documentation",
+  "state": "approved",
+  "base_commit": "9dfbdb649891a95f27e7590e9e6ddc72b9e58d08",
+  "created_at": 1791220529,
+  "updated_at": 1791220708,
+  "affected_specs": [
+    "ThreeMD",
+    "ThreeMDElement"
+  ],
+  "affected_paths": [
+    "AGENTS.md",
+    "CHANGELOG.md",
+    "README.md",
+    "docs/EDITING-RELEASE.md",
+    "docs/RELEASE-2.0.0.md",
+    "js/package.json",
+    "element/package.json",
+    "editor/vscode/package.json",
+    "rust/Cargo.toml",
+    "rust/Cargo.lock"
+  ],
+  "no_spec_change": true,
+  "no_spec_change_rationale": "Only package version declarations and current release documentation change. The existing ThreeMD, CLI and element behavior, public API, text grammar, binary/profile versions, runtime policies, conformance fixtures and canonical requirements are unchanged.",
+  "acceptance_criteria": [
+    "All JS library, element, VSCode and Rust package manifests plus Rust root lock declare 2.0.0; Swift remains tag-versioned. Prepared release notes accurately distinguish package version from unchanged text1.0, binary1 and composition3md-composition-1 contracts. Migration documents legacy compatibility, optional Apple LZFSE, platform and signed-provenance gaps, app-specific Sculpt formats and a separately verified dependency adoption. Source, fixture, element/dist, archived lifecycle and workflow/policy bytes stay unchanged. Focused manifest/lock/package inspections pass and root runs the exact-tip pinned Trust lane before closure. No tag, publication, deploy or policy changes occur."
+  ],
+  "selected_artifacts": [
+    "context",
+    "docs",
+    "design",
+    "tasks"
+  ],
+  "dependencies": [],
+  "answers": {
+    "architecture_risk": "no",
+    "public_contract": "no"
+  }
+}

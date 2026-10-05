@@ -97,6 +97,16 @@ JavaScript typechecking/declaration build and Node runtime interchange. Preserve
 archives, old conformance fixtures, signer policies and element/dist. This scope
 does not authorize merging, releasing, pushing main or a Sculpt dependency bump.
 
+## Current 2.0.0 release preparation authority
+
+On 2026-10-05 Leif directly requested: "Ok can we merge all the PRs and prep 2.0.0? Also can we use all this in sculpt.3md and continue working on sculpt". Root coordinates GitHub merges and the separately verified Sculpt adoption. Earlier notes that Leif would merge later or Sculpt must remain on 1.8.1 describe the earlier scope and do not block this new request.
+
+Root reports the combined feature tree landed through PR61 at main commit `9dfbdb649891a95f27e7590e9e6ddc72b9e58d08`, byte-identical to feature tip `20d1ed4f04333e18c36a50a44bf10e1b0e9b72e6`. Historical approvals and verification pins stay unchanged.
+
+The release-preparation agent owns synchronized 2.0.0 manifests, the Rust root lock version and honest release/capability/migration prose under a new SpecSync 6 definition. Its actor is `agent:codex-threemd-editing`, acting under Leif's direct preparation authority. Agent definition approval is not a claim that Leif reviewed the diff, an independent human review or a permitted signature. Canonical behavior, public APIs, source, fixtures, dependency versions, release workflows, policies, old archives, the managed block and `element/dist/` stay unchanged in this metadata slice. Root owns the complete pinned Trust lane and lifecycle closing.
+
+This request authorizes preparation and configured-gate merges, not a tag, package publication, release, deployment, changed protections, policy weakening or invented signed provenance. Linux/Windows runtime parity and permitted signed attestation remain explicit release gaps. Uncompressed interchange is portable; optional LZFSE stays Swift/Apple only. Sculpt keeps its app-specific legacy schemas unless a separately verified explicit migration is implemented.
+
 <!-- CorvidLabs trust toolchain: BEGIN (managed, do not edit inside) -->
 ## CorvidLabs trust toolchain
 
