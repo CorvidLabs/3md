@@ -1,0 +1,45 @@
+{
+  "approvals": [
+    {
+      "gate": "definition",
+      "actor": "agent:codex-root",
+      "timestamp": 1791206536,
+      "digest": "204d562aa67182795ffae97fc5646853970dad4cf8c73eced6d4edc97b7d15cc",
+      "note": "Executing agent records the bounded scope under Leif direct instruction: Ok do it and prep; Leif will merge later. This records delegated preparation authority and does not claim Leif reviewed an implementation diff or an independent human review. No merge release signer or policy authority is inferred.",
+      "approved_scope": {
+        "schema_version": 1,
+        "change_id": "add-stable-document-identities-transactional-patches-and-diagnostics-for-release-preparation",
+        "title": "Add stable document identities transactional patches and diagnostics for release preparation",
+        "description": "Add stable document identities transactional patches and diagnostics for release preparation",
+        "kind": "feature",
+        "affected_specs": [
+          "ThreeMD"
+        ],
+        "affected_paths": [
+          ".specsync/config.toml",
+          "README.md",
+          "SPEC.md",
+          "Sources/ThreeMD/",
+          "Tests/ThreeMDTests/",
+          "docs/EDITING-RELEASE.md",
+          "specs/ThreeMD/"
+        ],
+        "no_spec_change": false,
+        "no_spec_change_rationale": null,
+        "acceptance_criteria": [
+          "Optional stable plane IDs survive text and binary round trips without changing existing parsing or z links; immutable Sendable typed patches apply atomically with bounded operation counts and exact revision preconditions; duplicate IDs invalid coordinates missing targets stale revisions and cancellation return structured diagnostics with no partial document; release docs publish Swift-first capabilities migration examples and a compatibility matrix; the full pinned Trust lane and strict SpecSync pass with actual evidence; feature PRs remain open for Leif to merge and no release is published."
+        ],
+        "dependencies": [],
+        "supersedes": [],
+        "answers": {
+          "architecture_risk": "yes",
+          "public_contract": "yes"
+        }
+      },
+      "approved_delta_digests": {
+        "ThreeMD": "5fe0d2a4ede5e1a83f453dda5c2daead338663ab71c58bf9a3ad9b42e6cc5ab3"
+      }
+    }
+  ],
+  "reopenings": []
+}
