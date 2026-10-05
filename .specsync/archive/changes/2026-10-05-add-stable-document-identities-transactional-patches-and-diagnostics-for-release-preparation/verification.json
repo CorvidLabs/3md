@@ -1,0 +1,567 @@
+{
+  "timestamp": 1791208712,
+  "commit": "a89d0c401f7f6b749e9f2ec4982b7a0dc063776f",
+  "contract_digest": "204d562aa67182795ffae97fc5646853970dad4cf8c73eced6d4edc97b7d15cc",
+  "execution_digest": "d7db2eeb3809aff5d41e0de4803bf7eaee2e3975fd581d837286aee22a09ed23",
+  "workspace_digest": "fb3a156c0e46b582a7ab028b714ac5618fd24ce63749a48ff4c4a03c7cfed5fe",
+  "acceptance_input_digest": "0659663ddd612b65dad1dbed6f33a0d542150fc0b801605dab9d9438cba86bf3",
+  "acceptance_manifest": {
+    "schema_version": 1,
+    "entries": [
+      {
+        "path": ".specsync/config.toml",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "7fe20146798fd7126560e634694c8825f9dcc70b6d3a00406c9c15e2e21a8f45",
+        "entry_digest": "79468790ec5ce83c052001769ee9e9ada8777a4fad58d462f008671c8178e8d3",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "README.md",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "4852891ae50aa6750332edbc9df4c15228b6fe75f3131a35bcf8659e6766ab64",
+        "entry_digest": "9a5c406506d7be9764c67fa7e0825cae8c6986edfb79510e5382ce8b1cb4d345",
+        "owners": [
+          "ThreeMD"
+        ]
+      },
+      {
+        "path": "SPEC.md",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "f9d5f0513672d5f1530b50ca41dfef1f44fc2f1867130aced99c2eadf72c60d5",
+        "entry_digest": "08248d82bd393e05917117b0e752e688c3e4e7cfe9dc4ef0c3211d1198d8deb9",
+        "owners": [
+          "ThreeMD"
+        ]
+      },
+      {
+        "path": "Sources/ThreeMD/Axis.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "2b2f7cd300a83ff29ae8e41b0047feb2a145dc5045975ba885ff649bc3e825ce",
+        "entry_digest": "8fde29872d62778a457e2bf8c89f8e0219e95669d1836a9380762fb1a14c9dea",
+        "owners": [
+          "ThreeMD"
+        ]
+      },
+      {
+        "path": "Sources/ThreeMD/CrossPlaneLink.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "3eb6b119775eb7165b5415e7c8ab071b305d8b8b3f2074e1d1c00ae77ba0f955",
+        "entry_digest": "375e7a8bf7bce11b225e722e552fe4a07b21b777c51c5183868a24973dc5362b",
+        "owners": [
+          "ThreeMD"
+        ]
+      },
+      {
+        "path": "Sources/ThreeMD/CrossPlaneLinkEdge.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "afb1afa4d30d457fd5d2eb5c6e6ca829924629e27e752b633fcf0ea6287027dd",
+        "entry_digest": "dca5b2885af6462462e73b02783ea8143bcb3875c19c134421bf352cd7eb951d",
+        "owners": [
+          "ThreeMD"
+        ]
+      },
+      {
+        "path": "Sources/ThreeMD/Document+Links.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "48a2d74fd87006c25effd01c000ddbd874b7858e93ee94c223a8800d36f4e70a",
+        "entry_digest": "69538fdd68e3dd2efa2e3f8f89053d68d61773eedacd2d1befa4b61a88dcdad4",
+        "owners": [
+          "ThreeMD"
+        ]
+      },
+      {
+        "path": "Sources/ThreeMD/Document.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "2308433c7a8c82acbe49749cb23b7020807b5ee022b8e8b01726b38af59342e7",
+        "entry_digest": "773cf23ee5b9109e3cc8d976dd93d878fddf8ec92c0c54ed72149111bcdcdf3b",
+        "owners": [
+          "ThreeMD"
+        ]
+      },
+      {
+        "path": "Sources/ThreeMD/DocumentComposition.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "1c7fd139e9ba95eb28f59a08174566e8bd2b07d9334c9905595982d9bb88c025",
+        "entry_digest": "b274ccf35b6bb01ee8837adca1a085cf4c5dc194f37a92f8d51d64b080b1391d",
+        "owners": [
+          "ThreeMD"
+        ]
+      },
+      {
+        "path": "Sources/ThreeMD/DocumentCompositionCodec.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "246dc55a35d05847a04b510b0ae410cb0f4fecdf2697e6f6b42240a7651eb1c9",
+        "entry_digest": "87478ac343fb06fee5e2f47f07004c548b9b5afda900a00de73ef63a9c073bbb",
+        "owners": [
+          "ThreeMD"
+        ]
+      },
+      {
+        "path": "Sources/ThreeMD/DocumentCompositionEditing.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "3c0b8ff9c1f044a2e02fcf3a0683f0c57b6062d7c32287a7c08bbd2ca8f4607a",
+        "entry_digest": "9ee2c8668b19b3ef7fde3a2addba37977baea30d16cc3b8af0714b1a3e369f35",
+        "owners": [
+          "ThreeMD"
+        ]
+      },
+      {
+        "path": "Sources/ThreeMD/DocumentCompositionJSON.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "7ce038bf1ab51f71a60a48e1dac535306c129fed8d4bf694e698aed7994beedd",
+        "entry_digest": "5105992df33ee3f01d5c2ca90b86708fa9adff4d7d7148a262739083034d593c",
+        "owners": [
+          "ThreeMD"
+        ]
+      },
+      {
+        "path": "Sources/ThreeMD/DocumentCompositionLimits.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "aa780deeabd1a910a739769155c1d8d319736d9a19d776d57eab716b31a136c7",
+        "entry_digest": "b28ad9a6c6c8b83d38d6bcf904d2075f5c8ec7911862fb40535d17a2ed63d1b8",
+        "owners": [
+          "ThreeMD"
+        ]
+      },
+      {
+        "path": "Sources/ThreeMD/DocumentDiagnostics.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "77fb9cd1cbd1973f5fe2fb3f0e040a9924fcfd21bd9402c6b7f80ed1ae4b7542",
+        "entry_digest": "9f6b613335aeef6b1c18660a1eeab7a9274713eeecff2147fb2101be50e712fd",
+        "owners": [
+          "ThreeMD"
+        ]
+      },
+      {
+        "path": "Sources/ThreeMD/DocumentEditing.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "7faf628a12f0c2bf408b7b6f074465df9da1a68b8c24df6fd22e3ecfc3945e0a",
+        "entry_digest": "e07d1c78bc934d6ee878fac7943f65e8037f92615800f0adbfdf8d75799bbc47",
+        "owners": [
+          "ThreeMD"
+        ]
+      },
+      {
+        "path": "Sources/ThreeMD/DocumentEditingTypes.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "b084d251a955b08226588edcc78af352b99ca9eccecc03c4905d653813ce0384",
+        "entry_digest": "2c8e5b32f8c720871792ca13c61fec0cd383fb0368c7b0fd71cd78c66e606f52",
+        "owners": [
+          "ThreeMD"
+        ]
+      },
+      {
+        "path": "Sources/ThreeMD/DocumentIdentity.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "44ca06d9725967d1412b57fdc8cb77f5e68040f226060abf514d29d2e4e55fab",
+        "entry_digest": "12390a550ca328a554e180704b18ee050b47d365a2b368054011bbdcfb52faa3",
+        "owners": [
+          "ThreeMD"
+        ]
+      },
+      {
+        "path": "Sources/ThreeMD/DocumentStorage.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "2c98adb876554937bbe743c3b6174725ee21890b116e4d1cdc10a00b456e1b92",
+        "entry_digest": "15b4062ad65293bc371d99cc2c60a28d7efd3d63dddf24ef0b1e42a2a16657a2",
+        "owners": [
+          "ThreeMD"
+        ]
+      },
+      {
+        "path": "Sources/ThreeMD/DocumentStorageCodec.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "0d056d3995db5c38f3e57ec9812ce2bd34832681dd7363001da43b263b24b4ac",
+        "entry_digest": "b041a21f57bbf45ab4c7f0ea74ec383d299f3687ada0b9c9589e4584ff091a77",
+        "owners": [
+          "ThreeMD"
+        ]
+      },
+      {
+        "path": "Sources/ThreeMD/DocumentStorageCompression.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "02b9b7540473233bd6e8208ac21f59b19e6a7f2371c6fb74f3a480769f14802e",
+        "entry_digest": "ca88a68d740e94c324c16046ce71f72360facf1491aa32df4a1f914d9a905da7",
+        "owners": [
+          "ThreeMD"
+        ]
+      },
+      {
+        "path": "Sources/ThreeMD/DocumentStorageValidation.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "e74001e493594f4497859dcf79d602c0729fe9feac707a2ab46944ee1e943e42",
+        "entry_digest": "47bb09efb7fbc4023cd51ecb61c3045531bcf7431bb2a5340f7f978295928d31",
+        "owners": [
+          "ThreeMD"
+        ]
+      },
+      {
+        "path": "Sources/ThreeMD/Double+ThreeMD.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "30b70d217c1a27bc8a3277cb69ab0ce4cca48510ce3a7c880a222d814f61a96b",
+        "entry_digest": "fd3d537b1e085f12ff2bb3c3755c6b1f82b9a1abb4c7430b179658349d650127",
+        "owners": [
+          "ThreeMD"
+        ]
+      },
+      {
+        "path": "Sources/ThreeMD/FiniteDecimal.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "e36a98a7b07ad2bc7d0121d5af661634106bf551650d39509eb5b4578ebb6e70",
+        "entry_digest": "f8afed6bbf6ee100e96ccab4e80b6216af0b7bf7cb9ce5e3b66bf08b742d4eaf",
+        "owners": [
+          "ThreeMD"
+        ]
+      },
+      {
+        "path": "Sources/ThreeMD/HTMLRenderer.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "3c22081efd127ae604ffbde538915dad50eadc5dac04539b5730c583e4f0c5e4",
+        "entry_digest": "874b0b45d452fc0bbc3464a1b398349718dcdd82c511c4e2e01a1b592c82896a",
+        "owners": [
+          "ThreeMD"
+        ]
+      },
+      {
+        "path": "Sources/ThreeMD/MarkdownRenderer.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "55aa619de6841ede744066c8076b4d30a14334715f847af3f0f062e4520340d0",
+        "entry_digest": "6eda36739dee3d881ef25bf83dea5792ea87c421945b0bee3ef23b5e7f453142",
+        "owners": [
+          "ThreeMD"
+        ]
+      },
+      {
+        "path": "Sources/ThreeMD/ParseError.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "b200c24afc62a2ca857246a328e79515c417e7ced5ab612750dea7cda165db97",
+        "entry_digest": "ffa025151870b81e1ba59bc9f6f52c60c27f9dff5222eeb39d7419363f4e9632",
+        "owners": [
+          "ThreeMD"
+        ]
+      },
+      {
+        "path": "Sources/ThreeMD/Parser.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "839910f22fce54305dd50877bf4e2ec75d9adfffd3cfc1f39f0364e1315e306e",
+        "entry_digest": "160f307753b28b3b0db840e97dc793869d1bdb495f0e730ec9d44eac8a132547",
+        "owners": [
+          "ThreeMD"
+        ]
+      },
+      {
+        "path": "Sources/ThreeMD/Plane.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "a275e4844e7fa062ba2210441bef3e8ed971134e2ea53eecd1d97b279ba75f21",
+        "entry_digest": "fc613d5fd2164028765ba3b68f7cbdfcdd4836944169f6418e8ebb0d92358c84",
+        "owners": [
+          "ThreeMD"
+        ]
+      },
+      {
+        "path": "Sources/ThreeMD/Serializer.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "9f912e4a0f35c362c33ba2f36c812a40fc986cc75c4fa0b5eb463465b761823b",
+        "entry_digest": "f1950da1d056d5450f8220f7651dab3fc0b529411493008e321c4c747451b6af",
+        "owners": [
+          "ThreeMD"
+        ]
+      },
+      {
+        "path": "Sources/ThreeMD/ThreeMDAnchor.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "e959b0487b490cc6592ef2b834e90f88395f4bf21ed54828e2a2c3722e0bb610",
+        "entry_digest": "aeef74126d3ff75ca2d65bde8352adb8a74f6a3c06531a767fbdcfe15a7a1325",
+        "owners": [
+          "ThreeMD"
+        ]
+      },
+      {
+        "path": "Tests/ThreeMDTests/CompositionEditingTests.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "61aae60e1e335916acfb6a98bdb12064809858207ad3a3e4b048a20ec90fe0d1",
+        "entry_digest": "1cb4f2b2e509f7e8ebb5b1499d14fa7bff875bd2e2dade526ac628c6c8fbad5b",
+        "owners": [
+          "ThreeMD"
+        ]
+      },
+      {
+        "path": "Tests/ThreeMDTests/ConformanceTests.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "e1f8345a4ebd56428834c20bd78eb6b059930566c0e07fc746b47b497a01e29e",
+        "entry_digest": "2cd123ae022e0b384fb2fb14d6f4a32ca2847779c3fc8ac4277e830d59fe0220",
+        "owners": [
+          "ThreeMD"
+        ]
+      },
+      {
+        "path": "Tests/ThreeMDTests/CrossPlaneLinkHTMLTests.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "2e4876d672a2112483aac8d05b28a3f803dd136b91a6563fe6526e6d509a05c4",
+        "entry_digest": "7d0649973c8ee1e2f5c0d3b04e5d66631e92c94cf307fc4ac06ae1ef30e6c5f4",
+        "owners": [
+          "ThreeMD"
+        ]
+      },
+      {
+        "path": "Tests/ThreeMDTests/CrossPlaneLinkTests.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "ee9ba8e83b1257159ed5f06e4500a1c6618db666737c4d0496dd0c28b7950549",
+        "entry_digest": "5f4ee13c677f6d214db54890c9ad50dc50268502ca4c1a123eebce9e9e188eb1",
+        "owners": [
+          "ThreeMD"
+        ]
+      },
+      {
+        "path": "Tests/ThreeMDTests/DocumentCompositionCodecTests.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "2515b2fb36afa067dbb845ce5f30f9303564c34963d15001280499bd05194975",
+        "entry_digest": "35c1ddfc8750019df36b4ec4362a51771f100177e9188972fac00c431f3d1718",
+        "owners": [
+          "ThreeMD"
+        ]
+      },
+      {
+        "path": "Tests/ThreeMDTests/DocumentCompositionTests.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "78e8366f9c0f0bd540d021473fde07f1955015fde7b6eb34c30eefcfeb23ec4f",
+        "entry_digest": "71c222123246caec25bb2a8c70be9cbfdf9ab82b4f58f19411d46a95061ac9ea",
+        "owners": [
+          "ThreeMD"
+        ]
+      },
+      {
+        "path": "Tests/ThreeMDTests/DocumentDiagnosticTests.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "2e695116d38bf6e2c6d035424497b11d39ac5019e30586c3f2db70043a192b27",
+        "entry_digest": "7a98c9e689e0e91d8376eef74a390811bc72db4e7d9ccff7d70c5ccf73e62b3b",
+        "owners": [
+          "ThreeMD"
+        ]
+      },
+      {
+        "path": "Tests/ThreeMDTests/DocumentEditingTests.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "3feb80399acb689bc2e562e59a4147962c51bf9e292e9b5722011f3b6bfd58d1",
+        "entry_digest": "f7a550b37865b4a6f24eaf65b58f0316e8376a5241cf891c741b550c2791249e",
+        "owners": [
+          "ThreeMD"
+        ]
+      },
+      {
+        "path": "Tests/ThreeMDTests/DocumentIdentityTests.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "f76d629b48272c12ca6ae0dd8c6e29b21e8f130fc2d0209161987e46dcb5aa72",
+        "entry_digest": "f0a72732942686227aea4475e263ea718c90287a11ea7212445739cd96615f93",
+        "owners": [
+          "ThreeMD"
+        ]
+      },
+      {
+        "path": "Tests/ThreeMDTests/DocumentStorageBoundsTests.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "65db4829420533613d7791e9ad8f26e79a0319886e1d7acd1d47379897ac733a",
+        "entry_digest": "7bc68cb3681a7bca7326b119e625bb2e8a84b5b5066699183f101b2c817c2eeb",
+        "owners": [
+          "ThreeMD"
+        ]
+      },
+      {
+        "path": "Tests/ThreeMDTests/DocumentStorageCompressionTests.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "ec6d12e8cf442fdff28f8f9434b4107adc52ec00952b593139fc1ab17ce23362",
+        "entry_digest": "703ec3b61b1936558892e7a2b82cb3be23c9409fbecaba348208328892af8e22",
+        "owners": [
+          "ThreeMD"
+        ]
+      },
+      {
+        "path": "Tests/ThreeMDTests/DocumentStorageDecimalTests.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "032e2493507000266b75ad72ca4617764f14bf1b6bace18e70239c8bbcef2ef9",
+        "entry_digest": "6ccddbaa0408a4f9a3ef173d54d1e7fb7d78a83ca312ec86ed9cc04b46ee6ae6",
+        "owners": [
+          "ThreeMD"
+        ]
+      },
+      {
+        "path": "Tests/ThreeMDTests/DocumentStorageTests.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "811c00477b1bce643cded7aa2a454875e99ec228cbedfc636cb34402f1e5249f",
+        "entry_digest": "38db600d86642b410ef94700f807b0516367fb261ef086e4081b3d458873d929",
+        "owners": [
+          "ThreeMD"
+        ]
+      },
+      {
+        "path": "Tests/ThreeMDTests/HTMLRendererTests.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "f8349f3d6aba96fac430ad03d035060123170c9265eb721e907fe5d53e41022d",
+        "entry_digest": "7eda0d6c49c14cb49b4006615fe1670cd0fb250edaa54e69a8ae422656103b22",
+        "owners": [
+          "ThreeMD"
+        ]
+      },
+      {
+        "path": "Tests/ThreeMDTests/MarkdownRendererTests.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "837dd57237f2b24dd4bc9d56f3dc8d20dee00c424b2d12be5b022edfe3e1975e",
+        "entry_digest": "cad06c00c2ee3b3752f5e9189f214e093e4e559cded8725309c55054f84f231c",
+        "owners": [
+          "ThreeMD"
+        ]
+      },
+      {
+        "path": "Tests/ThreeMDTests/ParseErrorMetadataTests.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "7bc3af503e42fd99427b3c233b4efda47b2f5216985df5a3a7b389c3ac05fcba",
+        "entry_digest": "2c473a332b4700b651e16151f9b42340751941faf049eab53b9730fb2f7e22c4",
+        "owners": [
+          "ThreeMD"
+        ]
+      },
+      {
+        "path": "Tests/ThreeMDTests/ParserNumericTests.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "2612d5c6db206bd10237afc2cfd51dc3804befa94db20d99cdfd20d44788ccbf",
+        "entry_digest": "a1df3cf9fa980b8c1faeffc0b870e22fd6c228787ab776690a31cb9749b5ffdf",
+        "owners": [
+          "ThreeMD"
+        ]
+      },
+      {
+        "path": "Tests/ThreeMDTests/ParserTests.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "a51c22360464b1e7faddb9aecec5ef445e97a830853a17f6e026fe9ad6fc437d",
+        "entry_digest": "56954447c373b7606676da2ac2039631b1b6cff85229478238fea65c4ad2d18b",
+        "owners": [
+          "ThreeMD"
+        ]
+      },
+      {
+        "path": "docs/EDITING-RELEASE.md",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "9f44437456ce9ffd42fe0de41672b9e537c52bd8747c9fe099a53530cd6acbcb",
+        "entry_digest": "0e3ad1a8fa5489768c5c1a57be9b6b9150d9da270783ba68550d2fc1852e07d7",
+        "owners": [
+          "ThreeMD"
+        ]
+      },
+      {
+        "path": "specs/ThreeMD/ThreeMD.spec.md",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "ca85c88284d3e5af39a9ad7cc77b3fae47109583ea41fa83f1745a2233197a99",
+        "entry_digest": "f7d41c62c2434dec3660c88eab5eb866c2c0854977f5e010e2301b81d371173c",
+        "owners": [
+          "ThreeMD"
+        ]
+      },
+      {
+        "path": "specs/ThreeMD/context.md",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "469027e5932dd860b70b463d68e723f39297be9ccd2e267fa2faf21f076d0161",
+        "entry_digest": "b24b450ea6825c8ae97c0d0114e887c2b0fc955d5fa4f6d165383ce5bb3bae20",
+        "owners": [
+          "ThreeMD"
+        ]
+      },
+      {
+        "path": "specs/ThreeMD/requirements.md",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "0a8e9307c567db4a88ef48904cbeea5a29b86dc9e46fa6a24fe550d831a10b68",
+        "entry_digest": "80f76ea4767f674d48128ec605d156ba9380d0bcddfacec6d0dbb4cacd1e4964",
+        "owners": [
+          "ThreeMD"
+        ]
+      },
+      {
+        "path": "specs/ThreeMD/tasks.md",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "9764f36441dd07f5ac719346c72c09e83e2afdd0543be2569e18954c9ab5e903",
+        "entry_digest": "9c3747c84319ed7506789965e3686a46a4aaf1820a52af9acdd7b2f45896954a",
+        "owners": [
+          "ThreeMD"
+        ]
+      },
+      {
+        "path": "specs/ThreeMD/testing.md",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "fa08d61ce136ee4d66abc5d1525cd2ec4a51b5e09ec7d4b2c9f7026f56a44a58",
+        "entry_digest": "6abe3dd24d99a5c424b9e434c1ef2dfde2a07634e5550fc78789e92a3ee5a179",
+        "owners": [
+          "ThreeMD"
+        ]
+      }
+    ]
+  },
+  "passed": true,
+  "commands": [
+    {
+      "command": "specsync check --spec ThreeMD --strict",
+      "success": true,
+      "exit_code": 0
+    }
+  ],
+  "requirement_ids": [
+    "REQ-ThreeMD-026",
+    "REQ-ThreeMD-027",
+    "REQ-ThreeMD-028",
+    "REQ-ThreeMD-029"
+  ]
+}

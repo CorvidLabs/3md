@@ -1,0 +1,8 @@
+---
+3md: "0.1"
+axis: "time"
+---
+
+@plane z=10 label=""
+
+@plane z=-10

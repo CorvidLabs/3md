@@ -6,9 +6,10 @@ File extensions: `.3md` text; `.3mdb` general binary storage
 Media type (proposed): `text/3md`
 
 Sections 1–10 define the unchanged version 1.0 text format. Sections 11–12
-define independently versioned storage and composition extensions. The Swift
-library implements these extensions; the TypeScript and Rust ports and the web
-viewer continue to implement the existing text contract. The `3md:` key inside a
+define independently versioned storage and composition extensions. The Swift,
+TypeScript and Rust libraries implement portable uncompressed storage,
+composition and typed editing. Apple LZFSE remains an optional Swift backend;
+the hosted viewer continues to implement its existing text contract. The `3md:` key inside a
 document's frontmatter declares which format version that document targets. See
 section 9 (Stability) for the compatibility guarantees that version 1.0 makes.
 
@@ -281,6 +282,14 @@ Version 1.0 freezes the grammar described in this document. Concretely:
   implementation that passes them is conforming, and any change that would alter
   their expected results is a breaking change.
 
+### Optional editing identity convention
+
+Swift, TypeScript and Rust editing APIs optionally interpret `3md-id` in plane attributes and composition reference attributes. Existing parsers preserve it as an ordinary string; they never assign IDs or reject otherwise valid text based on this convention. An existing `id` attribute remains application metadata. Identity-aware validation requires a 1...64-byte case-sensitive ASCII identifier, beginning with an alphanumeric and containing only alphanumerics, underscores or hyphens, unique within one document's planes or one composition entry's references.
+
+Explicit identity adoption assigns only missing IDs and preserves valid existing ones. IDs survive changes to content, coordinates, order and reference targets. Existing z-based links and HTML anchors keep their current grammar and semantics. Generic attribute replacement cannot silently change an adopted identity.
+
+Typed editing is an optional library layer above parsing/storage. A patch compares exact canonical expected content, stages bounded operations privately and publishes only a completely validated final document or composition. A revision is a concurrency precondition, not an authenticity claim. Cancellation, stale preconditions and invalid final values produce no partial result. These additions do not change the frozen text grammar or existing binary/composition versions.
+
 ## 11. General document storage
 
 Binary storage contains a general 3md `Document`. It does not interpret an axis,
@@ -339,9 +348,23 @@ Errors return no partial document or encoded payload.
 Direct `Document` values must have finite coordinates, unique plane positions,
 and fields representable by the existing text grammar. The new storage writer
 quotes every scalar and validates a semantic parse round trip. It preserves
-literal quotes and backslashes without changing the existing serializer. Values
+literal quotes and backslashes. Legacy scalar quoting is also repaired for
+representable values that would otherwise lose apostrophes or edge whitespace. Values
 that would change through text serialization, including reserved-key collisions
 or significant unrepresentable whitespace, are rejected explicitly.
+
+Canonical extension writers compare dictionary keys by NFC-normalized Unicode
+scalar order and preserve original spelling. Raw and bounded text decoding retain the
+first spelling and last assigned value of equivalent keys, matching Swift's
+dictionary semantics. Strict composition JSON rejects equivalent duplicate
+keys. A direct Rust map with both equivalent spellings has no insertion history
+and is rejected rather than selecting an arbitrary value. Canonical numeric
+spelling is verified by shared IEEE754 fixtures, including the exact `2^53`
+boundary. Signed zero normalizes to zero in canonical output, as in the existing
+text contract; its sign bit is not stored. Compatibility repairs align the ports'
+interpretation of existing whitespace and quoting grammar without new syntax or
+changed parser signatures. Legacy numeric spelling may differ when it parses
+to the same finite value; canonical storage spelling is exact across languages.
 
 The API is synchronous and pure, and the package's existing deployment baseline
 is unchanged. A caller may run it in a Swift task away from the UI actor.
@@ -349,7 +372,11 @@ Cooperative cancellation is checked where Swift concurrency is available:
 macOS 10.15, iOS 13, tvOS 13, watchOS 6 or later, and supported non-Apple
 platforms. On earlier Apple runtimes the cancellation check is a no-op;
 synchronous validation and storage remain available. Cancellation propagates as
-`CancellationError` when checked. The API does not open files, resolve URLs,
+`CancellationError` when checked. TypeScript accepts an optional AbortSignal;
+Rust accepts explicit OperationOptions with an optional shared CancellationToken.
+The ports report typed cancellation and publish no partial result. Uncompressed
+storage is supported in all three implementations; requesting LZFSE in either
+port reports compressionUnavailable. The APIs do not open files, resolve URLs,
 launch a process, or read the network.
 
 ## 12. Self-contained document composition
@@ -425,5 +452,5 @@ files may be removed after import without affecting the composition.
 - Inline 3D model embeds, for example `@model src="scene.glb"`.
 - Explicit external transclusion and resolver policy.
 - Per-plane transition or timing hints for `frame`/`time` axes.
-- Portable implementations of the storage and composition extensions in the
-  TypeScript and Rust ports and hosted viewer.
+- Hosted viewer adoption of the storage, composition and editing extensions.
+- A portable optional LZFSE backend for TypeScript and Rust.

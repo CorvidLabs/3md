@@ -1,0 +1,10 @@
+---
+3md: "0.1"
+axis: "layer"
+profile: "3md-composition-1"
+---
+
+@plane z=0 label="Composition"
+```json
+{"schema":"3md-composition-1","rootID":"root","entries":[],"unknown":true}
+```

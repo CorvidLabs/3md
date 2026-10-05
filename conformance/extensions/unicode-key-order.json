@@ -1,0 +1,23 @@
+{
+  "axis" : "layer",
+  "metadata" : {
+    "é" : "last",
+    "z" : "ascii",
+    "" : "private",
+    "😀" : "astral"
+  },
+  "planes" : [
+    {
+      "attributes" : {
+        "3md-id" : "unicode-plane",
+        "é" : "last",
+        "q" : "ascii",
+        "" : "private",
+        "😀" : "astral"
+      },
+      "body" : "Unicode scalar ordering preserves original key spelling.",
+      "z" : 0
+    }
+  ],
+  "version" : "0.1"
+}

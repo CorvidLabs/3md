@@ -1,0 +1,17 @@
+{
+  "axis" : "layer",
+  "metadata" : {
+    "é" : "last"
+  },
+  "planes" : [
+    {
+      "attributes" : {
+        "3md-id" : "unicode-plane",
+        "é" : "last"
+      },
+      "body" : "Original spelling and last value.",
+      "z" : 0
+    }
+  ],
+  "version" : "0.1"
+}

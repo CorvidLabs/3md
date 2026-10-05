@@ -1,0 +1,19 @@
+---
+3md: "1.0"
+axis: "layer"
+title: "Glass café 🐦"
+Studio: "Corvid 🐦"
+escaped: "quote \" slash \\"
+opaque: "001"
+---
+
+# Workspace
+Unicode: café / café.
+
+@plane z=-2 label="Main 🧊" x=1e-07 y=-0.5 3md-id="plane-main" id="opaque-main" material="teal 🟦"
+# Main
+Shared snowman ☃ and a link [[z=1e-6|Next]].
+
+@plane z=1e-06 label="Next" x=1000000000000000.0 y=1e+20 3md-id="plane-next" data="002" id="ordinary-id"
+## Next
+Quoted "text" and path \model.

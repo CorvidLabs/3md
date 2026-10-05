@@ -124,9 +124,6 @@ extension Document {
     /// digits with an optional fraction, and an optional exponent. Hex, `inf`,
     /// `nan`, and overflow to infinity are all rejected.
     private func parseFiniteDecimalInLink(_ raw: String) -> Double? {
-        let pattern = #"^[+-]?([0-9]+\.?[0-9]*|\.[0-9]+)([eE][+-]?[0-9]+)?$"#
-        guard raw.range(of: pattern, options: .regularExpression) != nil else { return nil }
-        guard let value = Double(raw), value.isFinite else { return nil }
-        return value
+        FiniteDecimal.parse(raw)
     }
 }

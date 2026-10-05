@@ -9,6 +9,9 @@
 // exactly, including its error behavior. The cross-language conformance vectors
 // in conformance/ pin that behavior down.
 
+import { canonicalKeys, canonicalStrings, isFoundationWhitespace, trimFoundationWhitespace } from "./portable.js";
+import { canonicalNumber } from "./storage.js";
+
 // MARK: - Types
 
 /**
@@ -140,12 +143,18 @@ export class ParseError extends Error {
 const RESERVED_PLANE_KEYS: ReadonlySet<string> = new Set(["z", "x", "y", "label"]);
 
 /**
- * Trims leading and trailing space and tab characters, mirroring the Swift
- * `trimmingCharacters(in: .whitespaces)` used throughout the parser. Lines are
- * already split on newlines, so only horizontal whitespace is relevant.
+ * Trims exactly the Foundation `.whitespaces` set used throughout the Swift parser.
  */
 function trimWhitespace(value: string): string {
-  return value.replace(/^[ \t]+/, "").replace(/[ \t]+$/, "");
+  return trimFoundationWhitespace(value);
+}
+
+/** Preserve the first spelling and last assigned value of canonically equivalent Swift dictionary keys. */
+function assignField(values: Record<string, string>, spellings: Map<string, string>, key: string, value: string): void {
+  const normalized = key.normalize("NFC");
+  const spelling = spellings.get(normalized) ?? key;
+  if (!spellings.has(normalized)) spellings.set(normalized, key);
+  values[spelling] = value;
 }
 
 /**
@@ -292,12 +301,27 @@ function collapse(lines: readonly string[]): string | null {
  * @returns The parsed number, or `null` when the text is not a finite decimal.
  */
 function parseFiniteDecimal(text: string): number | null {
-  // Non-ambiguous: \d+(?:\.\d*)? avoids the \d+...\d* overlap that lets a long
-  // run of digits backtrack polynomially (ReDoS) on a near-match.
-  const pattern = /^[+-]?(?:\d+(?:\.\d*)?|\.\d+)(?:[eE][+-]?\d+)?$/;
-  if (!pattern.test(text)) {
-    return null;
+  let index = 0;
+  if (text[index] === "+" || text[index] === "-") index += 1;
+  const isDigit = (offset: number): boolean => {
+    const unit = text.charCodeAt(offset);
+    return unit >= 48 && unit <= 57;
+  };
+  let digits = false;
+  while (isDigit(index)) { digits = true; index += 1; }
+  if (text[index] === ".") {
+    index += 1;
+    while (isDigit(index)) { digits = true; index += 1; }
   }
+  if (!digits) return null;
+  if (text[index] === "e" || text[index] === "E") {
+    index += 1;
+    if (text[index] === "+" || text[index] === "-") index += 1;
+    const start = index;
+    while (isDigit(index)) index += 1;
+    if (index === start) return null;
+  }
+  if (index !== text.length) return null;
   const value = Number(text);
   return Number.isFinite(value) ? value : null;
 }
@@ -385,6 +409,7 @@ function interpretFrontmatter(fields: readonly FrontmatterField[]): InterpretedF
   // key like `__proto__` or `constructor` must land as plain data, never on the
   // object's prototype. All keys are still preserved (parity with Swift/Rust).
   const metadata: Record<string, string> = Object.create(null);
+  const spellings = new Map<string, string>();
 
   for (const field of fields) {
     switch (field.key.toLowerCase()) {
@@ -398,7 +423,7 @@ function interpretFrontmatter(fields: readonly FrontmatterField[]): InterpretedF
         title = field.value;
         break;
       default:
-        metadata[field.key] = field.value;
+        assignField(metadata, spellings, field.key, field.value);
         break;
     }
   }
@@ -415,6 +440,7 @@ function interpretFrontmatter(fields: readonly FrontmatterField[]): InterpretedF
 function parseDirective(trimmed: string, line: number): Record<string, string> {
   const remainder = trimWhitespace(trimmed.slice("@plane".length));
   const result: Record<string, string> = Object.create(null); // untrusted keys, no prototype
+  const spellings = new Map<string, string>();
 
   for (const token of tokenize(remainder, line)) {
     const separator = token.indexOf("=");
@@ -436,7 +462,7 @@ function parseDirective(trimmed: string, line: number): Record<string, string> {
         `empty attribute key in '${token}'`,
       );
     }
-    result[key] = value;
+    assignField(result, spellings, key, value);
   }
 
   return result;
@@ -643,23 +669,31 @@ export function links(document: Document): CrossPlaneLink[] {
   const targets = new Set<number>(document.planes.map((plane) => plane.z));
 
   for (const plane of document.planes) {
-    // z is a short finite decimal; the link text is short. Bounded quantifiers
-    // make this provably linear (no polynomial backtracking - CodeQL clean).
-    // parseFiniteDecimal still validates the captured z value.
-    const pattern = /\[\[z=([-+0-9eE.]{1,40})(?:\|([^\]\n]{0,400}))?\]\]/g;
-    let match: RegExpExecArray | null = pattern.exec(plane.body);
-    while (match !== null) {
-      const targetZ = parseFiniteDecimal(match[1] ?? "");
+    const body = plane.body;
+    let cursor = 0;
+    while (cursor < body.length) {
+      const opening = body.indexOf("[[z=", cursor);
+      if (opening < 0) break;
+      const start = opening + 4;
+      let delimiter = start;
+      while (delimiter < body.length && body[delimiter] !== "|" && body[delimiter] !== "]") delimiter += 1;
+      if (delimiter === body.length) break;
+      if (delimiter === start) { cursor = start; continue; }
+      const closing = body[delimiter] === "|" ? body.indexOf("]", delimiter + 1) : delimiter;
+      if (closing < 0) break;
+      // Every candidate within this span has the same first closing bracket. Advancing
+      // past a malformed close keeps nested near-matches linear without discarding a valid link.
+      cursor = closing + (body[closing + 1] === "]" ? 2 : 1);
+      if (body[closing + 1] !== "]") continue;
+      const targetZ = parseFiniteDecimal(body.slice(start, delimiter));
       if (targetZ !== null) {
-        const rawText = match[2];
         result.push({
           sourceZ: plane.z,
           targetZ,
-          text: rawText === undefined ? null : rawText,
+          text: body[delimiter] === "|" ? body.slice(delimiter + 1, closing) : null,
           targetExists: targets.has(targetZ),
         });
       }
-      match = pattern.exec(plane.body);
     }
   }
 
@@ -718,10 +752,8 @@ export function linkGraph(document: Document): CrossPlaneLinkEdge[] {
  * Swift serializer's `format(_:)` helper.
  */
 function formatNumber(value: number): string {
-  if (Number.isInteger(value) && Math.abs(value) < 1e15) {
-    return String(value);
-  }
-  return String(value);
+  if (!Number.isFinite(value)) return Number.isNaN(value) ? "nan" : value < 0 ? "-inf" : "inf";
+  return canonicalNumber(value);
 }
 
 /**
@@ -736,6 +768,9 @@ function quoteIfNeeded(value: string, forceQuote = false): string {
     value.includes("\t") ||
     value.includes('"') ||
     value.includes("\\") ||
+    (value.startsWith("'") && value.endsWith("'") && value.length >= 2) ||
+    isFoundationWhitespace(value.charCodeAt(0)) ||
+    isFoundationWhitespace(value.charCodeAt(value.length - 1)) ||
     value.length === 0;
   if (!needsQuote) {
     return value;
@@ -745,14 +780,15 @@ function quoteIfNeeded(value: string, forceQuote = false): string {
 }
 
 function frontmatterLines(document: Document): string[] {
-  const lines = ["---", `3md: ${document.version}`, `axis: ${document.axis}`];
+  const lines = ["---", `3md: ${quoteIfNeeded(document.version)}`, `axis: ${quoteIfNeeded(document.axis)}`];
 
   if (document.title !== null) {
     lines.push(`title: ${quoteIfNeeded(document.title)}`);
   }
 
-  for (const key of Object.keys(document.metadata).sort()) {
-    lines.push(`${key}: ${quoteIfNeeded(document.metadata[key] ?? "")}`);
+  const metadata = canonicalStrings(document.metadata);
+  for (const key of canonicalKeys(metadata)) {
+    lines.push(`${key}: ${quoteIfNeeded(metadata[key] ?? "")}`);
   }
   lines.push("---");
 
@@ -772,8 +808,9 @@ function directiveLine(plane: Plane): string {
     parts.push(`y=${formatNumber(plane.y)}`);
   }
 
-  for (const key of Object.keys(plane.attributes).sort()) {
-    parts.push(`${key}=${quoteIfNeeded(plane.attributes[key] ?? "", true)}`);
+  const attributes = canonicalStrings(plane.attributes);
+  for (const key of canonicalKeys(attributes)) {
+    parts.push(`${key}=${quoteIfNeeded(attributes[key] ?? "", true)}`);
   }
 
   return parts.join(" ");
@@ -783,7 +820,7 @@ function directiveLine(plane: Plane): string {
  * Renders a {@link Document} back into 3md source text.
  *
  * The output round-trips through {@link parse}: parsing serialized text yields
- * an equivalent document for content that does not rely on quote escaping.
+ * an equivalent document for values representable by the frozen text grammar.
  * Mirrors the Swift `Serializer`.
  *
  * @param document The document to render.
@@ -807,3 +844,19 @@ export function serialize(document: Document): string {
 
   return lines.join("\n") + "\n";
 }
+
+// Optional portable layers share the frozen text grammar and lossless interchange helpers.
+export {
+  DocumentCompression, DocumentDecodeLimits, DocumentStorageCodec, DocumentStorageError, DocumentStorageFormat,
+  type DocumentStorageErrorCode,
+} from "./storage.js";
+export {
+  DocumentComposition, DocumentCompositionCodec, DocumentCompositionError, DocumentCompositionLimits,
+  type DocumentCompositionErrorCode, type DocumentEntry, type DocumentReference,
+} from "./composition.js";
+export {
+  CompositionEditor, DocumentCompositionSnapshot, DocumentDiagnostics, DocumentEditError, DocumentEditLimits,
+  DocumentEditor, DocumentIdentity, DocumentRevision, DocumentSnapshot, stableID,
+  type CompositionEdit, type CompositionPatch, type DocumentDiagnostic, type DocumentDiagnosticCode,
+  type DocumentDiagnosticReport, type DocumentEdit, type DocumentHeader, type DocumentPatch,
+} from "./editing.js";

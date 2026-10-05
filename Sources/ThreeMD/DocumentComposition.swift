@@ -1,7 +1,7 @@
 import Foundation
 
 /// A reference to a definition supplied in the same library. Attributes are opaque application data.
-public struct DocumentReference: Hashable, Sendable {
+public struct DocumentReference: Hashable, Codable, Sendable {
     /// The case-sensitive ID of a definition in the supplied composition library.
     public let targetID: String
     /// Opaque string attributes interpreted by the application, never resolved as external resources.
@@ -15,7 +15,7 @@ public struct DocumentReference: Hashable, Sendable {
 }
 
 /// A named, standalone document and its ordered application-defined references.
-public struct DocumentEntry: Hashable, Sendable {
+public struct DocumentEntry: Hashable, Codable, Sendable {
     /// The case-sensitive library ID, validated when the enclosing composition is created.
     public let id: String
     /// The standalone definition, retaining its own axis, metadata, preamble and planes.
@@ -32,7 +32,7 @@ public struct DocumentEntry: Hashable, Sendable {
 }
 
 /// A validated reference graph. Definitions keep their own axes and metadata; no flattening is performed.
-public struct DocumentComposition: Hashable, Sendable {
+public struct DocumentComposition: Hashable, Codable, Sendable {
     /// The case-sensitive ID of the library's designated root definition.
     public let rootID: String
     /// Definitions are ordered by their ASCII ID. Reference order within each definition is preserved.
@@ -64,6 +64,24 @@ public struct DocumentComposition: Hashable, Sendable {
 
     /// Looks up only the supplied library. An ID is never interpreted as a path or URL.
     public func entry(id: String) -> DocumentEntry? { entries.first { $0.id == id } }
+
+    private enum CodingKeys: String, CodingKey { case rootID, entries }
+
+    /// Codable reconstruction validates the complete graph, including unused definitions.
+    public init(from decoder: any Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        try self.init(
+            rootID: container.decode(String.self, forKey: .rootID),
+            entries: container.decode([DocumentEntry].self, forKey: .entries)
+        )
+    }
+
+    /// Encodes ordered definitions and the root ID without adding a second copy of the root entry.
+    public func encode(to encoder: any Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(rootID, forKey: .rootID)
+        try container.encode(entries, forKey: .entries)
+    }
 }
 
 internal enum DocumentCompositionValidation {

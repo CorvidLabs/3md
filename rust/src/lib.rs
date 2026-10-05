@@ -19,7 +19,30 @@
 //! assert_eq!(document.planes[0].label.as_deref(), Some("Monday"));
 //! ```
 
-use std::collections::BTreeMap;
+use std::collections::{BTreeMap, HashSet};
+use unicode_normalization::UnicodeNormalization;
+
+pub mod composition;
+pub mod diagnostics;
+pub mod editing;
+pub mod storage;
+
+pub use composition::{
+    DocumentComposition, DocumentCompositionError, DocumentCompositionLimits, DocumentEntry,
+    DocumentReference,
+};
+pub use diagnostics::{
+    DiagnosticCode, DiagnosticSeverity, DocumentDiagnostic, DocumentDiagnosticReport,
+    DocumentEditError,
+};
+pub use editing::{
+    CompositionEdit, CompositionPatch, DocumentCompositionSnapshot, DocumentEdit,
+    DocumentEditLimits, DocumentHeader, DocumentPatch, DocumentRevision, DocumentSnapshot,
+};
+pub use storage::{
+    CancellationToken, DocumentCompression, DocumentDecodeLimits, DocumentStorageError,
+    DocumentStorageFormat, OperationOptions,
+};
 
 // MARK: - Types
 
@@ -36,7 +59,7 @@ use std::collections::BTreeMap;
 /// ```
 #[must_use]
 pub fn axis(raw: &str) -> String {
-    raw.trim_matches([' ', '\t']).to_lowercase()
+    trim_whitespace(raw).to_lowercase()
 }
 
 /// A single slice of a 3md document positioned along the Z axis.
@@ -201,11 +224,66 @@ impl std::error::Error for ParseError {}
 
 const RESERVED_PLANE_KEYS: [&str; 4] = ["z", "x", "y", "label"];
 
-/// Trims leading and trailing space and tab characters, mirroring the Swift
-/// `trimmingCharacters(in: .whitespaces)` used throughout the parser. Lines are
-/// already split on newlines, so only horizontal whitespace is relevant.
+/// Foundation's horizontal whitespace set, including U+200B and excluding
+/// newlines and U+FEFF. Rust's `char::is_whitespace` differs from this set.
+fn is_foundation_whitespace(character: char) -> bool {
+    matches!(
+        character,
+        '\t' | ' ' | '\u{00a0}' | '\u{1680}' | '\u{2000}'
+            ..='\u{200b}' | '\u{202f}' | '\u{205f}' | '\u{3000}'
+    )
+}
+
+/// Mirrors Swift `trimmingCharacters(in: .whitespaces)`.
 fn trim_whitespace(value: &str) -> &str {
-    value.trim_matches([' ', '\t'])
+    value.trim_matches(is_foundation_whitespace)
+}
+
+enum ParseFailure {
+    Invalid(ParseError),
+    Cancelled,
+}
+
+impl From<ParseError> for ParseFailure {
+    fn from(error: ParseError) -> Self {
+        Self::Invalid(error)
+    }
+}
+
+struct ParseContext<'a> {
+    cancellation: Option<&'a CancellationToken>,
+}
+
+impl ParseContext<'_> {
+    fn check(&self) -> Result<(), ParseFailure> {
+        if self
+            .cancellation
+            .is_some_and(CancellationToken::is_cancelled)
+        {
+            Err(ParseFailure::Cancelled)
+        } else {
+            Ok(())
+        }
+    }
+
+    fn insert_source_value(
+        &self,
+        values: &mut BTreeMap<String, String>,
+        keys: &mut BTreeMap<String, String>,
+        key: String,
+        value: String,
+    ) -> Result<(), ParseFailure> {
+        let mut normalized = String::new();
+        for (index, character) in key.nfc().enumerate() {
+            if index.is_multiple_of(4096) {
+                self.check()?;
+            }
+            normalized.push(character);
+        }
+        let original = keys.entry(normalized).or_insert(key);
+        values.insert(original.clone(), value);
+        Ok(())
+    }
 }
 
 /// Returns the first space/tab-delimited token of a line, or the empty string.
@@ -219,13 +297,20 @@ fn first_token(line: &str) -> &str {
 /// spans intact. A backslash inside a quoted span escapes the next character, so
 /// `\"` does not close a double-quoted value. Returns an error on an
 /// unterminated quote.
-fn tokenize(input: &str, line: usize) -> Result<Vec<String>, ParseError> {
+fn tokenize(
+    input: &str,
+    line: usize,
+    context: &ParseContext<'_>,
+) -> Result<Vec<String>, ParseFailure> {
     let mut tokens: Vec<String> = Vec::new();
     let mut current = String::new();
     let mut active_quote: Option<char> = None;
     let mut escaped = false;
 
-    for character in input.chars() {
+    for (index, character) in input.chars().enumerate() {
+        if index.is_multiple_of(4096) {
+            context.check()?;
+        }
         if let Some(quote) = active_quote {
             current.push(character);
             if escaped {
@@ -251,7 +336,8 @@ fn tokenize(input: &str, line: usize) -> Result<Vec<String>, ParseError> {
         return Err(ParseError::InvalidPlaneDirective {
             line,
             detail: format!("unterminated quote in '{input}'"),
-        });
+        }
+        .into());
     }
     if !current.is_empty() {
         tokens.push(current);
@@ -405,8 +491,6 @@ struct ExtractedFrontmatter {
     fields: Vec<(String, String)>,
     /// 1-based line number of the first body line, after the closing `---`.
     body_start_line: usize,
-    /// The remaining body lines after the closing fence.
-    body: Vec<String>,
 }
 
 struct PendingPlane {
@@ -415,31 +499,29 @@ struct PendingPlane {
     body_lines: Vec<String>,
 }
 
-fn extract_frontmatter(lines: &[String]) -> Result<ExtractedFrontmatter, ParseError> {
+fn extract_frontmatter(
+    lines: &[String],
+    context: &ParseContext<'_>,
+) -> Result<ExtractedFrontmatter, ParseFailure> {
     let mut index = 0;
     while index < lines.len() && trim_whitespace(&lines[index]).is_empty() {
+        context.check()?;
         index += 1;
     }
     if index >= lines.len() || trim_whitespace(&lines[index]) != "---" {
-        return Err(ParseError::MissingFrontmatter);
+        return Err(ParseError::MissingFrontmatter.into());
     }
 
     index += 1;
     let mut fields: Vec<(String, String)> = Vec::new();
 
     while index < lines.len() {
+        context.check()?;
         let trimmed = trim_whitespace(&lines[index]);
         if trimmed == "---" {
-            let body_start = index + 1;
-            let body = if body_start < lines.len() {
-                lines[body_start..].to_vec()
-            } else {
-                Vec::new()
-            };
             return Ok(ExtractedFrontmatter {
                 fields,
                 body_start_line: index + 2,
-                body,
             });
         }
         if !trimmed.is_empty() && !trimmed.starts_with('#') {
@@ -447,7 +529,8 @@ fn extract_frontmatter(lines: &[String]) -> Result<ExtractedFrontmatter, ParseEr
                 None => {
                     return Err(ParseError::InvalidFrontmatter(format!(
                         "expected 'key: value', found '{trimmed}'"
-                    )));
+                    ))
+                    .into());
                 }
                 Some(separator) => {
                     let key = trim_whitespace(&trimmed[..separator]).to_string();
@@ -459,9 +542,10 @@ fn extract_frontmatter(lines: &[String]) -> Result<ExtractedFrontmatter, ParseEr
         index += 1;
     }
 
-    Err(ParseError::InvalidFrontmatter(
-        "frontmatter block was not closed with '---'".to_string(),
-    ))
+    Err(
+        ParseError::InvalidFrontmatter("frontmatter block was not closed with '---'".to_string())
+            .into(),
+    )
 }
 
 struct InterpretedFrontmatter {
@@ -473,19 +557,27 @@ struct InterpretedFrontmatter {
 
 fn interpret_frontmatter(
     fields: &[(String, String)],
-) -> Result<InterpretedFrontmatter, ParseError> {
+    context: &ParseContext<'_>,
+) -> Result<InterpretedFrontmatter, ParseFailure> {
     let mut version: Option<String> = None;
     let mut axis_value = String::from("layer");
     let mut title: Option<String> = None;
     let mut metadata: BTreeMap<String, String> = BTreeMap::new();
+    let mut metadata_keys = BTreeMap::new();
 
     for (key, value) in fields {
+        context.check()?;
         match key.to_lowercase().as_str() {
             "3md" => version = Some(value.clone()),
             "axis" => axis_value = axis(value),
             "title" => title = Some(value.clone()),
             _ => {
-                metadata.insert(key.clone(), value.clone());
+                context.insert_source_value(
+                    &mut metadata,
+                    &mut metadata_keys,
+                    key.clone(),
+                    value.clone(),
+                )?;
             }
         }
     }
@@ -497,21 +589,28 @@ fn interpret_frontmatter(
             title,
             metadata,
         }),
-        _ => Err(ParseError::MissingVersion),
+        _ => Err(ParseError::MissingVersion.into()),
     }
 }
 
-fn parse_directive(trimmed: &str, line: usize) -> Result<BTreeMap<String, String>, ParseError> {
+fn parse_directive(
+    trimmed: &str,
+    line: usize,
+    context: &ParseContext<'_>,
+) -> Result<BTreeMap<String, String>, ParseFailure> {
     let remainder = trim_whitespace(&trimmed["@plane".len()..]);
     let mut result: BTreeMap<String, String> = BTreeMap::new();
+    let mut keys = BTreeMap::new();
 
-    for token in tokenize(remainder, line)? {
+    for token in tokenize(remainder, line, context)? {
+        context.check()?;
         match token.find('=') {
             None => {
                 return Err(ParseError::InvalidPlaneDirective {
                     line,
                     detail: format!("expected key=value, found '{token}'"),
-                });
+                }
+                .into());
             }
             Some(separator) => {
                 let key = trim_whitespace(&token[..separator]).to_lowercase();
@@ -520,9 +619,10 @@ fn parse_directive(trimmed: &str, line: usize) -> Result<BTreeMap<String, String
                     return Err(ParseError::InvalidPlaneDirective {
                         line,
                         detail: format!("empty attribute key in '{token}'"),
-                    });
+                    }
+                    .into());
                 }
-                result.insert(key, value);
+                context.insert_source_value(&mut result, &mut keys, key, value)?;
             }
         }
     }
@@ -586,14 +686,19 @@ struct ParsedBody {
     planes: Vec<Plane>,
 }
 
-fn parse_body(lines: &[String], body_start_line: usize) -> Result<ParsedBody, ParseError> {
-    let mut seen_z: Vec<f64> = Vec::new();
+fn parse_body(
+    lines: &[String],
+    body_start_line: usize,
+    context: &ParseContext<'_>,
+) -> Result<ParsedBody, ParseFailure> {
+    let mut seen_z = HashSet::new();
     let mut planes: Vec<Plane> = Vec::new();
     let mut pending: Option<PendingPlane> = None;
     let mut preamble_lines: Vec<String> = Vec::new();
     let mut fence: Option<char> = None;
 
     for (offset, raw) in lines.iter().enumerate() {
+        context.check()?;
         let line_number = body_start_line + offset;
         let trimmed = trim_whitespace(raw);
 
@@ -624,7 +729,7 @@ fn parse_body(lines: &[String], body_start_line: usize) -> Result<ParsedBody, Pa
             flush_pending(flushed, &mut seen_z, &mut planes)?;
         }
 
-        let attributes = parse_directive(trimmed, line_number)?;
+        let attributes = parse_directive(trimmed, line_number, context)?;
         pending = Some(PendingPlane {
             line_number,
             attributes,
@@ -663,14 +768,13 @@ fn parse_body(lines: &[String], body_start_line: usize) -> Result<ParsedBody, Pa
 
 fn flush_pending(
     pending: PendingPlane,
-    seen_z: &mut Vec<f64>,
+    seen_z: &mut HashSet<u64>,
     planes: &mut Vec<Plane>,
 ) -> Result<(), ParseError> {
     let plane = make_plane(pending)?;
-    if seen_z.contains(&plane.z) {
+    if !seen_z.insert(storage::position_key(plane.z)) {
         return Err(ParseError::DuplicatePlane { z: plane.z });
     }
-    seen_z.push(plane.z);
     planes.push(plane);
     Ok(())
 }
@@ -694,15 +798,33 @@ fn flush_pending(
 /// `invalidFrontmatter`, `missingVersion`, `missingPlanePosition`,
 /// `invalidPlaneDirective`, or `duplicatePlane`).
 pub fn parse(source: &str) -> Result<Document, ParseError> {
+    match parse_internal(source, &ParseContext { cancellation: None }) {
+        Ok(document) => Ok(document),
+        Err(ParseFailure::Invalid(error)) => Err(error),
+        Err(ParseFailure::Cancelled) => unreachable!("raw parsing has no cancellation token"),
+    }
+}
+
+fn parse_internal(source: &str, context: &ParseContext<'_>) -> Result<Document, ParseFailure> {
+    context.check()?;
     let mut normalized = source.replace("\r\n", "\n");
     if let Some(stripped) = normalized.strip_prefix('\u{FEFF}') {
         normalized = stripped.to_string();
     }
-    let lines: Vec<String> = normalized.split('\n').map(str::to_string).collect();
+    let mut lines = Vec::new();
+    for line in normalized.split('\n') {
+        context.check()?;
+        lines.push(line.to_string());
+    }
 
-    let frontmatter = extract_frontmatter(&lines)?;
-    let interpreted = interpret_frontmatter(&frontmatter.fields)?;
-    let parsed_body = parse_body(&frontmatter.body, frontmatter.body_start_line)?;
+    let frontmatter = extract_frontmatter(&lines, context)?;
+    let interpreted = interpret_frontmatter(&frontmatter.fields, context)?;
+    let parsed_body = parse_body(
+        &lines[frontmatter.body_start_line - 1..],
+        frontmatter.body_start_line,
+        context,
+    )?;
+    context.check()?;
 
     Ok(Document {
         version: interpreted.version,
@@ -711,6 +833,22 @@ pub fn parse(source: &str) -> Result<Document, ParseError> {
         metadata: interpreted.metadata,
         preamble: parsed_body.preamble,
         planes: parsed_body.planes,
+    })
+}
+
+pub(crate) fn parse_with_options(
+    source: &str,
+    options: &OperationOptions,
+) -> Result<Document, DocumentStorageError> {
+    parse_internal(
+        source,
+        &ParseContext {
+            cancellation: options.cancellation.as_ref(),
+        },
+    )
+    .map_err(|error| match error {
+        ParseFailure::Invalid(error) => DocumentStorageError::InvalidText(error),
+        ParseFailure::Cancelled => DocumentStorageError::Cancelled,
     })
 }
 
@@ -863,6 +1001,9 @@ fn quote_if_needed(value: &str, force_quote: bool) -> String {
         || value.contains('\t')
         || value.contains('"')
         || value.contains('\\')
+        || (value.starts_with('\'') && value.ends_with('\'') && value.len() >= 2)
+        || value.starts_with(is_foundation_whitespace)
+        || value.ends_with(is_foundation_whitespace)
         || value.is_empty();
     if !needs_quote {
         return value.to_string();
@@ -874,8 +1015,8 @@ fn quote_if_needed(value: &str, force_quote: bool) -> String {
 fn frontmatter_lines(document: &Document) -> Vec<String> {
     let mut lines = vec![
         "---".to_string(),
-        format!("3md: {}", document.version),
-        format!("axis: {}", document.axis),
+        format!("3md: {}", quote_if_needed(&document.version, false)),
+        format!("axis: {}", quote_if_needed(&document.axis, false)),
     ];
 
     if let Some(title) = &document.title {

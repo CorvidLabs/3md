@@ -1,0 +1,12 @@
+{
+  "schema_version": 2,
+  "change_id": "guarantee-portable-cross-language-document-and-composition-interchange-with-a-nine-pair-public-api-verification-matrix",
+  "implementation_commit": "0eeb26a65421dd732dae37061a1e867d3d74d016",
+  "implementation_tree": "0dd7122605ac40bd1f206476fe50df9f36a46a89",
+  "contract_digest": "b43bf1477bfdb02d7cd25d148e848ac06b385c82d0c8c335a472594f6a210849",
+  "workspace_digest": "7a19c538c309646cd48be2c0e889da47ebe11908e47c4685b3c6884d6c661660",
+  "closing_digest": "3e81a31064c8075affa03c9c6ce762b17855229f897320b07befc8cfe8cafb74",
+  "review_digest": "367778c2453a4e3a93d3fef1800e82eaf2d5e6f001e2df6c72094f74cbca5b81",
+  "finalization_digest": "1cbf8dae1abba754acc3c71869cd4177851acc290625769875f458322d920f5a",
+  "timestamp": 1791218343
+}

@@ -190,12 +190,12 @@ Acceptance Criteria
 
 ### REQ-threemd-014
 
-Serialization output SHALL parse back to an equal document when content does not depend on quote escaping.
+Serialization output SHALL parse back to an equal document for representable content, including lossless scalar quoting.
 
 Acceptance Criteria
 
-- Serializing a `Document` and parsing the result yields
-  an equal document, for content that does not rely on quote escaping.
+- Serializing a representable `Document` and parsing the result yields
+  an equal document, including literal apostrophes, quotes and scalar edge whitespace.
 
 ### REQ-threemd-015
 
@@ -270,17 +270,21 @@ materializes REQ-ThreeMD-021 through REQ-ThreeMD-025 from the approved delta.
   the frozen 1.0 text grammar and additive 1.1 storage/composition specification.
 - Frontmatter is parsed line-by-line as simple `key: value` pairs, not as full
   YAML. Nested structures, lists, and multi-line values are not supported.
-- Existing parser/serializer behavior stays unchanged. The new storage writer
-  additionally quotes every scalar and requires a faithful semantic round trip.
+- Existing parser signatures and frozen syntax stay unchanged. Narrow interchange
+  repairs align Unicode whitespace/source-key behavior and make legacy scalar
+  quoting faithful. The canonical writer quotes every scalar and requires a
+  faithful semantic round trip.
 - `z`, `x`, and `y` are parsed as `Double`, so they carry double-precision
   range and rounding.
 
 ## Out of Scope
 
-- Changes to the existing Markdown/HTML renderers or cross-plane link behavior.
+- Changes to the existing Markdown/HTML renderers. The TypeScript link extractor
+  is repaired to follow the existing shared grammar without arbitrary truncation.
 - External transclusion, inline model embeds, and application-specific placement,
   automatic flattening, voxel interpretation or timing behavior.
-- New binary/composition implementations in the TypeScript/Rust ports or viewer.
+- Hosted binary/composition viewer features. The libraries now have the approved
+  portable TypeScript/Rust implementations and a separate interchange gate.
 - Validation of axis semantics; the axis label is treated as free metadata.
 - Networking, file I/O, and any rendering or viewer behavior.
 
@@ -331,3 +335,91 @@ Acceptance Criteria
 - The recorded definition accurately cites Leif's direct scope approval with a delegated agent actor and no claim of human implementation review.
 - Strict SpecSync coverage and the existing cross-language native checks are executed by the root verification lane.
 - Managed agent rules are updated only with Trust adopt; historical evidence is not fabricated or rewritten, and unavailable signer authority is reported without weakening Attest policy.
+
+### REQ-ThreeMD-026
+
+The library SHALL expose optional stable plane identities and per-owning-entry reference identities through the preserved namespaced 3md-id attribute without changing frozen text parsing, legacy z links or composition definition IDs.
+
+Acceptance Criteria
+- Identity-aware validation reports empty, unsafe or duplicate IDs with an exact plane path.
+- Text and supported binary round trips preserve IDs and arbitrary existing metadata.
+- Explicit adoption preserves valid existing IDs and assigns missing identities without interpreting ordinary id attributes.
+- Identity-aware edits can change a plane coordinate, source order or reference target without changing its ID.
+
+### REQ-ThreeMD-027
+
+Typed document and composition patches SHALL be immutable Sendable values applied transactionally with exact canonical-content revision comparison and bounded operation counts.
+
+Acceptance Criteria
+- Insert, remove, replace and reorder operations target stable IDs and preserve unrelated content.
+- Invalid operations, final duplicate positions or reference graphs, stale expected content and cancellation return no partial document or composition.
+- Existing no-ID documents remain parseable and identities can be explicitly assigned before ID-targeted edits.
+
+### REQ-ThreeMD-028
+
+Additive diagnostics SHALL expose stable codes, explanatory text and available source line or plane/reference paths without changing existing ParseError cases.
+
+Acceptance Criteria
+- Parse failures reuse actual line evidence and never invent a line for value-only diagnostics.
+- Identity and patch failures identify the offending plane or operation.
+- Diagnostics preserve legacy parser and serializer behavior and do not perform external I/O.
+
+### REQ-ThreeMD-029
+
+Release preparation SHALL publish accurate capability, compatibility and migration documentation while preserving current text conformance and historical lifecycle evidence.
+
+Acceptance Criteria
+- New editing and binary/composition APIs are declared Swift-first until other implementations support them.
+- No library release/tag, protection change or signer claim is invented.
+- Existing format/source APIs remain compatible and later indexed storage, materials and timing remain labeled planned.
+
+### REQ-ThreeMD-030
+
+TypeScript and Rust SHALL expose bounded general-document uncompressed binary and self-contained composition APIs compatible with the Swift format.
+
+Acceptance Criteria
+- Readers identify complete magic and enforce exact streams, CRC, UTF-8 and allocation limits.
+- Unsupported compression is explicit; LZFSE is unavailable without a platform backend.
+- Rust may use exact unicode-normalization 0.1.25 solely for canonical key comparison; no compression dependency is introduced. This records the reviewed Unicode parity repair to the original dependency-free plan.
+- Composition validates strict duplicate-aware JSON, all definitions and graph budgets without external I/O.
+
+### REQ-ThreeMD-031
+
+TypeScript and Rust SHALL expose namespaced stable identities, exact canonical-byte revision snapshots, atomic typed patches and bounded structured diagnostics.
+
+Acceptance Criteria
+- IDs survive metadata/body/order/position/target edits and legacy id metadata stays opaque.
+- Final-only validation supports coordinated swaps and invalid later operations publish no partial result.
+- Exact stale revisions, budgets and cooperative cancellation reject safely.
+- Diagnostics retain actual line/path evidence and preflight work before expensive validation.
+
+### REQ-ThreeMD-032
+
+All language implementations SHALL share verified portable extension vectors and accurate capability contracts while preserving existing text conformance.
+
+Acceptance Criteria
+- Shared vectors exercise canonical numeric and Unicode edge cases, fixed envelopes, composition and identities in Swift, TypeScript and Rust.
+- Existing parser/serializer APIs, conformance vectors, viewer behavior and historical archives remain unchanged. The generated web bundle may refresh deterministic compiler output from the new module graph; element/dist stays untouched.
+- Complete pinned Trust and strict SpecSync pass with actual scoped agent review and honest provenance limits.
+- PRs remain open for Leif and no release or Sculpt dependency migration occurs.
+
+### REQ-ThreeMD-033
+
+Swift, TypeScript and Rust SHALL import and export one another's representable readable documents, canonical text, portable uncompressed binary and self-contained composition profiles without losing supported content or references.
+
+Acceptance Criteria
+- Every producer's canonical document and composition output is imported by all three languages and re-exported to identical canonical bytes.
+- Finite coordinates, Unicode spelling, quoting, source order, metadata, identities, revisions and graph references survive. Signed zero follows the existing canonical normalization to zero.
+- Confirmed grammar interpretation differences are repaired without changing public parser signatures or the frozen grammar; all existing valid and invalid vectors remain mandatory.
+- Optional Apple LZFSE is explicitly distinguished from portable text/uncompressed binary.
+
+### REQ-ThreeMD-034
+
+The repository SHALL execute a bounded mandatory public-API interchange matrix in its verification lane, including built JavaScript package execution in Node and no silently skipped manifest cases.
+
+Acceptance Criteria
+- A Swift development coordinator drives Swift, TypeScript and Rust adapters for all nine producer/consumer pairs with fixed byte goldens, generated numeric/Unicode cases, imported identity edits and hostile inputs.
+- Canonical/profile/binary bytes and semantic numeric fields are checked with exact byte/bit comparisons under the existing zero normalization.
+- JavaScript typechecking, declaration builds and package runtime execution are required, alongside all existing language, bundle and editor gates.
+- Test transport is development-only, performs no library I/O, and does not establish a public snapshot/patch JSON format or an exhaustive all-input parity claim.
+

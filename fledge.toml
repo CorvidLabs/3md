@@ -12,6 +12,7 @@ lint = "swift-format lint --strict --recursive Sources Tests Package.swift"
 build = "swift build"
 test = "swift test"
 element-bundle = "bun scripts/check-element-bundle.mjs"
+interchange = "swift run threemd-interchange"
 
 [tasks.editor]
 cmd = "bun install --frozen-lockfile && bun run test"
@@ -24,22 +25,22 @@ dir = "uitests"
 description = "Playwright UI suite for the web viewer, gallery, and custom element."
 
 [tasks.rust]
-cmd = "cargo fmt --check && cargo clippy --all-targets -- -D warnings && cargo test"
+cmd = "cargo fmt --check && cargo clippy --all-targets -- -D warnings && cargo test --all-targets && cargo test --doc && cargo build --example interchange"
 dir = "rust"
 description = "Rust crate: format check, clippy, and tests (runs the shared conformance vectors)."
 
 [tasks.js]
-cmd = "bun install --frozen-lockfile && bun test"
+cmd = "bun install --frozen-lockfile && bun run typecheck && bun run build && bun test"
 dir = "js"
-description = "TypeScript port: install and run the test suite (the shared conformance vectors)."
+description = "TypeScript port: typecheck, build distributable JavaScript/declarations and execute shared tests."
 
 [lanes.verify]
-description = "Native verification for all three parser implementations, generated element bundle drift, and editor grammar. Trust runs SpecSync after this lane."
-steps = ["lint", "build", "test", "js", "rust", "element-bundle", "editor"]
+description = "Three language suites, nine-pair public-package interchange, generated bundle drift and editor grammar. Trust runs SpecSync after this lane."
+steps = ["lint", "build", "test", "js", "rust", "interchange", "element-bundle", "editor"]
 
 [lanes.ci]
 description = "Alias for the native verify lane."
-steps = ["lint", "build", "test", "js", "rust", "element-bundle", "editor"]
+steps = ["lint", "build", "test", "js", "rust", "interchange", "element-bundle", "editor"]
 
 [lanes.ui]
 description = "Browser UI suite for the published web surfaces."
