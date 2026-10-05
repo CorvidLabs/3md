@@ -48,6 +48,21 @@
       "timestamp": 1784013064,
       "digest": "fb0b6266d5085ac27eda5e6341cb6e6c69dedba28d6bbcf227334ccf87408200",
       "note": "Fresh closing approval after final governance corrections and full seven-step native verification; hosted checks are not claimed yet."
+    },
+    {
+      "gate": "definition",
+      "actor": "user:0xLeif",
+      "timestamp": 1791163100,
+      "digest": "1d2ba924f80d9b4e3f780440209d5f6d58c937a5746ac8e42f7d5a958ff6c07d",
+      "note": "Normalized compatible definition evidence during explicit acceptance",
+      "approved_delta_digests": {}
+    },
+    {
+      "gate": "acceptance",
+      "actor": "user:0xLeif",
+      "timestamp": 1791163100,
+      "digest": "e96780628521be8b3c44d3cb0cf0cb0f012d22c03160a02dc12cae53a14b60c4",
+      "note": "Audited reopen after trust.yml set permissions.contents to read. Directed with the SpecSync 6 SDD for PR 57."
     }
   ],
   "reopenings": [
@@ -84,6 +99,40 @@
       },
       "stale_acceptance_input_digest": "cfc943b5b376e22b72c0c900d66b9f2b57c945e8e70a215a880fbf4cf0dbca34",
       "current_acceptance_input_digest": "a6793c577723410186164e0e0d9a4e91892380830069ed60dfb3278c211e8740"
+    },
+    {
+      "schema_version": 1,
+      "change_id": "CHG-0001-adopt-trust-1-and-specsync-5",
+      "actor": "user:0xLeif",
+      "reason": "trust.yml now sets permissions.contents to read, so the accepted delivery input no longer matches the tree.",
+      "timestamp": 1791162618,
+      "from_state": "accepted",
+      "to_state": "verifying",
+      "superseded_approval": {
+        "gate": "acceptance",
+        "actor": "user:0xLeif",
+        "timestamp": 1784013064,
+        "digest": "fb0b6266d5085ac27eda5e6341cb6e6c69dedba28d6bbcf227334ccf87408200",
+        "note": "Fresh closing approval after final governance corrections and full seven-step native verification; hosted checks are not claimed yet."
+      },
+      "prior_verification": {
+        "timestamp": 1784013006,
+        "commit": "01263f573ae8d89b58f04c2be84b041164c8d789",
+        "contract_digest": "3e3993f3a310d989da0f46bf1d7643e8d7c3cfe201df57371fcb31e1c4b52116",
+        "workspace_digest": "96b757577179b0b7c087eebd3f8e96ac148ea0abce4320e96d43696c31a9255f",
+        "acceptance_input_digest": "a6793c577723410186164e0e0d9a4e91892380830069ed60dfb3278c211e8740",
+        "passed": true,
+        "commands": [
+          {
+            "command": "fledge lanes run verify",
+            "success": true,
+            "exit_code": 0
+          }
+        ],
+        "requirement_ids": []
+      },
+      "stale_acceptance_input_digest": "a6793c577723410186164e0e0d9a4e91892380830069ed60dfb3278c211e8740",
+      "current_acceptance_input_digest": "10e8661e5cad393d6554ff34eef8f40bc36893271a4ec7cac3324abc991ac084"
     }
   ]
 }

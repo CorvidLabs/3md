@@ -1,0 +1,46 @@
+{
+  "approvals": [
+    {
+      "gate": "definition",
+      "actor": "user:0xLeif",
+      "timestamp": 1791162423,
+      "digest": "b150befa4d04d5d7eb90b2e21ee993ca589ecf37c8406ec295b2e1f81320f49a",
+      "note": "Directed SpecSync 6 SDD for the contents:read workflow fix on PR 57, including the workflow-v2 baseline.",
+      "approved_scope": {
+        "schema_version": 1,
+        "change_id": "limit-github-token-to-contents-read-in-the-ui-trust-and-cargo-publish-workflows",
+        "title": "Limit GITHUB_TOKEN to contents read in the UI, trust, and cargo-publish workflows",
+        "description": "Limit GITHUB_TOKEN to contents read in the UI, trust, and cargo-publish workflows",
+        "kind": "bug_fix",
+        "affected_specs": [],
+        "affected_paths": [
+          ".github/workflows/cargo-publish.yml",
+          ".github/workflows/trust.yml",
+          ".github/workflows/ui.yml",
+          ".specsync/adoption-report.json",
+          ".specsync/workflow-v2-baseline.json"
+        ],
+        "no_spec_change": true,
+        "no_spec_change_rationale": "Workflow token permissions and the SpecSync 6 workflow-v2 baseline only. Parser behavior and the ThreeMD, ThreeMDCLI, and ThreeMDElement contracts stay the same.",
+        "acceptance_criteria": [
+          "ui.yml, trust.yml, and cargo-publish.yml each set permissions.contents to read. CodeQL actions/missing-workflow-permissions is clean for those workflows. The trust gate and the UI lab still pass with that token. New changes use the SpecSync 6 workflow-v2 baseline. Canonical specs and parser behavior stay unchanged."
+        ],
+        "dependencies": [],
+        "supersedes": [],
+        "answers": {
+          "architecture_risk": "yes",
+          "public_contract": "no"
+        }
+      },
+      "approved_delta_digests": {}
+    },
+    {
+      "gate": "finalization",
+      "actor": "specsync:finalization",
+      "timestamp": 1791162547,
+      "digest": "2a875b7d97d3ff21ca2c01d4a3c18abf94e851084cd92fb9db9135f173ec26c7",
+      "note": "Same-PR finalization closing digest"
+    }
+  ],
+  "reopenings": []
+}
