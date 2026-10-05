@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "workflow_version": 2,
+  "workflow_origin_version": 2,
+  "id": "retain-workflow-permissions-archive-evidence-and-correct-retrospective-delivery-history",
+  "slug": "retain-workflow-permissions-archive-evidence-and-correct-retrospective-delivery-history",
+  "title": "Retain workflow permissions archive evidence and correct retrospective delivery history",
+  "description": "Retain workflow permissions archive evidence and correct retrospective delivery history",
+  "kind": "documentation",
+  "state": "archived",
+  "canonical_applied": true,
+  "base_commit": "8b09724fc390236f52c873761247166048aef67e",
+  "created_at": 1791168200,
+  "updated_at": 1791168958,
+  "affected_specs": [],
+  "affected_paths": [
+    "docs/evidence/workflow-permissions-archive/"
+  ],
+  "no_spec_change": true,
+  "no_spec_change_rationale": "Retain and document existing historical Git evidence and the actual delivery chronology. No parser, format, workflow token permissions, canonical specs, provenance policy, old archive record or existing active change is modified.",
+  "acceptance_criteria": [
+    "The original implementation commit 777427d6c89dd55eead16a3d46e4e97894ef2a6f is retained under a dedicated named evidence branch, retrievable from GitHub and fetchable into a fresh repository; its tree equals the archived implementation_tree. An additive correction note records both squash mappings, the post-PR57 definition/finalization chronology, preserved legacy delivery hashes, agent review and degraded unsigned provenance. Original archive files, workflows, parser, format, language ports, canonical specs, generated product bundles and existing local untracked Atlas files are unchanged. Actual verification and delegated lifecycle records remain distinct from human review or trusted signatures."
+  ],
+  "selected_artifacts": [
+    "context",
+    "docs",
+    "testing",
+    "tasks",
+    "design",
+    "research",
+    "plan"
+  ],
+  "dependencies": [],
+  "answers": {
+    "architecture_risk": "yes",
+    "public_contract": "no"
+  }
+}

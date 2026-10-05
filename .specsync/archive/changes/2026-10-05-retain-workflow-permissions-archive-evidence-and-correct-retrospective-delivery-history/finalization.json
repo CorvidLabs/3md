@@ -1,0 +1,12 @@
+{
+  "schema_version": 2,
+  "change_id": "retain-workflow-permissions-archive-evidence-and-correct-retrospective-delivery-history",
+  "implementation_commit": "50d6a54ee5873c5659edb052b431bf300011597e",
+  "implementation_tree": "41c79a76930708f4803f736a7fb286282d82eb09",
+  "contract_digest": "55eaa93506a67689f5f7f3ea9d1e35fc93cbbed0199643a67508af66a723b592",
+  "workspace_digest": "d8c969b72f7c076cb869dd3460574177449baa0d68e5715f7afb5c58060e86f3",
+  "closing_digest": "fa6cd7f1f8302744ac6b20d7d03ca621ca7716561d703429b9374fc42a8d015d",
+  "review_digest": "5ba86ef5f89c1d150e2da3b17429e6c39909cf491b5f2acee52900f790ba0459",
+  "finalization_digest": "bd2d78765d0aafaaeef95027f5b2ea5f9764ec05428dbab0725154ab1ef54dfb",
+  "timestamp": 1791168946
+}

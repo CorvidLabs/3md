@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "actor": "agent:codex-root",
+  "authorization": "Leif instructed do it after the landed archive review",
+  "baseline": "8b09724fc390236f52c873761247166048aef67e",
+  "retained_ref": "refs/heads/leif/evidence-workflow-permissions-777427d",
+  "retained_commit": "777427d6c89dd55eead16a3d46e4e97894ef2a6f",
+  "retained_tree": "8858ce95114438865fbb981fcfb83c283f6302e9",
+  "github_commit_retrieval": "pass",
+  "fresh_bare_fetch": "pass",
+  "fresh_retained_product_workflow_spec_policy_diff": "empty",
+  "repair_original_archive_and_implementation_diff": "empty",
+  "implementation_checkpoint": "814efb9ec60f3f1c5198c5c4b3bc7f939746c506",
+  "trust_version": "1.2.2",
+  "specsync_version": "6.0.0",
+  "native_lane_steps": 7,
+  "native_lane_seconds": 28.168,
+  "swift_tests": 129,
+  "javascript_tests": 79,
+  "rust_conformance": "pass",
+  "rust_documentation_tests": 3,
+  "strict_contract": {
+    "specs": 3,
+    "warnings": 0,
+    "files": "14/14",
+    "source_lines": "2002/2002",
+    "existing_draft_section_export_skips": true
+  },
+  "risk": {"verdict": "proceed", "score": 33},
+  "provenance": {
+    "policy_changed": false,
+    "mode": "soft",
+    "signed_policy_satisfied": false,
+    "executing_agent_claim": "unsigned",
+    "human_review_claimed": false,
+    "github_approval_claimed": false
+  }
+}
