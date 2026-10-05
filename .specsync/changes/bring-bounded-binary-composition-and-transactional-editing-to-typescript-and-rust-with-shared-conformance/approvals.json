@@ -168,6 +168,50 @@
       "approved_delta_digests": {
         "ThreeMD": "dd0ea765ed598a93b633a6b6849f2c26e46da97414dff8606daab2436b7d66a9"
       }
+    },
+    {
+      "gate": "definition",
+      "actor": "agent:codex-root",
+      "timestamp": 1791212671,
+      "digest": "9a83eceb7aafebd35c95425e06041046068e2da77fa51997ba7ebea2ed6f5973",
+      "note": "Acting under Leif direct all-language implementation and release-preparation instruction. Add AGENTS.md to the current documentation scope before correcting the inherited Swift-only statement identified in final agent review. Source behavior and merge/release boundaries are unchanged. This is an agent definition record, not a claim that Leif reviewed the implementation and not independent human review.",
+      "approved_scope": {
+        "schema_version": 1,
+        "change_id": "bring-bounded-binary-composition-and-transactional-editing-to-typescript-and-rust-with-shared-conformance",
+        "title": "Bring bounded binary composition and transactional editing to TypeScript and Rust with shared conformance",
+        "description": "Bring bounded binary composition and transactional editing to TypeScript and Rust with shared conformance",
+        "kind": "feature",
+        "affected_specs": [
+          "ThreeMD"
+        ],
+        "affected_paths": [
+          ".specsync/config.toml",
+          "AGENTS.md",
+          "README.md",
+          "SPEC.md",
+          "Tests/ThreeMDTests/",
+          "conformance/",
+          "docs/EDITING-RELEASE.md",
+          "js/",
+          "rust/",
+          "specs/ThreeMD/",
+          "web/assets/three-md.js"
+        ],
+        "no_spec_change": false,
+        "no_spec_change_rationale": null,
+        "acceptance_criteria": [
+          "TypeScript and Rust implement portable uncompressed storage strict bounded composition stable identities exact-byte revisions atomic patches and structured diagnostics compatible with Swift; shared format vectors prove semantic and canonical compatibility while old parser conformance remains unchanged; unsupported LZFSE fails explicitly without a compression dependency; Rust uses exact pinned Unicode normalization solely for canonical key equivalence and order; generated web bundle may refresh deterministic output while viewer behavior remains unchanged and element/dist is untouched; limits and cooperative cancellation are tested with idiomatic APIs; the complete pinned Trust lane strict specs and actual scoped review pass; PRs stay open for Leif with no release or automatic Sculpt dependency update."
+        ],
+        "dependencies": [],
+        "supersedes": [],
+        "answers": {
+          "architecture_risk": "yes",
+          "public_contract": "yes"
+        }
+      },
+      "approved_delta_digests": {
+        "ThreeMD": "dd0ea765ed598a93b633a6b6849f2c26e46da97414dff8606daab2436b7d66a9"
+      }
     }
   ],
   "reopenings": []

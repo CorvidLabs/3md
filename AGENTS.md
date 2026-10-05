@@ -38,8 +38,10 @@ change the global plugin installation merely to run this checkout's gate.
 The current scope adds general binary Document storage and self-contained
 named Document references. Preserve the existing 1.0 text grammar, version
 leniency, parser/serializer APIs, and cross-language text conformance. New
-feature code is Swift-only; portable uncompressed storage is required and
-Apple LZFSE is an optional conditional backend. Named references never perform
+feature code in the original foundation scope was Swift-only. The portable
+follow-up below supersedes that implementation-language limit. Portable
+uncompressed storage is required and Apple LZFSE is an optional conditional
+backend. Named references never perform
 implicit filesystem or network reads. Voxel expansion and rendering are
 application semantics, not ThreeMD behavior.
 
@@ -55,6 +57,26 @@ Root coordinates exact implementation commits, verification and authorized
 feature-branch pull requests. A scope approval does not authorize an unreviewed
 merge, tag, release, deployment or repository visibility change. Do not run the
 shared verification lane concurrently with the coordinator.
+
+## Portable editing release preparation
+
+On 2026-10-05 Leif explicitly requested updating every language supported by
+ThreeMD, not only Swift. The approved follow-up brings the uncompressed binary
+container, self-contained composition, stable identities, exact revisions,
+atomic edits and structured diagnostics to TypeScript and Rust. Shared
+extension fixtures verify all three libraries alongside unchanged legacy
+text conformance. TypeScript and Rust report unsupported LZFSE explicitly.
+Rust pins unicode-normalization 0.1.25 for canonical key equivalence.
+
+Use SpecSync 6 for the new scope only and preserve historical archives.
+Source coverage includes Sources, js/src and rust/src. The derived web bundle
+must pass the existing drift gate; do not build or commit element/dist.
+Actual agent review is not independent human approval or a permitted signature.
+Retain the existing provenance policy and report unsigned degradation honestly.
+
+Leif will merge the prepared PRs. This work does not merge them, push main,
+publish a version, tag a release or deploy. Sculpt remains Swift-only with
+ThreeMD 1.8.1 until separately verified dependency adoption is authorized.
 
 <!-- CorvidLabs trust toolchain: BEGIN (managed, do not edit inside) -->
 ## CorvidLabs trust toolchain
