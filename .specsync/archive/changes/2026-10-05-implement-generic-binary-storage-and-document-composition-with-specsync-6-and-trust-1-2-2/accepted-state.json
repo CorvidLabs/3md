@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "workflow_version": 2,
+  "workflow_origin_version": 2,
+  "id": "implement-generic-binary-storage-and-document-composition-with-specsync-6-and-trust-1-2-2",
+  "slug": "implement-generic-binary-storage-and-document-composition-with-specsync-6-and-trust-1-2-2",
+  "title": "Implement generic binary storage and document composition with SpecSync 6 and Trust 1.2.2",
+  "description": "Implement generic binary storage and document composition with SpecSync 6 and Trust 1.2.2",
+  "kind": "feature",
+  "state": "accepted",
+  "canonical_applied": true,
+  "base_commit": "8712c686b91a54a972b1ffcb7512055513990d73",
+  "created_at": 1791157611,
+  "updated_at": 1791166655,
+  "affected_specs": [
+    "ThreeMD"
+  ],
+  "affected_paths": [
+    "Sources/ThreeMD/",
+    "Tests/ThreeMDTests/",
+    "Examples/",
+    "SPEC.md",
+    "README.md",
+    "AGENTS.md",
+    ".specsync/",
+    "specs/",
+    ".github/workflows/trust.yml",
+    ".trust.toml"
+  ],
+  "no_spec_change": false,
+  "no_spec_change_rationale": null,
+  "acceptance_criteria": [
+    "General ThreeMD documents round-trip through bounded portable uncompressed binary and optional Apple LZFSE envelopes; named document composition stores shared definitions once and validates references without I/O; malformed, oversized, cyclic, cancelled or corrupt input fails without partial success; existing text conformance and Rook legacy format discrimination remain intact; strict SpecSync 6 workflow-v2 SDD and the immutable Trust 1.2.2 gate pass the existing native cross-language lane without weakening risk or provenance policies."
+  ],
+  "selected_artifacts": [
+    "context",
+    "requirements",
+    "plan",
+    "tasks",
+    "testing",
+    "docs",
+    "design",
+    "research"
+  ],
+  "dependencies": [],
+  "answers": {
+    "architecture_risk": "yes",
+    "public_contract": "yes"
+  }
+}

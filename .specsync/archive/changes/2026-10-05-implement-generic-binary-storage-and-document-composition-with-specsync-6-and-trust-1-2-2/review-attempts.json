@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "reviews": [
+    {
+      "schema_version": 2,
+      "change_id": "implement-generic-binary-storage-and-document-composition-with-specsync-6-and-trust-1-2-2",
+      "reviewer": "agent:codex-root",
+      "provenance": {
+        "schema_version": 1,
+        "provider": "github_actions_check",
+        "required_check": "SpecSync scoped review"
+      },
+      "verdict": "pass",
+      "implementation_commit": "7405db4bf4a21b94e257e957a22067979194ed15",
+      "contract_digest": "4f548002617f0a693751cc4bf565d90ac34e11444d7f742481d4e114cfa73b58",
+      "execution_digest": "e7ce39892e947c1dc91a25380b41b969d3ad49b563a33a94b21808e400a423ca",
+      "workspace_digest": "8d6853f25d4b7024ef9d9be9fc6c8c8db4519e70445fe9441d40cee7a65c806d",
+      "timestamp": 1791166647
+    }
+  ]
+}

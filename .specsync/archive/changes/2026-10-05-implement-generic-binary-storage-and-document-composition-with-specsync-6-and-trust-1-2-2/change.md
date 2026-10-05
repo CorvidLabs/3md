@@ -1,6 +1,6 @@
 ---
 id: implement-generic-binary-storage-and-document-composition-with-specsync-6-and-trust-1-2-2
-state: verifying
+state: archived
 type: feature
 base_commit: 8712c686b91a54a972b1ffcb7512055513990d73
 ---
