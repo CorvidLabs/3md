@@ -7,10 +7,11 @@
   "title": "Implement generic binary storage and document composition with SpecSync 6 and Trust 1.2.2",
   "description": "Implement generic binary storage and document composition with SpecSync 6 and Trust 1.2.2",
   "kind": "feature",
-  "state": "approved",
+  "state": "verifying",
+  "canonical_applied": true,
   "base_commit": "8712c686b91a54a972b1ffcb7512055513990d73",
   "created_at": 1791157611,
-  "updated_at": 1791158010,
+  "updated_at": 1791159820,
   "affected_specs": [
     "ThreeMD"
   ],

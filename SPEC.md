@@ -1,11 +1,14 @@
 # 3md Format Specification
 
-Version: 1.0
-Status: stable (frozen grammar)
-File extension: `.3md`
+Version: 1.1 (additive storage and composition specification)
+Status: the 1.0 text grammar is frozen; the new extensions are implemented on this branch, not a published release
+File extensions: `.3md` text; `.3mdb` general binary storage
 Media type (proposed): `text/3md`
 
-This document defines version 1.0 of the 3md format. The `3md:` key inside a
+Sections 1–10 define the unchanged version 1.0 text format. Sections 11–12
+define independently versioned storage and composition extensions. The Swift
+library implements these extensions; the TypeScript and Rust ports and the web
+viewer continue to implement the existing text contract. The `3md:` key inside a
 document's frontmatter declares which format version that document targets. See
 section 9 (Stability) for the compatibility guarantees that version 1.0 makes.
 
@@ -278,9 +281,149 @@ Version 1.0 freezes the grammar described in this document. Concretely:
   implementation that passes them is conforming, and any change that would alter
   their expected results is a breaking change.
 
-## 11. Open questions for later versions
+## 11. General document storage
+
+Binary storage contains a general 3md `Document`. It does not interpret an axis,
+Markdown body, spatial coordinates, glyphs, assets, or application metadata. It
+introduces no text directive and does not change `Parser` or `Serializer`.
+
+`DocumentStorageCodec` accepts UTF-8 text or the complete binary magic and returns
+a `Document`. The writer takes an explicit `.text` or `.binary(compression:)`
+format. Text remains the portable interchange form. The binary extension is
+`.3mdb`; readers MUST identify content by its magic rather than an extension.
+
+### 11.1 Version 1 binary envelope
+
+The header is exactly 40 bytes. All multi-byte integers use little-endian order.
+The payload immediately follows the header; no trailing bytes are permitted.
+
+| Offset | Bytes | Field | Version 1 value |
+|--------|-------|-------|-----------------|
+| 0 | 8 | Magic | `3mdbin\r\n`, hexadecimal `33 6d 64 62 69 6e 0d 0a` |
+| 8 | 2 | Container version | `1` |
+| 10 | 1 | Payload kind | `1`, canonical UTF-8 3md text |
+| 11 | 1 | Compression | `0` for none; `1` for LZFSE |
+| 12 | 4 | Flags | `0` |
+| 16 | 4 | Reserved | `0` |
+| 20 | 8 | Encoded payload length | Exact payload byte count |
+| 28 | 8 | Decoded payload length | Exact UTF-8 text byte count |
+| 36 | 4 | CRC-32/ISO-HDLC | Header bytes `0..<36`, followed by the encoded payload |
+
+The checksum uses reflected polynomial `0xEDB88320`, initial value
+`0xFFFFFFFF`, and final XOR `0xFFFFFFFF`. The check value for ASCII
+`123456789` is `0xCBF43926`. The checksum field itself is excluded. CRC detects
+accidental corruption; it does not authenticate an author or provide a signature.
+
+Uncompressed payloads are mandatory and portable. LZFSE is optional and uses
+Apple's system Compression framework where available. An implementation without
+that framework MUST report unsupported compression explicitly. A decoder MUST
+reject an unknown version, kind, compression identifier, flags, reserved value,
+inconsistent length, checksum mismatch, truncated or concatenated stream, or
+unused trailing input. A compressed stream must terminate exactly once and
+produce exactly the declared decoded length.
+
+This magic is deliberately different from the older application-specific `3MDB`
+voxel format used by Sculpt/Rook. Those containers do not become this standard;
+applications keep their existing readers and explicitly migrate documents.
+
+### 11.2 Validation and resource policy
+
+Storage defaults to 64 MiB encoded bytes, 64 MiB decoded bytes, 100,000 physical
+lines, 65,536 planes, and 8 MiB per line, scalar, preamble, or plane body.
+Callers can lower these limits. The record limit can be raised explicitly up to
+the absolute 64 MiB ceiling; other limits cannot exceed their defaults. Declared
+decoded size is checked before decompression allocation. Counts and byte sums
+use bounded arithmetic, and long operations cooperatively check cancellation.
+Errors return no partial document or encoded payload.
+
+Direct `Document` values must have finite coordinates, unique plane positions,
+and fields representable by the existing text grammar. The new storage writer
+quotes every scalar and validates a semantic parse round trip. It preserves
+literal quotes and backslashes without changing the existing serializer. Values
+that would change through text serialization, including reserved-key collisions
+or significant unrepresentable whitespace, are rejected explicitly.
+
+The API is synchronous and pure, and the package's existing deployment baseline
+is unchanged. A caller may run it in a Swift task away from the UI actor.
+Cooperative cancellation is checked where Swift concurrency is available:
+macOS 10.15, iOS 13, tvOS 13, watchOS 6 or later, and supported non-Apple
+platforms. On earlier Apple runtimes the cancellation check is a no-op;
+synchronous validation and storage remain available. Cancellation propagates as
+`CancellationError` when checked. The API does not open files, resolve URLs,
+launch a process, or read the network.
+
+## 12. Self-contained document composition
+
+A composition stores one root ID and a library of unique named `Document`
+definitions. Each definition has ordered references to IDs in that same
+library. The documents keep their own axes, metadata and Markdown; reference
+attributes are opaque strings interpreted by the consuming application.
+No voxel placement, rendering transform, automatic flattening, or external
+transclusion is implied.
+
+IDs are case-sensitive ASCII strings of 1–64 bytes matching
+`[A-Za-z0-9][A-Za-z0-9_-]*`. An ID is never a filesystem path or URL. A target
+must exist in the supplied library. Definitions are stored once even when
+referenced repeatedly. Validation covers every definition, including unused
+ones, so an unreachable missing target or cycle is an error.
+
+### 12.1 The `3md-composition-1` profile
+
+The readable profile uses existing 3md syntax: version `0.1`, axis `layer`,
+metadata exactly `profile: 3md-composition-1`, no title or preamble, and one
+plane at `z=0` labelled `Composition`, without coordinates or extra attributes.
+The plane body is one fenced `json` object with exactly these fields:
+
+```json
+{
+  "schema": "3md-composition-1",
+  "rootID": "root",
+  "entries": [
+    {
+      "id": "root",
+      "source": "---\n3md: \"0.1\"\naxis: \"layer\"\n---\n\n@plane z=0\n# Collection\n",
+      "references": [
+        {"targetID": "chapter", "attributes": {"role": "first"}},
+        {"targetID": "chapter", "attributes": {"role": "again"}}
+      ]
+    },
+    {
+      "id": "chapter",
+      "source": "---\n3md: \"0.1\"\naxis: \"time\"\n---\n\n@plane z=0\n# Reusable chapter\n",
+      "references": []
+    }
+  ]
+}
+```
+
+`source` is canonical readable 3md text, not a path. Writers sort definitions by
+ID, preserve reference order, and use the general storage text writer for each
+definition. Readers reject unknown or duplicate JSON fields, invalid envelope
+structure, malformed child documents, and unsupported profiles. The profile's
+outer document can itself be stored through the general binary codec, keeping
+all definitions and references intact.
+
+### 12.2 Graph and resource limits
+
+The standard policy permits at most 1,024 definitions, 16,384 reference records,
+64 nodes along a dependency path, 16 MiB summed unique canonical definition
+bytes, and 20 MiB profile bytes. Each definition's reachable traversal has at
+most 1,000,000 occurrences, counting shared targets each time they are reached.
+Each reference permits at most 64 attributes and 16 KiB summed UTF-8 key/value
+bytes. Callers can lower each limit but cannot raise these ceilings.
+
+The codec uses an explicit 20 MiB outer record policy for the escaped JSON
+manifest while child documents use their separately supplied document policy.
+Before object decoding it bounds JSON nesting and record counts and rejects
+duplicate decoded keys. Missing roots or targets, duplicate IDs, cycles,
+excessive depth, byte/count/occurrence overflow, and available task cancellation fail without
+partial output. Lookup only returns a definition supplied in memory; source
+files may be removed after import without affecting the composition.
+
+## 13. Open questions for later versions
 
 - Inline 3D model embeds, for example `@model src="scene.glb"`.
-- Transclusion across documents.
+- Explicit external transclusion and resolver policy.
 - Per-plane transition or timing hints for `frame`/`time` axes.
-- A binary or compressed container for large scenes.
+- Portable implementations of the storage and composition extensions in the
+  TypeScript and Rust ports and hosted viewer.

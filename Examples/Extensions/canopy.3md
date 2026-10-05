@@ -1,0 +1,14 @@
+---
+3md: "1.0"
+axis: "space"
+title: "Reusable canopy"
+material: "mint"
+---
+
+@plane z=0
+.#
+##
+
+@plane z=1
+##
+.#

@@ -1,6 +1,34 @@
 # 3md examples
 
-171 example `.3md` documents spanning many meanings of the Z axis. Every one validates with the parser and renders in the <three-md> component. Browse them live in the [gallery viewer](https://corvidlabs.github.io/3md/gallery.html).
+Text examples span many meanings of the Z axis. Browse the existing text
+catalog in the [gallery viewer](https://corvidlabs.github.io/3md/gallery.html).
+The extension fixtures below use the new Swift storage/composition APIs; the
+hosted viewer does not yet decode binary files or expand composition references.
+
+## Storage and composition fixtures
+
+These six actual fixtures were generated with the public Swift APIs and decoded
+back to equal documents and composition values. They exercise the general
+binary envelope and a self-contained reusable library, without application
+placement or rendering semantics.
+
+| Example | Readable 3md | Portable binary | Apple LZFSE binary |
+|---------|--------------|-----------------|--------------------|
+| Canopy | [canopy.3md](Extensions/canopy.3md) | [canopy.3mdb](Extensions/canopy.3mdb) | [canopy.lzfse.3mdb](Extensions/canopy.lzfse.3mdb) |
+| Shared grove | [shared-grove.3md](Extensions/shared-grove.3md) | [shared-grove.3mdb](Extensions/shared-grove.3mdb) | [shared-grove.lzfse.3mdb](Extensions/shared-grove.lzfse.3mdb) |
+
+Canopy is a two-plane space-axis document with mint material metadata. Shared
+grove embeds it once and declares a reference carrying an opaque A binding.
+Its root body contains repeated A characters; interpreting those characters as
+model placements is the consuming application's job. All definitions are
+self-contained, so the library requires no source-file or URL resolution.
+
+The [manifest](Extensions/manifest.json) records container version 1, profile
+3md-composition-1, exact byte counts and SHA256 for each file. Hashes document
+fixture integrity and do not authenticate an author. LZFSE is optional and can
+make very small inputs larger; uncompressed binary is portable. Existing CLI,
+TypeScript/Rust parsers and hosted viewer continue to support the original text
+contract; no new binary/composition UI or command behavior is implied.
 
 ## axis: time (34)
 

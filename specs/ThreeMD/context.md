@@ -4,141 +4,64 @@ spec: ThreeMD.spec.md
 
 ## Context
 
-ThreeMD is the Swift implementation of the 3md file format. 3md is Markdown
-extended along one free third axis (the Z axis): an ordinary Markdown document
-flows left to right and top to bottom, and 3md adds depth by stacking
-**planes**, where each plane is itself ordinary Markdown. The author declares
-what that Z axis means (time, depth, layer, frame, space, or any custom label);
-the format records the intent but does not constrain it.
+ThreeMD is Markdown extended along one free Z axis. Documents carry an axis
+label and ordered Markdown planes without assigning application semantics to
+their content. The original text grammar remains frozen and shared between
+Swift, TypeScript and Rust through the existing conformance fixtures.
 
-This module's job is narrow and well bounded: turn 3md source text into a typed
-`Document`, and turn a `Document` back into 3md source text. It is a
-parser/serializer and nothing more. It does not render planes, does not parse or
-interpret the Markdown inside a plane body, and does not lay planes out for a
-viewer. Plane bodies are carried as opaque strings.
-
-The module is a single `ThreeMD` library target with no dependencies beyond
-Foundation, built under Swift 6 with strict concurrency enabled (see
-`Package.swift`). Every public type is a value type and `Sendable`, so a parsed
-document can cross concurrency boundaries freely without locks or copies of
-shared mutable state.
-
-### Module purpose and boundaries
-
-- In scope: lexing and parsing 3md source, a strongly typed document model,
-  lossless serialization back to source, and typed parse errors.
-- Out of scope (non-goals): rendering, Markdown processing of plane bodies,
-  layout, validation of body content, file I/O. The module operates on
-  `String` in and `String` out.
-
-### File and type layout
-
-Source lives in `Sources/ThreeMD/`. Each type has one focused responsibility:
-
-- `Axis.swift` - `Axis`, a `RawRepresentable` struct wrapping the Z axis label.
-  Its initializer trims whitespace and lowercases the value. It exposes named
-  constants (`time`, `depth`, `layer`, `frame`, `space`) but accepts any string.
-- `Plane.swift` - `Plane`, one slice of the document. Holds the required `z`
-  position, optional `label`, optional in-plane `x`/`y` offsets, a string
-  dictionary of any extra directive attributes, and the trimmed Markdown `body`.
-- `Document.swift` - `Document`, the top-level model: format `version`, `axis`,
-  optional `title`, a `metadata` dictionary for extra frontmatter keys, an
-  optional `preamble`, and the `planes` array in source order. Convenience
-  accessors `planesByZ` (sorted ascending) and `plane(atZ:)` are read-only views;
-  they do not change stored order.
-- `ParseError.swift` - `ParseError`, the typed error enum thrown by the parser,
-  conforming to `LocalizedError` and `Equatable` with one case per documented
-  failure mode.
-- `Parser.swift` - `Parser`, the parsing pipeline (detailed below).
-- `Serializer.swift` - `Serializer`, the inverse of the parser.
-
-### Related modules
-
-- `SPEC.md` is the prose format specification this code implements. The error
-  cases, the frontmatter rules, the plane attribute rules, the single-plane
-  shorthand, and the round-trip guarantee all trace directly to that document.
-- There are no other modules; `ThreeMD` is self-contained.
+The Swift target also contains the existing HTML and Markdown renderers. This
+change adds bounded general Document storage and named-document composition.
+They do not introduce voxel grids, assets, placement transforms, file resolvers,
+network access or automatic flattening. The web component and command-line
+tool remain separate consumers; this feature does not add binary/composition
+commands or claim implementation in the language ports or viewer.
 
 ## Design Decisions
 
-- **Value types and `Sendable` everywhere.** `Document`, `Plane`, `Axis`,
-  `Parser`, and `Serializer` are all `struct`s and `Sendable`. This is the
-  primary concurrency-safety decision: there is no shared mutable state to guard,
-  parsed documents are freely shareable across tasks and actors, and the strict
-  concurrency build setting in `Package.swift` is satisfied without
-  `@unchecked` escapes.
+- Immutable Sendable value types keep storage/composition safe across task
+  boundaries without shared mutable state.
+- General binary storage wraps canonical UTF-8 text in an independently
+  versioned envelope. Its magic is distinct from Sculpt/Rook's existing
+  application-specific voxel container. Portable uncompressed payloads are
+  mandatory; conditional system LZFSE is optional.
+- CRC-32 checks corruption, not authenticity. Explicit lengths, flags and
+  resource limits prevent ambiguous or unbounded decoding.
+- A new canonical storage writer quotes all scalar values and checks semantic
+  round trips. Parser and Serializer are left unchanged.
+- Composition stores each named Document once, preserving each axis and opaque
+  reference attributes. IDs resolve solely within the supplied library.
+- Validation covers unused definitions as well as the root, preventing hidden
+  missing targets, cycles and excessive traversal work.
+- The readable profile uses one fenced JSON manifest inside existing 3md syntax.
+  A bounded scanner rejects duplicate keys and excessive records before JSON
+  object decoding. The profile can itself pass through generic binary storage.
+- APIs remain synchronous and pure, with cooperative task cancellation. Callers
+  choose their executor and filesystem boundary.
 
-- **`Axis` as a `RawRepresentable` struct, not an enum.** The axis is
-  deliberately free-form. The format treats the axis label as metadata that
-  tools interpret, so a closed enum would be wrong. A struct over `String` gives
-  type safety and named constants for the common cases while still accepting any
-  custom label. The initializer normalizes (trim plus lowercase) so axis values
-  compare consistently.
+## Source Responsibilities
 
-- **Frontmatter is required, and the `3md` key is the magic marker.** A valid
-  document must open with a `---` fenced frontmatter block, and that block must
-  carry a non-empty `3md` version key. The presence of the `3md` key is what
-  identifies the file as 3md at all; without it, parsing fails with
-  `missingVersion`. The `axis` key defaults to `layer` when absent. Any key that
-  is not `3md`, `axis`, or `title` is preserved as string metadata rather than
-  discarded.
+The existing Axis, Plane, Document, Parser, Serializer, link and renderer files
+retain the text contract. DocumentStorage.swift defines storage policy/errors;
+DocumentStorageCodec.swift owns the envelope; DocumentStorageValidation.swift
+owns bounded text validation and canonical writing; DocumentStorageCompression.swift
+owns the optional system compression boundary.
 
-- **The single-plane shorthand.** A document with valid frontmatter but no
-  `@plane` directives is treated as one implicit plane at `z = 0`, whose body is
-  the entire post-frontmatter content. This means a plain Markdown file with a
-  3md header is a valid one-plane document. The parser produces this from the
-  collapsed preamble; if there is no content at all, it produces an empty plane
-  list rather than an empty plane.
+DocumentComposition.swift owns the graph/value model and graph validation.
+DocumentCompositionLimits.swift owns policies and typed failures.
+DocumentCompositionCodec.swift owns the profile boundary.
+DocumentCompositionJSON.swift owns bounded strict manifest scanning/writing.
+All new feature implementation is Swift.
 
-- **Throwing parser with a typed `ParseError`.** Parsing fails loudly through
-  Swift error handling, never through optionals or sentinel values. `ParseError`
-  has a distinct case per documented failure (`missingFrontmatter`,
-  `invalidFrontmatter`, `missingVersion`, `missingPlanePosition`,
-  `invalidPlaneDirective`, `duplicatePlane`), several of which carry the offending
-  line number, so callers can react programmatically and report precisely.
+## Governance
 
-- **Lossless round-trip via the `Serializer`.** `Serializer.render` is the
-  documented inverse of `Parser.parse`: parsing serialized output yields an
-  equivalent document (for content that does not depend on quote escaping). The
-  serializer emits `3md` and `axis` first, sorts extra metadata and plane
-  attributes by key for stable output, formats whole-number doubles as integers,
-  and quotes values only when needed (or always, for `label` and extra
-  attributes, to keep spaces safe).
+The workflow-v2 change
+`implement-generic-binary-storage-and-document-composition-with-specsync-6-and-trust-1-2-2`
+records the actual delegated definition approval before source implementation.
+The actor is agent:sculpture_exports, acting under Leif's direct scope approval.
+This is not a claim of human implementation review. Root coordinates actual
+verification, required lifecycle commits and authorized PR publication.
 
-## Parsing pipeline
-
-`Parser.parse(_:)` runs a small fixed pipeline:
-
-1. **Normalize.** Convert `\r\n` to `\n` and split the source into lines. All
-   later work is line-oriented.
-
-2. **Extract frontmatter.** Skip leading blank lines, require an opening line
-   that is exactly `---`, then read `key: value` pairs until a closing `---`.
-   Inside the block, blank lines and `#` comment lines are ignored, the first
-   `:` separates key from value, and matching surrounding single or double quotes
-   are stripped. A block that never closes throws `invalidFrontmatter`; a missing
-   opening fence throws `missingFrontmatter`. The extractor also records the
-   1-based line number where the body begins, so plane errors can report
-   accurate source lines.
-
-3. **Interpret frontmatter.** Fold the raw fields into `version`, `axis`,
-   `title`, and `metadata`, defaulting the axis to `layer` and rejecting a
-   missing or empty `3md` version with `missingVersion`.
-
-4. **Parse the body into preamble plus planes.** Walk the remaining lines. Lines
-   whose first whitespace-delimited token is `@plane` open a new plane;
-   everything else accumulates into the current plane's body, or into the
-   preamble if no plane has started yet. Each `@plane` directive is parsed into
-   attributes, and the previous pending plane is finalized. Bodies are collapsed
-   (leading and trailing blank lines trimmed). A `z` is required
-   (`missingPlanePosition`), `z`/`x`/`y` must parse as `Double`
-   (`invalidPlaneDirective`), and a repeated `z` throws `duplicatePlane`. The
-   reserved keys `z`, `x`, `y`, and `label` are pulled out; anything else lands
-   in the plane's `attributes`. If no directives were seen, the single-plane
-   shorthand applies.
-
-5. **Tokenize directive attributes.** Directive attributes are split by a small
-   tokenizer that keeps quoted spans intact, so a value like `label="Mon Day"`
-   stays one token despite the space. Each token splits on the first `=` into a
-   lowercased key and an unquoted value; an empty key or a token with no `=`
-   throws `invalidPlaneDirective`.
+SpecSync is pinned to 6.0.0, Fledge to 1.7.2, and Trust 1.2.2 to immutable commit
+bccd89c111d47778c97c5064fb62ab51695e04ea. Existing risk and trusted-signature
+policies are preserved. Unavailable signer authority must remain an honest
+limitation rather than an invented identity or weakened gate.

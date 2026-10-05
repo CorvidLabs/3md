@@ -31,7 +31,7 @@ jobs:
         with:
           bun-version: latest
 
-      # Strict SpecSync contract uses the same 6.0.0 binary Trust 1.2.0
+      # Strict SpecSync contract uses the same 6.0.0 binary Trust 1.2.2
       # defaults to. 6.x check is spec validation plus coverage only;
       # Trust owns lifecycle verify.
       - name: Install pinned lifecycle tools
@@ -52,9 +52,9 @@ jobs:
           chmod +x "$RUNNER_TEMP/specsync-bin/specsync"
           fledge="$RUNNER_TEMP/specsync-bin/fledge"
           curl -fsSL \
-            "https://github.com/CorvidLabs/fledge/releases/download/v1.7.0/fledge-macos-aarch64" \
+            "https://github.com/CorvidLabs/fledge/releases/download/v1.7.2/fledge-macos-aarch64" \
             -o "$fledge"
-          expected_fledge="21d0916d52ef14e6d33e3967417773369e047a0311e66bbb1eecc8f69332a040"
+          expected_fledge="073fd399fc19e7604b8498e78bebbc00ea22bc346daad0394d7d278ad60c8a02"
           actual_fledge="$(shasum -a 256 "$fledge" | awk '{print $1}')"
           test "$actual_fledge" = "$expected_fledge"
           chmod +x "$fledge"
@@ -68,7 +68,7 @@ jobs:
       # Unified lifecycle, contract, risk, and progressive provenance gate.
       - name: CorvidLabs Trust gate
         id: trust
-        uses: CorvidLabs/trust@dd52a7a90ffbc1d2b1030e37007c18274f3d96bc # v1.2.1
+        uses: CorvidLabs/trust@bccd89c111d47778c97c5064fb62ab51695e04ea # v1.2.2
 
       # Durability: fail if the standing rules block was removed.
       - name: Trust block present
