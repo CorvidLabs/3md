@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "reviews": [
+    {
+      "schema_version": 2,
+      "change_id": "prepare-coherent-threemd-2-0-0-package-metadata-and-honest-capability-and-migration-release-notes",
+      "reviewer": "agent:codex-root",
+      "provenance": {
+        "schema_version": 1,
+        "provider": "github_actions_check",
+        "required_check": "SpecSync scoped review"
+      },
+      "verdict": "pass",
+      "implementation_commit": "1eb8ed2a3dd1b5db3c4b9cb64e38c451f7b8c44b",
+      "contract_digest": "fdd56664d10303f053524abeda693623804297286022c7db12f24e4786e04006",
+      "execution_digest": "d96dbc6d033d89db9b858ff1e53e5fd3e63ab106c5c1f199c3013916a8ef90e0",
+      "workspace_digest": "a03123bde638918b82b7a34c0abd0980cd26af79404519891c9158172bb4d5c2",
+      "timestamp": 1791221644
+    }
+  ]
+}
