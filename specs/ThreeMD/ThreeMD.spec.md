@@ -1,6 +1,6 @@
 ---
 module: ThreeMD
-version: 6
+version: 7
 status: active
 files:
   - Sources/ThreeMD/Axis.swift
@@ -24,6 +24,8 @@ files:
   - Sources/ThreeMD/DocumentCompositionLimits.swift
   - Sources/ThreeMD/DocumentCompositionCodec.swift
   - Sources/ThreeMD/DocumentCompositionJSON.swift
+  - Sources/ThreeMD/DocumentFileComposition.swift
+  - Sources/ThreeMD/DocumentFileCompositionLedger.swift
   - Sources/ThreeMD/DocumentEditingTypes.swift
   - Sources/ThreeMD/DocumentIdentity.swift
   - Sources/ThreeMD/DocumentEditing.swift
@@ -34,15 +36,19 @@ files:
   - js/src/portable.ts
   - js/src/storage.ts
   - js/src/composition.ts
+  - js/src/file-composition.ts
   - js/src/editing.ts
   - rust/src/lib.rs
   - rust/src/storage.rs
   - rust/src/composition.rs
+  - rust/src/file_composition.rs
   - rust/src/editing.rs
   - rust/src/diagnostics.rs
   - Sources/ThreeMDInterop/Protocol.swift
   - Sources/ThreeMDInterop/SwiftAdapter.swift
   - Sources/ThreeMDInterop/main.swift
+  - Sources/ThreeMDInterop/FileCases.swift
+  - Sources/ThreeMDInterop/FileBundleHost.swift
 db_tables: []
 depends_on: []
 ---
@@ -367,6 +373,34 @@ Portable API contracts: TypeScript exports the analogous storage/composition/edi
 
 
 Cancellation is cooperative. JavaScript work is synchronous, so an AbortSignal dispatched on the same event loop cannot preempt it mid-call; callers can pre-cancel or schedule work and cancellation in their own execution context. No library worker or external service is created. Rust's shared atomic flag can be canceled from another thread. Both ports check bounded work and return no partial result.
+
+### Public file composition APIs
+
+| Export | Contract |
+|--------|----------|
+| `DocumentFileSource` | Explicit normalized project path plus supplied encoded document/profile bytes; never a filesystem read. |
+| `data` | Caller-supplied Data/Uint8Array/Vec bytes for file composition. |
+| `DocumentFileReference` | One printable ASCII glyph and relative source filename. |
+| `glyph` | Host-defined printable ASCII ledger character. |
+| `source` | Relative child filename; bundled profile source remains canonical embedded document text. |
+| `DocumentFileCompositionResult` | Validated portable graph plus normalized root and contributing-path index. |
+| `rootPath` | Normalized project-relative root filename. |
+| `fileRootIDs` | Normalized filename to generated root-definition ID mapping. |
+| `resolvedPaths` | Reachable filenames sorted by Unicode scalar order. |
+| `DocumentFileCompositionError` | Typed file-intake failures; wrapped storage/graph/cancellation failures retain their codes. |
+| `DocumentFileComposition` | Pure ledger parsing, relative path resolution and supplied-byte graph bundling. |
+| `ledger` | Parse strict 3md-files metadata to glyph-ordered filename references. |
+| `resolvePath` | Normalize a relative filename against its containing file without project escape. |
+| `resolve` | Discover supplied reachable files, preserve nested sharing and produce a self-contained graph under existing policies. |
+| `invalidPath` | Absolute, escaping, forbidden delimiter/control or malformed project path. |
+| `duplicatePath` | Multiple source inputs normalize to the same project path. |
+| `invalidLedger` | Malformed JSON, duplicate keys or nonstring ledger values. |
+| `invalidGlyph` | Key is not one printable ASCII character. |
+| `missingFile` | A reachable normalized filename has no supplied bytes. |
+| `inputLimit` | Supplied count/path bytes, reachable input bytes or standalone ledger/path policy exceeded. |
+| `DocumentFileCompositionErrorCode` | TypeScript stable file-intake error code union. |
+| `file_composition` | Rust pure supplied-file resolver module; ledger and resolve take explicit OperationOptions/policies. |
+| `resolve_path` | Rust relative path normalization with explicit cancellation options. |
 
 ## Invariants
 
