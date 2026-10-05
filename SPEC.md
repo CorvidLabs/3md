@@ -281,6 +281,14 @@ Version 1.0 freezes the grammar described in this document. Concretely:
   implementation that passes them is conforming, and any change that would alter
   their expected results is a breaking change.
 
+### Optional editing identity convention
+
+Swift editing APIs optionally interpret `3md-id` in plane attributes and composition reference attributes. The existing parser still preserves it as an ordinary string; it never assigns IDs or rejects otherwise valid text based on this convention. An existing `id` attribute remains application metadata. Identity-aware validation requires a 1...64-byte case-sensitive ASCII identifier, beginning with an alphanumeric and containing only alphanumerics, underscores or hyphens, unique within one document's planes or one composition entry's references.
+
+Explicit identity adoption assigns only missing IDs and preserves valid existing ones. IDs survive changes to content, coordinates, order and reference targets. Existing z-based links and HTML anchors keep their current grammar and semantics. Generic attribute replacement cannot silently change an adopted identity.
+
+Typed editing is an optional library layer above parsing/storage. A patch compares exact canonical expected content, stages bounded operations privately and publishes only a completely validated final document or composition. A revision is a concurrency precondition, not an authenticity claim. Cancellation, stale preconditions and invalid final values produce no partial result. These additions do not change the frozen text grammar or existing binary/composition versions.
+
 ## 11. General document storage
 
 Binary storage contains a general 3md `Document`. It does not interpret an axis,

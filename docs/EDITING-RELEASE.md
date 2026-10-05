@@ -47,6 +47,20 @@ The editor applies operations to a private candidate and validates the final val
 
 Diagnostics carry stable codes, severity, explanatory text and available line/path evidence. Value-only diagnostics do not invent source line numbers. IDs remain stable when bodies, labels, positions, order or reference targets change.
 
+Inspection covers source/storage validity, identities, positions and graph values. It does not invoke the existing Markdown link extractor or automatically report dangling links. Existing `links()` behavior remains available separately. Codable snapshots and patches are typed transport values, not a bounded streaming JSON decoder; a host accepting untrusted wire input must limit its bytes before Foundation decoding.
+
+```swift
+let identified = try DocumentIdentity.adopt(document)
+let snapshot = try DocumentSnapshot(identified)
+let patch = DocumentPatch(
+    expectedRevision: snapshot.revision,
+    operations: [.move(id: "ideas", to: 0)]
+)
+let updated = try DocumentEditor.apply(patch, to: snapshot)
+```
+
+The example assumes the Ideas plane already carries `3md-id="ideas"`. Adoption of an unnamed plane assigns a deterministic `plane-N` ID instead of deriving identity from its label.
+
 ## Sculpt integration boundary
 
 Sculpt's shared-model editing uses its existing validated sculpture/reference values and ThreeMD 1.8.1 until a separately verified upstream version is published. Its current voxel `.3mdb`, `ascii-composition-1` and `ascii-world-1` schemas remain app-specific. The general binary container is a different discriminated format; identical filename suffixes do not make these payloads interchangeable.
