@@ -1,7 +1,11 @@
 import Foundation
 
 internal enum DocumentStorageValidation {
-    static func parse(_ data: Data, limits: DocumentDecodeLimits) throws -> Document {
+    static func parse(
+        _ data: Data,
+        limits: DocumentDecodeLimits,
+        parseDocument: (String) throws -> Document = { try Parser().parse($0) }
+    ) throws -> Document {
         try DocumentStorageCancellation.check()
         guard data.count <= limits.maximumDecodedBytes else { throw DocumentStorageError.oversizedOutput }
         var lines = 1
@@ -20,7 +24,8 @@ internal enum DocumentStorageValidation {
         guard let source = String(data: data, encoding: .utf8) else { throw DocumentStorageError.invalidUTF8 }
         try preflightPlanes(source, limits: limits)
         let document: Document
-        do { document = try Parser().parse(source) } catch let error as ParseError {
+        do { document = try parseDocument(source) } catch let error as ParseError {
+            try DocumentStorageCancellation.check()
             throw DocumentStorageError.invalidText(error)
         }
         try DocumentStorageCancellation.check()

@@ -11,6 +11,10 @@ shared text vectors; new APIs do not claim parity in those ports.
 
 DocumentStorageTests.swift, DocumentStorageBoundsTests.swift and
 DocumentStorageCompressionTests.swift cover the new general storage boundary.
+ParserNumericTests.swift preserves the accepted finite ASCII decimal grammar
+for every coordinate. DocumentStorageDecimalTests.swift covers long malformed
+decimals in readable and correctly checksummed binary input, plus deterministic
+cancellation after preflight when the parser fails.
 DocumentCompositionTests.swift and DocumentCompositionCodecTests.swift cover
 the graph and readable profile. Presence of tests is not a passing receipt;
 root records actual results against the implemented revision.
@@ -25,6 +29,9 @@ root records actual results against the implemented revision.
   nonzero-reserved and unknown-compression containers.
 - Verify decoded-byte declarations are bounded before allocation, plus lowered
   limits for input/output, records, lines and planes.
+- Reject a 4 KiB decimal with an invalid suffix through readable input and an
+  otherwise valid binary envelope without quadratic backtracking. Preserve
+  optional signs, fractions and exponents and reject nonfinite/non-ASCII forms.
 - Reject nonfinite coordinates, repeated Z, reserved-key collisions and direct
   values that cannot round-trip faithfully.
 - On platforms without Compression, verify explicit unavailability rather than
@@ -33,6 +40,9 @@ root records actual results against the implemented revision.
   concurrency runtimes. Cancellation checks use an availability guard for
   macOS 10.15/iOS 13/tvOS 13/watchOS 6 and later; earlier Apple runtimes no-op
   that check without raising the package deployment baseline.
+  A synchronous internal parser injection cancels its current task immediately
+  before a real parse failure, proving cancellation takes priority without
+  timing races or a public API change.
 
 ## Composition Verification
 

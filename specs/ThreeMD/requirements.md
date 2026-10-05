@@ -112,7 +112,9 @@ Acceptance Criteria
   attribute. A directive with no `z` throws
   `ParseError.missingPlanePosition(line:)`. A `z` value that does not parse as a
   `Double` throws `ParseError.invalidPlaneDirective(line:detail:)`. Numbers may
-  be integer or decimal and may be negative.
+  be integer or decimal and may be negative. ASCII decimal validation scans
+  linearly and retains optional signs, fractions and exponents; malformed
+  suffixes cannot cause regular-expression backtracking.
 
 ### REQ-threemd-008
 
@@ -298,6 +300,9 @@ Storage SHALL validate finite unique positions, serializable values, declared al
 Acceptance Criteria
 - Fixed header and CRC vectors are independently inspected.
 - Corrupt, truncated, trailing, concatenated, oversized, unsupported and cancelled inputs fail predictably.
+- Malformed decimal tokens within the byte limits are rejected with linear
+  lexical work. Cancellation detected after a failing text parse takes priority
+  over conversion of its `ParseError` to a storage validation failure.
 - Existing text-parser conformance vectors remain unchanged.
 
 ### REQ-ThreeMD-023
