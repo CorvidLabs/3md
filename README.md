@@ -124,6 +124,13 @@ println!("{}", document.axis); // "time"
 
 ## Library usage
 
+Unreleased editing preparation adds optional stable plane/reference identities,
+immutable revision-checked document/composition patches and structured
+diagnostics above the existing parser. These APIs are Swift-first additions;
+existing TypeScript/Rust text conformance does not imply support for the new
+binary, composition or editing APIs. See the [release scope and capability
+matrix](docs/EDITING-RELEASE.md). Existing releases do not contain these APIs.
+
 ```swift
 import ThreeMD
 
