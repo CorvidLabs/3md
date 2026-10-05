@@ -16,6 +16,22 @@
         }
       ],
       "requirement_ids": []
+    },
+    {
+      "timestamp": 1791221617,
+      "commit": "6a2949e52a4cfe2e5f57466bcd24eca3ec7a02d9",
+      "contract_digest": "fdd56664d10303f053524abeda693623804297286022c7db12f24e4786e04006",
+      "execution_digest": "d96dbc6d033d89db9b858ff1e53e5fd3e63ab106c5c1f199c3013916a8ef90e0",
+      "workspace_digest": "a03123bde638918b82b7a34c0abd0980cd26af79404519891c9158172bb4d5c2",
+      "passed": true,
+      "commands": [
+        {
+          "command": "specsync check --spec ThreeMD --spec ThreeMDElement --strict",
+          "success": true,
+          "exit_code": 0
+        }
+      ],
+      "requirement_ids": []
     }
   ]
 }
