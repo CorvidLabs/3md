@@ -166,6 +166,9 @@ private final class InterchangeCoordinator {
             guard ids.insert(fixture.id).inserted, ["document", "composition"].contains(fixture.kind) else {
                 throw InterchangeFailure.invalid("Duplicate/invalid mandatory catalog ID \(fixture.id)")
             }
+            guard fixture.expectedError != "adapterFailure" else {
+                throw InterchangeFailure.invalid("Catalog cannot accept an unclassified adapterFailure")
+            }
             let bytes = try readBytes(fixture.sourceFile)
             cases.append(
                 CheckCase(
