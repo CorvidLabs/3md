@@ -1,0 +1,35 @@
+{
+  "approvals": [
+    {
+      "gate": "definition",
+      "actor": "agent:codex-root",
+      "timestamp": 1791168356,
+      "digest": "55eaa93506a67689f5f7f3ea9d1e35fc93cbbed0199643a67508af66a723b592",
+      "note": "Leif explicitly said do it after the read-only review identified missing historical implementation evidence and inaccurate delivery chronology. The actual executing agent records delegated approval for this bounded retention and additive documentation repair. This is not independent human diff review, GitHub approval, a trusted signature, a provenance-policy change or PR58 work.",
+      "approved_scope": {
+        "schema_version": 1,
+        "change_id": "retain-workflow-permissions-archive-evidence-and-correct-retrospective-delivery-history",
+        "title": "Retain workflow permissions archive evidence and correct retrospective delivery history",
+        "description": "Retain workflow permissions archive evidence and correct retrospective delivery history",
+        "kind": "documentation",
+        "affected_specs": [],
+        "affected_paths": [
+          "docs/evidence/workflow-permissions-archive/"
+        ],
+        "no_spec_change": true,
+        "no_spec_change_rationale": "Retain and document existing historical Git evidence and the actual delivery chronology. No parser, format, workflow token permissions, canonical specs, provenance policy, old archive record or existing active change is modified.",
+        "acceptance_criteria": [
+          "The original implementation commit 777427d6c89dd55eead16a3d46e4e97894ef2a6f is retained under a dedicated named evidence branch, retrievable from GitHub and fetchable into a fresh repository; its tree equals the archived implementation_tree. An additive correction note records both squash mappings, the post-PR57 definition/finalization chronology, preserved legacy delivery hashes, agent review and degraded unsigned provenance. Original archive files, workflows, parser, format, language ports, canonical specs, generated product bundles and existing local untracked Atlas files are unchanged. Actual verification and delegated lifecycle records remain distinct from human review or trusted signatures."
+        ],
+        "dependencies": [],
+        "supersedes": [],
+        "answers": {
+          "architecture_risk": "yes",
+          "public_contract": "no"
+        }
+      },
+      "approved_delta_digests": {}
+    }
+  ],
+  "reopenings": []
+}
