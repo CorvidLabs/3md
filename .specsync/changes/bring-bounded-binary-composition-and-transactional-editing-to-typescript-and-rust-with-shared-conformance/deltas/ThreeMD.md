@@ -9,6 +9,7 @@ TypeScript and Rust SHALL expose bounded general-document uncompressed binary an
 Acceptance Criteria
 - Readers identify complete magic and enforce exact streams, CRC, UTF-8 and allocation limits.
 - Unsupported compression is explicit; LZFSE is unavailable without a platform backend.
+- Rust may use exact unicode-normalization 0.1.25 solely for canonical key comparison; no compression dependency is introduced. This records the reviewed Unicode parity repair to the original dependency-free plan.
 - Composition validates strict duplicate-aware JSON, all definitions and graph budgets without external I/O.
 
 ### REQUIREMENT REQ-ThreeMD-031
@@ -27,6 +28,6 @@ All language implementations SHALL share verified portable extension vectors and
 
 Acceptance Criteria
 - Shared vectors exercise canonical numeric and Unicode edge cases, fixed envelopes, composition and identities in Swift, TypeScript and Rust.
-- Existing parser/serializer APIs, conformance vectors, generated bundle and historical archives remain unchanged.
+- Existing parser/serializer APIs, conformance vectors, viewer behavior and historical archives remain unchanged. The generated web bundle may refresh deterministic compiler output from the new module graph; element/dist stays untouched.
 - Complete pinned Trust and strict SpecSync pass with actual scoped agent review and honest provenance limits.
 - PRs remain open for Leif and no release or Sculpt dependency migration occurs.

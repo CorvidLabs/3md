@@ -41,6 +41,133 @@
       "approved_delta_digests": {
         "ThreeMD": "497dcad7c888af2c5640ae600647c4fe407634caa5a3e3830f5a92d24de33c5f"
       }
+    },
+    {
+      "gate": "definition",
+      "actor": "agent:codex-root",
+      "timestamp": 1791210987,
+      "digest": "96274ffa80061127142af784058ae397eab2b748da42cd0a52b72f85911a80b0",
+      "note": "Executing agent under Leif direct all-language implementation and preparation request. Original definition was approved before source edits. This append-only approval records the actual reviewed Unicode parity requirement and the narrowly authorized pinned normalization dependency. It is not Leif diff review, independent human review, a signature or merge/release authority.",
+      "approved_scope": {
+        "schema_version": 1,
+        "change_id": "bring-bounded-binary-composition-and-transactional-editing-to-typescript-and-rust-with-shared-conformance",
+        "title": "Bring bounded binary composition and transactional editing to TypeScript and Rust with shared conformance",
+        "description": "Bring bounded binary composition and transactional editing to TypeScript and Rust with shared conformance",
+        "kind": "feature",
+        "affected_specs": [
+          "ThreeMD"
+        ],
+        "affected_paths": [
+          ".specsync/config.toml",
+          "README.md",
+          "SPEC.md",
+          "Tests/ThreeMDTests/",
+          "conformance/",
+          "docs/EDITING-RELEASE.md",
+          "js/",
+          "rust/",
+          "specs/ThreeMD/"
+        ],
+        "no_spec_change": false,
+        "no_spec_change_rationale": null,
+        "acceptance_criteria": [
+          "TypeScript and Rust implement portable uncompressed storage strict bounded composition stable identities exact-byte revisions atomic patches and structured diagnostics compatible with Swift; shared format vectors prove semantic and canonical compatibility while old parser conformance remains unchanged; unsupported LZFSE fails explicitly without new runtime dependencies; limits and cooperative cancellation are tested with idiomatic APIs; the complete pinned Trust lane strict specs and actual scoped review pass; PRs stay open for Leif with no release or automatic Sculpt dependency update."
+        ],
+        "dependencies": [],
+        "supersedes": [],
+        "answers": {
+          "architecture_risk": "yes",
+          "public_contract": "yes"
+        }
+      },
+      "approved_delta_digests": {
+        "ThreeMD": "497dcad7c888af2c5640ae600647c4fe407634caa5a3e3830f5a92d24de33c5f"
+      }
+    },
+    {
+      "gate": "definition",
+      "actor": "agent:codex-root",
+      "timestamp": 1791211074,
+      "digest": "96274ffa80061127142af784058ae397eab2b748da42cd0a52b72f85911a80b0",
+      "note": "Executing agent under Leif direct all-language preparation request. Append-only amended definition records the actual Unicode key comparison requirement and exact narrowly authorized normalization dependency. The original definition preceded source implementation, and the dependency amendment is recorded after the reviewed incompatibility was reproduced. No Leif diff review, human review, signature, merge or release is claimed.",
+      "approved_scope": {
+        "schema_version": 1,
+        "change_id": "bring-bounded-binary-composition-and-transactional-editing-to-typescript-and-rust-with-shared-conformance",
+        "title": "Bring bounded binary composition and transactional editing to TypeScript and Rust with shared conformance",
+        "description": "Bring bounded binary composition and transactional editing to TypeScript and Rust with shared conformance",
+        "kind": "feature",
+        "affected_specs": [
+          "ThreeMD"
+        ],
+        "affected_paths": [
+          ".specsync/config.toml",
+          "README.md",
+          "SPEC.md",
+          "Tests/ThreeMDTests/",
+          "conformance/",
+          "docs/EDITING-RELEASE.md",
+          "js/",
+          "rust/",
+          "specs/ThreeMD/"
+        ],
+        "no_spec_change": false,
+        "no_spec_change_rationale": null,
+        "acceptance_criteria": [
+          "TypeScript and Rust implement portable uncompressed storage strict bounded composition stable identities exact-byte revisions atomic patches and structured diagnostics compatible with Swift; shared format vectors prove semantic and canonical compatibility while old parser conformance remains unchanged; unsupported LZFSE fails explicitly without new runtime dependencies; limits and cooperative cancellation are tested with idiomatic APIs; the complete pinned Trust lane strict specs and actual scoped review pass; PRs stay open for Leif with no release or automatic Sculpt dependency update."
+        ],
+        "dependencies": [],
+        "supersedes": [],
+        "answers": {
+          "architecture_risk": "yes",
+          "public_contract": "yes"
+        }
+      },
+      "approved_delta_digests": {
+        "ThreeMD": "bad29449793e512bdc6749199f40505037b8dd753d90dec48424b425ab6e9ab9"
+      }
+    },
+    {
+      "gate": "definition",
+      "actor": "agent:codex-root",
+      "timestamp": 1791211227,
+      "digest": "6a9cec63b542c30a9c324deb6c25a32f845d4e752a76dafcf7d0452ab78a154f",
+      "note": "Under Leif direct all-language preparation authority, amended current definition explicitly includes exact pinned Unicode normalization and necessary deterministic web bundle refresh. Prior approval evidence remains; no historical archive or accepted evidence is rewritten. This approval precedes the derived web asset mutation. Viewer behavior and element/dist stay unchanged. Agent claim only, no human review, signature, merge or release.",
+      "approved_scope": {
+        "schema_version": 1,
+        "change_id": "bring-bounded-binary-composition-and-transactional-editing-to-typescript-and-rust-with-shared-conformance",
+        "title": "Bring bounded binary composition and transactional editing to TypeScript and Rust with shared conformance",
+        "description": "Bring bounded binary composition and transactional editing to TypeScript and Rust with shared conformance",
+        "kind": "feature",
+        "affected_specs": [
+          "ThreeMD"
+        ],
+        "affected_paths": [
+          ".specsync/config.toml",
+          "README.md",
+          "SPEC.md",
+          "Tests/ThreeMDTests/",
+          "conformance/",
+          "docs/EDITING-RELEASE.md",
+          "js/",
+          "rust/",
+          "specs/ThreeMD/",
+          "web/assets/three-md.js"
+        ],
+        "no_spec_change": false,
+        "no_spec_change_rationale": null,
+        "acceptance_criteria": [
+          "TypeScript and Rust implement portable uncompressed storage strict bounded composition stable identities exact-byte revisions atomic patches and structured diagnostics compatible with Swift; shared format vectors prove semantic and canonical compatibility while old parser conformance remains unchanged; unsupported LZFSE fails explicitly without a compression dependency; Rust uses exact pinned Unicode normalization solely for canonical key equivalence and order; generated web bundle may refresh deterministic output while viewer behavior remains unchanged and element/dist is untouched; limits and cooperative cancellation are tested with idiomatic APIs; the complete pinned Trust lane strict specs and actual scoped review pass; PRs stay open for Leif with no release or automatic Sculpt dependency update."
+        ],
+        "dependencies": [],
+        "supersedes": [],
+        "answers": {
+          "architecture_risk": "yes",
+          "public_contract": "yes"
+        }
+      },
+      "approved_delta_digests": {
+        "ThreeMD": "dd0ea765ed598a93b633a6b6849f2c26e46da97414dff8606daab2436b7d66a9"
+      }
     }
   ],
   "reopenings": []
