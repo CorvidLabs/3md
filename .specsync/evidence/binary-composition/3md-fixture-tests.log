@@ -1,0 +1,130 @@
+Building for debugging...
+[0/5] Write sources
+[1/5] Write swift-version--58304C5D6DBC2206.txt
+[3/6] Emitting module ThreeMDTests
+[4/6] Compiling ThreeMDTests DocumentCompositionCodecTests.swift
+[5/6] Compiling ThreeMDTests DocumentStorageTests.swift
+[6/8] Compiling ThreeMDTests DocumentStorageBoundsTests.swift
+[7/8] Compiling ThreeMDTests DocumentStorageCompressionTests.swift
+[7/9] Write Objects.LinkFileList
+[8/9] Linking 3mdPackageTests
+Build complete! (1.74s)
+Test Suite 'Selected tests' started at 2026-10-04 18:21:20.385.
+Test Suite '3mdPackageTests.xctest' started at 2026-10-04 18:21:20.386.
+Test Suite 'DocumentCompositionCodecTests' started at 2026-10-04 18:21:20.386.
+Test Case '-[ThreeMDTests.DocumentCompositionCodecTests testCanonicalProfileStoresSharedDefinitionOnceAndIsOrderIndependent]' started.
+Test Case '-[ThreeMDTests.DocumentCompositionCodecTests testCanonicalProfileStoresSharedDefinitionOnceAndIsOrderIndependent]' passed (0.007 seconds).
+Test Case '-[ThreeMDTests.DocumentCompositionCodecTests testCheckedInGrovePreservesItsSingleCanopyDefinitionAndBindingAcrossFormats]' started.
+Test Case '-[ThreeMDTests.DocumentCompositionCodecTests testCheckedInGrovePreservesItsSingleCanopyDefinitionAndBindingAcrossFormats]' passed (0.006 seconds).
+Test Case '-[ThreeMDTests.DocumentCompositionCodecTests testJSONAllocationPreflightRejectsExcessiveArraysNestingAndTrailingBytes]' started.
+Test Case '-[ThreeMDTests.DocumentCompositionCodecTests testJSONAllocationPreflightRejectsExcessiveArraysNestingAndTrailingBytes]' passed (0.001 seconds).
+Test Case '-[ThreeMDTests.DocumentCompositionCodecTests testProfileAndDefinitionBytePoliciesBoundBothReaderAndWriter]' started.
+Test Case '-[ThreeMDTests.DocumentCompositionCodecTests testProfileAndDefinitionBytePoliciesBoundBothReaderAndWriter]' passed (0.001 seconds).
+Test Case '-[ThreeMDTests.DocumentCompositionCodecTests testProfileUsesGenericPortableBinaryEnvelopeWithoutAnotherFormat]' started.
+Test Case '-[ThreeMDTests.DocumentCompositionCodecTests testProfileUsesGenericPortableBinaryEnvelopeWithoutAnotherFormat]' passed (0.004 seconds).
+Test Case '-[ThreeMDTests.DocumentCompositionCodecTests testReaderRejectsDuplicateDefinitionIDsAndUnusedMissingReferences]' started.
+Test Case '-[ThreeMDTests.DocumentCompositionCodecTests testReaderRejectsDuplicateDefinitionIDsAndUnusedMissingReferences]' passed (0.002 seconds).
+Test Case '-[ThreeMDTests.DocumentCompositionCodecTests testReaderRejectsDuplicateJSONKeysIncludingEscapedSpelling]' started.
+Test Case '-[ThreeMDTests.DocumentCompositionCodecTests testReaderRejectsDuplicateJSONKeysIncludingEscapedSpelling]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.DocumentCompositionCodecTests testReaderRejectsInvalidUnusedDefinitionsAndDoesNotLoadSourcePaths]' started.
+Test Case '-[ThreeMDTests.DocumentCompositionCodecTests testReaderRejectsInvalidUnusedDefinitionsAndDoesNotLoadSourcePaths]' passed (0.002 seconds).
+Test Case '-[ThreeMDTests.DocumentCompositionCodecTests testReaderRejectsUnknownManifestEntryAndReferenceKeys]' started.
+Test Case '-[ThreeMDTests.DocumentCompositionCodecTests testReaderRejectsUnknownManifestEntryAndReferenceKeys]' passed (0.001 seconds).
+Test Case '-[ThreeMDTests.DocumentCompositionCodecTests testReaderRequiresExactEnvelopeAndVersionedManifest]' started.
+Test Case '-[ThreeMDTests.DocumentCompositionCodecTests testReaderRequiresExactEnvelopeAndVersionedManifest]' passed (0.001 seconds).
+Test Case '-[ThreeMDTests.DocumentCompositionCodecTests testReferenceAttributesPreserveControlsQuotesAndUnicodeWithoutBreakingFences]' started.
+Test Case '-[ThreeMDTests.DocumentCompositionCodecTests testReferenceAttributesPreserveControlsQuotesAndUnicodeWithoutBreakingFences]' passed (0.001 seconds).
+Test Suite 'DocumentCompositionCodecTests' passed at 2026-10-04 18:21:20.414.
+	 Executed 11 tests, with 0 failures (0 unexpected) in 0.026 (0.028) seconds
+Test Suite 'DocumentCompositionTests' started at 2026-10-04 18:21:20.414.
+Test Case '-[ThreeMDTests.DocumentCompositionTests testCanceledConstructionAndStorageStayDistinctFromValidationErrors]' started.
+Test Case '-[ThreeMDTests.DocumentCompositionTests testCanceledConstructionAndStorageStayDistinctFromValidationErrors]' passed (0.003 seconds).
+Test Case '-[ThreeMDTests.DocumentCompositionTests testCyclesAreRejectedInRootAndUnusedNodes]' started.
+Test Case '-[ThreeMDTests.DocumentCompositionTests testCyclesAreRejectedInRootAndUnusedNodes]' passed (0.001 seconds).
+Test Case '-[ThreeMDTests.DocumentCompositionTests testDefinitionDepthAndReferenceBudgetsHaveExactBoundarySemantics]' started.
+Test Case '-[ThreeMDTests.DocumentCompositionTests testDefinitionDepthAndReferenceBudgetsHaveExactBoundarySemantics]' passed (0.001 seconds).
+Test Case '-[ThreeMDTests.DocumentCompositionTests testDefinitionDocumentPolicyIsIndependentOfCompositionPolicy]' started.
+Test Case '-[ThreeMDTests.DocumentCompositionTests testDefinitionDocumentPolicyIsIndependentOfCompositionPolicy]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.DocumentCompositionTests testEveryDefinitionIsValidatedEvenWhenUnused]' started.
+Test Case '-[ThreeMDTests.DocumentCompositionTests testEveryDefinitionIsValidatedEvenWhenUnused]' passed (0.001 seconds).
+Test Case '-[ThreeMDTests.DocumentCompositionTests testIDsAreCaseSensitiveAndNeverFileOrNetworkLocations]' started.
+Test Case '-[ThreeMDTests.DocumentCompositionTests testIDsAreCaseSensitiveAndNeverFileOrNetworkLocations]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.DocumentCompositionTests testMissingRootMissingTargetAndDuplicateDefinitionsAreRejected]' started.
+Test Case '-[ThreeMDTests.DocumentCompositionTests testMissingRootMissingTargetAndDuplicateDefinitionsAreRejected]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.DocumentCompositionTests testOccurrenceBudgetCountsSharedReferencesWithoutMaterializingThem]' started.
+Test Case '-[ThreeMDTests.DocumentCompositionTests testOccurrenceBudgetCountsSharedReferencesWithoutMaterializingThem]' passed (0.002 seconds).
+Test Case '-[ThreeMDTests.DocumentCompositionTests testReferenceAttributesAreOpaqueUnicodeDataWithCountAndByteLimits]' started.
+Test Case '-[ThreeMDTests.DocumentCompositionTests testReferenceAttributesAreOpaqueUnicodeDataWithCountAndByteLimits]' passed (0.002 seconds).
+Test Case '-[ThreeMDTests.DocumentCompositionTests testResourceLimitsCannotBeRaisedBeyondAbsoluteBounds]' started.
+Test Case '-[ThreeMDTests.DocumentCompositionTests testResourceLimitsCannotBeRaisedBeyondAbsoluteBounds]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.DocumentCompositionTests testSharedNestedDefinitionsPreserveAxesMetadataAndReferenceOrder]' started.
+Test Case '-[ThreeMDTests.DocumentCompositionTests testSharedNestedDefinitionsPreserveAxesMetadataAndReferenceOrder]' passed (0.003 seconds).
+Test Case '-[ThreeMDTests.DocumentCompositionTests testUniqueSourceByteBudgetCountsEachDefinitionOnce]' started.
+Test Case '-[ThreeMDTests.DocumentCompositionTests testUniqueSourceByteBudgetCountsEachDefinitionOnce]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.DocumentCompositionTests testUnusedDepthAndOccurrenceBudgetsAreAlsoEnforced]' started.
+Test Case '-[ThreeMDTests.DocumentCompositionTests testUnusedDepthAndOccurrenceBudgetsAreAlsoEnforced]' passed (0.000 seconds).
+Test Suite 'DocumentCompositionTests' passed at 2026-10-04 18:21:20.429.
+	 Executed 13 tests, with 0 failures (0 unexpected) in 0.014 (0.015) seconds
+Test Suite 'DocumentStorageBoundsTests' started at 2026-10-04 18:21:20.429.
+Test Case '-[ThreeMDTests.DocumentStorageBoundsTests testCanceledTasksCannotReturnPartiallyEncodedOrDecodedDocuments]' started.
+Test Case '-[ThreeMDTests.DocumentStorageBoundsTests testCanceledTasksCannotReturnPartiallyEncodedOrDecodedDocuments]' passed (0.005 seconds).
+Test Case '-[ThreeMDTests.DocumentStorageBoundsTests testCombinedScalarAndDirectiveBytesCannotBypassTheOutputBound]' started.
+Test Case '-[ThreeMDTests.DocumentStorageBoundsTests testCombinedScalarAndDirectiveBytesCannotBypassTheOutputBound]' passed (0.001 seconds).
+Test Case '-[ThreeMDTests.DocumentStorageBoundsTests testLimitsArePositiveAndHaveAbsoluteCeilings]' started.
+Test Case '-[ThreeMDTests.DocumentStorageBoundsTests testLimitsArePositiveAndHaveAbsoluteCeilings]' passed (0.001 seconds).
+Test Case '-[ThreeMDTests.DocumentStorageBoundsTests testPhysicalLinesAreBoundedBeforeParsingEvenForBlankInputs]' started.
+Test Case '-[ThreeMDTests.DocumentStorageBoundsTests testPhysicalLinesAreBoundedBeforeParsingEvenForBlankInputs]' passed (0.011 seconds).
+Test Case '-[ThreeMDTests.DocumentStorageBoundsTests testPlanePreflightIgnoresDirectivesInsideBothKindsOfFences]' started.
+Test Case '-[ThreeMDTests.DocumentStorageBoundsTests testPlanePreflightIgnoresDirectivesInsideBothKindsOfFences]' passed (0.001 seconds).
+Test Case '-[ThreeMDTests.DocumentStorageBoundsTests testRecordBoundIncludesWholePlaneBodiesAndEscapedScalarLines]' started.
+Test Case '-[ThreeMDTests.DocumentStorageBoundsTests testRecordBoundIncludesWholePlaneBodiesAndEscapedScalarLines]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.DocumentStorageBoundsTests testTextAndPortableBinaryAcceptExactByteBounds]' started.
+Test Case '-[ThreeMDTests.DocumentStorageBoundsTests testTextAndPortableBinaryAcceptExactByteBounds]' passed (0.001 seconds).
+Test Suite 'DocumentStorageBoundsTests' passed at 2026-10-04 18:21:20.451.
+	 Executed 7 tests, with 0 failures (0 unexpected) in 0.020 (0.022) seconds
+Test Suite 'DocumentStorageCompressionTests' started at 2026-10-04 18:21:20.451.
+Test Case '-[ThreeMDTests.DocumentStorageCompressionTests testAppleLZFSECompressionIsDeterministicAndRoundTripsGeneralText]' started.
+Test Case '-[ThreeMDTests.DocumentStorageCompressionTests testAppleLZFSECompressionIsDeterministicAndRoundTripsGeneralText]' passed (0.167 seconds).
+Test Case '-[ThreeMDTests.DocumentStorageCompressionTests testCanceledCompressionAndDecompressionRemainCancellationErrors]' started.
+Test Case '-[ThreeMDTests.DocumentStorageCompressionTests testCanceledCompressionAndDecompressionRemainCancellationErrors]' passed (0.029 seconds).
+Test Case '-[ThreeMDTests.DocumentStorageCompressionTests testDeclaredOutputSizeCannotTruncateOrGrowDecompression]' started.
+Test Case '-[ThreeMDTests.DocumentStorageCompressionTests testDeclaredOutputSizeCannotTruncateOrGrowDecompression]' passed (0.125 seconds).
+Test Case '-[ThreeMDTests.DocumentStorageCompressionTests testEveryTruncationAndMalformedCompressionPayloadFailsWithoutPartialResults]' started.
+Test Case '-[ThreeMDTests.DocumentStorageCompressionTests testEveryTruncationAndMalformedCompressionPayloadFailsWithoutPartialResults]' passed (0.005 seconds).
+Test Case '-[ThreeMDTests.DocumentStorageCompressionTests testLargeFirstStreamDrainsMultipleChunksBeforeFinalMarkerAndRejectsConcatenation]' started.
+Test Case '-[ThreeMDTests.DocumentStorageCompressionTests testLargeFirstStreamDrainsMultipleChunksBeforeFinalMarkerAndRejectsConcatenation]' passed (0.111 seconds).
+Test Case '-[ThreeMDTests.DocumentStorageCompressionTests testLZFSERejectsTrailingAndConcatenatedStreamsWithValidChecksums]' started.
+Test Case '-[ThreeMDTests.DocumentStorageCompressionTests testLZFSERejectsTrailingAndConcatenatedStreamsWithValidChecksums]' passed (0.001 seconds).
+Test Suite 'DocumentStorageCompressionTests' passed at 2026-10-04 18:21:20.890.
+	 Executed 6 tests, with 0 failures (0 unexpected) in 0.439 (0.439) seconds
+Test Suite 'DocumentStorageTests' started at 2026-10-04 18:21:20.890.
+Test Case '-[ThreeMDTests.DocumentStorageTests testAllHeaderFieldsAndCorruptionAreChecked]' started.
+Test Case '-[ThreeMDTests.DocumentStorageTests testAllHeaderFieldsAndCorruptionAreChecked]' passed (0.001 seconds).
+Test Case '-[ThreeMDTests.DocumentStorageTests testBinaryDecodeHandlesDataSlices]' started.
+Test Case '-[ThreeMDTests.DocumentStorageTests testBinaryDecodeHandlesDataSlices]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.DocumentStorageTests testCheckedInCompressedCanopyRoundTripsToItsReadableDocument]' started.
+Test Case '-[ThreeMDTests.DocumentStorageTests testCheckedInCompressedCanopyRoundTripsToItsReadableDocument]' passed (0.002 seconds).
+Test Case '-[ThreeMDTests.DocumentStorageTests testCheckedInExtensionManifestDescribesTheActualSixArtifacts]' started.
+Test Case '-[ThreeMDTests.DocumentStorageTests testCheckedInExtensionManifestDescribesTheActualSixArtifacts]' passed (0.005 seconds).
+Test Case '-[ThreeMDTests.DocumentStorageTests testCheckedInPortableCanopyRoundTripsToItsReadableDocument]' started.
+Test Case '-[ThreeMDTests.DocumentStorageTests testCheckedInPortableCanopyRoundTripsToItsReadableDocument]' passed (0.001 seconds).
+Test Case '-[ThreeMDTests.DocumentStorageTests testContainerPayloadMustBeValidUTF8AndThreeMDText]' started.
+Test Case '-[ThreeMDTests.DocumentStorageTests testContainerPayloadMustBeValidUTF8AndThreeMDText]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.DocumentStorageTests testDirectDocumentValidationRejectsLossyOrAmbiguousSerialization]' started.
+Test Case '-[ThreeMDTests.DocumentStorageTests testDirectDocumentValidationRejectsLossyOrAmbiguousSerialization]' passed (0.000 seconds).
+Test Case '-[ThreeMDTests.DocumentStorageTests testGeneralDocumentsPreserveUnicodeCustomAxesAndFractionalPositions]' started.
+Test Case '-[ThreeMDTests.DocumentStorageTests testGeneralDocumentsPreserveUnicodeCustomAxesAndFractionalPositions]' passed (0.004 seconds).
+Test Case '-[ThreeMDTests.DocumentStorageTests testPortableContainerFixedVector]' started.
+Test Case '-[ThreeMDTests.DocumentStorageTests testPortableContainerFixedVector]' passed (0.001 seconds).
+Test Case '-[ThreeMDTests.DocumentStorageTests testStorageDoesNotChangeExistingTextGrammarOrSerializer]' started.
+Test Case '-[ThreeMDTests.DocumentStorageTests testStorageDoesNotChangeExistingTextGrammarOrSerializer]' passed (0.001 seconds).
+Test Suite 'DocumentStorageTests' passed at 2026-10-04 18:21:20.907.
+	 Executed 10 tests, with 0 failures (0 unexpected) in 0.016 (0.017) seconds
+Test Suite '3mdPackageTests.xctest' passed at 2026-10-04 18:21:20.907.
+	 Executed 47 tests, with 0 failures (0 unexpected) in 0.515 (0.522) seconds
+Test Suite 'Selected tests' passed at 2026-10-04 18:21:20.907.
+	 Executed 47 tests, with 0 failures (0 unexpected) in 0.515 (0.523) seconds
+◇ Test run started.
+↳ Testing Library Version: 1902
+↳ Target Platform: arm64e-apple-macos14.0
+✔ Test run with 0 tests in 0 suites passed after 0.001 seconds.

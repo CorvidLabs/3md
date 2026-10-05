@@ -1,0 +1,76 @@
+{
+  "change": {
+    "schema_version": 1,
+    "id": "CHG-0003-address-final-trust-and-sdd-governance-review-corrections",
+    "slug": "address-final-trust-and-sdd-governance-review-corrections",
+    "title": "Address final Trust and SDD governance review corrections",
+    "description": "Address final Trust and SDD governance review corrections",
+    "kind": "migration",
+    "state": "verifying",
+    "canonical_applied": true,
+    "base_commit": "2458e7d2e607a8cd98448652821d515ed1f51bf9",
+    "created_at": 1783975947,
+    "updated_at": 1791159943,
+    "affected_specs": [],
+    "affected_paths": [
+      ".github/workflows/trust.yml",
+      ".specsync/sdd.json",
+      ".claude/skills/spec-sync/SKILL.md",
+      ".codex/skills/spec-sync/SKILL.md",
+      ".cursor/skills/spec-sync/SKILL.md",
+      ".gemini/skills/spec-sync/SKILL.md"
+    ],
+    "no_spec_change": true,
+    "no_spec_change_rationale": "Governance policy and generated-agent guidance corrections only; no product or canonical module behavior changes.",
+    "acceptance_criteria": [
+      "Trust runs for every governed public-documentation change; SDD policy and canonical spec edits require a covering change; all installed agent skills preserve multi-word interview answers; strict SpecSync and the complete Trust gate pass at 100%."
+    ],
+    "selected_artifacts": [
+      "context",
+      "requirements",
+      "plan",
+      "tasks",
+      "testing",
+      "docs"
+    ],
+    "dependencies": [],
+    "answers": {
+      "architecture_risk": "no",
+      "public_contract": "no"
+    }
+  },
+  "audit": {
+    "schema_version": 1,
+    "change_id": "CHG-0003-address-final-trust-and-sdd-governance-review-corrections",
+    "actor": "agent:codex-root",
+    "reason": "Leif authorized full SDD and latest Trust. The immutable Trust workflow update makes exact delivery evidence stale; append current verification without replacing historical approvals, weakening policies or claiming human diff review.",
+    "timestamp": 1791159943,
+    "from_state": "accepted",
+    "to_state": "verifying",
+    "superseded_approval": {
+      "gate": "acceptance",
+      "actor": "user:0xLeif",
+      "timestamp": 1784012970,
+      "digest": "a02b2a8ea28461e6a5dbfe880389246f14291a0d72fb403709a616bab38bc6cb",
+      "note": "Closing approval after strict native verification passed all seven Swift, TypeScript, Rust, generated-bundle, and editor steps; hosted checks are not claimed yet."
+    },
+    "prior_verification": {
+      "timestamp": 1784012957,
+      "commit": "765abbf6be3919262f3fb885ed36439afafc5c5b",
+      "contract_digest": "5bd9d4eddcff67d4e2ed60328ba2cf59b66e0a8a29627e72b6b08fd006d3f754",
+      "workspace_digest": "96b757577179b0b7c087eebd3f8e96ac148ea0abce4320e96d43696c31a9255f",
+      "acceptance_input_digest": "c00a57191dd6a175286195a6217702c871180367d7d53ad5091b975b5619ee2e",
+      "passed": true,
+      "commands": [
+        {
+          "command": "fledge lanes run verify",
+          "success": true,
+          "exit_code": 0
+        }
+      ],
+      "requirement_ids": []
+    },
+    "stale_acceptance_input_digest": "c00a57191dd6a175286195a6217702c871180367d7d53ad5091b975b5619ee2e",
+    "current_acceptance_input_digest": "2937f1ae113d8ac0a5b10f4f57bf6d88135b989dbac3abd194d38afbb20c09ca"
+  }
+}

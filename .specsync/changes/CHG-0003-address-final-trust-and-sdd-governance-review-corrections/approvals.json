@@ -20,6 +20,21 @@
       "timestamp": 1784012970,
       "digest": "a02b2a8ea28461e6a5dbfe880389246f14291a0d72fb403709a616bab38bc6cb",
       "note": "Closing approval after strict native verification passed all seven Swift, TypeScript, Rust, generated-bundle, and editor steps; hosted checks are not claimed yet."
+    },
+    {
+      "gate": "definition",
+      "actor": "agent:codex-root",
+      "timestamp": 1791160353,
+      "digest": "7fe9d71efbc0db4ee3f3a61c456c09dd9a300e1b72981dacf66b90b565c67936",
+      "note": "Normalized compatible definition evidence during explicit acceptance",
+      "approved_delta_digests": {}
+    },
+    {
+      "gate": "acceptance",
+      "actor": "agent:codex-root",
+      "timestamp": 1791160353,
+      "digest": "4eec9aee6a8ce922b535b0ed37f1ad81817adb3a299b03366ba337bce4ede0f9",
+      "note": "Delegated refresh of changed Trust delivery inputs under Leif full SDD approval. Complete native lane and Trust 1.2.2 passed with progressive provenance degraded. Historical evidence is retained; no human or Claude reviewer or signer identity is claimed."
     }
   ],
   "reopenings": [

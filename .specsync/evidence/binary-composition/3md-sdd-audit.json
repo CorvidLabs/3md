@@ -1,0 +1,36 @@
+{
+  "report": {
+    "checked_changes": 4,
+    "enabled": true,
+    "errors": [
+      "CHG-0001-adopt-trust-1-and-specsync-5: accepted change verification is stale for current delivery inputs: exact-only delivery input `.github/workflows/trust.yml` changed after acceptance and requires an audited reopen; run `specsync change reopen CHG-0001-adopt-trust-1-and-specsync-5` to re-verify the accepted change, or supersede it from a later change under a module granted the path by `owns` in `.specsync/config.toml`",
+      "CHG-0002-assign-stable-requirement-ids: accepted change verification is stale for current delivery inputs: exact-only delivery input `specs/ThreeMD/ThreeMD.spec.md` changed after acceptance and requires an audited reopen; run `specsync change reopen CHG-0002-assign-stable-requirement-ids` to re-verify the accepted change, or supersede it from a later change under a module granted the path by `owns` in `.specsync/config.toml`",
+      "CHG-0003-address-final-trust-and-sdd-governance-review-corrections: accepted change verification is stale for current delivery inputs: exact-only delivery input `.github/workflows/trust.yml` changed after acceptance and requires an audited reopen; run `specsync change reopen CHG-0003-address-final-trust-and-sdd-governance-review-corrections` to re-verify the accepted change, or supersede it from a later change under a module granted the path by `owns` in `.specsync/config.toml`",
+      "meaningful changed paths are not covered by an active change: Examples/Extensions/canopy.3md, Examples/Extensions/canopy.3mdb, Examples/Extensions/canopy.lzfse.3mdb, Examples/Extensions/manifest.json, Examples/Extensions/shared-grove.3md, Examples/Extensions/shared-grove.3mdb, Examples/Extensions/shared-grove.lzfse.3mdb, Examples/README.md, SPEC.md, Sources/ThreeMD/DocumentComposition.swift, Sources/ThreeMD/DocumentCompositionCodec.swift, Sources/ThreeMD/DocumentCompositionJSON.swift, Sources/ThreeMD/DocumentCompositionLimits.swift, Sources/ThreeMD/DocumentStorage.swift, Sources/ThreeMD/DocumentStorageCodec.swift, Sources/ThreeMD/DocumentStorageCompression.swift, Sources/ThreeMD/DocumentStorageValidation.swift, Tests/ThreeMDTests/DocumentCompositionCodecTests.swift, Tests/ThreeMDTests/DocumentCompositionTests.swift, Tests/ThreeMDTests/DocumentStorageBoundsTests.swift, Tests/ThreeMDTests/DocumentStorageCompressionTests.swift, Tests/ThreeMDTests/DocumentStorageTests.swift\n  cover them: specsync change new \"<summary>\" --kind bug-fix --spec <module> --path Examples/Extensions/canopy.3md --path Examples/Extensions/canopy.3mdb --path Examples/Extensions/canopy.lzfse.3mdb --path Examples/Extensions/manifest.json --path Examples/Extensions/shared-grove.3md --path Examples/Extensions/shared-grove.3mdb --path Examples/Extensions/shared-grove.lzfse.3mdb --path Examples/README.md --path SPEC.md --path Sources/ThreeMD/DocumentComposition.swift --path Sources/ThreeMD/DocumentCompositionCodec.swift --path Sources/ThreeMD/DocumentCompositionJSON.swift\n  ... and 10 more path(s) — add a `--path` for each, or declare a covering prefix such as `--path src/`\n  no spec text changes: add --no-spec-change --rationale \"<why>\" to that command"
+    ],
+    "terminal_evidence": [
+      {
+        "evidence": {
+          "reason": "exact-only delivery input `.github/workflows/trust.yml` changed after acceptance and requires an audited reopen; run `specsync change reopen CHG-0001-adopt-trust-1-and-specsync-5` to re-verify the accepted change, or supersede it from a later change under a module granted the path by `owns` in `.specsync/config.toml`",
+          "validity": "stale"
+        },
+        "id": "CHG-0001-adopt-trust-1-and-specsync-5"
+      },
+      {
+        "evidence": {
+          "reason": "exact-only delivery input `specs/ThreeMD/ThreeMD.spec.md` changed after acceptance and requires an audited reopen; run `specsync change reopen CHG-0002-assign-stable-requirement-ids` to re-verify the accepted change, or supersede it from a later change under a module granted the path by `owns` in `.specsync/config.toml`",
+          "validity": "stale"
+        },
+        "id": "CHG-0002-assign-stable-requirement-ids"
+      },
+      {
+        "evidence": {
+          "reason": "exact-only delivery input `.github/workflows/trust.yml` changed after acceptance and requires an audited reopen; run `specsync change reopen CHG-0003-address-final-trust-and-sdd-governance-review-corrections` to re-verify the accepted change, or supersede it from a later change under a module granted the path by `owns` in `.specsync/config.toml`",
+          "validity": "stale"
+        },
+        "id": "CHG-0003-address-final-trust-and-sdd-governance-review-corrections"
+      }
+    ],
+    "warnings": []
+  }
+}

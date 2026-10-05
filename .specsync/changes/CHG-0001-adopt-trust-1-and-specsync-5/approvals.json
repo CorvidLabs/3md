@@ -48,6 +48,21 @@
       "timestamp": 1784013064,
       "digest": "fb0b6266d5085ac27eda5e6341cb6e6c69dedba28d6bbcf227334ccf87408200",
       "note": "Fresh closing approval after final governance corrections and full seven-step native verification; hosted checks are not claimed yet."
+    },
+    {
+      "gate": "definition",
+      "actor": "agent:codex-root",
+      "timestamp": 1791160178,
+      "digest": "1d2ba924f80d9b4e3f780440209d5f6d58c937a5746ac8e42f7d5a958ff6c07d",
+      "note": "Normalized compatible definition evidence during explicit acceptance",
+      "approved_delta_digests": {}
+    },
+    {
+      "gate": "acceptance",
+      "actor": "agent:codex-root",
+      "timestamp": 1791160178,
+      "digest": "83164d5e9f766d98e321ab225af7720560da58590615806f925a5fda04117a4c",
+      "note": "Delegated refresh of current delivery inputs under Leif approval. Current native lane and Trust 1.2.2 passed, with existing progressive provenance reported degraded. Original evidence is preserved; no human or Claude reviewer or signer claim."
     }
   ],
   "reopenings": [

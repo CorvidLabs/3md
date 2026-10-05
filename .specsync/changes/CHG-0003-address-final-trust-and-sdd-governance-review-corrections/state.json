@@ -5,11 +5,11 @@
   "title": "Address final Trust and SDD governance review corrections",
   "description": "Address final Trust and SDD governance review corrections",
   "kind": "migration",
-  "state": "verifying",
+  "state": "accepted",
   "canonical_applied": true,
   "base_commit": "2458e7d2e607a8cd98448652821d515ed1f51bf9",
   "created_at": 1783975947,
-  "updated_at": 1791159943,
+  "updated_at": 1791160353,
   "affected_specs": [],
   "affected_paths": [
     ".github/workflows/trust.yml",

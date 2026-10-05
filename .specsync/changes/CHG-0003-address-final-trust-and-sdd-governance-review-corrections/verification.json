@@ -1,13 +1,78 @@
 {
-  "timestamp": 1784012957,
-  "commit": "765abbf6be3919262f3fb885ed36439afafc5c5b",
-  "contract_digest": "5bd9d4eddcff67d4e2ed60328ba2cf59b66e0a8a29627e72b6b08fd006d3f754",
-  "workspace_digest": "96b757577179b0b7c087eebd3f8e96ac148ea0abce4320e96d43696c31a9255f",
-  "acceptance_input_digest": "c00a57191dd6a175286195a6217702c871180367d7d53ad5091b975b5619ee2e",
+  "timestamp": 1791160310,
+  "commit": "0e9f81ab6c8c104f3f2856f8b9760fd520a05f5b",
+  "contract_digest": "7fe9d71efbc0db4ee3f3a61c456c09dd9a300e1b72981dacf66b90b565c67936",
+  "workspace_digest": "30437a58fec4326e1275ca670a546704991f48205e3e04d3ed35ba159a919249",
+  "acceptance_input_digest": "7a4ad32d9542ece26d7c315cccc1fa493a3d974e54e49da963dc6c4d887c1a8c",
+  "acceptance_manifest": {
+    "schema_version": 1,
+    "entries": [
+      {
+        "path": ".claude/skills/spec-sync/SKILL.md",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "0db08a11daf93a661e53a0d576940447bbfdccce012c0362553cd1ee3702a1bf",
+        "entry_digest": "180e52280cc377a79aa1409c631fa301c9e44a55b538814a585b101f63ea3bef",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": ".codex/skills/spec-sync/SKILL.md",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "9f4fa2d87142191397f21f60a35621181e556f4a87bffe6def0909bc1e52236a",
+        "entry_digest": "ac94c6c54e118c23dc3a0d5125fb0b42b3f0356eebb5160f987d421dcb20b54c",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": ".cursor/skills/spec-sync/SKILL.md",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "9f4fa2d87142191397f21f60a35621181e556f4a87bffe6def0909bc1e52236a",
+        "entry_digest": "ef09b4d2d8d907fa32acfb79ad661a97810b1099d35937816d7e302889c412c6",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": ".gemini/skills/spec-sync/SKILL.md",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "0db08a11daf93a661e53a0d576940447bbfdccce012c0362553cd1ee3702a1bf",
+        "entry_digest": "df5158c737c0abb71aa71bcd02bfb91182b06c69d0093bc148d630a3e0a86bce",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": ".github/workflows/trust.yml",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "422edf51b3d995383f92a026ac6df991786a4765013ff22bd18a49a201bdea3d",
+        "entry_digest": "5fa7246d8b310aef65b3f4330044a9d7534c34e70c10ae1cc2ecbadf1fffd8a1",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": ".specsync/sdd.json",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "acda27e570c07cd976975ba97e3bf9fa89f31d179575d4e23fc51af42c11571f",
+        "entry_digest": "fe3115a8277e0bcf1d66e6046b105567c16a767a0e71fc3d9a001b0a6787cfc2",
+        "owners": [
+          "@exact:delivery"
+        ]
+      }
+    ]
+  },
   "passed": true,
   "commands": [
     {
-      "command": "fledge lanes run verify",
+      "command": "specsync check (no spec in scope)",
       "success": true,
       "exit_code": 0
     }
