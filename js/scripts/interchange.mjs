@@ -1,15 +1,19 @@
 import { once } from "node:events";
 import { stdin, stdout } from "node:process";
 import {
-  CompositionEditor, DocumentCompositionCodec, DocumentCompositionSnapshot,
+  CompositionEditor, DocumentComposition, DocumentCompositionCodec, DocumentCompositionLimits, DocumentCompositionSnapshot,
   DocumentCompositionError, DocumentEditError, DocumentEditor, DocumentIdentity,
-  DocumentSnapshot, DocumentStorageCodec, DocumentStorageError,
+  DocumentFileComposition, DocumentFileCompositionError,
+  DocumentDecodeLimits, DocumentSnapshot, DocumentStorageCodec, DocumentStorageError,
   DocumentStorageFormat, ParseError, parse, serialize, stableID,
 } from "../dist/index.js";
 
 const maximumLineBytes = 32 * 1024 * 1024;
 const encoder = new TextEncoder();
 const decoder = new TextDecoder("utf-8", { fatal: true, ignoreBOM: true });
+const profileBytes = DocumentCompositionLimits.standard.maximumProfileBytes;
+const profileDecodeLimits = new DocumentDecodeLimits({ maximumEncodedBytes: profileBytes,
+  maximumDecodedBytes: profileBytes, maximumPlanes: 1, maximumRecordBytes: profileBytes });
 
 function hex(bytes) { return Buffer.from(bytes.buffer, bytes.byteOffset, bytes.byteLength).toString("hex"); }
 function textHex(text) { return hex(encoder.encode(text)); }
@@ -72,7 +76,7 @@ function documentResponse(bytes, document) {
   };
 }
 function compositionResponse(document) {
-  const composition = DocumentCompositionCodec.decode(document);
+  const composition = document instanceof DocumentComposition ? document : DocumentCompositionCodec.decode(document);
   const adopted = DocumentIdentity.adopt(composition);
   const snapshot = new DocumentCompositionSnapshot(adopted);
   const entry = adopted.rootEntry;
@@ -90,7 +94,7 @@ function compositionResponse(document) {
   return {
     ok: true,
     canonicalHex: hex(DocumentCompositionCodec.encode(composition)),
-    binaryHex: hex(DocumentStorageCodec.encode(DocumentCompositionCodec.document(composition), DocumentStorageFormat.binary())),
+    binaryHex: hex(DocumentStorageCodec.encode(DocumentCompositionCodec.document(composition), DocumentStorageFormat.binary(), profileDecodeLimits)),
     legacyHex: null, rawCanonicalHex: null,
     revisionHex: textHex(snapshot.revision.canonicalContent),
     adoptedHex: hex(DocumentCompositionCodec.encode(adopted)),
@@ -99,22 +103,110 @@ function compositionResponse(document) {
     semantic: semanticComposition(composition),
   };
 }
+// Requests use only objects, arrays and strings. Preflight retains strict duplicate-key semantics.
+function strictJSON(source) {
+  let index = 0;
+  function invalid() { throw new Error("Invalid adapter JSON."); }
+  function whitespace() { while (index < source.length && " \t\r\n".includes(source[index])) index += 1; }
+  function string() {
+    if (source[index++] !== '"') invalid();
+    const start = index - 1;
+    while (index < source.length) {
+      const unit = source.charCodeAt(index++);
+      if (unit === 34) {
+        const value = JSON.parse(source.slice(start, index));
+        for (let offset = 0; offset < value.length; offset += 1) {
+          const character = value.charCodeAt(offset);
+          if (character >= 0xd800 && character <= 0xdbff) {
+            const next = value.charCodeAt(++offset);
+            if (!(next >= 0xdc00 && next <= 0xdfff)) invalid();
+          } else if (character >= 0xdc00 && character <= 0xdfff) invalid();
+        }
+        return value;
+      }
+      if (unit < 32) invalid();
+      if (unit === 92) {
+        const escape = source[index++];
+        if (escape === "u") {
+          if (!/^[0-9a-fA-F]{4}$/.test(source.slice(index, index + 4))) invalid();
+          index += 4;
+        } else if (escape === undefined || !'"\\/bfnrt'.includes(escape)) invalid();
+      }
+    }
+    invalid();
+  }
+  function value(depth) {
+    if (depth > 4) invalid();
+    whitespace();
+    if (source[index] === '"') { string(); return; }
+    if (source[index] === "{") {
+      index += 1; whitespace();
+      if (source[index] === "}") { index += 1; return; }
+      const keys = new Set();
+      while (true) {
+        const key = string().normalize("NFC");
+        if (keys.has(key)) invalid(); keys.add(key);
+        whitespace(); if (source[index++] !== ":") invalid(); value(depth + 1); whitespace();
+        if (source[index] === "}") { index += 1; return; }
+        if (source[index++] !== ",") invalid(); whitespace();
+      }
+    }
+    if (source[index] === "[") {
+      index += 1; whitespace();
+      if (source[index] === "]") { index += 1; return; }
+      while (true) {
+        value(depth + 1); whitespace();
+        if (source[index] === "]") { index += 1; return; }
+        if (source[index++] !== ",") invalid(); whitespace();
+      }
+    }
+    invalid();
+  }
+  value(0); whitespace(); if (index !== source.length) invalid();
+  return JSON.parse(source);
+}
+function record(value, keys) {
+  if (value === null || typeof value !== "object" || Array.isArray(value) ||
+    Object.keys(value).length !== keys.length || !keys.every((key) => Object.hasOwn(value, key))) {
+    throw new Error("Invalid adapter fields.");
+  }
+  return value;
+}
+function bytesFromHex(value) {
+  if (typeof value !== "string" || value.length % 2 !== 0) throw new Error("Invalid request hexadecimal.");
+  for (let index = 0; index < value.length; index += 1) {
+    const unit = value.charCodeAt(index);
+    if (!((unit >= 48 && unit <= 57) || (unit >= 97 && unit <= 102))) throw new Error("Invalid request hexadecimal.");
+  }
+  return Buffer.from(value, "hex");
+}
 function requestResponse(line) {
   try {
-    const request = JSON.parse(decoder.decode(line));
-    if (request?.schema !== "3md-interchange-1" || !["document", "composition"].includes(request.kind) ||
-      typeof request.bytesHex !== "string" || request.bytesHex.length % 2 !== 0) throw new Error("Invalid adapter request.");
-    for (let index = 0; index < request.bytesHex.length; index += 1) {
-      const unit = request.bytesHex.charCodeAt(index);
-      if (!((unit >= 48 && unit <= 57) || (unit >= 97 && unit <= 102))) throw new Error("Invalid request hexadecimal.");
+    const request = record(strictJSON(decoder.decode(line)), ["schema", "kind", "bytesHex"]);
+    if (request.schema !== "3md-interchange-1" || !["document", "composition", "files"].includes(request.kind)) {
+      throw new Error("Invalid adapter request.");
     }
-    const bytes = Buffer.from(request.bytesHex, "hex");
+    const bytes = bytesFromHex(request.bytesHex);
+    if (request.kind === "files") {
+      const payload = record(strictJSON(decoder.decode(bytes)), ["rootPath", "files"]);
+      if (typeof payload.rootPath !== "string" || !Array.isArray(payload.files)) throw new Error("Invalid files request.");
+      const sources = payload.files.map((file) => {
+        const source = record(file, ["path", "bytesHex"]);
+        if (typeof source.path !== "string") throw new Error("Invalid file path field.");
+        return { path: source.path, data: bytesFromHex(source.bytesHex) };
+      });
+      return compositionResponse(DocumentFileComposition.resolve(payload.rootPath, sources).composition);
+    }
+    if (request.kind === "composition") return compositionResponse(DocumentCompositionCodec.decode(bytes));
     const document = DocumentStorageCodec.decode(bytes);
-    return request.kind === "document" ? documentResponse(bytes, document) : compositionResponse(document);
+    return documentResponse(bytes, document);
   } catch (error) {
-    const code = error instanceof DocumentEditError ? error.diagnostic.code :
+    const fileCode = error instanceof DocumentFileCompositionError ?
+      ({ invalidPath: "filePath", duplicatePath: "filePath", invalidLedger: "fileLedger", invalidGlyph: "fileLedger",
+        missingFile: "missingFile", inputLimit: "fileLimit" })[error.code] : undefined;
+    const code = fileCode ?? (error instanceof DocumentEditError ? error.diagnostic.code :
       error instanceof DocumentStorageError || error instanceof DocumentCompositionError || error instanceof ParseError ?
-        error.code : "adapterFailure";
+        error.code : "adapterFailure");
     return { ok: false, error: code };
   }
 }

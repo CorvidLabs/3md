@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "workflow_version": 2,
+  "workflow_origin_version": 2,
+  "id": "add-linked-file-composition-with-a-glyph-ledger-recursive-supplied-file-resolution-and-portable-self-contained-bundling",
+  "slug": "add-linked-file-composition-with-a-glyph-ledger-recursive-supplied-file-resolution-and-portable-self-contained-bundling",
+  "title": "Add linked file composition with a glyph ledger recursive supplied-file resolution and portable self-contained bundling in all three languages",
+  "description": "Add linked file composition with a glyph ledger recursive supplied-file resolution and portable self-contained bundling in all three languages",
+  "kind": "feature",
+  "state": "verifying",
+  "canonical_applied": true,
+  "base_commit": "be41af523aecf041202a06d4c83471b19e09b275",
+  "created_at": 1791239089,
+  "updated_at": 1791242362,
+  "affected_specs": [
+    "ThreeMD"
+  ],
+  "affected_paths": [
+    "Sources/ThreeMD",
+    "Sources/ThreeMDInterop",
+    "js",
+    "rust",
+    "scripts",
+    "conformance",
+    "SPEC.md",
+    "docs"
+  ],
+  "no_spec_change": false,
+  "no_spec_change_rationale": null,
+  "acceptance_criteria": [
+    "A parent Document maps printable ASCII glyphs to relative filenames, resolves supplied files recursively while preserving identities and shared children, and produces portable bundles; all three languages and all nine writer-reader pairs agree and refuse invalid paths, missing files, cycles, limits and cancellation."
+  ],
+  "selected_artifacts": [
+    "context",
+    "requirements",
+    "plan",
+    "tasks",
+    "testing",
+    "docs",
+    "design",
+    "research"
+  ],
+  "dependencies": [],
+  "answers": {
+    "architecture_risk": "yes",
+    "public_contract": "yes"
+  }
+}

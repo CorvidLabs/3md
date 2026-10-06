@@ -1,5 +1,11 @@
 # 3md
 
+## Linked file authoring preparation
+
+Leif approved direct filename composition on 2026-10-05 with "ok do it": a printable glyph ledger in an ordinary Document refers to local ThreeMD filenames, a pure supplied-byte resolver follows reachable references recursively, and existing self-contained readable/binary profiles preserve the resulting graph. Swift, TypeScript and Rust must agree through all nine interchange pairs. The explicit development host reads a chosen project folder; the library has no filesystem or network I/O. No watcher, remote loading, grammar version or automatic file migration is added.
+
+Root owns definition-first SpecSync 6 records, integration verification, current contracts and feature PR publication. Parallel agents own their assigned language implementations and tests. Actual actor/reviewer claims identify the executing agent and do not claim Leif reviewed an implementation diff, independent human review or a permitted signature. Preserve previous archives, provenance policy and element/dist. Leif will merge the prepared PRs; this scope does not merge, push main, tag, publish or deploy.
+
 ## Current merge request
 
 Leif directly instructed "merge al the prs" on 2026-10-04 after reviewing the binary/composition implementation. This authorizes repairing the reviewed decimal-decoding resource issue, verifying the resulting feature head, completing truthful delegated lifecycle records, and merging the related open PRs through the configured GitHub rules. The actor remains the actual executing agent; no record claims an independent human review, a different agent identity, or an unavailable signature. Existing Trust risk and provenance policy stays unchanged. Main pushes, releases, deployments and changes to branch protections are outside this request.

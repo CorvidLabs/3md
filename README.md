@@ -6,6 +6,12 @@
 [![License: MIT](https://img.shields.io/github/license/CorvidLabs/3md)](LICENSE)
 [![Live demo](https://img.shields.io/badge/demo-live-0E6F66)](https://corvidlabs.github.io/3md/)
 
+ThreeMD 2.0 preparation includes [linked file composition](docs/FILE-COMPOSITION.md):
+map a character to another 3md filename, resolve explicit supplied files in any
+of the three libraries, and share a self-contained bundle. See the
+[nested LinkedVillage example](Examples/LinkedVillage/README.md). No release
+publication is claimed by this branch.
+
 **Markdown with a Z axis.** A `.3md` file is ordinary Markdown extended along
 one free axis: stack your content into **planes** and tell the reader what the
 depth means. Time for a daily planner. Frames for an animation. Layers for

@@ -1,0 +1,46 @@
+{
+  "approvals": [
+    {
+      "gate": "definition",
+      "actor": "agent:codex-root",
+      "timestamp": 1791239527,
+      "digest": "d2b882fcab08af6e58ba4226227bd1d5c12633c4620378320a82ca02b1d69d09",
+      "note": "Executing agent codex-root records scope approval under Leif direct ok do it for linked authoring and portable bundling. This is not a claim that Leif reviewed the implementation diff and is not independent human review or signing authority.",
+      "approved_scope": {
+        "schema_version": 1,
+        "change_id": "add-linked-file-composition-with-a-glyph-ledger-recursive-supplied-file-resolution-and-portable-self-contained-bundling",
+        "title": "Add linked file composition with a glyph ledger recursive supplied-file resolution and portable self-contained bundling in all three languages",
+        "description": "Add linked file composition with a glyph ledger recursive supplied-file resolution and portable self-contained bundling in all three languages",
+        "kind": "feature",
+        "affected_specs": [
+          "ThreeMD"
+        ],
+        "affected_paths": [
+          "SPEC.md",
+          "Sources/ThreeMD",
+          "Sources/ThreeMDInterop",
+          "conformance",
+          "docs",
+          "js",
+          "rust",
+          "scripts"
+        ],
+        "no_spec_change": false,
+        "no_spec_change_rationale": null,
+        "acceptance_criteria": [
+          "A parent Document maps printable ASCII glyphs to relative filenames, resolves supplied files recursively while preserving identities and shared children, and produces portable bundles; all three languages and all nine writer-reader pairs agree and refuse invalid paths, missing files, cycles, limits and cancellation."
+        ],
+        "dependencies": [],
+        "supersedes": [],
+        "answers": {
+          "architecture_risk": "yes",
+          "public_contract": "yes"
+        }
+      },
+      "approved_delta_digests": {
+        "ThreeMD": "27a5cc9d306a053412a55e52465b6225c1a995063838c48abc6429832ffefa55"
+      }
+    }
+  ],
+  "reopenings": []
+}

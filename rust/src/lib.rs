@@ -25,6 +25,7 @@ use unicode_normalization::UnicodeNormalization;
 pub mod composition;
 pub mod diagnostics;
 pub mod editing;
+pub mod file_composition;
 pub mod storage;
 
 pub use composition::{
@@ -38,6 +39,10 @@ pub use diagnostics::{
 pub use editing::{
     CompositionEdit, CompositionPatch, DocumentCompositionSnapshot, DocumentEdit,
     DocumentEditLimits, DocumentHeader, DocumentPatch, DocumentRevision, DocumentSnapshot,
+};
+pub use file_composition::{
+    DocumentFileCompositionError, DocumentFileCompositionResult, DocumentFileReference,
+    DocumentFileSource,
 };
 pub use storage::{
     CancellationToken, DocumentCompression, DocumentDecodeLimits, DocumentStorageError,

@@ -5,7 +5,13 @@ One JSON object per line is written to stdin and one response per line to stdout
 Adapters use only their public library APIs and do not log to stdout.
 
 Request: `{"schema":"3md-interchange-1","kind":"document","bytesHex":"..."}`.
-Kinds are document and composition. Exact bytes are lowercase hexadecimal.
+Kinds are document, composition and files. Exact bytes are lowercase hexadecimal.
+For files, bytesHex contains UTF-8 JSON with exactly rootPath (string) and files
+(array of records with exactly path and bytesHex string fields). Libraries resolve
+these explicitly supplied bytes under docs/FILE-COMPOSITION.md, then emit normal
+composition responses. Produced text/binary/adopted/edited bundles are consumed
+as composition kind, with no source inputs. File failures use filePath,
+fileLedger, missingFile and fileLimit; malformed protocol fields are adapterFailure.
 Both text and uncompressed binary input must be detected by the storage codec.
 Composition input first uses storage decode, then composition decode.
 
