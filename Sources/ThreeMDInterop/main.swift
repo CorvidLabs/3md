@@ -6,6 +6,8 @@ import ThreeMD
 import Darwin
 #elseif canImport(Glibc)
 import Glibc
+#elseif canImport(Musl)
+import Musl
 #endif
 
 private struct Catalog: Decodable {
@@ -84,7 +86,7 @@ private final class InterchangeCoordinator {
         ]
         try checkExactJSONRegression()
         try await checkAdapterBounds(adapters[0])
-        #if canImport(Darwin) || canImport(Glibc)
+        #if canImport(Darwin) || canImport(Glibc) || canImport(Musl)
         try await checkWatchdog(executable)
         #endif
         var producers: [[InterchangeResponse]] = []
@@ -464,7 +466,7 @@ private final class InterchangeCoordinator {
             try? await Task.sleep(nanoseconds: 10_000_000)
         }
         if process.isRunning {
-            #if canImport(Darwin) || canImport(Glibc)
+            #if canImport(Darwin) || canImport(Glibc) || canImport(Musl)
             _ = kill(process.processIdentifier, SIGKILL)
             #else
             throw InterchangeFailure.invalid("Development watchdog hard stop unavailable on this platform")
@@ -621,7 +623,7 @@ private func runSwiftAdapter() {
 
 do {
     if CommandLine.arguments.contains("--watchdog-probe") {
-        #if canImport(Darwin) || canImport(Glibc)
+        #if canImport(Darwin) || canImport(Glibc) || canImport(Musl)
         guard #available(macOS 10.15, *) else { throw InterchangeFailure.invalid("Watchdog probe runtime unavailable") }
         signal(SIGTERM, SIG_IGN)
         FileHandle.standardOutput.write(Data("ready\n".utf8))

@@ -89,9 +89,12 @@ impl From<DocumentCompositionError> for DocumentFileCompositionError {
 }
 type Result<T> = std::result::Result<T, DocumentFileCompositionError>;
 
-// Independent discovery safety ceiling. Embedded disconnected entries do not extend the final
-// root entry path; the caller's maximum_depth applies after remapping the complete entry graph.
-const MAXIMUM_FILE_DISCOVERY_DEPTH: usize = 64;
+// Independent discovery safety ceiling, the standard maximum depth. Embedded disconnected entries
+// do not extend the final root entry path; the caller's maximum_depth applies after remapping the
+// complete entry graph.
+fn maximum_file_discovery_depth() -> usize {
+    DocumentCompositionLimits::default().maximum_depth
+}
 
 /// Read a strict glyph-to-filename ledger. Filenames are interpreted only during explicit resolution.
 pub fn ledger(
@@ -126,17 +129,51 @@ pub fn resolve_path(
     options: &OperationOptions,
 ) -> std::result::Result<String, DocumentFileCompositionError> {
     options.check()?;
-    let bound = DocumentDecodeLimits::default().maximum_record_bytes;
-    if relative_to.len() > bound || source.len() > bound - relative_to.len() {
-        return Err(DocumentFileCompositionError::InputLimit);
-    }
-    let owner = normalize(relative_to, &[], options)?;
-    let mut base: Vec<&str> = owner.split('/').collect();
-    base.pop();
-    normalize(source, &base, options)
+    check_path_bytes(source, relative_to.len())?;
+    let owner = normalize(relative_to, None, options)?;
+    normalize(source, Some(&ContainingFile::new(&owner)), options)
 }
 
-fn normalize(path: &str, base: &[&str], options: &OperationOptions) -> Result<String> {
+/// A normalized containing filename whose directory boundaries are located once per discovered file.
+struct ContainingFile<'a> {
+    path: &'a str,
+    /// The byte offset of every separator, which is also the end of each directory segment.
+    directory_ends: Vec<usize>,
+}
+impl<'a> ContainingFile<'a> {
+    fn new(path: &'a str) -> Self {
+        Self {
+            path,
+            directory_ends: path.match_indices('/').map(|(index, _)| index).collect(),
+        }
+    }
+}
+
+/// The standalone record bound: the containing filename and reference together fit one record.
+fn check_path_bytes(source: &str, containing_bytes: usize) -> Result<()> {
+    let bound = DocumentDecodeLimits::default().maximum_record_bytes;
+    if containing_bytes > bound || source.len() > bound - containing_bytes {
+        return Err(DocumentFileCompositionError::InputLimit);
+    }
+    Ok(())
+}
+
+/// Resolve one ledger reference against an owner normalized once, with the same bound as resolve_path.
+fn resolve_reference(
+    source: &str,
+    owner: &ContainingFile<'_>,
+    options: &OperationOptions,
+) -> Result<String> {
+    options.check()?;
+    check_path_bytes(source, owner.path.len())?;
+    normalize(source, Some(owner), options)
+}
+
+fn normalize(
+    path: &str,
+    base: Option<&ContainingFile<'_>>,
+    options: &OperationOptions,
+) -> Result<String> {
     options.check()?;
     if path.is_empty() || path.starts_with('/') || path.ends_with('/') {
         return Err(DocumentFileCompositionError::InvalidPath(path.into()));
@@ -150,7 +187,9 @@ fn normalize(path: &str, base: &[&str], options: &OperationOptions) -> Result<St
         }
     }
     let normalized = normalized_key(path, options)?;
-    let mut segments: Vec<&str> = base.to_vec();
+    // One stack: the kept base directory segments followed by the source's own segments.
+    let mut kept = base.map_or(0, |base| base.directory_ends.len());
+    let mut segments: Vec<&str> = Vec::new();
     for segment in normalized.split('/') {
         options.check()?;
         match segment {
@@ -158,16 +197,31 @@ fn normalize(path: &str, base: &[&str], options: &OperationOptions) -> Result<St
             "." => {}
             ".." => {
                 if segments.pop().is_none() {
-                    return Err(DocumentFileCompositionError::InvalidPath(path.into()));
+                    if kept == 0 {
+                        return Err(DocumentFileCompositionError::InvalidPath(path.into()));
+                    }
+                    kept -= 1;
                 }
             }
             _ => segments.push(segment),
         }
     }
-    if segments.is_empty() {
+    let prefix = match base {
+        Some(base) if kept > 0 => &base.path[..base.directory_ends[kept - 1]],
+        _ => "",
+    };
+    if prefix.is_empty() && segments.is_empty() {
         return Err(DocumentFileCompositionError::InvalidPath(path.into()));
     }
-    Ok(segments.join("/"))
+    let mut result = String::with_capacity(prefix.len() + 1 + normalized.len());
+    result.push_str(prefix);
+    for segment in segments {
+        if !result.is_empty() {
+            result.push('/');
+        }
+        result.push_str(segment);
+    }
+    Ok(result)
 }
 
 fn normalized_key(value: &str, options: &OperationOptions) -> Result<String> {
@@ -208,6 +262,7 @@ struct Resolver<'a> {
     encoded_bytes: usize,
     definitions: usize,
     references: usize,
+    maximum_discovery_depth: usize,
 }
 impl Resolver<'_> {
     fn visit(&mut self, path: &str, active_depth: usize) -> Result<usize> {
@@ -216,14 +271,14 @@ impl Resolver<'_> {
             return Err(DocumentCompositionError::Cycle(path.into()).into());
         }
         if let Some(file) = self.files.get(path) {
-            if active_depth >= MAXIMUM_FILE_DISCOVERY_DEPTH
-                || file.depth > MAXIMUM_FILE_DISCOVERY_DEPTH - active_depth
+            if active_depth >= self.maximum_discovery_depth
+                || file.depth > self.maximum_discovery_depth - active_depth
             {
                 return Err(DocumentCompositionError::DepthExceeded.into());
             }
             return Ok(file.depth);
         }
-        if active_depth >= MAXIMUM_FILE_DISCOVERY_DEPTH {
+        if active_depth >= self.maximum_discovery_depth {
             return Err(DocumentCompositionError::DepthExceeded.into());
         }
         let source = self
@@ -269,6 +324,7 @@ impl Resolver<'_> {
         let mut ledgers = BTreeMap::new();
         self.active.insert(path.into());
         let mut depth = 1;
+        let owner = ContainingFile::new(path);
         for entry in &entries {
             self.options.check()?;
             let mut values = ledger(&entry.document, self.options)?;
@@ -280,11 +336,11 @@ impl Resolver<'_> {
             }
             self.references += entry.references.len() + values.len();
             for reference in &mut values {
-                reference.source = resolve_path(&reference.source, path, self.options)?;
+                reference.source = resolve_reference(&reference.source, &owner, self.options)?;
                 // Match the other ports' immediate DFS in local-ID then glyph order.
                 let child_depth = self.visit(&reference.source, active_depth + 1)?;
                 depth = depth.max(child_depth + 1);
-                if depth > MAXIMUM_FILE_DISCOVERY_DEPTH {
+                if depth > self.maximum_discovery_depth {
                     return Err(DocumentCompositionError::DepthExceeded.into());
                 }
             }
@@ -306,6 +362,8 @@ impl Resolver<'_> {
 
 /// Resolve only reachable supplied bytes and preserve imported nested bundles, including unused entries.
 /// Discovery and remapping are private; errors or cancellation never return a partial composition.
+/// Cancellation observed anywhere, including inside composition validation, is reported as
+/// `Storage(DocumentStorageError::Cancelled)`.
 pub fn resolve(
     root_path: &str,
     sources: &[DocumentFileSource],
@@ -313,6 +371,27 @@ pub fn resolve(
     document_limits: &DocumentDecodeLimits,
     options: &OperationOptions,
 ) -> std::result::Result<DocumentFileCompositionResult, DocumentFileCompositionError> {
+    resolve_supplied(root_path, sources, limits, document_limits, options).map_err(|error| {
+        if matches!(
+            error,
+            DocumentFileCompositionError::Composition(DocumentCompositionError::Storage(
+                DocumentStorageError::Cancelled
+            ))
+        ) {
+            DocumentFileCompositionError::Storage(DocumentStorageError::Cancelled)
+        } else {
+            error
+        }
+    })
+}
+
+fn resolve_supplied(
+    root_path: &str,
+    sources: &[DocumentFileSource],
+    limits: &DocumentCompositionLimits,
+    document_limits: &DocumentDecodeLimits,
+    options: &OperationOptions,
+) -> Result<DocumentFileCompositionResult> {
     limits.validate()?;
     document_limits.validate()?;
     options.check()?;
@@ -330,10 +409,10 @@ pub fn resolve(
         }
         path_bytes += source.path.len();
     }
-    let root_path = normalize(root_path, &[], options)?;
+    let root_path = normalize(root_path, None, options)?;
     let mut indexed = BTreeMap::new();
     for source in sources {
-        let path = normalize(&source.path, &[], options)?;
+        let path = normalize(&source.path, None, options)?;
         if indexed.insert(path.clone(), source).is_some() {
             return Err(DocumentFileCompositionError::DuplicatePath(path));
         }
@@ -348,25 +427,27 @@ pub fn resolve(
         encoded_bytes: 0,
         definitions: 0,
         references: 0,
+        maximum_discovery_depth: maximum_file_discovery_depth(),
     };
     resolver.visit(&root_path, 0)?;
     // UTF-8 lexicographic ordering is Unicode scalar ordering. Paths are already NFC-normalized.
     let resolved_paths: Vec<String> = resolver.files.keys().cloned().collect();
-    let mut ids: BTreeMap<(String, String), String> = BTreeMap::new();
+    // One map per file, keyed by local ID, so remapping never copies or compares a full path per reference.
+    let mut assigned: Vec<BTreeMap<&str, String>> = Vec::with_capacity(resolver.files.len());
     let mut file_root_ids = BTreeMap::new();
+    let mut ordinal = 0_usize;
     for (path, file) in &resolver.files {
         options.check()?;
+        let mut ids = BTreeMap::new();
         for entry in &file.entries {
-            let id = format!("file-{:06}", ids.len());
-            ids.insert((path.clone(), entry.id.clone()), id);
+            ids.insert(entry.id.as_str(), format!("file-{ordinal:06}"));
+            ordinal += 1;
         }
-        file_root_ids.insert(
-            path.clone(),
-            ids[&(path.clone(), file.root_id.clone())].clone(),
-        );
+        file_root_ids.insert(path.clone(), ids[file.root_id.as_str()].clone());
+        assigned.push(ids);
     }
     let mut entries = Vec::with_capacity(resolver.definitions);
-    for (path, file) in &resolver.files {
+    for (file, ids) in resolver.files.values().zip(&assigned) {
         for entry in &file.entries {
             options.check()?;
             let mut document = entry.document.clone();
@@ -376,7 +457,7 @@ pub fn resolve(
             for reference in &entry.references {
                 options.check()?;
                 references.push(DocumentReference {
-                    target_id: ids[&(path.clone(), reference.target_id.clone())].clone(),
+                    target_id: ids[reference.target_id.as_str()].clone(),
                     attributes: reference.attributes.clone(),
                 });
             }
@@ -391,7 +472,7 @@ pub fn resolve(
                 });
             }
             entries.push(DocumentEntry {
-                id: ids[&(path.clone(), entry.id.clone())].clone(),
+                id: ids[entry.id.as_str()].clone(),
                 document,
                 references,
             });

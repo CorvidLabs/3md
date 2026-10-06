@@ -504,6 +504,329 @@ final class DocumentFileCompositionTests: XCTestCase {
         }
     }
 
+    func testOwnerDirectoryResolutionKeepsParentDotAndGrammarSemantics() throws {
+        let cases = [
+            ("../../x", "a/b/c/owner", "a/x"), ("x/..", "a/owner", "a"), ("../c", "a/\u{301}b/owner", "a/c"),
+            ("./x/./y", "a/./b/owner", "a/b/x/y"), ("child", "owner", "child"), ("x/../../y", "a/b/owner", "a/y"),
+        ]
+        for (source, owner, expected) in cases {
+            XCTAssertEqual(try DocumentFileComposition.resolvePath(source, relativeTo: owner), expected)
+        }
+        for (source, owner) in [("../..", "a/b/owner"), ("x/../..", "a/owner"), ("..", "owner"), ("../../..", "a/b/o")]
+        {
+            assertFileFailure(.invalidPath(source)) {
+                try DocumentFileComposition.resolvePath(source, relativeTo: owner)
+            }
+        }
+    }
+
+    func testLongOwnerPathWithManyReferencesResolvesEveryReferenceInItsDirectory() throws {
+        let glyphs = (33...126).map { String(UnicodeScalar(UInt8($0))) }
+        let ledger = String(
+            decoding: try JSONEncoder().encode(Dictionary(uniqueKeysWithValues: glyphs.map { ($0, "leaf.3md") })),
+            as: UTF8.self
+        )
+        let entries = (0..<3).map { DocumentEntry(id: "e\($0)", document: document(metadata: ["3md-files": ledger])) }
+        let graph = try DocumentComposition(
+            rootID: "m",
+            entries: entries + [
+                .init(id: "m", document: document(), references: entries.map { .init(targetID: $0.id) })
+            ]
+        )
+        let owner = "owner/" + String(repeating: "\u{E9}", count: 200_000) + ".3md"
+        let result = try DocumentFileComposition.resolve(
+            rootPath: owner,
+            sources: [
+                .init(path: owner, data: try DocumentCompositionCodec.encode(graph)),
+                try source("owner/leaf.3md", document(body: "Leaf")),
+            ]
+        )
+        XCTAssertEqual(result.resolvedPaths, ["owner/leaf.3md", owner])
+        let edges = result.composition.entries.flatMap(\.references).filter { $0.attributes["glyph"] != nil }
+        XCTAssertEqual(edges.count, 3 * glyphs.count)
+        XCTAssertTrue(edges.allSatisfy { $0.attributes["source-file"] == "owner/leaf.3md" })
+    }
+
+    func testRefusalsFollowEntryIDThenGlyphDiscoveryOrder() throws {
+        assertFileFailure(.missingFile("missing")) {
+            try DocumentFileComposition.resolve(
+                rootPath: "root",
+                sources: [try source("root", document(metadata: ["3md-files": #"{"a":"missing","b":"/x"}"#]))]
+            )
+        }
+        assertFileFailure(.invalidPath("/x")) {
+            try DocumentFileComposition.resolve(
+                rootPath: "root",
+                sources: [try source("root", document(metadata: ["3md-files": #"{"a":"/x","b":"missing"}"#]))]
+            )
+        }
+        for (first, second, expected) in [
+            ("missing", "/x", DocumentFileCompositionError.missingFile("missing")),
+            ("/x", "missing", DocumentFileCompositionError.invalidPath("/x")),
+        ] {
+            let graph = try DocumentComposition(
+                rootID: "m",
+                entries: [
+                    .init(id: "m", document: document()),
+                    .init(id: "a", document: document(metadata: ["3md-files": "{\"z\":\"\(first)\"}"])),
+                    .init(id: "b", document: document(metadata: ["3md-files": "{\"a\":\"\(second)\"}"])),
+                ]
+            )
+            assertFileFailure(expected) {
+                try DocumentFileComposition.resolve(
+                    rootPath: "root",
+                    sources: [.init(path: "root", data: try DocumentCompositionCodec.encode(graph))]
+                )
+            }
+        }
+    }
+
+    func testRootAndUnreachableSuppliedPathsUseTheLedgerPathGrammar() throws {
+        let leaf = try source("root.3md", document())
+        for path in ["/root.3md", ".", "../root.3md", "", "a\\b.3md", "a:b.3md", "a\u{7F}b.3md", "a\u{0}b.3md"] {
+            assertFileFailure(.invalidPath(path)) {
+                try DocumentFileComposition.resolve(rootPath: path, sources: [leaf])
+            }
+            assertFileFailure(.invalidPath(path)) {
+                try DocumentFileComposition.resolve(
+                    rootPath: leaf.path,
+                    sources: [leaf, .init(path: path, data: leaf.data)]
+                )
+            }
+        }
+        let percent = try DocumentFileComposition.resolve(
+            rootPath: "root",
+            sources: [
+                try source("root", document(metadata: ["3md-files": #"{"1":"%2e%2e/leaf"}"#])),
+                try source("%2e%2e/leaf", document()),
+            ]
+        )
+        XCTAssertEqual(percent.resolvedPaths, ["%2e%2e/leaf", "root"])
+        let distinct = try DocumentFileComposition.resolve(
+            rootPath: "root",
+            sources: [
+                try source("root", document(metadata: ["3md-files": #"{"1":"Leaf","2":"leaf"}"#])),
+                try source("Leaf", document(body: "Upper")), try source("leaf", document(body: "Lower")),
+            ]
+        )
+        XCTAssertEqual(distinct.resolvedPaths, ["Leaf", "leaf", "root"])
+    }
+
+    func testLedgerEscapesDecodeBeforePathGrammar() throws {
+        func resolve(_ ledger: String, _ extra: [DocumentFileSource] = []) throws -> DocumentFileCompositionResult {
+            try DocumentFileComposition.resolve(
+                rootPath: "root",
+                sources: [try source("root", document(metadata: ["3md-files": ledger]))] + extra
+            )
+        }
+        let leaf = try source("models/leaf", document())
+        let slash = try resolve(#"{"1":"models\/leaf","2":"models/leaf"}"#, [leaf])
+        XCTAssertEqual(slash.resolvedPaths, ["models/leaf", "root"])
+        XCTAssertEqual(Set(slash.composition.rootEntry.references.map(\.targetID)).count, 1)
+        assertFileFailure(.invalidPath("models\\leaf")) { try resolve(#"{"1":"models\\leaf"}"#, [leaf]) }
+        assertFileFailure(.invalidPath("a\u{1}b")) { try resolve(#"{"1":"a\u0001b"}"#) }
+        let pair = try resolve(#"{"1":"😀"}"#, [try source("😀", document())])
+        XCTAssertEqual(pair.resolvedPaths, ["root", "😀"])
+        XCTAssertThrowsError(try resolve(#"{"\ud800":"leaf"}"#)) {
+            guard case .invalidLedger = $0 as? DocumentFileCompositionError else {
+                return XCTFail("Expected a malformed ledger, received \($0)")
+            }
+        }
+    }
+
+    func testSelfAndAliasCyclesCompareNormalizedPaths() throws {
+        for ledger in [#"{"1":"root.3md"}"#, #"{"1":"./root.3md"}"#] {
+            assertCompositionFailure(.cycle("root.3md")) {
+                try DocumentFileComposition.resolve(
+                    rootPath: "root.3md",
+                    sources: [try source("root.3md", document(metadata: ["3md-files": ledger]))]
+                )
+            }
+        }
+        for (child, link) in [("models/child.3md", "../root.3md"), ("child.3md", "models/../root.3md")] {
+            assertCompositionFailure(.cycle("root.3md")) {
+                try DocumentFileComposition.resolve(
+                    rootPath: "root.3md",
+                    sources: [
+                        try source("root.3md", document(metadata: ["3md-files": "{\"1\":\"\(child)\"}"])),
+                        try source(child, document(metadata: ["3md-files": "{\"1\":\"\(link)\"}"])),
+                    ]
+                )
+            }
+        }
+    }
+
+    func testCachedSubtreeIsChargedAtItsDeeperOccurrenceAgainstTheDiscoveryCeiling() throws {
+        func chain(_ prefix: String, count: Int, last: String?) throws -> [DocumentFileSource] {
+            try (1...count).map { index in
+                let next = index < count ? "\(prefix)\(index + 1)" : last
+                let graph = try DocumentComposition(
+                    rootID: "r",
+                    entries: [
+                        .init(id: "r", document: document()),
+                        .init(
+                            id: "u",
+                            document: document(metadata: next.map { ["3md-files": "{\"1\":\"\($0)\"}"] } ?? [:])
+                        ),
+                    ]
+                )
+                return .init(path: "\(prefix)\(index)", data: try DocumentCompositionCodec.encode(graph))
+            }
+        }
+        let root = try source("root", document(metadata: ["3md-files": #"{"1":"a1","2":"b1"}"#]))
+        let long = try chain("a", count: 40, last: nil)
+        assertCompositionFailure(.depthExceeded) {
+            try DocumentFileComposition.resolve(
+                rootPath: "root",
+                sources: [root] + long + chain("b", count: 24, last: "a1")
+            )
+        }
+        let exact = try DocumentFileComposition.resolve(
+            rootPath: "root",
+            sources: [root] + long + chain("b", count: 23, last: "a1")
+        )
+        XCTAssertEqual(exact.composition.entries.count, 127)
+    }
+
+    func testExistingEdgesPrecedeLedgerEdgesAndEmbeddedLedgersResolveFromTheirBundleFolder() throws {
+        let graph = try DocumentComposition(
+            rootID: "m",
+            entries: [
+                .init(
+                    id: "m",
+                    document: document(metadata: ["3md-files": #"{"2":"leaf"}"#]),
+                    references: [.init(targetID: "c", attributes: ["glyph": "1", "opaque": "keep"])]
+                ),
+                .init(id: "c", document: document(body: "Kept")),
+            ]
+        )
+        let result = try DocumentFileComposition.resolve(
+            rootPath: "root",
+            sources: [
+                try source("root", document(metadata: ["3md-files": #"{"1":"models/group"}"#])),
+                .init(path: "models/group", data: try DocumentCompositionCodec.encode(graph)),
+                try source("models/leaf", document(body: "Leaf")),
+            ]
+        )
+        let group = try XCTUnwrap(result.composition.entry(id: try XCTUnwrap(result.fileRootIDs["models/group"])))
+        XCTAssertEqual(group.references.map { $0.attributes["glyph"] }, ["1", "2"])
+        XCTAssertEqual(group.references.first?.attributes["opaque"], "keep")
+        XCTAssertEqual(group.references.last?.targetID, result.fileRootIDs["models/leaf"])
+        XCTAssertEqual(group.references.last?.attributes["source-file"], "models/leaf")
+    }
+
+    func testResolverOutputRebundlesWithOpaqueGlyphAndSourceFileAttributes() throws {
+        let first = try simpleResult()
+        let second = try DocumentFileComposition.resolve(
+            rootPath: "root.3md",
+            sources: [
+                try source("root.3md", document(metadata: ["3md-files": #"{"1":"archive/bundle.3md"}"#])),
+                .init(path: "archive/bundle.3md", data: try DocumentCompositionCodec.encode(first.composition)),
+            ]
+        )
+        XCTAssertEqual(second.resolvedPaths, ["archive/bundle.3md", "root.3md"])
+        XCTAssertEqual(second.composition.entries.count, 3)
+        let archived = try XCTUnwrap(
+            second.composition.entry(id: try XCTUnwrap(second.fileRootIDs["archive/bundle.3md"]))
+        )
+        XCTAssertEqual(archived.references.first?.attributes, ["glyph": "1", "source-file": "leaf.3md"])
+    }
+
+    func testSourceFileAttributeBoundCountsNormalizedUTF8Bytes() throws {
+        // glyph (5) + "1" (1) + source-file (11) + path: a 16,367-byte NFC path exactly fills 16,384 bytes.
+        func resolve(padding: Int, limits: DocumentCompositionLimits = .standard) throws
+            -> DocumentFileCompositionResult
+        {
+            let path = "models/" + String(repeating: "e\u{301}", count: 8_000) + String(repeating: "a", count: padding)
+            let ledger = String(decoding: try JSONEncoder().encode(["1": path]), as: UTF8.self)
+            return try DocumentFileComposition.resolve(
+                rootPath: "root",
+                sources: [try source("root", document(metadata: ["3md-files": ledger])), try source(path, document())],
+                limits: limits
+            )
+        }
+        let exact = try resolve(padding: 360)
+        let edge = try XCTUnwrap(exact.composition.rootEntry.references.first)
+        XCTAssertEqual(edge.attributes["source-file"]?.utf8.count, 16_367)
+        assertCompositionFailure(.referenceAttributesExceeded) { try resolve(padding: 361) }
+        let lowered = try DocumentCompositionLimits(maximumReferenceAttributeBytes: 16_383)
+        assertCompositionFailure(.referenceAttributesExceeded) { try resolve(padding: 360, limits: lowered) }
+    }
+
+    func testLoweredPolicyChargesOriginalPathBytesBeforePathGrammarAndEncodedBytesBeforeDecoding() throws {
+        let root = try source("/root", document())
+        assertFileFailure(.inputLimit) {
+            try DocumentFileComposition.resolve(
+                rootPath: "/root",
+                sources: [root],
+                limits: .init(maximumProfileBytes: 9)
+            )
+        }
+        assertFileFailure(.invalidPath("/root")) {
+            try DocumentFileComposition.resolve(
+                rootPath: "/root",
+                sources: [root],
+                limits: .init(maximumProfileBytes: 10)
+            )
+        }
+        assertFileFailure(.inputLimit) {
+            try DocumentFileComposition.resolve(
+                rootPath: "a",
+                sources: [try source("a", document()), try source("b", document()), try source("c", document())],
+                limits: .init(maximumDefinitions: 2)
+            )
+        }
+        let parent = try source("root", document(metadata: ["3md-files": #"{"1":"leaf"}"#]))
+        let leaf = try source("leaf", document())
+        let result = try DocumentFileComposition.resolve(
+            rootPath: "root",
+            sources: [parent, leaf],
+            limits: .init(maximumReferenceAttributes: 2)
+        )
+        XCTAssertEqual(result.composition.entries.count, 2)
+    }
+
+    @MainActor
+    func testCancellationDuringARunningFanOutResolutionPublishesNoResult() async throws {
+        let sources = try cancellationWorkload()
+        let started = StartSignal()
+        let task = Task.detached {
+            await started.mark()
+            return try DocumentFileComposition.resolve(rootPath: "m/root", sources: sources)
+        }
+        while !(await started.isMarked) { await Task.yield() }
+        try await Task.sleep(nanoseconds: 5_000_000)
+        task.cancel()
+        switch await task.result {
+        case .success: XCTFail("A resolution canceled while running returned a composition")
+        case .failure(let error): XCTAssertTrue(error is CancellationError, "Unexpected error \(error)")
+        }
+    }
+
+    /// About 10 MB across 600 reachable files, fanned out through ledgers in a composition root.
+    private func cancellationWorkload() throws -> [DocumentFileSource] {
+        let body = String(repeating: "abcdefghij", count: 1_600)
+        var sources = try (0..<600).map { try source("f/\($0)", document(body: body)) }
+        let glyphs = (33...126).map { String(UnicodeScalar(UInt8($0))) }
+        var entries: [DocumentEntry] = []
+        for group in 0..<7 {
+            var ledger: [String: String] = [:]
+            for (offset, glyph) in glyphs.enumerated() where group * glyphs.count + offset < 600 {
+                ledger[glyph] = "../f/\(group * glyphs.count + offset)"
+            }
+            let json = String(decoding: try JSONEncoder().encode(ledger), as: UTF8.self)
+            entries.append(.init(id: "g\(group)", document: document(metadata: ["3md-files": json])))
+        }
+        let root = try DocumentComposition(
+            rootID: "root",
+            entries: entries + [
+                .init(id: "root", document: document(), references: entries.map { .init(targetID: $0.id) })
+            ]
+        )
+        sources.append(.init(path: "m/root", data: try DocumentCompositionCodec.encode(root)))
+        return sources
+    }
+
     private func document(
         title: String = "Document",
         body: String = "Body",
@@ -545,4 +868,12 @@ final class DocumentFileCompositionTests: XCTestCase {
     private func assertCompositionFailure<Value>(_ expected: DocumentCompositionError, _ body: () throws -> Value) {
         XCTAssertThrowsError(try body()) { XCTAssertEqual($0 as? DocumentCompositionError, expected) }
     }
+}
+
+/// Marks when a detached resolution is about to begin so the test can cancel it while it runs.
+@available(macOS 10.15, iOS 13, tvOS 13, watchOS 6, *)
+fileprivate actor StartSignal {
+    private(set) var isMarked = false
+
+    func mark() { isMarked = true }
 }

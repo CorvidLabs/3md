@@ -11,11 +11,13 @@ struct FileInterchangeCase {
 
 @available(macOS 10.15, *)
 enum FileInterchangeCases {
-    private struct Input: Encodable {
-        let rootPath: String
-        let files: [Source]
+    internal struct Input: Encodable {
+        internal let rootPath: String
+        internal let files: [Source]
+        internal var limits: JSONValue?
+        internal var documentLimits: JSONValue?
     }
-    private struct Source: Encodable {
+    internal struct Source: Encodable {
         let path: String
         let bytesHex: String
     }
@@ -321,10 +323,11 @@ enum FileInterchangeCases {
                 )
             )
         }
+        result += try hardeningCases(leaf: leaf, leafBytes: leafBytes)
         return result
     }
 
-    private static func document(_ title: String, body: String, metadata: [String: String] = [:]) -> Document {
+    internal static func document(_ title: String, body: String, metadata: [String: String] = [:]) -> Document {
         Document(
             version: "1.1",
             axis: .space,

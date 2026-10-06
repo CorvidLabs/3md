@@ -177,6 +177,31 @@ function record(value, keys) {
   }
   return value;
 }
+const compositionLimitNames = ["maximumDefinitions", "maximumReferences", "maximumDepth", "maximumDefinitionBytes",
+  "maximumTraversalOccurrences", "maximumProfileBytes", "maximumReferenceAttributes", "maximumReferenceAttributeBytes"];
+const documentLimitNames = ["maximumEncodedBytes", "maximumDecodedBytes", "maximumLines", "maximumPlanes",
+  "maximumRecordBytes"];
+// An absent object keeps standard limits. Present objects carry known names with integral numbers within
+// +/-(2^53 - 1); the library limit types validate ranges when resolution begins.
+function requestedLimits(payload, key, names) {
+  if (!Object.hasOwn(payload, key)) return undefined;
+  const value = payload[key];
+  if (value === null || typeof value !== "object" || Array.isArray(value)) throw new Error("Invalid limits object.");
+  for (const [name, number] of Object.entries(value)) {
+    if (!names.includes(name) || typeof number !== "number" || !Number.isSafeInteger(number)) {
+      throw new Error("Invalid limits field.");
+    }
+  }
+  return value;
+}
+function filesPayload(value) {
+  if (value === null || typeof value !== "object" || Array.isArray(value) ||
+    !Object.keys(value).every((key) => ["rootPath", "files", "limits", "documentLimits"].includes(key)) ||
+    !Object.hasOwn(value, "rootPath") || !Object.hasOwn(value, "files")) {
+    throw new Error("Invalid files request.");
+  }
+  return value;
+}
 function bytesFromHex(value) {
   if (typeof value !== "string" || value.length % 2 !== 0) throw new Error("Invalid request hexadecimal.");
   for (let index = 0; index < value.length; index += 1) {
@@ -193,8 +218,12 @@ function requestResponse(line) {
     }
     const bytes = bytesFromHex(request.bytesHex);
     if (request.kind === "files") {
-      const payload = record(strictJSON(decoder.decode(bytes)), ["rootPath", "files"]);
+      // Order: strict protocol JSON, envelope and limit-object shapes, the standard source-count ceiling,
+      // per-file fields and hex, then library resolution, which validates limit values first.
+      const payload = filesPayload(strictJSON(decoder.decode(bytes)));
       if (typeof payload.rootPath !== "string" || !Array.isArray(payload.files)) throw new Error("Invalid files request.");
+      const limits = requestedLimits(payload, "limits", compositionLimitNames);
+      const documentLimits = requestedLimits(payload, "documentLimits", documentLimitNames);
       if (payload.files.length > DocumentCompositionLimits.standard.maximumDefinitions) {
         throw new DocumentFileCompositionError("inputLimit");
       }
@@ -203,7 +232,8 @@ function requestResponse(line) {
         if (typeof source.path !== "string") throw new Error("Invalid file path field.");
         return { path: source.path, data: bytesFromHex(source.bytesHex) };
       });
-      return compositionResponse(DocumentFileComposition.resolve(payload.rootPath, sources).composition);
+      return compositionResponse(DocumentFileComposition.resolve(payload.rootPath, sources, limits, documentLimits)
+        .composition);
     }
     if (request.kind === "composition") return compositionResponse(DocumentCompositionCodec.decode(bytes));
     const document = DocumentStorageCodec.decode(bytes);

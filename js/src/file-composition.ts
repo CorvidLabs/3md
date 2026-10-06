@@ -43,7 +43,21 @@ function pathBytes(path: string, remaining: number, signal?: AbortSignal): numbe
   }
 }
 
-function normalizedPath(source: string, base: readonly string[], signal?: AbortSignal): string {
+/** A normalized containing file whose directory boundaries are located once per discovered file. */
+interface ContainingFile {
+  readonly path: string;
+  readonly bytes: number;
+  readonly directoryEnds: readonly number[];
+}
+const projectRoot: ContainingFile = Object.freeze({ path: "", bytes: 0, directoryEnds: Object.freeze([]) });
+
+function containingFile(path: string, bytes: number): ContainingFile {
+  const directoryEnds: number[] = [];
+  for (let index = path.indexOf("/"); index >= 0; index = path.indexOf("/", index + 1)) directoryEnds.push(index);
+  return { path, bytes, directoryEnds };
+}
+
+function normalizedPath(source: string, base: ContainingFile, signal?: AbortSignal): string {
   checkCancellation(signal);
   if (source.length === 0 || source.startsWith("/")) throw new DocumentFileCompositionError("invalidPath", source);
   for (let index = 0; index < source.length; index += 1) {
@@ -53,19 +67,33 @@ function normalizedPath(source: string, base: readonly string[], signal?: AbortS
       throw new DocumentFileCompositionError("invalidPath", source);
     }
   }
-  const segments = [...base];
+  // One stack: the kept base directory segments followed by the source's own segments.
+  let kept = base.directoryEnds.length;
+  const segments: string[] = [];
   const normalized = source.normalize("NFC");
   for (const segment of normalized.split("/")) {
     checkCancellation(signal);
     if (segment === "") throw new DocumentFileCompositionError("invalidPath", source);
     if (segment === ".") continue;
     if (segment === "..") {
-      if (segments.length === 0) throw new DocumentFileCompositionError("invalidPath", source);
-      segments.pop();
+      if (segments.length > 0) segments.pop();
+      else if (kept > 0) kept -= 1;
+      else throw new DocumentFileCompositionError("invalidPath", source);
     } else segments.push(segment);
   }
-  if (segments.length === 0) throw new DocumentFileCompositionError("invalidPath", source);
-  return segments.join("/");
+  if (kept === 0 && segments.length === 0) throw new DocumentFileCompositionError("invalidPath", source);
+  const prefix = kept > 0 ? base.path.slice(0, base.directoryEnds[kept - 1]) : "";
+  if (segments.length === 0) return prefix;
+  return prefix === "" ? segments.join("/") : `${prefix}/${segments.join("/")}`;
+}
+
+/** Resolves one ledger reference against an owner normalized once, charging the same record bound as resolvePath. */
+function resolveReference(source: string, owner: ContainingFile, signal?: AbortSignal): string {
+  checkCancellation(signal);
+  const maximum = DocumentDecodeLimits.standard.maximumRecordBytes;
+  const remaining = maximum - pathBytes(source, maximum, signal);
+  if (owner.bytes > remaining) throw new DocumentFileCompositionError("inputLimit");
+  return normalizedPath(source, owner, signal);
 }
 
 function scalarCompare(left: string, right: string, signal?: AbortSignal): number {
@@ -172,10 +200,9 @@ export class DocumentFileComposition {
     checkCancellation(signal);
     let remaining = DocumentDecodeLimits.standard.maximumRecordBytes;
     remaining -= pathBytes(source, remaining, signal);
-    if (relativeTo === undefined) return normalizedPath(source, [], signal);
-    pathBytes(relativeTo, remaining, signal);
-    const base = normalizedPath(relativeTo, [], signal).split("/"); base.pop();
-    return normalizedPath(source, base, signal);
+    if (relativeTo === undefined) return normalizedPath(source, projectRoot, signal);
+    const ownerBytes = pathBytes(relativeTo, remaining, signal);
+    return normalizedPath(source, containingFile(normalizedPath(relativeTo, projectRoot, signal), ownerBytes), signal);
   }
 
   public static resolve(rootPath: string, sources: readonly DocumentFileSource[],
@@ -187,11 +214,11 @@ export class DocumentFileComposition {
     let pathBudget = limits.maximumProfileBytes;
     pathBudget -= pathBytes(rootPath, pathBudget, signal);
     for (const source of sources) pathBudget -= pathBytes(source.path, pathBudget, signal);
-    const root = normalizedPath(rootPath, [], signal);
+    const root = normalizedPath(rootPath, projectRoot, signal);
     const index = new Map<string, DocumentFileSource>();
     for (const source of sources) {
       checkCancellation(signal);
-      const path = normalizedPath(source.path, [], signal);
+      const path = normalizedPath(source.path, projectRoot, signal);
       if (index.has(path)) throw new DocumentFileCompositionError("duplicatePath", path);
       index.set(path, source);
     }
@@ -225,16 +252,17 @@ export class DocumentFileComposition {
       active.add(path);
       const links = new Map<string, { glyph: string; path: string }[]>();
       let depth = 1;
+      const owner = containingFile(path, utf8Length(path, signal));
       for (const entry of [...entries].sort((a, b) => a.id < b.id ? -1 : a.id > b.id ? 1 : 0)) {
         checkCancellation(signal);
-        const ledger = this.ledger(entry.document, signal);
+        const ledger = DocumentFileComposition.ledger(entry.document, signal);
         const count = entry.references.length + ledger.length;
         if (count > limits.maximumReferences - references) throw new DocumentCompositionError("tooManyReferences");
         references += count;
         const resolved: { glyph: string; path: string }[] = [];
         for (const reference of ledger) {
           checkCancellation(signal);
-          const childPath = this.resolvePath(reference.source, path, signal);
+          const childPath = resolveReference(reference.source, owner, signal);
           const child = visit(childPath, activeDepth + 1);
           depth = Math.max(depth, child.depth + 1);
           if (depth > maximumFileDiscoveryDepth) throw new DocumentCompositionError("depthExceeded");

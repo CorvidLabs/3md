@@ -1,7 +1,7 @@
 //! Bounded JSON-lines development adapter for the shared file interchange gate.
 use serde::{Deserialize, Serialize};
 use serde_json::{json, Value};
-use std::collections::HashSet;
+use std::collections::{BTreeMap, HashSet};
 use std::io::{self, BufRead, Write};
 use threemd::composition::{self, DocumentCompositionLimits};
 use threemd::editing::{
@@ -169,6 +169,17 @@ struct FileRequest {
     #[serde(rename = "rootPath")]
     _root_path: String,
     files: Vec<Value>,
+    // A present JSON null is a wrong type, not an absent object.
+    #[serde(default, deserialize_with = "present_value")]
+    limits: Option<Value>,
+    #[serde(default, deserialize_with = "present_value")]
+    document_limits: Option<Value>,
+}
+
+fn present_value<'de, D: serde::Deserializer<'de>>(
+    deserializer: D,
+) -> Result<Option<Value>, D::Error> {
+    Value::deserialize(deserializer).map(Some)
 }
 
 #[derive(Deserialize)]
@@ -176,6 +187,79 @@ struct FileRequest {
 struct ValidatedFileRequest {
     root_path: String,
     files: Vec<FileSourceRequest>,
+    #[serde(default, rename = "limits")]
+    _limits: Option<serde::de::IgnoredAny>,
+    #[serde(default, rename = "documentLimits")]
+    _document_limits: Option<serde::de::IgnoredAny>,
+}
+
+const COMPOSITION_LIMIT_NAMES: [&str; 8] = [
+    "maximumDefinitions",
+    "maximumReferences",
+    "maximumDepth",
+    "maximumDefinitionBytes",
+    "maximumTraversalOccurrences",
+    "maximumProfileBytes",
+    "maximumReferenceAttributes",
+    "maximumReferenceAttributeBytes",
+];
+const DOCUMENT_LIMIT_NAMES: [&str; 5] = [
+    "maximumEncodedBytes",
+    "maximumDecodedBytes",
+    "maximumLines",
+    "maximumPlanes",
+    "maximumRecordBytes",
+];
+const MAXIMUM_SAFE_INTEGER: u64 = 9_007_199_254_740_991;
+
+/// Accept an absent value or an object of known names with integral numbers within +/-(2^53 - 1).
+/// Range checks belong to the library limit types when resolution begins.
+fn requested_limits(
+    value: Option<&Value>,
+    names: &[&str],
+) -> Result<BTreeMap<String, i64>, &'static str> {
+    let Some(value) = value else {
+        return Ok(BTreeMap::new());
+    };
+    let Value::Object(fields) = value else {
+        return Err("adapterFailure");
+    };
+    let mut result = BTreeMap::new();
+    for (name, field) in fields {
+        if !names.contains(&name.as_str()) {
+            return Err("adapterFailure");
+        }
+        let Value::Number(number) = field else {
+            return Err("adapterFailure");
+        };
+        let integer = if let Some(integer) = number.as_i64() {
+            integer
+        } else if number.as_u64().is_some() {
+            // Every u64 outside i64 also exceeds the safe-integer magnitude.
+            return Err("adapterFailure");
+        } else {
+            let float = number.as_f64().ok_or("adapterFailure")?;
+            if !float.is_finite()
+                || float.fract() != 0.0
+                || float.abs() > MAXIMUM_SAFE_INTEGER as f64
+            {
+                return Err("adapterFailure");
+            }
+            float as i64
+        };
+        if integer.unsigned_abs() > MAXIMUM_SAFE_INTEGER {
+            return Err("adapterFailure");
+        }
+        result.insert(name.clone(), integer);
+    }
+    Ok(result)
+}
+
+/// Negative values cannot be represented by usize; the out-of-range sentinel lets the library refuse them.
+fn limit(values: &BTreeMap<String, i64>, name: &str, standard: usize) -> usize {
+    values.get(name).map_or(standard, |value| {
+        usize::try_from(*value).unwrap_or(usize::MAX)
+    })
 }
 
 #[derive(Deserialize)]
@@ -366,12 +450,79 @@ fn file_error(error: DocumentFileCompositionError) -> &'static str {
 }
 
 fn files_response(bytes: &[u8]) -> Result<Response, &'static str> {
+    // Order: strict protocol JSON, envelope and limit-object shapes, the standard source-count
+    // ceiling, per-file fields and hex, then library resolution, which validates limit values first.
     validate_protocol_json(bytes)?;
     let request: FileRequest = serde_json::from_slice(bytes).map_err(|_| "adapterFailure")?;
-    let graph_limits = DocumentCompositionLimits::default();
-    if request.files.len() > graph_limits.maximum_definitions {
+    let requested = requested_limits(request.limits.as_ref(), &COMPOSITION_LIMIT_NAMES)?;
+    let requested_document =
+        requested_limits(request.document_limits.as_ref(), &DOCUMENT_LIMIT_NAMES)?;
+    let standard = DocumentCompositionLimits::default();
+    if request.files.len() > standard.maximum_definitions {
         return Err("fileLimit");
     }
+    let graph_limits = DocumentCompositionLimits {
+        maximum_definitions: limit(
+            &requested,
+            "maximumDefinitions",
+            standard.maximum_definitions,
+        ),
+        maximum_references: limit(&requested, "maximumReferences", standard.maximum_references),
+        maximum_depth: limit(&requested, "maximumDepth", standard.maximum_depth),
+        maximum_definition_bytes: limit(
+            &requested,
+            "maximumDefinitionBytes",
+            standard.maximum_definition_bytes,
+        ),
+        maximum_traversal_occurrences: limit(
+            &requested,
+            "maximumTraversalOccurrences",
+            standard.maximum_traversal_occurrences,
+        ),
+        maximum_profile_bytes: limit(
+            &requested,
+            "maximumProfileBytes",
+            standard.maximum_profile_bytes,
+        ),
+        maximum_reference_attributes: limit(
+            &requested,
+            "maximumReferenceAttributes",
+            standard.maximum_reference_attributes,
+        ),
+        maximum_reference_attribute_bytes: limit(
+            &requested,
+            "maximumReferenceAttributeBytes",
+            standard.maximum_reference_attribute_bytes,
+        ),
+    };
+    let document_standard = DocumentDecodeLimits::default();
+    let document_limits = DocumentDecodeLimits {
+        maximum_encoded_bytes: limit(
+            &requested_document,
+            "maximumEncodedBytes",
+            document_standard.maximum_encoded_bytes,
+        ),
+        maximum_decoded_bytes: limit(
+            &requested_document,
+            "maximumDecodedBytes",
+            document_standard.maximum_decoded_bytes,
+        ),
+        maximum_lines: limit(
+            &requested_document,
+            "maximumLines",
+            document_standard.maximum_lines,
+        ),
+        maximum_planes: limit(
+            &requested_document,
+            "maximumPlanes",
+            document_standard.maximum_planes,
+        ),
+        maximum_record_bytes: limit(
+            &requested_document,
+            "maximumRecordBytes",
+            document_standard.maximum_record_bytes,
+        ),
+    };
     // Values permit counting before source validation. Re-read the bounded original input so
     // duplicate source fields, including escaped spellings, are not lost by Value objects.
     drop(request);
@@ -388,7 +539,7 @@ fn files_response(bytes: &[u8]) -> Result<Response, &'static str> {
         &request.root_path,
         &sources,
         &graph_limits,
-        &DocumentDecodeLimits::default(),
+        &document_limits,
         &OperationOptions::default(),
     )
     .map_err(file_error)?;
@@ -759,6 +910,81 @@ mod tests {
                 Err("adapterFailure")
             ));
         }
+    }
+
+    #[test]
+    fn file_limits_are_strict_shapes_with_library_validated_values() {
+        let root = b"---\n3md: 0.1\n3md-files: '{\"1\":\"leaf\"}'\n---\n@plane z=0\n1\n";
+        let leaf = b"---\n3md: 0.1\n---\n@plane z=0\nLeaf\n";
+        let request = |extra: &str| {
+            format!(
+                r#"{{"rootPath":"root","files":[{{"path":"root","bytesHex":"{}"}},{{"path":"leaf","bytesHex":"{}"}}]{extra}}}"#,
+                hex(root),
+                hex(leaf)
+            )
+        };
+        for (extra, expected) in [
+            (r#","limits":{"maximumDepth":2}"#, None),
+            (r#","limits":{},"documentLimits":{}"#, None),
+            (
+                r#","limits":{"maximumDepth":6.4e1,"maximumReferences":-0,"maximumDefinitions":2.0}"#,
+                Some("tooManyReferences"),
+            ),
+            (
+                r#","limits":{"maximumReferenceAttributes":1}"#,
+                Some("referenceAttributesExceeded"),
+            ),
+            (
+                r#","limits":{"maximumReferences":-1}"#,
+                Some("invalidLimits"),
+            ),
+            (r#","limits":{"maximumDepth":0}"#, Some("invalidLimits")),
+            (
+                r#","documentLimits":{"maximumPlanes":0}"#,
+                Some("invalidLimits"),
+            ),
+            (
+                r#","limits":{"maximumDepth":9007199254740991}"#,
+                Some("invalidLimits"),
+            ),
+            (
+                r#","limits":{"maximumDepth":9007199254740992}"#,
+                Some("adapterFailure"),
+            ),
+            (r#","limits":{"maximumDepth":1.5}"#, Some("adapterFailure")),
+            (r#","limits":{"maximumDepth":"2"}"#, Some("adapterFailure")),
+            (r#","limits":{"maximumPlanes":1}"#, Some("adapterFailure")),
+            (
+                r#","documentLimits":{"maximumDepth":1}"#,
+                Some("adapterFailure"),
+            ),
+            (r#","limits":null"#, Some("adapterFailure")),
+            (r#","limits":[]"#, Some("adapterFailure")),
+        ] {
+            let result = files_response(request(extra).as_bytes());
+            match expected {
+                None => assert!(result.is_ok(), "{extra}"),
+                Some(code) => assert!(matches!(result, Err(error) if error == code), "{extra}"),
+            }
+        }
+        let many: Vec<_> = (0..1025)
+            .map(|index| json!({"path":format!("f{index}"), "bytesHex":""}))
+            .collect();
+        let shape = json!({"rootPath":"root", "files":many, "limits":{"unknown":1}});
+        assert!(matches!(
+            files_response(&serde_json::to_vec(&shape).unwrap()),
+            Err("adapterFailure")
+        ));
+        let value = json!({"rootPath":"root", "files":many, "limits":{"maximumDepth":0}});
+        assert!(matches!(
+            files_response(&serde_json::to_vec(&value).unwrap()),
+            Err("fileLimit")
+        ));
+        let hex_first = r#"{"rootPath":"root","files":[{"path":"root","bytesHex":"zz"}],"limits":{"maximumDepth":0}}"#;
+        assert!(matches!(
+            files_response(hex_first.as_bytes()),
+            Err("adapterFailure")
+        ));
     }
 
     #[test]
