@@ -6,6 +6,8 @@ Verified commit: `d6eb66f23641e2f7fb7e7dc6ea6dd8e324bd17f6`, the last source cha
 
 `trust-d6eb66f.log` starts with a header naming the commit and tool versions and ends with the exit status: `fledge trust verify` with Trust 1.2.2 and the pinned Fledge 1.7.2 on PATH, exit 0 in 48 seconds. 268 Swift tests, 157 TypeScript tests with typecheck and package build, 49 Rust tests plus 3 doctests, strict Clippy, editor grammar and element bundle drift passed. The nine-pair interchange passed 479 cases and 17,451 imports, 1,939 per writer/reader pair. Augur returned proceed (risk 27). Provenance is reported as degraded under the soft policy; no permitted signature exists.
 
+`trust-761f473-docs-tip.log` repeats the gate on documentation commit `761f473` (same source as `d6eb66f`): exit 0 in 44 seconds with the same counts and augur risk 33.
+
 ## CLI behaviour
 
 `cli-parity/cases.sh` runs 39 CLI cases against a `threemd` binary: every subcommand with valid, missing, invalid and dangling-link inputs, the JSON variants, standard input, a missing file argument, closed standard error and a broken pipe with SIGPIPE ignored. It records stdout, stderr and the exit code of each case.
