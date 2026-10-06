@@ -1,3 +1,4 @@
+import Dispatch
 import Foundation
 import XCTest
 
@@ -625,8 +626,12 @@ final class DocumentFileCompositionTests: XCTestCase {
         XCTAssertEqual(Set(slash.composition.rootEntry.references.map(\.targetID)).count, 1)
         assertFileFailure(.invalidPath("models\\leaf")) { try resolve(#"{"1":"models\\leaf"}"#, [leaf]) }
         assertFileFailure(.invalidPath("a\u{1}b")) { try resolve(#"{"1":"a\u0001b"}"#) }
-        let pair = try resolve(#"{"1":"😀"}"#, [try source("😀", document())])
-        XCTAssertEqual(pair.resolvedPaths, ["root", "😀"])
+        // The ledger text holds the escape pair itself: backslash, "ud83d", backslash, "ude00".
+        let backslash = "\u{5C}"
+        let escaped = "{\"1\":\"" + backslash + "ud83d" + backslash + "ude00\"}"
+        XCTAssertFalse(escaped.unicodeScalars.contains("\u{1F600}"))
+        let pair = try resolve(escaped, [try source("\u{1F600}", document())])
+        XCTAssertEqual(pair.resolvedPaths, ["root", "\u{1F600}"])
         XCTAssertThrowsError(try resolve(#"{"\ud800":"leaf"}"#)) {
             guard case .invalidLedger = $0 as? DocumentFileCompositionError else {
                 return XCTFail("Expected a malformed ledger, received \($0)")
@@ -657,16 +662,16 @@ final class DocumentFileCompositionTests: XCTestCase {
     }
 
     func testCachedSubtreeIsChargedAtItsDeeperOccurrenceAgainstTheDiscoveryCeiling() throws {
-        func chain(_ prefix: String, count: Int, last: String?) throws -> [DocumentFileSource] {
+        func chain(_ prefix: String, count: Int, lastLedger: String?) throws -> [DocumentFileSource] {
             try (1...count).map { index in
-                let next = index < count ? "\(prefix)\(index + 1)" : last
+                let ledger = index < count ? "{\"1\":\"\(prefix)\(index + 1)\"}" : lastLedger
                 let graph = try DocumentComposition(
                     rootID: "r",
                     entries: [
                         .init(id: "r", document: document()),
                         .init(
                             id: "u",
-                            document: document(metadata: next.map { ["3md-files": "{\"1\":\"\($0)\"}"] } ?? [:])
+                            document: document(metadata: ledger.map { ["3md-files": $0] } ?? [:])
                         ),
                     ]
                 )
@@ -674,16 +679,23 @@ final class DocumentFileCompositionTests: XCTestCase {
             }
         }
         let root = try source("root", document(metadata: ["3md-files": #"{"1":"a1","2":"b1"}"#]))
-        let long = try chain("a", count: 40, last: nil)
+        let long = try chain("a", count: 40, lastLedger: nil)
         assertCompositionFailure(.depthExceeded) {
             try DocumentFileComposition.resolve(
                 rootPath: "root",
-                sources: [root] + long + chain("b", count: 24, last: "a1")
+                sources: [root] + long + chain("b", count: 24, lastLedger: #"{"1":"a1"}"#)
+            )
+        }
+        // Only the cache-hit height check can refuse before b24's second glyph names a missing file.
+        assertCompositionFailure(.depthExceeded) {
+            try DocumentFileComposition.resolve(
+                rootPath: "root",
+                sources: [root] + long + chain("b", count: 24, lastLedger: #"{"1":"a1","2":"missing"}"#)
             )
         }
         let exact = try DocumentFileComposition.resolve(
             rootPath: "root",
-            sources: [root] + long + chain("b", count: 23, last: "a1")
+            sources: [root] + long + chain("b", count: 23, lastLedger: #"{"1":"a1"}"#)
         )
         XCTAssertEqual(exact.composition.entries.count, 127)
     }
@@ -786,32 +798,139 @@ final class DocumentFileCompositionTests: XCTestCase {
         XCTAssertEqual(result.composition.entries.count, 2)
     }
 
-    @MainActor
-    func testCancellationDuringARunningFanOutResolutionPublishesNoResult() async throws {
-        let sources = try cancellationWorkload()
-        let started = StartSignal()
-        let task = Task.detached {
-            await started.mark()
-            return try DocumentFileComposition.resolve(rootPath: "m/root", sources: sources)
+    func testOverBoundLedgerEdgeIsRefusedWhileResolvingBeforeLaterRefusals() throws {
+        // A 40-byte policy leaves 23 bytes for a target after "glyph", the glyph and "source-file".
+        let tight = try DocumentCompositionLimits(maximumReferenceAttributeBytes: 40)
+        let long = String(repeating: "x", count: 30) + ".3md"
+        func resolve(root: String = "root", _ sources: [DocumentFileSource]) throws -> DocumentFileCompositionResult {
+            try DocumentFileComposition.resolve(rootPath: root, sources: sources, limits: tight)
         }
-        while !(await started.isMarked) { await Task.yield() }
-        try await Task.sleep(nanoseconds: 5_000_000)
-        task.cancel()
-        switch await task.result {
-        case .success: XCTFail("A resolution canceled while running returned a composition")
-        case .failure(let error): XCTAssertTrue(error is CancellationError, "Unexpected error \(error)")
+        func ledger(_ fields: [String: String]) throws -> [String: String] {
+            ["3md-files": String(decoding: try JSONEncoder().encode(fields), as: UTF8.self)]
+        }
+        let target = try source(long, document())
+        assertCompositionFailure(.referenceAttributesExceeded) {
+            try resolve([try source("root", document(metadata: ledger(["a": long, "b": "missing"]))), target])
+        }
+        assertFileFailure(.missingFile("missing")) {
+            try resolve([try source("root", document(metadata: ledger(["a": "missing", "b": long]))), target])
+        }
+        assertCompositionFailure(.referenceAttributesExceeded) {
+            try resolve([try source("root", document(metadata: ledger(["1": long])))])
+        }
+        assertCompositionFailure(.referenceAttributesExceeded) {
+            try resolve(root: long, [try source(long, document(metadata: ledger(["1": "./" + long])))])
+        }
+        assertFileFailure(.invalidPath(long + "/")) {
+            try resolve([try source("root", document(metadata: ledger(["1": long + "/"])))])
         }
     }
 
-    /// About 10 MB across 600 reachable files, fanned out through ledgers in a composition root.
-    private func cancellationWorkload() throws -> [DocumentFileSource] {
+    func testAttributeBoundCountsNormalizedDirectoryPrefixBytes() throws {
+        // Twelve decomposed é become 24 NFC bytes, so "é…/leaf" is 29 bytes and needs a 46-byte policy.
+        let directory = String(repeating: "e\u{301}", count: 12)
+        let sources = try [
+            source(directory + "/root", document(metadata: ["3md-files": #"{"1":"leaf","2":"../top"}"#])),
+            source(directory + "/leaf", document()), source("top", document()),
+        ]
+        let result = try DocumentFileComposition.resolve(
+            rootPath: directory + "/root",
+            sources: sources,
+            limits: .init(maximumReferenceAttributeBytes: 46)
+        )
+        let edge = try XCTUnwrap(result.composition.rootEntry.references.first)
+        XCTAssertEqual(edge.attributes["source-file"]?.utf8.count, 29)
+        assertCompositionFailure(.referenceAttributesExceeded) {
+            try DocumentFileComposition.resolve(
+                rootPath: directory + "/root",
+                sources: sources,
+                limits: .init(maximumReferenceAttributeBytes: 45)
+            )
+        }
+    }
+
+    func testLongDirectoryOwnersResolveRepeatedSourcesOnceAndRefuseOverBoundTargetsAtTheFirstEdge() throws {
+        let glyphs = (33...126).map { String(UnicodeScalar(UInt8($0))) }
+        let ledger = String(
+            decoding: try JSONEncoder().encode(Dictionary(uniqueKeysWithValues: glyphs.map { ($0, "leaf.3md") })),
+            as: UTF8.self
+        )
+        func owner(_ directory: String, entries count: Int) throws -> [DocumentFileSource] {
+            let entries = (0..<count).map {
+                DocumentEntry(id: "e\($0)", document: document(metadata: ["3md-files": ledger]))
+            }
+            let graph = try DocumentComposition(
+                rootID: "m",
+                entries: entries + [
+                    .init(id: "m", document: document(), references: entries.map { .init(targetID: $0.id) })
+                ]
+            )
+            return [
+                .init(path: directory + "/root", data: try DocumentCompositionCodec.encode(graph)),
+                try source(directory + "/leaf.3md", document(body: "Leaf")),
+            ]
+        }
+        let inBound = String(repeating: "d", count: 8_000)
+        let result = try DocumentFileComposition.resolve(
+            rootPath: inBound + "/root",
+            sources: owner(inBound, entries: 3)
+        )
+        let edges = result.composition.entries.flatMap(\.references).filter { $0.attributes["glyph"] != nil }
+        XCTAssertEqual(edges.count, 3 * glyphs.count)
+        XCTAssertTrue(edges.allSatisfy { $0.attributes["source-file"] == inBound + "/leaf.3md" })
+        let overBound = String(repeating: "d", count: 262_144)
+        assertCompositionFailure(.referenceAttributesExceeded) {
+            try DocumentFileComposition.resolve(rootPath: overBound + "/root", sources: owner(overBound, entries: 170))
+        }
+    }
+
+    @MainActor
+    func testCancellationDuringARunningFanOutResolutionPublishesNoResult() async throws {
+        let sources = try cancellationWorkload(files: 60)
+        // The uncancelled duration sets the cancellation delay, so the run cannot finish within it.
+        let baselineStart = DispatchTime.now().uptimeNanoseconds
+        XCTAssertEqual(
+            try DocumentFileComposition.resolve(rootPath: "m/root", sources: sources).resolvedPaths.count,
+            61
+        )
+        let baseline = DispatchTime.now().uptimeNanoseconds - baselineStart
+        let delay = baseline / 4
+        let started = StartSignal()
+        let task = Task.detached { () -> (failure: (any Error)?, callStart: UInt64) in
+            await started.mark()
+            let callStart = DispatchTime.now().uptimeNanoseconds
+            do {
+                _ = try DocumentFileComposition.resolve(rootPath: "m/root", sources: sources)
+                return (nil, callStart)
+            } catch {
+                return (error, callStart)
+            }
+        }
+        while !(await started.isMarked) { await Task.yield() }
+        try await Task.sleep(nanoseconds: delay)
+        let cancelAt = DispatchTime.now().uptimeNanoseconds
+        task.cancel()
+        let outcome = await task.value
+        guard let failure = outcome.failure else {
+            return XCTFail("A resolution canceled while running returned a composition")
+        }
+        XCTAssertTrue(failure is CancellationError, "Unexpected error \(failure)")
+        // The call had been running for at least half the delay when cancellation arrived, so this is a
+        // mid-run interruption, not a check at entry. A thread descheduled for that long between recording
+        // `callStart` and entering the call would defeat the assertion; that residual is accepted.
+        XCTAssertGreaterThan(cancelAt, outcome.callStart)
+        XCTAssertGreaterThanOrEqual(cancelAt - outcome.callStart, delay / 2)
+    }
+
+    /// About 16 KB per file, fanned out through ledgers in a composition root.
+    private func cancellationWorkload(files count: Int) throws -> [DocumentFileSource] {
         let body = String(repeating: "abcdefghij", count: 1_600)
-        var sources = try (0..<600).map { try source("f/\($0)", document(body: body)) }
+        var sources = try (0..<count).map { try source("f/\($0)", document(body: body)) }
         let glyphs = (33...126).map { String(UnicodeScalar(UInt8($0))) }
         var entries: [DocumentEntry] = []
-        for group in 0..<7 {
+        for group in 0..<((count + glyphs.count - 1) / glyphs.count) {
             var ledger: [String: String] = [:]
-            for (offset, glyph) in glyphs.enumerated() where group * glyphs.count + offset < 600 {
+            for (offset, glyph) in glyphs.enumerated() where group * glyphs.count + offset < count {
                 ledger[glyph] = "../f/\(group * glyphs.count + offset)"
             }
             let json = String(decoding: try JSONEncoder().encode(ledger), as: UTF8.self)

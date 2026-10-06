@@ -17,7 +17,12 @@ and documentLimits objects. No other key is accepted.
 - documentLimits may contain maximumEncodedBytes, maximumDecodedBytes,
   maximumLines, maximumPlanes and maximumRecordBytes.
 - Each present field is an integral JSON number whose magnitude is at most
-  2^53 - 1. Integral spellings such as 1.0, 6.4e1 and -0 are accepted.
+  2^53 - 1. Integral spellings such as 1.0, 6.4e1 and -0 are accepted. A
+  literal is judged by its correctly rounded IEEE double, as Swift and
+  JavaScript parse it; the Rust adapter enables serde_json's float_roundtrip
+  for the same result. So 999999.0000000001 is not integral (adapterFailure),
+  and 9007199254740991.4 rounds to 2^53 - 1, which the library refuses
+  (invalidLimits).
 - An absent object or field keeps the standard value; `{}` means standard limits.
 - Each adapter maps the fields one to one onto its library's existing composition
   and document limit types (snake_case fields in Rust). A negative value cannot
@@ -49,14 +54,20 @@ limits. File failures use filePath, fileLedger, missingFile and fileLimit;
 graph, storage and limit refusals keep their library codes, for example
 depthExceeded, referenceAttributesExceeded and invalidLimits.
 
+The libraries refuse a ledger edge whose source-file attribute cannot fit
+maximumReferenceAttributeBytes (17 bytes for glyph and source-file plus the
+target's UTF-8 bytes) while that reference is resolved, before its target is
+visited. Shared cases pin this order against later missing files and cycles.
+
 Every response adopts identities under standard limits, which adds a 3md-id
 attribute to each reference that lacks one. A resolution whose source-file
-attribute exactly fills the standard 16,384-byte attribute bound therefore
-cannot be a successful gate case: adoption refuses it, and the ports report that
-refusal differently (Rust invalidComposition, Swift and TypeScript
-referenceAttributesExceeded). Shared cases pin the exact bound under a lowered
-maximumReferenceAttributeBytes instead; the library-level standard bound is
-covered by each language's unit tests.
+attribute exactly fills the standard 16,384-byte bound therefore resolves, but
+its response is refused during adoption with referenceAttributesExceeded in all
+three adapters. Swift and TypeScript DocumentIdentity.adopt report that graph
+error directly. The Rust adapter builds the adopted graph from
+editing::adopt_composition_entries with DocumentComposition::new, because
+editing::adopt_composition reports the same failure as an invalidComposition
+edit diagnostic.
 
 Both text and uncompressed binary input must be detected by the storage codec.
 Composition input first uses storage decode, then composition decode.

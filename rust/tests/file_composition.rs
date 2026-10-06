@@ -981,11 +981,10 @@ fn ledger_escapes_decode_before_path_grammar() {
         with(r#"{"1":"a\u0001b"}"#, &[]),
         Err(Error::InvalidPath("a\u{1}b".into()))
     );
-    let pair = with(
-        r#"{"1":"😀"}"#,
-        &[source("\u{1f600}", &document("Emoji", None))],
-    )
-    .unwrap();
+    // The ledger text holds the escape pair itself, exercising the hand-written surrogate decoder.
+    let escaped = format!(r#"{{"1":"{0}ud83d{0}ude00"}}"#, '\u{5c}');
+    assert!(!escaped.contains('\u{1f600}'));
+    let pair = with(&escaped, &[source("\u{1f600}", &document("Emoji", None))]).unwrap();
     assert_eq!(pair.resolved_paths, ["root", "\u{1f600}"]);
     assert!(matches!(
         with(r#"{"\ud800":"leaf"}"#, &[]),
@@ -1030,15 +1029,17 @@ fn self_and_alias_cycles_compare_normalized_paths() {
 
 #[test]
 fn cached_subtree_is_charged_at_its_deeper_occurrence_against_the_discovery_ceiling() {
-    let chain = |prefix: &str, count: usize, last: Option<&str>| -> Vec<DocumentFileSource> {
+    // `last` is the final file's ledger fields.
+    let chain = |prefix: &str, count: usize, last: &[(&str, &str)]| -> Vec<DocumentFileSource> {
         (1..=count)
             .map(|index| {
-                let next = if index < count {
-                    Some(format!("{prefix}{}", index + 1))
+                let ledger = if index < count {
+                    Some(ledger_json(&[("1", &format!("{prefix}{}", index + 1))]))
+                } else if last.is_empty() {
+                    None
                 } else {
-                    last.map(str::to_owned)
+                    Some(ledger_json(last))
                 };
-                let ledger = next.map(|path| ledger_json(&[("1", &path)]));
                 composition_source(
                     &format!("{prefix}{index}"),
                     "r",
@@ -1051,19 +1052,24 @@ fn cached_subtree_is_charged_at_its_deeper_occurrence_against_the_discovery_ceil
             .collect()
     };
     let root = source("root", &document("Root", Some(r#"{"1":"a1","2":"b1"}"#)));
-    let long = chain("a", 40, None);
-    let sources = |count| {
+    let long = chain("a", 40, &[]);
+    let sources = |count, last: &[(&str, &str)]| {
         let mut all = vec![root.clone()];
         all.extend(long.iter().cloned());
-        all.extend(chain("b", count, Some("a1")));
+        all.extend(chain("b", count, last));
         all
     };
     assert_eq!(
-        resolve("root", &sources(24)),
+        resolve("root", &sources(24, &[("1", "a1")])),
+        Err(Error::Composition(DocumentCompositionError::DepthExceeded))
+    );
+    // Only the cache-hit height check can refuse before b24's second glyph names a missing file.
+    assert_eq!(
+        resolve("root", &sources(24, &[("1", "a1"), ("2", "missing")])),
         Err(Error::Composition(DocumentCompositionError::DepthExceeded))
     );
     assert_eq!(
-        resolve("root", &sources(23))
+        resolve("root", &sources(23, &[("1", "a1")]))
             .unwrap()
             .composition
             .entries()
@@ -1266,20 +1272,21 @@ fn discovery_ceiling_is_the_standard_maximum_depth() {
 fn cancellation_from_another_thread_during_resolution_returns_no_result() {
     use std::sync::atomic::{AtomicBool, Ordering};
     use std::sync::Arc;
-    use std::time::Duration;
+    use std::time::Instant;
 
-    // About 10 MB across 600 reachable files, fanned out through ledgers in a composition root.
+    // About 16 KB per file, fanned out through ledgers in a composition root.
+    let files: usize = 200;
     let body = "abcdefghij".repeat(1_600);
-    let mut sources: Vec<DocumentFileSource> = (0..600)
+    let mut sources: Vec<DocumentFileSource> = (0..files)
         .map(|index| source(&format!("f/{index}"), &document(&body, None)))
         .collect();
     let glyphs = glyphs();
     let mut entries = Vec::new();
-    for group in 0..7 {
+    for group in 0..files.div_ceil(glyphs.len()) {
         let fields: Vec<(String, String)> = glyphs
             .iter()
             .enumerate()
-            .filter(|(offset, _)| group * glyphs.len() + offset < 600)
+            .filter(|(offset, _)| group * glyphs.len() + offset < files)
             .map(|(offset, glyph)| {
                 (
                     glyph.clone(),
@@ -1307,6 +1314,14 @@ fn cancellation_from_another_thread_during_resolution_returns_no_result() {
     entries.push(entry("root", document("Root", None), references));
     sources.push(composition_source("m/root", "root", entries));
 
+    // The uncancelled duration sets the cancellation delay, so the run cannot finish within it.
+    let baseline_start = Instant::now();
+    assert_eq!(
+        resolve("m/root", &sources).unwrap().resolved_paths.len(),
+        files + 1
+    );
+    let delay = baseline_start.elapsed() / 4;
+
     let token = CancellationToken::new();
     let started = Arc::new(AtomicBool::new(false));
     let worker = {
@@ -1314,17 +1329,158 @@ fn cancellation_from_another_thread_during_resolution_returns_no_result() {
         let started = Arc::clone(&started);
         std::thread::spawn(move || {
             started.store(true, Ordering::SeqCst);
-            file_composition::resolve("m/root", &sources, &graph_limits(), &limits(), &options)
+            let call_start = Instant::now();
+            let result =
+                file_composition::resolve("m/root", &sources, &graph_limits(), &limits(), &options);
+            (result, call_start)
         })
     };
     while !started.load(Ordering::SeqCst) {
         std::thread::yield_now();
     }
-    std::thread::sleep(Duration::from_millis(5));
+    std::thread::sleep(delay);
+    let cancel_at = Instant::now();
     token.cancel();
-    let result = worker.join().unwrap();
+    let (result, call_start) = worker.join().unwrap();
     assert!(
         matches!(result, Err(Error::Storage(DocumentStorageError::Cancelled))),
         "{result:?}"
+    );
+    // The call had been running for at least half the delay when cancellation arrived, so this is a
+    // mid-run interruption, not a check at entry. A thread descheduled for that long between recording
+    // `call_start` and entering the call would defeat the assertion; that residual is accepted.
+    assert!(cancel_at > call_start);
+    assert!(cancel_at - call_start >= delay / 2);
+}
+
+#[test]
+fn over_bound_ledger_edge_is_refused_while_resolving_before_later_refusals() {
+    // A 40-byte policy leaves 23 bytes for a target after "glyph", the glyph and "source-file".
+    let mut tight = graph_limits();
+    tight.maximum_reference_attribute_bytes = 40;
+    let long = format!("{}.3md", "x".repeat(30));
+    let attempt = |root: &str, sources: &[DocumentFileSource]| {
+        file_composition::resolve(root, sources, &tight, &limits(), &options())
+    };
+    let target = source(&long, &document("T", None));
+    let over_bound = Err(Error::Composition(
+        DocumentCompositionError::ReferenceAttributesExceeded,
+    ));
+    let ledger = |fields: &[(&str, &str)]| document("R", Some(&ledger_json(fields)));
+    assert_eq!(
+        attempt(
+            "root",
+            &[
+                source("root", &ledger(&[("a", &long), ("b", "missing")])),
+                target.clone()
+            ]
+        ),
+        over_bound
+    );
+    assert_eq!(
+        attempt(
+            "root",
+            &[
+                source("root", &ledger(&[("a", "missing"), ("b", &long)])),
+                target.clone()
+            ]
+        ),
+        Err(Error::MissingFile("missing".into()))
+    );
+    assert_eq!(
+        attempt("root", &[source("root", &ledger(&[("1", &long)]))]),
+        over_bound
+    );
+    assert_eq!(
+        attempt(
+            &long,
+            &[source(&long, &ledger(&[("1", &format!("./{long}"))]))]
+        ),
+        over_bound
+    );
+    assert_eq!(
+        attempt(
+            "root",
+            &[source("root", &ledger(&[("1", &format!("{long}/"))]))]
+        ),
+        Err(Error::InvalidPath(format!("{long}/")))
+    );
+}
+
+#[test]
+fn attribute_bound_counts_normalized_directory_prefix_bytes() {
+    // Twelve decomposed é become 24 NFC bytes, so "é…/leaf" is 29 bytes and needs a 46-byte policy.
+    let directory = "e\u{301}".repeat(12);
+    let root = format!("{directory}/root");
+    let sources = [
+        source(&root, &document("R", Some(r#"{"1":"leaf","2":"../top"}"#))),
+        source(&format!("{directory}/leaf"), &document("Leaf", None)),
+        source("top", &document("Top", None)),
+    ];
+    let mut policy = graph_limits();
+    policy.maximum_reference_attribute_bytes = 46;
+    let result =
+        file_composition::resolve(&root, &sources, &policy, &limits(), &options()).unwrap();
+    assert_eq!(
+        result.composition.root_entry().references[0].attributes["source-file"].len(),
+        29
+    );
+    policy.maximum_reference_attribute_bytes = 45;
+    assert_eq!(
+        file_composition::resolve(&root, &sources, &policy, &limits(), &options()),
+        Err(Error::Composition(
+            DocumentCompositionError::ReferenceAttributesExceeded
+        ))
+    );
+}
+
+#[test]
+fn long_directory_owners_resolve_repeated_sources_once_and_refuse_over_bound_targets_early() {
+    let fields: Vec<(String, &str)> = glyphs()
+        .into_iter()
+        .map(|glyph| (glyph, "leaf.3md"))
+        .collect();
+    let borrowed: Vec<(&str, &str)> = fields
+        .iter()
+        .map(|(glyph, path)| (glyph.as_str(), *path))
+        .collect();
+    let ledger = ledger_json(&borrowed);
+    let owner = |directory: &str, count: usize| {
+        let mut entries: Vec<DocumentEntry> = (0..count)
+            .map(|index| entry(&format!("e{index}"), document("E", Some(&ledger)), vec![]))
+            .collect();
+        let references = entries
+            .iter()
+            .map(|value| DocumentReference {
+                target_id: value.id.clone(),
+                attributes: BTreeMap::new(),
+            })
+            .collect();
+        entries.push(entry("m", document("Main", None), references));
+        vec![
+            composition_source(&format!("{directory}/root"), "m", entries),
+            source(&format!("{directory}/leaf.3md"), &document("Leaf", None)),
+        ]
+    };
+    let in_bound = "d".repeat(8_000);
+    let result = resolve(&format!("{in_bound}/root"), &owner(&in_bound, 3)).unwrap();
+    let edges: Vec<_> = result
+        .composition
+        .entries()
+        .iter()
+        .flat_map(|value| &value.references)
+        .filter(|reference| reference.attributes.contains_key("glyph"))
+        .collect();
+    assert_eq!(edges.len(), 3 * 94);
+    let expected = format!("{in_bound}/leaf.3md");
+    assert!(edges
+        .iter()
+        .all(|reference| reference.attributes["source-file"] == expected));
+    let over_bound = "d".repeat(262_144);
+    assert_eq!(
+        resolve(&format!("{over_bound}/root"), &owner(&over_bound, 170)),
+        Err(Error::Composition(
+            DocumentCompositionError::ReferenceAttributesExceeded
+        ))
     );
 }

@@ -6,6 +6,7 @@ use crate::composition::{
 use crate::storage::{self, DocumentDecodeLimits, DocumentStorageError, OperationOptions};
 use crate::Document;
 use std::collections::{BTreeMap, BTreeSet};
+use std::rc::Rc;
 use unicode_normalization::UnicodeNormalization;
 
 #[derive(Debug, Clone, PartialEq, Eq)]
@@ -130,8 +131,8 @@ pub fn resolve_path(
 ) -> std::result::Result<String, DocumentFileCompositionError> {
     options.check()?;
     check_path_bytes(source, relative_to.len())?;
-    let owner = normalize(relative_to, None, options)?;
-    normalize(source, Some(&ContainingFile::new(&owner)), options)
+    let owner = normalize(relative_to, None, None, options)?;
+    normalize(source, Some(&ContainingFile::new(&owner)), None, options)
 }
 
 /// A normalized containing filename whose directory boundaries are located once per discovered file.
@@ -158,20 +159,32 @@ fn check_path_bytes(source: &str, containing_bytes: usize) -> Result<()> {
     Ok(())
 }
 
+// UTF-8 bytes of a ledger edge's attributes besides its target: "glyph", the one-byte glyph and "source-file".
+const LEDGER_EDGE_ATTRIBUTE_OVERHEAD: usize = 17;
+
 /// Resolve one ledger reference against an owner normalized once, with the same bound as resolve_path.
+/// A target whose source-file attribute cannot fit `maximum_attribute_bytes` is refused before it is
+/// built or visited.
 fn resolve_reference(
     source: &str,
     owner: &ContainingFile<'_>,
+    maximum_attribute_bytes: usize,
     options: &OperationOptions,
 ) -> Result<String> {
     options.check()?;
     check_path_bytes(source, owner.path.len())?;
-    normalize(source, Some(owner), options)
+    normalize(
+        source,
+        Some(owner),
+        Some(maximum_attribute_bytes.saturating_sub(LEDGER_EDGE_ATTRIBUTE_OVERHEAD)),
+        options,
+    )
 }
 
 fn normalize(
     path: &str,
     base: Option<&ContainingFile<'_>>,
+    maximum_bytes: Option<usize>,
     options: &OperationOptions,
 ) -> Result<String> {
     options.check()?;
@@ -213,6 +226,14 @@ fn normalize(
     if prefix.is_empty() && segments.is_empty() {
         return Err(DocumentFileCompositionError::InvalidPath(path.into()));
     }
+    if let Some(maximum) = maximum_bytes {
+        let length = segments.iter().fold(prefix.len(), |length, segment| {
+            length + usize::from(length > 0) + segment.len()
+        });
+        if length > maximum {
+            return Err(DocumentCompositionError::ReferenceAttributesExceeded.into());
+        }
+    }
     let mut result = String::with_capacity(prefix.len() + 1 + normalized.len());
     result.push_str(prefix);
     for segment in segments {
@@ -246,15 +267,20 @@ fn normalized_key(value: &str, options: &OperationOptions) -> Result<String> {
     Ok(normalized)
 }
 
+/// A resolved ledger edge. Every edge to one file shares that file's canonical path allocation.
+struct LinkedFile {
+    glyph: String,
+    path: Rc<str>,
+}
 struct ImportedFile {
     root_id: String,
     entries: Vec<DocumentEntry>,
-    ledgers: BTreeMap<String, Vec<DocumentFileReference>>,
+    ledgers: BTreeMap<String, Vec<LinkedFile>>,
     depth: usize,
 }
 struct Resolver<'a> {
     sources: BTreeMap<String, &'a DocumentFileSource>,
-    files: BTreeMap<String, ImportedFile>,
+    files: BTreeMap<Rc<str>, ImportedFile>,
     active: BTreeSet<String>,
     limits: &'a DocumentCompositionLimits,
     document_limits: &'a DocumentDecodeLimits,
@@ -265,18 +291,19 @@ struct Resolver<'a> {
     maximum_discovery_depth: usize,
 }
 impl Resolver<'_> {
-    fn visit(&mut self, path: &str, active_depth: usize) -> Result<usize> {
+    /// Returns the file's depth and its canonical path, shared by every edge to it.
+    fn visit(&mut self, path: &str, active_depth: usize) -> Result<(usize, Rc<str>)> {
         self.options.check()?;
         if self.active.contains(path) {
             return Err(DocumentCompositionError::Cycle(path.into()).into());
         }
-        if let Some(file) = self.files.get(path) {
+        if let Some((key, file)) = self.files.get_key_value(path) {
             if active_depth >= self.maximum_discovery_depth
                 || file.depth > self.maximum_discovery_depth - active_depth
             {
                 return Err(DocumentCompositionError::DepthExceeded.into());
             }
-            return Ok(file.depth);
+            return Ok((file.depth, Rc::clone(key)));
         }
         if active_depth >= self.maximum_discovery_depth {
             return Err(DocumentCompositionError::DepthExceeded.into());
@@ -325,9 +352,12 @@ impl Resolver<'_> {
         self.active.insert(path.into());
         let mut depth = 1;
         let owner = ContainingFile::new(path);
+        // Raw ledger source to its target's depth and canonical path. A repeated source in this file
+        // resolves to the same target with the same outcome, so it is neither resolved nor visited again.
+        let mut targets: BTreeMap<String, (usize, Rc<str>)> = BTreeMap::new();
         for entry in &entries {
             self.options.check()?;
-            let mut values = ledger(&entry.document, self.options)?;
+            let values = ledger(&entry.document, self.options)?;
             let remaining = self.limits.maximum_references - self.references;
             if entry.references.len() > remaining
                 || values.len() > remaining - entry.references.len()
@@ -335,20 +365,38 @@ impl Resolver<'_> {
                 return Err(DocumentCompositionError::TooManyReferences.into());
             }
             self.references += entry.references.len() + values.len();
-            for reference in &mut values {
-                reference.source = resolve_reference(&reference.source, &owner, self.options)?;
-                // Match the other ports' immediate DFS in local-ID then glyph order.
-                let child_depth = self.visit(&reference.source, active_depth + 1)?;
+            let mut links = Vec::with_capacity(values.len());
+            for reference in values {
+                let (child_depth, target) = match targets.get(&reference.source) {
+                    Some((child_depth, target)) => (*child_depth, Rc::clone(target)),
+                    None => {
+                        let resolved = resolve_reference(
+                            &reference.source,
+                            &owner,
+                            self.limits.maximum_reference_attribute_bytes,
+                            self.options,
+                        )?;
+                        // Match the other ports' immediate DFS in local-ID then glyph order.
+                        let (child_depth, target) = self.visit(&resolved, active_depth + 1)?;
+                        targets.insert(reference.source, (child_depth, Rc::clone(&target)));
+                        (child_depth, target)
+                    }
+                };
                 depth = depth.max(child_depth + 1);
                 if depth > self.maximum_discovery_depth {
                     return Err(DocumentCompositionError::DepthExceeded.into());
                 }
+                links.push(LinkedFile {
+                    glyph: reference.glyph,
+                    path: target,
+                });
             }
-            ledgers.insert(entry.id.clone(), values);
+            ledgers.insert(entry.id.clone(), links);
         }
         self.active.remove(path);
+        let key: Rc<str> = Rc::from(path);
         self.files.insert(
-            path.into(),
+            Rc::clone(&key),
             ImportedFile {
                 root_id,
                 entries,
@@ -356,7 +404,7 @@ impl Resolver<'_> {
                 depth,
             },
         );
-        Ok(depth)
+        Ok((depth, key))
     }
 }
 
@@ -409,10 +457,10 @@ fn resolve_supplied(
         }
         path_bytes += source.path.len();
     }
-    let root_path = normalize(root_path, None, options)?;
+    let root_path = normalize(root_path, None, None, options)?;
     let mut indexed = BTreeMap::new();
     for source in sources {
-        let path = normalize(&source.path, None, options)?;
+        let path = normalize(&source.path, None, None, options)?;
         if indexed.insert(path.clone(), source).is_some() {
             return Err(DocumentFileCompositionError::DuplicatePath(path));
         }
@@ -431,7 +479,7 @@ fn resolve_supplied(
     };
     resolver.visit(&root_path, 0)?;
     // UTF-8 lexicographic ordering is Unicode scalar ordering. Paths are already NFC-normalized.
-    let resolved_paths: Vec<String> = resolver.files.keys().cloned().collect();
+    let resolved_paths: Vec<String> = resolver.files.keys().map(|path| path.to_string()).collect();
     // One map per file, keyed by local ID, so remapping never copies or compares a full path per reference.
     let mut assigned: Vec<BTreeMap<&str, String>> = Vec::with_capacity(resolver.files.len());
     let mut file_root_ids = BTreeMap::new();
@@ -443,7 +491,7 @@ fn resolve_supplied(
             ids.insert(entry.id.as_str(), format!("file-{ordinal:06}"));
             ordinal += 1;
         }
-        file_root_ids.insert(path.clone(), ids[file.root_id.as_str()].clone());
+        file_root_ids.insert(path.to_string(), ids[file.root_id.as_str()].clone());
         assigned.push(ids);
     }
     let mut entries = Vec::with_capacity(resolver.definitions);
@@ -461,13 +509,13 @@ fn resolve_supplied(
                     attributes: reference.attributes.clone(),
                 });
             }
-            for reference in &file.ledgers[&entry.id] {
+            for link in &file.ledgers[&entry.id] {
                 options.check()?;
                 references.push(DocumentReference {
-                    target_id: file_root_ids[&reference.source].clone(),
+                    target_id: file_root_ids[link.path.as_ref()].clone(),
                     attributes: BTreeMap::from([
-                        ("glyph".into(), reference.glyph.clone()),
-                        ("source-file".into(), reference.source.clone()),
+                        ("glyph".into(), link.glyph.clone()),
+                        ("source-file".into(), link.path.to_string()),
                     ]),
                 });
             }

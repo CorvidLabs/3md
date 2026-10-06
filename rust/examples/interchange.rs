@@ -568,8 +568,19 @@ fn composition_graph_response(graph: &DocumentComposition) -> Result<Response, &
         &options,
     )
     .map_err(|error| error.code())?;
-    let adopted = editing::adopt_composition(graph, &graph_limits, &limits, &options)
-        .map_err(|error| error.code())?;
+    // Construct the adopted graph here so its own failure keeps its specific composition code, as
+    // Swift and TypeScript DocumentIdentity.adopt report it.
+    let adopted_entries =
+        editing::adopt_composition_entries(graph, &graph_limits, &limits, &options)
+            .map_err(|error| error.code())?;
+    let adopted = DocumentComposition::new(
+        graph.root_id().into(),
+        adopted_entries,
+        &graph_limits,
+        &limits,
+        &options,
+    )
+    .map_err(|error| error.code())?;
     let snapshot = DocumentCompositionSnapshot::new(adopted, &graph_limits, &limits, &options)
         .map_err(|error| error.code())?;
     let adopted_hex =
@@ -950,6 +961,16 @@ mod tests {
             (
                 r#","limits":{"maximumDepth":9007199254740992}"#,
                 Some("adapterFailure"),
+            ),
+            // Correctly rounded parsing (serde_json float_roundtrip) matches Swift and TypeScript:
+            // the first is not integral; the second rounds to 2^53 - 1, which the library refuses.
+            (
+                r#","limits":{"maximumDepth":999999.0000000001}"#,
+                Some("adapterFailure"),
+            ),
+            (
+                r#","limits":{"maximumDepth":9007199254740991.4}"#,
+                Some("invalidLimits"),
             ),
             (r#","limits":{"maximumDepth":1.5}"#, Some("adapterFailure")),
             (r#","limits":{"maximumDepth":"2"}"#, Some("adapterFailure")),

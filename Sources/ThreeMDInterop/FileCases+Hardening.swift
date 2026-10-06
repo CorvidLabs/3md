@@ -242,6 +242,19 @@ extension FileInterchangeCases {
             let input = JSONValue.object(["rootPath": .string("root"), "files": manySources, "limits": limits])
             result.append(.init(id: "files-" + name, bytes: try encoder.encode(input), expectedError: error))
         }
+        // Long literals are judged by their correctly rounded IEEE double: 999999.0000000001 is not integral,
+        // and 9007199254740991.4 rounds to the largest safe integer, which the library then refuses.
+        for (name, literal, error) in [
+            ("limits-long-fraction-literal", "999999.0000000001", "adapterFailure"),
+            ("limits-near-safe-integer-literal", "9007199254740991.4", "invalidLimits"),
+        ] {
+            addRaw(
+                name,
+                json: #"{"files":[{"bytesHex":"\#(leafHex)","path":"root.3md"}],"#
+                    + #""limits":{"maximumDepth":\#(literal)},"rootPath":"root.3md"}"#,
+                error: error
+            )
+        }
         addRaw(
             "limits-value-follows-invalid-hex",
             json: #"{"files":[{"bytesHex":"zz","path":"root.3md"}],"limits":{"maximumDepth":0},"rootPath":"root.3md"}"#,
@@ -263,20 +276,17 @@ extension FileInterchangeCases {
         )
 
         // A cached subtree is charged at its later, deeper occurrence against the fixed discovery ceiling.
-        func chain(_ prefix: String, count: Int, last: String?) throws -> [(String, Data)] {
+        // `lastLedger` is the final file's raw ledger JSON.
+        func chain(_ prefix: String, count: Int, lastLedger: String?) throws -> [(String, Data)] {
             try (1...count).map { index in
-                let next = index < count ? "\(prefix)\(index + 1)" : last
+                let ledger = index < count ? "{\"1\":\"\(prefix)\(index + 1)\"}" : lastLedger
                 let graph = try DocumentComposition(
                     rootID: "r",
                     entries: [
                         .init(id: "r", document: leaf),
                         .init(
                             id: "u",
-                            document: document(
-                                "Unused",
-                                body: "1",
-                                metadata: next.map { ["3md-files": "{\"1\":\"\($0)\"}"] } ?? [:]
-                            )
+                            document: document("Unused", body: "1", metadata: ledger.map { ["3md-files": $0] } ?? [:])
                         ),
                     ]
                 )
@@ -284,15 +294,22 @@ extension FileInterchangeCases {
             }
         }
         let ceilingRoot = ("root.3md", try text("Root", body: "12", ledger: #"{"1":"a1","2":"b1"}"#))
-        let longChain = try chain("a", count: 40, last: nil)
+        let longChain = try chain("a", count: 40, lastLedger: nil)
         try add(
             "cached-subtree-exceeds-discovery-ceiling",
-            sources: [ceilingRoot] + longChain + chain("b", count: 30, last: "a1"),
+            sources: [ceilingRoot] + longChain + chain("b", count: 30, lastLedger: #"{"1":"a1"}"#),
             error: "depthExceeded"
         )
         try add(
             "cached-subtree-reaches-discovery-ceiling",
-            sources: [ceilingRoot] + longChain + chain("b", count: 23, last: "a1")
+            sources: [ceilingRoot] + longChain + chain("b", count: 23, lastLedger: #"{"1":"a1"}"#)
+        )
+        // Only the cache-hit height check refuses here: b24 re-reaches a1 (height 40) at discovery depth 25,
+        // before its second glyph names a missing file. Without that check the result would be missingFile.
+        try add(
+            "cached-subtree-height-check-precedes-missing-file",
+            sources: [ceilingRoot] + longChain + chain("b", count: 24, lastLedger: #"{"1":"a1","2":"missing"}"#),
+            error: "depthExceeded"
         )
 
         // Root and supplied-but-unreachable paths obey the same grammar as ledger targets.
@@ -344,9 +361,17 @@ extension FileInterchangeCases {
             ],
             error: "filePath"
         )
+        // The ledger text holds the JSON escape pair itself (backslash, "ud83d", backslash, "ude00"), not UTF-8.
+        let backslash = "\u{5C}"
         try add(
             "ledger-escaped-surrogate-pair",
-            sources: [("root.3md", try text("Parent", ledger: #"{"1":"😀.3md"}"#)), ("😀.3md", leafBytes)]
+            sources: [
+                (
+                    "root.3md",
+                    try text("Parent", ledger: "{\"1\":\"" + backslash + "ud83d" + backslash + "ude00.3md\"}")
+                ),
+                ("\u{1F600}.3md", leafBytes),
+            ]
         )
         try add(
             "ledger-lone-surrogate-key",
@@ -459,12 +484,14 @@ extension FileInterchangeCases {
         )
 
         // glyph (5) + "1" (1) + source-file (11) + NFC path bytes must fit the reference attribute byte bound.
-        // Decomposed spellings are supplied; the bound counts the normalized two-byte é. A success exactly at
-        // the standard 16,384-byte bound cannot pass this gate's identity adoption, which adds a 3md-id
-        // attribute, so the exact bound is pinned under a lowered 1,000-byte policy (983 and 984 path bytes).
+        // Decomposed spellings are supplied; the bound counts the normalized two-byte é. Under a lowered
+        // 1,000-byte policy 983 path bytes succeed and 984 are refused during discovery. At the standard
+        // 16,384-byte bound, 16,367 path bytes resolve, but every gate response adopts identities, and the
+        // added 3md-id takes that edge past the bound: all three adapters report referenceAttributesExceeded.
         for (name, repeated, padding, bound, error) in [
             ("at-lowered-bound", 400, 172, 1_000, nil),
             ("over-lowered-bound", 400, 173, 1_000, "referenceAttributesExceeded"),
+            ("at-standard-bound-adoption", 8_000, 356, nil, "referenceAttributesExceeded"),
             ("over-standard-bound", 8_000, 357, nil, "referenceAttributesExceeded"),
         ] as [(String, Int, Int, Double?, String?)] {
             let path =
@@ -478,33 +505,91 @@ extension FileInterchangeCases {
             )
         }
 
-        // A long owner path with many ledger references. Each owner is normalized once per discovered file, so
-        // references do not repeat work proportional to the 1 MiB owner name; the output stays small.
+        // An edge whose target cannot fit its source-file attribute is refused while it is resolved, before
+        // its target is visited, so it precedes a later missing file or cycle; earlier refusals still win.
+        // Under a 40-byte attribute policy a target may hold 23 bytes; the long target below holds 34.
+        let tight = values(["maximumReferenceAttributeBytes": 40])
+        let long = String(repeating: "x", count: 30) + ".3md"
+        try add(
+            "order-attribute-bound-before-missing-file",
+            sources: [
+                ("root.3md", try text("Parent", body: "ab", ledger: try ledgerJSON(["a": long, "b": "missing.3md"]))),
+                (long, leafBytes),
+            ],
+            limits: tight,
+            error: "referenceAttributesExceeded"
+        )
+        try add(
+            "order-missing-file-before-attribute-bound",
+            sources: [
+                ("root.3md", try text("Parent", body: "ab", ledger: try ledgerJSON(["a": "missing.3md", "b": long]))),
+                (long, leafBytes),
+            ],
+            limits: tight,
+            error: "missingFile"
+        )
+        try add(
+            "attribute-bound-precedes-own-missing-target",
+            sources: [("root.3md", try text("Parent", ledger: try ledgerJSON(["1": long])))],
+            limits: tight,
+            error: "referenceAttributesExceeded"
+        )
+        try add(
+            "attribute-bound-precedes-cycle",
+            root: long,
+            sources: [(long, try text("Parent", ledger: try ledgerJSON(["1": "./" + long])))],
+            limits: tight,
+            error: "referenceAttributesExceeded"
+        )
+        try add(
+            "path-grammar-precedes-attribute-bound",
+            sources: [("root.3md", try text("Parent", ledger: try ledgerJSON(["1": long + "/"])))],
+            limits: tight,
+            error: "filePath"
+        )
+
+        // Long-directory owners. Every target in the directory carries the directory in its key and attribute.
+        // A repeated raw source resolves once per containing file and shares one stored key, and a target that
+        // cannot fit its attribute is refused at its first edge instead of after thousands of edges.
         let glyphs = (33...126).map { String(UnicodeScalar(UInt8($0))) }
         let ownerLedger = try ledgerJSON(Dictionary(uniqueKeysWithValues: glyphs.map { ($0, "leaf.3md") }))
-        let ownerEntries = (0..<3).map { index in
-            DocumentEntry(
-                id: "e\(index)",
-                document: document("Entry \(index)", body: "!", metadata: ["3md-files": ownerLedger]),
-                references: [.init(targetID: "s", attributes: ["role": "shared"])]
+        func ownerGraph(entries count: Int) throws -> Data {
+            let entries = (0..<count).map { index in
+                DocumentEntry(
+                    id: "e\(index)",
+                    document: document("Entry \(index)", body: "!", metadata: ["3md-files": ownerLedger]),
+                    references: [.init(targetID: "s", attributes: ["role": "shared"])]
+                )
+            }
+            return try bundle(
+                DocumentComposition(
+                    rootID: "m",
+                    entries: entries + [
+                        .init(
+                            id: "m",
+                            document: document("Main", body: "Owner"),
+                            references: entries.map { .init(targetID: $0.id, attributes: [:]) }
+                        ),
+                        .init(id: "s", document: document("Shared", body: "Shared")),
+                    ]
+                )
             )
         }
-        let ownerGraph = try DocumentComposition(
-            rootID: "m",
-            entries: ownerEntries + [
-                .init(
-                    id: "m",
-                    document: document("Main", body: "Owner"),
-                    references: ownerEntries.map { .init(targetID: $0.id, attributes: [:]) }
-                ),
-                .init(id: "s", document: document("Shared", body: "Shared")),
-            ]
-        )
-        let ownerPath = "owner/" + String(repeating: "\u{E9}", count: 524_288) + ".3md"
+        let directory = String(repeating: "d", count: 256)
         try add(
-            "long-owner-path-many-references",
-            root: ownerPath,
-            sources: [(ownerPath, try bundle(ownerGraph)), ("owner/leaf.3md", leafBytes)]
+            "long-directory-many-references",
+            root: directory + "/root",
+            sources: [(directory + "/root", try ownerGraph(entries: 2)), (directory + "/leaf.3md", leafBytes)]
+        )
+        let overBoundDirectory = String(repeating: "d", count: 262_144)
+        try add(
+            "long-directory-over-attribute-bound",
+            root: overBoundDirectory + "/root",
+            sources: [
+                (overBoundDirectory + "/root", try ownerGraph(entries: 170)),
+                (overBoundDirectory + "/leaf.3md", leafBytes),
+            ],
+            error: "referenceAttributesExceeded"
         )
         return result
     }

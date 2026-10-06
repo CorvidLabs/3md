@@ -342,16 +342,20 @@ describe("linked composition parity hardening", () => {
   });
 
   test("a cached subtree is charged at its deeper occurrence against the discovery ceiling", () => {
-    const chain = (prefix: string, count: number, last?: string): DocumentFileSource[] =>
+    // `last` holds the final file's ledger fields.
+    const chain = (prefix: string, count: number, last?: Record<string, string>): DocumentFileSource[] =>
       Array.from({ length: count }, (_, offset) => {
-        const index = offset + 1; const next = index < count ? `${prefix}${index + 1}` : last;
+        const index = offset + 1; const fields = index < count ? { 1: `${prefix}${index + 1}` } : last;
         const graph = new DocumentComposition("r", [{ id: "r", document: document(), references: [] },
-          { id: "u", document: document("Unused", next === undefined ? {} : { "3md-files": ledgerJSON({ 1: next }) }), references: [] }]);
+          { id: "u", document: document("Unused", fields === undefined ? {} : { "3md-files": ledgerJSON(fields) }), references: [] }]);
         return source(`${prefix}${index}`, DocumentCompositionCodec.document(graph));
       });
     const root = source("root", host('{"1":"a1","2":"b1"}')); const long = chain("a", 40);
-    graphRejects("depthExceeded", () => DocumentFileComposition.resolve("root", [root, ...long, ...chain("b", 24, "a1")]));
-    expect(DocumentFileComposition.resolve("root", [root, ...long, ...chain("b", 23, "a1")]).composition.entries).toHaveLength(127);
+    graphRejects("depthExceeded", () => DocumentFileComposition.resolve("root", [root, ...long, ...chain("b", 24, { 1: "a1" })]));
+    // Only the cache-hit height check can refuse before b24's second glyph names a missing file.
+    graphRejects("depthExceeded", () => DocumentFileComposition.resolve("root",
+      [root, ...long, ...chain("b", 24, { 1: "a1", 2: "missing" })]));
+    expect(DocumentFileComposition.resolve("root", [root, ...long, ...chain("b", 23, { 1: "a1" })]).composition.entries).toHaveLength(127);
   });
 
   test("existing edges precede ledger edges; embedded ledgers resolve from their bundle folder; output rebundles", () => {
@@ -407,5 +411,47 @@ describe("linked composition parity hardening", () => {
     expect(() => DocumentFileComposition.resolve("root", [source("root", host('{"1":"b","2":"a"}')), source("a"), source("b")],
       undefined, undefined, abort.signal)).toThrow(abort.reason);
     expect(abort.fired()).toBe(true);
+  });
+});
+
+describe("early source-file attribute bound and long-directory owners", () => {
+  test("an over-bound ledger edge is refused while resolving, before later refusals", () => {
+    // A 40-byte policy leaves 23 bytes for a target after "glyph", the glyph and "source-file".
+    const tight = new DocumentCompositionLimits({ maximumReferenceAttributeBytes: 40 });
+    const long = `${"x".repeat(30)}.3md`; const target = source(long);
+    const attempt = (root: string, sources: DocumentFileSource[]) => DocumentFileComposition.resolve(root, sources, tight);
+    graphRejects("referenceAttributesExceeded", () => attempt("root", [source("root", host(ledgerJSON({ a: long, b: "missing" }))), target]));
+    rejects("missingFile", () => attempt("root", [source("root", host(ledgerJSON({ a: "missing", b: long }))), target]));
+    graphRejects("referenceAttributesExceeded", () => attempt("root", [source("root", host(ledgerJSON({ 1: long })))]));
+    graphRejects("referenceAttributesExceeded", () => attempt(long, [source(long, host(ledgerJSON({ 1: `./${long}` })))]));
+    rejects("invalidPath", () => attempt("root", [source("root", host(ledgerJSON({ 1: `${long}/` })))]));
+  });
+
+  test("the attribute bound counts normalized directory prefix bytes", () => {
+    // Twelve decomposed é become 24 NFC bytes, so "é…/leaf" is 29 bytes and needs a 46-byte policy.
+    const directory = "é".repeat(12);
+    const sources = [source(`${directory}/root`, host('{"1":"leaf","2":"../top"}')), source(`${directory}/leaf`), source("top")];
+    const result = DocumentFileComposition.resolve(`${directory}/root`, sources,
+      new DocumentCompositionLimits({ maximumReferenceAttributeBytes: 46 }));
+    expect(new TextEncoder().encode(result.composition.rootEntry.references[0]!.attributes["source-file"]).length).toBe(29);
+    graphRejects("referenceAttributesExceeded", () => DocumentFileComposition.resolve(`${directory}/root`, sources,
+      new DocumentCompositionLimits({ maximumReferenceAttributeBytes: 45 })));
+  });
+
+  test("long-directory owners resolve repeated sources once and refuse over-bound targets at the first edge", () => {
+    const ledger = ledgerJSON(Object.fromEntries(glyphs().map((glyph) => [glyph, "leaf.3md"])));
+    const owner = (directory: string, count: number): DocumentFileSource[] => {
+      const entries = Array.from({ length: count }, (_, index) => ({ id: `e${index}`, document: host(ledger), references: [] }));
+      const graph = new DocumentComposition("m", [...entries,
+        { id: "m", document: document(), references: entries.map((entry) => ({ targetID: entry.id, attributes: {} })) }]);
+      return [source(`${directory}/root`, DocumentCompositionCodec.document(graph)), source(`${directory}/leaf.3md`)];
+    };
+    const inBound = "d".repeat(8_000);
+    const result = DocumentFileComposition.resolve(`${inBound}/root`, owner(inBound, 3));
+    const edges = result.composition.entries.flatMap((entry) => entry.references).filter((edge) => edge.attributes.glyph);
+    expect(edges).toHaveLength(3 * 94);
+    expect(edges.every((edge) => edge.attributes["source-file"] === `${inBound}/leaf.3md`)).toBe(true);
+    const overBound = "d".repeat(262_144);
+    graphRejects("referenceAttributesExceeded", () => DocumentFileComposition.resolve(`${overBound}/root`, owner(overBound, 170)));
   });
 });

@@ -58,6 +58,28 @@ pub fn adopt_composition(
     document_limits: &DocumentDecodeLimits,
     options: &OperationOptions,
 ) -> Result<DocumentComposition, DocumentEditError> {
+    let entries = adopt_composition_entries(composition, limits, document_limits, options)?;
+    DocumentComposition::new(
+        composition.root_id().into(),
+        entries,
+        limits,
+        document_limits,
+        options,
+    )
+    .map_err(Into::into)
+}
+/// Adopt plane and reference identities in every definition, returning the adopted entries without
+/// constructing the final graph. [`adopt_composition`] constructs it and reports a failure of that
+/// construction as an `invalidComposition` diagnostic. Passing these entries to
+/// [`DocumentComposition::new`] instead reports the specific `DocumentCompositionError`, as Swift and
+/// TypeScript `DocumentIdentity.adopt` do: for example `referenceAttributesExceeded` when an added
+/// `3md-id` takes a reference past its attribute bound.
+pub fn adopt_composition_entries(
+    composition: &DocumentComposition,
+    limits: &DocumentCompositionLimits,
+    document_limits: &DocumentDecodeLimits,
+    options: &OperationOptions,
+) -> Result<Vec<DocumentEntry>, DocumentEditError> {
     limits.validate()?;
     document_limits.validate()?;
     composition::validate_graph(
@@ -88,14 +110,7 @@ pub fn adopt_composition(
             }
         }
     }
-    DocumentComposition::new(
-        composition.root_id().into(),
-        entries,
-        limits,
-        document_limits,
-        options,
-    )
-    .map_err(Into::into)
+    Ok(entries)
 }
 fn next_identity(prefix: &str, ids: &mut BTreeSet<String>, next: &mut usize) -> String {
     loop {

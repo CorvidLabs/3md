@@ -47,17 +47,33 @@ function pathBytes(path: string, remaining: number, signal?: AbortSignal): numbe
 interface ContainingFile {
   readonly path: string;
   readonly bytes: number;
+  /** UTF-16 offset of every separator, the end of each directory segment. */
   readonly directoryEnds: readonly number[];
+  /** UTF-8 bytes before each separator, so a resolved target's length is known before it is built. */
+  readonly directoryByteEnds: readonly number[];
 }
-const projectRoot: ContainingFile = Object.freeze({ path: "", bytes: 0, directoryEnds: Object.freeze([]) });
+const projectRoot: ContainingFile = Object.freeze({ path: "", bytes: 0, directoryEnds: Object.freeze([]),
+  directoryByteEnds: Object.freeze([]) });
 
-function containingFile(path: string, bytes: number): ContainingFile {
-  const directoryEnds: number[] = [];
-  for (let index = path.indexOf("/"); index >= 0; index = path.indexOf("/", index + 1)) directoryEnds.push(index);
-  return { path, bytes, directoryEnds };
+/** Records separator positions and UTF-8 offsets in an already normalized, well-formed filename. */
+function containingFile(path: string, signal?: AbortSignal): ContainingFile {
+  const directoryEnds: number[] = []; const directoryByteEnds: number[] = [];
+  let bytes = 0;
+  for (let index = 0; index < path.length; index += 1) {
+    if (index % 4096 === 0) checkCancellation(signal);
+    const unit = path.charCodeAt(index);
+    if (unit === 47) { directoryEnds.push(index); directoryByteEnds.push(bytes); }
+    // A high surrogate counts the whole four-byte scalar; its low surrogate adds nothing.
+    bytes += unit < 0x80 ? 1 : unit < 0x800 ? 2 : unit >= 0xd800 && unit <= 0xdbff ? 4 :
+      unit >= 0xdc00 && unit <= 0xdfff ? 0 : 3;
+  }
+  return { path, bytes, directoryEnds, directoryByteEnds };
 }
 
-function normalizedPath(source: string, base: ContainingFile, signal?: AbortSignal): string {
+// UTF-8 bytes of a ledger edge's attributes besides its target: "glyph", the one-byte glyph and "source-file".
+const ledgerEdgeAttributeOverhead = 17;
+
+function normalizedPath(source: string, base: ContainingFile, signal?: AbortSignal, maximumBytes?: number): string {
   checkCancellation(signal);
   if (source.length === 0 || source.startsWith("/")) throw new DocumentFileCompositionError("invalidPath", source);
   for (let index = 0; index < source.length; index += 1) {
@@ -82,18 +98,27 @@ function normalizedPath(source: string, base: ContainingFile, signal?: AbortSign
     } else segments.push(segment);
   }
   if (kept === 0 && segments.length === 0) throw new DocumentFileCompositionError("invalidPath", source);
+  if (maximumBytes !== undefined) {
+    let length = kept > 0 ? base.directoryByteEnds[kept - 1]! : 0;
+    for (const segment of segments) length += (length > 0 ? 1 : 0) + utf8Length(segment, signal);
+    if (length > maximumBytes) throw new DocumentCompositionError("referenceAttributesExceeded");
+  }
   const prefix = kept > 0 ? base.path.slice(0, base.directoryEnds[kept - 1]) : "";
   if (segments.length === 0) return prefix;
   return prefix === "" ? segments.join("/") : `${prefix}/${segments.join("/")}`;
 }
 
-/** Resolves one ledger reference against an owner normalized once, charging the same record bound as resolvePath. */
-function resolveReference(source: string, owner: ContainingFile, signal?: AbortSignal): string {
+/**
+ * Resolves one ledger reference against an owner normalized once, charging the same record bound as resolvePath.
+ * A target whose source-file attribute cannot fit `maximumAttributeBytes` is refused before it is built or visited.
+ */
+function resolveReference(source: string, owner: ContainingFile, maximumAttributeBytes: number,
+  signal?: AbortSignal): string {
   checkCancellation(signal);
   const maximum = DocumentDecodeLimits.standard.maximumRecordBytes;
   const remaining = maximum - pathBytes(source, maximum, signal);
   if (owner.bytes > remaining) throw new DocumentFileCompositionError("inputLimit");
-  return normalizedPath(source, owner, signal);
+  return normalizedPath(source, owner, signal, Math.max(0, maximumAttributeBytes - ledgerEdgeAttributeOverhead));
 }
 
 function scalarCompare(left: string, right: string, signal?: AbortSignal): number {
@@ -171,6 +196,8 @@ class LedgerScanner {
 }
 
 interface DiscoveredFile {
+  /** The normalized filename this file was discovered under; every ledger edge to it shares this string. */
+  readonly path: string;
   readonly rootID: string;
   readonly entries: readonly DocumentEntry[];
   readonly links: ReadonlyMap<string, readonly { readonly glyph: string; readonly path: string }[]>;
@@ -201,8 +228,8 @@ export class DocumentFileComposition {
     let remaining = DocumentDecodeLimits.standard.maximumRecordBytes;
     remaining -= pathBytes(source, remaining, signal);
     if (relativeTo === undefined) return normalizedPath(source, projectRoot, signal);
-    const ownerBytes = pathBytes(relativeTo, remaining, signal);
-    return normalizedPath(source, containingFile(normalizedPath(relativeTo, projectRoot, signal), ownerBytes), signal);
+    pathBytes(relativeTo, remaining, signal);
+    return normalizedPath(source, containingFile(normalizedPath(relativeTo, projectRoot, signal), signal), signal);
   }
 
   public static resolve(rootPath: string, sources: readonly DocumentFileSource[],
@@ -252,7 +279,10 @@ export class DocumentFileComposition {
       active.add(path);
       const links = new Map<string, { glyph: string; path: string }[]>();
       let depth = 1;
-      const owner = containingFile(path, utf8Length(path, signal));
+      const owner = containingFile(path, signal);
+      // Raw ledger source to its canonical target. A repeated source in this file resolves to the same target with
+      // the same outcome, so it is neither resolved nor visited again.
+      const targets = new Map<string, DiscoveredFile>();
       for (const entry of [...entries].sort((a, b) => a.id < b.id ? -1 : a.id > b.id ? 1 : 0)) {
         checkCancellation(signal);
         const ledger = DocumentFileComposition.ledger(entry.document, signal);
@@ -262,15 +292,19 @@ export class DocumentFileComposition {
         const resolved: { glyph: string; path: string }[] = [];
         for (const reference of ledger) {
           checkCancellation(signal);
-          const childPath = resolveReference(reference.source, owner, signal);
-          const child = visit(childPath, activeDepth + 1);
+          let child = targets.get(reference.source);
+          if (child === undefined) {
+            child = visit(resolveReference(reference.source, owner, limits.maximumReferenceAttributeBytes, signal),
+              activeDepth + 1);
+            targets.set(reference.source, child);
+          }
           depth = Math.max(depth, child.depth + 1);
           if (depth > maximumFileDiscoveryDepth) throw new DocumentCompositionError("depthExceeded");
-          resolved.push({ glyph: reference.glyph, path: childPath });
+          resolved.push({ glyph: reference.glyph, path: child.path });
         }
         links.set(entry.id, resolved);
       }
-      const result = { rootID: composition?.rootID ?? "root", entries, links, depth };
+      const result = { path, rootID: composition?.rootID ?? "root", entries, links, depth };
       files.set(path, result); active.delete(path); return result;
     };
     visit(root, 0);
