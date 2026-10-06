@@ -30,9 +30,10 @@ jobs:
       - name: Check crate version matches the release tag
         env:
           TAG: ${{ github.event.release.tag_name || github.ref_name }}
+          REF_TYPE: ${{ github.ref_type }}
         run: |
           set -euo pipefail
-          if [[ ! "${TAG}" =~ ^v[0-9]+\.[0-9]+\.[0-9]+([-+][0-9A-Za-z.-]+)?$ ]]; then
+          if [ "${REF_TYPE}" != "tag" ] || [[ ! "${TAG}" =~ ^v[0-9]+\.[0-9]+\.[0-9]+([-+][0-9A-Za-z.-]+)?$ ]]; then
             echo "::error::Run this workflow from a release tag such as v2.0.0."
             exit 1
           fi
@@ -48,7 +49,7 @@ jobs:
           CARGO_REGISTRY_TOKEN: ${{ secrets.CRATES_IO_TOKEN }}
         run: |
           set -euo pipefail
-          if [ -z "${CARGO_REGISTRY_TOKEN}" ]; then
+          if [ -z "${CARGO_REGISTRY_TOKEN:-}" ]; then
             echo "::error::The CRATES_IO_TOKEN repository secret is not configured."
             exit 1
           fi

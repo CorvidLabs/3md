@@ -327,6 +327,16 @@ private func printUsage() {
 
 /// Writes a message to standard error without referencing the C `stderr` global,
 /// which Glibc exposes as shared mutable state that Swift 6 strict concurrency rejects.
+/// Like `fputs`, a failed write (closed descriptor, broken pipe) is ignored instead of
+/// trapping, so the caller's exit code is preserved.
 private func writeStandardError(_ message: String) {
-    FileHandle.standardError.write(Data(message.utf8))
+    let descriptor = FileHandle.standardError.fileDescriptor
+    var remaining = Array(message.utf8)[...]
+    while !remaining.isEmpty {
+        let written = remaining.withUnsafeBytes { buffer in
+            write(descriptor, buffer.baseAddress, buffer.count)
+        }
+        guard written > 0 else { return }
+        remaining = remaining.dropFirst(written)
+    }
 }
