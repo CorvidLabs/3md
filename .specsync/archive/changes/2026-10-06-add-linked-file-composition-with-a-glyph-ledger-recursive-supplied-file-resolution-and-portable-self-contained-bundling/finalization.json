@@ -1,0 +1,12 @@
+{
+  "schema_version": 2,
+  "change_id": "add-linked-file-composition-with-a-glyph-ledger-recursive-supplied-file-resolution-and-portable-self-contained-bundling",
+  "implementation_commit": "9ac2454dfec51a9d575a030236f046462059f847",
+  "implementation_tree": "0d5920f7b829e4ca68bcbf88617fc235e0f3a3e8",
+  "contract_digest": "d2b882fcab08af6e58ba4226227bd1d5c12633c4620378320a82ca02b1d69d09",
+  "workspace_digest": "f78248e4eb2524376d7641588d9614c121fd6eacede3b5ed49a5cf95afaa8afa",
+  "closing_digest": "fd9e382470e9b65ee18308b97ecd07c265796ac6e78fb24d6ab90fe0e80dfcb9",
+  "review_digest": "d026d2eeb013a0c070d64d385e9d5fd99b4e271ee7405d3ef2852c8c5b4c144d",
+  "finalization_digest": "22e8c02d08d6af0865dc480cfa2fd4ce2f2cf1b07931d23d4ad2f9abc4e9a294",
+  "timestamp": 1791298025
+}

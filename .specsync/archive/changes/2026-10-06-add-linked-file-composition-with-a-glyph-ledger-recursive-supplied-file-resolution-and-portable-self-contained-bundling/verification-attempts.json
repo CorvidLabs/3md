@@ -1,0 +1,2789 @@
+{
+  "schema_version": 1,
+  "attempts": [
+    {
+      "timestamp": 1791242360,
+      "commit": "ad17806da3eb0e093d7d02f9fb4d15dd4c3aaf90",
+      "contract_digest": "d2b882fcab08af6e58ba4226227bd1d5c12633c4620378320a82ca02b1d69d09",
+      "execution_digest": "878f57c9bf6d88a75717a5cfe8a9f6eb6238886f6d5e767ebfccd6c2c4343afe",
+      "workspace_digest": "c9354df395ad95c1afde5d9167dd145932a3cbb7eb857d9b543ea705ddbad06a",
+      "passed": true,
+      "commands": [
+        {
+          "command": "specsync check --spec ThreeMD --strict",
+          "success": true,
+          "exit_code": 0
+        }
+      ],
+      "requirement_ids": [
+        "REQ-ThreeMD-035"
+      ]
+    },
+    {
+      "timestamp": 1791294282,
+      "commit": "0869c5aa44602175ddb750c84be8a9b32bf75515",
+      "contract_digest": "d2b882fcab08af6e58ba4226227bd1d5c12633c4620378320a82ca02b1d69d09",
+      "execution_digest": "597132771687a1e59fe3537a529e2c3ee107ca90645c5b02a8f192abda009cbf",
+      "workspace_digest": "477a34bc79b810594b01180a7620b863f771b48901b193111e2d78e99c17a306",
+      "passed": true,
+      "commands": [
+        {
+          "command": "specsync check --spec ThreeMD --strict",
+          "success": true,
+          "exit_code": 0
+        }
+      ],
+      "requirement_ids": [
+        "REQ-ThreeMD-035"
+      ]
+    },
+    {
+      "timestamp": 1791294287,
+      "commit": "116538f42469d56feec42981addf5c6ff91ac437",
+      "contract_digest": "d2b882fcab08af6e58ba4226227bd1d5c12633c4620378320a82ca02b1d69d09",
+      "execution_digest": "597132771687a1e59fe3537a529e2c3ee107ca90645c5b02a8f192abda009cbf",
+      "workspace_digest": "477a34bc79b810594b01180a7620b863f771b48901b193111e2d78e99c17a306",
+      "passed": true,
+      "commands": [
+        {
+          "command": "specsync check --spec ThreeMD --strict",
+          "success": true,
+          "exit_code": 0
+        }
+      ],
+      "requirement_ids": [
+        "REQ-ThreeMD-035"
+      ]
+    },
+    {
+      "timestamp": 1791294658,
+      "commit": "6f55a3b214e4484124c394114e19eee5816c8c63",
+      "contract_digest": "d2b882fcab08af6e58ba4226227bd1d5c12633c4620378320a82ca02b1d69d09",
+      "execution_digest": "597132771687a1e59fe3537a529e2c3ee107ca90645c5b02a8f192abda009cbf",
+      "workspace_digest": "f78248e4eb2524376d7641588d9614c121fd6eacede3b5ed49a5cf95afaa8afa",
+      "passed": true,
+      "commands": [
+        {
+          "command": "specsync check --spec ThreeMD --strict",
+          "success": true,
+          "exit_code": 0
+        }
+      ],
+      "requirement_ids": [
+        "REQ-ThreeMD-035"
+      ]
+    },
+    {
+      "timestamp": 1791294664,
+      "commit": "6cb5f97c7ded948983adee8d4686d664c77d656a",
+      "contract_digest": "d2b882fcab08af6e58ba4226227bd1d5c12633c4620378320a82ca02b1d69d09",
+      "execution_digest": "597132771687a1e59fe3537a529e2c3ee107ca90645c5b02a8f192abda009cbf",
+      "workspace_digest": "f78248e4eb2524376d7641588d9614c121fd6eacede3b5ed49a5cf95afaa8afa",
+      "passed": true,
+      "commands": [
+        {
+          "command": "specsync check --spec ThreeMD --strict",
+          "success": true,
+          "exit_code": 0
+        }
+      ],
+      "requirement_ids": [
+        "REQ-ThreeMD-035"
+      ]
+    },
+    {
+      "timestamp": 1791294664,
+      "commit": "9ac2454dfec51a9d575a030236f046462059f847",
+      "contract_digest": "d2b882fcab08af6e58ba4226227bd1d5c12633c4620378320a82ca02b1d69d09",
+      "execution_digest": "597132771687a1e59fe3537a529e2c3ee107ca90645c5b02a8f192abda009cbf",
+      "workspace_digest": "f78248e4eb2524376d7641588d9614c121fd6eacede3b5ed49a5cf95afaa8afa",
+      "acceptance_input_digest": "319db9e1bd82c1c515cd4af6977132355be5c884f8edba9e700eeb7e727c83ad",
+      "acceptance_manifest": {
+        "schema_version": 1,
+        "entries": [
+          {
+            "path": "SPEC.md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "acea59c48aa7e54f3771967f32108625875b71c582247e12a60942afae9f31e8",
+            "entry_digest": "9529d016d610d49192bd9879e31835125c3eec90319e8a38c9c1d08426c963e3",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "Sources/ThreeMD",
+            "kind": "non_file",
+            "mode": 0,
+            "payload_digest": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "entry_digest": "0b3347d6efa42c81236b8c6e9c902cd86fae0f5aa726bee3d5ab50c72eab94fa",
+            "owners": [
+              "@exact:delivery"
+            ]
+          },
+          {
+            "path": "Sources/ThreeMD/Axis.swift",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "2b2f7cd300a83ff29ae8e41b0047feb2a145dc5045975ba885ff649bc3e825ce",
+            "entry_digest": "8fde29872d62778a457e2bf8c89f8e0219e95669d1836a9380762fb1a14c9dea",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "Sources/ThreeMD/CrossPlaneLink.swift",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "3eb6b119775eb7165b5415e7c8ab071b305d8b8b3f2074e1d1c00ae77ba0f955",
+            "entry_digest": "375e7a8bf7bce11b225e722e552fe4a07b21b777c51c5183868a24973dc5362b",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "Sources/ThreeMD/CrossPlaneLinkEdge.swift",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "afb1afa4d30d457fd5d2eb5c6e6ca829924629e27e752b633fcf0ea6287027dd",
+            "entry_digest": "dca5b2885af6462462e73b02783ea8143bcb3875c19c134421bf352cd7eb951d",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "Sources/ThreeMD/Document+Links.swift",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "48a2d74fd87006c25effd01c000ddbd874b7858e93ee94c223a8800d36f4e70a",
+            "entry_digest": "69538fdd68e3dd2efa2e3f8f89053d68d61773eedacd2d1befa4b61a88dcdad4",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "Sources/ThreeMD/Document.swift",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "2308433c7a8c82acbe49749cb23b7020807b5ee022b8e8b01726b38af59342e7",
+            "entry_digest": "773cf23ee5b9109e3cc8d976dd93d878fddf8ec92c0c54ed72149111bcdcdf3b",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "Sources/ThreeMD/DocumentComposition.swift",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "1c7fd139e9ba95eb28f59a08174566e8bd2b07d9334c9905595982d9bb88c025",
+            "entry_digest": "b274ccf35b6bb01ee8837adca1a085cf4c5dc194f37a92f8d51d64b080b1391d",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "Sources/ThreeMD/DocumentCompositionCodec.swift",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "246dc55a35d05847a04b510b0ae410cb0f4fecdf2697e6f6b42240a7651eb1c9",
+            "entry_digest": "87478ac343fb06fee5e2f47f07004c548b9b5afda900a00de73ef63a9c073bbb",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "Sources/ThreeMD/DocumentCompositionEditing.swift",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "3c0b8ff9c1f044a2e02fcf3a0683f0c57b6062d7c32287a7c08bbd2ca8f4607a",
+            "entry_digest": "9ee2c8668b19b3ef7fde3a2addba37977baea30d16cc3b8af0714b1a3e369f35",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "Sources/ThreeMD/DocumentCompositionJSON.swift",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "7ce038bf1ab51f71a60a48e1dac535306c129fed8d4bf694e698aed7994beedd",
+            "entry_digest": "5105992df33ee3f01d5c2ca90b86708fa9adff4d7d7148a262739083034d593c",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "Sources/ThreeMD/DocumentCompositionLimits.swift",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "aa780deeabd1a910a739769155c1d8d319736d9a19d776d57eab716b31a136c7",
+            "entry_digest": "b28ad9a6c6c8b83d38d6bcf904d2075f5c8ec7911862fb40535d17a2ed63d1b8",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "Sources/ThreeMD/DocumentDiagnostics.swift",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "77fb9cd1cbd1973f5fe2fb3f0e040a9924fcfd21bd9402c6b7f80ed1ae4b7542",
+            "entry_digest": "9f6b613335aeef6b1c18660a1eeab7a9274713eeecff2147fb2101be50e712fd",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "Sources/ThreeMD/DocumentEditing.swift",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "7faf628a12f0c2bf408b7b6f074465df9da1a68b8c24df6fd22e3ecfc3945e0a",
+            "entry_digest": "e07d1c78bc934d6ee878fac7943f65e8037f92615800f0adbfdf8d75799bbc47",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "Sources/ThreeMD/DocumentEditingTypes.swift",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "b084d251a955b08226588edcc78af352b99ca9eccecc03c4905d653813ce0384",
+            "entry_digest": "2c8e5b32f8c720871792ca13c61fec0cd383fb0368c7b0fd71cd78c66e606f52",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "Sources/ThreeMD/DocumentFileComposition.swift",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "52248590fe22c607b6e44c04fee409b4bc10eb511b80d20500361781dbb0aa34",
+            "entry_digest": "2e7e4c9c396c4cb2726ca7786404396f7866bb92bca4a1e48b93e5a77ccc9059",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "Sources/ThreeMD/DocumentFileCompositionLedger.swift",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "886eb4f732beb3ee829893fd8b0f295f4565b76ee6d2e7ef1fe44dea9cf4c226",
+            "entry_digest": "4decfd5dfe80a773b3ecb96b2ba66c1579a3421431a8ef59e8b523143f840b18",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "Sources/ThreeMD/DocumentIdentity.swift",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "44ca06d9725967d1412b57fdc8cb77f5e68040f226060abf514d29d2e4e55fab",
+            "entry_digest": "12390a550ca328a554e180704b18ee050b47d365a2b368054011bbdcfb52faa3",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "Sources/ThreeMD/DocumentStorage.swift",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "2c98adb876554937bbe743c3b6174725ee21890b116e4d1cdc10a00b456e1b92",
+            "entry_digest": "15b4062ad65293bc371d99cc2c60a28d7efd3d63dddf24ef0b1e42a2a16657a2",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "Sources/ThreeMD/DocumentStorageCodec.swift",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "0d056d3995db5c38f3e57ec9812ce2bd34832681dd7363001da43b263b24b4ac",
+            "entry_digest": "b041a21f57bbf45ab4c7f0ea74ec383d299f3687ada0b9c9589e4584ff091a77",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "Sources/ThreeMD/DocumentStorageCompression.swift",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "02b9b7540473233bd6e8208ac21f59b19e6a7f2371c6fb74f3a480769f14802e",
+            "entry_digest": "ca88a68d740e94c324c16046ce71f72360facf1491aa32df4a1f914d9a905da7",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "Sources/ThreeMD/DocumentStorageValidation.swift",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "ed22f58814384dc04cb568a6680968eaec49f437b7b8ddd48a813da1d58d2088",
+            "entry_digest": "bddd5e86db35d025aa93e9661aa016bfa91f8994ab1cb0963c060b059624a863",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "Sources/ThreeMD/Double+ThreeMD.swift",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "30b70d217c1a27bc8a3277cb69ab0ce4cca48510ce3a7c880a222d814f61a96b",
+            "entry_digest": "fd3d537b1e085f12ff2bb3c3755c6b1f82b9a1abb4c7430b179658349d650127",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "Sources/ThreeMD/FiniteDecimal.swift",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "e36a98a7b07ad2bc7d0121d5af661634106bf551650d39509eb5b4578ebb6e70",
+            "entry_digest": "f8afed6bbf6ee100e96ccab4e80b6216af0b7bf7cb9ce5e3b66bf08b742d4eaf",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "Sources/ThreeMD/HTMLRenderer.swift",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "3c22081efd127ae604ffbde538915dad50eadc5dac04539b5730c583e4f0c5e4",
+            "entry_digest": "874b0b45d452fc0bbc3464a1b398349718dcdd82c511c4e2e01a1b592c82896a",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "Sources/ThreeMD/MarkdownRenderer.swift",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "55aa619de6841ede744066c8076b4d30a14334715f847af3f0f062e4520340d0",
+            "entry_digest": "6eda36739dee3d881ef25bf83dea5792ea87c421945b0bee3ef23b5e7f453142",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "Sources/ThreeMD/ParseError.swift",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "b200c24afc62a2ca857246a328e79515c417e7ced5ab612750dea7cda165db97",
+            "entry_digest": "ffa025151870b81e1ba59bc9f6f52c60c27f9dff5222eeb39d7419363f4e9632",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "Sources/ThreeMD/Parser.swift",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "d2b3ae85f7955547fa1f8a2c4919ac5ca06887903aae416d6dcf440fd6416fb5",
+            "entry_digest": "4710603d0a1963278c2eed2131d3dfaf24f809661af628faa8a9de124076089c",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "Sources/ThreeMD/Plane.swift",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "a275e4844e7fa062ba2210441bef3e8ed971134e2ea53eecd1d97b279ba75f21",
+            "entry_digest": "fc613d5fd2164028765ba3b68f7cbdfcdd4836944169f6418e8ebb0d92358c84",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "Sources/ThreeMD/Serializer.swift",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "273280a399f43585899e92a689f7e75fff133f4a3b0f92b02a25727e45afc3ad",
+            "entry_digest": "c9ffd33ab779590940b03c6b1258f5504724cf89ccf7854241196dd11bd0c4b5",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "Sources/ThreeMD/ThreeMDAnchor.swift",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "e959b0487b490cc6592ef2b834e90f88395f4bf21ed54828e2a2c3722e0bb610",
+            "entry_digest": "aeef74126d3ff75ca2d65bde8352adb8a74f6a3c06531a767fbdcfe15a7a1325",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "Sources/ThreeMDInterop",
+            "kind": "non_file",
+            "mode": 0,
+            "payload_digest": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "entry_digest": "162eb15d68d9eea4063c625c08c6af1155083474aa709b5ac7fa3628fc1b1fc9",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "Sources/ThreeMDInterop/FileBundleHost.swift",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "e2810ef750d7ad27a25805e9634744a28e65d5d705320b3755dd4d8cc5632cbc",
+            "entry_digest": "e57b756bd386791e2ea0689b06dabbc14f08dfd07ddfeab5761cbf1012027cef",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "Sources/ThreeMDInterop/FileCases.swift",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "581bbe2d91a98de2e8428304d9c1a57d2fd47bb687fa4c43a3b0d9c1f6e79294",
+            "entry_digest": "4965d9d39bacc603519b5a146bc971baafcba812c426e76ad704aa13f5e2f63d",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "Sources/ThreeMDInterop/Protocol.swift",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "dee56abb50c4979d4c02b9cc6002b216324f8135472192be1648025b44073d2e",
+            "entry_digest": "e3202397b95bd2dc281ca8217efb9f76796ab6ebbd440d0308dbdcdd6ed5fe1f",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "Sources/ThreeMDInterop/SwiftAdapter.swift",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "54e38ffac6f0cd49f622f5325430898c93453a27968ad8f3a602f2a291936197",
+            "entry_digest": "362bb8dbb7aeaa58c09e2ff341d8c927c112907a5369e0d049a2818f2f29494a",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "Sources/ThreeMDInterop/main.swift",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "3f6061c9bd7ff85bd51090e0134b715f769bae0119ba28cb8eade14d3489a693",
+            "entry_digest": "3d0ffb75fd2c80d6878360738f5f4bc86e39fdb9453d74612dca0e8a1dee2aa4",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance",
+            "kind": "non_file",
+            "mode": 0,
+            "payload_digest": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "entry_digest": "7801a789e5811772598978dbe6313b156d071b23105fc6ccc25e24e4669c61f8",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/README.md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "cd76bf981d02cb6503261fcc13409d5ffa3e63496ac4031ac0c9cb9fb6549997",
+            "entry_digest": "00a78f54ccfe1e40c5cb3f305baff8cbfed37378c40c51a319f838c02928ab67",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/extensions/composition-instances.3md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "1578ab29d6857836c8af81a29d8abdeca7827273cab02af1aa42c89f87fc2b6b",
+            "entry_digest": "37551a4d5206ed8d9c8e24d686b45f41f298a63560df90361df2b87d08b3976e",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/extensions/composition-instances.3mdb",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "5040bed352f4d3e1e0ca33b59b0b3eecd2c0f51f53f7143b09241948b79120fb",
+            "entry_digest": "4aa25c76880214fc62897fb1fce3ea51f91ea6f8b32b7295331cf98f05ed9951",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/extensions/composition-instances.json",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "04ceebee3f999cb0c33dfc896c84dceff214f72de33b4fca5219a5fc4cfbfb0c",
+            "entry_digest": "4cecc5ee77791bc04fd96613d897fa58656db07fb2abaa76ca3951128d704355",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/extensions/document-unicode.3md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "4c59d8073a4ae5d8be1207fd42240966b020ec03200dfacfbec53dc03e923799",
+            "entry_digest": "5fd4093ef1dbd557622e020ba68893079b2307999f43ce8d5a72111ebe60817a",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/extensions/document-unicode.3mdb",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "e50065e6c344dd85ce42f604edb80fc66ae6edc3e66886ba2116991cc9103cab",
+            "entry_digest": "67cec5872bfdafb7594eb61ff8eb028526c1dbbeff173fd23c4c209f1afc559c",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/extensions/document-unicode.json",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "1ffc79e64adfdda51ffe0c2509473ad12276cceaa0e6aac523caedfe9b8bbc00",
+            "entry_digest": "baa6e7f2c269e52ed79e7e19a726e425f7518df696c0bbefbfcf1e67900f9c2e",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/extensions/editing-vectors.json",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "ee5e3624ae64d540f8b494a627eebf4a95e5ba80abf29bf61d4f586dd01d2669",
+            "entry_digest": "b537039464461e020f5e5c39c55051c5324000e6438be72dc79b8e928616d768",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/extensions/manifest.json",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "48c735851692299cc73a17aa658835c1eeb6ba4c62b2ef7cc2382f32557f4bdd",
+            "entry_digest": "5f1369c926a66d54653cd6ef20857f7c57307a77f544b18ba6a654bc9a45fbbb",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/extensions/numeric-vectors.json",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "23119ae8bd446098ba6e3b7d6037c3109bbed7ed09792cca13c0aed98ccccc7f",
+            "entry_digest": "9046caecd2fa84a254d41a1e5add515b4cf57b93537f638b891bfe1039dbb396",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/extensions/unicode-composition-duplicate.3md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "15110d22b69162c05c2f6bc7ab356b665b55451e156faf4d83887ef4c676ae66",
+            "entry_digest": "f6e7ee7a1981e71ed547bbbef03a330c7de6bb62896bea5d62b88a7625b6f9cd",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/extensions/unicode-key-order.3md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "8914f100d5ace4e6c746c975874a2b1c864d980e3279332a4f393758b06aba78",
+            "entry_digest": "0ef3ac4d498effcb9da32d97900cfb5432bdf707fff4fa159870a52dc93eed76",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/extensions/unicode-key-order.3mdb",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "1de50e486f618221570ffd42243b4324a3436f8c62a0473bbacbcee05e552aed",
+            "entry_digest": "a7a8b8b91fca8f86acea7cb1043b4a0c25f9c01ba989c3f3756e621fc6efe2d7",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/extensions/unicode-key-order.json",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "cfd21193209049e654ea02922f14cf25b4b70c40d830f8b9d481e0b3ad8efded",
+            "entry_digest": "92906546d26a7680dade44cce100d50cd09c43c97e66bf52859435740dd950c0",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/extensions/unicode-source-collision.3md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "76a82a0225e60c37f0114b4c76718a98452918f03ab7f106b353d89bd4fcf302",
+            "entry_digest": "5d993af80c51f887a8b3def3ba93eba0a7e9123dfea9650089d9fbd683084b20",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/extensions/unicode-source-collision.json",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "837281409700350bdeb0f4b7fbb73871d2b6442dcb71b4bbbc224af0b578fe25",
+            "entry_digest": "ed0b0d8c9e723795bc5052dddfc8fadd5811dd50f97dfea6710e5935a1812fe4",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/interchange/PROTOCOL.md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "a40b516a337d4e1434029776c0fb566d12fcf6993edfeee77aead7ef5d318212",
+            "entry_digest": "a5bd208e8f471820945a02fb380b9d435b00ad274529f5d72b1f8e89b6cfe36a",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/interchange/README.md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "29411541e59d96d1e011372909a8aa46e9a464cc7df942ead46a76c186ee514b",
+            "entry_digest": "a15b7f342d00ff47c1ca979a9e4830c3539ae05919325d0d29b2e68771eaacc4",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/interchange/axis-48.3md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "0acf1b728b9d260d8554b457a46c0fcc423598c94342095a97e5e6bcabc80c66",
+            "entry_digest": "e51216865ce496e23b5a53005cdcf91cce6d745d146c5d98b6122e2e3c248e83",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/interchange/axis-48.3mdb",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "402cc5c5185479bfe3a0d362dca45e491a5286adbb25c6770cd88ca8b4d4aded",
+            "entry_digest": "7842c613d563f3d5d589a3d139920fe875081fce4a85f9889c17bb9c2ac02537",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/interchange/axis-49.3md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "064254a439a4621201152d5396c07e59aa8a53195cb562e916c710f3c8dc1bee",
+            "entry_digest": "ad8fd068427c03288cb1f6c7b1cf82c64eafebd6d6d5b8b0ed7777718b823797",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/interchange/axis-49.3mdb",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "da9c5de2888b2bca25ce5babc11fd03d65e603036195955413132f4befc51b54",
+            "entry_digest": "47f0afa5e82ce8512bb664b1d38778b1c351e969edc2cf96a1c550c9869c82b0",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/interchange/axis-50.3md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "019f09e6c16d1c342778a784ab9d6cc191feb7e3308dcb8872f2d4b2d6b0651e",
+            "entry_digest": "564b50e6a146fc27002c762c1c7b41edb894149daef67be83eebf529d1770484",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/interchange/axis-50.3mdb",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "dd5152002720b668f1dbef77bf251b00c119b5955ce43595264704da083b6d54",
+            "entry_digest": "719a54f0ae358a8e5f42532086a59d6ee6dac627d50e6b2954712531496e7295",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/interchange/axis-51.3md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "afe4a6c57c0ae58e8bb6f62886b00ea7dfe449e4a6d666b2f9d3955fc6ca233b",
+            "entry_digest": "79a695528daa41ba03869e73d0ccc022a22ede37689e395941d936ba3da068e7",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/interchange/axis-51.3mdb",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "a61f86a90c0933c03f1eacecd6bf83f6e19fa1ae87ad3c805fad55208b537a1a",
+            "entry_digest": "2178267ca81331834cfbec1a3a0efd90ddd05d1a4a66c9a1cb0a6f280867c7c6",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/interchange/axis-52.3md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "3ba4652eaa6c97b6af4c5ed3b28e3a8b3b17ac2eca67751e227bb68895413184",
+            "entry_digest": "04c2b773db1448d7d02c06bab2ba365e778b2f5322526b3eff90438e70420e9f",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/interchange/axis-52.3mdb",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "640967bcd3baedb5078d6bff51f7372dd0bed2c5f7b94ebed1bb9843137834f2",
+            "entry_digest": "ed5505d478d079ec8b8c97f1e8b1778a9a25a1efbdee243bba958209d0daa866",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/interchange/axis-53.3md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "fe2817887c9153792129dd8fff171873b805b807c1c9b5f87f7d0f3c47450a15",
+            "entry_digest": "6ca19fb3ca08a1b465c949376ab2d5614d0b64df23752dd79e42b2bbe0844bbd",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/interchange/axis-53.3mdb",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "2d8c32e4e328b8e015bb09a16d861147b769e38f6cd6d58d4bb1b03786e3fd92",
+            "entry_digest": "1e79191d85cc9326874ddd61d9987375eb32f20fd498b0967e5bba65c19aad38",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/interchange/axis-54.3md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "36d55260648a8e2277d4a8f2c56e26edc32aa7e722703174dd117f82ebbe3c3a",
+            "entry_digest": "442fbd9228cee5ce6fb46c9dac12bea9469251dd6a1297853fa21402af926f4d",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/interchange/axis-54.3mdb",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "8ffe80e0e1b0a989d0a6ebf38dce7107444358bede905c68c2de14ef892d28be",
+            "entry_digest": "3570f40137a739c81bbd892f774259a071b88917c6b58c1557639fb1b7fbbe83",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/interchange/axis-55.3md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "466040613f361a36dd1b3e37dc7ed63545fd4e122c99eda93855cbe9ac8d221a",
+            "entry_digest": "438a833753e3da9f3cf5db89b92b79d8836bbcdca8825e10e35ba69e25daa175",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/interchange/axis-55.3mdb",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "1c9ed2b251bf179345bc5b155167eb916c32013bac8d40ab8173a574e8ae76e0",
+            "entry_digest": "80bfc898e8c67d0da750ada1d59d0aa40a9bb6ca7657c93271d60ed236823c4a",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/interchange/axis-56.3md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "cfce14cb2b6189ea0f3c939c4211cd8ba8383370a4ccc264f0e758f0615dbcfb",
+            "entry_digest": "13d4ea5773e3cb714cc23b8c8ca15bf4ed147e13b527d46778d60858559353b2",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/interchange/axis-56.3mdb",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "ac8b9e7d964e8ca7e469586cd8ba3a6547caf953b4cfc1f9d8c5d8b95db62945",
+            "entry_digest": "ea53eb3e571ab33126d2dcd142d737794b539d8a07e33c483ad1ce49d3cc9cdf",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/interchange/axis-57.3md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "c63edebb8163e84297bc8922ed4f99cbdeccf7229d6eb336745a9be6a47f4865",
+            "entry_digest": "ead4341c6c4eb82103fef1bd689ced666a485cfa0db85876dcb7e30c809a3c4b",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/interchange/axis-57.3mdb",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "1e885f078fb538f36ed3c164eac1053cc0f65d1b60c597a04fe3b77e09f49b58",
+            "entry_digest": "827b5e33cc29f24e9d6fa0b0b9ab1a8d6ebccba162d1a4f91836452a362a6f69",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/interchange/combining-mark-delimiters.3md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "d232ad72cee1a164f1a686f8eba0b0613be1f7f106aec45ef5367a61441e67ba",
+            "entry_digest": "e9dc9e7b029c2f50ebde6048a7eb75db5f0e646ad9ff78194f89cf186704b802",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/interchange/combining-mark-fences.3md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "50155daa7103b33b3701b664220b204216aac20116b720e02fa61e940c717322",
+            "entry_digest": "c1bfafb0ebd8b9e796cc67d06599af74da2357b89e3d18a23c73a577471cc803",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/interchange/combining-mark-scalars.3md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "25a592a14b97e63ccca29e890f49af92b070436f1aacf2a85bab5178015315b8",
+            "entry_digest": "4956ee3d37489db80f3e2f5ffc899af3139ac9b1b96935ad7f6ea0a14c6ba7a8",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/interchange/combining-mark-scalars.3mdb",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "a8ae26f8205ce27f4633d41d129303c990c7900d9dc4bb6d1170b71985c23904",
+            "entry_digest": "c21914fea54c3592feae0405b39b1b42263b6d21794c34e09f987d72c7ee6c79",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/interchange/composition-empty-root.3md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "37cf5c8b6f8c6768532cb3de0d22f9cd5f7e67939255b04140b11cc5fda12468",
+            "entry_digest": "c597968b218ec70335d84840e028c09f9d423a290d41a6638110cdd735805bca",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/interchange/composition-empty-root.3mdb",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "02cbf04d1cd04d0d20916866132d3cd7fa23a58ebb3fd7f73e6225a25c119605",
+            "entry_digest": "ca387d59585d82244fafc039fc1baa2196ede51b8bf239562aa6877da1b292bc",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/interchange/composition-shared-dag-unused.3md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "a5bb9956c2b9e3d35b89cc9fc412e10d9986139756e2fcb50080460864ca3455",
+            "entry_digest": "f5e11f4b3f70ede17bc7cabb627139d1ef0cddb7871a75b5af05d2827092e139",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/interchange/composition-shared-dag-unused.3mdb",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "dbc50aa0bc98f482a556df4995fbb06c4cf549f83a4da2646f77f533c7fdeb38",
+            "entry_digest": "3a2151692763af077284e7b007e52be866d80b1b3b2708b3e25e5268b8927389",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/interchange/empty-document.3md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "0c11945a4867cd213e299833ed1a10e639c18c5449f5913d851c21bbd02a39f9",
+            "entry_digest": "d949529300721db18bd9be31c6dfa83939875d99d6bbe8e6d4ef46e4be7bbc94",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/interchange/empty-document.3mdb",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "0314551efefa2be1e1036355bcecdabfc41bc3d5567475482b3417295718fd6c",
+            "entry_digest": "0f3cdf62cfa0da1cdf792caf37c1d4bf76cb9d3047b93e6c7edf41b0ca4a00ed",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/interchange/empty-planes.3md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "edc01d971db6cbd4895eb43ee1589fb1b98004ec66cc12bbc6800036108cb19e",
+            "entry_digest": "1539de355fa70483b15be85e59bb535ffab2a72b919834dfb291a76b0d64852e",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/interchange/empty-planes.3mdb",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "40c4881d4a0c85a83b4bd8a818a5012562cf1eea331fb3723b6e52b029b17421",
+            "entry_digest": "d1bb2010766ebb7b326b4265e7a18ba1a34ce89e15214c05d561318e821d2669",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/interchange/fences-and-directives.3md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "99361447720b4df6c35a80b22f2f5b50a9e7dcf368f184d35ac34cadac0ea405",
+            "entry_digest": "eef752af4eb7ad1c8c659fd5458f6a11791780333e2072d8a341b56b989590b6",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/interchange/fences-and-directives.3mdb",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "84ead4917109eaaf7af62e803deb89a6c7fdf4ae3e4a5644fc8d9032abb6ddef",
+            "entry_digest": "924aa981e2bc19bc028727efe066c392ac5f3f8a98792304872af7bf55eba843",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/interchange/invalid-binary-checksum.3mdb",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "cb306822772ba035045bb9f2d290f5f1f9dd1b7be601a964d5c039fbd7934ab5",
+            "entry_digest": "0ab9347d9f841ddb4a4c156eb8247fc0c3008b8aa39fc3bb3b14a29af7f6911f",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/interchange/invalid-binary-compression.3mdb",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "a8faf1ac026f8ace659c6889c2b165709b50c7e845676886969b6d92a5520172",
+            "entry_digest": "ab4c60a61a47ac43d09037a3d2bf9fa87056ba470b05ed9e7fa59c0157128244",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/interchange/invalid-binary-flags.3mdb",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "5cdc9ee70145324099ef9756e485a1c18767c556aca5ccee845db1f92ed7e74a",
+            "entry_digest": "bcb409278523018fbb0cb4b0cb58231daebaf40d2edc3c626ad229e483a0954f",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/interchange/invalid-binary-kind.3mdb",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "3ebc8f0256cbcd5b874a9806a08005fb648a9d6b4432faf654a738fa84e8ae26",
+            "entry_digest": "e750e7d4cf0b1cbda57ce6a1cd242dc074a429543bf21054f3c8602f2ef39611",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/interchange/invalid-binary-reserved.3mdb",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "dc86128343fbf59cc20844222ac10984ccb3e73f58d2a057d690009fc268123d",
+            "entry_digest": "47213f976c29eebf74b0c6d660ed7ab73125a11ab389e909abc99bcdfda9b3b8",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/interchange/invalid-binary-version.3mdb",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "a1613820eef9e7d6418998fa88f233dc3ef7b4492ee63eac90dc0fb0482fbf44",
+            "entry_digest": "9c7ef41f503407f0d5aa4b9c430433fd06dad0ccf01d38a356efb099e8c25a06",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/interchange/invalid-duplicate-identities.3md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "d937897da262af03026cb67c0fc0afca05be48910640ef367f7d259377f5d212",
+            "entry_digest": "9a67ff1b5c080478d56fb68d13137b233e84b3e60f613ad4b7e6f6e9b0213b66",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/interchange/invalid-graph-duplicate-id.3md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "f4bfd9948becf0f19a3a3047a79cd0028d197e0aa6e0ba4818069f9864821917",
+            "entry_digest": "7735c0358e23138b624609a795992595897fec4c614682f35f4912466a7af31c",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/interchange/invalid-graph-missing-root.3md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "d87af1311ea33f38dc24c3c2bfbd25e123af4124486f46dc3bd0684ddd734576",
+            "entry_digest": "71cd7faea4dda59b98504269024f7c6348ab6f4909f57985ae6c8ed155911260",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/interchange/invalid-invalid-utf8.3mdb",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "b3d510ef04275ca8e698e5b3cbb0ece3949ef9252f0cdc839e9ee347409a2209",
+            "entry_digest": "fb31a72ac743ea06b9606c543d866f3a9cffa7c81c567f3b3b372b67e6b93ad9",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/interchange/invalid-profile-unknown-key.3md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "a3026030ead069e5363a1a783927160c65df46372422603f828770490d22c0f2",
+            "entry_digest": "4a5150481c626b544a4095420ae57e0b828868802f8ad433633aa019a46c17ed",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/interchange/invalid-reference-identity.3md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "c6d202cc692fccbdaa6e73340f1a53f24955cbe06db73a3f849a664cd85b6b2b",
+            "entry_digest": "c86e87eba4d1a6f73eb80555f0fb92b0dd8a7bf4a7bdeabf5e8141d31724d909",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/interchange/invalid-truncated-header.3mdb",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "6c5ac418efc7b8d459f9d3be285bba760b03bbef8b91ee840128cbd47b1518a3",
+            "entry_digest": "8c5023193574f8a0196deec6dd5019e8333955f00a4126815f56724e30652e2a",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/interchange/invalid-truncated-payload.3mdb",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "8e72e7db56f80c10178ab002f3c221939eaf1ee86581d5a84148011d779bfd6c",
+            "entry_digest": "e2ec1af4c2d2edf6187804788f15323e08db7d67c055c9421e2966d904fa6ee3",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/interchange/invalid-unsafe-identity.3md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "2e8cb085d2b58a6ee51bbb43d202e63488cd66c5ccd95dc19642760ab1fabf17",
+            "entry_digest": "86886b9acffea7390e84b8b1e1c2c6322628946fe555c623fa4584cbbc9c42d9",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/interchange/invalid-unused-cycle.3md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "c6aa80ac98a5b78430ae86fe8c41d78db934d0272f2e491de968f30e5e017a5f",
+            "entry_digest": "2760313dbeb40acfa495f93f2773e58ed0bea8f66d2320db8273d2af572a7b55",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/interchange/invalid-unused-missing-target.3md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "93a99eb4f436d5ac248091253cb27bae53e1a6e83ed67ec9e7afc5b70636db7e",
+            "entry_digest": "f8bf04102f80fcefbf3eae9d7ce090f2bd6ce30f1e4a2c03e50f0303f5b1d281",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/interchange/legacy-invalid-duplicate-plane.3md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "d3fd570b9e84bd799576fde5164e4cff72a48d28448b607fc5a5315a5ad13a13",
+            "entry_digest": "5f560fec5cd36eba99f2a9dbb97e5065cd0b874c13f99f696b66b699f8c501e2",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/interchange/legacy-invalid-duplicate-z-decimal-forms.3md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "94597a85106b3eff6ab7f13ea4f634474d7a693900ca38d781e19e5fb1f7f1a2",
+            "entry_digest": "159f27dff95ee6c75d58cd7b928fde40a634cf83a3b6b9b182a7a8689536a695",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/interchange/legacy-invalid-frontmatter-no-colon.3md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "d14d37b5a9a9cd8bafcb7ddf7ca1bfaaa5112ed111501d354ed1e13d4f3cdc1d",
+            "entry_digest": "2681f315ea0e07f7d819eafa91e0445fece24203958d753608e443edc495c645",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/interchange/legacy-invalid-frontmatter-unclosed.3md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "28e18112b5a5168d9e2c38e22795413a94636e1041e5b3efe81e18cf9854a74b",
+            "entry_digest": "bb92baed297e5b74e0e0b18ef85ddb972d7771ff106b9525f5939456cd1a84fb",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/interchange/legacy-invalid-missing-frontmatter.3md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "5b85a4712d3cde2a6515f4963983a7eb79f89ae098071ab06bbf574ffeb86c38",
+            "entry_digest": "2c23c9a257d779afae85283c94e2c09ac94271c1de4312d677787e903aed4326",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/interchange/legacy-invalid-missing-plane-position.3md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "679bd0deca58bc9bec9fd8fe65f27e0a3e34740c9e5fb79026f1eb6d71459014",
+            "entry_digest": "3d7c27ef0d833aa0e926685fcb515064fffa764f134004da431e6a3bc6b348f5",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/interchange/legacy-invalid-missing-version.3md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "1ae9816a65440a8d497f70cf3cbcf732a5ab89fab3e90413c7c708ca1439b9c4",
+            "entry_digest": "276c2d541186fdbe077f63bf83cdcc215479c3a6d498a70344c04ae518a9a560",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/interchange/legacy-invalid-plane-token-no-equals.3md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "e394ecb3d7ef684e5ae4146d33f6cb966ffe8f8d7211934c8e81635f2dc3db53",
+            "entry_digest": "5aa5f22c9e6efa4ab65259558bdc1fd97e2aa68c803ac9725f0c9c78089f9b03",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/interchange/legacy-invalid-plane-x-not-number.3md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "25c8744ca04fa22883c3f25ff0738771587a0a4f7019d72970e314352b04f19a",
+            "entry_digest": "50e1202c2a6acbe0bba2c7c0815110100afb7037ed334fc98a0928ea273091e3",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/interchange/legacy-invalid-plane-z-not-number.3md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "dfb68783759f08a33415c10dacb3a8c27862d8d8efcce2395bda8de332dd37ee",
+            "entry_digest": "37fd945e6a7f46102939c6cf6b895c93bc131e12e5d6845e78e1cff6306b8103",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/interchange/legacy-invalid-unterminated-quote.3md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "89ff895d953b50e3d89ae02f54b1c0a4a6c97baf9369679350cbe2f5572275ef",
+            "entry_digest": "942bef35fd8df9f1dae50c26027d24bfe43bfb99e8f88c7be559c076b5d77332",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/interchange/legacy-invalid-z-hex.3md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "932f2b151e55072e8405e0175916d4dd09fb34b5f89cad0ae59a6292abe0d3ec",
+            "entry_digest": "c61430e6aa8e310ce3b1befb1d8fe9c5c4b5252d4f539f35af612bd74c8f9038",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/interchange/legacy-invalid-z-infinity.3md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "754a97d922a848000517776ad9462809b6fa3d66b2efaee4cb81341b366517b8",
+            "entry_digest": "cc3b31f8f41fb106f148d8d06c0bdc00165ff9733c378d80e8d520b6e2e3da58",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/interchange/legacy-invalid-z-nan.3md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "f7cb6cdbdef45bab6d08d395b17a5945a8f9d7eecec201a7f4223534f83e6950",
+            "entry_digest": "49161d30f091eff6a15590daffe0ff32a97c70ffbcb411ee0a16b1bf85c5d189",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/interchange/legacy-invalid-z-thousands-separator.3md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "af355d26d8bff9a22051f75fb4debe8e77fb289dfa8da21d51246f6b05bb4380",
+            "entry_digest": "e34995f6f4f096eaae9ae56c7ad827f4cddf9bf5d55587608b4d4ad5071098f4",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/interchange/legacy-valid-attribute-numeric-stays-string.3md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "7b589d2adc7c03010a2c3b3d743c5ef3f0fc0d8286851641a34ffe11765be06b",
+            "entry_digest": "a0c49ab6a6397b16e0e3a79666af74acf205ebb61df8cb5c0798928aab61157c",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/interchange/legacy-valid-axis-default.3md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "bd408dde49ee4a2912d19d4fbcaa111cc5ed57ae18f33fac930ab7b1d5838ebc",
+            "entry_digest": "56f5044951612b69fc88706abd515a192dd81ff979f5464e80287ae8b0780d33",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/interchange/legacy-valid-axis-lowercased.3md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "9f846643968a7b8c49edcdbbb2aef573719a123835e53788606ecdbc937bf81c",
+            "entry_digest": "38a4d5e60ef6d6b7e498cf24ec232f49608a4516c7d445ae434587458fefd3c7",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/interchange/legacy-valid-bom.3md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "04654497da8dc89336c76429adb28d649decf777a5a9a04e83984b856b741d54",
+            "entry_digest": "81ea8320a258b86a6b08073c7d9826bd3c65a423aabe5aaae1f846f32a2026aa",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/interchange/legacy-valid-code-block-directive-safe.3md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "8110da14cb29f6f23e48d62dab9ec2efefc3a119a83316317222ee2e1018726a",
+            "entry_digest": "71c408be8b0c95e0ad2ebd599325e5589aedb0f50229efb7faa3dabad078ff1e",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/interchange/legacy-valid-coordinates-attributes.3md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "776f1b6e8e60b411155c2380a130b94aa1fdb586473602cc1d4773f039784c2e",
+            "entry_digest": "df9c4a2ea90a7a9a8c999582d40a31ccb30dd8778b52faba181a87ea1e86da9a",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/interchange/legacy-valid-crlf.3md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "7bc06f9049c6124ece6f3faf8996608a963d48c6877fc90830a959a0eedc4339",
+            "entry_digest": "26d073f594c2e5ac1ebcdaf91ee1b61dff962b3a0e64012fcc22406eebcafce8",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/interchange/legacy-valid-decimal-negative-z.3md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "2575454e9248e0f2f040342c470b84bc3d28e19619daa4b69b442d6296e14b99",
+            "entry_digest": "dcbf4acb7935b40d488b4fd28fa7e13fa701838dd89fbe87a9612899fb9b38cb",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/interchange/legacy-valid-empty-body.3md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "d7d0810c8c3b6bc30381feb90237e9ba0ccc0a65e4bf7a45e3fbcf43f486a50a",
+            "entry_digest": "fe52c62024c78f65f0b854351beb9186df19cd61f028977f241e6f8384746156",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/interchange/legacy-valid-empty-plane-body.3md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "e9d98e82275a95ebc5dacd068533f4c61bd334e0d48805018c6a60838cb220d5",
+            "entry_digest": "effcd7283479864ea0d3af00c925de71978e07ac813e807b6936908fdcc4d939",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/interchange/legacy-valid-escaped-quote-label.3md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "3db7dba198cc2aa8e61ac6b6a6ac3ba16de6fb0bbc22bb5bb678a10f1c8e5ecc",
+            "entry_digest": "9024821cf703c48b4a2fd39631c5dbaa646ade2beb7358ac38109aab9717928b",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/interchange/legacy-valid-frontmatter-comments.3md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "96c19268c0b1fbf4f70c2e216214de6dd21dc82cd32363f683e7438c343efb35",
+            "entry_digest": "5c62fa814641d54f96deb28d8679a24e47d17380135090a066773e020074a05a",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/interchange/legacy-valid-indented-directive-is-body.3md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "2eeff21176b1a2ad5d18e88d1bdb038c939145f579f04a52352d361b4abcbfd5",
+            "entry_digest": "ed4d913812df3682b7dd5b2bd952654953d00bfc25e39428099afb71060af882",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/interchange/legacy-valid-leading-blank-lines.3md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "a840ba24b823a2b0b8d15dd28dadff9aa8d82763ac16c07c6d682292f316d2f6",
+            "entry_digest": "5cd3bb3ee101ec77b16445a753372e0be9141aab3202152ef8f8c66e1d1fdfb8",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/interchange/legacy-valid-metadata-key-case-preserved.3md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "8b3c44340f3fe22062762fa27ebef10bd9c16efc4f406f78fa5619f83b1c985b",
+            "entry_digest": "b6e760975f9691d6a4db2d679bf0064691cf6ba8d95f6047a932b9be719fb31e",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/interchange/legacy-valid-multi-plane.3md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "c1aedc37bab0628e2a89062e099e5d771c2a8e151be035d0f5d45708be8c5f48",
+            "entry_digest": "7a135b378eebccb0ea037067c55956ccea8d6d73429d23444c931d12e7800b4a",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/interchange/legacy-valid-plane-prefix-not-directive.3md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "121600cb6f8e081d4aee9a6662ce7ffdb0a65aa70b8fe4e09ebba393cdde7f9e",
+            "entry_digest": "de51cf3677bdc2058e15fa31b49606f2236df8330be86d54e0c8dfeb1b59b65c",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/interchange/legacy-valid-preamble-with-planes.3md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "a002cd4bc0cd2c23f4741c8003aaee78a5be7dc37791ff33fbc1ebcc2aacfa04",
+            "entry_digest": "07d09956223ba35e4a60ff116ddbb7ea40d1934f8b3a9d436e686167ec6548c3",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/interchange/legacy-valid-repeated-directive-key-last-wins.3md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "976d878b5a1f4d96e3095e3e78feb21530577ec4a1162d5b5190c79f724534c0",
+            "entry_digest": "35c07d6e14739dfd51b93c786cf7df58e84f93c45820f0288af342d369e57323",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/interchange/legacy-valid-single-plane-shorthand.3md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "6b56b5be0c9a9a03b30f69c39c6707c9a57d718ca285422c8aca2794d3fe71fc",
+            "entry_digest": "6e11fb0d4f9c85c77399643185a000d472fdc02d14fbb561222c94291bd0fe82",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/interchange/legacy-valid-version-1-0.3md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "8929f6df44fd9155e0ae8b2f94eb649158ad588c61bb4205fe8d4e8c0c995deb",
+            "entry_digest": "953021617106f171f9e12a58179dccb0988782a6e3e92ee2d7f4b173ab78384a",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/interchange/legacy-valid-z-scientific-notation.3md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "2182a4988358bccf1d93b1efb8cdf3d3eb29c5b6f25ebf56b9e4c1bb4bb46011",
+            "entry_digest": "1022918a1772859a13389506b40371616d687cae3e35139616a5522adb2a052c",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/interchange/manifest.json",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "211c208610df9adc1727fe1fd79fe897018b68ef6c78a17a5241d19aafb83be5",
+            "entry_digest": "d366f8fb304552abb07a3ebbdb199e068dec535704d8d33b7f20ae3f5dab1c70",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/interchange/mixed-coordinates.3md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "26b2ae647701f00549268b33eccee21f9154575c10ae07950fb728f6cf2f57ff",
+            "entry_digest": "43722c0c9d586394db4e9cfde8eb925270f49166911bcf470fe3a597cb087324",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/interchange/mixed-coordinates.3mdb",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "7e472dc174e2ebbf4e0267663e39ce3a422342bf80b099e46af3a5e9eb0759e8",
+            "entry_digest": "f341643e855f2d02e337e6330c070b829649f374078d03e9e1349230a065bc55",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/interchange/nfc-source-keys.3md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "b3d5d2e935c16a5976cd058425a51fd71be2eb5aeb2b2c8a396b04cabb61a101",
+            "entry_digest": "77721519a3f98855342ec842b276340d0bf35589823ffb3f2e2d202429eaba18",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/interchange/scalar-quoting.3md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "a61509256c92854a84e8724089bc373e47f93776c8cad5eafc6c80599dda760c",
+            "entry_digest": "ad05948a579a91c01d3390412b8fca72ad1e2188a3a202bda0a674ced35fc52f",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/interchange/scalar-quoting.3mdb",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "3092e3ddc6d6a9234a0fa403269e332fc88b5335fc224d93a0fd461c27dc350b",
+            "entry_digest": "8493a784527ae7539600d4f8f7ab64c66e9324ce85eae2b49cbe698293202a36",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/interchange/unicode-exact-values.3md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "5ece0ff3b6288bd463e7ebc8ca462199f562a9509939e35be3c8fbd822f4dedb",
+            "entry_digest": "7ab3ac77460f29c00aeac857a1692bc5e853d116fbf78c09c38bf99a7d19dd6d",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/interchange/unicode-exact-values.3mdb",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "1679cdf638ec10fdf5923a4f9dd2ae60875bbb140db5d6665afb7f8dc1e23f6a",
+            "entry_digest": "24ac1755b25811ce08afdf94bacf7adbe9a3dbe92be0a58ab4dc72cc492cda2b",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/interchange/whitespace-crlf-bom.3md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "c15aef218886659bde96cc62bc261a1e26e79207e2b5bd26ecf688f1f480bd1e",
+            "entry_digest": "04f44d0df890408f9b2cd172d779229e65063f1fe0441c3045cb0157e9f70999",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/invalid-duplicate-plane.json",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "b7dbb6d92b6841675571041daa38cfbc213a118a84177cee407c04424d84b2b7",
+            "entry_digest": "a5abeca8b3e4effa59fb259230163208026271655dce42a556eca5942ded7629",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/invalid-duplicate-z-decimal-forms.json",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "4b3d792de3268c6b84f16cd55e8545e866adfda914673d5ab34068b56bb4d444",
+            "entry_digest": "ea5a4b88b12e5e0375b5624c97ec48da46f4755ead434194ed14ab6e9e200504",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/invalid-frontmatter-no-colon.json",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "e8a7a5dae56be63acc5c66403a78190b9e05678b615702440a86f13ae84e6a56",
+            "entry_digest": "290e2272ffe0cc1937fd58e34ce89ae64a6fa44bfae36099f16427b55782b880",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/invalid-frontmatter-unclosed.json",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "9318d604862b92479400e7dacfff17ba2bf5993ef0f23b479fc35cf461ca029f",
+            "entry_digest": "eed2bd573da3f8548722c48bc7b74d5cd3c1cc5f7a038a20433281749a8c5d4b",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/invalid-missing-frontmatter.json",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "69b86ba2c0731894f678b068a3429360d9866114b2d20e89928ac5656eac67fc",
+            "entry_digest": "8f31c2b69bf45b78b7cfbe8bc76217f76fa3c93260b4fba8570e18b8270e0491",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/invalid-missing-plane-position.json",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "3d51ff022723c7dec686cc398b205075c6dd2a28ccbd8781f154c4bbe4eca782",
+            "entry_digest": "b2830099d468b8e0a35a239e6601d6eaa0f92d834c4c7930ce89bf93555275a1",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/invalid-missing-version.json",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "66194de5a345dae1efb8ad1f2f7fe71c12bdf43f31190342c283c816894723cb",
+            "entry_digest": "f7d988d8c64122e4d162eaf9773f0b0ed10f6015fc812119b69ee2eabf42328d",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/invalid-plane-token-no-equals.json",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "a69ce5612560607a5ecde48e5e9a30c2d1372be5bedf1895e021529b4c4b223f",
+            "entry_digest": "bfccb12c7c95d943f5949361b6bfa05c1f8ebda5fdda8322c1ca0791ac26bf12",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/invalid-plane-x-not-number.json",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "44d526ddea39fdfe2e1b6dd4407f95fb9fb04a82f57882ec474ce4cb53b9d593",
+            "entry_digest": "6b01bd757aaeed93903e340424c166d2edacc71e61ebeff7bbb24341fa466429",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/invalid-plane-z-not-number.json",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "86e30839b99e894a85494a252de23571c78e58c26f0adfc754ab40f1df96dc61",
+            "entry_digest": "e84dfef0744209d8993248824cd507c6a2e7a49c0134292602137ca9f0af4380",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/invalid-unterminated-quote.json",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "5064b881f377da7aafbf93ad855cc0928c97ac03cecab629edc07f009d2ddccc",
+            "entry_digest": "7c86cf27d8febfe91f39871ad8ee4ccce2678decdbb5bb42cc945c432697f750",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/invalid-z-hex.json",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "4fac0ceb960390aa728973d4b40e8363c43d34a90c0f32652a2667aee116bfc5",
+            "entry_digest": "f23c74b6912e9a6df079ff857df3058983c6ecf1bf2b8207816bfceed9f51b10",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/invalid-z-infinity.json",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "7f981d6ed3c4db4fb5a4fd13c12bcaea9ebb82e5c78db7c79cc082113b6c195e",
+            "entry_digest": "88caca1426816706e22021213504858e532fc35730eb0972d4d646549ab12829",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/invalid-z-nan.json",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "1469b101561a7c278c5bf5c334819f2494230e738cd469149586078319bb65d5",
+            "entry_digest": "87bf6738034eae4db6fc62932488f84d538c1752b199e773c04d8dc9c2bc1848",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/invalid-z-thousands-separator.json",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "f5a1d1fe3964df41b8217031c71abf0ee0296101f43a59e5f7b267d04d7142e9",
+            "entry_digest": "4c7ca83be6490da586246383164d7eb591e343be40809d438334f2fc0dcc7565",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/links-basic.json",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "a338d9268c0d449911edbc7ddb11bb3ad4af488c741b90a58c9595fa419554b1",
+            "entry_digest": "437638a714b027f4cb8aa2226d618c027e6dc99f45820e95a0eeb71676d59ce0",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/links-dangling.json",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "7e64be06138e6ce342a473d8a835d9e2c577733d86b3fbf360652ad4bc99e936",
+            "entry_digest": "5fd7bfaf940d7fca557654f1e29e80a760218605eaeddb736d03c46148ec3b61",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/links-decimal-target.json",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "e971db21a025f0674e1cdd01ddb94e4b1bce97570af1d3139424a529a14407c7",
+            "entry_digest": "0ea1bec882e81b76cf2086ddb99ce58e1605735f7eea08b9149b57b9318b0aee",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/links-invalid-ignored.json",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "6897378726e982aee67d8b6f746528732353dbea109e8d0c39ab6254104a1310",
+            "entry_digest": "5774753b1e04ea465a09e8941385785c29a4045da75b7ee829d548e7d3da0e51",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/links-multiple.json",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "cfc792052ad8923aa6b884e7947fd1b8db2bc9b14cdd252104134d5d1182cf98",
+            "entry_digest": "d7cdc3681f8f171fd3f178ea13ec2177e433dde7d89c6595c4837031891e6376",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/links-with-text.json",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "5adcf684787ba15f421c539509953696966bd88bc7d96a23a43920b4ed3212d7",
+            "entry_digest": "1809411f6f85374780cf4ac6dd5d7feb22c3bc2efbf8cd6b74565dd091ca630d",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/valid-attribute-numeric-stays-string.json",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "a18094cb264fd9ce312a87a4ab6539989bb7c7e7719c9d5a36d0064abc9a4302",
+            "entry_digest": "c04b7f50343e804b5edbccf5e5c9961dd7e11290be1f2140e04c81e33f0e4619",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/valid-axis-default.json",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "0cb166e4742898561d572bfce5c6c4749ac59112ac3963633d0903df233c69d5",
+            "entry_digest": "ea4f170247592fd7ce4601082e99376b69dc4a74668726df9eaaaf5ac6440a0b",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/valid-axis-lowercased.json",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "e919fe13e3de1be2020aed17396fa4e978c62d95875ce3917179bb9a912fe4f2",
+            "entry_digest": "63d0c0a1f13b3611a8cf6012a9f966244aea05d20c746c74c20006b86b782dd1",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/valid-bom.json",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "4c5e08d4fe149cafd2f13fc6a79a3c89c268f3ec87238132ee238fddf72a9d7c",
+            "entry_digest": "dacc826390cb13b6e30dd729a8fe47ea020fa4de06d0f5b70a37b55371d126f9",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/valid-code-block-directive-safe.json",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "1487e2c0893715ac7e121de22e614ed940854b8bc1d95e1240f512eb503034c3",
+            "entry_digest": "5f548a2d6775dbe7c14362d6e62c623c2388a46859456503771792ef20f954b0",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/valid-coordinates-attributes.json",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "43ec1558de9d6ff2ba70925124586fae2c8a7a75ea46018b012feefb1b1c2d68",
+            "entry_digest": "fc6fca75d90d5d6be3420b3f67620b2eed6bcb1056d236aa5f6db99e31e7b1fe",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/valid-crlf.json",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "790dddaa6c7e24e0c6f5b5fe4dfc8da57bd5b722cf6eabc0a7953d78c7d3cb45",
+            "entry_digest": "d03d4ce31568c5c123e523658a126c74fd8b9669621ff912ed2ef14b3cee58b1",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/valid-decimal-negative-z.json",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "ab0b35374a96bd669545da4d1a5025a6195633113825ff84a691e3656b86b9b3",
+            "entry_digest": "5f001fe856091e9ebc101898e41e5b2cf406989c907b586192e05ea9e07c3588",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/valid-empty-body.json",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "ce68084746287958a1eb52368fa6f89c54be44494ddf3e926e2e25a06366b597",
+            "entry_digest": "583708d4190f0d9b1a316ba460ce07e8c1faa298a955a099825bfd92f421a87c",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/valid-empty-plane-body.json",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "b16a6bfba45487e32edd256d93c0814679c33482120f3252648c1d8f2a99e787",
+            "entry_digest": "6dc34673657959bdbaa67a759e420bd3b3a5af5dfc152a7c72a0f97388525133",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/valid-escaped-quote-label.json",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "3ba76c9c45ea34fdd1b9454648e5174c7ac34631060ebe5a89b2917643d2f20c",
+            "entry_digest": "c709abb84aad2c01fcfe5696c9b2477b60da5f87b693384c61fd3d241ab54b36",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/valid-frontmatter-comments.json",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "0047f493c42ff14c65fd232d634d65ad5ff6e47608c5ab4b981614f18897cbed",
+            "entry_digest": "244d800b92c382652c0747066ae6315fa6678207e71221d3822b2a99d8f1e83a",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/valid-indented-directive-is-body.json",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "175f0d2f4278a9bbee7331746d0abc42576a9742fd97d33ee261f2af72eba94f",
+            "entry_digest": "cc0059f2d334e3d903444d96520258f8f605e0d0f5eb817e79bbfd534f2a908a",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/valid-leading-blank-lines.json",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "450f94b7384ca89920211481b19979d31dbcc84d873e50524b2bac3903ca08ac",
+            "entry_digest": "73a7e60dfb2eef21757fb260d13f48f314a940c653eb34487a317a6069e7770a",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/valid-metadata-key-case-preserved.json",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "0ceab4a933ac9681ffc287b44724f3d13b39d61e4fc96b413019923b87c2d1fc",
+            "entry_digest": "6930fb4f203aef9fde23b8cea3b6cc1ff942285e8decdb5aa6e08626509174b1",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/valid-multi-plane.json",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "6d0620ebcd3cddb071cac094aa0292556224f1e6c6ec276043dcf5b325991f36",
+            "entry_digest": "0eff6893fabc21f8ef72e5553f7fdad69f30ce40013f615fbe01ebdfe3a8ac27",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/valid-plane-prefix-not-directive.json",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "2fcaf6aa60e09c472d9e1510821008f1c7fb374c42039004110cfd340c334b4e",
+            "entry_digest": "c6b628a8324ac4d17ff98c30149e4aeb60dc2cc0391864f381d5df6ddae525f2",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/valid-preamble-with-planes.json",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "18f750ccb6a9cc5680c60185c565c339077ecdeaf7e1feb91d023aa53a10b398",
+            "entry_digest": "a35eb1159a1297e5ca8266ff44ff154f44fe519af61fa50b2b52bf3b6e45a914",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/valid-repeated-directive-key-last-wins.json",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "7a7387844ee6d9a677d2a3c6d3939e26d25bb00bc30c21e1183328033ec43953",
+            "entry_digest": "8763c48614a6ede2b6e996c90fafb9050ea97d0c885a80ab5f958b4ff1c43c4d",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/valid-single-plane-shorthand.json",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "4121523f91d16f670b6b1e0903fbdc5055e17210a63fcb48edc41d493cfa026f",
+            "entry_digest": "fe0f78395e84c7d83cdd8640a6ee01cd30bc29fe42ad7ea53235eb7ed6226b6f",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/valid-version-1-0.json",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "3611bda130ab75365de9c054f3bb57c8676e0625cd10468d00c54ef62f4e8c42",
+            "entry_digest": "2c9bb7db726fe9789f33fef1c295a3fc16fbb3dbd3765018c2e64a80baedb21f",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "conformance/valid-z-scientific-notation.json",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "ac8399edc03c4189386d017e4b13b469f3a7bbdea2b34760688821f9870ae7a0",
+            "entry_digest": "02af02d673b15e0d3c4efe726c7fea9db9a31c963fe54001af18b8408b96ff28",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "docs",
+            "kind": "non_file",
+            "mode": 0,
+            "payload_digest": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "entry_digest": "4b3518868771230297bcf5946ff830dab4ffc13cfc01424f4ae2e7f33d7f21f7",
+            "owners": [
+              "@exact:delivery"
+            ]
+          },
+          {
+            "path": "docs/EDITING-RELEASE.md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "f043fb9279f089989f421cfb288ab78f4c9062a50cd0e9cac21e7b471a69ed0d",
+            "entry_digest": "4422966cc7fa39349732efdfd947aea4c7e68ecc6600938ce78712ac7d24b4ae",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "docs/FILE-COMPOSITION.md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "3e1742735a71d3a9197ff10868baaec1584e6efca39479a32dc2568d320d3e3d",
+            "entry_digest": "9f5b95e04a3b72175397463f2b64605a3f27c7d2bf7a536245c40c7d34b366b2",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "docs/PROOF.md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "f0971691d5a05bf0e53159d4b89c298b46545a7d282b384e7a692c098440029d",
+            "entry_digest": "1048d755cb7fc90b7ed94b64bbaa3faed25361b5249fb7449b40733417eca6a7",
+            "owners": [
+              "@exact:delivery"
+            ]
+          },
+          {
+            "path": "docs/PROPOSALS.md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "1a205ee18862042719fa119e4eab07cccf9201010d260e84382c7250e9022528",
+            "entry_digest": "6e15e83c73982dccdc9945c12c1dff2db40e2a651b405b94db9aa7fa9d752d91",
+            "owners": [
+              "@exact:delivery"
+            ]
+          },
+          {
+            "path": "docs/RELEASE-2.0.0.md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "0e67dd7d4e15519ca845afdf242f9a1a5c925573a15ce7d8a2900846812db366",
+            "entry_digest": "a513d2f95bdafa232efff7279cb7a7dda608930b083de177eee6d39c012d1c4b",
+            "owners": [
+              "@exact:delivery"
+            ]
+          },
+          {
+            "path": "docs/demo.png",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "f8ec64f06d03f25b12fa1ebcfba346020eae54fa56bf8be730a5e2c2828cf829",
+            "entry_digest": "1655e01de14f166987c95aba93baced500e0b25bea004efc46953415fb641f38",
+            "owners": [
+              "@exact:delivery"
+            ]
+          },
+          {
+            "path": "docs/evidence/file-composition/README.md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "c921e1f9dc5525ef49f1df378640409dcb6b6e9f9ff007a4c777ba25c01fd9d2",
+            "entry_digest": "0cf29b61f375d55d42d4130909409dc6da26709a6fcdec984edc96115e1fe911",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "docs/evidence/file-composition/claude-intake-recheck-receipt.json",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "9ac27dc8d5943c45778e6d87ee138f68502213216f926e9cc0ea46b114b08de5",
+            "entry_digest": "c829fd5c36d04e3e1cd39b91cb5af374128ea074e1d0772b638654f2f9764b8a",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "docs/evidence/file-composition/claude-protocol-final-review-receipt.json",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "a881639856d5e1db3c658b75211f09d30e97bc2c18c6386fdbc0b664a1a41ee4",
+            "entry_digest": "647535f56d37d0ba0ca66d9130e5e22e750d6be8e6034eaa48e5b043165c1092",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "docs/evidence/file-composition/claude-recheck-receipt.json",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "9ed2284d62832f8f492707489dd5caf2447cc91866789ac5acf872a289d32558",
+            "entry_digest": "39ba2f01c63ab62bbab947f2b21622064b0e442873de1ef63e742ba92f354e83",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "docs/evidence/file-composition/claude-review-receipt.json",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "1f58341a3dd562143c388951c7ce30fe62cd928070f34eec191f62169c186f69",
+            "entry_digest": "613594492d3b2f4854c65abd96b1c0835717b602a3c8baafc7d3ae18ef322d7d",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "docs/evidence/file-composition/claude-triage.md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "664109dcad468c6690e533485498fca300050aa7f30e132331d11a8695402770",
+            "entry_digest": "f0a53a6cba7bfd868dd9a71d0ed565b283e3097f136e0a77d7e26696d63391ee",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "docs/evidence/file-composition/host-probe.log",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "d833931c151938f0b1ec294541a6ede3b1e4c81071c12f7a63599be49bc4377d",
+            "entry_digest": "71262766f61e1bde7b83c011751312c4c1ef9c90683803ab012787c43ab9e0bc",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "docs/evidence/file-composition/host-probe.swift",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "fc40edd519754a6a81739c7b9776f1139f1844b1037eb175f7fe83ccbba84d78",
+            "entry_digest": "5ef7ca4901c6aba14ce5f784010273e2340606807d094b2abbe20526225d7a95",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "docs/evidence/file-composition/repair-bundle-initial.log",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "a1b96a7c9499edacf8ab8dc4025cd80b9e703513dfb05382cb63ab6e3e3e7f93",
+            "entry_digest": "25a966fe631b38d877156715c1280a5adef99d9f54cbcb1651c481392c405fbb",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "docs/evidence/file-composition/repair-final-host-probe.log",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "e4294ca7183598a8ff6c56a334f9b5bba1c33a2e1657d7c6ac9027cc252b8ce5",
+            "entry_digest": "30135651d5ba91aa6b0c8d9ae5fdcf494bfab68f9eed81cd7fce4fa34f25d20e",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "docs/evidence/file-composition/repair-final-trust.log",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "8bc6a9421b114b9ae7b7dbded0261d0b578f42fed9c84a07e60b96b7d16c302a",
+            "entry_digest": "4a576b64052248d9d9cc20075d3865c3bbd73cb4894ee8625aee71d7a60f2b88",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "docs/evidence/file-composition/repair-first-pass.log",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "5f24f435aa42819e99172a215068633a8c6e0aae83562c2e061ce1601f074997",
+            "entry_digest": "cd130713fa9fa58756fc80c7f78836633494e4b393e37387ee9348f8b8da4b2f",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "docs/evidence/file-composition/repair-malformed-source-matrix.log",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "c12471f8a490febd9ca1a0bd43bcd6981ab8c0cfc8886265cc9b51abb3e748f3",
+            "entry_digest": "ef04844188d7b43a35e2cc70e3d1cddb069f6ff7e02cccd1d360ebedd192e88d",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "docs/evidence/file-composition/repair-typecheck-initial.log",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "53db3aa59bc114b47ab2fde7e05e56a7e5324b4cb950258c9d417e7e543722e8",
+            "entry_digest": "40c37ca1ed58ad84c8f364128ebc2739979d0704a96013f8c189d47c445df5c1",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "docs/evidence/file-composition/trust.log",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "460489e63d4ea9c70f609356e00cf8a9fdd53f6ce0cc6930596f759d6f0d5215",
+            "entry_digest": "e86796605e89407891a5d5525e0d180e6ffe8df5e2538b7f0b66157bb18976f4",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "docs/evidence/workflow-permissions-archive/README.md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "9e64e4c41340d561eeb53e7f450afacb95700cb48746b0d2d0957528000ca074",
+            "entry_digest": "cee761a0480270a8509074e3053018e0413b0cb64ce11b4e620f8a84cdc794dd",
+            "owners": [
+              "@exact:delivery"
+            ]
+          },
+          {
+            "path": "docs/evidence/workflow-permissions-archive/verification.json",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "3779543b719957e79b8589577a091673501131a10b64700c9138455f90e07077",
+            "entry_digest": "f93b92b73e1d45b43b0efc3ecab5482b3fc1119851d87054487f095be25b069c",
+            "owners": [
+              "@exact:delivery"
+            ]
+          },
+          {
+            "path": "docs/social-preview.png",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "146f9ee1948871c56eb0c9c0f791d3c9cbc468a8bdb23be9b1967edd416f538f",
+            "entry_digest": "4d48c24f0ec6323f80aa8750e1b4c2766544c3eaaa80e31bcc89fc07038b0f3b",
+            "owners": [
+              "@exact:delivery"
+            ]
+          },
+          {
+            "path": "js",
+            "kind": "non_file",
+            "mode": 0,
+            "payload_digest": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "entry_digest": "bdb80a6caf02db2b1587fd4ef7e0f604aa8a9a293744c364ef92af86e675e8f5",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "js/README.md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "491292b8a46a5a48e78b8daba99355efe634521a343c9a20651acb4118d50df1",
+            "entry_digest": "619e472ddecaca849172d6e04f39aa1abfeb8e4c2abb897923eb419eef93ccc2",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "js/bun.lock",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "ef2584cd31d3703d47e0907ddb63582c841c094788375ecbd3566bff7f0ec27c",
+            "entry_digest": "16e459fdbf63b89509a5c74730fb95933254bede2eedbb618b67026afdd7b930",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "js/package.json",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "120153eb96630e01da8feca4d5413415647a89ece64f5699588b0c8ca0662791",
+            "entry_digest": "654df17f8c8a9f96883848e2e2333c9e17eeb2f3deed21cb30a893786ba8ef08",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "js/scripts/interchange.mjs",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "baa74e34f942f6478c9948c6d34d303abc798fff3ad99efe02749e9d490c5623",
+            "entry_digest": "35d473c07c2a554d4f9aa222068ec3f8c2bb2e82b9ae5074aa425b4ba0676aa7",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "js/src/composition.ts",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "30f463d30216c2a1a9c2bbdc107584021c6a6dab0bc8630bcfd652f61b3771e9",
+            "entry_digest": "ed56baf7e53d56259ec03ac36ed2b03104aba51a2395de2242ec6965a3631e5c",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "js/src/editing.ts",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "d4a14b417323fe826dc02dd7b186e585004ab56e9416118b23050c947461ead4",
+            "entry_digest": "13152f3c06551f61d161352c8054f4ccc4feec4b02c5f131dbb4859e00be80c5",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "js/src/file-composition.ts",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "24ebd2e5dbdf395c5ed666a8e8dd5aabd5d49a665c903dd70f34d56afe8a6d13",
+            "entry_digest": "6a17b50e92ac86817e5f336c42d8255d8ba71c1b32831aca14e0981c56fe8c3b",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "js/src/index.ts",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "90975cfd7a58e74e9d0f0e958fbfae906576b20b79c5e23b00c60b06617a5b8f",
+            "entry_digest": "7b1951e48251e28d5d762c325e8394e561cfc1a97ae5e67f4c66a5aa536ba6a0",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "js/src/portable.ts",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "6d918bfea93ce802b9213848209a1d19151ad432eb4b3d5a861aa8a81c087a44",
+            "entry_digest": "069a2fd276a21390a4138be8e9ef7f79e04e6a8435c8a37a757e205157071130",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "js/src/storage.ts",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "70894f4b91b55df19e3341bd26e523efb7e14b1fc183b673db042fc1ffcf3e29",
+            "entry_digest": "2efadc511133f003df0cd68f09dc84f621197c4bdd42b0ccde0a5ab4d9706f84",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "js/test/composition.test.ts",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "754419346c59ab2dc8eae77d51442758f96d6d36db8d3d9268a8d319f611b393",
+            "entry_digest": "6496288d3108b66bedaab7c168c2abc4e2005b9822bd18d8ecc89767c8401a2c",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "js/test/conformance.test.ts",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "be6c2b29058074ff02ec173c8e0eb6e4d4dc2a68980c2a18de98d13496ccd6f5",
+            "entry_digest": "171f491a7502b3063ff5fd264c97314804e1b2155cbc12f92641902b96a6f5d6",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "js/test/editing.test.ts",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "683cb0f100b2805f5ab8ff69691e66b06f8be05d01b37a2415f9f77e459cd486",
+            "entry_digest": "c5674f9d19f63deb0be6ba8970e20b7d4beb356e78d7c3c739d51dc65a3f5bf2",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "js/test/extensions.test.ts",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "6f0e312641b79e4d42ac391f83a906b819a9eed8a7c0d8140e23d5c88e8442c3",
+            "entry_digest": "c2fbdff8d4b6bbe318ede7b63a590bf3d8453abad91a442b48662a1173b2ee71",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "js/test/file-composition.test.ts",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "95e5ac37b6e6cdad233d4f952a4f68ee2d3536ca1433f6d1c3a1b9f5f0705d3e",
+            "entry_digest": "845a8b9b618d971cc3dd99164e8a51e2080a7c39c9aae982bd14de18e013606f",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "js/test/interchange.test.ts",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "8eeb7378e6fc77a7c277be3f1094294724470cf4d88906534bd05fe03c3429e2",
+            "entry_digest": "6cd4fb876f214566c6ca1fdca51e6d7d11eeb178f1dca53f4e0bdea3ae3d4d8a",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "js/test/links.test.ts",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "35f9743413b196e6d78e5d66e7e112588a49dc93f8507ec57f1526bf4f0e89d1",
+            "entry_digest": "047e372f273975ba4613783be53d920c0af0d26002640106b874a5b4aeadfaab",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "js/test/storage.test.ts",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "bddd5720da13383d03295bc554c3ee50c1542d95f6496a9c4bfb9efd5f7e41b7",
+            "entry_digest": "330e41fdd23c4106da2b9fd6dcb760eda05566cdd4d8973dcbfe7400482f28f5",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "js/tsconfig.build.json",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "8f8484d107365533c362efec9858b380827937ab52901fdcc81f81af0b6254ba",
+            "entry_digest": "9bf6584af4c670f80c8d31a35f8869a2bc23aabe2788f8203cfdb3e01cdf985a",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "js/tsconfig.json",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "17d24709fa3713ff2b18bf5d39635acc39aec2b903a5cdb206dc067170fe7fdc",
+            "entry_digest": "87d851706d67ee0f1478d64086276a3328ef5679f43c67c06157699ee3e90786",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "rust",
+            "kind": "non_file",
+            "mode": 0,
+            "payload_digest": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "entry_digest": "7689f76c80e196f31a0107e1314c2c2c5ef8f32d38b205b7675f9e683e618ad5",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "rust/Cargo.lock",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "8899ed45c9b83e25dafdd1788307dd00ab21daad7b040f2bae522fe64e59615c",
+            "entry_digest": "7dfb03028f45193ed5dff85dfd6c9a7cff0c38371a15096e502a426f0dd018b6",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "rust/Cargo.toml",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "171cd32dea358bc6652d79506373d3f65ed1fff2ec9898844cfc9f7f2194d475",
+            "entry_digest": "af93368a442163111484d3f3d056927052927acfea0f6b05ffee767c63e2148c",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "rust/examples/interchange.rs",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "4346bddf3ac2c8b4bfc81c68a6a81036070f1b1356fbd9ee48fc1e70b193a445",
+            "entry_digest": "0ee6a9e55bf6eb040257e92e042b672376520d68e1facaaba4aa1933154c0922",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "rust/src/composition.rs",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "b92fe0a1390ae5a08b8514616fae4f269f869bfd561a61e5f244b0be10e5bc29",
+            "entry_digest": "8a649bf0b124c630e3c48ddc8f1cd6c6a7883c33f3e0945ca33850f8a29c5280",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "rust/src/diagnostics.rs",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "0402502a9166cb5202e9e44799f079b042f32c6d63e5871d19dd967caefc43bb",
+            "entry_digest": "2baf9c801e14f347e8ba5c207703eb5c5178f5a37d409798fac90b9236278aac",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "rust/src/editing.rs",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "2cd5120e4aae5af06ee4d3dc43caea999ee8aed61e89f83bf3b68c2233c5b8f3",
+            "entry_digest": "e8765a4b4f27c9f976bf542e014bb6d474bc3469e11113db476e654ce04c9ed2",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "rust/src/file_composition.rs",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "3ed18375adbee207dbf6d32d8c5df6d2512acfb603220ef404aad17ca1d4347c",
+            "entry_digest": "31d27bd66d7dd8950567396966cc5255821bc5a4baceaff87ff6d2f86a7de6fc",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "rust/src/lib.rs",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "f1860c91b783bb611b3c5e0aa565e06d5602fe7c31853f6249539d43da9b5e9a",
+            "entry_digest": "eddcc59c90a2ebe7484c592da43cde73aebf75d83cfa1cd74b86abdd7c28d295",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "rust/src/storage.rs",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "b2ef077757fdab44f73891946f39b42f6b4ab826f4fb2676aa207ef84aeba47c",
+            "entry_digest": "20ed1414d2fc88c1937f1229c4a8e80620e64c265d0d40797d383059042da365",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "rust/tests/conformance.rs",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "badc2b2b515b6839bb00581d55c56c68f14fa0733d508ee5f00516daf590adea",
+            "entry_digest": "76b4de45340dd828c8132c863f0181cd4d89ead28028e53e1573da94758e10e6",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "rust/tests/editing.rs",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "d9a473315ce373d4d1f96dd42fbddab7fcb3d4d74394837659c2fc86cfa2c29e",
+            "entry_digest": "e428d71d52c05185e400a9090f6c265f3bca99c754c88e34a43452d723cb617e",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "rust/tests/extensions.rs",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "988349b852b615ae3359eb7a903223eff9a4d4f6986f7117360d5fe032ff1491",
+            "entry_digest": "8b701c2722018970b8190c1d05ea64893e7812961a44b8418311c5bed746ae13",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "rust/tests/file_composition.rs",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "f0886f411ac16f3b2aed9a8ff37623e03101220e56f073d382704820a9fd0e33",
+            "entry_digest": "eaf8ec2dd7f81fd372e3ab380ee3949ed3fe906aa1a2eb7ad8f409d07665da6a",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "rust/tests/interchange.rs",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "621de9c595854a353379986531b36904c0be7b35dc9d4f48f346cd298669621a",
+            "entry_digest": "3649f2faae2285f92e6ac15d23045816558b4f2b5e78e38f35a1cb7c16075537",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "scripts",
+            "kind": "non_file",
+            "mode": 0,
+            "payload_digest": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "entry_digest": "864e9a2192f831be5f2ad86c78e332ef57a496aa26aa0a96b99b52455cb13401",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "scripts/build-docs-3md.mjs",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "3644c778c5c94416bd8ed9bd5bfc0987fcad3ee2f8298fc7b030c1b43202b0a6",
+            "entry_digest": "e7c659a2aa3549fb454f71e014c4a98a2d2d62351b2648f0038888b124292a14",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "scripts/build-examples-gallery.mjs",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "17dd11d5be94c16b27ddbf26a163c2194325864a25ca53b18c3d026b89ad7957",
+            "entry_digest": "ba59b9c258269b2c8da070c9b60057f7d5f151fa36493dcdb0ec7e674cfbfde4",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "scripts/build-gallery-data.mjs",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "e31be9b95b40f304e432f1a6354e18dfeb7f5f1ac2399a220b6f8a91f7e5a712",
+            "entry_digest": "ef416bed9fb25b6940b6ef955ce9d620a157e1d8ba2676eda6e5e91c58da6d3b",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "scripts/check-element-bundle.mjs",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "a2e17f27d7bbf96d267f68fc64a1444bbf9d17242d8a90210497374ac7c2e6b1",
+            "entry_digest": "8de3fd4d59bda47602920e0127e505f188d92e95777a754f6208b8bb2b32b00b",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "specs/ThreeMD/ThreeMD.spec.md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "e49f9931990a731d0c590063f97bd974e5ea6cedbdb1d87861274ea04d1b58e6",
+            "entry_digest": "fbeefe75d79ddf30a80be16a4efcbb3ced3a6954310beb8f39e05e8f01c227ff",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "specs/ThreeMD/context.md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "e2dd8543c2c3373dd6d7bdffa0a4530c725da3c6954cc087ac96689b420d7af9",
+            "entry_digest": "488741a2341d94cc062f337d40a5521693beb9c39eee08cae87b86381f8e1c73",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "specs/ThreeMD/requirements.md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "9c6c41aaa775030a7eb67266a85e15f5cc0684d7cfa39cf75fca475158f5e720",
+            "entry_digest": "249e81b9e21abd8434c67ad45784b4809d45412cc89e519c553bb10ea41fdaef",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "specs/ThreeMD/tasks.md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "9764f36441dd07f5ac719346c72c09e83e2afdd0543be2569e18954c9ab5e903",
+            "entry_digest": "9c3747c84319ed7506789965e3686a46a4aaf1820a52af9acdd7b2f45896954a",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "specs/ThreeMD/testing.md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "fa08d61ce136ee4d66abc5d1525cd2ec4a51b5e09ec7d4b2c9f7026f56a44a58",
+            "entry_digest": "6abe3dd24d99a5c424b9e434c1ef2dfde2a07634e5550fc78789e92a3ee5a179",
+            "owners": [
+              "ThreeMD"
+            ]
+          }
+        ]
+      },
+      "passed": true,
+      "commands": [
+        {
+          "command": "specsync check --spec ThreeMD --strict",
+          "success": true,
+          "exit_code": 0
+        }
+      ],
+      "requirement_ids": [
+        "REQ-ThreeMD-035"
+      ]
+    }
+  ]
+}

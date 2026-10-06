@@ -1,6 +1,6 @@
 ---
 id: add-linked-file-composition-with-a-glyph-ledger-recursive-supplied-file-resolution-and-portable-self-contained-bundling
-state: implementing
+state: archived
 type: feature
 base_commit: be41af523aecf041202a06d4c83471b19e09b275
 ---
