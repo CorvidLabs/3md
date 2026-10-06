@@ -180,7 +180,7 @@ final class DocumentFileCompositionTests: XCTestCase {
         ) { XCTAssertEqual($0 as? DocumentStorageError, .oversizedRecord) }
     }
 
-    func testCachedDepthFailurePrecedesLaterMissingFile() throws {
+    func testDiscoveryMissingFilePrecedesUnvalidatedFinalGraphDepth() throws {
         let sources = try [
             source("root", document(metadata: ["3md-files": #"{"1":"short","2":"long"}"#])),
             source("short", document(metadata: ["3md-files": #"{"1":"leaf"}"#])),
@@ -194,7 +194,96 @@ final class DocumentFileCompositionTests: XCTestCase {
                 limits: .init(maximumDepth: 3)
             )
         ) { error in
-            XCTAssertEqual(error as? DocumentCompositionError, .depthExceeded)
+            XCTAssertEqual(error as? DocumentFileCompositionError, .missingFile("missing"))
+        }
+    }
+
+    func testOuterRecognitionDoesNotUseCallerPlaneLimitBeforeByteAndLinePolicies() throws {
+        let value = Document(version: "1.0", axis: .space, planes: [Plane(z: 0, body: "A"), Plane(z: 1, body: "B")])
+        for binary in [false, true] {
+            let input = try source("root", value, binary: binary)
+            let policies: [(DocumentDecodeLimits, DocumentStorageError)] = [
+                (try .init(maximumEncodedBytes: 1, maximumPlanes: 1), .oversizedInput),
+                (try .init(maximumDecodedBytes: 1, maximumPlanes: 1), .oversizedOutput),
+                (try .init(maximumLines: 1, maximumPlanes: 1), .tooManyLines),
+            ]
+            for (policy, expected) in policies {
+                XCTAssertThrowsError(
+                    try DocumentFileComposition.resolve(rootPath: "root", sources: [input], documentLimits: policy)
+                ) {
+                    XCTAssertEqual($0 as? DocumentStorageError, expected)
+                }
+            }
+        }
+    }
+
+    func testDisconnectedEmbeddedLedgerUsesActualEntryDepthAndRepeatedCachedFiles() throws {
+        let embedded = try DocumentComposition(
+            rootID: "r",
+            entries: [
+                .init(id: "r", document: document(title: "Root")),
+                .init(id: "u", document: document(metadata: ["3md-files": #"{"1":"x"}"#])),
+            ]
+        )
+        let sources = try [
+            source("root", document(metadata: ["3md-files": #"{"1":"bundle","2":"bundle"}"#])),
+            DocumentFileSource(path: "bundle", data: DocumentCompositionCodec.encode(embedded)),
+            source("x", document(title: "Disconnected child")),
+        ]
+        let result = try DocumentFileComposition.resolve(
+            rootPath: "root",
+            sources: sources,
+            limits: .init(maximumDepth: 2)
+        )
+        XCTAssertEqual(result.composition.entries.count, 4)
+        XCTAssertEqual(result.resolvedPaths, ["bundle", "root", "x"])
+        XCTAssertEqual(result.composition.rootEntry.references.map(\.targetID), ["file-000000", "file-000000"])
+        XCTAssertEqual(result.composition.entry(id: "file-000001")?.references.first?.targetID, "file-000003")
+    }
+
+    func testRepeatedCachedFilesAreStillCheckedAgainstFinalCompleteEntryDepth() throws {
+        let sources = try [
+            source("root", document(metadata: ["3md-files": #"{"1":"short","2":"long"}"#])),
+            source("short", document(metadata: ["3md-files": #"{"1":"leaf"}"#])),
+            source("long", document(metadata: ["3md-files": #"{"1":"short","2":"short"}"#])),
+            source("leaf", document()),
+        ]
+        assertCompositionFailure(.depthExceeded) {
+            try DocumentFileComposition.resolve(rootPath: "root", sources: sources, limits: .init(maximumDepth: 3))
+        }
+        let valid = try DocumentFileComposition.resolve(
+            rootPath: "root",
+            sources: sources,
+            limits: .init(maximumDepth: 4)
+        )
+        XCTAssertEqual(valid.composition.entries.count, 4)
+        XCTAssertEqual(
+            valid.composition.entry(id: "file-000001")?.references.map(\.targetID),
+            ["file-000003", "file-000003"]
+        )
+    }
+
+    func testFixedFileDiscoverySafetyCeilingRemainsBoundedForDisconnectedEntries() throws {
+        func files(_ count: Int) throws -> [DocumentFileSource] {
+            try (0..<count).map { index in
+                let metadata = index + 1 < count ? ["3md-files": "{\"1\":\"f\(index + 1)\"}"] : [:]
+                let graph = try DocumentComposition(
+                    rootID: "r",
+                    entries: [
+                        .init(id: "r", document: document()), .init(id: "u", document: document(metadata: metadata)),
+                    ]
+                )
+                return .init(path: "f\(index)", data: try DocumentCompositionCodec.encode(graph))
+            }
+        }
+        let valid = try DocumentFileComposition.resolve(
+            rootPath: "f0",
+            sources: files(64),
+            limits: .init(maximumDepth: 2)
+        )
+        XCTAssertEqual(valid.composition.entries.count, 128)
+        assertCompositionFailure(.depthExceeded) {
+            try DocumentFileComposition.resolve(rootPath: "f0", sources: files(65), limits: .init(maximumDepth: 2))
         }
     }
 
@@ -256,7 +345,8 @@ final class DocumentFileCompositionTests: XCTestCase {
     func testLedgerRejectsDuplicateEscapedKeysAndMalformedValuesAndGlyphs() throws {
         for ledger in [
             #"{"1":"x","\u0031":"y"}"#, #"{"1":false}"#, #"{"1":{}}"#, #"{"1":"x",}"#, #"[]"#, #"{"1":"\q"}"#,
-            #"{"1":"x"} trailing"#,
+            #"{"1":"x"} trailing"#, #"{"1":"\ud800"}"#, #"{"1":"\udc00"}"#,
+            "{\"1\":\"a\u{01}b\"}", "{\"1\":\"a\tb\"}",
         ] {
             XCTAssertThrowsError(try DocumentFileComposition.ledger(in: document(metadata: ["3md-files": ledger]))) {
                 guard case .invalidLedger = $0 as? DocumentFileCompositionError else {

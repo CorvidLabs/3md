@@ -348,6 +348,8 @@ fn ledger_is_strict_json_with_ascii_glyph_validation_before_duplicate_checks() {
         r#"{"1":"\udc00"}"#,
         r#"{"1":"\q"}"#,
         "{\"1\":\"a\nb\"}",
+        "{\"1\":\"a\u{01}b\"}",
+        "{\"1\":\"a\tb\"}",
     ] {
         assert!(
             matches!(
@@ -555,7 +557,7 @@ fn supplied_and_resolved_policies_are_checked_before_returning_a_bundle() {
 }
 
 #[test]
-fn depth_checks_include_cached_dependencies_and_cancelled_operations_are_atomic() {
+fn final_depth_checks_include_cached_dependencies_and_cancelled_operations_are_atomic() {
     let sources = vec![
         source("root", &document("Root", Some(r#"{"1":"a","2":"b"}"#))),
         source("a", &document("A", None)),
@@ -592,4 +594,177 @@ fn depth_checks_include_cached_dependencies_and_cancelled_operations_are_atomic(
             .len(),
         3
     );
+}
+
+#[test]
+fn outer_recognition_preserves_child_byte_and_line_policy_precedence_over_planes() {
+    let value = parse("---\n3md: 1\naxis: space\n---\n@plane z=0\nA\n@plane z=1\nB\n").unwrap();
+    for format in [
+        DocumentStorageFormat::Text,
+        DocumentStorageFormat::Binary(DocumentCompression::None),
+    ] {
+        let input = DocumentFileSource {
+            path: "root".into(),
+            data: storage::encode(&value, format, &limits(), &options()).unwrap(),
+        };
+        let policies = [
+            (
+                DocumentDecodeLimits {
+                    maximum_encoded_bytes: 1,
+                    maximum_planes: 1,
+                    ..limits()
+                },
+                DocumentStorageError::OversizedInput,
+            ),
+            (
+                DocumentDecodeLimits {
+                    maximum_decoded_bytes: 1,
+                    maximum_planes: 1,
+                    ..limits()
+                },
+                DocumentStorageError::OversizedOutput,
+            ),
+            (
+                DocumentDecodeLimits {
+                    maximum_lines: 1,
+                    maximum_planes: 1,
+                    ..limits()
+                },
+                DocumentStorageError::TooManyLines,
+            ),
+        ];
+        for (policy, expected) in policies {
+            let error = file_composition::resolve(
+                "root",
+                std::slice::from_ref(&input),
+                &graph_limits(),
+                &policy,
+                &options(),
+            )
+            .unwrap_err();
+            assert_eq!(error, Error::Storage(expected));
+        }
+    }
+}
+
+#[test]
+fn disconnected_embedded_ledgers_use_actual_entry_depth_and_repeated_cached_files() {
+    let embedded = graph(vec![
+        entry("root", document("Root", None), vec![]),
+        entry("unused", document("Unused", Some(r#"{"1":"x"}"#)), vec![]),
+    ]);
+    let sources = vec![
+        source(
+            "root",
+            &document("Parent", Some(r#"{"1":"bundle","2":"bundle"}"#)),
+        ),
+        graph_source("bundle", &embedded, false),
+        source("x", &document("Child", None)),
+    ];
+    let mut policy = graph_limits();
+    policy.maximum_depth = 2;
+    let result =
+        file_composition::resolve("root", &sources, &policy, &limits(), &options()).unwrap();
+    assert_eq!(result.resolved_paths, ["bundle", "root", "x"]);
+    assert_eq!(result.composition.entries().len(), 4);
+    assert_eq!(
+        result
+            .composition
+            .root_entry()
+            .references
+            .iter()
+            .map(|value| value.target_id.as_str())
+            .collect::<Vec<_>>(),
+        ["file-000000", "file-000000"]
+    );
+    assert_eq!(
+        result.composition.entry("file-000001").unwrap().references[0].target_id,
+        "file-000003"
+    );
+}
+
+#[test]
+fn repeated_cached_files_validate_final_depth_and_missing_discovery_precedence() {
+    let mut sources = vec![
+        source(
+            "root",
+            &document("Root", Some(r#"{"1":"short","2":"long"}"#)),
+        ),
+        source("short", &document("Short", Some(r#"{"1":"leaf"}"#))),
+        source(
+            "long",
+            &document("Long", Some(r#"{"1":"short","2":"short"}"#)),
+        ),
+        source("leaf", &document("Leaf", None)),
+    ];
+    let mut policy = graph_limits();
+    policy.maximum_depth = 3;
+    assert!(matches!(
+        file_composition::resolve("root", &sources, &policy, &limits(), &options()),
+        Err(Error::Composition(DocumentCompositionError::DepthExceeded))
+    ));
+    policy.maximum_depth = 4;
+    let result =
+        file_composition::resolve("root", &sources, &policy, &limits(), &options()).unwrap();
+    assert_eq!(result.composition.entries().len(), 4);
+    assert_eq!(
+        result
+            .composition
+            .entry("file-000001")
+            .unwrap()
+            .references
+            .iter()
+            .map(|value| value.target_id.as_str())
+            .collect::<Vec<_>>(),
+        ["file-000003", "file-000003"]
+    );
+    sources[2] = source(
+        "long",
+        &document("Long", Some(r#"{"1":"short","2":"missing"}"#)),
+    );
+    policy.maximum_depth = 3;
+    assert!(
+        matches!(file_composition::resolve("root", &sources, &policy, &limits(), &options()), Err(Error::MissingFile(path)) if path == "missing")
+    );
+}
+
+#[test]
+fn fixed_file_discovery_ceiling_bounds_disconnected_chains() {
+    let files = |count: usize| -> Vec<DocumentFileSource> {
+        (0..count)
+            .map(|index| {
+                let ledger = format!(r#"{{"1":"f{}"}}"#, index + 1);
+                let bundle = graph(vec![
+                    entry("root", document("Root", None), vec![]),
+                    entry(
+                        "unused",
+                        document(
+                            "Unused",
+                            if index + 1 < count {
+                                Some(&ledger)
+                            } else {
+                                None
+                            },
+                        ),
+                        vec![],
+                    ),
+                ]);
+                graph_source(&format!("f{index}"), &bundle, false)
+            })
+            .collect()
+    };
+    let mut policy = graph_limits();
+    policy.maximum_depth = 2;
+    assert_eq!(
+        file_composition::resolve("f0", &files(64), &policy, &limits(), &options())
+            .unwrap()
+            .composition
+            .entries()
+            .len(),
+        128
+    );
+    assert!(matches!(
+        file_composition::resolve("f0", &files(65), &policy, &limits(), &options()),
+        Err(Error::Composition(DocumentCompositionError::DepthExceeded))
+    ));
 }

@@ -45,6 +45,7 @@ internal struct DocumentFileLedgerScanner {
             if index.isMultiple(of: 4_096) { try DocumentStorageCancellation.check() }
             let byte = bytes[index]
             index += 1
+            guard byte >= 32 else { throw DocumentFileCompositionError.invalidLedger("unescaped JSON control") }
             if byte == 34 {
                 do { return try JSONDecoder().decode(String.self, from: Data(bytes[start..<index])) } catch {
                     throw DocumentFileCompositionError.invalidLedger("malformed JSON string")

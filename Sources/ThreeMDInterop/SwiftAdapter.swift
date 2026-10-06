@@ -77,6 +77,9 @@ private func filesInterchange(_ data: Data) throws -> InterchangeResponse {
         let rootValue = manifest["rootPath"], case .string(let rootPath) = rootValue,
         let filesValue = manifest["files"], case .array(let files) = filesValue
     else { throw InterchangeAdapterError.invalidFilesRequest }
+    guard files.count <= DocumentCompositionLimits.standard.maximumDefinitions else {
+        throw DocumentFileCompositionError.inputLimit
+    }
     let sources = try files.map { value -> DocumentFileSource in
         guard case .object(let file) = value,
             Set(file.keys) == ["path", "bytesHex"],

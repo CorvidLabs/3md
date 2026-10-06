@@ -283,7 +283,8 @@ private final class InterchangeCoordinator {
                     expectedCanonical: nil,
                     expectedBinary: nil,
                     expectedError: fixture.expectedError,
-                    expectedZBits: nil
+                    expectedZBits: nil,
+                    expectedSemantic: fixture.expectedSemantic
                 )
             )
         }

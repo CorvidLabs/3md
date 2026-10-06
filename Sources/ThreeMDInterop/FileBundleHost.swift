@@ -94,7 +94,9 @@ enum FileBundleHost {
             information.st_mode & mode_t(S_IFMT) == mode_t(S_IFDIR)
         else {
             _ = close(descriptor)
-            throw InterchangeFailure.invalid("Choose a regular project or output directory without symlinks")
+            throw InterchangeFailure.invalid(
+                "Choose a readable directory; the selected directory itself cannot be a symlink"
+            )
         }
         return descriptor
     }
@@ -117,7 +119,7 @@ enum FileBundleHost {
             parent = next
             ownsParent = true
         }
-        let descriptor = openat(parent, filename, O_RDONLY | O_NOFOLLOW | O_NONBLOCK | O_CLOEXEC)
+        let descriptor = openat(parent, filename, O_RDONLY | O_NOFOLLOW | O_NONBLOCK | O_NOCTTY | O_CLOEXEC)
         guard descriptor >= 0 else { throw systemFailure("Cannot open source: " + path) }
         defer { _ = close(descriptor) }
         var information = stat()

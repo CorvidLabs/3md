@@ -13,6 +13,10 @@ export interface DocumentFileCompositionResult {
   readonly fileRootIDs: Readonly<Record<string, string>>;
   readonly resolvedPaths: readonly string[];
 }
+
+// Disconnected embedded entries may discover files without extending the final root graph path.
+// Keep recursion independently bounded; caller graph depth applies after entry remapping.
+const maximumFileDiscoveryDepth = DocumentCompositionLimits.standard.maximumDepth;
 export type DocumentFileCompositionErrorCode = "invalidPath" | "duplicatePath" | "invalidLedger" |
   "invalidGlyph" | "missingFile" | "inputLimit";
 export class DocumentFileCompositionError extends Error {
@@ -199,10 +203,12 @@ export class DocumentFileComposition {
       if (active.has(path)) throw new DocumentCompositionError("cycle", path);
       const prior = files.get(path);
       if (prior !== undefined) {
-        if (prior.depth > limits.maximumDepth - activeDepth) throw new DocumentCompositionError("depthExceeded");
+        if (activeDepth >= maximumFileDiscoveryDepth || prior.depth > maximumFileDiscoveryDepth - activeDepth) {
+          throw new DocumentCompositionError("depthExceeded");
+        }
         return prior;
       }
-      if (activeDepth >= limits.maximumDepth) throw new DocumentCompositionError("depthExceeded");
+      if (activeDepth >= maximumFileDiscoveryDepth) throw new DocumentCompositionError("depthExceeded");
       const source = index.get(path);
       if (source === undefined) throw new DocumentFileCompositionError("missingFile", path);
       if (source.data.byteLength > limits.maximumProfileBytes - encodedBytes) throw new DocumentFileCompositionError("inputLimit");
@@ -231,7 +237,7 @@ export class DocumentFileComposition {
           const childPath = this.resolvePath(reference.source, path, signal);
           const child = visit(childPath, activeDepth + 1);
           depth = Math.max(depth, child.depth + 1);
-          if (depth > limits.maximumDepth) throw new DocumentCompositionError("depthExceeded");
+          if (depth > maximumFileDiscoveryDepth) throw new DocumentCompositionError("depthExceeded");
           resolved.push({ glyph: reference.glyph, path: childPath });
         }
         links.set(entry.id, resolved);

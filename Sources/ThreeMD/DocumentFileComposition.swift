@@ -175,6 +175,9 @@ public enum DocumentFileComposition {
     }
 
     private struct FileResolver {
+        // File dependencies can originate in disconnected imported entries. This fixed safety cap
+        // bounds discovery recursion; the caller's graph depth is validated after entry remapping.
+        private static let maximumDiscoveryDepth = DocumentCompositionLimits.standard.maximumDepth
         let sources: [String: Data]
         let limits: DocumentCompositionLimits
         let documentLimits: DocumentDecodeLimits
@@ -193,9 +196,9 @@ public enum DocumentFileComposition {
         mutating func discover(_ path: String, depth: Int) throws -> LocalFile {
             try DocumentStorageCancellation.check()
             guard !visiting.contains(path) else { throw DocumentCompositionError.cycle(path) }
-            guard depth <= limits.maximumDepth else { throw DocumentCompositionError.depthExceeded }
+            guard depth <= Self.maximumDiscoveryDepth else { throw DocumentCompositionError.depthExceeded }
             if let file = files[path] {
-                guard file.depth <= limits.maximumDepth - depth + 1 else {
+                guard file.depth <= Self.maximumDiscoveryDepth - depth + 1 else {
                     throw DocumentCompositionError.depthExceeded
                 }
                 return file
@@ -209,11 +212,11 @@ public enum DocumentFileComposition {
             // A composition envelope has its own profile record ceiling. Its child definitions retain
             // the caller's stricter document policy; ordinary sources are decoded again under that policy.
             let intakeLimits = try DocumentDecodeLimits(
-                maximumEncodedBytes: max(documentLimits.maximumEncodedBytes, limits.maximumProfileBytes),
-                maximumDecodedBytes: max(documentLimits.maximumDecodedBytes, limits.maximumProfileBytes),
-                maximumLines: max(documentLimits.maximumLines, DocumentDecodeLimits.standard.maximumLines),
-                maximumPlanes: documentLimits.maximumPlanes,
-                maximumRecordBytes: max(documentLimits.maximumRecordBytes, limits.maximumProfileBytes)
+                maximumEncodedBytes: limits.maximumProfileBytes,
+                maximumDecodedBytes: limits.maximumProfileBytes,
+                maximumLines: DocumentDecodeLimits.standard.maximumLines,
+                maximumPlanes: DocumentDecodeLimits.standard.maximumPlanes,
+                maximumRecordBytes: limits.maximumProfileBytes
             )
             let document = try DocumentStorageCodec.decode(data, limits: intakeLimits)
             let entries: [DocumentEntry]
@@ -252,7 +255,7 @@ public enum DocumentFileComposition {
                     let target = try DocumentFileComposition.resolvePath(reference.source, relativeTo: path)
                     let child = try discover(target, depth: depth + 1)
                     fileDepth = max(fileDepth, child.depth + 1)
-                    guard fileDepth <= limits.maximumDepth else { throw DocumentCompositionError.depthExceeded }
+                    guard fileDepth <= Self.maximumDiscoveryDepth else { throw DocumentCompositionError.depthExceeded }
                     resolved.append(.init(glyph: reference.glyph, source: target))
                 }
                 ledgers[entry.id] = resolved

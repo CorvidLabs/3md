@@ -103,7 +103,7 @@ function compositionResponse(document) {
     semantic: semanticComposition(composition),
   };
 }
-// Requests use only objects, arrays and strings. Preflight retains strict duplicate-key semantics.
+// Preflight validates generic JSON before field policies, retaining strict duplicate-key semantics.
 function strictJSON(source) {
   let index = 0;
   function invalid() { throw new Error("Invalid adapter JSON."); }
@@ -136,7 +136,7 @@ function strictJSON(source) {
     invalid();
   }
   function value(depth) {
-    if (depth > 4) invalid();
+    if (depth > 64) invalid();
     whitespace();
     if (source[index] === '"') { string(); return; }
     if (source[index] === "{") {
@@ -160,7 +160,12 @@ function strictJSON(source) {
         if (source[index++] !== ",") invalid(); whitespace();
       }
     }
-    invalid();
+    const start = index;
+    while (index < source.length && !" \t\r\n,]}".includes(source[index])) index += 1;
+    if (index === start) invalid();
+    const literal = JSON.parse(source.slice(start, index));
+    if (literal !== null && typeof literal !== "boolean" &&
+      !(typeof literal === "number" && Number.isFinite(literal))) invalid();
   }
   value(0); whitespace(); if (index !== source.length) invalid();
   return JSON.parse(source);
@@ -190,6 +195,9 @@ function requestResponse(line) {
     if (request.kind === "files") {
       const payload = record(strictJSON(decoder.decode(bytes)), ["rootPath", "files"]);
       if (typeof payload.rootPath !== "string" || !Array.isArray(payload.files)) throw new Error("Invalid files request.");
+      if (payload.files.length > DocumentCompositionLimits.standard.maximumDefinitions) {
+        throw new DocumentFileCompositionError("inputLimit");
+      }
       const sources = payload.files.map((file) => {
         const source = record(file, ["path", "bytesHex"]);
         if (typeof source.path !== "string") throw new Error("Invalid file path field.");

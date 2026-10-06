@@ -10,5 +10,7 @@ artifact: tasks
 - [x] Shared cases and nine-pair portable bundles.
 - [x] Complete Trust on implementation tip ad17806.
 - [x] Current specs/examples/release docs and complementary source review repairs.
+- [x] Reproduce and correct the completed Claude review's plane-policy, entry-depth and adapter-limit findings.
+- [x] Run focused regressions, shared oracle/interchange and complete pinned verification on the corrected implementation.
 
-Closing milestones: the official scoped review, additional Claude review, lifecycle finalization and feature PR publication remain separately tracked. They follow verification and are not prerequisites for the check that records it.
+Closing milestones: Claude's final scoped source review and feature PR publication are complete; official scope review/finalization and fresh GitHub checks remain separate. The initial passing evidence remains pinned to its original source. Fresh corrected-source evidence is retained separately.
