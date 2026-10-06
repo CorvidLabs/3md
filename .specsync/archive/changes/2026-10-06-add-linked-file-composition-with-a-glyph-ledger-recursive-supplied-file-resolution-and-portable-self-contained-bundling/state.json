@@ -7,11 +7,11 @@
   "title": "Add linked file composition with a glyph ledger recursive supplied-file resolution and portable self-contained bundling in all three languages",
   "description": "Add linked file composition with a glyph ledger recursive supplied-file resolution and portable self-contained bundling in all three languages",
   "kind": "feature",
-  "state": "verifying",
+  "state": "archived",
   "canonical_applied": true,
   "base_commit": "be41af523aecf041202a06d4c83471b19e09b275",
   "created_at": 1791239089,
-  "updated_at": 1791294665,
+  "updated_at": 1791298043,
   "affected_specs": [
     "ThreeMD"
   ],
