@@ -72,8 +72,13 @@ jobs:
           bun run build
           bun test
 
+      # The Swift image ships clang but no `cc`, so Cargo links with clang.
       - name: Rust format, Clippy, tests and interchange adapter
         working-directory: rust
+        env:
+          CC: clang
+          CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_LINKER: clang
+          CARGO_TARGET_AARCH64_UNKNOWN_LINUX_GNU_LINKER: clang
         run: |
           cargo fmt --check
           cargo clippy --all-targets -- -D warnings
