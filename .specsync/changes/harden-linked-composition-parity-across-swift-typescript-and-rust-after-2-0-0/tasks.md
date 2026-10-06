@@ -10,4 +10,4 @@ artifact: tasks
 - [x] Shared files cases and per-language tests, including mid-operation cancellation.
 - [x] Rust adoption parity through an additive function; TypeScript detached resolve.
 - [x] Development host platform guards and path-named errors.
-- [ ] Linux CI job, documentation, Trust gate, Linux container run and evidence.
+- [x] Linux CI job, documentation, Trust gate, Linux container run and evidence.

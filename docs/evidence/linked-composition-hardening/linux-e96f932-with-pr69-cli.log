@@ -1,0 +1,34 @@
+== swift build
+[52/53] Linking threemd-interchange
+Build complete! (43.70s)
+== swift test
+	 Executed 39 tests, with 0 failures (0 unexpected) in 0.01 (0.01) seconds
+	 Executed 3 tests, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
+	 Executed 2 tests, with 0 failures (0 unexpected) in 0.003 (0.003) seconds
+	 Executed 32 tests, with 0 failures (0 unexpected) in 0.116 (0.116) seconds
+	 Executed 274 tests, with 0 failures (0 unexpected) in 5.059 (5.059) seconds
+	 Executed 274 tests, with 0 failures (0 unexpected) in 5.059 (5.059) seconds
+== js
+$ tsc --noEmit
+$ bun build ./src/index.ts --outdir ./dist --target node --format esm && tsc -p tsconfig.build.json
+ 0 fail
+ 1075 expect() calls
+Ran 170 tests across 8 files. [2.10s]
+== rust
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.04s
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+test result: ok. 13 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.03s
+test result: ok. 27 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 1.43s
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.62s
+test result: ok. 9 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.15s
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.29s
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 3.18s
+== interchange
+Build of product 'threemd-interchange' complete! (0.59s)
+{"cases":558,"compression":"none; optional Apple LZFSE excluded","imports":17991,"pairCounts":{"Rust -> Rust":1999,"Rust -> Swift":1999,"Rust -> TypeScript-Node":1999,"Swift -> Rust":1999,"Swift -> Swift":1999,"Swift -> TypeScript-Node":1999,"TypeScript-Node -> Rust":1999,"TypeScript-Node -> Swift":1999,"TypeScript-Node -> TypeScript-Node":1999},"passed":true,"producerConsumerPairs":9,"schema":"3md-interchange-receipt-1"}
+Interchange evidence: /tmp/3md-interchange-2A7BC7C2-8A8E-41AC-8FB0-DB2C23786A1B
+== bundle host
+Bundled 4 files, 4 definitions, 1641 bytes: /work/linux-bundle-out/linked-village.3md
+Interchange failed: Cannot open directory: /work/Examples/LinkedVillage/missing: No such file or directory
+exit=0
