@@ -1,12 +1,41 @@
 # 3md
 
+## Current 2.0.0 release authority
+
+On 2026-10-06 Leif directly instructed "Finish 2.0.0". This is the current
+release authority. For 2.0.0 only, it supersedes the earlier notes below that
+preparation does not merge, tag, publish or release. The executing agent is
+Claude, and the release change's lifecycle and review records it writes use
+`agent:claude`. The approved SpecSync change
+`finish-threemd-2-0-0-with-a-linux-cli-build-fix-pinned-publish-workflows-and-release-documentation`
+covers the Linux CLI build fix, the pinned npm and crate publish workflows,
+release documentation and verification evidence under
+`docs/evidence/release-2.0.0/`. The release is the `v2.0.0` tag on the merge of
+that work and its GitHub release, whose existing workflows publish the npm
+packages, publish the crate when the `CRATES_IO_TOKEN` secret is configured and
+update the Homebrew formula. Leif's approval of the change scope is not a review
+of its diff.
+
+Limits: do not change branch protections, weaken Trust lifecycle, contract,
+risk or provenance policy, or dispatch release workflows as a check. Do not
+invent signatures, an independent human review or a claim that Leif reviewed a
+diff. The VS Code extension is built locally as a VSIX and is not published to a
+marketplace. Keep these release limits explicit: soft unsigned provenance,
+unverified Windows, emulated-only x86_64 Linux, Swift/Apple-only LZFSE,
+text-only element and VS Code surfaces, and the separate Sculpt adoption.
+Library source, fixtures, format versions and package versions stay unchanged.
+Preserve previous archives, signer policies, the managed block and
+`element/dist/`. Parity hardening (resolver path-work bounds, shared
+limit/cancellation interchange cases, path-naming bundle host errors) belongs to
+a separate post-release PR.
+
 ## Linked file authoring preparation
 
 Leif approved direct filename composition on 2026-10-05 with "ok do it": a printable glyph ledger in an ordinary Document refers to local ThreeMD filenames, a pure supplied-byte resolver follows reachable references recursively, and existing self-contained readable/binary profiles preserve the resulting graph. Swift, TypeScript and Rust must agree through all nine interchange pairs. The explicit development host reads a chosen project folder; the library has no filesystem or network I/O. No watcher, remote loading, grammar version or automatic file migration is added.
 
 Root owns definition-first SpecSync 6 records, integration verification, current contracts and feature PR publication. Parallel agents own their assigned language implementations and tests. Actual actor/reviewer claims identify the executing agent and do not claim Leif reviewed an implementation diff, independent human review or a permitted signature. Preserve previous archives, provenance policy and element/dist. Leif will merge the prepared PRs; this scope does not merge, push main, tag, publish or deploy.
 
-## Current merge request
+## Merge request (2026-10-04, historical)
 
 Leif directly instructed "merge al the prs" on 2026-10-04 after reviewing the binary/composition implementation. This authorizes repairing the reviewed decimal-decoding resource issue, verifying the resulting feature head, completing truthful delegated lifecycle records, and merging the related open PRs through the configured GitHub rules. The actor remains the actual executing agent; no record claims an independent human review, a different agent identity, or an unavailable signature. Existing Trust risk and provenance policy stays unchanged. Main pushes, releases, deployments and changes to branch protections are outside this request.
 
@@ -34,7 +63,9 @@ config in `.swift-format` enforces the mechanical parts.
 Use SpecSync 6.0.0 for all lifecycle writers. The local binary is
 `/Users/leif/.cargo/bin/specsync`; the development Fledge pin is 1.7.2 at
 `/opt/homebrew/bin/fledge`. CI verifies the release checksums and pins Trust
-1.2.2 to `bccd89c111d47778c97c5064fb62ab51695e04ea`.
+1.2.2 to `bccd89c111d47778c97c5064fb62ab51695e04ea`. PATH can resolve
+`~/.cargo/bin/fledge` 1.8.0 before the pinned `/opt/homebrew/bin/fledge` 1.7.2;
+invoke the pinned path explicitly for release verification.
 
 Check the plugin's actual version. Fledge's installed plugin registry can take
 priority over PATH; when it resolves an older Trust, invoke the isolated
@@ -103,7 +134,9 @@ JavaScript typechecking/declaration build and Node runtime interchange. Preserve
 archives, old conformance fixtures, signer policies and element/dist. This scope
 does not authorize merging, releasing, pushing main or a Sculpt dependency bump.
 
-## Current 2.0.0 release preparation authority
+## 2.0.0 release preparation authority (2026-10-05, historical)
+
+Superseded for the release itself by the current 2.0.0 release authority above.
 
 On 2026-10-05 Leif directly requested: "Ok can we merge all the PRs and prep 2.0.0? Also can we use all this in sculpt.3md and continue working on sculpt". Root coordinates GitHub merges and the separately verified Sculpt adoption. Earlier notes that Leif would merge later or Sculpt must remain on 1.8.1 describe the earlier scope and do not block this new request.
 

@@ -1,0 +1,283 @@
+### no-args exit=1
+--- stdout
+Usage: threemd <subcommand> <file>
+
+A file of '-' reads from standard input.
+
+Subcommands:
+  validate [--json] <file>    Parse a .3md file; exit non-zero and print error on failure, else print "ok".
+  info [--json] <file>        Print document metadata, plane count, and each plane's attributes.
+  links [--json] <file>       Print cross-plane links and graph edges.
+  check-links [--json] <file> Exit non-zero when any cross-plane link is dangling.
+  html <file>                 Render the document to HTML and print to stdout.
+--- stderr
+### help exit=0
+--- stdout
+Usage: threemd <subcommand> <file>
+
+A file of '-' reads from standard input.
+
+Subcommands:
+  validate [--json] <file>    Parse a .3md file; exit non-zero and print error on failure, else print "ok".
+  info [--json] <file>        Print document metadata, plane count, and each plane's attributes.
+  links [--json] <file>       Print cross-plane links and graph edges.
+  check-links [--json] <file> Exit non-zero when any cross-plane link is dangling.
+  html <file>                 Render the document to HTML and print to stdout.
+--- stderr
+### unknown exit=1
+--- stdout
+Usage: threemd <subcommand> <file>
+
+A file of '-' reads from standard input.
+
+Subcommands:
+  validate [--json] <file>    Parse a .3md file; exit non-zero and print error on failure, else print "ok".
+  info [--json] <file>        Print document metadata, plane count, and each plane's attributes.
+  links [--json] <file>       Print cross-plane links and graph edges.
+  check-links [--json] <file> Exit non-zero when any cross-plane link is dangling.
+  html <file>                 Render the document to HTML and print to stdout.
+--- stderr
+threemd: unknown subcommand 'bogus'
+### validate valid exit=0
+--- stdout
+ok
+--- stderr
+### validate missing exit=1
+--- stdout
+--- stderr
+threemd: file not found: 'fixtures/missing.3md'
+### validate invalid exit=1
+--- stdout
+--- stderr
+3md documents must begin with a '---' frontmatter block.
+### validate dangling exit=0
+--- stdout
+ok
+--- stderr
+### info valid exit=0
+--- stdout
+version: 1.0
+axis:    section
+title:   3md, explained in 3md
+planes:  4
+  z=0 label=what
+  z=1 label=anatomy
+  z=2 label=axis
+  z=3 label=tooling
+--- stderr
+### info missing exit=1
+--- stdout
+--- stderr
+threemd: file not found: 'fixtures/missing.3md'
+### info invalid exit=1
+--- stdout
+--- stderr
+3md documents must begin with a '---' frontmatter block.
+### info dangling exit=0
+--- stdout
+version: 1.0
+axis:    time
+title:   (none)
+planes:  1
+  z=0
+--- stderr
+### links valid exit=0
+--- stdout
+links: 0
+dangling: 0
+--- stderr
+### links missing exit=1
+--- stdout
+--- stderr
+threemd: file not found: 'fixtures/missing.3md'
+### links invalid exit=1
+--- stdout
+--- stderr
+3md documents must begin with a '---' frontmatter block.
+### links dangling exit=0
+--- stdout
+links: 1
+dangling: 1
+  source=0 target=5 status=dangling
+--- stderr
+### check-links valid exit=0
+--- stdout
+ok
+--- stderr
+### check-links missing exit=1
+--- stdout
+--- stderr
+threemd: file not found: 'fixtures/missing.3md'
+### check-links invalid exit=1
+--- stdout
+--- stderr
+3md documents must begin with a '---' frontmatter block.
+### check-links dangling exit=1
+--- stdout
+--- stderr
+dangling links: 1
+  source=0 target=5 status=dangling
+### html valid exit=0
+--- stdout
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="ThreeMD">
+<meta name="3md-version" content="1.0">
+<meta name="3md-axis" content="section">
+<title>3md, explained in 3md</title>
+</head>
+<body>
+<header>
+<h1>3md, explained in 3md</h1>
+<p>Axis: <code>section</code></p>
+</header>
+<main>
+<section class="preamble">
+<p>This file is a 3md document that teaches 3md. Scrub the Z axis to read it in order. The &quot;anatomy&quot; plane contains a fenced code block with a literal @plane line inside it, which the parser treats as body text, not a new plane.</p>
+</section>
+<section id="plane-z-0" data-z="0" aria-label="what">
+<h2>what</h2>
+<h1>What is 3md</h1>
+<p>Markdown with a Z axis. A document is ordinary Markdown sliced into planes along one axis you name yourself: time, frame, layer, depth, space, anything.</p>
+</section>
+<section id="plane-z-1" data-z="1" aria-label="anatomy">
+<h2>anatomy</h2>
+<h1>Anatomy</h1>
+<p>A required frontmatter block declares the version (the magic marker) and the axis. Each <code>@plane</code> directive starts a plane; the Markdown between directives is that plane&#39;s body. Here is a whole 3md file shown inside a code block:</p>
+<pre><code>---
+3md: 1.0
+axis: time
+title: My Week
+---
+@plane z=0 label=&quot;Monday&quot;
+# Monday
+- [ ] Standup</code></pre>
+<p>The <code>@plane</code> line above sits inside a code fence, so this document still has four planes, not five.</p>
+</section>
+<section id="plane-z-2" data-z="2" aria-label="axis">
+<h2>axis</h2>
+<h1>The axis is yours</h1>
+<p>The <code>axis:</code> value is free-form metadata. The same parser serves a planner (time), an animation (frame), an annotated contract (layer), and a scene (space). Tools decide how to lay the planes out.</p>
+</section>
+<section id="plane-z-3" data-z="3" aria-label="tooling">
+<h2>tooling</h2>
+<h1>Tooling</h1>
+<p>Parse it in Swift (ThreeMD) or TypeScript (@corvidlabs/threemd), validate and render it with the <code>threemd</code> CLI, and trust that both parsers agree, thanks to the shared conformance suite.</p>
+</section>
+</main>
+</body>
+</html>
+--- stderr
+### html missing exit=1
+--- stdout
+--- stderr
+threemd: file not found: 'fixtures/missing.3md'
+### html invalid exit=1
+--- stdout
+--- stderr
+3md documents must begin with a '---' frontmatter block.
+### html dangling exit=0
+--- stdout
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="ThreeMD">
+<meta name="3md-version" content="1.0">
+<meta name="3md-axis" content="time">
+<title>3md Document</title>
+</head>
+<body>
+<header>
+<h1>3md Document</h1>
+<p>Axis: <code>time</code></p>
+</header>
+<main>
+<section id="plane-z-0" data-z="0">
+<h2>Plane 0</h2>
+<p>Go to <a href="#plane-z-5">z=5</a></p>
+</section>
+</main>
+</body>
+</html>
+--- stderr
+### validate --json missing exit=1
+--- stdout
+--- stderr
+threemd: file not found: 'fixtures/missing.3md'
+### validate --json invalid exit=1
+--- stdout
+{
+  "error" : {
+    "code" : "missingFrontmatter",
+    "message" : "3md documents must begin with a '---' frontmatter block."
+  },
+  "ok" : false
+}
+--- stderr
+### info --json missing exit=1
+--- stdout
+--- stderr
+threemd: file not found: 'fixtures/missing.3md'
+### info --json invalid exit=1
+--- stdout
+{
+  "error" : {
+    "code" : "missingFrontmatter",
+    "message" : "3md documents must begin with a '---' frontmatter block."
+  },
+  "ok" : false
+}
+--- stderr
+### links --json missing exit=1
+--- stdout
+--- stderr
+threemd: file not found: 'fixtures/missing.3md'
+### links --json invalid exit=1
+--- stdout
+{
+  "error" : {
+    "code" : "missingFrontmatter",
+    "message" : "3md documents must begin with a '---' frontmatter block."
+  },
+  "ok" : false
+}
+--- stderr
+### check-links --json missing exit=1
+--- stdout
+--- stderr
+threemd: file not found: 'fixtures/missing.3md'
+### check-links --json invalid exit=1
+--- stdout
+{
+  "error" : {
+    "code" : "missingFrontmatter",
+    "message" : "3md documents must begin with a '---' frontmatter block."
+  },
+  "ok" : false
+}
+--- stderr
+### validate no file exit=1
+--- stdout
+--- stderr
+usage: threemd validate [--json] <file>
+### stdin valid exit=0
+--- stdout
+ok
+--- stderr
+bash: line 1: 59357 Abort trap: 6           "threemd" bogus > /dev/null 2>&-
+### closed-stderr [bogus] exit=134
+bash: line 1: 59359 Abort trap: 6           "threemd" validate fixtures/missing.3md > /dev/null 2>&-
+### closed-stderr [validate fixtures/missing.3md] exit=134
+bash: line 1: 59361 Abort trap: 6           "threemd" check-links fixtures/dangling.3md > /dev/null 2>&-
+### closed-stderr [check-links fixtures/dangling.3md] exit=134
+bash: line 1: 59363 Abort trap: 6           "threemd" validate fixtures/invalid.3md > /dev/null 2>&-
+### closed-stderr [validate fixtures/invalid.3md] exit=134
+### broken-pipe-sigpipe-ignored check-links exit(pipe last)=0
+bash: line 1: 59370 Abort trap: 6           "threemd" check-links "fixtures/dangling.3md" 2>&1
+     59371 Done                    | ( exec 0>&-; sleep 0.3 )
+### broken-pipe-sigpipe-ignored check-links pipefail exit=134

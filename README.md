@@ -6,11 +6,11 @@
 [![License: MIT](https://img.shields.io/github/license/CorvidLabs/3md)](LICENSE)
 [![Live demo](https://img.shields.io/badge/demo-live-0E6F66)](https://corvidlabs.github.io/3md/)
 
-ThreeMD 2.0 preparation includes [linked file composition](docs/FILE-COMPOSITION.md):
-map a character to another 3md filename, resolve explicit supplied files in any
-of the three libraries, and share a self-contained bundle. See the
-[nested LinkedVillage example](Examples/LinkedVillage/README.md). No release
-publication is claimed by this branch.
+ThreeMD 2.0.0 adds [linked file composition](docs/FILE-COMPOSITION.md): map a
+character to another 3md filename, resolve host-supplied files in any of the
+three libraries, and share a self-contained bundle. See the
+[nested LinkedVillage example](Examples/LinkedVillage/README.md) and the
+[2.0.0 release notes](docs/RELEASE-2.0.0.md).
 
 **Markdown with a Z axis.** A `.3md` file is ordinary Markdown extended along
 one free axis: stack your content into **planes** and tell the reader what the
@@ -56,19 +56,19 @@ cross-platform Swift parser; a TypeScript port in [`js/`](js); and a Rust crate
 in [`rust/`](rust)), and a shared cross-implementation conformance suite
 ([conformance/](conformance)) that all three pass.
 
-The prepared 2.0.0 library adds general `.3mdb` storage, self-contained
-document composition, stable optional identities, atomic revision-checked edits
-and structured diagnostics in Swift, TypeScript and Rust. The uncompressed
-container and shared extension fixtures are portable. LZFSE is available only
-through Swift's conditional Apple backend; the ports return an explicit
-unsupported-backend error. These library APIs perform no file or network I/O.
-No 2.0.0 release is claimed yet. See the [release preparation and migration
-guide](docs/RELEASE-2.0.0.md) and [editing capability matrix](docs/EDITING-RELEASE.md).
+ThreeMD 2.0.0 adds general `.3mdb` storage, self-contained document
+composition, linked file composition, stable optional identities, atomic
+revision-checked edits and structured diagnostics in Swift, TypeScript and Rust.
+The uncompressed container and shared extension fixtures are portable. LZFSE is
+available only through Swift's conditional Apple backend; the ports return an
+explicit unsupported-backend error. These library APIs perform no file or
+network I/O. See the [release notes and migration guide](docs/RELEASE-2.0.0.md)
+and [editing capability matrix](docs/EDITING-RELEASE.md).
 
 Cross-language file interchange is verified by a development gate: each Swift,
 TypeScript and Rust writer feeds every reader, for all nine pairings. It checks
-canonical text, uncompressed binary, composition references and imported edits.
-The [interchange catalog](conformance/interchange/README.md) states the cases,
+canonical text, uncompressed binary, composition references, linked-file bundles
+and imported edits. The [interchange catalog](conformance/interchange/README.md) states the cases,
 exact-byte checks and platform exceptions. This does not claim portable LZFSE
 or a shared JSON snapshot/patch transport.
 
@@ -85,10 +85,10 @@ text a depth dimension of its own.
 
 ### Swift Package Manager
 
-For the existing 1.x package line, add the package to your `Package.swift`:
+Add the package to your `Package.swift`:
 
 ```swift
-.package(url: "https://github.com/CorvidLabs/3md", from: "1.0.0")
+.package(url: "https://github.com/CorvidLabs/3md", from: "2.0.0")
 ```
 
 Then depend on the `ThreeMD` library product:
@@ -97,8 +97,10 @@ Then depend on the `ThreeMD` library product:
 .product(name: "ThreeMD", package: "3md")
 ```
 
-The prepared 2.0.0 APIs require a separately published `v2.0.0` tag before
-using `from: "2.0.0"`. Source-checkout testing does not publish that tag.
+Existing projects can stay on `from: "1.0.0"`. Read the
+[migration guide](docs/RELEASE-2.0.0.md#migrating-an-existing-host) before
+upgrading: legacy serialization output can change for string values that earlier
+writers serialized lossily.
 
 ### JavaScript / TypeScript
 
@@ -107,17 +109,18 @@ A TypeScript library lives in [`js/`](js), alongside the
 All three implementations (Swift, TypeScript, and the Rust crate in [`rust/`](rust))
 are kept in sync by the shared conformance suite ([conformance/](conformance)).
 
-The current [publication workflow](.github/workflows/publish.yml) targets the
-public npm registry. Install an available published version with:
+The [publication workflow](.github/workflows/publish.yml) publishes to the
+public npm registry. Install with:
 
 ```bash
 bun add @corvidlabs/threemd
 ```
 
-Prepared 2.0.0 metadata does not establish registry availability. If an older
-installation maps `@corvidlabs` to GitHub Packages, update that scope when
-adopting a release published to npm. The web component retains text rendering;
-the library exports the new storage, composition and editing APIs.
+`@corvidlabs/threemd` and `@corvidlabs/three-md-element` 2.0.0 are published by
+the release workflows. If an older installation maps `@corvidlabs` to GitHub
+Packages, point that scope at the public npm registry. The web component keeps
+text rendering; the library exports the storage, composition, linked-file and
+editing APIs.
 
 No install needed just to use it: try the hosted [editor and
 viewer](https://corvidlabs.github.io/3md/viewer.html), or load the self-contained
@@ -144,9 +147,13 @@ targets crates.io. Install an available published version with:
 cargo add threemd
 ```
 
-The prepared 2.0.0 crate pins `unicode-normalization =0.1.25` as its runtime
-dependency. Its serde/serde_json dependencies are development-only. Release
-metadata here does not establish that 2.0.0 is available on crates.io.
+The 2.0.0 crate pins `unicode-normalization =0.1.25` as its runtime
+dependency. Its serde/serde_json dependencies are development-only. The release
+workflow publishes `threemd` 2.0.0 to crates.io when the `CRATES_IO_TOKEN`
+repository secret is configured. Releases between 1.0.0 and 2.0.0 never reached
+crates.io, which stayed at 1.0.0, because the old workflow rewrote the crate
+version and left the tree dirty; 2.0.0 fixes that workflow. The secret is not
+configured yet, so confirm that crates.io lists 2.0.0 before depending on it.
 
 ```rust
 let document = threemd::parse(source)?;
@@ -155,12 +162,12 @@ println!("{}", document.axis); // "time"
 
 ## Library usage
 
-Prepared 2.0.0 adds optional stable plane/reference identities,
-immutable revision-checked document/composition patches and structured
-diagnostics above the existing parser in Swift, TypeScript and Rust. General
-uncompressed binary and composition APIs are implemented in all three. See the
-[release scope and capability matrix](docs/EDITING-RELEASE.md). Existing
-published releases do not contain these prepared APIs.
+ThreeMD 2.0.0 adds optional stable plane/reference identities, immutable
+revision-checked document/composition patches and structured diagnostics above
+the existing parser in Swift, TypeScript and Rust. General uncompressed binary,
+composition and linked-file APIs are implemented in all three. See the
+[release scope and capability matrix](docs/EDITING-RELEASE.md). Releases before
+2.0.0 do not contain these APIs.
 
 ```swift
 import ThreeMD
@@ -179,10 +186,11 @@ let text = Serializer().render(document)
 
 ## Binary storage and reusable documents
 
-This branch adds Swift APIs for bounded general-document storage and
-self-contained composition. These additions have not been released yet. The
-existing text parsers, command-line tool and hosted viewer retain their current
-text behavior; the TypeScript and Rust ports do not yet expose these new APIs.
+ThreeMD 2.0.0 provides bounded general-document storage and self-contained
+composition in Swift, TypeScript and Rust. The examples below use Swift; see
+[EDITING-RELEASE.md](docs/EDITING-RELEASE.md) for the TypeScript and Rust
+equivalents. The existing text parsers, command-line tool and hosted viewer
+retain their current text behavior.
 
 ```swift
 import ThreeMD
@@ -250,6 +258,34 @@ The fixture directory also includes LZFSE variants and a byte/hash manifest.
 The public Swift APIs generated all six documents and decoded them back to
 equal values. This demonstrates storage and references, without promising
 automatic character-to-model expansion or hosted viewer support.
+
+### Linked files
+
+An ordinary document can name other 3md files in a `3md-files` metadata ledger
+that maps single printable ASCII characters to relative filenames:
+
+```
+3md-files: "{\"1\":\"models/house.3md\",\"2\":\"models/tree.3md\"}"
+```
+
+The host reads the files it chooses and supplies their bytes. The library
+resolves the graph and can bundle it into the self-contained profile above:
+
+```swift
+let linked = try DocumentFileComposition.resolve(
+    rootPath: "scene.3md",
+    sources: [DocumentFileSource(path: "scene.3md", data: sceneBytes),
+              DocumentFileSource(path: "models/house.3md", data: houseBytes),
+              DocumentFileSource(path: "models/tree.3md", data: treeBytes)]
+)
+let portable = try DocumentCompositionCodec.encode(linked.composition)
+```
+
+Paths are project-relative POSIX paths that cannot escape the root. Missing
+files, cycles, invalid ledgers and exceeded limits are refused without partial
+results. See [FILE-COMPOSITION.md](docs/FILE-COMPOSITION.md),
+[SPEC.md section 12.3](SPEC.md#123-linked-file-authoring) and the
+[LinkedVillage example](Examples/LinkedVillage/README.md).
 
 ## Command-line tool
 
@@ -322,11 +358,11 @@ cross-implementation contract that keeps the parsers behaving identically.
 ## Status
 
 The 1.0 text grammar remains frozen. Specification 1.1 adds independently
-versioned binary storage and composition without changing that grammar. The new
-Swift APIs on this branch are awaiting the complete repository verification
-and publication workflow; they are not a published release. The release badge
-reflects published tags. Older `3md: 0.1` documents remain valid: the parser is
-version-lenient and never rejects a document by its version string.
+versioned binary storage, composition and linked file authoring without changing
+that grammar. ThreeMD 2.0.0, released on 2026-10-06, implements those extensions
+in Swift, TypeScript and Rust; the package version is separate from the format
+version. Older `3md: 0.1` documents remain valid: the parser is version-lenient
+and never rejects a document by its version string.
 
 ## License
 

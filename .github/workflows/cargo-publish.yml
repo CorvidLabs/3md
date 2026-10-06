@@ -2,8 +2,12 @@ name: cargo-publish
 
 # Publishes the `threemd` crate to crates.io on each GitHub release, mirroring
 # the npm publish workflow. Requires a CRATES_IO_TOKEN repository secret
-# (crates.io > Account Settings > API Tokens). Until that secret exists the job
-# will fail at the publish step; nothing else is affected.
+# (crates.io > Account Settings > API Tokens, publish-update scope for threemd).
+#
+# The crate version is committed with the release (rust/Cargo.toml and
+# rust/Cargo.lock). This job checks it against the tag instead of rewriting it:
+# cargo publish refuses uncommitted changes, so a version rewrite here leaves
+# the tree dirty and the publish exits 101.
 
 # Checkout only. crates.io auth uses the CRATES_IO_TOKEN secret.
 permissions:
@@ -23,15 +27,30 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: dtolnay/rust-toolchain@stable
-      - name: Sync crate version to the release tag
-        if: github.event_name == 'release'
+      - name: Check crate version matches the release tag
+        env:
+          TAG: ${{ github.event.release.tag_name || github.ref_name }}
+          REF_TYPE: ${{ github.ref_type }}
         run: |
-          VER="${TAG#v}"
-          sed -i "s/^version = .*/version = \"${VER}\"/" Cargo.toml
-          echo "Set crate version to ${VER}"
-        env:
-          TAG: ${{ github.event.release.tag_name }}
+          set -euo pipefail
+          if [ "${REF_TYPE}" != "tag" ] || [[ ! "${TAG}" =~ ^v[0-9]+\.[0-9]+\.[0-9]+([-+][0-9A-Za-z.-]+)?$ ]]; then
+            echo "::error::Run this workflow from a release tag such as v2.0.0."
+            exit 1
+          fi
+          CRATE_VERSION="$(cargo metadata --locked --no-deps --format-version 1 \
+            | jq -r '.packages[] | select(.name == "threemd") | .version')"
+          if [ "${TAG#v}" != "${CRATE_VERSION}" ]; then
+            echo "::error::rust/Cargo.toml is ${CRATE_VERSION}; commit the bump to Cargo.toml and Cargo.lock before tagging."
+            exit 1
+          fi
+          echo "Publishing threemd ${CRATE_VERSION}"
       - name: Publish to crates.io
-        run: cargo publish --token "${CRATES_IO_TOKEN}"
         env:
-          CRATES_IO_TOKEN: ${{ secrets.CRATES_IO_TOKEN }}
+          CARGO_REGISTRY_TOKEN: ${{ secrets.CRATES_IO_TOKEN }}
+        run: |
+          set -euo pipefail
+          if [ -z "${CARGO_REGISTRY_TOKEN:-}" ]; then
+            echo "::error::The CRATES_IO_TOKEN repository secret is not configured."
+            exit 1
+          fi
+          cargo publish --locked

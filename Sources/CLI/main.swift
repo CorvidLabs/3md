@@ -27,7 +27,7 @@ case "--help", "-h", "help":
     printUsage()
     exit(0)
 default:
-    fputs("threemd: unknown subcommand '\(subcommand)'\n", stderr)
+    writeStandardError("threemd: unknown subcommand '\(subcommand)'\n")
     printUsage()
     exit(1)
 }
@@ -51,7 +51,7 @@ private func runValidate(arguments: [String]) {
         if fileArguments.json {
             printJSON(ValidateOutput(ok: false, error: ErrorOutput(error)))
         } else {
-            fputs("\(error.localizedDescription)\n", stderr)
+            writeStandardError("\(error.localizedDescription)\n")
         }
         exit(1)
     }
@@ -125,9 +125,9 @@ private func runCheckLinks(arguments: [String]) {
     } else if danglingLinks.isEmpty {
         print("ok")
     } else {
-        fputs("dangling links: \(danglingLinks.count)\n", stderr)
+        writeStandardError("dangling links: \(danglingLinks.count)\n")
         for link in danglingLinks {
-            fputs(linkLine(link) + "\n", stderr)
+            writeStandardError(linkLine(link) + "\n")
         }
     }
 
@@ -230,7 +230,7 @@ private func parseFileArguments(_ arguments: [String], usage: String) -> FileArg
     }
 
     guard paths.count == 1, let path = paths.first else {
-        fputs("\(usage)\n", stderr)
+        writeStandardError("\(usage)\n")
         exit(1)
     }
 
@@ -247,7 +247,7 @@ private func parseDocument(at path: String, json: Bool) -> Document {
         if json {
             printJSON(ValidateOutput(ok: false, error: ErrorOutput(error)))
         } else {
-            fputs("\(error.localizedDescription)\n", stderr)
+            writeStandardError("\(error.localizedDescription)\n")
         }
         exit(1)
     }
@@ -261,11 +261,11 @@ private func readFile(at path: String) -> String {
         return String(decoding: data, as: UTF8.self)
     }
     guard FileManager.default.fileExists(atPath: path) else {
-        fputs("threemd: file not found: '\(path)'\n", stderr)
+        writeStandardError("threemd: file not found: '\(path)'\n")
         exit(1)
     }
     guard let source = try? String(contentsOf: URL(fileURLWithPath: path), encoding: .utf8) else {
-        fputs("threemd: cannot read '\(path)' (is it valid UTF-8?)\n", stderr)
+        writeStandardError("threemd: cannot read '\(path)' (is it valid UTF-8?)\n")
         exit(1)
     }
     return source
@@ -297,12 +297,12 @@ private func printJSON<Payload: Encodable>(_ payload: Payload) {
     do {
         let data = try encoder.encode(payload)
         guard let string = String(data: data, encoding: .utf8) else {
-            fputs("threemd: failed to encode JSON as UTF-8\n", stderr)
+            writeStandardError("threemd: failed to encode JSON as UTF-8\n")
             exit(1)
         }
         print(string)
     } catch {
-        fputs("threemd: failed to encode JSON: \(error.localizedDescription)\n", stderr)
+        writeStandardError("threemd: failed to encode JSON: \(error.localizedDescription)\n")
         exit(1)
     }
 }
@@ -323,4 +323,20 @@ private func printUsage() {
           html <file>                 Render the document to HTML and print to stdout.
         """
     )
+}
+
+/// Writes a message to standard error without referencing the C `stderr` global,
+/// which Glibc exposes as shared mutable state that Swift 6 strict concurrency rejects.
+/// Like `fputs`, a failed write (closed descriptor, broken pipe) is ignored instead of
+/// trapping, so the caller's exit code is preserved.
+private func writeStandardError(_ message: String) {
+    let descriptor = FileHandle.standardError.fileDescriptor
+    var remaining = Array(message.utf8)[...]
+    while !remaining.isEmpty {
+        let written = remaining.withUnsafeBytes { buffer in
+            write(descriptor, buffer.baseAddress, buffer.count)
+        }
+        guard written > 0 else { return }
+        remaining = remaining.dropFirst(written)
+    }
 }

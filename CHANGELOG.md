@@ -1,27 +1,44 @@
 # Changelog
 
-## [v2.0.0] - Unreleased
+## [v2.0.0] - 2026-10-06
 
-Prepared package metadata only. No 2.0.0 tag or published package is claimed.
+ThreeMD 2.0.0 gives the Swift, TypeScript and Rust libraries the same feature set: portable storage, self-contained composition, linked files and transactional editing. The package version is separate from the persisted formats. Text grammar 1.0, binary envelope version 1 and composition profile `3md-composition-1` are unchanged. See the [release notes and migration guide](docs/RELEASE-2.0.0.md).
 
-### Library capabilities
+Verification: the pinned Trust 1.2.2 gate passed on macOS at commit `d6eb66f`, the last source change on the release pull request, in 48 seconds. The `v2.0.0` tag is the squash merge of that pull request, with the same source; later release-branch commits change only documentation, evidence and SpecSync records. It ran 268 Swift tests, 157 TypeScript tests with typecheck and package build, 49 Rust tests plus 3 doctests, and the nine-pair interchange: 479 cases and 17,451 imports, 1,939 for each writer/reader pair. Augur returned proceed (risk 27); provenance is reported degraded (soft policy, unsigned). The log is [docs/evidence/release-2.0.0/trust-d6eb66f.log](docs/evidence/release-2.0.0/trust-d6eb66f.log).
 
-- General readable and uncompressed binary document storage across Swift, TypeScript and Rust, with bounded decoding and deterministic canonical output.
-- Self-contained reusable-document composition with validated references, shared definitions and bounded acyclic graphs.
-- Optional namespaced plane and reference identities, immutable snapshots, exact canonical revisions, transactional typed patches and structured diagnostics.
-- Cooperative cancellation and explicit work limits. Library APIs leave file and network access to their host.
-- Public-API interchange checks across all nine writer-reader pairs, including legacy text, canonical text, uncompressed containers, composition and imported identity edits.
-- Compatibility repairs for Unicode scalars, whitespace, quoted metadata and canonical numeric spelling found by cross-language round trips.
+### Added
 
-### Compatibility and release boundaries
+- General readable and uncompressed binary document storage (`.3mdb`, magic `3mdbin\r\n`) in Swift, TypeScript and Rust, with bounded decoding, a corruption checksum and deterministic canonical output.
+- Self-contained reusable-document composition (`3md-composition-1`) with validated references, shared definitions and bounded acyclic graphs, stored as readable text or uncompressed binary.
+- Linked file composition: an ordinary document's `3md-files` metadata maps single printable ASCII glyphs to relative filenames. Each library resolves host-supplied file bytes recursively, deduplicates normalized paths, preserves identities and nested graphs, and bundles the result into the existing profile, which reopens without the source folder. See [linked file composition](docs/FILE-COMPOSITION.md) and the [LinkedVillage example](Examples/LinkedVillage/README.md).
+- Optional namespaced `3md-id` plane and reference identities, explicit identity adoption, immutable snapshots, exact canonical revisions, transactional typed patches and structured diagnostics.
+- Cooperative cancellation and explicit work limits in every port. Library APIs leave file and network access to their host.
+- The `threemd-interchange` development gate, which drives all nine Swift/TypeScript/Rust writer/reader pairs through the public APIs, and its explicit offline `--bundle` mode for creating portable bundles from a chosen folder.
 
-- Package 2.0.0 retains frozen text grammar 1.0, binary container version 1 and composition profile `3md-composition-1`. Existing parser/serializer signatures and ordinary `id` attributes remain supported.
-- Swift's optional LZFSE backend requires Apple Compression. TypeScript and Rust return an explicit unsupported-backend error; uncompressed storage is the portable contract.
-- Rust adds the pinned `unicode-normalization =0.1.25` runtime dependency for canonical key equivalence and ordering. Swift and TypeScript introduce no runtime package dependency.
-- Element and VSCode package versions align to 2.0.0. The element remains a text renderer; VSCode remains syntax highlighting only. They do not expose the new binary/composition editing APIs as UI.
-- Runtime evidence currently comes from macOS. Linux/Windows execution and a permitted signed attestation remain release gaps. Finite conformance tests do not prove exhaustive parity.
+### Changed
 
-See [release preparation and migration](docs/RELEASE-2.0.0.md) for capability, adoption and publication checks.
+- The JS library, web element, VS Code extension and Rust crate versions align at 2.0.0. Swift remains versioned by Git tag.
+- Rust adds the pinned `unicode-normalization =0.1.25` runtime dependency for canonical key equivalence and ordering. Swift and TypeScript add no runtime package dependency.
+- Faithful legacy quoting can change emitted text bytes for string values that earlier writers serialized lossily. Imported semantics are preserved.
+- The npm publish jobs install `npm@^11.5.1` instead of `npm@latest`. npm 12 does not support the Node 20 those jobs use.
+
+### Fixed
+
+- Unicode scalar, whitespace, quoted-metadata and canonical numeric-spelling defects found by cross-language round trips.
+- The `threemd` CLI writes standard error through `FileHandle.standardError`'s descriptor instead of the C `stderr` global, which Swift 6 strict concurrency rejects with Glibc on Linux. Like `fputs`, it ignores a failed write, so messages and exit codes are unchanged, including when standard error is closed (checked by comparing 39 CLI cases against main).
+- `cargo-publish.yml` checks that the committed crate version matches the release tag instead of rewriting `rust/Cargo.toml`. Releases between 1.0.0 and 2.0.0 never reached crates.io, which stayed at `threemd` 1.0.0: the old workflow rewrote the version, left the tree dirty, and `cargo publish` refused. The `CRATES_IO_TOKEN` repository secret is also not configured yet. The workflow now also fails clearly when the token secret is missing and refuses to run from anything other than a release tag.
+
+### Known limitations
+
+- Linux execution is verified on aarch64 only, in Docker at commit `d6eb66f`: with official `swift:6.0-noble` (6.0.3) and `swift:6.3-noble` (6.3.3) images the whole Swift package builds and 262 tests pass (the Apple Compression tests compile only on Apple platforms), `rust:1.95-bookworm` passes 49 tests plus 3 doctests, `oven/bun:1.4` passes typecheck, build and 157 tests, and the nine-pair interchange passes all 479 cases. No CI job runs the library suites on Linux yet. See [docs/evidence/release-2.0.0](docs/evidence/release-2.0.0/README.md).
+- x86_64 Linux is not verified: it was tried only under emulation during readiness checks, and no log is retained for this release. Windows execution is not verified.
+- Provenance is soft and unsigned: Trust passes while reporting degradation because no permitted signed attestation exists. No independent human review or signature is claimed.
+- The npm packages `@corvidlabs/threemd` and `@corvidlabs/three-md-element` are published by the release workflows. The release workflow publishes the `threemd` crate when the `CRATES_IO_TOKEN` repository secret is configured. The VS Code extension is not published to a marketplace; build the VSIX locally with `bun run package` in `editor/vscode`.
+- Optional LZFSE compression is Swift-only through Apple Compression. TypeScript and Rust return an explicit unsupported-backend error; uncompressed storage is the portable contract.
+- The `<three-md>` element remains a text renderer and the VS Code extension remains syntax highlighting only. Neither exposes binary, composition, linked-file or editing UI.
+- Sculpt's adoption of 2.0.0 is a separate workstream. Its app-specific `.3mdb`, `ascii-composition-1` and `ascii-world-1` schemas are not the general container or profile.
+- Cross-language agreement rests on a finite conformance catalog, not exhaustive proof for every input or runtime.
+- Known follow-up, not part of 2.0.0: a separate post-release parity-hardening PR will bound per-reference path work in the resolvers, add shared interchange cases for lowered limits and cancellation, and make the development bundle host's errors name the failing path.
 
 ## [v1.0.0] - 2026-06-23
 

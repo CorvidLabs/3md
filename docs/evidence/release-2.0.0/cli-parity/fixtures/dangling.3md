@@ -1,0 +1,6 @@
+---
+3md: 1.0
+axis: time
+---
+@plane z=0
+Go to [[z=5]]

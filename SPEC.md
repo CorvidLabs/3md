@@ -1,17 +1,18 @@
 # 3md Format Specification
 
-Version: 1.1 (additive storage and composition specification)
-Status: the 1.0 text grammar is frozen; the new extensions are implemented on this branch, not a published release
+Version: 1.1 (additive storage, composition and linked file authoring specification)
+Status: the 1.0 text grammar is frozen; sections 11 and 12 are implemented by ThreeMD 2.0.0 (released 2026-10-06) in Swift, TypeScript and Rust
 File extensions: `.3md` text; `.3mdb` general binary storage
 Media type (proposed): `text/3md`
 
 Sections 1–10 define the unchanged version 1.0 text format. Sections 11–12
-define independently versioned storage and composition extensions. The Swift,
-TypeScript and Rust libraries implement portable uncompressed storage,
-composition and typed editing. Apple LZFSE remains an optional Swift backend;
-the hosted viewer continues to implement its existing text contract. The `3md:` key inside a
+define independently versioned storage, composition and linked file authoring
+extensions. The Swift, TypeScript and Rust libraries implement portable
+uncompressed storage, composition, linked file resolution and typed editing.
+Apple LZFSE remains an optional Swift backend; the hosted viewer continues to
+implement its existing text contract. The `3md:` key inside a
 document's frontmatter declares which format version that document targets. See
-section 9 (Stability) for the compatibility guarantees that version 1.0 makes.
+section 10 (Stability) for the compatibility guarantees that version 1.0 makes.
 
 ### Format version and back-compatibility
 
