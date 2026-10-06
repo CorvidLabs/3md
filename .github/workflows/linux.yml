@@ -32,6 +32,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # The Swift image omits curl, which the Rust toolchain installer needs.
+      - name: Install container prerequisites
+        run: |
+          apt-get update
+          apt-get install -y --no-install-recommends ca-certificates curl unzip
+
       - uses: oven-sh/setup-bun@v2
         with:
           bun-version: 1.4.2

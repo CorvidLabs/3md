@@ -6,8 +6,8 @@
 
 - Linked file composition resolves each ledger reference without work or memory that grows with the containing path, in Swift, TypeScript and Rust. A repeated raw source within one file reuses its first resolution.
 - A ledger edge whose `source-file` attribute cannot fit `maximumReferenceAttributeBytes` is now refused with `referenceAttributesExceeded` while it is resolved, before a later missing file or cycle. It was previously refused only after discovery.
-- Rust `file_composition::resolve` reports cancellation observed during composition validation or encoding as `DocumentFileCompositionError::Storage(DocumentStorageError::Cancelled)`, as for other cancellations. `code()` stays `cancelled`; code that matched `Composition(Storage(Cancelled))` should match the storage variant.
-- TypeScript `DocumentFileComposition.resolve`, `ledger` and `resolvePath` work when called detached from the class.
+- Rust `file_composition::resolve` reports every cancellation, including one observed while decoding an embedded bundle, validating the final graph or encoding it, as `DocumentFileCompositionError::Storage(DocumentStorageError::Cancelled)`, as for other cancellations. `code()` stays `cancelled`; code that matched `Composition(Storage(Cancelled))` should match the storage variant.
+- TypeScript `DocumentFileComposition.resolve` works when called detached from the class; it no longer relies on `this`.
 
 ### Added
 
@@ -17,7 +17,7 @@
 
 ### Fixed
 
-- The development `threemd-interchange --bundle` host compiles on Darwin, Glibc and Musl, reports an explicit unsupported-platform error elsewhere, and names the path in open and publish errors.
+- The development `threemd-interchange --bundle` host adds Musl import guards (not yet compiled) and an explicit unsupported-platform error for other platforms, keeps its existing Darwin and Glibc builds, and names the path in open and publish errors.
 - The Rust interchange adapter checks limit literals with correctly rounded numbers, matching Swift and TypeScript.
 
 ## [v2.0.0] - 2026-10-06
