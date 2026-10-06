@@ -36,6 +36,24 @@
       "requirement_ids": [
         "REQ-ThreeMD-036"
       ]
+    },
+    {
+      "timestamp": 1791313183,
+      "commit": "924356a5de09a800d0c5170a80441c1b81f4aed5",
+      "contract_digest": "19068b259d9336284455d88b63596d1a2c56155393e2a0787bde2507e43475ba",
+      "execution_digest": "e2e1111b074f4d7be99f221e5153d2112f121f48ff38550b3c05790aff5b7885",
+      "workspace_digest": "2f771de7fdc9ff7f26a59190dedd5294347bff1a1f59da49ec149d599466fcf1",
+      "passed": true,
+      "commands": [
+        {
+          "command": "specsync check --spec ThreeMD --strict",
+          "success": true,
+          "exit_code": 0
+        }
+      ],
+      "requirement_ids": [
+        "REQ-ThreeMD-036"
+      ]
     }
   ]
 }
