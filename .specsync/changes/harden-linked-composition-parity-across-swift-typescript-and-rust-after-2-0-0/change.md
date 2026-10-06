@@ -1,6 +1,6 @@
 ---
 id: harden-linked-composition-parity-across-swift-typescript-and-rust-after-2-0-0
-state: approved
+state: implementing
 type: feature
 base_commit: ca2d1e34f20be3c5100d0fd1474a8ee9cc78d2d4
 ---

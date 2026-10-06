@@ -1,6 +1,6 @@
 ---
 module: ThreeMD
-version: 8
+version: 9
 status: active
 files:
   - Sources/ThreeMD/Axis.swift
@@ -488,3 +488,4 @@ errors retain their stable cases and metadata.
 | 5 | 2026-10-05 | bring-bounded-binary-composition-and-transactional-editing-to-typescript-and-rust-with-shared-conformance: Bring bounded binary composition and transactional editing to TypeScript and Rust with shared conformance |
 | 6 | 2026-10-05 | guarantee-portable-cross-language-document-and-composition-interchange-with-a-nine-pair-public-api-verification-matrix: Guarantee portable cross-language document and composition interchange with a nine-pair public API verification matrix |
 | 8 | 2026-10-05 | add-linked-file-composition-with-a-glyph-ledger-recursive-supplied-file-resolution-and-portable-self-contained-bundling: Add linked file composition with a glyph ledger recursive supplied-file resolution and portable self-contained bundling in all three languages |
+| 9 | 2026-10-06 | harden-linked-composition-parity-across-swift-typescript-and-rust-after-2-0-0: Harden linked composition parity across Swift TypeScript and Rust after 2.0.0 |
