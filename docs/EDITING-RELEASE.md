@@ -6,7 +6,7 @@ Status: released in ThreeMD 2.0.0 on 2026-10-06. Release notes, migration guidan
 
 The package release is 2.0.0. The package version, frozen 1.0 text grammar, binary container version 1 and composition profile version `3md-composition-1` are separate contracts. Existing documents and parser/serializer signatures stay supported.
 
-The release combines the binary/composition foundation in PR58 with stable identities, typed document/composition patches and structured diagnostics in PR61, portable TypeScript/Rust implementations in PR62 and public-API interchange in PR63. PR63 landed in PR62, PR62 landed in PR61, and Leif merged PR61 into main at `9dfbdb649891a95f27e7590e9e6ddc72b9e58d08`. The landed tree is byte-identical to feature tip `20d1ed4f04333e18c36a50a44bf10e1b0e9b72e6`. Existing archive records are preserved and do not pretend that feature evidence was originally collected on the squash commit. PR64 prepared the 2.0.0 package metadata at `be41af523aecf041202a06d4c83471b19e09b275`, PR65 added linked file composition at `e424fc5b20b16c657dd00c47415de833e25cf7af`, PR66 landed its review corrections at `9ac2454dfec51a9d575a030236f046462059f847` and PR68 finalized its SpecSync change at `87edafb2f47b4d73e47441ae754ad955b6d49f44`. Release commit `b1f5937bd47a0bd45fcaf4dd6f805d3bbad80da8` adds the Linux CLI build fix and the pinned publish workflows.
+The release combines the binary/composition foundation in PR58 with stable identities, typed document/composition patches and structured diagnostics in PR61, portable TypeScript/Rust implementations in PR62 and public-API interchange in PR63. PR63 landed in PR62, PR62 landed in PR61, and Leif merged PR61 into main at `9dfbdb649891a95f27e7590e9e6ddc72b9e58d08`. The landed tree is byte-identical to feature tip `20d1ed4f04333e18c36a50a44bf10e1b0e9b72e6`. Existing archive records are preserved and do not pretend that feature evidence was originally collected on the squash commit. PR64 prepared the 2.0.0 package metadata at `be41af523aecf041202a06d4c83471b19e09b275`, PR65 added linked file composition at `e424fc5b20b16c657dd00c47415de833e25cf7af`, PR66 landed its review corrections at `9ac2454dfec51a9d575a030236f046462059f847` and PR68 finalized its SpecSync change at `87edafb2f47b4d73e47441ae754ad955b6d49f44`. Release pull request commit `d6eb66f23641e2f7fb7e7dc6ea6dd8e324bd17f6` adds the Linux CLI build fix and the pinned publish workflows; the `v2.0.0` tag is the squash merge of that pull request, with the same source.
 
 ## Capability matrix
 
@@ -95,11 +95,11 @@ Dependency adoption and explicit file migration require semantic equivalence and
 ## Release checklist
 
 - Done: all three libraries' semantic tests and shared extension fixtures pass with the existing text conformance unchanged.
-- Done: the pinned Trust 1.2.2 gate passed on macOS at release commit `b1f5937`. Counts are in [RELEASE-2.0.0.md](RELEASE-2.0.0.md#landed-source-and-verification).
+- Done: the pinned Trust 1.2.2 gate passed on macOS at commit `d6eb66f`. Counts are in [RELEASE-2.0.0.md](RELEASE-2.0.0.md#landed-source-and-verification).
 - Done: cross-platform unsupported-compression behavior is explicit and the capability matrix is published.
 - Done: scoped agent reviews are recorded under their actual reviewer identities, and the unsigned provenance limitation is preserved under the existing policy.
 - Done: the storage/composition, editing, portable-library, interchange, metadata and linked-file scopes are finalized through SpecSync with their implementation evidence archived.
-- Open: Windows execution and a permitted signed attestation. x86_64 Linux was exercised only under emulation. Linux status is recorded under the known limits in [RELEASE-2.0.0.md](RELEASE-2.0.0.md#known-limits).
+- Open: Windows and x86_64 Linux execution and a permitted signed attestation. Linux status is recorded under the known limits in [RELEASE-2.0.0.md](RELEASE-2.0.0.md#known-limits).
 - Release: the `v2.0.0` tag and GitHub release follow Leif's direct "Finish 2.0.0" instruction of 2026-10-06. The release workflows publish the npm packages, and publish the Rust crate when the `CRATES_IO_TOKEN` repository secret is configured. The VSIX is built locally and is not published to a marketplace.
 
 Indexed partial reads, portable material/timing profiles and a full animation timeline are later milestones. They are not part of 2.0.0.

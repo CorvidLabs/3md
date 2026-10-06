@@ -175,16 +175,19 @@ its SpecSync change at `87edafb2f47b4d73e47441ae754ad955b6d49f44`. Archived
 approvals and exact implementation pins retain their real history; squash
 merging does not rewrite where the evidence was collected.
 
-Release commit `b1f5937bd47a0bd45fcaf4dd6f805d3bbad80da8` adds the last product
-changes after `87edafb`: the `threemd` CLI writes standard error through
-`FileHandle.standardError` instead of the C `stderr` global, which Swift 6
-strict concurrency rejects with Glibc on Linux (messages and exit codes are
-unchanged); the npm publish jobs pin their npm upgrade to `npm@^11.5.1`; and the
-crate workflow checks the committed version against the tag instead of
-rewriting it. Later commits before the tag change only documentation, evidence
-and SpecSync records.
+Commit `d6eb66f23641e2f7fb7e7dc6ea6dd8e324bd17f6` on the release pull request carries the last product
+changes after `87edafb`. The `threemd` CLI writes standard error through
+`FileHandle.standardError`'s descriptor instead of the C `stderr` global, which
+Swift 6 strict concurrency rejects with Glibc on Linux. Like `fputs`, it ignores
+a failed write, so messages and exit codes are unchanged; 39 CLI cases,
+including closed standard error and a broken pipe, match main exactly. The npm
+publish jobs pin their npm upgrade to `npm@^11.5.1`, and the crate workflow
+checks the committed version against a tag ref instead of rewriting it. Later
+release-branch commits change only documentation, evidence and SpecSync
+records. The repository merges by squash, so the `v2.0.0` tag is the squash
+merge of that pull request: a different commit with the same source.
 
-The pinned Trust 1.2.2 gate passed on that exact commit on macOS in 59 seconds,
+The pinned Trust 1.2.2 gate passed on `d6eb66f` on macOS in 48 seconds,
 with Fledge 1.7.2: 268 Swift tests, 157 TypeScript tests with typecheck and
 package build, 49 Rust tests plus 3 doctests, strict Clippy, editor grammar and
 element bundle drift. The public-API interchange gate ran 479 cases: 82 catalog
@@ -194,7 +197,7 @@ for each of the nine writer/reader pairs, comparing canonical bytes,
 uncompressed envelopes, preserved semantics, identities, atomic imported edits
 and source-free bundle imports. Augur returned proceed (risk 27). Provenance is
 reported degraded under the soft policy because no permitted signature exists.
-The log is [evidence/release-2.0.0/trust-b1f5937.log](evidence/release-2.0.0/trust-b1f5937.log).
+The log is [evidence/release-2.0.0/trust-d6eb66f.log](evidence/release-2.0.0/trust-d6eb66f.log).
 Linked-file implementation receipts are in
 [evidence/file-composition](evidence/file-composition/README.md); earlier
 receipts remain in [EDITING-RELEASE.md](EDITING-RELEASE.md).
@@ -211,15 +214,15 @@ approval or a signature.
   value, arbitrary graph or language runtime.
 - The release Trust receipt comes from macOS, and the configured complete Trust
   job in CI runs on macos-15.
-- Linux execution is verified on aarch64 only, in Docker at release commit
-  `b1f5937`. With official `swift:6.0-noble` (6.0.3) and `swift:6.3-noble`
+- Linux execution is verified on aarch64 only, in Docker at commit `d6eb66f`. With official `swift:6.0-noble` (6.0.3) and `swift:6.3-noble`
   (6.3.3) images the whole Swift package builds and 262 tests pass; the Apple
   Compression tests compile only on Apple platforms. `rust:1.95-bookworm` passes
   49 tests plus 3 doctests, `oven/bun:1.4` passes typecheck, build and 157
   tests, and the nine-pair interchange passes all 479 cases and 17,451 imports.
-  There is no Linux CI job yet. Logs and scripts are in
+  No CI job runs the library suites on Linux yet. Logs and scripts are in
   [evidence/release-2.0.0](evidence/release-2.0.0/README.md).
-- x86_64 Linux was exercised only under emulation, not on native hardware or CI.
+- x86_64 Linux is not verified: it was tried only under emulation during
+  readiness checks, and no log is retained for this release.
 - Windows execution is not verified.
 - The repository uses soft provenance. Trust passes while reporting degradation
   because no permitted signed attestation exists. Agent scope approval and
@@ -254,7 +257,8 @@ The `v2.0.0` GitHub release starts the existing workflows:
   Releases between 1.0.0 and 2.0.0 never reached crates.io, which stayed at
   `threemd` 1.0.0: the old workflow rewrote the crate version, left the tree
   dirty, and `cargo publish` refused. This release checks the committed version
-  instead.
+  instead. The `CRATES_IO_TOKEN` secret is not configured yet; once it is,
+  re-running the failed `cargo-publish` job for `v2.0.0` publishes the crate.
 - `post-release-formula.yml` updates the Homebrew formula.
 
 The VS Code extension is not published to a marketplace. Build the VSIX locally

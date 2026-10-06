@@ -1,6 +1,8 @@
-== typescript image=oven/bun:1.4 digest=oven/bun@sha256:9114c058aeae42162ee16dd5084b95fe9473970bb6bcb5b232ab1630f0546895
+== commit d6eb66f23641e2f7fb7e7dc6ea6dd8e324bd17f6 (git archive copy)
+== typescript image=oven/bun:1.4 id=sha256:9114c058aeae42162ee16dd5084b95fe9473970bb6bcb5b232ab1630f0546895
+== docker 29.8.1 linux/arm64
 == uname
-Linux f80efb54c379 7.0.14-linuxkit #1 SMP PREEMPT Fri Sep 18 10:19:32 UTC 2026 aarch64 GNU/Linux
+Linux f62a60611a5a 7.0.14-linuxkit #1 SMP PREEMPT Fri Sep 18 10:19:32 UTC 2026 aarch64 GNU/Linux
 == os
 PRETTY_NAME="Debian GNU/Linux 13 (trixie)"
 NAME="Debian GNU/Linux"
@@ -14,7 +16,7 @@ bun install v1.4.2 (744846f84)
 + @types/bun@1.3.14
 + typescript@5.9.3
 
-5 packages installed [1.73s]
+5 packages installed [1.50s]
 EXIT bun-install=0
 == tsc version
 Version 5.9.3
@@ -23,200 +25,200 @@ $ tsc --noEmit
 EXIT typecheck=0
 == bun run build
 $ bun build ./src/index.ts --outdir ./dist --target node --format esm && tsc -p tsconfig.build.json
-Bundled 6 modules in 103ms
+Bundled 6 modules in 63ms
 
   index.js  96.77 KB  (entry point)
 
 EXIT build=0
 total 128
-drwxr-xr-x  9 root root   288 Oct  6 15:05 .
-drwxr-xr-x 12 root root   384 Oct  6 15:05 ..
--rw-r--r--  1 root root  3578 Oct  6 15:05 composition.d.ts
--rw-r--r--  1 root root  6487 Oct  6 15:05 editing.d.ts
--rw-r--r--  1 root root  1645 Oct  6 15:05 file-composition.d.ts
--rw-r--r--  1 root root  8171 Oct  6 15:05 index.d.ts
--rw-r--r--  1 root root 96770 Oct  6 15:05 index.js
--rw-r--r--  1 root root  1991 Oct  6 15:05 portable.d.ts
--rw-r--r--  1 root root  3005 Oct  6 15:05 storage.d.ts
+drwxr-xr-x  9 root root   288 Oct  6 15:49 .
+drwxr-xr-x 12 root root   384 Oct  6 15:48 ..
+-rw-r--r--  1 root root  3578 Oct  6 15:49 composition.d.ts
+-rw-r--r--  1 root root  6487 Oct  6 15:49 editing.d.ts
+-rw-r--r--  1 root root  1645 Oct  6 15:49 file-composition.d.ts
+-rw-r--r--  1 root root  8171 Oct  6 15:49 index.d.ts
+-rw-r--r--  1 root root 96770 Oct  6 15:48 index.js
+-rw-r--r--  1 root root  1991 Oct  6 15:49 portable.d.ts
+-rw-r--r--  1 root root  3005 Oct  6 15:49 storage.d.ts
 == bun test
 bun test v1.4.2 (744846f84)
 
 test/interchange.test.ts:
-(pass) lossless cross-language interchange > raw parsing and bounded decoding use the literal Foundation whitespace set [3.70ms]
-(pass) lossless cross-language interchange > Unicode whitespace fences do not invent directives during bounded preflight [0.42ms]
-(pass) lossless cross-language interchange > UTF-8 decoding leaves BOM removal to the parser exactly once [0.21ms]
-(pass) lossless cross-language interchange > source dictionary collisions retain first spelling and the last assignment in source order [1.44ms]
-(pass) lossless cross-language interchange > legacy serialization preserves literal apostrophes, edge whitespace, quotes and backslashes [0.57ms]
-(pass) lossless cross-language interchange > legacy number formatting and Unicode scalar key order agree with canonical wire writers [0.28ms]
-(pass) lossless cross-language interchange > links preserve long finite targets, long labels and multiline labels [0.68ms]
-(pass) lossless cross-language interchange > linear link scanning preserves reference regex matching for malformed nested candidates [0.88ms]
+(pass) lossless cross-language interchange > raw parsing and bounded decoding use the literal Foundation whitespace set [3.95ms]
+(pass) lossless cross-language interchange > Unicode whitespace fences do not invent directives during bounded preflight [0.58ms]
+(pass) lossless cross-language interchange > UTF-8 decoding leaves BOM removal to the parser exactly once [0.24ms]
+(pass) lossless cross-language interchange > source dictionary collisions retain first spelling and the last assignment in source order [4.27ms]
+(pass) lossless cross-language interchange > legacy serialization preserves literal apostrophes, edge whitespace, quotes and backslashes [0.49ms]
+(pass) lossless cross-language interchange > legacy number formatting and Unicode scalar key order agree with canonical wire writers [0.32ms]
+(pass) lossless cross-language interchange > links preserve long finite targets, long labels and multiline labels [0.46ms]
+(pass) lossless cross-language interchange > linear link scanning preserves reference regex matching for malformed nested candidates [0.85ms]
 
 test/composition.test.ts:
-(pass) bounded self-contained composition > safe ID grammar, duplicates, absent roots and unreachable missing targets fail [2.14ms]
-(pass) bounded self-contained composition > cycles, unused cycles, cached depth and repeated-traversal occurrence limits fail [1.16ms]
-(pass) bounded self-contained composition > counts, unique source bytes and per-reference UTF-8 attributes are bounded [0.93ms]
+(pass) bounded self-contained composition > safe ID grammar, duplicates, absent roots and unreachable missing targets fail [8.87ms]
+(pass) bounded self-contained composition > cycles, unused cycles, cached depth and repeated-traversal occurrence limits fail [1.00ms]
+(pass) bounded self-contained composition > counts, unique source bytes and per-reference UTF-8 attributes are bounded [1.12ms]
 (pass) bounded self-contained composition > constructors enforce absolute integer limits and legitimate zero reference limits [0.15ms]
-(pass) bounded self-contained composition > public graph codecs validate plain-object composition policies before reading or writing [0.56ms]
-(pass) bounded self-contained composition > strict envelopes, schemas, unknown fields and JSON types are rejected [1.87ms]
-(pass) bounded self-contained composition > duplicate escaped keys, nested records, numeric fields and trailing JSON fail before object decoding [1.12ms]
-(pass) bounded self-contained composition > embedded paths and malformed unused sources stay local parse errors [0.63ms]
-(pass) bounded self-contained composition > profile and escaped JSON bounds count the complete envelope [1.74ms]
-(pass) bounded self-contained composition > opaque attributes preserve controls, Unicode and prototype-looking keys [1.36ms]
-(pass) bounded self-contained composition > pre-aborted graph construction and codecs propagate cancellation [0.42ms]
-(pass) bounded self-contained composition > new reference writers sort Unicode scalar keys and strict JSON rejects equivalent duplicate keys [0.94ms]
+(pass) bounded self-contained composition > public graph codecs validate plain-object composition policies before reading or writing [0.62ms]
+(pass) bounded self-contained composition > strict envelopes, schemas, unknown fields and JSON types are rejected [1.64ms]
+(pass) bounded self-contained composition > duplicate escaped keys, nested records, numeric fields and trailing JSON fail before object decoding [0.60ms]
+(pass) bounded self-contained composition > embedded paths and malformed unused sources stay local parse errors [0.53ms]
+(pass) bounded self-contained composition > profile and escaped JSON bounds count the complete envelope [1.19ms]
+(pass) bounded self-contained composition > opaque attributes preserve controls, Unicode and prototype-looking keys [1.83ms]
+(pass) bounded self-contained composition > pre-aborted graph construction and codecs propagate cancellation [0.50ms]
+(pass) bounded self-contained composition > new reference writers sort Unicode scalar keys and strict JSON rejects equivalent duplicate keys [1.50ms]
 
 test/conformance.test.ts:
-(pass) conformance vectors > at least one valid and one invalid vector exist [0.20ms]
-(pass) conformance vectors > invalid-duplicate-plane.json: two planes sharing the same z value are rejected [0.22ms]
-(pass) conformance vectors > invalid-duplicate-z-decimal-forms.json: z=0 and z=0.0 are the same position [0.05ms]
+(pass) conformance vectors > at least one valid and one invalid vector exist [0.11ms]
+(pass) conformance vectors > invalid-duplicate-plane.json: two planes sharing the same z value are rejected [0.17ms]
+(pass) conformance vectors > invalid-duplicate-z-decimal-forms.json: z=0 and z=0.0 are the same position [0.04ms]
 (pass) conformance vectors > invalid-frontmatter-no-colon.json: frontmatter line without a colon separator is rejected [0.04ms]
-(pass) conformance vectors > invalid-frontmatter-unclosed.json: frontmatter block that is never closed is rejected [0.02ms]
+(pass) conformance vectors > invalid-frontmatter-unclosed.json: frontmatter block that is never closed is rejected [0.01ms]
 (pass) conformance vectors > invalid-missing-frontmatter.json: document without a frontmatter fence is rejected
 (pass) conformance vectors > invalid-missing-plane-position.json: a plane directive with no z attribute is rejected [0.03ms]
 (pass) conformance vectors > invalid-missing-version.json: frontmatter without the 3md version key is rejected [0.01ms]
 (pass) conformance vectors > invalid-plane-token-no-equals.json: a plane attribute token with no equals sign is rejected (Swift throws; it is not skipped) [0.05ms]
-(pass) conformance vectors > invalid-plane-x-not-number.json: a plane directive whose x is not a number is rejected [0.03ms]
-(pass) conformance vectors > invalid-plane-z-not-number.json: a plane directive whose z is not a number is rejected [0.02ms]
-(pass) conformance vectors > invalid-unterminated-quote.json: an unterminated quote in a directive is rejected [0.03ms]
+(pass) conformance vectors > invalid-plane-x-not-number.json: a plane directive whose x is not a number is rejected [0.02ms]
+(pass) conformance vectors > invalid-plane-z-not-number.json: a plane directive whose z is not a number is rejected [0.01ms]
+(pass) conformance vectors > invalid-unterminated-quote.json: an unterminated quote in a directive is rejected [0.02ms]
 (pass) conformance vectors > invalid-z-hex.json: hex z is rejected so Swift and TS agree [0.01ms]
 (pass) conformance vectors > invalid-z-infinity.json: z=inf is rejected (non-finite) [0.01ms]
 (pass) conformance vectors > invalid-z-nan.json: z=nan is rejected (non-finite, also closes the NaN dedup bypass) [0.01ms]
-(pass) conformance vectors > invalid-z-thousands-separator.json: thousands separators are rejected [0.03ms]
+(pass) conformance vectors > invalid-z-thousands-separator.json: thousands separators are rejected [0.01ms]
 (pass) conformance vectors > links-basic.json: a [[z=N]] reference resolves to the source z, target z, and existence [0.03ms]
-(pass) conformance vectors > links-dangling.json: a reference to a missing plane is reported with targetExists false [0.02ms]
+(pass) conformance vectors > links-dangling.json: a reference to a missing plane is reported with targetExists false [0.01ms]
 (pass) conformance vectors > links-decimal-target.json: a decimal target z is matched against a decimal plane z [0.03ms]
-(pass) conformance vectors > links-invalid-ignored.json: non-finite targets and ordinary Markdown links are not cross-plane links [0.24ms]
-(pass) conformance vectors > links-multiple.json: multiple links in one body are returned left to right [0.05ms]
-(pass) conformance vectors > links-with-text.json: a [[z=N|text]] reference captures the link text [0.14ms]
-(pass) conformance vectors > valid-attribute-numeric-stays-string.json: non z/x/y attributes stay strings, not coerced [0.19ms]
-(pass) conformance vectors > valid-axis-default.json: axis defaults to layer when omitted [0.02ms]
+(pass) conformance vectors > links-invalid-ignored.json: non-finite targets and ordinary Markdown links are not cross-plane links
+(pass) conformance vectors > links-multiple.json: multiple links in one body are returned left to right [0.25ms]
+(pass) conformance vectors > links-with-text.json: a [[z=N|text]] reference captures the link text [0.04ms]
+(pass) conformance vectors > valid-attribute-numeric-stays-string.json: non z/x/y attributes stay strings, not coerced [0.08ms]
+(pass) conformance vectors > valid-axis-default.json: axis defaults to layer when omitted [0.01ms]
 (pass) conformance vectors > valid-axis-lowercased.json: axis value is trimmed and lowercased [0.01ms]
 (pass) conformance vectors > valid-bom.json: a leading UTF-8 BOM is stripped before parsing
-(pass) conformance vectors > valid-code-block-directive-safe.json: a @plane line inside a fenced code block stays body text [0.01ms]
-(pass) conformance vectors > valid-coordinates-attributes.json: coordinates, label, and extra attributes are captured [0.06ms]
-(pass) conformance vectors > valid-crlf.json: CRLF line endings are normalized to LF [0.04ms]
+(pass) conformance vectors > valid-code-block-directive-safe.json: a @plane line inside a fenced code block stays body text
+(pass) conformance vectors > valid-coordinates-attributes.json: coordinates, label, and extra attributes are captured [0.04ms]
+(pass) conformance vectors > valid-crlf.json: CRLF line endings are normalized to LF [0.02ms]
 (pass) conformance vectors > valid-decimal-negative-z.json: z accepts negative and decimal values and keeps source order [0.02ms]
 (pass) conformance vectors > valid-empty-body.json: frontmatter only with no body yields no planes
 (pass) conformance vectors > valid-empty-plane-body.json: a plane directive with no following content has an empty body
-(pass) conformance vectors > valid-escaped-quote-label.json: escaped quotes inside a quoted label round-trip [0.05ms]
-(pass) conformance vectors > valid-frontmatter-comments.json: frontmatter skips comment and blank lines and strips quotes [0.02ms]
-(pass) conformance vectors > valid-indented-directive-is-body.json: an indented @plane is body, not a directive [0.03ms]
+(pass) conformance vectors > valid-escaped-quote-label.json: escaped quotes inside a quoted label round-trip [0.04ms]
+(pass) conformance vectors > valid-frontmatter-comments.json: frontmatter skips comment and blank lines and strips quotes [0.04ms]
+(pass) conformance vectors > valid-indented-directive-is-body.json: an indented @plane is body, not a directive [0.02ms]
 (pass) conformance vectors > valid-leading-blank-lines.json: leading blank lines before the frontmatter fence are allowed
 (pass) conformance vectors > valid-metadata-key-case-preserved.json: non-reserved frontmatter keys keep their case [0.01ms]
 (pass) conformance vectors > valid-multi-plane.json: valid multi-plane document with title, metadata, and preamble [0.02ms]
-(pass) conformance vectors > valid-plane-prefix-not-directive.json: @planex is not a directive; the doc is single-plane shorthand
-(pass) conformance vectors > valid-preamble-with-planes.json: preamble is preserved when planes follow and quoted attribute keeps spaces [0.02ms]
-(pass) conformance vectors > valid-repeated-directive-key-last-wins.json: a repeated directive key takes the last value
-(pass) conformance vectors > valid-single-plane-shorthand.json: single-plane shorthand wraps body at z=0 when no directives [0.01ms]
-(pass) conformance vectors > valid-version-1-0.json: the 1.0 format marker parses, with version reported as 1.0 [0.02ms]
-(pass) conformance vectors > valid-z-scientific-notation.json: scientific notation in z parses as a decimal [0.11ms]
-(pass) round trip: parse -> serialize -> parse > valid-attribute-numeric-stays-string.json: non z/x/y attributes stay strings, not coerced [0.20ms]
-(pass) round trip: parse -> serialize -> parse > valid-axis-default.json: axis defaults to layer when omitted [0.04ms]
-(pass) round trip: parse -> serialize -> parse > valid-axis-lowercased.json: axis value is trimmed and lowercased [0.02ms]
-(pass) round trip: parse -> serialize -> parse > valid-bom.json: a leading UTF-8 BOM is stripped before parsing [0.02ms]
-(pass) round trip: parse -> serialize -> parse > valid-code-block-directive-safe.json: a @plane line inside a fenced code block stays body text [0.03ms]
-(pass) round trip: parse -> serialize -> parse > valid-coordinates-attributes.json: coordinates, label, and extra attributes are captured [0.10ms]
-(pass) round trip: parse -> serialize -> parse > valid-crlf.json: CRLF line endings are normalized to LF [0.03ms]
-(pass) round trip: parse -> serialize -> parse > valid-decimal-negative-z.json: z accepts negative and decimal values and keeps source order [0.05ms]
-(pass) round trip: parse -> serialize -> parse > valid-empty-body.json: frontmatter only with no body yields no planes [0.01ms]
-(pass) round trip: parse -> serialize -> parse > valid-empty-plane-body.json: a plane directive with no following content has an empty body [0.01ms]
+(pass) conformance vectors > valid-plane-prefix-not-directive.json: @planex is not a directive; the doc is single-plane shorthand [0.09ms]
+(pass) conformance vectors > valid-preamble-with-planes.json: preamble is preserved when planes follow and quoted attribute keeps spaces [0.07ms]
+(pass) conformance vectors > valid-repeated-directive-key-last-wins.json: a repeated directive key takes the last value [0.02ms]
+(pass) conformance vectors > valid-single-plane-shorthand.json: single-plane shorthand wraps body at z=0 when no directives
+(pass) conformance vectors > valid-version-1-0.json: the 1.0 format marker parses, with version reported as 1.0
+(pass) conformance vectors > valid-z-scientific-notation.json: scientific notation in z parses as a decimal [0.05ms]
+(pass) round trip: parse -> serialize -> parse > valid-attribute-numeric-stays-string.json: non z/x/y attributes stay strings, not coerced [0.14ms]
+(pass) round trip: parse -> serialize -> parse > valid-axis-default.json: axis defaults to layer when omitted [0.05ms]
+(pass) round trip: parse -> serialize -> parse > valid-axis-lowercased.json: axis value is trimmed and lowercased [0.04ms]
+(pass) round trip: parse -> serialize -> parse > valid-bom.json: a leading UTF-8 BOM is stripped before parsing [0.03ms]
+(pass) round trip: parse -> serialize -> parse > valid-code-block-directive-safe.json: a @plane line inside a fenced code block stays body text [0.02ms]
+(pass) round trip: parse -> serialize -> parse > valid-coordinates-attributes.json: coordinates, label, and extra attributes are captured [0.12ms]
+(pass) round trip: parse -> serialize -> parse > valid-crlf.json: CRLF line endings are normalized to LF [0.05ms]
+(pass) round trip: parse -> serialize -> parse > valid-decimal-negative-z.json: z accepts negative and decimal values and keeps source order [0.07ms]
+(pass) round trip: parse -> serialize -> parse > valid-empty-body.json: frontmatter only with no body yields no planes [0.02ms]
+(pass) round trip: parse -> serialize -> parse > valid-empty-plane-body.json: a plane directive with no following content has an empty body [0.02ms]
 (pass) round trip: parse -> serialize -> parse > valid-escaped-quote-label.json: escaped quotes inside a quoted label round-trip [0.02ms]
-(pass) round trip: parse -> serialize -> parse > valid-frontmatter-comments.json: frontmatter skips comment and blank lines and strips quotes [0.40ms]
+(pass) round trip: parse -> serialize -> parse > valid-frontmatter-comments.json: frontmatter skips comment and blank lines and strips quotes [0.03ms]
 (pass) round trip: parse -> serialize -> parse > valid-indented-directive-is-body.json: an indented @plane is body, not a directive [0.03ms]
-(pass) round trip: parse -> serialize -> parse > valid-leading-blank-lines.json: leading blank lines before the frontmatter fence are allowed [0.03ms]
-(pass) round trip: parse -> serialize -> parse > valid-metadata-key-case-preserved.json: non-reserved frontmatter keys keep their case [0.09ms]
+(pass) round trip: parse -> serialize -> parse > valid-leading-blank-lines.json: leading blank lines before the frontmatter fence are allowed [0.07ms]
+(pass) round trip: parse -> serialize -> parse > valid-metadata-key-case-preserved.json: non-reserved frontmatter keys keep their case [0.04ms]
 (pass) round trip: parse -> serialize -> parse > valid-multi-plane.json: valid multi-plane document with title, metadata, and preamble [0.06ms]
-(pass) round trip: parse -> serialize -> parse > valid-plane-prefix-not-directive.json: @planex is not a directive; the doc is single-plane shorthand [0.01ms]
+(pass) round trip: parse -> serialize -> parse > valid-plane-prefix-not-directive.json: @planex is not a directive; the doc is single-plane shorthand [0.02ms]
 (pass) round trip: parse -> serialize -> parse > valid-preamble-with-planes.json: preamble is preserved when planes follow and quoted attribute keeps spaces [0.06ms]
-(pass) round trip: parse -> serialize -> parse > valid-repeated-directive-key-last-wins.json: a repeated directive key takes the last value [0.03ms]
+(pass) round trip: parse -> serialize -> parse > valid-repeated-directive-key-last-wins.json: a repeated directive key takes the last value [0.08ms]
 (pass) round trip: parse -> serialize -> parse > valid-single-plane-shorthand.json: single-plane shorthand wraps body at z=0 when no directives [0.01ms]
-(pass) round trip: parse -> serialize -> parse > valid-version-1-0.json: the 1.0 format marker parses, with version reported as 1.0 [0.21ms]
-(pass) round trip: parse -> serialize -> parse > valid-z-scientific-notation.json: scientific notation in z parses as a decimal [0.38ms]
+(pass) round trip: parse -> serialize -> parse > valid-version-1-0.json: the 1.0 format marker parses, with version reported as 1.0 [0.08ms]
+(pass) round trip: parse -> serialize -> parse > valid-z-scientific-notation.json: scientific notation in z parses as a decimal [0.07ms]
 
 test/editing.test.ts:
-(pass) portable atomic editing and diagnostics > adoption skips existing IDs, preserves id metadata and rejects unsafe or duplicated identities [1.33ms]
-(pass) portable atomic editing and diagnostics > snapshots deep-copy and freeze values; reconstruction rejects a forged revision [1.48ms]
-(pass) portable atomic editing and diagnostics > insert, move, remove and header replacements are one pure transaction [0.99ms]
-(pass) portable atomic editing and diagnostics > later invalid operation rolls back; replacement identities, indices and missing targets are precise [1.17ms]
-(pass) portable atomic editing and diagnostics > exact revisions reject NFC-equivalent bytes and expected-content budgets [0.24ms]
-(pass) portable atomic editing and diagnostics > structurally typed snapshot revisions cannot replace the exact-content comparison [0.95ms]
-(pass) portable atomic editing and diagnostics > operation, payload and final invalid-document policies return no partial result [1.08ms]
-(pass) portable atomic editing and diagnostics > two NaN coordinate replacements reach invalid-document validation without a false duplicate [0.90ms]
-(pass) portable atomic editing and diagnostics > graph patches allow forward definitions and final root swaps without flattening [2.89ms]
-(pass) portable atomic editing and diagnostics > graph final failures identify the missing target or root and enforce scoped IDs [2.98ms]
-(pass) portable atomic editing and diagnostics > source diagnostics carry only actual parser lines; value paths and truncation stay precise [0.69ms]
-(pass) portable atomic editing and diagnostics > diagnostic payload preflight precedes expensive graph validation and retains owner paths [3.14ms]
-(pass) portable atomic editing and diagnostics > all identity, transaction and diagnostic entry points honor pre-aborted signals [0.76ms]
-(pass) portable atomic editing and diagnostics > public editor and diagnostic boundaries reject forged plain-object policies [0.48ms]
+(pass) portable atomic editing and diagnostics > adoption skips existing IDs, preserves id metadata and rejects unsafe or duplicated identities [3.37ms]
+(pass) portable atomic editing and diagnostics > snapshots deep-copy and freeze values; reconstruction rejects a forged revision [1.90ms]
+(pass) portable atomic editing and diagnostics > insert, move, remove and header replacements are one pure transaction [1.11ms]
+(pass) portable atomic editing and diagnostics > later invalid operation rolls back; replacement identities, indices and missing targets are precise [1.18ms]
+(pass) portable atomic editing and diagnostics > exact revisions reject NFC-equivalent bytes and expected-content budgets [0.40ms]
+(pass) portable atomic editing and diagnostics > structurally typed snapshot revisions cannot replace the exact-content comparison [1.23ms]
+(pass) portable atomic editing and diagnostics > operation, payload and final invalid-document policies return no partial result [0.53ms]
+(pass) portable atomic editing and diagnostics > two NaN coordinate replacements reach invalid-document validation without a false duplicate [0.46ms]
+(pass) portable atomic editing and diagnostics > graph patches allow forward definitions and final root swaps without flattening [2.15ms]
+(pass) portable atomic editing and diagnostics > graph final failures identify the missing target or root and enforce scoped IDs [2.51ms]
+(pass) portable atomic editing and diagnostics > source diagnostics carry only actual parser lines; value paths and truncation stay precise [0.53ms]
+(pass) portable atomic editing and diagnostics > diagnostic payload preflight precedes expensive graph validation and retains owner paths [3.07ms]
+(pass) portable atomic editing and diagnostics > all identity, transaction and diagnostic entry points honor pre-aborted signals [0.61ms]
+(pass) portable atomic editing and diagnostics > public editor and diagnostic boundaries reject forged plain-object policies [0.70ms]
 
 test/storage.test.ts:
-(pass) bounded portable storage > fixed envelope vector matches Swift and sliced data retains its byte offset [0.24ms]
-(pass) bounded portable storage > existing Swift canopy and grove envelopes remain readable and byte-identical [17.40ms]
-(pass) bounded portable storage > LZFSE is explicitly unavailable while unknown compression remains a different error [1.79ms]
-(pass) bounded portable storage > header fields, checksums, trailing bytes and unsafe 64-bit lengths are checked [0.50ms]
-(pass) bounded portable storage > resource constructors reject noninteger, nonpositive and raised limits [0.62ms]
+(pass) bounded portable storage > fixed envelope vector matches Swift and sliced data retains its byte offset [0.26ms]
+(pass) bounded portable storage > existing Swift canopy and grove envelopes remain readable and byte-identical [17.55ms]
+(pass) bounded portable storage > LZFSE is explicitly unavailable while unknown compression remains a different error [8.91ms]
+(pass) bounded portable storage > header fields, checksums, trailing bytes and unsafe 64-bit lengths are checked [2.68ms]
+(pass) bounded portable storage > resource constructors reject noninteger, nonpositive and raised limits [0.22ms]
 (pass) bounded portable storage > public storage boundaries validate structurally typed plain-object policies [0.11ms]
-(pass) bounded portable storage > exact byte boundaries succeed; physical lines, planes and entire records are bounded [0.51ms]
-(pass) bounded portable storage > preflight respects code fences and preserves the existing parser/serializer behavior [0.19ms]
-(pass) bounded portable storage > direct lossy values and malformed decimals fail without changing legacy text APIs [4.73ms]
-(pass) bounded portable storage > hostile interior and trailing ASCII whitespace remains exact through text and portable storage [83.29ms]
-(pass) bounded portable storage > pre-aborted operations propagate the abort reason [0.28ms]
-(pass) bounded portable storage > new canonical maps use Swift Unicode key equality, scalar order and original spelling [0.39ms]
+(pass) bounded portable storage > exact byte boundaries succeed; physical lines, planes and entire records are bounded [0.37ms]
+(pass) bounded portable storage > preflight respects code fences and preserves the existing parser/serializer behavior [0.12ms]
+(pass) bounded portable storage > direct lossy values and malformed decimals fail without changing legacy text APIs [4.02ms]
+(pass) bounded portable storage > hostile interior and trailing ASCII whitespace remains exact through text and portable storage [82.45ms]
+(pass) bounded portable storage > pre-aborted operations propagate the abort reason [0.30ms]
+(pass) bounded portable storage > new canonical maps use Swift Unicode key equality, scalar order and original spelling [0.51ms]
 
 test/extensions.test.ts:
-(pass) Swift portable extension conformance > all IEEE754 number vectors match Swift canonical formatting [4.69ms]
-(pass) Swift portable extension conformance > Swift scientific notation starts strictly above the exact 2^53 boundary [0.07ms]
-(pass) Swift portable extension conformance > canonical Unicode document text, envelope and revision are byte-identical to Swift [17.77ms]
-(pass) Swift portable extension conformance > canonical composition preserves shared definitions, instance IDs and exact profile bytes [24.30ms]
-(pass) Swift portable extension conformance > additive Swift Unicode key ordering and source-collision goldens match the portable codecs [52.43ms]
-(pass) Swift portable extension conformance > identity adoption follows the Swift fixture and preserves ordinary id metadata [1.62ms]
-(pass) Swift portable extension conformance > document transaction: atomic-coordinate-swap [0.57ms]
-(pass) Swift portable extension conformance > document transaction: source-order-change [0.38ms]
-(pass) Swift portable extension conformance > composition transaction: retarget-and-reorder-owner-instance [9.90ms]
-(pass) Swift portable extension conformance > composition transaction: remove-one-repeated-target-instance [3.41ms]
-(pass) Swift portable extension conformance > atomic failure: stale-document-revision [2.92ms]
-(pass) Swift portable extension conformance > atomic failure: final-coordinate-conflict [3.05ms]
-(pass) Swift portable extension conformance > atomic failure: changed-plane-identity [3.63ms]
-(pass) Swift portable extension conformance > atomic failure: stale-composition-revision [4.51ms]
-(pass) Swift portable extension conformance > atomic failure: final-reference-cycle [10.58ms]
-(pass) Swift portable extension conformance > atomic failure: wrong-owner-reference-target [7.23ms]
+(pass) Swift portable extension conformance > all IEEE754 number vectors match Swift canonical formatting [9.38ms]
+(pass) Swift portable extension conformance > Swift scientific notation starts strictly above the exact 2^53 boundary [1.89ms]
+(pass) Swift portable extension conformance > canonical Unicode document text, envelope and revision are byte-identical to Swift [20.16ms]
+(pass) Swift portable extension conformance > canonical composition preserves shared definitions, instance IDs and exact profile bytes [13.69ms]
+(pass) Swift portable extension conformance > additive Swift Unicode key ordering and source-collision goldens match the portable codecs [23.38ms]
+(pass) Swift portable extension conformance > identity adoption follows the Swift fixture and preserves ordinary id metadata [1.14ms]
+(pass) Swift portable extension conformance > document transaction: atomic-coordinate-swap [0.53ms]
+(pass) Swift portable extension conformance > document transaction: source-order-change [0.36ms]
+(pass) Swift portable extension conformance > composition transaction: retarget-and-reorder-owner-instance [6.85ms]
+(pass) Swift portable extension conformance > composition transaction: remove-one-repeated-target-instance [1.84ms]
+(pass) Swift portable extension conformance > atomic failure: stale-document-revision [3.28ms]
+(pass) Swift portable extension conformance > atomic failure: final-coordinate-conflict [4.86ms]
+(pass) Swift portable extension conformance > atomic failure: changed-plane-identity [3.89ms]
+(pass) Swift portable extension conformance > atomic failure: stale-composition-revision [3.81ms]
+(pass) Swift portable extension conformance > atomic failure: final-reference-cycle [5.47ms]
+(pass) Swift portable extension conformance > atomic failure: wrong-owner-reference-target [8.90ms]
 
 test/file-composition.test.ts:
-(pass) explicit supplied-file composition > simple and repeated glyph links deduplicate files and refresh changed child bytes [2.34ms]
-(pass) explicit supplied-file composition > nested parent paths and duplicate basenames resolve relative to each containing file [1.00ms]
-(pass) explicit supplied-file composition > binary nested bundles retain unused entries, stable identities and opaque edges before new ledger edges [3.77ms]
-(pass) explicit supplied-file composition > nested profile records use the outer composition policy while embedded ordinary records retain child bounds [2017.16ms]
-(pass) explicit supplied-file composition > paths use NFC and Unicode scalar ordering rather than UTF16 or locale sorting [1.19ms]
+(pass) explicit supplied-file composition > simple and repeated glyph links deduplicate files and refresh changed child bytes [2.18ms]
+(pass) explicit supplied-file composition > nested parent paths and duplicate basenames resolve relative to each containing file [0.90ms]
+(pass) explicit supplied-file composition > binary nested bundles retain unused entries, stable identities and opaque edges before new ledger edges [4.18ms]
+(pass) explicit supplied-file composition > nested profile records use the outer composition policy while embedded ordinary records retain child bounds [1743.32ms]
+(pass) explicit supplied-file composition > paths use NFC and Unicode scalar ordering rather than UTF16 or locale sorting [1.16ms]
 (pass) explicit supplied-file composition > path grammar rejects escape, absolute paths, empty segments, controls and normalized aliases [0.64ms]
-(pass) explicit supplied-file composition > strict ledger scanner rejects duplicate escaped keys, malformed JSON and invalid glyphs before values [0.56ms]
-(pass) explicit supplied-file composition > missing files and malformed reachable storage retain distinct errors, unreachable storage is ignored [0.37ms]
-(pass) explicit supplied-file composition > file cycles also fail when unused bundle entries form a cycle across files [0.78ms]
-(pass) explicit supplied-file composition > supplied counts, original path bytes and reachable bytes use input limits before decoding [21.93ms]
-(pass) explicit supplied-file composition > outer recognition applies child byte and line policies before its lowered plane ceiling [16.61ms]
-(pass) explicit supplied-file composition > disconnected embedded ledgers use final entry depth rather than incoming file depth [1.33ms]
-(pass) explicit supplied-file composition > repeated cached dependencies validate final depth after complete discovery [1.16ms]
-(pass) explicit supplied-file composition > independent fixed64 discovery safety bounds disconnected file chains [90.72ms]
-(pass) explicit supplied-file composition > lowered policies enforce final graph depth, imported entries, edges, conceptual traversal and final profile size [5.77ms]
-(pass) explicit supplied-file composition > pre-aborted and cooperatively aborted operations propagate the caller's cancellation reason [2.17ms]
+(pass) explicit supplied-file composition > strict ledger scanner rejects duplicate escaped keys, malformed JSON and invalid glyphs before values [0.50ms]
+(pass) explicit supplied-file composition > missing files and malformed reachable storage retain distinct errors, unreachable storage is ignored [0.99ms]
+(pass) explicit supplied-file composition > file cycles also fail when unused bundle entries form a cycle across files [1.33ms]
+(pass) explicit supplied-file composition > supplied counts, original path bytes and reachable bytes use input limits before decoding [24.39ms]
+(pass) explicit supplied-file composition > outer recognition applies child byte and line policies before its lowered plane ceiling [0.75ms]
+(pass) explicit supplied-file composition > disconnected embedded ledgers use final entry depth rather than incoming file depth [1.23ms]
+(pass) explicit supplied-file composition > repeated cached dependencies validate final depth after complete discovery [2.20ms]
+(pass) explicit supplied-file composition > independent fixed64 discovery safety bounds disconnected file chains [51.53ms]
+(pass) explicit supplied-file composition > lowered policies enforce final graph depth, imported entries, edges, conceptual traversal and final profile size [1.91ms]
+(pass) explicit supplied-file composition > pre-aborted and cooperatively aborted operations propagate the caller's cancellation reason [2.42ms]
 
 test/links.test.ts:
-(pass) links() > basic reference resolves source, target, and existence [4.98ms]
-(pass) links() > captures optional link text [0.09ms]
-(pass) links() > present-but-empty link text is the empty string [0.03ms]
+(pass) links() > basic reference resolves source, target, and existence [3.53ms]
+(pass) links() > captures optional link text [0.27ms]
+(pass) links() > present-but-empty link text is the empty string [0.02ms]
 (pass) links() > multiple links in one body are returned left to right [0.03ms]
 (pass) links() > links across planes follow source order [0.02ms]
-(pass) links() > dangling reference reports targetExists false [0.02ms]
-(pass) links() > decimal target matches a decimal plane z [0.04ms]
-(pass) links() > non-finite and non-link sequences are ignored [0.02ms]
-(pass) links() > signed and exponent targets parse as finite decimals [0.97ms]
-(pass) links() > a document with no links returns an empty array [0.19ms]
-(pass) links() > danglingLinks filters only missing targets [0.15ms]
-(pass) links() > linkGraph collapses repeated source-target pairs [1.59ms]
-(pass) links() > linkGraph keeps dangling edge status [1.34ms]
+(pass) links() > dangling reference reports targetExists false [0.16ms]
+(pass) links() > decimal target matches a decimal plane z [0.19ms]
+(pass) links() > non-finite and non-link sequences are ignored [0.04ms]
+(pass) links() > signed and exponent targets parse as finite decimals [0.03ms]
+(pass) links() > a document with no links returns an empty array [0.03ms]
+(pass) links() > danglingLinks filters only missing targets [0.07ms]
+(pass) links() > linkGraph collapses repeated source-target pairs [0.13ms]
+(pass) links() > linkGraph keeps dangling edge status [0.02ms]
 
  157 pass
  0 fail
  971 expect() calls
-Ran 157 tests across 8 files. [2.67s]
+Ran 157 tests across 8 files. [2.34s]
 EXIT bun-test=0
 DOCKER-EXIT typescript=0

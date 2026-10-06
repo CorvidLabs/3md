@@ -152,8 +152,8 @@ dependency. Its serde/serde_json dependencies are development-only. The release
 workflow publishes `threemd` 2.0.0 to crates.io when the `CRATES_IO_TOKEN`
 repository secret is configured. Releases between 1.0.0 and 2.0.0 never reached
 crates.io, which stayed at 1.0.0, because the old workflow rewrote the crate
-version and left the tree dirty; 2.0.0 fixes that workflow. Confirm that
-crates.io lists 2.0.0 before depending on it.
+version and left the tree dirty; 2.0.0 fixes that workflow. The secret is not
+configured yet, so confirm that crates.io lists 2.0.0 before depending on it.
 
 ```rust
 let document = threemd::parse(source)?;
