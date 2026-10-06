@@ -1,0 +1,90 @@
+name: linux
+
+# Runs the Swift, TypeScript and Rust suites and the nine-pair interchange on
+# Linux. Trust stays the macOS release gate; Windows remains unverified.
+permissions:
+  contents: read
+
+on:
+  pull_request:
+    paths-ignore:
+      - "LICENSE"
+      - "**/*.png"
+      - "**/*.md"
+      - ".github/ISSUE_TEMPLATE/**"
+  push:
+    branches: [main]
+    paths-ignore:
+      - "LICENSE"
+      - "**/*.png"
+      - "**/*.md"
+      - ".github/ISSUE_TEMPLATE/**"
+  workflow_dispatch:
+
+jobs:
+  linux:
+    runs-on: ubuntu-24.04
+    container: swift:6.3.3-noble
+    timeout-minutes: 45
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v4
+
+      # The Swift image omits curl, which the Rust toolchain installer needs.
+      - name: Install container prerequisites
+        run: |
+          apt-get update
+          apt-get install -y --no-install-recommends ca-certificates curl unzip
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.4.2
+
+      # The TypeScript interchange adapter runs under Node.
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - uses: dtolnay/rust-toolchain@master
+        with:
+          toolchain: 1.95.0
+          components: rustfmt, clippy
+
+      - name: Toolchain versions
+        run: |
+          swift --version
+          bun --version
+          node --version
+          cargo --version
+
+      - name: Swift build and tests
+        run: |
+          swift build
+          swift test
+
+      - name: TypeScript typecheck, build and tests
+        working-directory: js
+        run: |
+          bun install --frozen-lockfile
+          bun run typecheck
+          bun run build
+          bun test
+
+      # The Swift image ships clang but no `cc`, so Cargo links with clang.
+      - name: Rust format, Clippy, tests and interchange adapter
+        working-directory: rust
+        env:
+          CC: clang
+          CARGO_TARGET_X86_64_UNKNOWN_LINUX_GNU_LINKER: clang
+          CARGO_TARGET_AARCH64_UNKNOWN_LINUX_GNU_LINKER: clang
+        run: |
+          cargo fmt --check
+          cargo clippy --all-targets -- -D warnings
+          cargo test --all-targets
+          cargo test --doc
+          cargo build --locked --example interchange
+
+      - name: Nine-pair interchange
+        run: swift run threemd-interchange

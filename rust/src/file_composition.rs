@@ -6,6 +6,7 @@ use crate::composition::{
 use crate::storage::{self, DocumentDecodeLimits, DocumentStorageError, OperationOptions};
 use crate::Document;
 use std::collections::{BTreeMap, BTreeSet};
+use std::rc::Rc;
 use unicode_normalization::UnicodeNormalization;
 
 #[derive(Debug, Clone, PartialEq, Eq)]
@@ -89,9 +90,12 @@ impl From<DocumentCompositionError> for DocumentFileCompositionError {
 }
 type Result<T> = std::result::Result<T, DocumentFileCompositionError>;
 
-// Independent discovery safety ceiling. Embedded disconnected entries do not extend the final
-// root entry path; the caller's maximum_depth applies after remapping the complete entry graph.
-const MAXIMUM_FILE_DISCOVERY_DEPTH: usize = 64;
+// Independent discovery safety ceiling, the standard maximum depth. Embedded disconnected entries
+// do not extend the final root entry path; the caller's maximum_depth applies after remapping the
+// complete entry graph.
+fn maximum_file_discovery_depth() -> usize {
+    DocumentCompositionLimits::default().maximum_depth
+}
 
 /// Read a strict glyph-to-filename ledger. Filenames are interpreted only during explicit resolution.
 pub fn ledger(
@@ -126,17 +130,63 @@ pub fn resolve_path(
     options: &OperationOptions,
 ) -> std::result::Result<String, DocumentFileCompositionError> {
     options.check()?;
-    let bound = DocumentDecodeLimits::default().maximum_record_bytes;
-    if relative_to.len() > bound || source.len() > bound - relative_to.len() {
-        return Err(DocumentFileCompositionError::InputLimit);
-    }
-    let owner = normalize(relative_to, &[], options)?;
-    let mut base: Vec<&str> = owner.split('/').collect();
-    base.pop();
-    normalize(source, &base, options)
+    check_path_bytes(source, relative_to.len())?;
+    let owner = normalize(relative_to, None, None, options)?;
+    normalize(source, Some(&ContainingFile::new(&owner)), None, options)
 }
 
-fn normalize(path: &str, base: &[&str], options: &OperationOptions) -> Result<String> {
+/// A normalized containing filename whose directory boundaries are located once per discovered file.
+struct ContainingFile<'a> {
+    path: &'a str,
+    /// The byte offset of every separator, which is also the end of each directory segment.
+    directory_ends: Vec<usize>,
+}
+impl<'a> ContainingFile<'a> {
+    fn new(path: &'a str) -> Self {
+        Self {
+            path,
+            directory_ends: path.match_indices('/').map(|(index, _)| index).collect(),
+        }
+    }
+}
+
+/// The standalone record bound: the containing filename and reference together fit one record.
+fn check_path_bytes(source: &str, containing_bytes: usize) -> Result<()> {
+    let bound = DocumentDecodeLimits::default().maximum_record_bytes;
+    if containing_bytes > bound || source.len() > bound - containing_bytes {
+        return Err(DocumentFileCompositionError::InputLimit);
+    }
+    Ok(())
+}
+
+// UTF-8 bytes of a ledger edge's attributes besides its target: "glyph", the one-byte glyph and "source-file".
+const LEDGER_EDGE_ATTRIBUTE_OVERHEAD: usize = 17;
+
+/// Resolve one ledger reference against an owner normalized once, with the same bound as resolve_path.
+/// A target whose source-file attribute cannot fit `maximum_attribute_bytes` is refused before it is
+/// built or visited.
+fn resolve_reference(
+    source: &str,
+    owner: &ContainingFile<'_>,
+    maximum_attribute_bytes: usize,
+    options: &OperationOptions,
+) -> Result<String> {
+    options.check()?;
+    check_path_bytes(source, owner.path.len())?;
+    normalize(
+        source,
+        Some(owner),
+        Some(maximum_attribute_bytes.saturating_sub(LEDGER_EDGE_ATTRIBUTE_OVERHEAD)),
+        options,
+    )
+}
+
+fn normalize(
+    path: &str,
+    base: Option<&ContainingFile<'_>>,
+    maximum_bytes: Option<usize>,
+    options: &OperationOptions,
+) -> Result<String> {
     options.check()?;
     if path.is_empty() || path.starts_with('/') || path.ends_with('/') {
         return Err(DocumentFileCompositionError::InvalidPath(path.into()));
@@ -150,7 +200,9 @@ fn normalize(path: &str, base: &[&str], options: &OperationOptions) -> Result<St
         }
     }
     let normalized = normalized_key(path, options)?;
-    let mut segments: Vec<&str> = base.to_vec();
+    // One stack: the kept base directory segments followed by the source's own segments.
+    let mut kept = base.map_or(0, |base| base.directory_ends.len());
+    let mut segments: Vec<&str> = Vec::new();
     for segment in normalized.split('/') {
         options.check()?;
         match segment {
@@ -158,16 +210,39 @@ fn normalize(path: &str, base: &[&str], options: &OperationOptions) -> Result<St
             "." => {}
             ".." => {
                 if segments.pop().is_none() {
-                    return Err(DocumentFileCompositionError::InvalidPath(path.into()));
+                    if kept == 0 {
+                        return Err(DocumentFileCompositionError::InvalidPath(path.into()));
+                    }
+                    kept -= 1;
                 }
             }
             _ => segments.push(segment),
         }
     }
-    if segments.is_empty() {
+    let prefix = match base {
+        Some(base) if kept > 0 => &base.path[..base.directory_ends[kept - 1]],
+        _ => "",
+    };
+    if prefix.is_empty() && segments.is_empty() {
         return Err(DocumentFileCompositionError::InvalidPath(path.into()));
     }
-    Ok(segments.join("/"))
+    if let Some(maximum) = maximum_bytes {
+        let length = segments.iter().fold(prefix.len(), |length, segment| {
+            length + usize::from(length > 0) + segment.len()
+        });
+        if length > maximum {
+            return Err(DocumentCompositionError::ReferenceAttributesExceeded.into());
+        }
+    }
+    let mut result = String::with_capacity(prefix.len() + 1 + normalized.len());
+    result.push_str(prefix);
+    for segment in segments {
+        if !result.is_empty() {
+            result.push('/');
+        }
+        result.push_str(segment);
+    }
+    Ok(result)
 }
 
 fn normalized_key(value: &str, options: &OperationOptions) -> Result<String> {
@@ -192,15 +267,20 @@ fn normalized_key(value: &str, options: &OperationOptions) -> Result<String> {
     Ok(normalized)
 }
 
+/// A resolved ledger edge. Every edge to one file shares that file's canonical path allocation.
+struct LinkedFile {
+    glyph: String,
+    path: Rc<str>,
+}
 struct ImportedFile {
     root_id: String,
     entries: Vec<DocumentEntry>,
-    ledgers: BTreeMap<String, Vec<DocumentFileReference>>,
+    ledgers: BTreeMap<String, Vec<LinkedFile>>,
     depth: usize,
 }
 struct Resolver<'a> {
     sources: BTreeMap<String, &'a DocumentFileSource>,
-    files: BTreeMap<String, ImportedFile>,
+    files: BTreeMap<Rc<str>, ImportedFile>,
     active: BTreeSet<String>,
     limits: &'a DocumentCompositionLimits,
     document_limits: &'a DocumentDecodeLimits,
@@ -208,22 +288,24 @@ struct Resolver<'a> {
     encoded_bytes: usize,
     definitions: usize,
     references: usize,
+    maximum_discovery_depth: usize,
 }
 impl Resolver<'_> {
-    fn visit(&mut self, path: &str, active_depth: usize) -> Result<usize> {
+    /// Returns the file's depth and its canonical path, shared by every edge to it.
+    fn visit(&mut self, path: &str, active_depth: usize) -> Result<(usize, Rc<str>)> {
         self.options.check()?;
         if self.active.contains(path) {
             return Err(DocumentCompositionError::Cycle(path.into()).into());
         }
-        if let Some(file) = self.files.get(path) {
-            if active_depth >= MAXIMUM_FILE_DISCOVERY_DEPTH
-                || file.depth > MAXIMUM_FILE_DISCOVERY_DEPTH - active_depth
+        if let Some((key, file)) = self.files.get_key_value(path) {
+            if active_depth >= self.maximum_discovery_depth
+                || file.depth > self.maximum_discovery_depth - active_depth
             {
                 return Err(DocumentCompositionError::DepthExceeded.into());
             }
-            return Ok(file.depth);
+            return Ok((file.depth, Rc::clone(key)));
         }
-        if active_depth >= MAXIMUM_FILE_DISCOVERY_DEPTH {
+        if active_depth >= self.maximum_discovery_depth {
             return Err(DocumentCompositionError::DepthExceeded.into());
         }
         let source = self
@@ -269,9 +351,13 @@ impl Resolver<'_> {
         let mut ledgers = BTreeMap::new();
         self.active.insert(path.into());
         let mut depth = 1;
+        let owner = ContainingFile::new(path);
+        // Raw ledger source to its target's depth and canonical path. A repeated source in this file
+        // resolves to the same target with the same outcome, so it is neither resolved nor visited again.
+        let mut targets: BTreeMap<String, (usize, Rc<str>)> = BTreeMap::new();
         for entry in &entries {
             self.options.check()?;
-            let mut values = ledger(&entry.document, self.options)?;
+            let values = ledger(&entry.document, self.options)?;
             let remaining = self.limits.maximum_references - self.references;
             if entry.references.len() > remaining
                 || values.len() > remaining - entry.references.len()
@@ -279,20 +365,38 @@ impl Resolver<'_> {
                 return Err(DocumentCompositionError::TooManyReferences.into());
             }
             self.references += entry.references.len() + values.len();
-            for reference in &mut values {
-                reference.source = resolve_path(&reference.source, path, self.options)?;
-                // Match the other ports' immediate DFS in local-ID then glyph order.
-                let child_depth = self.visit(&reference.source, active_depth + 1)?;
+            let mut links = Vec::with_capacity(values.len());
+            for reference in values {
+                let (child_depth, target) = match targets.get(&reference.source) {
+                    Some((child_depth, target)) => (*child_depth, Rc::clone(target)),
+                    None => {
+                        let resolved = resolve_reference(
+                            &reference.source,
+                            &owner,
+                            self.limits.maximum_reference_attribute_bytes,
+                            self.options,
+                        )?;
+                        // Match the other ports' immediate DFS in local-ID then glyph order.
+                        let (child_depth, target) = self.visit(&resolved, active_depth + 1)?;
+                        targets.insert(reference.source, (child_depth, Rc::clone(&target)));
+                        (child_depth, target)
+                    }
+                };
                 depth = depth.max(child_depth + 1);
-                if depth > MAXIMUM_FILE_DISCOVERY_DEPTH {
+                if depth > self.maximum_discovery_depth {
                     return Err(DocumentCompositionError::DepthExceeded.into());
                 }
+                links.push(LinkedFile {
+                    glyph: reference.glyph,
+                    path: target,
+                });
             }
-            ledgers.insert(entry.id.clone(), values);
+            ledgers.insert(entry.id.clone(), links);
         }
         self.active.remove(path);
+        let key: Rc<str> = Rc::from(path);
         self.files.insert(
-            path.into(),
+            Rc::clone(&key),
             ImportedFile {
                 root_id,
                 entries,
@@ -300,12 +404,14 @@ impl Resolver<'_> {
                 depth,
             },
         );
-        Ok(depth)
+        Ok((depth, key))
     }
 }
 
 /// Resolve only reachable supplied bytes and preserve imported nested bundles, including unused entries.
 /// Discovery and remapping are private; errors or cancellation never return a partial composition.
+/// Cancellation observed anywhere, including inside composition validation, is reported as
+/// `Storage(DocumentStorageError::Cancelled)`.
 pub fn resolve(
     root_path: &str,
     sources: &[DocumentFileSource],
@@ -313,6 +419,27 @@ pub fn resolve(
     document_limits: &DocumentDecodeLimits,
     options: &OperationOptions,
 ) -> std::result::Result<DocumentFileCompositionResult, DocumentFileCompositionError> {
+    resolve_supplied(root_path, sources, limits, document_limits, options).map_err(|error| {
+        if matches!(
+            error,
+            DocumentFileCompositionError::Composition(DocumentCompositionError::Storage(
+                DocumentStorageError::Cancelled
+            ))
+        ) {
+            DocumentFileCompositionError::Storage(DocumentStorageError::Cancelled)
+        } else {
+            error
+        }
+    })
+}
+
+fn resolve_supplied(
+    root_path: &str,
+    sources: &[DocumentFileSource],
+    limits: &DocumentCompositionLimits,
+    document_limits: &DocumentDecodeLimits,
+    options: &OperationOptions,
+) -> Result<DocumentFileCompositionResult> {
     limits.validate()?;
     document_limits.validate()?;
     options.check()?;
@@ -330,10 +457,10 @@ pub fn resolve(
         }
         path_bytes += source.path.len();
     }
-    let root_path = normalize(root_path, &[], options)?;
+    let root_path = normalize(root_path, None, None, options)?;
     let mut indexed = BTreeMap::new();
     for source in sources {
-        let path = normalize(&source.path, &[], options)?;
+        let path = normalize(&source.path, None, None, options)?;
         if indexed.insert(path.clone(), source).is_some() {
             return Err(DocumentFileCompositionError::DuplicatePath(path));
         }
@@ -348,25 +475,27 @@ pub fn resolve(
         encoded_bytes: 0,
         definitions: 0,
         references: 0,
+        maximum_discovery_depth: maximum_file_discovery_depth(),
     };
     resolver.visit(&root_path, 0)?;
     // UTF-8 lexicographic ordering is Unicode scalar ordering. Paths are already NFC-normalized.
-    let resolved_paths: Vec<String> = resolver.files.keys().cloned().collect();
-    let mut ids: BTreeMap<(String, String), String> = BTreeMap::new();
+    let resolved_paths: Vec<String> = resolver.files.keys().map(|path| path.to_string()).collect();
+    // One map per file, keyed by local ID, so remapping never copies or compares a full path per reference.
+    let mut assigned: Vec<BTreeMap<&str, String>> = Vec::with_capacity(resolver.files.len());
     let mut file_root_ids = BTreeMap::new();
+    let mut ordinal = 0_usize;
     for (path, file) in &resolver.files {
         options.check()?;
+        let mut ids = BTreeMap::new();
         for entry in &file.entries {
-            let id = format!("file-{:06}", ids.len());
-            ids.insert((path.clone(), entry.id.clone()), id);
+            ids.insert(entry.id.as_str(), format!("file-{ordinal:06}"));
+            ordinal += 1;
         }
-        file_root_ids.insert(
-            path.clone(),
-            ids[&(path.clone(), file.root_id.clone())].clone(),
-        );
+        file_root_ids.insert(path.to_string(), ids[file.root_id.as_str()].clone());
+        assigned.push(ids);
     }
     let mut entries = Vec::with_capacity(resolver.definitions);
-    for (path, file) in &resolver.files {
+    for (file, ids) in resolver.files.values().zip(&assigned) {
         for entry in &file.entries {
             options.check()?;
             let mut document = entry.document.clone();
@@ -376,22 +505,22 @@ pub fn resolve(
             for reference in &entry.references {
                 options.check()?;
                 references.push(DocumentReference {
-                    target_id: ids[&(path.clone(), reference.target_id.clone())].clone(),
+                    target_id: ids[reference.target_id.as_str()].clone(),
                     attributes: reference.attributes.clone(),
                 });
             }
-            for reference in &file.ledgers[&entry.id] {
+            for link in &file.ledgers[&entry.id] {
                 options.check()?;
                 references.push(DocumentReference {
-                    target_id: file_root_ids[&reference.source].clone(),
+                    target_id: file_root_ids[link.path.as_ref()].clone(),
                     attributes: BTreeMap::from([
-                        ("glyph".into(), reference.glyph.clone()),
-                        ("source-file".into(), reference.source.clone()),
+                        ("glyph".into(), link.glyph.clone()),
+                        ("source-file".into(), link.path.to_string()),
                     ]),
                 });
             }
             entries.push(DocumentEntry {
-                id: ids[&(path.clone(), entry.id.clone())].clone(),
+                id: ids[entry.id.as_str()].clone(),
                 document,
                 references,
             });

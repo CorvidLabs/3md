@@ -696,3 +696,58 @@ fn direct_btree_maps_reject_ambiguous_canonically_equivalent_keys() {
         "invalidDocument"
     );
 }
+
+#[test]
+fn adopted_entries_report_the_specific_graph_error_that_adoption_wraps() {
+    // A reference whose attributes exactly fill the bound gains a 3md-id during adoption.
+    let attribute = "a".repeat(16_384 - 1 - 4);
+    let attributes = BTreeMap::from([("k".to_owned(), attribute)]);
+    let composition = DocumentComposition::new(
+        "root".into(),
+        vec![
+            DocumentEntry {
+                id: "root".into(),
+                document: threemd::parse("---\n3md: 1.1\n---\n@plane z=0\nRoot\n").unwrap(),
+                references: vec![DocumentReference {
+                    target_id: "leaf".into(),
+                    attributes,
+                }],
+            },
+            DocumentEntry {
+                id: "leaf".into(),
+                document: threemd::parse("---\n3md: 1.1\n---\n@plane z=0\nLeaf\n").unwrap(),
+                references: Vec::new(),
+            },
+        ],
+        &DocumentCompositionLimits::default(),
+        &DocumentDecodeLimits::default(),
+        &OperationOptions::default(),
+    )
+    .unwrap();
+    let wrapped = editing::adopt_composition(
+        &composition,
+        &DocumentCompositionLimits::default(),
+        &DocumentDecodeLimits::default(),
+        &OperationOptions::default(),
+    )
+    .unwrap_err();
+    assert_eq!(wrapped.code(), "invalidComposition");
+    let entries = editing::adopt_composition_entries(
+        &composition,
+        &DocumentCompositionLimits::default(),
+        &DocumentDecodeLimits::default(),
+        &OperationOptions::default(),
+    )
+    .unwrap();
+    assert_eq!(
+        DocumentComposition::new(
+            "root".into(),
+            entries,
+            &DocumentCompositionLimits::default(),
+            &DocumentDecodeLimits::default(),
+            &OperationOptions::default(),
+        )
+        .unwrap_err(),
+        threemd::composition::DocumentCompositionError::ReferenceAttributesExceeded
+    );
+}

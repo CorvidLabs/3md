@@ -1,6 +1,6 @@
 ---
 module: ThreeMD
-version: 8
+version: 9
 status: active
 files:
   - Sources/ThreeMD/Axis.swift
@@ -48,6 +48,7 @@ files:
   - Sources/ThreeMDInterop/SwiftAdapter.swift
   - Sources/ThreeMDInterop/main.swift
   - Sources/ThreeMDInterop/FileCases.swift
+  - Sources/ThreeMDInterop/FileCases+Hardening.swift
   - Sources/ThreeMDInterop/FileBundleHost.swift
 db_tables: []
 depends_on: []
@@ -302,6 +303,7 @@ are pure synchronous APIs; they never open paths or resolve URLs.
 | `from_parts` | Rust snapshot reconstruction rejects forged document/revision pairs. |
 | `adopt_document` | Rust explicit deterministic missing plane identity adoption. |
 | `adopt_composition` | Rust explicit document/reference identity adoption with owner scopes. |
+| `adopt_composition_entries` | Rust additive adoption that returns the adopted entries without building the graph, so a caller constructing it with `DocumentComposition::new` receives the specific composition error, for example at the exact reference attribute bound. |
 | `apply_document_patch` | Rust staged ordered operations validate final value before publication. |
 | `apply_composition_patch` | Rust staged operations validate the entire resulting graph before publication. |
 | `inspect_source` | Rust bounded storage decode and structured diagnostic report. |
@@ -486,3 +488,4 @@ errors retain their stable cases and metadata.
 | 5 | 2026-10-05 | bring-bounded-binary-composition-and-transactional-editing-to-typescript-and-rust-with-shared-conformance: Bring bounded binary composition and transactional editing to TypeScript and Rust with shared conformance |
 | 6 | 2026-10-05 | guarantee-portable-cross-language-document-and-composition-interchange-with-a-nine-pair-public-api-verification-matrix: Guarantee portable cross-language document and composition interchange with a nine-pair public API verification matrix |
 | 8 | 2026-10-05 | add-linked-file-composition-with-a-glyph-ledger-recursive-supplied-file-resolution-and-portable-self-contained-bundling: Add linked file composition with a glyph ledger recursive supplied-file resolution and portable self-contained bundling in all three languages |
+| 9 | 2026-10-06 | harden-linked-composition-parity-across-swift-typescript-and-rust-after-2-0-0: Harden linked composition parity across Swift TypeScript and Rust after 2.0.0 |

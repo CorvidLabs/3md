@@ -1,5 +1,25 @@
 # Changelog
 
+## [Unreleased]
+
+### Changed
+
+- Linked file composition resolves each ledger reference without work or memory that grows with the containing path, in Swift, TypeScript and Rust. A repeated raw source within one file reuses its first resolution.
+- A ledger edge whose `source-file` attribute cannot fit `maximumReferenceAttributeBytes` is now refused with `referenceAttributesExceeded` while it is resolved, before a later missing file or cycle. It was previously refused only after discovery.
+- Rust `file_composition::resolve` reports every cancellation, including one observed while decoding an embedded bundle, validating the final graph or encoding it, as `DocumentFileCompositionError::Storage(DocumentStorageError::Cancelled)`, as for other cancellations. `code()` stays `cancelled`; code that matched `Composition(Storage(Cancelled))` should match the storage variant.
+- TypeScript `DocumentFileComposition.resolve` works when called detached from the class; it no longer relies on `this`.
+
+### Added
+
+- Rust `editing::adopt_composition_entries`, an additive function that returns adopted entries so callers can build the graph and receive the specific composition error.
+- The development interchange `files` request accepts strict optional `limits` and `documentLimits` objects, and the shared cases cover lowered limits, refusal order, path grammar, ledger escapes, cycle spellings, the cached-subtree discovery ceiling and the attribute bound in all nine writer/reader pairs.
+- A Linux CI job runs the Swift, TypeScript and Rust suites and the nine-pair interchange in a `swift:6.3.3-noble` container. Windows remains unverified.
+
+### Fixed
+
+- The development `threemd-interchange --bundle` host adds Musl import guards (not yet compiled) and an explicit unsupported-platform error for other platforms, keeps its existing Darwin and Glibc builds, and names the path in open and publish errors.
+- The Rust interchange adapter checks limit literals with correctly rounded numbers, matching Swift and TypeScript.
+
 ## [v2.0.0] - 2026-10-06
 
 ThreeMD 2.0.0 gives the Swift, TypeScript and Rust libraries the same feature set: portable storage, self-contained composition, linked files and transactional editing. The package version is separate from the persisted formats. Text grammar 1.0, binary envelope version 1 and composition profile `3md-composition-1` are unchanged. See the [release notes and migration guide](docs/RELEASE-2.0.0.md).

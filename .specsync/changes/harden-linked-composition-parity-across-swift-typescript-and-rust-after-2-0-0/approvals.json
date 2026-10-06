@@ -1,0 +1,48 @@
+{
+  "approvals": [
+    {
+      "gate": "definition",
+      "actor": "agent:claude",
+      "timestamp": 1791310974,
+      "digest": "19068b259d9336284455d88b63596d1a2c56155393e2a0787bde2507e43475ba",
+      "note": "Executing agent Claude (root) records scope approval under Leif's direct 2026-10-06 request and his choice that this session delivers the parity hardening after the 2.0.0 release. The implementation was prepared beforehand under an unpublished local definition (cdf01b7, approved before implementation) whose release-documentation scope moved to PR69; this records the narrowed scope. Not Leif's implementation diff review, independent human review, a GitHub approval or signing authority.",
+      "approved_scope": {
+        "schema_version": 1,
+        "change_id": "harden-linked-composition-parity-across-swift-typescript-and-rust-after-2-0-0",
+        "title": "Harden linked composition parity across Swift TypeScript and Rust after 2.0.0",
+        "description": "Harden linked composition parity across Swift TypeScript and Rust after 2.0.0",
+        "kind": "feature",
+        "affected_specs": [
+          "ThreeMD"
+        ],
+        "affected_paths": [
+          ".github",
+          "AGENTS.md",
+          "CHANGELOG.md",
+          "Sources/ThreeMD",
+          "Sources/ThreeMDInterop",
+          "Tests",
+          "conformance",
+          "docs",
+          "js",
+          "rust"
+        ],
+        "no_spec_change": false,
+        "no_spec_change_rationale": null,
+        "acceptance_criteria": [
+          "Swift TypeScript and Rust resolve linked files without work or memory that grows with the containing path and refuse over-bound edges at discovery in the same order; shared files cases covering caller limits and refusal order and path grammar and escapes and the cached-subtree ceiling agree in all nine pairs; Swift and Rust cancellation during resolution returns no partial result; the development file-bundle host compiles on Darwin and Glibc and Musl and names failing paths; Linux runs of all three suites and interchange are recorded and a Linux CI job runs them"
+        ],
+        "dependencies": [],
+        "supersedes": [],
+        "answers": {
+          "architecture_risk": "yes",
+          "public_contract": "yes"
+        }
+      },
+      "approved_delta_digests": {
+        "ThreeMD": "fdacb191c8a30fcfb0fcdab800858a385485a0fcbb2eaf0466e0e1cf9ee9afe4"
+      }
+    }
+  ],
+  "reopenings": []
+}

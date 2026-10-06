@@ -244,3 +244,214 @@ describe("explicit supplied-file composition", () => {
     expect(calls).toBe(20);
   });
 });
+
+/** Aborts the first time `checkCancellation` is reached from a matching call site, then reports whether it fired. */
+function abortAt(site: (caller: string, stack: string) => boolean) {
+  const controller = new AbortController(); const reason = new Error("stop at call site"); let fired = false;
+  const check = controller.signal.throwIfAborted.bind(controller.signal);
+  Object.defineProperty(controller.signal, "throwIfAborted", { value: () => {
+    const stack = new Error().stack ?? "";
+    const frames = stack.split("\n").map((frame) => frame.trim());
+    const index = frames.findIndex((frame) => frame.startsWith("at checkCancellation"));
+    const caller = (frames[index + 1] ?? "").split(" (")[0] ?? "";
+    if (!fired && index >= 0 && site(caller, stack)) { fired = true; controller.abort(reason); }
+    check();
+  } });
+  return { signal: controller.signal, reason, fired: () => fired };
+}
+function ledgerJSON(fields: Record<string, string>): string { return JSON.stringify(fields); }
+function glyphs(): string[] { return Array.from({ length: 94 }, (_, index) => String.fromCharCode(33 + index)); }
+
+describe("linked composition parity hardening", () => {
+  test("static resolve, ledger and resolvePath do not depend on their class binding", () => {
+    const { resolve, ledger, resolvePath } = DocumentFileComposition;
+    const result = resolve("root", [source("root", host('{"1":"child"}')), source("child")]);
+    expect(result.resolvedPaths).toEqual(["child", "root"]);
+    expect(ledger(host('{"1":"x"}'))).toEqual([{ glyph: "1", source: "x" }]);
+    expect(resolvePath("x", "a/b")).toBe("a/x");
+  });
+
+  test("owner directories keep parent, dot and grammar semantics", () => {
+    for (const [path, owner, expected] of [["../../x", "a/b/c/owner", "a/x"], ["x/..", "a/owner", "a"],
+      ["../c", "a/́b/owner", "a/c"], ["./x/./y", "a/./b/owner", "a/b/x/y"], ["child", "owner", "child"],
+      ["x/../../y", "a/b/owner", "a/y"]] as const) {
+      expect(DocumentFileComposition.resolvePath(path, owner)).toBe(expected);
+    }
+    for (const [path, owner] of [["../..", "a/b/owner"], ["x/../..", "a/owner"], ["..", "owner"], ["../../..", "a/b/o"]]) {
+      rejects("invalidPath", () => DocumentFileComposition.resolvePath(path!, owner));
+    }
+  });
+
+  test("a long owner path with many references resolves every reference in its directory", () => {
+    const ledger = ledgerJSON(Object.fromEntries(glyphs().map((glyph) => [glyph, "leaf.3md"])));
+    const entries = [0, 1, 2].map((index) => ({ id: `e${index}`, document: host(ledger), references: [] }));
+    const graph = new DocumentComposition("m", [...entries,
+      { id: "m", document: document(), references: entries.map((entry) => ({ targetID: entry.id, attributes: {} })) }]);
+    const owner = `owner/${"é".repeat(200_000)}.3md`;
+    const result = DocumentFileComposition.resolve(owner, [source(owner, DocumentCompositionCodec.document(graph)),
+      source("owner/leaf.3md")]);
+    expect(result.resolvedPaths).toEqual(["owner/leaf.3md", owner]);
+    const edges = result.composition.entries.flatMap((entry) => entry.references).filter((edge) => edge.attributes.glyph);
+    expect(edges).toHaveLength(3 * 94);
+    expect(edges.every((edge) => edge.attributes["source-file"] === "owner/leaf.3md")).toBe(true);
+  });
+
+  test("refusals follow entry ID, then glyph, discovery order", () => {
+    rejects("missingFile", () => DocumentFileComposition.resolve("root", [source("root", host('{"a":"missing","b":"/x"}'))]));
+    rejects("invalidPath", () => DocumentFileComposition.resolve("root", [source("root", host('{"a":"/x","b":"missing"}'))]));
+    for (const [first, second, code] of [["missing", "/x", "missingFile"], ["/x", "missing", "invalidPath"]] as const) {
+      const graph = new DocumentComposition("m", [{ id: "m", document: document(), references: [] },
+        { id: "a", document: host(ledgerJSON({ z: first })), references: [] },
+        { id: "b", document: host(ledgerJSON({ a: second })), references: [] }]);
+      rejects(code, () => DocumentFileComposition.resolve("root", [source("root", DocumentCompositionCodec.document(graph))]));
+    }
+  });
+
+  test("root and unreachable supplied paths use the ledger path grammar", () => {
+    const leaf = source("root.3md");
+    for (const path of ["/root.3md", ".", "../root.3md", "", "a\\b.3md", "a:b.3md", "a\u007fb.3md", "a\u0000b.3md"]) {
+      rejects("invalidPath", () => DocumentFileComposition.resolve(path, [leaf]));
+      rejects("invalidPath", () => DocumentFileComposition.resolve("root.3md", [leaf, { path, data: leaf.data }]));
+    }
+    expect(DocumentFileComposition.resolve("root", [source("root", host('{"1":"%2e%2e/leaf"}')), source("%2e%2e/leaf")])
+      .resolvedPaths).toEqual(["%2e%2e/leaf", "root"]);
+    expect(DocumentFileComposition.resolve("root", [source("root", host('{"1":"Leaf","2":"leaf"}')),
+      source("Leaf", document("Upper")), source("leaf", document("Lower"))]).resolvedPaths).toEqual(["Leaf", "leaf", "root"]);
+  });
+
+  test("ledger escapes decode before path grammar", () => {
+    const leaf = source("models/leaf");
+    const slash = DocumentFileComposition.resolve("root", [source("root", host('{"1":"models\\/leaf","2":"models/leaf"}')), leaf]);
+    expect(slash.resolvedPaths).toEqual(["models/leaf", "root"]);
+    expect(new Set(slash.composition.rootEntry.references.map((edge) => edge.targetID)).size).toBe(1);
+    rejects("invalidPath", () => DocumentFileComposition.resolve("root", [source("root", host('{"1":"models\\\\leaf"}')), leaf]));
+    rejects("invalidPath", () => DocumentFileComposition.resolve("root", [source("root", host('{"1":"a\\u0001b"}'))]));
+    expect(DocumentFileComposition.resolve("root", [source("root", host('{"1":"\\ud83d\\ude00"}')), source("😀")]).resolvedPaths)
+      .toEqual(["root", "😀"]);
+    rejects("invalidLedger", () => DocumentFileComposition.resolve("root", [source("root", host('{"\\ud800":"leaf"}'))]));
+  });
+
+  test("self and alias cycles compare normalized paths", () => {
+    for (const ledger of ['{"1":"root.3md"}', '{"1":"./root.3md"}']) {
+      graphRejects("cycle", () => DocumentFileComposition.resolve("root.3md", [source("root.3md", host(ledger))]));
+    }
+    for (const [child, link] of [["models/child.3md", "../root.3md"], ["child.3md", "models/../root.3md"]] as const) {
+      graphRejects("cycle", () => DocumentFileComposition.resolve("root.3md", [source("root.3md", host(ledgerJSON({ 1: child }))),
+        source(child, host(ledgerJSON({ 1: link })))]));
+    }
+  });
+
+  test("a cached subtree is charged at its deeper occurrence against the discovery ceiling", () => {
+    // `last` holds the final file's ledger fields.
+    const chain = (prefix: string, count: number, last?: Record<string, string>): DocumentFileSource[] =>
+      Array.from({ length: count }, (_, offset) => {
+        const index = offset + 1; const fields = index < count ? { 1: `${prefix}${index + 1}` } : last;
+        const graph = new DocumentComposition("r", [{ id: "r", document: document(), references: [] },
+          { id: "u", document: document("Unused", fields === undefined ? {} : { "3md-files": ledgerJSON(fields) }), references: [] }]);
+        return source(`${prefix}${index}`, DocumentCompositionCodec.document(graph));
+      });
+    const root = source("root", host('{"1":"a1","2":"b1"}')); const long = chain("a", 40);
+    graphRejects("depthExceeded", () => DocumentFileComposition.resolve("root", [root, ...long, ...chain("b", 24, { 1: "a1" })]));
+    // Only the cache-hit height check can refuse before b24's second glyph names a missing file.
+    graphRejects("depthExceeded", () => DocumentFileComposition.resolve("root",
+      [root, ...long, ...chain("b", 24, { 1: "a1", 2: "missing" })]));
+    expect(DocumentFileComposition.resolve("root", [root, ...long, ...chain("b", 23, { 1: "a1" })]).composition.entries).toHaveLength(127);
+  });
+
+  test("existing edges precede ledger edges; embedded ledgers resolve from their bundle folder; output rebundles", () => {
+    const group = new DocumentComposition("m", [
+      { id: "m", document: host('{"2":"leaf"}'), references: [{ targetID: "c", attributes: { glyph: "1", opaque: "keep" } }] },
+      { id: "c", document: document("Kept"), references: [] }]);
+    const result = DocumentFileComposition.resolve("root", [source("root", host('{"1":"models/group"}')),
+      source("models/group", DocumentCompositionCodec.document(group)), source("models/leaf", document("Leaf"))]);
+    expect(result.composition.entry(result.fileRootIDs["models/group"]!)?.references).toEqual([
+      { targetID: "file-000000", attributes: { glyph: "1", opaque: "keep" } },
+      { targetID: result.fileRootIDs["models/leaf"]!, attributes: { glyph: "2", "source-file": "models/leaf" } },
+    ]);
+    const second = DocumentFileComposition.resolve("root.3md", [source("root.3md", host('{"1":"archive/bundle.3md"}')),
+      source("archive/bundle.3md", DocumentCompositionCodec.document(result.composition))]);
+    expect(second.resolvedPaths).toEqual(["archive/bundle.3md", "root.3md"]);
+    expect(second.composition.entries).toHaveLength(5);
+    const archived = second.composition.entry(second.fileRootIDs["archive/bundle.3md"]!);
+    expect(archived?.references[0]?.attributes).toEqual({ glyph: "1", "source-file": "models/group" });
+  });
+
+  test("the source-file attribute bound counts normalized UTF-8 bytes", () => {
+    const attempt = (padding: number, limits?: DocumentCompositionLimits) => {
+      const path = `models/${"é".repeat(8_000)}${"a".repeat(padding)}`;
+      return DocumentFileComposition.resolve("root", [source("root", host(ledgerJSON({ 1: path }))), source(path)], limits);
+    };
+    const exact = attempt(360);
+    expect(new TextEncoder().encode(exact.composition.rootEntry.references[0]!.attributes["source-file"]).length).toBe(16_367);
+    graphRejects("referenceAttributesExceeded", () => attempt(361));
+    graphRejects("referenceAttributesExceeded", () => attempt(360, new DocumentCompositionLimits({ maximumReferenceAttributeBytes: 16_383 })));
+    graphRejects("referenceAttributesExceeded", () => DocumentFileComposition.resolve("root", [source("root", host('{"1":"leaf"}')),
+      source("leaf")], new DocumentCompositionLimits({ maximumReferenceAttributes: 1 })));
+  });
+
+  test("lowered policies charge original path bytes before path grammar; invalid limits are refused first", () => {
+    const root = source("/root");
+    rejects("inputLimit", () => DocumentFileComposition.resolve("/root", [root], new DocumentCompositionLimits({ maximumProfileBytes: 9 })));
+    rejects("invalidPath", () => DocumentFileComposition.resolve("/root", [root], new DocumentCompositionLimits({ maximumProfileBytes: 10 })));
+    graphRejects("invalidLimits", () => DocumentFileComposition.resolve("/root", [root], { ...DocumentCompositionLimits.standard, maximumDepth: 0 }));
+    expect(() => DocumentFileComposition.resolve("/root", [root], undefined, { ...DocumentDecodeLimits.standard, maximumLines: 0 }))
+      .toThrow(DocumentStorageError);
+  });
+
+  test("an abort inside the ledger scanner propagates the caller's reason", () => {
+    const abort = abortAt((caller, stack) => (caller === "at string" || caller === "at whitespace") && stack.includes("at ledger"));
+    const ledger = `{"1":"${"a".repeat(10_000)}"}`;
+    expect(() => DocumentFileComposition.resolve("root", [source("root", host(ledger))], undefined, undefined, abort.signal))
+      .toThrow(abort.reason);
+    expect(abort.fired()).toBe(true);
+  });
+
+  test("an abort inside the scalar path sort propagates the caller's reason", () => {
+    const abort = abortAt((caller) => caller === "at scalarCompare");
+    expect(() => DocumentFileComposition.resolve("root", [source("root", host('{"1":"b","2":"a"}')), source("a"), source("b")],
+      undefined, undefined, abort.signal)).toThrow(abort.reason);
+    expect(abort.fired()).toBe(true);
+  });
+});
+
+describe("early source-file attribute bound and long-directory owners", () => {
+  test("an over-bound ledger edge is refused while resolving, before later refusals", () => {
+    // A 40-byte policy leaves 23 bytes for a target after "glyph", the glyph and "source-file".
+    const tight = new DocumentCompositionLimits({ maximumReferenceAttributeBytes: 40 });
+    const long = `${"x".repeat(30)}.3md`; const target = source(long);
+    const attempt = (root: string, sources: DocumentFileSource[]) => DocumentFileComposition.resolve(root, sources, tight);
+    graphRejects("referenceAttributesExceeded", () => attempt("root", [source("root", host(ledgerJSON({ a: long, b: "missing" }))), target]));
+    rejects("missingFile", () => attempt("root", [source("root", host(ledgerJSON({ a: "missing", b: long }))), target]));
+    graphRejects("referenceAttributesExceeded", () => attempt("root", [source("root", host(ledgerJSON({ 1: long })))]));
+    graphRejects("referenceAttributesExceeded", () => attempt(long, [source(long, host(ledgerJSON({ 1: `./${long}` })))]));
+    rejects("invalidPath", () => attempt("root", [source("root", host(ledgerJSON({ 1: `${long}/` })))]));
+  });
+
+  test("the attribute bound counts normalized directory prefix bytes", () => {
+    // Twelve decomposed é become 24 NFC bytes, so "é…/leaf" is 29 bytes and needs a 46-byte policy.
+    const directory = "é".repeat(12);
+    const sources = [source(`${directory}/root`, host('{"1":"leaf","2":"../top"}')), source(`${directory}/leaf`), source("top")];
+    const result = DocumentFileComposition.resolve(`${directory}/root`, sources,
+      new DocumentCompositionLimits({ maximumReferenceAttributeBytes: 46 }));
+    expect(new TextEncoder().encode(result.composition.rootEntry.references[0]!.attributes["source-file"]).length).toBe(29);
+    graphRejects("referenceAttributesExceeded", () => DocumentFileComposition.resolve(`${directory}/root`, sources,
+      new DocumentCompositionLimits({ maximumReferenceAttributeBytes: 45 })));
+  });
+
+  test("long-directory owners resolve repeated sources once and refuse over-bound targets at the first edge", () => {
+    const ledger = ledgerJSON(Object.fromEntries(glyphs().map((glyph) => [glyph, "leaf.3md"])));
+    const owner = (directory: string, count: number): DocumentFileSource[] => {
+      const entries = Array.from({ length: count }, (_, index) => ({ id: `e${index}`, document: host(ledger), references: [] }));
+      const graph = new DocumentComposition("m", [...entries,
+        { id: "m", document: document(), references: entries.map((entry) => ({ targetID: entry.id, attributes: {} })) }]);
+      return [source(`${directory}/root`, DocumentCompositionCodec.document(graph)), source(`${directory}/leaf.3md`)];
+    };
+    const inBound = "d".repeat(8_000);
+    const result = DocumentFileComposition.resolve(`${inBound}/root`, owner(inBound, 3));
+    const edges = result.composition.entries.flatMap((entry) => entry.references).filter((edge) => edge.attributes.glyph);
+    expect(edges).toHaveLength(3 * 94);
+    expect(edges.every((edge) => edge.attributes["source-file"] === `${inBound}/leaf.3md`)).toBe(true);
+    const overBound = "d".repeat(262_144);
+    graphRejects("referenceAttributesExceeded", () => DocumentFileComposition.resolve(`${overBound}/root`, owner(overBound, 170)));
+  });
+});

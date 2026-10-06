@@ -1,0 +1,35 @@
+{
+  "approvals": [
+    {
+      "gate": "definition",
+      "actor": "agent:claude",
+      "timestamp": 1791313123,
+      "digest": "de1198f1915cb07f244900aafb97124104efc31766cb18311be3819c55670625",
+      "note": "Executing agent Claude (root) records this covering definition under Leif's direct 2026-10-06 request. It covers only the derived web/assets/three-md.js already regenerated in 4a0f8de, which an audit found outside the hardening change's paths. Not a human diff review, GitHub approval or signature.",
+      "approved_scope": {
+        "schema_version": 1,
+        "change_id": "cover-the-derived-web-bundle-refreshed-by-the-linked-composition-hardening",
+        "title": "Cover the derived web bundle refreshed by the linked composition hardening",
+        "description": "Cover the derived web bundle refreshed by the linked composition hardening",
+        "kind": "operations",
+        "affected_specs": [],
+        "affected_paths": [
+          "web/assets/three-md.js"
+        ],
+        "no_spec_change": true,
+        "no_spec_change_rationale": "web/assets/three-md.js is a derived bundle of element/src and js/src; the drift gate requires it to match the hardened TypeScript sources, and no canonical contract changes",
+        "acceptance_criteria": [
+          "web/assets/three-md.js equals the drift gate's fresh build of element/src after the linked composition hardening; element/dist is not built or committed"
+        ],
+        "dependencies": [],
+        "supersedes": [],
+        "answers": {
+          "architecture_risk": "no",
+          "public_contract": "no"
+        }
+      },
+      "approved_delta_digests": {}
+    }
+  ],
+  "reopenings": []
+}

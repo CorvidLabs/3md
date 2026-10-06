@@ -91,13 +91,9 @@ public enum DocumentFileComposition {
     /// Resolves POSIX dot/parent segments against a containing filename without escaping the project root.
     public static func resolvePath(_ source: String, relativeTo containingFile: String) throws -> String {
         try DocumentStorageCancellation.check()
-        let maximum = DocumentDecodeLimits.standard.maximumRecordBytes
-        guard containingFile.utf8.count <= maximum,
-            source.utf8.count <= maximum - containingFile.utf8.count
-        else { throw DocumentFileCompositionError.inputLimit }
-        let containing = try normalize(containingFile)
-        let directory = containing.unicodeScalars.split(separator: "/").dropLast().map(String.init)
-        return try normalize(source, base: directory)
+        // The bound charges the caller's original spelling; discovery charges already normalized owners.
+        try checkPathBytes(source, containingBytes: containingFile.utf8.count)
+        return try normalize(source, base: ContainingFile(normalizedPath: try normalize(containingFile)))
     }
 
     /// Only reachable sources decode. Re-resolving after supplied child bytes change refreshes the snapshot.
@@ -132,7 +128,83 @@ public enum DocumentFileComposition {
         return try resolver.bundle(rootPath: normalizedRoot)
     }
 
-    private static func normalize(_ source: String, base: [String] = []) throws -> String {
+    /// A normalized containing filename whose directory boundaries are located once and reused for every reference.
+    private struct ContainingFile {
+        /// The normalized containing filename.
+        let path: String
+        /// UTF-8 bytes in the containing filename, charged against each reference's record bound.
+        let pathBytes: Int
+        /// The end of each directory segment: the index of every separator in `path`.
+        let directoryEnds: [String.Index]
+        /// UTF-8 bytes before each separator, so a resolved target's length is known before it is built.
+        let directoryByteEnds: [Int]
+
+        /// A project root with no containing directory.
+        static let projectRoot = ContainingFile(path: "", pathBytes: 0, directoryEnds: [], directoryByteEnds: [])
+
+        private init(path: String, pathBytes: Int, directoryEnds: [String.Index], directoryByteEnds: [Int]) {
+            self.path = path
+            self.pathBytes = pathBytes
+            self.directoryEnds = directoryEnds
+            self.directoryByteEnds = directoryByteEnds
+        }
+
+        /// Records separator positions in an already normalized filename.
+        init(normalizedPath: String) {
+            var ends: [String.Index] = []
+            var byteEnds: [Int] = []
+            var offset = 0
+            for index in normalizedPath.utf8.indices {
+                if normalizedPath.utf8[index] == 47 {
+                    ends.append(index)
+                    byteEnds.append(offset)
+                }
+                offset += 1
+            }
+            path = normalizedPath
+            pathBytes = offset
+            directoryEnds = ends
+            directoryByteEnds = byteEnds
+        }
+
+        /// The first `count` directory segments, joined by their original separators.
+        func directory(keeping count: Int) -> Substring.UnicodeScalarView {
+            path.unicodeScalars[path.unicodeScalars.startIndex..<directoryEnds[count - 1]]
+        }
+    }
+
+    /// The standalone record bound: the containing filename and reference together fit one record.
+    private static func checkPathBytes(_ source: String, containingBytes: Int) throws {
+        let maximum = DocumentDecodeLimits.standard.maximumRecordBytes
+        guard containingBytes <= maximum, source.utf8.count <= maximum - containingBytes else {
+            throw DocumentFileCompositionError.inputLimit
+        }
+    }
+
+    /// UTF-8 bytes of a ledger edge's attributes besides its target: "glyph", the one-byte glyph and "source-file".
+    private static let ledgerEdgeAttributeOverhead = 17
+
+    /// Resolves one ledger reference against a containing file whose path was normalized once. A target whose
+    /// source-file attribute cannot fit `maximumAttributeBytes` is refused before it is built or visited.
+    private static func resolve(
+        _ source: String,
+        in containing: ContainingFile,
+        maximumAttributeBytes: Int
+    ) throws -> String {
+        try DocumentStorageCancellation.check()
+        try checkPathBytes(source, containingBytes: containing.pathBytes)
+        return try normalize(
+            source,
+            base: containing,
+            maximumBytes: max(0, maximumAttributeBytes - ledgerEdgeAttributeOverhead)
+        )
+    }
+
+    private static func normalize(
+        _ source: String,
+        base: ContainingFile = .projectRoot,
+        maximumBytes: Int? = nil
+    ) throws -> String {
         try DocumentStorageCancellation.check()
         let normalized = source.precomposedStringWithCanonicalMapping
         guard !normalized.isEmpty, normalized.unicodeScalars.first?.value != 47,
@@ -141,33 +213,49 @@ public enum DocumentFileComposition {
                 $0.value < 32 || $0.value == 127 || $0.value == 92 || $0.value == 58
             })
         else { throw DocumentFileCompositionError.invalidPath(source) }
-        var components = base
-        for scalars in normalized.unicodeScalars.split(separator: "/", omittingEmptySubsequences: false) {
-            let segment = String(scalars)
+        // One stack: the kept base directory segments followed by the source's own segments.
+        var kept = base.directoryEnds.count
+        var components: [Substring.UnicodeScalarView] = []
+        for segment in normalized.unicodeScalars.split(separator: "/", omittingEmptySubsequences: false) {
             try DocumentStorageCancellation.check()
             guard !segment.isEmpty else { throw DocumentFileCompositionError.invalidPath(source) }
-            switch segment {
-            case ".": continue
-            case "..":
-                guard !components.isEmpty else { throw DocumentFileCompositionError.invalidPath(source) }
-                components.removeLast()
-            default: components.append(String(segment))
+            if segment.elementsEqual(".".unicodeScalars) { continue }
+            if segment.elementsEqual("..".unicodeScalars) {
+                if !components.isEmpty {
+                    components.removeLast()
+                } else if kept > 0 {
+                    kept -= 1
+                } else {
+                    throw DocumentFileCompositionError.invalidPath(source)
+                }
+            } else {
+                components.append(segment)
             }
         }
-        guard !components.isEmpty else { throw DocumentFileCompositionError.invalidPath(source) }
-        return components.joined(separator: "/")
+        guard kept > 0 || !components.isEmpty else { throw DocumentFileCompositionError.invalidPath(source) }
+        if let maximumBytes {
+            var length = kept > 0 ? base.directoryByteEnds[kept - 1] : 0
+            for component in components {
+                length += (length > 0 ? 1 : 0) + component.reduce(0) { $0 + UTF8.width($1) }
+            }
+            guard length <= maximumBytes else { throw DocumentCompositionError.referenceAttributesExceeded }
+        }
+        var result = kept > 0 ? String(base.directory(keeping: kept)) : ""
+        for component in components {
+            if !result.isEmpty { result.unicodeScalars.append("/") }
+            result.unicodeScalars.append(contentsOf: component)
+        }
+        return result
     }
 
+    /// UTF-8 code unit order is Unicode scalar order; comparison stops at the first difference without copying.
     private static func pathPrecedes(_ lhs: String, _ rhs: String) -> Bool {
-        lhs.unicodeScalars.map(\.value).lexicographicallyPrecedes(rhs.unicodeScalars.map(\.value))
-    }
-
-    private struct FileKey: Hashable {
-        let path: String
-        let localID: String
+        lhs.utf8.lexicographicallyPrecedes(rhs.utf8)
     }
 
     private struct LocalFile {
+        /// The normalized filename this file was discovered under; every ledger edge to it shares this string.
+        let path: String
         let rootID: String
         let entries: [DocumentEntry]
         let ledgers: [String: [DocumentFileReference]]
@@ -239,6 +327,10 @@ public enum DocumentFileComposition {
             definitions += entries.count
             var ledgers: [String: [DocumentFileReference]] = [:]
             var fileDepth = 1
+            let containing = ContainingFile(normalizedPath: path)
+            // Raw ledger source to its canonical target and that target's file depth. A repeated source in this
+            // file resolves to the same target with the same outcome, so it is neither resolved nor visited again.
+            var targets: [String: (path: String, depth: Int)] = [:]
             for entry in entries.sorted(by: { $0.id < $1.id }) {
                 try DocumentStorageCancellation.check()
                 let ledger = try DocumentFileComposition.ledger(in: entry.document)
@@ -252,46 +344,60 @@ public enum DocumentFileComposition {
                 references += ledger.count
                 var resolved: [DocumentFileReference] = []
                 for reference in ledger {
-                    let target = try DocumentFileComposition.resolvePath(reference.source, relativeTo: path)
-                    let child = try discover(target, depth: depth + 1)
-                    fileDepth = max(fileDepth, child.depth + 1)
+                    let target: (path: String, depth: Int)
+                    if let cached = targets[reference.source] {
+                        target = cached
+                    } else {
+                        let path = try DocumentFileComposition.resolve(
+                            reference.source,
+                            in: containing,
+                            maximumAttributeBytes: limits.maximumReferenceAttributeBytes
+                        )
+                        let child = try discover(path, depth: depth + 1)
+                        target = (child.path, child.depth)
+                        targets[reference.source] = target
+                    }
+                    fileDepth = max(fileDepth, target.depth + 1)
                     guard fileDepth <= Self.maximumDiscoveryDepth else { throw DocumentCompositionError.depthExceeded }
-                    resolved.append(.init(glyph: reference.glyph, source: target))
+                    resolved.append(.init(glyph: reference.glyph, source: target.path))
                 }
                 ledgers[entry.id] = resolved
             }
             visiting.remove(path)
-            let file = LocalFile(rootID: rootID, entries: entries, ledgers: ledgers, depth: fileDepth)
+            let file = LocalFile(path: path, rootID: rootID, entries: entries, ledgers: ledgers, depth: fileDepth)
             files[path] = file
             return file
         }
 
         func bundle(rootPath: String) throws -> DocumentFileCompositionResult {
             let paths = files.keys.sorted(by: DocumentFileComposition.pathPrecedes)
-            var ids: [FileKey: String] = [:]
+            // One map per file, keyed by local ID, so remapping never hashes or copies a full path per reference.
+            var ordered: [(file: LocalFile, entries: [DocumentEntry], ids: [String: String])] = []
             var roots: [String: String] = [:]
             var nextID = 0
             for path in paths {
                 try DocumentStorageCancellation.check()
                 guard let file = files[path] else { continue }
-                for entry in file.entries.sorted(by: { $0.id < $1.id }) {
+                let sorted = file.entries.sorted(by: { $0.id < $1.id })
+                var ids: [String: String] = [:]
+                for entry in sorted {
                     let digits = String(nextID)
                     let id = "file-" + String(repeating: "0", count: max(0, 6 - digits.count)) + digits
-                    ids[FileKey(path: path, localID: entry.id)] = id
+                    ids[entry.id] = id
                     if entry.id == file.rootID { roots[path] = id }
                     nextID += 1
                 }
+                ordered.append((file, sorted, ids))
             }
             var entries: [DocumentEntry] = []
-            for path in paths {
-                guard let file = files[path] else { continue }
-                for entry in file.entries.sorted(by: { $0.id < $1.id }) {
+            for (file, sorted, ids) in ordered {
+                for entry in sorted {
                     try DocumentStorageCancellation.check()
-                    guard let id = ids[FileKey(path: path, localID: entry.id)] else {
+                    guard let id = ids[entry.id] else {
                         throw DocumentCompositionError.missingRoot(entry.id)
                     }
                     var references = try entry.references.map { reference in
-                        guard let target = ids[FileKey(path: path, localID: reference.targetID)] else {
+                        guard let target = ids[reference.targetID] else {
                             throw DocumentCompositionError.missingTarget(from: entry.id, target: reference.targetID)
                         }
                         return DocumentReference(targetID: target, attributes: reference.attributes)

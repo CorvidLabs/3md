@@ -70,13 +70,17 @@ private func compositionInterchange(_ data: Data) throws -> InterchangeResponse 
 }
 
 private func filesInterchange(_ data: Data) throws -> InterchangeResponse {
+    // Order: strict protocol JSON, envelope and limit-object shapes, the standard source-count
+    // ceiling, per-file fields and hex, then library resolution, which validates limit values.
     try validateInterchangeJSON(data)
     let value = try JSONDecoder().decode(JSONValue.self, from: data)
     guard case .object(let manifest) = value,
-        Set(manifest.keys) == ["rootPath", "files"],
+        Set(manifest.keys).isSubset(of: ["rootPath", "files", "limits", "documentLimits"]),
         let rootValue = manifest["rootPath"], case .string(let rootPath) = rootValue,
         let filesValue = manifest["files"], case .array(let files) = filesValue
     else { throw InterchangeAdapterError.invalidFilesRequest }
+    let requestedLimits = try requestedIntegers(manifest["limits"], names: compositionLimitNames)
+    let requestedDocumentLimits = try requestedIntegers(manifest["documentLimits"], names: documentLimitNames)
     guard files.count <= DocumentCompositionLimits.standard.maximumDefinitions else {
         throw DocumentFileCompositionError.inputLimit
     }
@@ -88,8 +92,62 @@ private func filesInterchange(_ data: Data) throws -> InterchangeResponse {
         else { throw InterchangeAdapterError.invalidFilesRequest }
         return DocumentFileSource(path: path, data: try Data(hex: bytesHex))
     }
-    let result = try DocumentFileComposition.resolve(rootPath: rootPath, sources: sources)
+    // Swift validates limit values while constructing them, immediately before resolving, which is
+    // where the TypeScript and Rust libraries validate theirs.
+    let standard = DocumentCompositionLimits.standard
+    let limits = try DocumentCompositionLimits(
+        maximumDefinitions: requestedLimits["maximumDefinitions"] ?? standard.maximumDefinitions,
+        maximumReferences: requestedLimits["maximumReferences"] ?? standard.maximumReferences,
+        maximumDepth: requestedLimits["maximumDepth"] ?? standard.maximumDepth,
+        maximumDefinitionBytes: requestedLimits["maximumDefinitionBytes"] ?? standard.maximumDefinitionBytes,
+        maximumTraversalOccurrences: requestedLimits["maximumTraversalOccurrences"]
+            ?? standard.maximumTraversalOccurrences,
+        maximumProfileBytes: requestedLimits["maximumProfileBytes"] ?? standard.maximumProfileBytes,
+        maximumReferenceAttributes: requestedLimits["maximumReferenceAttributes"]
+            ?? standard.maximumReferenceAttributes,
+        maximumReferenceAttributeBytes: requestedLimits["maximumReferenceAttributeBytes"]
+            ?? standard.maximumReferenceAttributeBytes
+    )
+    let documentStandard = DocumentDecodeLimits.standard
+    let documentLimits = try DocumentDecodeLimits(
+        maximumEncodedBytes: requestedDocumentLimits["maximumEncodedBytes"] ?? documentStandard.maximumEncodedBytes,
+        maximumDecodedBytes: requestedDocumentLimits["maximumDecodedBytes"] ?? documentStandard.maximumDecodedBytes,
+        maximumLines: requestedDocumentLimits["maximumLines"] ?? documentStandard.maximumLines,
+        maximumPlanes: requestedDocumentLimits["maximumPlanes"] ?? documentStandard.maximumPlanes,
+        maximumRecordBytes: requestedDocumentLimits["maximumRecordBytes"] ?? documentStandard.maximumRecordBytes
+    )
+    let result = try DocumentFileComposition.resolve(
+        rootPath: rootPath,
+        sources: sources,
+        limits: limits,
+        documentLimits: documentLimits
+    )
     return try compositionResponse(result.composition)
+}
+
+private let compositionLimitNames: Set<String> = [
+    "maximumDefinitions", "maximumReferences", "maximumDepth", "maximumDefinitionBytes",
+    "maximumTraversalOccurrences", "maximumProfileBytes", "maximumReferenceAttributes",
+    "maximumReferenceAttributeBytes",
+]
+
+private let documentLimitNames: Set<String> = [
+    "maximumEncodedBytes", "maximumDecodedBytes", "maximumLines", "maximumPlanes", "maximumRecordBytes",
+]
+
+/// Accepts an absent value or an object of known names whose values are integral JSON numbers within
+/// ±(2^53 - 1). Range checks belong to the library limit types.
+private func requestedIntegers(_ value: JSONValue?, names: Set<String>) throws -> [String: Int] {
+    guard let value else { return [:] }
+    guard case .object(let fields) = value, Set(fields.keys).isSubset(of: names) else {
+        throw InterchangeAdapterError.invalidFilesRequest
+    }
+    return try fields.mapValues { field in
+        guard case .number(let number) = field, number.rounded(.towardZero) == number,
+            number.magnitude <= 9_007_199_254_740_991
+        else { throw InterchangeAdapterError.invalidFilesRequest }
+        return Int(number)
+    }
 }
 
 private func compositionResponse(_ composition: DocumentComposition) throws -> InterchangeResponse {

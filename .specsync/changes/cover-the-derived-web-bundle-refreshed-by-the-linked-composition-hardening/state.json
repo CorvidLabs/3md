@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "workflow_version": 2,
+  "workflow_origin_version": 2,
+  "id": "cover-the-derived-web-bundle-refreshed-by-the-linked-composition-hardening",
+  "slug": "cover-the-derived-web-bundle-refreshed-by-the-linked-composition-hardening",
+  "title": "Cover the derived web bundle refreshed by the linked composition hardening",
+  "description": "Cover the derived web bundle refreshed by the linked composition hardening",
+  "kind": "operations",
+  "state": "verifying",
+  "canonical_applied": true,
+  "base_commit": "17d81597cc361ea885ea0e38112e3ec1e11e21f4",
+  "created_at": 1791313097,
+  "updated_at": 1791314157,
+  "affected_specs": [],
+  "affected_paths": [
+    "web/assets/three-md.js"
+  ],
+  "no_spec_change": true,
+  "no_spec_change_rationale": "web/assets/three-md.js is a derived bundle of element/src and js/src; the drift gate requires it to match the hardened TypeScript sources, and no canonical contract changes",
+  "acceptance_criteria": [
+    "web/assets/three-md.js equals the drift gate's fresh build of element/src after the linked composition hardening; element/dist is not built or committed"
+  ],
+  "selected_artifacts": [
+    "context",
+    "plan",
+    "testing"
+  ],
+  "dependencies": [],
+  "answers": {
+    "architecture_risk": "no",
+    "public_contract": "no"
+  }
+}

@@ -6,12 +6,69 @@ Adapters use only their public library APIs and do not log to stdout.
 
 Request: `{"schema":"3md-interchange-1","kind":"document","bytesHex":"..."}`.
 Kinds are document, composition and files. Exact bytes are lowercase hexadecimal.
-For files, bytesHex contains UTF-8 JSON with exactly rootPath (string) and files
-(array of records with exactly path and bytesHex string fields). Libraries resolve
-these explicitly supplied bytes under docs/FILE-COMPOSITION.md, then emit normal
-composition responses. Produced text/binary/adopted/edited bundles are consumed
-as composition kind, with no source inputs. File failures use filePath,
-fileLedger, missingFile and fileLimit; malformed protocol fields are adapterFailure.
+
+For files, bytesHex contains UTF-8 JSON with rootPath (string) and files (array
+of records with exactly path and bytesHex string fields), and optionally limits
+and documentLimits objects. No other key is accepted.
+
+- limits may contain maximumDefinitions, maximumReferences, maximumDepth,
+  maximumDefinitionBytes, maximumTraversalOccurrences, maximumProfileBytes,
+  maximumReferenceAttributes and maximumReferenceAttributeBytes.
+- documentLimits may contain maximumEncodedBytes, maximumDecodedBytes,
+  maximumLines, maximumPlanes and maximumRecordBytes.
+- Each present field is an integral JSON number whose magnitude is at most
+  2^53 - 1. Integral spellings such as 1.0, 6.4e1 and -0 are accepted. A
+  literal is judged by its correctly rounded IEEE double, as Swift and
+  JavaScript parse it; the Rust adapter enables serde_json's float_roundtrip
+  for the same result. So 999999.0000000001 is not integral (adapterFailure),
+  and 9007199254740991.4 rounds to 2^53 - 1, which the library refuses
+  (invalidLimits).
+- An absent object or field keeps the standard value; `{}` means standard limits.
+- Each adapter maps the fields one to one onto its library's existing composition
+  and document limit types (snake_case fields in Rust). A negative value cannot
+  be held by Rust's usize, so the Rust adapter passes usize::MAX, which the library
+  refuses with the same invalidLimits code.
+
+Adapters check a files request in this order, identically in all three:
+
+1. Strict protocol JSON: duplicate or NFC-equivalent keys, nesting deeper than
+   64, non-finite numbers or malformed JSON give adapterFailure.
+2. Envelope and limit-object shape: a missing or extra top-level key, a wrong
+   rootPath or files type, a limits or documentLimits value that is not an object
+   (including null), an unknown limit name, or a value that is not an integral
+   number within the magnitude bound gives adapterFailure.
+3. The standard source-count ceiling: more than 1,024 files gives fileLimit
+   before any file record is examined, whatever the request's limits say.
+4. Each file record's fields and hexadecimal: adapterFailure.
+5. Library resolution with the requested limits. The library validates limit
+   values before anything else, so a composition or document limit outside its
+   supported range gives invalidLimits ahead of path, count and byte checks.
+   The library's own order then applies: a source count above a lowered
+   maximumDefinitions gives fileLimit, and original supplied path bytes above a
+   lowered maximumProfileBytes give fileLimit before path grammar (filePath).
+
+Libraries resolve these explicitly supplied bytes under docs/FILE-COMPOSITION.md,
+then emit normal composition responses. Produced text/binary/adopted/edited
+bundles are consumed as composition kind, with no source inputs and standard
+limits. File failures use filePath, fileLedger, missingFile and fileLimit;
+graph, storage and limit refusals keep their library codes, for example
+depthExceeded, referenceAttributesExceeded and invalidLimits.
+
+The libraries refuse a ledger edge whose source-file attribute cannot fit
+maximumReferenceAttributeBytes (17 bytes for glyph and source-file plus the
+target's UTF-8 bytes) while that reference is resolved, before its target is
+visited. Shared cases pin this order against later missing files and cycles.
+
+Every response adopts identities under standard limits, which adds a 3md-id
+attribute to each reference that lacks one. A resolution whose source-file
+attribute exactly fills the standard 16,384-byte bound therefore resolves, but
+its response is refused during adoption with referenceAttributesExceeded in all
+three adapters. Swift and TypeScript DocumentIdentity.adopt report that graph
+error directly. The Rust adapter builds the adopted graph from
+editing::adopt_composition_entries with DocumentComposition::new, because
+editing::adopt_composition reports the same failure as an invalidComposition
+edit diagnostic.
+
 Both text and uncompressed binary input must be detected by the storage codec.
 Composition input first uses storage decode, then composition decode.
 
@@ -46,7 +103,9 @@ Revision is the adopted pre-edit snapshot revision, not a hash.
 
 Failure response: `{"ok":false,"error":"stableCode"}`. Stable storage,
 composition, parser and editing codes use the existing camel-case names.
-Unclassified adapter failures use adapterFailure and must fail the gate.
+Unclassified adapter failures use adapterFailure. An adapterFailure that a
+case does not expect fails the gate. Catalog fixtures may never expect it; only
+shared files cases that deliberately send malformed protocol input do.
 Input requests and response lines are bounded to 32 MiB for this development
 tool. The coordinator enforces process deadlines and manifest completeness.
 Swift streams requests in bounded chunks, rejects malformed/oversized lines with

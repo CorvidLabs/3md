@@ -5,8 +5,11 @@ import ThreeMD
 import Darwin
 #elseif canImport(Glibc)
 import Glibc
+#elseif canImport(Musl)
+import Musl
 #endif
 
+#if canImport(Darwin) || canImport(Glibc) || canImport(Musl)
 /// Explicit development host for the pure resolver. It reads only reachable regular files in one supplied folder.
 @available(macOS 10.15.4, *)
 enum FileBundleHost {
@@ -21,7 +24,7 @@ enum FileBundleHost {
             throw InterchangeFailure.invalid("File paths cannot contain NUL")
         }
         let folder = URL(fileURLWithPath: arguments[3], isDirectory: true).standardizedFileURL
-        let rootDescriptor = try openDirectory(folder.path)
+        let rootDescriptor = try openDirectory(folder.path, named: folder.path)
         defer { _ = close(rootDescriptor) }
         let rootPath = try DocumentFileComposition.resolvePath(arguments[1], relativeTo: "project-root")
         var pending = [rootPath]
@@ -85,17 +88,24 @@ enum FileBundleHost {
         )
     }
 
-    private static func openDirectory(_ path: String, relativeTo parent: Int32 = AT_FDCWD) throws -> Int32 {
+    /// Opens one directory without following a final symlink. `name` identifies it in errors: the chosen folder,
+    /// the output folder, or a project-relative directory.
+    private static func openDirectory(_ path: String, relativeTo parent: Int32 = AT_FDCWD, named name: String) throws
+        -> Int32
+    {
         try Task.checkCancellation()
         let descriptor = openat(parent, path, O_RDONLY | O_DIRECTORY | O_NOFOLLOW | O_NONBLOCK | O_CLOEXEC)
-        guard descriptor >= 0 else { throw systemFailure("Cannot open directory") }
+        guard descriptor >= 0 else {
+            let code = errno
+            throw systemFailure("Cannot open directory: " + name, code: code)
+        }
         var information = stat()
         guard fstat(descriptor, &information) == 0,
             information.st_mode & mode_t(S_IFMT) == mode_t(S_IFDIR)
         else {
             _ = close(descriptor)
             throw InterchangeFailure.invalid(
-                "Choose a readable directory; the selected directory itself cannot be a symlink"
+                "Choose a readable directory; the selected directory itself cannot be a symlink: " + name
             )
         }
         return descriptor
@@ -113,14 +123,19 @@ enum FileBundleHost {
         var parent = root
         var ownsParent = false
         defer { if ownsParent { _ = close(parent) } }
+        var directory = ""
         for component in components.dropLast() {
-            let next = try openDirectory(component, relativeTo: parent)
+            directory = directory.isEmpty ? component : directory + "/" + component
+            let next = try openDirectory(component, relativeTo: parent, named: directory)
             if ownsParent { _ = close(parent) }
             parent = next
             ownsParent = true
         }
         let descriptor = openat(parent, filename, O_RDONLY | O_NOFOLLOW | O_NONBLOCK | O_NOCTTY | O_CLOEXEC)
-        guard descriptor >= 0 else { throw systemFailure("Cannot open source: " + path) }
+        guard descriptor >= 0 else {
+            let code = errno
+            throw systemFailure("Cannot open source: " + path, code: code)
+        }
         defer { _ = close(descriptor) }
         var information = stat()
         guard fstat(descriptor, &information) == 0,
@@ -138,8 +153,9 @@ enum FileBundleHost {
                 read(descriptor, bytes.baseAddress, allowance)
             }
             if count < 0 {
-                if errno == EINTR { continue }
-                throw systemFailure("Cannot read source: " + path)
+                let code = errno
+                if code == EINTR { continue }
+                throw systemFailure("Cannot read source: " + path, code: code)
             }
             if count == 0 { return data }
             data.append(contentsOf: buffer.prefix(count))
@@ -148,7 +164,8 @@ enum FileBundleHost {
     }
 
     private static func publish(_ data: Data, to destination: URL) throws {
-        let parent = try openDirectory(destination.deletingLastPathComponent().path)
+        let folder = destination.deletingLastPathComponent().path
+        let parent = try openDirectory(folder, named: folder)
         defer { _ = close(parent) }
         let name = destination.lastPathComponent
         let staging = ".3md-bundle-" + UUID().uuidString
@@ -158,7 +175,10 @@ enum FileBundleHost {
             O_WRONLY | O_CREAT | O_EXCL | O_NOFOLLOW | O_NONBLOCK | O_CLOEXEC,
             mode_t(0o600)
         )
-        guard descriptor >= 0 else { throw systemFailure("Cannot create staging file") }
+        guard descriptor >= 0 else {
+            let code = errno
+            throw systemFailure("Cannot create staging file: " + folder, code: code)
+        }
         defer { _ = close(descriptor) }
         var identity = stat()
         guard fstat(descriptor, &identity) == 0,
@@ -173,15 +193,17 @@ enum FileBundleHost {
                 return write(descriptor, base.advanced(by: offset), min(65_536, data.count - offset))
             }
             if count < 0 {
-                if errno == EINTR { continue }
-                throw systemFailure("Cannot write staging file")
+                let code = errno
+                if code == EINTR { continue }
+                throw systemFailure("Cannot write staging file: " + folder, code: code)
             }
             guard count > 0 else { throw InterchangeFailure.invalid("Staging write made no progress") }
             offset += count
         }
         while fsync(descriptor) != 0 {
             try Task.checkCancellation()
-            if errno != EINTR { throw systemFailure("Cannot synchronize staging file") }
+            let code = errno
+            if code != EINTR { throw systemFailure("Cannot synchronize staging file: " + folder, code: code) }
         }
         try Task.checkCancellation()
         guard sameRegularFile(staging, relativeTo: parent, matching: identity) else {
@@ -190,7 +212,10 @@ enum FileBundleHost {
         // linkat atomically refuses existing destinations and publishes a complete written file.
         // Darwin cannot link directly from this file descriptor. Before/after identity checks detect
         // replacement, but cannot promise verified-inode atomicity against a concurrent same-user rename.
-        guard linkat(parent, staging, parent, name, 0) == 0 else { throw systemFailure("Cannot publish new bundle") }
+        guard linkat(parent, staging, parent, name, 0) == 0 else {
+            let code = errno
+            throw systemFailure("Cannot publish new bundle: " + destination.path, code: code)
+        }
         guard sameRegularFile(name, relativeTo: parent, matching: identity) else {
             // Do not delete an output inode that we cannot establish belongs to this operation.
             throw InterchangeFailure.invalid("Output identity changed during publication")
@@ -210,9 +235,21 @@ enum FileBundleHost {
         _ = unlinkat(parent, name, 0)
     }
 
-    private static func systemFailure(_ operation: String) -> InterchangeFailure {
-        let code = errno
+    /// `code` is captured immediately after the failing call, before any message is built.
+    private static func systemFailure(_ operation: String, code: Int32) -> InterchangeFailure {
         let explanation = strerror(code).map { String(cString: $0) } ?? "POSIX error \(code)"
         return .invalid(operation + ": " + explanation)
     }
 }
+#else
+/// The folder host needs POSIX descriptor-relative calls (openat, linkat, fstatat, unlinkat). Other platforms
+/// report an explicit unsupported-platform failure instead of failing to compile; the pure resolver is unaffected.
+@available(macOS 10.15.4, *)
+enum FileBundleHost {
+    static func run(_ arguments: [String]) throws {
+        throw InterchangeFailure.invalid(
+            "threemd-interchange --bundle is unsupported on this platform: it needs POSIX openat, linkat and fstatat"
+        )
+    }
+}
+#endif
