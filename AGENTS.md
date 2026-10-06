@@ -1,5 +1,11 @@
 # 3md
 
+## Linked composition parity hardening after 2.0.0
+
+On 2026-10-06 Leif directly requested continued 3md development and release preparation through implementation, verification and feature-branch PRs, which Leif will merge. When two sessions overlapped, Leif chose that the release session owns the 2.0.0 release and this session delivers the linked-composition parity hardening as a follow-up PR after the tag. Asked directly, Leif also approved running the suites on Linux through Docker, adding a Linux CI job, and recording a signed `agent:claude` attestation with the local key only when its public key matches the pinned trusted key.
+
+The `harden-linked-composition-parity-across-swift-typescript-and-rust-after-2-0-0` change covers bounded per-reference work, discovery-time attribute-bound refusal, strict optional adapter limits, shared files cases, mid-operation cancellation tests, Rust adoption parity through an additive function, development host platform guards and path-named errors, and a Linux CI job. The executing agent is Claude acting as root; one parallel agent wrote the Swift, TypeScript and Rust implementation and tests. Claims are agent claims, not Leif's diff review, an independent human review, a GitHub approval or a signature. This scope does not merge, push main, tag, release, publish packages, deploy, change protections or weaken the provenance policy.
+
 ## Current 2.0.0 release authority
 
 On 2026-10-06 Leif directly instructed "Finish 2.0.0". This is the current

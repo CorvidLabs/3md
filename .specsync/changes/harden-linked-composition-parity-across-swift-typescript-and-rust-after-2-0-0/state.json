@@ -1,0 +1,49 @@
+{
+  "schema_version": 1,
+  "workflow_version": 2,
+  "workflow_origin_version": 2,
+  "id": "harden-linked-composition-parity-across-swift-typescript-and-rust-after-2-0-0",
+  "slug": "harden-linked-composition-parity-across-swift-typescript-and-rust-after-2-0-0",
+  "title": "Harden linked composition parity across Swift TypeScript and Rust after 2.0.0",
+  "description": "Harden linked composition parity across Swift TypeScript and Rust after 2.0.0",
+  "kind": "feature",
+  "state": "approved",
+  "base_commit": "ca2d1e34f20be3c5100d0fd1474a8ee9cc78d2d4",
+  "created_at": 1791310927,
+  "updated_at": 1791310974,
+  "affected_specs": [
+    "ThreeMD"
+  ],
+  "affected_paths": [
+    "Sources/ThreeMD",
+    "Sources/ThreeMDInterop",
+    "Tests",
+    "js",
+    "rust",
+    "conformance",
+    "docs",
+    "CHANGELOG.md",
+    ".github",
+    "AGENTS.md"
+  ],
+  "no_spec_change": false,
+  "no_spec_change_rationale": null,
+  "acceptance_criteria": [
+    "Swift TypeScript and Rust resolve linked files without work or memory that grows with the containing path and refuse over-bound edges at discovery in the same order; shared files cases covering caller limits and refusal order and path grammar and escapes and the cached-subtree ceiling agree in all nine pairs; Swift and Rust cancellation during resolution returns no partial result; the development file-bundle host compiles on Darwin and Glibc and Musl and names failing paths; Linux runs of all three suites and interchange are recorded and a Linux CI job runs them"
+  ],
+  "selected_artifacts": [
+    "context",
+    "requirements",
+    "plan",
+    "tasks",
+    "testing",
+    "docs",
+    "design",
+    "research"
+  ],
+  "dependencies": [],
+  "answers": {
+    "architecture_risk": "yes",
+    "public_contract": "yes"
+  }
+}
