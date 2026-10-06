@@ -49,13 +49,16 @@ runs all suites and executes the same gate. Node and Rust must be installed.
 The separate development executable requires macOS 10.15+ when running on macOS;
 it does not change the library deployment baseline.
 
-The current finite gate has 426 requests: 82 catalog sources, 43 legacy JSON
-sources, 45 fixed numbers and 256 seeded finite-number samples. The 378 valid
-cases produce 16,983 imported outputs across nine pairs, including canonical,
-binary, legacy where applicable, adopted and edited files. Forty-eight invalid
-requests require an exact failure code from each language. The driver writes
-its request/response transcripts and JSON receipt to an isolated temporary
-directory and fails on any omission, mismatch, unclassified failure or timeout.
+The current finite gate has 479 requests: 82 catalog sources, 43 legacy JSON
+sources, 45 fixed numbers, 256 seeded finite-number samples and 53 linked-file
+(`files` kind) requests that the development driver generates under
+[FILE-COMPOSITION.md](../../docs/FILE-COMPOSITION.md). Valid requests produce
+17,451 imported outputs, 1,939 for each of the nine pairs, including canonical,
+binary, legacy where applicable, adopted and edited files and source-free imports
+of produced linked-file bundles. Invalid requests require an exact failure code
+from each language. The driver writes its request/response transcripts and JSON
+receipt to an isolated temporary directory and fails on any omission, mismatch,
+unclassified failure or timeout.
 
 This is a finite executable contract, not an exhaustive proof for every possible
 input. See [PROTOCOL.md](PROTOCOL.md) for the development-only JSONL adapter and

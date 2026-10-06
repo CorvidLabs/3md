@@ -26,6 +26,12 @@ regenerate with `node scripts/build-docs-3md.mjs`.
 [![License: MIT](https://img.shields.io/github/license/CorvidLabs/3md)](LICENSE)
 [![Live demo](https://img.shields.io/badge/demo-live-0E6F66)](https://corvidlabs.github.io/3md/)
 
+ThreeMD 2.0.0 adds [linked file composition](docs/FILE-COMPOSITION.md): map a
+character to another 3md filename, resolve host-supplied files in any of the
+three libraries, and share a self-contained bundle. See the
+[nested LinkedVillage example](Examples/LinkedVillage/README.md) and the
+[2.0.0 release notes](docs/RELEASE-2.0.0.md).
+
 **Markdown with a Z axis.** A `.3md` file is ordinary Markdown extended along
 one free axis: stack your content into **planes** and tell the reader what the
 depth means. Time for a daily planner. Frames for an animation. Layers for
@@ -70,6 +76,22 @@ cross-platform Swift parser; a TypeScript port in [`js/`](js); and a Rust crate
 in [`rust/`](rust)), and a shared cross-implementation conformance suite
 ([conformance/](conformance)) that all three pass.
 
+ThreeMD 2.0.0 adds general `.3mdb` storage, self-contained document
+composition, linked file composition, stable optional identities, atomic
+revision-checked edits and structured diagnostics in Swift, TypeScript and Rust.
+The uncompressed container and shared extension fixtures are portable. LZFSE is
+available only through Swift's conditional Apple backend; the ports return an
+explicit unsupported-backend error. These library APIs perform no file or
+network I/O. See the [release notes and migration guide](docs/RELEASE-2.0.0.md)
+and [editing capability matrix](docs/EDITING-RELEASE.md).
+
+Cross-language file interchange is verified by a development gate: each Swift,
+TypeScript and Rust writer feeds every reader, for all nine pairings. It checks
+canonical text, uncompressed binary, composition references, linked-file bundles
+and imported edits. The [interchange catalog](conformance/interchange/README.md) states the cases,
+exact-byte checks and platform exceptions. This does not claim portable LZFSE
+or a shared JSON snapshot/patch transport.
+
 ## Why
 
 Markdown is two dimensional. Plenty of documents are not: a planner moves
@@ -86,7 +108,7 @@ text a depth dimension of its own.
 Add the package to your `Package.swift`:
 
 ```swift
-.package(url: "https://github.com/CorvidLabs/3md", from: "1.0.0")
+.package(url: "https://github.com/CorvidLabs/3md", from: "2.0.0")
 ```
 
 Then depend on the `ThreeMD` library product:
@@ -95,22 +117,30 @@ Then depend on the `ThreeMD` library product:
 .product(name: "ThreeMD", package: "3md")
 ```
 
+Existing projects can stay on `from: "1.0.0"`. Read the
+[migration guide](docs/RELEASE-2.0.0.md#migrating-an-existing-host) before
+upgrading: legacy serialization output can change for string values that earlier
+writers serialized lossily.
+
 ### JavaScript / TypeScript
 
-A faithful TypeScript port of the Swift parser is published to GitHub Packages,
-alongside the [`<three-md>` web component](element/) (`@corvidlabs/three-md-element`).
+A TypeScript library lives in [`js/`](js), alongside the
+[`<three-md>` web component](element/) (`@corvidlabs/three-md-element`).
 All three implementations (Swift, TypeScript, and the Rust crate in [`rust/`](rust))
 are kept in sync by the shared conformance suite ([conformance/](conformance)).
 
-GitHub Packages requires a GitHub token to install (even for public packages),
-so point the `@corvidlabs` scope at the registry and add a token in a project or
-user `.npmrc`, then install:
+The [publication workflow](.github/workflows/publish.yml) publishes to the
+public npm registry. Install with:
 
 ```bash
-echo "@corvidlabs:registry=https://npm.pkg.github.com" >> .npmrc
-echo "//npm.pkg.github.com/:_authToken=YOUR_GITHUB_TOKEN" >> .npmrc
 bun add @corvidlabs/threemd
 ```
+
+`@corvidlabs/threemd` and `@corvidlabs/three-md-element` 2.0.0 are published by
+the release workflows. If an older installation maps `@corvidlabs` to GitHub
+Packages, point that scope at the public npm registry. The web component keeps
+text rendering; the library exports the storage, composition, linked-file and
+editing APIs.
 
 No install needed just to use it: try the hosted [editor and
 viewer](https://corvidlabs.github.io/3md/viewer.html), or load the self-contained
@@ -130,12 +160,20 @@ const text = serialize(document);
 
 ### Rust
 
-The [`threemd`](https://crates.io/crates/threemd) crate is published on crates.io
-with zero runtime dependencies:
+The [`threemd`](https://crates.io/crates/threemd) crate's publication workflow
+targets crates.io. Install an available published version with:
 
 ```bash
 cargo add threemd
 ```
+
+The 2.0.0 crate pins `unicode-normalization =0.1.25` as its runtime
+dependency. Its serde/serde_json dependencies are development-only. The release
+workflow publishes `threemd` 2.0.0 to crates.io when the `CRATES_IO_TOKEN`
+repository secret is configured. Releases between 1.0.0 and 2.0.0 never reached
+crates.io, which stayed at 1.0.0, because the old workflow rewrote the crate
+version and left the tree dirty; 2.0.0 fixes that workflow. Confirm that
+crates.io lists 2.0.0 before depending on it.
 
 ```rust
 let document = threemd::parse(source)?;
@@ -143,6 +181,13 @@ println!("{}", document.axis); // "time"
 ```
 
 ## Library usage
+
+ThreeMD 2.0.0 adds optional stable plane/reference identities, immutable
+revision-checked document/composition patches and structured diagnostics above
+the existing parser in Swift, TypeScript and Rust. General uncompressed binary,
+composition and linked-file APIs are implemented in all three. See the
+[release scope and capability matrix](docs/EDITING-RELEASE.md). Releases before
+2.0.0 do not contain these APIs.
 
 ```swift
 import ThreeMD
@@ -158,6 +203,109 @@ print(document.linkGraph())     // compact source -> target edge list
 // Round trips back to text:
 let text = Serializer().render(document)
 ```
+
+## Binary storage and reusable documents
+
+ThreeMD 2.0.0 provides bounded general-document storage and self-contained
+composition in Swift, TypeScript and Rust. The examples below use Swift; see
+[EDITING-RELEASE.md](docs/EDITING-RELEASE.md) for the TypeScript and Rust
+equivalents. The existing text parsers, command-line tool and hosted viewer
+retain their current text behavior.
+
+```swift
+import ThreeMD
+
+let document = try Parser().parse(source)
+let binary = try DocumentStorageCodec.encode(
+    document, format: .binary(compression: .none)
+)
+let restored = try DocumentStorageCodec.decode(binary)
+
+// Optional on platforms with Apple's Compression framework:
+let compressed = try DocumentStorageCodec.encode(
+    document, format: .binary(compression: .lzfse)
+)
+```
+
+The general `.3mdb` container holds canonical UTF-8 3md text with explicit
+lengths and a corruption checksum. Its magic is `3mdbin\r\n`; it is separate
+from Sculpt/Rook's older voxel-specific `3MDB` container. Defaults cap encoded
+and decoded data at 64 MiB, with limits for records, planes and physical lines.
+Unavailable compression, malformed headers, excess limits and cancellation
+produce errors. CRC detects corruption and does not authenticate content.
+
+Composition preserves a library of named documents and ordered references:
+
+```swift
+let root = Document(version: "0.1", axis: .layer, planes: [
+    Plane(z: 0, body: "# Collection")
+])
+let composition = try DocumentComposition(rootID: "root", entries: [
+    DocumentEntry(id: "root", document: root, references: [
+        DocumentReference(targetID: "chapter", attributes: ["role": "first"]),
+        DocumentReference(targetID: "chapter", attributes: ["role": "again"])
+    ]),
+    DocumentEntry(id: "chapter", document: document)
+])
+let text = try DocumentCompositionCodec.encode(composition)
+let reloaded = try DocumentCompositionCodec.decode(text)
+
+// The profile is itself a normal Document, so binary storage also works.
+let profile = try DocumentCompositionCodec.document(for: composition)
+let binaryComposition = try DocumentStorageCodec.encode(
+    profile, format: .binary(compression: .none)
+)
+```
+
+Each definition is saved once. All references resolve inside the supplied
+library, with checked IDs, targets, cycles, depth and work limits, including
+unused definitions. Documents keep their own axes; attributes have no built-in
+voxel or layout meaning. The library performs no file reads, URL resolution or
+automatic flattening. See [SPEC.md](SPEC.md#11-general-document-storage) for the
+binary layout and [the composition profile](SPEC.md#12-self-contained-document-composition).
+
+The package keeps its existing deployment baseline. These synchronous APIs
+check cooperative task cancellation on macOS 10.15, iOS 13, tvOS 13, watchOS 6
+and later, and supported non-Apple platforms. On earlier Apple runtimes that
+check is a no-op; storage and validation remain synchronous and available.
+
+Actual canonical fixtures are in [Examples/Extensions](Examples/README.md#storage-and-composition-fixtures):
+[readable canopy](Examples/Extensions/canopy.3md),
+[portable binary canopy](Examples/Extensions/canopy.3mdb),
+[readable shared grove](Examples/Extensions/shared-grove.3md), and
+[portable binary shared grove](Examples/Extensions/shared-grove.3mdb).
+The fixture directory also includes LZFSE variants and a byte/hash manifest.
+The public Swift APIs generated all six documents and decoded them back to
+equal values. This demonstrates storage and references, without promising
+automatic character-to-model expansion or hosted viewer support.
+
+### Linked files
+
+An ordinary document can name other 3md files in a `3md-files` metadata ledger
+that maps single printable ASCII characters to relative filenames:
+
+```
+3md-files: "{\"1\":\"models/house.3md\",\"2\":\"models/tree.3md\"}"
+```
+
+The host reads the files it chooses and supplies their bytes. The library
+resolves the graph and can bundle it into the self-contained profile above:
+
+```swift
+let linked = try DocumentFileComposition.resolve(
+    rootPath: "scene.3md",
+    sources: [DocumentFileSource(path: "scene.3md", data: sceneBytes),
+              DocumentFileSource(path: "models/house.3md", data: houseBytes),
+              DocumentFileSource(path: "models/tree.3md", data: treeBytes)]
+)
+let portable = try DocumentCompositionCodec.encode(linked.composition)
+```
+
+Paths are project-relative POSIX paths that cannot escape the root. Missing
+files, cycles, invalid ledgers and exceeded limits are refused without partial
+results. See [FILE-COMPOSITION.md](docs/FILE-COMPOSITION.md),
+[SPEC.md section 12.3](SPEC.md#123-linked-file-authoring) and the
+[LinkedVillage example](Examples/LinkedVillage/README.md).
 
 ## Command-line tool
 
@@ -223,16 +371,18 @@ parity, generated web-component bundle drift, and VS Code grammar tests. See
 [AGENTS.md](AGENTS.md) for the standing rules every contributor and agent follows.
 Browser UI tests are exposed separately with `fledge lanes run ui`.
 
-Each implementation has its own tests (the Swift suite has 122 tests, the
-TypeScript suite 76), and all three implementations run the shared 43-vector
+Each implementation has its own tests, and all three implementations run the shared 43-vector
 conformance suite in [conformance/](conformance), which is the
 cross-implementation contract that keeps the parsers behaving identically.
 
 ## Status
 
-The format and spec are at version 1.0 (stable, frozen grammar). The latest
-release is v1.8.1 (see the release badge above). Older `3md: 0.1` documents remain valid: the parser is
-version-lenient and never rejects a document by its version string.
+The 1.0 text grammar remains frozen. Specification 1.1 adds independently
+versioned binary storage, composition and linked file authoring without changing
+that grammar. ThreeMD 2.0.0, released on 2026-10-06, implements those extensions
+in Swift, TypeScript and Rust; the package version is separate from the format
+version. Older `3md: 0.1` documents remain valid: the parser is version-lenient
+and never rejects a document by its version string.
 
 ## License
 
@@ -241,14 +391,19 @@ MIT (c) CorvidLabs. See [LICENSE](LICENSE).
 @plane z=1 label="SPEC" file="SPEC.md"
 # 3md Format Specification
 
-Version: 1.0
-Status: stable (frozen grammar)
-File extension: `.3md`
+Version: 1.1 (additive storage, composition and linked file authoring specification)
+Status: the 1.0 text grammar is frozen; sections 11 and 12 are implemented by ThreeMD 2.0.0 (released 2026-10-06) in Swift, TypeScript and Rust
+File extensions: `.3md` text; `.3mdb` general binary storage
 Media type (proposed): `text/3md`
 
-This document defines version 1.0 of the 3md format. The `3md:` key inside a
+Sections 1–10 define the unchanged version 1.0 text format. Sections 11–12
+define independently versioned storage, composition and linked file authoring
+extensions. The Swift, TypeScript and Rust libraries implement portable
+uncompressed storage, composition, linked file resolution and typed editing.
+Apple LZFSE remains an optional Swift backend; the hosted viewer continues to
+implement its existing text contract. The `3md:` key inside a
 document's frontmatter declares which format version that document targets. See
-section 9 (Stability) for the compatibility guarantees that version 1.0 makes.
+section 10 (Stability) for the compatibility guarantees that version 1.0 makes.
 
 ### Format version and back-compatibility
 
@@ -519,15 +674,234 @@ Version 1.0 freezes the grammar described in this document. Concretely:
   implementation that passes them is conforming, and any change that would alter
   their expected results is a breaking change.
 
-## 11. Open questions for later versions
+### Optional editing identity convention
+
+Swift, TypeScript and Rust editing APIs optionally interpret `3md-id` in plane attributes and composition reference attributes. Existing parsers preserve it as an ordinary string; they never assign IDs or reject otherwise valid text based on this convention. An existing `id` attribute remains application metadata. Identity-aware validation requires a 1...64-byte case-sensitive ASCII identifier, beginning with an alphanumeric and containing only alphanumerics, underscores or hyphens, unique within one document's planes or one composition entry's references.
+
+Explicit identity adoption assigns only missing IDs and preserves valid existing ones. IDs survive changes to content, coordinates, order and reference targets. Existing z-based links and HTML anchors keep their current grammar and semantics. Generic attribute replacement cannot silently change an adopted identity.
+
+Typed editing is an optional library layer above parsing/storage. A patch compares exact canonical expected content, stages bounded operations privately and publishes only a completely validated final document or composition. A revision is a concurrency precondition, not an authenticity claim. Cancellation, stale preconditions and invalid final values produce no partial result. These additions do not change the frozen text grammar or existing binary/composition versions.
+
+## 11. General document storage
+
+Binary storage contains a general 3md `Document`. It does not interpret an axis,
+Markdown body, spatial coordinates, glyphs, assets, or application metadata. It
+introduces no text directive and does not change `Parser` or `Serializer`.
+
+`DocumentStorageCodec` accepts UTF-8 text or the complete binary magic and returns
+a `Document`. The writer takes an explicit `.text` or `.binary(compression:)`
+format. Text remains the portable interchange form. The binary extension is
+`.3mdb`; readers MUST identify content by its magic rather than an extension.
+
+### 11.1 Version 1 binary envelope
+
+The header is exactly 40 bytes. All multi-byte integers use little-endian order.
+The payload immediately follows the header; no trailing bytes are permitted.
+
+| Offset | Bytes | Field | Version 1 value |
+|--------|-------|-------|-----------------|
+| 0 | 8 | Magic | `3mdbin\r\n`, hexadecimal `33 6d 64 62 69 6e 0d 0a` |
+| 8 | 2 | Container version | `1` |
+| 10 | 1 | Payload kind | `1`, canonical UTF-8 3md text |
+| 11 | 1 | Compression | `0` for none; `1` for LZFSE |
+| 12 | 4 | Flags | `0` |
+| 16 | 4 | Reserved | `0` |
+| 20 | 8 | Encoded payload length | Exact payload byte count |
+| 28 | 8 | Decoded payload length | Exact UTF-8 text byte count |
+| 36 | 4 | CRC-32/ISO-HDLC | Header bytes `0..<36`, followed by the encoded payload |
+
+The checksum uses reflected polynomial `0xEDB88320`, initial value
+`0xFFFFFFFF`, and final XOR `0xFFFFFFFF`. The check value for ASCII
+`123456789` is `0xCBF43926`. The checksum field itself is excluded. CRC detects
+accidental corruption; it does not authenticate an author or provide a signature.
+
+Uncompressed payloads are mandatory and portable. LZFSE is optional and uses
+Apple's system Compression framework where available. An implementation without
+that framework MUST report unsupported compression explicitly. A decoder MUST
+reject an unknown version, kind, compression identifier, flags, reserved value,
+inconsistent length, checksum mismatch, truncated or concatenated stream, or
+unused trailing input. A compressed stream must terminate exactly once and
+produce exactly the declared decoded length.
+
+This magic is deliberately different from the older application-specific `3MDB`
+voxel format used by Sculpt/Rook. Those containers do not become this standard;
+applications keep their existing readers and explicitly migrate documents.
+
+### 11.2 Validation and resource policy
+
+Storage defaults to 64 MiB encoded bytes, 64 MiB decoded bytes, 100,000 physical
+lines, 65,536 planes, and 8 MiB per line, scalar, preamble, or plane body.
+Callers can lower these limits. The record limit can be raised explicitly up to
+the absolute 64 MiB ceiling; other limits cannot exceed their defaults. Declared
+decoded size is checked before decompression allocation. Counts and byte sums
+use bounded arithmetic, and long operations cooperatively check cancellation.
+Errors return no partial document or encoded payload.
+
+Direct `Document` values must have finite coordinates, unique plane positions,
+and fields representable by the existing text grammar. The new storage writer
+quotes every scalar and validates a semantic parse round trip. It preserves
+literal quotes and backslashes. Legacy scalar quoting is also repaired for
+representable values that would otherwise lose apostrophes or edge whitespace. Values
+that would change through text serialization, including reserved-key collisions
+or significant unrepresentable whitespace, are rejected explicitly.
+
+Canonical extension writers compare dictionary keys by NFC-normalized Unicode
+scalar order and preserve original spelling. Raw and bounded text decoding retain the
+first spelling and last assigned value of equivalent keys, matching Swift's
+dictionary semantics. Strict composition JSON rejects equivalent duplicate
+keys. A direct Rust map with both equivalent spellings has no insertion history
+and is rejected rather than selecting an arbitrary value. Canonical numeric
+spelling is verified by shared IEEE754 fixtures, including the exact `2^53`
+boundary. Signed zero normalizes to zero in canonical output, as in the existing
+text contract; its sign bit is not stored. Compatibility repairs align the ports'
+interpretation of existing whitespace and quoting grammar without new syntax or
+changed parser signatures. Legacy numeric spelling may differ when it parses
+to the same finite value; canonical storage spelling is exact across languages.
+
+The API is synchronous and pure, and the package's existing deployment baseline
+is unchanged. A caller may run it in a Swift task away from the UI actor.
+Cooperative cancellation is checked where Swift concurrency is available:
+macOS 10.15, iOS 13, tvOS 13, watchOS 6 or later, and supported non-Apple
+platforms. On earlier Apple runtimes the cancellation check is a no-op;
+synchronous validation and storage remain available. Cancellation propagates as
+`CancellationError` when checked. TypeScript accepts an optional AbortSignal;
+Rust accepts explicit OperationOptions with an optional shared CancellationToken.
+The ports report typed cancellation and publish no partial result. Uncompressed
+storage is supported in all three implementations; requesting LZFSE in either
+port reports compressionUnavailable. The APIs do not open files, resolve URLs,
+launch a process, or read the network.
+
+## 12. Self-contained document composition
+
+A composition stores one root ID and a library of unique named `Document`
+definitions. Each definition has ordered references to IDs in that same
+library. The documents keep their own axes, metadata and Markdown; reference
+attributes are opaque strings interpreted by the consuming application.
+No voxel placement, rendering transform, automatic flattening, or external
+transclusion is implied.
+
+IDs are case-sensitive ASCII strings of 1–64 bytes matching
+`[A-Za-z0-9][A-Za-z0-9_-]*`. An ID is never a filesystem path or URL. A target
+must exist in the supplied library. Definitions are stored once even when
+referenced repeatedly. Validation covers every definition, including unused
+ones, so an unreachable missing target or cycle is an error.
+
+### 12.1 The `3md-composition-1` profile
+
+The readable profile uses existing 3md syntax: version `0.1`, axis `layer`,
+metadata exactly `profile: 3md-composition-1`, no title or preamble, and one
+plane at `z=0` labelled `Composition`, without coordinates or extra attributes.
+The plane body is one fenced `json` object with exactly these fields:
+
+```json
+{
+  "schema": "3md-composition-1",
+  "rootID": "root",
+  "entries": [
+    {
+      "id": "root",
+      "source": "---\n3md: \"0.1\"\naxis: \"layer\"\n---\n\n@plane z=0\n# Collection\n",
+      "references": [
+        {"targetID": "chapter", "attributes": {"role": "first"}},
+        {"targetID": "chapter", "attributes": {"role": "again"}}
+      ]
+    },
+    {
+      "id": "chapter",
+      "source": "---\n3md: \"0.1\"\naxis: \"time\"\n---\n\n@plane z=0\n# Reusable chapter\n",
+      "references": []
+    }
+  ]
+}
+```
+
+`source` is canonical readable 3md text, not a path. Writers sort definitions by
+ID, preserve reference order, and use the general storage text writer for each
+definition. Readers reject unknown or duplicate JSON fields, invalid envelope
+structure, malformed child documents, and unsupported profiles. The profile's
+outer document can itself be stored through the general binary codec, keeping
+all definitions and references intact.
+
+### 12.2 Graph and resource limits
+
+The standard policy permits at most 1,024 definitions, 16,384 reference records,
+64 nodes along a dependency path, 16 MiB summed unique canonical definition
+bytes, and 20 MiB profile bytes. Each definition's reachable traversal has at
+most 1,000,000 occurrences, counting shared targets each time they are reached.
+Each reference permits at most 64 attributes and 16 KiB summed UTF-8 key/value
+bytes. Callers can lower each limit but cannot raise these ceilings.
+
+The codec uses an explicit 20 MiB outer record policy for the escaped JSON
+manifest while child documents use their separately supplied document policy.
+Before object decoding it bounds JSON nesting and record counts and rejects
+duplicate decoded keys. Missing roots or targets, duplicate IDs, cycles,
+excessive depth, byte/count/occurrence overflow, and available task cancellation fail without
+partial output. Lookup only returns a definition supplied in memory; source
+files may be removed after import without affecting the composition.
+
+### 12.3 Linked file authoring
+
+The optional ordinary-document metadata string `3md-files` is a strict JSON
+glyph-to-relative-filename ledger. A host explicitly supplies file bytes to the
+Swift, TypeScript or Rust file-composition API. Core performs no filesystem or
+network I/O. Recursive resolution deduplicates normalized paths and preserves
+generic document content, existing identities and nested self-contained graphs.
+Portable bundling removes the external ledger and writes the existing
+`3md-composition-1` profile, retaining glyph and source-file provenance attributes.
+The normative path, ordering, bounds and refusal contract is
+[FILE-COMPOSITION.md](docs/FILE-COMPOSITION.md). Existing parser grammar and
+container/profile versions do not change. Placement remains a host concern.
+
+## 13. Open questions for later versions
 
 - Inline 3D model embeds, for example `@model src="scene.glb"`.
-- Transclusion across documents.
+- Hosted/remote transclusion, filesystem watchers and linked-file editor policy.
 - Per-plane transition or timing hints for `frame`/`time` axes.
-- A binary or compressed container for large scenes.
+- Hosted viewer adoption of the storage, composition and editing extensions.
+- A portable optional LZFSE backend for TypeScript and Rust.
 
 @plane z=2 label="CHANGELOG" file="CHANGELOG.md"
 # Changelog
+
+## [v2.0.0] - 2026-10-06
+
+ThreeMD 2.0.0 gives the Swift, TypeScript and Rust libraries the same feature set: portable storage, self-contained composition, linked files and transactional editing. The package version is separate from the persisted formats. Text grammar 1.0, binary envelope version 1 and composition profile `3md-composition-1` are unchanged. See the [release notes and migration guide](docs/RELEASE-2.0.0.md).
+
+Verification: the pinned Trust 1.2.2 gate passed on macOS at release commit `b1f5937` in 59 seconds. It ran 268 Swift tests, 157 TypeScript tests with typecheck and package build, 49 Rust tests plus 3 doctests, and the nine-pair interchange: 479 cases and 17,451 imports, 1,939 for each writer/reader pair. Augur returned proceed (risk 27); provenance is reported degraded (soft policy, unsigned). The log is [docs/evidence/release-2.0.0/trust-b1f5937.log](docs/evidence/release-2.0.0/trust-b1f5937.log).
+
+### Added
+
+- General readable and uncompressed binary document storage (`.3mdb`, magic `3mdbin\r\n`) in Swift, TypeScript and Rust, with bounded decoding, a corruption checksum and deterministic canonical output.
+- Self-contained reusable-document composition (`3md-composition-1`) with validated references, shared definitions and bounded acyclic graphs, stored as readable text or uncompressed binary.
+- Linked file composition: an ordinary document's `3md-files` metadata maps single printable ASCII glyphs to relative filenames. Each library resolves host-supplied file bytes recursively, deduplicates normalized paths, preserves identities and nested graphs, and bundles the result into the existing profile, which reopens without the source folder. See [linked file composition](docs/FILE-COMPOSITION.md) and the [LinkedVillage example](Examples/LinkedVillage/README.md).
+- Optional namespaced `3md-id` plane and reference identities, explicit identity adoption, immutable snapshots, exact canonical revisions, transactional typed patches and structured diagnostics.
+- Cooperative cancellation and explicit work limits in every port. Library APIs leave file and network access to their host.
+- The `threemd-interchange` development gate, which drives all nine Swift/TypeScript/Rust writer/reader pairs through the public APIs, and its explicit offline `--bundle` mode for creating portable bundles from a chosen folder.
+
+### Changed
+
+- The JS library, web element, VS Code extension and Rust crate versions align at 2.0.0. Swift remains versioned by Git tag.
+- Rust adds the pinned `unicode-normalization =0.1.25` runtime dependency for canonical key equivalence and ordering. Swift and TypeScript add no runtime package dependency.
+- Faithful legacy quoting can change emitted text bytes for string values that earlier writers serialized lossily. Imported semantics are preserved.
+- The npm publish jobs install `npm@^11.5.1` instead of `npm@latest`. npm 12 does not support the Node 20 those jobs use.
+
+### Fixed
+
+- Unicode scalar, whitespace, quoted-metadata and canonical numeric-spelling defects found by cross-language round trips.
+- The `threemd` CLI writes standard error through `FileHandle.standardError` instead of the C `stderr` global, which Swift 6 strict concurrency rejects with Glibc on Linux. Messages and exit codes are unchanged.
+- `cargo-publish.yml` checks that the committed crate version matches the release tag instead of rewriting `rust/Cargo.toml`. Releases between 1.0.0 and 2.0.0 never reached crates.io, which stayed at `threemd` 1.0.0: the old workflow rewrote the version, left the tree dirty, and `cargo publish` refused. The workflow now also fails clearly when the token secret is missing and refuses to run from anything other than a release tag.
+
+### Known limitations
+
+- Linux execution is verified on aarch64 only, in Docker at release commit `b1f5937`: with official `swift:6.0-noble` (6.0.3) and `swift:6.3-noble` (6.3.3) images the whole Swift package builds and 262 tests pass (the Apple Compression tests compile only on Apple platforms), `rust:1.95-bookworm` passes 49 tests plus 3 doctests, `oven/bun:1.4` passes typecheck, build and 157 tests, and the nine-pair interchange passes all 479 cases. There is no Linux CI job yet. See [docs/evidence/release-2.0.0](docs/evidence/release-2.0.0/README.md).
+- x86_64 Linux was exercised only under emulation, not on native hardware or CI. Windows execution is not verified.
+- Provenance is soft and unsigned: Trust passes while reporting degradation because no permitted signed attestation exists. No independent human review or signature is claimed.
+- The npm packages `@corvidlabs/threemd` and `@corvidlabs/three-md-element` are published by the release workflows. The release workflow publishes the `threemd` crate when the `CRATES_IO_TOKEN` repository secret is configured. The VS Code extension is not published to a marketplace; build the VSIX locally with `bun run package` in `editor/vscode`.
+- Optional LZFSE compression is Swift-only through Apple Compression. TypeScript and Rust return an explicit unsupported-backend error; uncompressed storage is the portable contract.
+- The `<three-md>` element remains a text renderer and the VS Code extension remains syntax highlighting only. Neither exposes binary, composition, linked-file or editing UI.
+- Sculpt's adoption of 2.0.0 is a separate workstream. Its app-specific `.3mdb`, `ascii-composition-1` and `ascii-world-1` schemas are not the general container or profile.
+- Cross-language agreement rests on a finite conformance catalog, not exhaustive proof for every input or runtime.
+- Known follow-up, not part of 2.0.0: a separate post-release parity-hardening PR will bound per-reference path work in the resolvers, add shared interchange cases for lowered limits and cancellation, and make the development bundle host's errors name the failing path.
 
 ## [v1.0.0] - 2026-06-23
 
@@ -586,15 +960,20 @@ Version 1.0 freezes the grammar described in this document. Concretely:
 Where the format and its tooling are headed. Confidence is a rough 0 to 100 read
 on how sure we are a step is the right next move and will land cleanly.
 
-## Now (v1.0)
+## Now (2.0.0 packages, format 1.0 grammar)
 
-The format is at version 1.0 (stable, frozen grammar). Shipped and verified: a
-frozen spec (SPEC.md) with a named frontmatter mini-format and a relation-to-prior-art
-section; three parsers in lockstep (Swift `ThreeMD`, TypeScript
-`@corvidlabs/threemd`, the Rust `threemd` crate) proven equivalent by a 43-vector
-conformance suite; a `threemd` CLI; an HTML renderer with Markdown rendering;
-cross-plane links; nine examples; VS Code syntax highlighting; two live demos
-(GitHub Pages and corvidlabs.xyz); MIT license; and enforcing signed attestations.
+The text grammar is 1.0 and frozen. SPEC.md 1.1 adds independently versioned
+general binary storage, self-contained composition and linked file authoring.
+ThreeMD 2.0.0 (released 2026-10-06) ships these in lockstep in the Swift
+`ThreeMD` package, the TypeScript `@corvidlabs/threemd` library and the Rust
+`threemd` crate: readable and uncompressed binary storage, composition,
+`3md-files` linked file resolution and bundling, optional stable identities and
+transactional typed patches. They are checked by the 43-vector text conformance
+suite and a nine-pair public-API interchange gate. Also shipped: the `threemd`
+CLI, an HTML renderer with Markdown rendering, cross-plane links, VS Code syntax
+highlighting, the `<three-md>` component, two live demos (GitHub Pages and
+corvidlabs.xyz) and an MIT license. Provenance is soft: Trust reports unsigned
+degradation, and a permitted signed attestation remains an open gap.
 State confidence: 93.
 
 ## Done (from this roadmap)
@@ -612,23 +991,30 @@ State confidence: 93.
   masks in Chromium.
 - Publish the `threemd` crate to [crates.io](https://crates.io/crates/threemd)
   (v1.0.0, zero runtime deps), so all three implementations are installable from
-  their native registries. A `cargo-publish` workflow keeps it in sync on release.
+  their native registries. The `cargo-publish` workflow failed for later
+  releases because it rewrote the crate version and left the tree dirty; 2.0.0
+  checks the committed version against the tag instead and publishes when the
+  `CRATES_IO_TOKEN` secret is configured.
+- General binary storage, self-contained composition, stable identities and
+  transactional editing in Swift, TypeScript and Rust (2.0.0).
+- Linked file composition with `3md-files` ledgers and portable bundles (2.0.0).
+- A nine-pair cross-language public-API interchange gate (2.0.0).
 
 ## Versioning
 
 Two independent numbers, kept distinct on purpose:
 
 - The **format version** is **1.0** and frozen. It only changes if the *grammar*
-  changes. A future **format 1.1** would mean new directives or attributes - the
-  additive proposals in [docs/PROPOSALS.md](docs/PROPOSALS.md) (per-plane timing
-  hints, `@asset`, `@include`, a container). None of those are implemented, so
-  the format is 1.0.
-- Each implementation is its own package with its own semver, all currently at
-  **1.0.0** for parity because they all implement format 1.0: the Swift package
-  (git tag v1.0.0), `@corvidlabs/threemd` (npm 1.0.0), the `threemd` crate
-  (crates.io 1.0.0), and the `<three-md>` component (`@corvidlabs/three-md-element`
-  1.0.0). A bug fix bumps a package's patch; new tooling bumps its minor;
-  neither changes the format version.
+  changes. SPEC.md 1.1 adds optional storage, composition and linked-file
+  extensions with their own identifiers (binary envelope version 1,
+  `3md-composition-1`, the `3md-files` metadata ledger) without new grammar.
+  The grammar proposals in [docs/PROPOSALS.md](docs/PROPOSALS.md) (per-plane
+  timing hints, `@asset`, `@include`) remain unimplemented, so the format is 1.0.
+- Each implementation is its own package with its own semver. The Swift package
+  (git tag v2.0.0), `@corvidlabs/threemd`, the `threemd` crate,
+  `@corvidlabs/three-md-element` and the VS Code extension align at **2.0.0**.
+  A bug fix bumps a package's patch; new tooling bumps its minor; neither
+  changes the format version.
 
 ## Tooling shipped on the 1.0 line
 
@@ -659,15 +1045,17 @@ Shipped since this table was first written: the Homebrew tap (`brew install
 CorvidLabs/tap/threemd`), a static docs page (web/docs.html), the social-preview
 image, and cross-browser CI for the demos.
 
-## Later / open questions (SPEC.md section 8)
+## Later / open questions (SPEC.md section 13)
 
 Designed in [docs/PROPOSALS.md](docs/PROPOSALS.md) (non-normative; the 1.0 grammar
-is frozen and nothing there is implemented yet):
+is frozen). General binary storage (SPEC.md section 11) and host-supplied linked
+files (section 12.3) now cover parts of proposals 4 and 3 without new grammar;
+the items below remain open:
 
 - Per-plane transition or timing hints for time and frame axes (confidence 88).
 - Inline model/asset embeds (`@asset src="scene.glb"`) (confidence 70).
 - Transclusion across documents (`@include`) (confidence 52).
-- A binary or compressed container for large scenes (confidence 35).
+- Portable compressed storage beyond Swift's optional Apple LZFSE backend (confidence 35).
 
 ## Out of scope
 
@@ -787,6 +1175,45 @@ to acknowledge a report within a few business days.
 @plane z=6 label="AGENTS" file="AGENTS.md"
 # 3md
 
+## Current 2.0.0 release authority
+
+On 2026-10-06 Leif directly instructed "Finish 2.0.0". This is the current
+release authority. For 2.0.0 only, it supersedes the earlier notes below that
+preparation does not merge, tag, publish or release. The executing agent is
+Claude, and the release change's lifecycle and review records it writes use
+`agent:claude`. The approved SpecSync change
+`finish-threemd-2-0-0-with-a-linux-cli-build-fix-pinned-publish-workflows-and-release-documentation`
+covers the Linux CLI build fix, the pinned npm and crate publish workflows,
+release documentation and verification evidence under
+`docs/evidence/release-2.0.0/`. The release is the `v2.0.0` tag on the merge of
+that work and its GitHub release, whose existing workflows publish the npm
+packages, publish the crate when the `CRATES_IO_TOKEN` secret is configured and
+update the Homebrew formula. Leif's approval of the change scope is not a review
+of its diff.
+
+Limits: do not change branch protections, weaken Trust lifecycle, contract,
+risk or provenance policy, or dispatch release workflows as a check. Do not
+invent signatures, an independent human review or a claim that Leif reviewed a
+diff. The VS Code extension is built locally as a VSIX and is not published to a
+marketplace. Keep these release limits explicit: soft unsigned provenance,
+unverified Windows, emulated-only x86_64 Linux, Swift/Apple-only LZFSE,
+text-only element and VS Code surfaces, and the separate Sculpt adoption.
+Library source, fixtures, format versions and package versions stay unchanged.
+Preserve previous archives, signer policies, the managed block and
+`element/dist/`. Parity hardening (resolver path-work bounds, shared
+limit/cancellation interchange cases, path-naming bundle host errors) belongs to
+a separate post-release PR.
+
+## Linked file authoring preparation
+
+Leif approved direct filename composition on 2026-10-05 with "ok do it": a printable glyph ledger in an ordinary Document refers to local ThreeMD filenames, a pure supplied-byte resolver follows reachable references recursively, and existing self-contained readable/binary profiles preserve the resulting graph. Swift, TypeScript and Rust must agree through all nine interchange pairs. The explicit development host reads a chosen project folder; the library has no filesystem or network I/O. No watcher, remote loading, grammar version or automatic file migration is added.
+
+Root owns definition-first SpecSync 6 records, integration verification, current contracts and feature PR publication. Parallel agents own their assigned language implementations and tests. Actual actor/reviewer claims identify the executing agent and do not claim Leif reviewed an implementation diff, independent human review or a permitted signature. Preserve previous archives, provenance policy and element/dist. Leif will merge the prepared PRs; this scope does not merge, push main, tag, publish or deploy.
+
+## Merge request (2026-10-04, historical)
+
+Leif directly instructed "merge al the prs" on 2026-10-04 after reviewing the binary/composition implementation. This authorizes repairing the reviewed decimal-decoding resource issue, verifying the resulting feature head, completing truthful delegated lifecycle records, and merging the related open PRs through the configured GitHub rules. The actor remains the actual executing agent; no record claims an independent human review, a different agent identity, or an unavailable signature. Existing Trust risk and provenance policy stays unchanged. Main pushes, releases, deployments and changes to branch protections are outside this request.
+
 Markdown with a Z axis. See [README.md](README.md) for the pitch and
 [SPEC.md](SPEC.md) for the format definition. The implementation is the
 `ThreeMD` Swift package.
@@ -805,6 +1232,94 @@ CorvidLabs Swift conventions apply: explicit access control, K&R braces, no
 force unwrap, async/await only, Sendable across concurrency boundaries,
 descriptive generic names, 4-space indentation, 120-column lines. The formatter
 config in `.swift-format` enforces the mechanical parts.
+
+## Binary and composition scope
+
+Use SpecSync 6.0.0 for all lifecycle writers. The local binary is
+`/Users/leif/.cargo/bin/specsync`; the development Fledge pin is 1.7.2 at
+`/opt/homebrew/bin/fledge`. CI verifies the release checksums and pins Trust
+1.2.2 to `bccd89c111d47778c97c5064fb62ab51695e04ea`. PATH can resolve
+`~/.cargo/bin/fledge` 1.8.0 before the pinned `/opt/homebrew/bin/fledge` 1.7.2;
+invoke the pinned path explicitly for release verification.
+
+Check the plugin's actual version. Fledge's installed plugin registry can take
+priority over PATH; when it resolves an older Trust, invoke the isolated
+`fledge-trust` 1.2.2 binary directly with the pinned Fledge on PATH. Do not
+change the global plugin installation merely to run this checkout's gate.
+
+The current scope adds general binary Document storage and self-contained
+named Document references. Preserve the existing 1.0 text grammar, version
+leniency, parser/serializer APIs, and cross-language text conformance. New
+feature code in the original foundation scope was Swift-only. The portable
+follow-up below supersedes that implementation-language limit. Portable
+uncompressed storage is required and Apple LZFSE is an optional conditional
+backend. Named references never perform
+implicit filesystem or network reads. Voxel expansion and rendering are
+application semantics, not ThreeMD behavior.
+
+Leif directly approved this defined scope and full SpecSync 6 SDD. The actor
+recording that definition is `agent:sculpture_exports`, acting under Leif's
+direct authorization. The record does not claim Leif reviewed an implementation
+diff and is not independent human review. Actual tests, implementation review,
+signature/provenance and lifecycle completion remain separately evidenced.
+Preserve the existing Attest trusted keys and reviewer identity restrictions;
+do not identify another agent as `agent:claude` or invent signer evidence.
+
+Root coordinates exact implementation commits, verification and authorized
+feature-branch pull requests. A scope approval does not authorize an unreviewed
+merge, tag, release, deployment or repository visibility change. Do not run the
+shared verification lane concurrently with the coordinator.
+
+## Portable editing release preparation
+
+On 2026-10-05 Leif explicitly requested updating every language supported by
+ThreeMD, not only Swift. The approved follow-up brings the uncompressed binary
+container, self-contained composition, stable identities, exact revisions,
+atomic edits and structured diagnostics to TypeScript and Rust. Shared
+extension fixtures verify all three libraries alongside unchanged legacy
+text conformance. TypeScript and Rust report unsupported LZFSE explicitly.
+Rust pins unicode-normalization 0.1.25 for canonical key equivalence.
+
+Use SpecSync 6 for the new scope only and preserve historical archives.
+Source coverage includes Sources, js/src and rust/src. The derived web bundle
+must pass the existing drift gate; do not build or commit element/dist.
+Actual agent review is not independent human approval or a permitted signature.
+Retain the existing provenance policy and report unsigned degradation honestly.
+
+Leif will merge the prepared PRs. This work does not merge them, push main,
+publish a version, tag a release or deploy. Sculpt remains Swift-only with
+ThreeMD 1.8.1 until separately verified dependency adoption is authorized.
+
+## Mandatory file interchange
+
+Leif directly requested that all supported languages import/export each other's
+files. The new SpecSync 6 scope requires a Swift development coordinator driving
+the public Swift, built TypeScript package in Node, and Rust adapters. Every
+catalog case and all nine writer/reader pairs are mandatory for canonical text,
+portable uncompressed binary and self-contained composition. Identity adoption,
+imported edits and exact revisions are tested on those same files. Existing
+signed-zero normalization remains explicit. LZFSE is still optional Apple-only.
+
+Repair confirmed Unicode trimming, source-key reconstruction and scalar quoting
+defects without changing the frozen grammar or parser signatures. Orchestration
+is Swift; test adapters use the library language. The coordinator may start
+development processes; the ThreeMD library remains pure without file/network
+I/O or process execution. Run the complete lane once through root, including
+JavaScript typechecking/declaration build and Node runtime interchange. Preserve
+archives, old conformance fixtures, signer policies and element/dist. This scope
+does not authorize merging, releasing, pushing main or a Sculpt dependency bump.
+
+## 2.0.0 release preparation authority (2026-10-05, historical)
+
+Superseded for the release itself by the current 2.0.0 release authority above.
+
+On 2026-10-05 Leif directly requested: "Ok can we merge all the PRs and prep 2.0.0? Also can we use all this in sculpt.3md and continue working on sculpt". Root coordinates GitHub merges and the separately verified Sculpt adoption. Earlier notes that Leif would merge later or Sculpt must remain on 1.8.1 describe the earlier scope and do not block this new request.
+
+Root reports the combined feature tree landed through PR61 at main commit `9dfbdb649891a95f27e7590e9e6ddc72b9e58d08`, byte-identical to feature tip `20d1ed4f04333e18c36a50a44bf10e1b0e9b72e6`. Historical approvals and verification pins stay unchanged.
+
+The release-preparation agent owns synchronized 2.0.0 manifests, the Rust root lock version and honest release/capability/migration prose under a new SpecSync 6 definition. Its actor is `agent:codex-threemd-editing`, acting under Leif's direct preparation authority. Agent definition approval is not a claim that Leif reviewed the diff, an independent human review or a permitted signature. Canonical behavior, public APIs, source, fixtures, dependency versions, release workflows, policies, old archives, the managed block and `element/dist/` stay unchanged in this metadata slice. Root owns the complete pinned Trust lane and lifecycle closing.
+
+This request authorizes preparation and configured-gate merges, not a tag, package publication, release, deployment, changed protections, policy weakening or invented signed provenance. Linux/Windows runtime parity and permitted signed attestation remain explicit release gaps. Uncompressed interchange is portable; optional LZFSE stays Swift/Apple only. Sculpt keeps its app-specific legacy schemas unless a separately verified explicit migration is implemented.
 
 <!-- CorvidLabs trust toolchain: BEGIN (managed, do not edit inside) -->
 ## CorvidLabs trust toolchain

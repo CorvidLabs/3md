@@ -7,8 +7,8 @@ These are generic ThreeMD Markdown documents with ASCII illustrations. Placement
 From the repository root, create a new portable bundle:
 
 ```
-swift run threemd-interchange --bundle scene.3md --folder Examples/LinkedVillage --output /tmp/linked-village.3md
+swift run threemd-interchange --bundle scene.3md --folder Examples/LinkedVillage --output linked-village.3md
 ```
 
-Use a new .3mdb destination for portable uncompressed binary. The command never overwrites an existing file. A bundled profile can move away from this folder and import through each library's existing composition codec. Editing the Tree source and resolving again refreshes every linked occurrence; existing bundled copies are independent.
+The output folder must not be a symlink: on macOS `/tmp` is one, and the host refuses it. Use a new .3mdb destination for portable uncompressed binary. The command never overwrites an existing file. A bundled profile can move away from this folder and import through each library's existing composition codec. Editing the Tree source and resolving again refreshes every linked occurrence; existing bundled copies are independent.
 

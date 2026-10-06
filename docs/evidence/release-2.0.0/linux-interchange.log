@@ -1,0 +1,104 @@
+== interchange image=threemd-linux-interchange:local digest=threemd-linux-interchange@sha256:4d8e90bf9c7fb4e5655e0e5a4e043808737aacc56415dedbe4f59d3d3bfad5de
+== uname
+Linux 5ac35a676ef9 7.0.14-linuxkit #1 SMP PREEMPT Fri Sep 18 10:19:32 UTC 2026 aarch64 aarch64 aarch64 GNU/Linux
+== os
+PRETTY_NAME="Ubuntu 24.04.5 LTS"
+== versions
+Swift version 6.3.3 (swift-6.3.3-RELEASE)
+Target: aarch64-unknown-linux-gnu
+v20.20.2
+1.4.2
+rustc 1.95.0 (59807616e 2026-04-14)
+cargo 1.95.0 (f2d3ce0bd 2026-03-21)
+== bun install --frozen-lockfile
+bun install v1.4.2 (744846f84)
+
++ @types/bun@1.3.14
++ typescript@5.9.3
+
+5 packages installed [1.81s]
+EXIT bun-install=0
+== bun run build
+$ bun build ./src/index.ts --outdir ./dist --target node --format esm && tsc -p tsconfig.build.json
+Bundled 6 modules in 27ms
+
+  index.js  96.77 KB  (entry point)
+
+EXIT js-build=0
+== cargo build --example interchange --locked
+    Updating crates.io index
+ Downloading crates ...
+  Downloaded itoa v1.0.18
+  Downloaded serde_core v1.0.228
+  Downloaded tinyvec_macros v0.1.1
+  Downloaded quote v1.0.46
+  Downloaded zmij v1.0.21
+  Downloaded serde_derive v1.0.228
+  Downloaded unicode-ident v1.0.24
+  Downloaded proc-macro2 v1.0.106
+  Downloaded serde v1.0.228
+  Downloaded tinyvec v1.12.0
+  Downloaded memchr v2.8.2
+  Downloaded unicode-normalization v0.1.25
+  Downloaded serde_json v1.0.150
+  Downloaded syn v2.0.118
+   Compiling proc-macro2 v1.0.106
+   Compiling quote v1.0.46
+   Compiling unicode-ident v1.0.24
+   Compiling serde_core v1.0.228
+   Compiling tinyvec_macros v0.1.1
+   Compiling zmij v1.0.21
+   Compiling serde_json v1.0.150
+   Compiling serde v1.0.228
+   Compiling itoa v1.0.18
+   Compiling memchr v2.8.2
+   Compiling tinyvec v1.12.0
+   Compiling unicode-normalization v0.1.25
+   Compiling threemd v2.0.0 (/work/rust)
+   Compiling syn v2.0.118
+   Compiling serde_derive v1.0.228
+warning: the gold linker is deprecated and has known bugs with Rust
+  |
+  = help: consider using LLD or ld from GNU binutils instead
+
+warning: `threemd` (example "interchange") generated 1 warning
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 9.53s
+EXIT cargo-build-example=0
+-rwxr-xr-x 2 root root 15017192 Oct  6 15:05 target/debug/examples/interchange
+== swift run threemd-interchange
+EXIT swift-run-threemd-interchange=0
+/run.sh: line 18: python3: command not found
+elapsed_seconds=
+[25/37] Emitting module ThreeMD
+[26/37] Compiling ThreeMD Document.swift
+[27/37] Compiling ThreeMD DocumentComposition.swift
+[28/37] Compiling ThreeMD ParseError.swift
+[29/37] Compiling ThreeMD Serializer.swift
+[30/37] Compiling ThreeMD DocumentFileCompositionLedger.swift
+[31/37] Compiling ThreeMD DocumentIdentity.swift
+[32/37] Compiling ThreeMD Parser.swift
+[33/37] Compiling ThreeMD DocumentStorageValidation.swift
+[34/38] Wrapping AST for ThreeMD for debugging
+[36/44] Compiling ThreeMDInterop FileBundleHost.swift
+[37/44] Emitting module ThreeMDInterop
+[38/44] Compiling ThreeMDInterop FileCases.swift
+[39/44] Compiling ThreeMDInterop Protocol.swift
+[40/44] Compiling ThreeMDInterop SwiftAdapter.swift
+[41/44] Compiling ThreeMDInterop main.swift
+[42/45] Wrapping AST for ThreeMDInterop for debugging
+[43/45] Write Objects.LinkFileList
+[44/45] Linking threemd-interchange
+Build of product 'threemd-interchange' complete! (7.54s)
+{"cases":479,"compression":"none; optional Apple LZFSE excluded","imports":17451,"pairCounts":{"Rust -> Rust":1939,"Rust -> Swift":1939,"Rust -> TypeScript-Node":1939,"Swift -> Rust":1939,"Swift -> Swift":1939,"Swift -> TypeScript-Node":1939,"TypeScript-Node -> Rust":1939,"TypeScript-Node -> Swift":1939,"TypeScript-Node -> TypeScript-Node":1939},"passed":true,"producerConsumerPairs":9,"schema":"3md-interchange-receipt-1"}
+Interchange evidence: /tmp/3md-interchange-D224B9E8-0D27-4B6E-8A79-38D01094F497
+Rust-consume.input.jsonl
+Rust-consume.output.jsonl
+Rust-consume.stderr.txt
+Rust-produce.input.jsonl
+Rust-produce.output.jsonl
+Rust-produce.stderr.txt
+Swift-bounds.input.jsonl
+Swift-bounds.output.jsonl
+Swift-bounds.stderr.txt
+Swift-consume.input.jsonl
+DOCKER-EXIT interchange=0

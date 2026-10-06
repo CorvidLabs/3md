@@ -1,6 +1,6 @@
 # Linked file composition
 
-Status: ThreeMD 2.0 preparation, not a released feature.
+Status: released in ThreeMD 2.0.0 (2026-10-06) for Swift, TypeScript and Rust. This document is the normative contract referenced by SPEC.md section 12.3.
 
 ## Public contract
 An ordinary Document MAY have a metadata string named `3md-files`. Its value is a strict JSON object mapping single printable ASCII glyphs U+0021 through U+007E to relative filenames: `{"1":"models/tree.3md","2":"castle.3md"}`. Glyph placement belongs to the host. Generic Markdown, version, axes and existing document/plane identities remain valid.

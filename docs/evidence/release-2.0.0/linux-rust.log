@@ -1,0 +1,148 @@
+== rust image=rust:1.95-bookworm digest=rust@sha256:6258907abe69656e41cd992e0b705cdcfabcbbe3db374f92ed2d47121282d4a1
+== uname
+Linux 5cebee3184d9 7.0.14-linuxkit #1 SMP PREEMPT Fri Sep 18 10:19:32 UTC 2026 aarch64 GNU/Linux
+== os
+PRETTY_NAME="Debian GNU/Linux 12 (bookworm)"
+NAME="Debian GNU/Linux"
+VERSION_ID="12"
+== versions
+rustc 1.95.0 (59807616e 2026-04-14)
+cargo 1.95.0 (f2d3ce0bd 2026-03-21)
+== cargo test --all-targets --locked
+    Updating crates.io index
+ Downloading crates ...
+  Downloaded tinyvec v1.12.0
+  Downloaded tinyvec_macros v0.1.1
+  Downloaded itoa v1.0.18
+  Downloaded serde_derive v1.0.228
+  Downloaded quote v1.0.46
+  Downloaded zmij v1.0.21
+  Downloaded unicode-ident v1.0.24
+  Downloaded serde_core v1.0.228
+  Downloaded serde v1.0.228
+  Downloaded proc-macro2 v1.0.106
+  Downloaded memchr v2.8.2
+  Downloaded unicode-normalization v0.1.25
+  Downloaded serde_json v1.0.150
+  Downloaded syn v2.0.118
+   Compiling proc-macro2 v1.0.106
+   Compiling quote v1.0.46
+   Compiling unicode-ident v1.0.24
+   Compiling serde_core v1.0.228
+   Compiling zmij v1.0.21
+   Compiling tinyvec_macros v0.1.1
+   Compiling serde v1.0.228
+   Compiling serde_json v1.0.150
+   Compiling itoa v1.0.18
+   Compiling memchr v2.8.2
+   Compiling tinyvec v1.12.0
+   Compiling unicode-normalization v0.1.25
+   Compiling threemd v2.0.0 (/work/rust)
+   Compiling syn v2.0.118
+   Compiling serde_derive v1.0.228
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 25.12s
+     Running unittests src/lib.rs (target/debug/deps/threemd-b87fd152705ecb64)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/conformance.rs (target/debug/deps/conformance-20736162927c2565)
+
+running 1 test
+test conformance_vectors_pass ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.04s
+
+     Running tests/editing.rs (target/debug/deps/editing-d0837c12519c26ff)
+
+running 8 tests
+test direct_btree_maps_reject_ambiguous_canonically_equivalent_keys ... ok
+test all_document_operations_preserve_source_order_and_header_fields ... ok
+test operation_payload_and_final_document_policies_are_enforced ... ok
+test document_operation_failures_are_structured_and_do_not_mutate_input ... ok
+test identity_adoption_is_explicit_and_scoped ... ok
+test graph_revision_roundtrip_diagnostics_and_cancellation ... ok
+test all_composition_operations_validate_the_final_graph_atomically ... ok
+test graph_failures_validate_counts_identity_and_reference_existence ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/extensions.rs (target/debug/deps/extensions-e8939d939f3ab032)
+
+running 13 tests
+test bounded_diagnostics_preserve_real_parser_lines_and_legacy_ids ... ok
+test binary_header_fields_and_corruption_are_rejected ... ok
+test canonical_decimal_ties_use_nearest_even_shortest_spelling ... ok
+test graph_validates_unused_entries_cycles_and_resource_limits ... ok
+test storage_resource_policies_and_faithful_value_validation ... ok
+test composition_json_is_strict_and_rejects_decoded_duplicate_keys ... ok
+test cancellation_propagates_without_publishing_values ... ok
+test swift_numeric_vectors_match_exact_storage_spelling ... ok
+test exact_utf8_revision_reopen_and_forged_snapshot_validation ... ok
+test swift_unicode_key_order_and_source_collision_semantics_match ... ok
+test original_extension_artifacts_and_lzfse_unavailability ... ok
+test swift_document_and_composition_goldens_are_byte_identical ... ok
+test swift_adoption_transactions_and_failures_match_semantics ... ok
+
+test result: ok. 13 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.04s
+
+     Running tests/file_composition.rs (target/debug/deps/file_composition-f378cfe0a68c9e16)
+
+running 14 tests
+test outer_recognition_preserves_child_byte_and_line_policy_precedence_over_planes ... ok
+test ledger_is_strict_json_with_ascii_glyph_validation_before_duplicate_checks ... ok
+test outer_profile_records_are_independent_of_child_record_policy ... ok
+test missing_files_and_file_cycles_include_ledgers_in_unused_bundle_entries ... ok
+test disconnected_embedded_ledgers_use_actual_entry_depth_and_repeated_cached_files ... ok
+test unreachable_content_is_ignored_but_every_supplied_path_is_validated ... ok
+test nested_relative_paths_keep_duplicate_basenames_and_use_scalar_order ... ok
+test final_depth_checks_include_cached_dependencies_and_cancelled_operations_are_atomic ... ok
+test repeated_cached_files_validate_final_depth_and_missing_discovery_precedence ... ok
+test supplied_and_resolved_policies_are_checked_before_returning_a_bundle ... ok
+test repeated_links_are_deterministic_and_preserve_the_ordinary_document ... ok
+test project_paths_have_explicit_rules_and_bounded_standalone_work ... ok
+test binary_children_and_nested_bundles_preserve_unused_entries_and_reference_ids ... ok
+test fixed_file_discovery_ceiling_bounds_disconnected_chains ... ok
+
+test result: ok. 14 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.13s
+
+     Running tests/interchange.rs (target/debug/deps/interchange-0a95d3b87ea273ee)
+
+running 5 tests
+test bounded_parse_keeps_limits_and_explicit_cancellation ... ok
+test source_unicode_aliases_keep_first_spelling_and_last_value_in_both_parsers ... ok
+test legacy_serializer_preserves_quoted_apostrophes_and_boundary_whitespace ... ok
+test raw_and_bounded_parsers_share_foundation_horizontal_whitespace ... ok
+test large_unique_plane_sets_and_numeric_duplicate_equality_are_preserved ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.59s
+
+     Running unittests examples/interchange.rs (target/debug/examples/interchange-508c6b61d36cac52)
+
+running 8 tests
+test tests::hex_is_exact_and_rejects_uppercase_or_odd_input ... ok
+test tests::document_adapter_edits_and_rejects_stale_patch_for_both_file_formats ... ok
+test tests::malformed_protocol_keys_numbers_and_depth_precede_source_count ... ok
+test tests::supplied_file_adapter_emits_reopenable_composition_outputs ... ok
+test tests::supplied_file_adapter_rejects_malformed_protocol_and_maps_core_errors ... ok
+test tests::composition_adapter_preserves_references_and_binary_parity ... ok
+test tests::oversized_requests_are_consumed_and_responses_are_atomic ... ok
+test tests::supplied_file_count_precedes_source_shape_validation_but_not_top_level_validation ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.12s
+
+EXIT cargo-test-all-targets=0
+== cargo test --doc --locked
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.12s
+   Doc-tests threemd
+
+running 3 tests
+test src/lib.rs - ParseError::code (line 173) ... ok
+test src/lib.rs - axis (line 62) ... ok
+test src/lib.rs - (line 12) ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.32s
+
+EXIT cargo-test-doc=0
+DOCKER-EXIT rust=0

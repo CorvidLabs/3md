@@ -22,15 +22,16 @@ or a language server.
 
 ## Install from a `.vsix`
 
-Build the prepared 2.0.0 package (see below), then:
+Build the 2.0.0 package (see below), then:
 
 ```sh
 code --install-extension threemd-2.0.0.vsix
 ```
 
-This version alignment does not add binary/composition editing, a preview or a
-language server. No Marketplace publication or prebuilt 2.0.0 VSIX is claimed.
-See the [release guide](../../docs/RELEASE-2.0.0.md).
+This version alignment does not add binary, composition or linked-file editing,
+a preview or a language server. The extension is distributed as a locally built
+VSIX; it is not published to the VS Code Marketplace or Open VSX. See the
+[release guide](../../docs/RELEASE-2.0.0.md).
 
 ## Development
 

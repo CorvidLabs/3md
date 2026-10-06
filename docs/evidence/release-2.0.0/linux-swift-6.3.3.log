@@ -1,0 +1,702 @@
+== swift-6.3.3 image=swift:6.3-noble digest=swift@sha256:cd45c27b3abc42310c33cfaf3008b18156cbdc9187834c9617e8f43a26d2675c
+== uname
+Linux 45a706fdc280 7.0.14-linuxkit #1 SMP PREEMPT Fri Sep 18 10:19:32 UTC 2026 aarch64 aarch64 aarch64 GNU/Linux
+== os
+PRETTY_NAME="Ubuntu 24.04.5 LTS"
+NAME="Ubuntu"
+VERSION_ID="24.04"
+== versions
+Swift version 6.3.3 (swift-6.3.3-RELEASE)
+Target: aarch64-unknown-linux-gnu
+== swift build
+Building for debugging...
+[0/11] Write sources
+[3/11] Write swift-version-24593BA9C3E375BF.txt
+[5/40] Compiling ThreeMD FiniteDecimal.swift
+[6/41] Compiling ThreeMD MarkdownRenderer.swift
+[7/41] Compiling ThreeMD Double+ThreeMD.swift
+[8/41] Compiling ThreeMD ThreeMDAnchor.swift
+[9/41] Compiling ThreeMD Serializer.swift
+[10/41] Compiling ThreeMD CrossPlaneLinkEdge.swift
+[11/41] Compiling ThreeMD Document+Links.swift
+[12/41] Compiling ThreeMD DocumentStorageCompression.swift
+[13/41] Compiling ThreeMD DocumentStorageValidation.swift
+[14/41] Compiling ThreeMD Plane.swift
+[15/41] Compiling ThreeMD ParseError.swift
+[16/41] Compiling ThreeMD HTMLRenderer.swift
+[17/41] Emitting module ThreeMD
+[18/41] Compiling ThreeMD Axis.swift
+[19/41] Compiling ThreeMD CrossPlaneLink.swift
+[20/41] Compiling ThreeMD DocumentCompositionCodec.swift
+[21/41] Compiling ThreeMD DocumentCompositionEditing.swift
+[22/41] Compiling ThreeMD Document.swift
+[23/41] Compiling ThreeMD DocumentComposition.swift
+[24/41] Compiling ThreeMD DocumentCompositionJSON.swift
+[25/41] Compiling ThreeMD DocumentCompositionLimits.swift
+[26/41] Compiling ThreeMD DocumentFileCompositionLedger.swift
+[27/41] Compiling ThreeMD DocumentIdentity.swift
+[28/41] Compiling ThreeMD DocumentStorage.swift
+[29/41] Compiling ThreeMD DocumentStorageCodec.swift
+[30/41] Compiling ThreeMD DocumentDiagnostics.swift
+[31/41] Compiling ThreeMD DocumentEditing.swift
+[32/41] Compiling ThreeMD DocumentEditingTypes.swift
+[33/41] Compiling ThreeMD DocumentFileComposition.swift
+[34/41] Compiling ThreeMD Parser.swift
+[35/42] Wrapping AST for ThreeMD for debugging
+[37/50] Compiling ThreeMDInterop SwiftAdapter.swift
+[38/50] Compiling ThreeMDCLI main.swift
+[39/50] Emitting module ThreeMDCLI
+[40/50] Emitting module ThreeMDInterop
+[41/50] Compiling ThreeMDInterop FileBundleHost.swift
+[42/51] Compiling ThreeMDInterop FileCases.swift
+[43/51] Compiling ThreeMDInterop Protocol.swift
+[44/51] Wrapping AST for ThreeMDCLI for debugging
+[45/51] Write Objects.LinkFileList
+[46/51] Linking threemd
+[48/51] Compiling ThreeMDInterop main.swift
+[49/52] Wrapping AST for ThreeMDInterop for debugging
+[50/52] Write Objects.LinkFileList
+[51/52] Linking threemd-interchange
+Build complete! (16.04s)
+EXIT swift-build=0
+== swift test
+[0/1] Planning build
+Building for debugging...
+[0/14] Write sources
+[1/14] Write swift-version-24593BA9C3E375BF.txt
+[3/32] Compiling ThreeMDTests ParseErrorMetadataTests.swift
+[4/33] Compiling ThreeMDTests MarkdownRendererTests.swift
+[5/33] Compiling ThreeMDTests HTMLRendererTests.swift
+[6/33] Compiling ThreeMDTests DocumentStorageCompressionTests.swift
+[7/33] Compiling ThreeMDTests DocumentStorageDecimalTests.swift
+[8/33] Compiling ThreeMDTests DocumentStorageBoundsTests.swift
+[9/33] Compiling ThreeMDTests DocumentIdentityTests.swift
+[10/33] Compiling ThreeMDTests DocumentCompositionTests.swift
+[11/33] Compiling ThreeMDTests DocumentDiagnosticTests.swift
+[12/33] Compiling ThreeMDTests DocumentCompositionCodecTests.swift
+[13/33] Compiling ThreeMDTests CrossPlaneLinkTests.swift
+[14/33] Compiling ThreeMDTests CrossPlaneLinkHTMLTests.swift
+[15/33] Emitting module ThreeMDTests
+[16/33] Compiling ThreeMDTests CompositionEditingTests.swift
+[17/33] Compiling ThreeMDTests ConformanceTests.swift
+[18/33] Compiling ThreeMDTests DocumentEditingTests.swift
+[19/33] Compiling ThreeMDTests DocumentFileCompositionTests.swift
+[20/33] Compiling ThreeMDTests ParserTests.swift
+[21/33] Compiling ThreeMDTests InterchangeConformanceTests.swift
+[22/33] Compiling ThreeMDTests ParserNumericTests.swift
+[23/33] Compiling ThreeMDTests DocumentStorageTests.swift
+[24/33] Compiling ThreeMDTests ExtensionConformanceTests.swift
+[25/34] Wrapping AST for ThreeMDTests for debugging
+[26/34] /work/.build/aarch64-unknown-linux-gnu/debug/3mdPackageDiscoveredTests.derived/all-discovered-tests.swift
+[27/34] Write sources
+[29/37] Compiling _mdPackageDiscoveredTests all-discovered-tests.swift
+[30/37] Compiling _mdPackageDiscoveredTests ThreeMDTests.swift
+[31/37] Emitting module _mdPackageDiscoveredTests
+[32/38] /work/.build/aarch64-unknown-linux-gnu/debug/3mdPackageTests.derived/runner.swift
+[33/38] Write sources
+[34/38] Wrapping AST for 3mdPackageDiscoveredTests for debugging
+[36/40] Compiling _mdPackageTests runner.swift
+[37/40] Emitting module _mdPackageTests
+[38/41] Wrapping AST for 3mdPackageTests for debugging
+[39/41] Write Objects.LinkFileList
+[40/41] Linking 3mdPackageTests.xctest
+Build complete! (8.18s)
+Test Suite 'All tests' started at 2026-10-06 15:05:32.696
+Test Suite 'debug.xctest' started at 2026-10-06 15:05:32.709
+Test Suite 'CompositionEditingTests' started at 2026-10-06 15:05:32.709
+Test Case 'CompositionEditingTests.testCancelledGraphTransactionPropagatesCancellation' started at 2026-10-06 15:05:32.709
+Test Case 'CompositionEditingTests.testCancelledGraphTransactionPropagatesCancellation' passed (0.005 seconds)
+Test Case 'CompositionEditingTests.testEntryReplacementKeepsIDAndCanEditSharedDefinitionWithoutFlattening' started at 2026-10-06 15:05:32.714
+Test Case 'CompositionEditingTests.testEntryReplacementKeepsIDAndCanEditSharedDefinitionWithoutFlattening' passed (0.004 seconds)
+Test Case 'CompositionEditingTests.testFinalGraphValidationAllowsForwardReferenceInsertionAndRootReplacement' started at 2026-10-06 15:05:32.718
+Test Case 'CompositionEditingTests.testFinalGraphValidationAllowsForwardReferenceInsertionAndRootReplacement' passed (0.004 seconds)
+Test Case 'CompositionEditingTests.testGraphRevisionIncludesReferenceOrderAttributesAndRootAndSurvivesReopen' started at 2026-10-06 15:05:32.721
+Test Case 'CompositionEditingTests.testGraphRevisionIncludesReferenceOrderAttributesAndRootAndSurvivesReopen' passed (0.011 seconds)
+Test Case 'CompositionEditingTests.testGraphSnapshotsAndPatchesAreCodableAndDecodedGraphsStillValidate' started at 2026-10-06 15:05:32.732
+Test Case 'CompositionEditingTests.testGraphSnapshotsAndPatchesAreCodableAndDecodedGraphsStillValidate' passed (0.004 seconds)
+Test Case 'CompositionEditingTests.testGraphTransactionBoundsOperationsPayloadAndDefinitions' started at 2026-10-06 15:05:32.737
+Test Case 'CompositionEditingTests.testGraphTransactionBoundsOperationsPayloadAndDefinitions' passed (0.003 seconds)
+Test Case 'CompositionEditingTests.testMissingTargetAndCycleFailuresHaveGraphPathsWithoutPartialPublication' started at 2026-10-06 15:05:32.740
+Test Case 'CompositionEditingTests.testMissingTargetAndCycleFailuresHaveGraphPathsWithoutPartialPublication' passed (0.003 seconds)
+Test Case 'CompositionEditingTests.testReferenceIdentityCannotChangeOrBeDuplicatedWithinOwner' started at 2026-10-06 15:05:32.743
+Test Case 'CompositionEditingTests.testReferenceIdentityCannotChangeOrBeDuplicatedWithinOwner' passed (0.005 seconds)
+Test Case 'CompositionEditingTests.testReferenceRetargetMoveAndRemoveKeepInstanceIdentityAndOpaqueAttributes' started at 2026-10-06 15:05:32.748
+Test Case 'CompositionEditingTests.testReferenceRetargetMoveAndRemoveKeepInstanceIdentityAndOpaqueAttributes' passed (0.003 seconds)
+Test Case 'CompositionEditingTests.testRemovingAndRewritingReferencesValidatesOnlyCompleteFinalGraph' started at 2026-10-06 15:05:32.751
+Test Case 'CompositionEditingTests.testRemovingAndRewritingReferencesValidatesOnlyCompleteFinalGraph' passed (0.003 seconds)
+Test Suite 'CompositionEditingTests' passed at 2026-10-06 15:05:32.754
+	 Executed 10 tests, with 0 failures (0 unexpected) in 0.044 (0.044) seconds
+Test Suite 'ConformanceTests' started at 2026-10-06 15:05:32.754
+Test Case 'ConformanceTests.testConformanceVectors' started at 2026-10-06 15:05:32.754
+Test Case 'ConformanceTests.testConformanceVectors' passed (0.034 seconds)
+Test Suite 'ConformanceTests' passed at 2026-10-06 15:05:32.787
+	 Executed 1 test, with 0 failures (0 unexpected) in 0.034 (0.034) seconds
+Test Suite 'CrossPlaneLinkHTMLTests' started at 2026-10-06 15:05:32.787
+Test Case 'CrossPlaneLinkHTMLTests.testAnchorHrefMatchesSectionId' started at 2026-10-06 15:05:32.787
+Test Case 'CrossPlaneLinkHTMLTests.testAnchorHrefMatchesSectionId' passed (0.001 seconds)
+Test Case 'CrossPlaneLinkHTMLTests.testCrossPlaneAnchorDecimalTarget' started at 2026-10-06 15:05:32.788
+Test Case 'CrossPlaneLinkHTMLTests.testCrossPlaneAnchorDecimalTarget' passed (0.0 seconds)
+Test Case 'CrossPlaneLinkHTMLTests.testCrossPlaneAnchorDefaultTextIsEscaped' started at 2026-10-06 15:05:32.789
+Test Case 'CrossPlaneLinkHTMLTests.testCrossPlaneAnchorDefaultTextIsEscaped' passed (0.104 seconds)
+Test Case 'CrossPlaneLinkHTMLTests.testCrossPlaneAnchorEmptyText' started at 2026-10-06 15:05:32.892
+Test Case 'CrossPlaneLinkHTMLTests.testCrossPlaneAnchorEmptyText' passed (0.0 seconds)
+Test Case 'CrossPlaneLinkHTMLTests.testCrossPlaneAnchorNegativeTarget' started at 2026-10-06 15:05:32.893
+Test Case 'CrossPlaneLinkHTMLTests.testCrossPlaneAnchorNegativeTarget' passed (0.0 seconds)
+Test Case 'CrossPlaneLinkHTMLTests.testCrossPlaneAnchorNoText' started at 2026-10-06 15:05:32.893
+Test Case 'CrossPlaneLinkHTMLTests.testCrossPlaneAnchorNoText' passed (0.0 seconds)
+Test Case 'CrossPlaneLinkHTMLTests.testCrossPlaneAnchorScientificNotation' started at 2026-10-06 15:05:32.894
+Test Case 'CrossPlaneLinkHTMLTests.testCrossPlaneAnchorScientificNotation' passed (0.0 seconds)
+Test Case 'CrossPlaneLinkHTMLTests.testCrossPlaneAnchorTextIsEscaped' started at 2026-10-06 15:05:32.894
+Test Case 'CrossPlaneLinkHTMLTests.testCrossPlaneAnchorTextIsEscaped' passed (0.0 seconds)
+Test Case 'CrossPlaneLinkHTMLTests.testCrossPlaneAnchorWithText' started at 2026-10-06 15:05:32.894
+Test Case 'CrossPlaneLinkHTMLTests.testCrossPlaneAnchorWithText' passed (0.0 seconds)
+Test Case 'CrossPlaneLinkHTMLTests.testHexTargetNotRenderedAsAnchor' started at 2026-10-06 15:05:32.895
+Test Case 'CrossPlaneLinkHTMLTests.testHexTargetNotRenderedAsAnchor' passed (0.0 seconds)
+Test Case 'CrossPlaneLinkHTMLTests.testInfTargetNotRenderedAsAnchor' started at 2026-10-06 15:05:32.895
+Test Case 'CrossPlaneLinkHTMLTests.testInfTargetNotRenderedAsAnchor' passed (0.0 seconds)
+Test Case 'CrossPlaneLinkHTMLTests.testInvalidTargetNotRenderedAsAnchor' started at 2026-10-06 15:05:32.895
+Test Case 'CrossPlaneLinkHTMLTests.testInvalidTargetNotRenderedAsAnchor' passed (0.0 seconds)
+Test Case 'CrossPlaneLinkHTMLTests.testPublicAnchorHelpersMatchRendererIds' started at 2026-10-06 15:05:32.896
+Test Case 'CrossPlaneLinkHTMLTests.testPublicAnchorHelpersMatchRendererIds' passed (0.0 seconds)
+Test Case 'CrossPlaneLinkHTMLTests.testSectionHasIdAttribute' started at 2026-10-06 15:05:32.896
+Test Case 'CrossPlaneLinkHTMLTests.testSectionHasIdAttribute' passed (0.0 seconds)
+Test Case 'CrossPlaneLinkHTMLTests.testSectionIdForDecimalZ' started at 2026-10-06 15:05:32.897
+Test Case 'CrossPlaneLinkHTMLTests.testSectionIdForDecimalZ' passed (0.001 seconds)
+Test Case 'CrossPlaneLinkHTMLTests.testSectionIdForNegativeZ' started at 2026-10-06 15:05:32.897
+Test Case 'CrossPlaneLinkHTMLTests.testSectionIdForNegativeZ' passed (0.0 seconds)
+Test Case 'CrossPlaneLinkHTMLTests.testSectionIdPrecedesDataZ' started at 2026-10-06 15:05:32.898
+Test Case 'CrossPlaneLinkHTMLTests.testSectionIdPrecedesDataZ' passed (0.001 seconds)
+Test Suite 'CrossPlaneLinkHTMLTests' passed at 2026-10-06 15:05:32.898
+	 Executed 17 tests, with 0 failures (0 unexpected) in 0.11 (0.11) seconds
+Test Suite 'CrossPlaneLinkTests' started at 2026-10-06 15:05:32.898
+Test Case 'CrossPlaneLinkTests.testBasicLinkNoText' started at 2026-10-06 15:05:32.898
+Test Case 'CrossPlaneLinkTests.testBasicLinkNoText' passed (0.0 seconds)
+Test Case 'CrossPlaneLinkTests.testDanglingLinkTargetExistsFalse' started at 2026-10-06 15:05:32.899
+Test Case 'CrossPlaneLinkTests.testDanglingLinkTargetExistsFalse' passed (0.0 seconds)
+Test Case 'CrossPlaneLinkTests.testDanglingLinksFiltersOnlyMissingTargets' started at 2026-10-06 15:05:32.899
+Test Case 'CrossPlaneLinkTests.testDanglingLinksFiltersOnlyMissingTargets' passed (0.0 seconds)
+Test Case 'CrossPlaneLinkTests.testDecimalTarget' started at 2026-10-06 15:05:32.899
+Test Case 'CrossPlaneLinkTests.testDecimalTarget' passed (0.0 seconds)
+Test Case 'CrossPlaneLinkTests.testDocumentWithNoLinksReturnsEmpty' started at 2026-10-06 15:05:32.900
+Test Case 'CrossPlaneLinkTests.testDocumentWithNoLinksReturnsEmpty' passed (0.0 seconds)
+Test Case 'CrossPlaneLinkTests.testHexTargetIgnored' started at 2026-10-06 15:05:32.900
+Test Case 'CrossPlaneLinkTests.testHexTargetIgnored' passed (0.0 seconds)
+Test Case 'CrossPlaneLinkTests.testLinkGraphCollapsesRepeatedEdgesInEncounterOrder' started at 2026-10-06 15:05:32.900
+Test Case 'CrossPlaneLinkTests.testLinkGraphCollapsesRepeatedEdgesInEncounterOrder' passed (0.001 seconds)
+Test Case 'CrossPlaneLinkTests.testLinkGraphKeepsDanglingEdgeStatus' started at 2026-10-06 15:05:32.901
+Test Case 'CrossPlaneLinkTests.testLinkGraphKeepsDanglingEdgeStatus' passed (0.0 seconds)
+Test Case 'CrossPlaneLinkTests.testLinkWithEmptyText' started at 2026-10-06 15:05:32.901
+Test Case 'CrossPlaneLinkTests.testLinkWithEmptyText' passed (0.001 seconds)
+Test Case 'CrossPlaneLinkTests.testLinkWithText' started at 2026-10-06 15:05:32.902
+Test Case 'CrossPlaneLinkTests.testLinkWithText' passed (0.0 seconds)
+Test Case 'CrossPlaneLinkTests.testLinksAcrossMultiplePlanesInSourceOrder' started at 2026-10-06 15:05:32.902
+Test Case 'CrossPlaneLinkTests.testLinksAcrossMultiplePlanesInSourceOrder' passed (0.101 seconds)
+Test Case 'CrossPlaneLinkTests.testMultipleLinksLeftToRight' started at 2026-10-06 15:05:33.003
+Test Case 'CrossPlaneLinkTests.testMultipleLinksLeftToRight' passed (0.101 seconds)
+Test Case 'CrossPlaneLinkTests.testNanTargetIgnored' started at 2026-10-06 15:05:33.104
+Test Case 'CrossPlaneLinkTests.testNanTargetIgnored' passed (0.0 seconds)
+Test Case 'CrossPlaneLinkTests.testNegativeDecimalTarget' started at 2026-10-06 15:05:33.105
+Test Case 'CrossPlaneLinkTests.testNegativeDecimalTarget' passed (0.0 seconds)
+Test Case 'CrossPlaneLinkTests.testNonDecimalTargetIgnored' started at 2026-10-06 15:05:33.105
+Test Case 'CrossPlaneLinkTests.testNonDecimalTargetIgnored' passed (0.0 seconds)
+Test Case 'CrossPlaneLinkTests.testOrdinaryMarkdownLinkNotExtracted' started at 2026-10-06 15:05:33.105
+Test Case 'CrossPlaneLinkTests.testOrdinaryMarkdownLinkNotExtracted' passed (0.0 seconds)
+Test Case 'CrossPlaneLinkTests.testScientificNotationTarget' started at 2026-10-06 15:05:33.106
+Test Case 'CrossPlaneLinkTests.testScientificNotationTarget' passed (0.0 seconds)
+Test Suite 'CrossPlaneLinkTests' passed at 2026-10-06 15:05:33.106
+	 Executed 17 tests, with 0 failures (0 unexpected) in 0.207 (0.207) seconds
+Test Suite 'DocumentCompositionCodecTests' started at 2026-10-06 15:05:33.106
+Test Case 'DocumentCompositionCodecTests.testCanonicalProfileStoresSharedDefinitionOnceAndIsOrderIndependent' started at 2026-10-06 15:05:33.106
+Test Case 'DocumentCompositionCodecTests.testCanonicalProfileStoresSharedDefinitionOnceAndIsOrderIndependent' passed (0.006 seconds)
+Test Case 'DocumentCompositionCodecTests.testCheckedInGrovePreservesItsSingleCanopyDefinitionAndBindingAcrossFormats' started at 2026-10-06 15:05:33.112
+Test Case 'DocumentCompositionCodecTests.testCheckedInGrovePreservesItsSingleCanopyDefinitionAndBindingAcrossFormats' passed (0.01 seconds)
+Test Case 'DocumentCompositionCodecTests.testJSONAllocationPreflightRejectsExcessiveArraysNestingAndTrailingBytes' started at 2026-10-06 15:05:33.122
+Test Case 'DocumentCompositionCodecTests.testJSONAllocationPreflightRejectsExcessiveArraysNestingAndTrailingBytes' passed (0.001 seconds)
+Test Case 'DocumentCompositionCodecTests.testProfileAndDefinitionBytePoliciesBoundBothReaderAndWriter' started at 2026-10-06 15:05:33.123
+Test Case 'DocumentCompositionCodecTests.testProfileAndDefinitionBytePoliciesBoundBothReaderAndWriter' passed (0.002 seconds)
+Test Case 'DocumentCompositionCodecTests.testProfileUsesGenericPortableBinaryEnvelopeWithoutAnotherFormat' started at 2026-10-06 15:05:33.126
+Test Case 'DocumentCompositionCodecTests.testProfileUsesGenericPortableBinaryEnvelopeWithoutAnotherFormat' passed (0.005 seconds)
+Test Case 'DocumentCompositionCodecTests.testReaderRejectsDuplicateDefinitionIDsAndUnusedMissingReferences' started at 2026-10-06 15:05:33.130
+Test Case 'DocumentCompositionCodecTests.testReaderRejectsDuplicateDefinitionIDsAndUnusedMissingReferences' passed (0.004 seconds)
+Test Case 'DocumentCompositionCodecTests.testReaderRejectsDuplicateJSONKeysIncludingEscapedSpelling' started at 2026-10-06 15:05:33.134
+Test Case 'DocumentCompositionCodecTests.testReaderRejectsDuplicateJSONKeysIncludingEscapedSpelling' passed (0.001 seconds)
+Test Case 'DocumentCompositionCodecTests.testReaderRejectsInvalidUnusedDefinitionsAndDoesNotLoadSourcePaths' started at 2026-10-06 15:05:33.135
+Test Case 'DocumentCompositionCodecTests.testReaderRejectsInvalidUnusedDefinitionsAndDoesNotLoadSourcePaths' passed (0.002 seconds)
+Test Case 'DocumentCompositionCodecTests.testReaderRejectsUnknownManifestEntryAndReferenceKeys' started at 2026-10-06 15:05:33.137
+Test Case 'DocumentCompositionCodecTests.testReaderRejectsUnknownManifestEntryAndReferenceKeys' passed (0.001 seconds)
+Test Case 'DocumentCompositionCodecTests.testReaderRequiresExactEnvelopeAndVersionedManifest' started at 2026-10-06 15:05:33.138
+Test Case 'DocumentCompositionCodecTests.testReaderRequiresExactEnvelopeAndVersionedManifest' passed (0.001 seconds)
+Test Case 'DocumentCompositionCodecTests.testReferenceAttributesPreserveControlsQuotesAndUnicodeWithoutBreakingFences' started at 2026-10-06 15:05:33.139
+Test Case 'DocumentCompositionCodecTests.testReferenceAttributesPreserveControlsQuotesAndUnicodeWithoutBreakingFences' passed (0.002 seconds)
+Test Suite 'DocumentCompositionCodecTests' passed at 2026-10-06 15:05:33.141
+	 Executed 11 tests, with 0 failures (0 unexpected) in 0.035 (0.035) seconds
+Test Suite 'DocumentCompositionTests' started at 2026-10-06 15:05:33.141
+Test Case 'DocumentCompositionTests.testCanceledConstructionAndStorageStayDistinctFromValidationErrors' started at 2026-10-06 15:05:33.141
+Test Case 'DocumentCompositionTests.testCanceledConstructionAndStorageStayDistinctFromValidationErrors' passed (0.002 seconds)
+Test Case 'DocumentCompositionTests.testCyclesAreRejectedInRootAndUnusedNodes' started at 2026-10-06 15:05:33.143
+Test Case 'DocumentCompositionTests.testCyclesAreRejectedInRootAndUnusedNodes' passed (0.001 seconds)
+Test Case 'DocumentCompositionTests.testDefinitionDepthAndReferenceBudgetsHaveExactBoundarySemantics' started at 2026-10-06 15:05:33.144
+Test Case 'DocumentCompositionTests.testDefinitionDepthAndReferenceBudgetsHaveExactBoundarySemantics' passed (0.001 seconds)
+Test Case 'DocumentCompositionTests.testDefinitionDocumentPolicyIsIndependentOfCompositionPolicy' started at 2026-10-06 15:05:33.145
+Test Case 'DocumentCompositionTests.testDefinitionDocumentPolicyIsIndependentOfCompositionPolicy' passed (0.0 seconds)
+Test Case 'DocumentCompositionTests.testEveryDefinitionIsValidatedEvenWhenUnused' started at 2026-10-06 15:05:33.146
+Test Case 'DocumentCompositionTests.testEveryDefinitionIsValidatedEvenWhenUnused' passed (0.0 seconds)
+Test Case 'DocumentCompositionTests.testIDsAreCaseSensitiveAndNeverFileOrNetworkLocations' started at 2026-10-06 15:05:33.146
+Test Case 'DocumentCompositionTests.testIDsAreCaseSensitiveAndNeverFileOrNetworkLocations' passed (0.0 seconds)
+Test Case 'DocumentCompositionTests.testMissingRootMissingTargetAndDuplicateDefinitionsAreRejected' started at 2026-10-06 15:05:33.147
+Test Case 'DocumentCompositionTests.testMissingRootMissingTargetAndDuplicateDefinitionsAreRejected' passed (0.001 seconds)
+Test Case 'DocumentCompositionTests.testOccurrenceBudgetCountsSharedReferencesWithoutMaterializingThem' started at 2026-10-06 15:05:33.147
+Test Case 'DocumentCompositionTests.testOccurrenceBudgetCountsSharedReferencesWithoutMaterializingThem' passed (0.002 seconds)
+Test Case 'DocumentCompositionTests.testReferenceAttributesAreOpaqueUnicodeDataWithCountAndByteLimits' started at 2026-10-06 15:05:33.150
+Test Case 'DocumentCompositionTests.testReferenceAttributesAreOpaqueUnicodeDataWithCountAndByteLimits' passed (0.002 seconds)
+Test Case 'DocumentCompositionTests.testResourceLimitsCannotBeRaisedBeyondAbsoluteBounds' started at 2026-10-06 15:05:33.152
+Test Case 'DocumentCompositionTests.testResourceLimitsCannotBeRaisedBeyondAbsoluteBounds' passed (0.0 seconds)
+Test Case 'DocumentCompositionTests.testSharedNestedDefinitionsPreserveAxesMetadataAndReferenceOrder' started at 2026-10-06 15:05:33.152
+Test Case 'DocumentCompositionTests.testSharedNestedDefinitionsPreserveAxesMetadataAndReferenceOrder' passed (0.005 seconds)
+Test Case 'DocumentCompositionTests.testUniqueSourceByteBudgetCountsEachDefinitionOnce' started at 2026-10-06 15:05:33.157
+Test Case 'DocumentCompositionTests.testUniqueSourceByteBudgetCountsEachDefinitionOnce' passed (0.001 seconds)
+Test Case 'DocumentCompositionTests.testUnusedDepthAndOccurrenceBudgetsAreAlsoEnforced' started at 2026-10-06 15:05:33.157
+Test Case 'DocumentCompositionTests.testUnusedDepthAndOccurrenceBudgetsAreAlsoEnforced' passed (0.001 seconds)
+Test Suite 'DocumentCompositionTests' passed at 2026-10-06 15:05:33.158
+	 Executed 13 tests, with 0 failures (0 unexpected) in 0.016 (0.016) seconds
+Test Suite 'DocumentDiagnosticTests' started at 2026-10-06 15:05:33.158
+Test Case 'DocumentDiagnosticTests.testCancellationIsNeverConvertedIntoAValidationDiagnostic' started at 2026-10-06 15:05:33.158
+Test Case 'DocumentDiagnosticTests.testCancellationIsNeverConvertedIntoAValidationDiagnostic' passed (0.0 seconds)
+Test Case 'DocumentDiagnosticTests.testCancelledCompositionDiagnosticsDoNotBeginPreflightOrGraphValidation' started at 2026-10-06 15:05:33.158
+Test Case 'DocumentDiagnosticTests.testCancelledCompositionDiagnosticsDoNotBeginPreflightOrGraphValidation' passed (0.001 seconds)
+Test Case 'DocumentDiagnosticTests.testCompositionDiagnosticBudgetRejectsBeforeExpensiveGraphSourceValidation' started at 2026-10-06 15:05:33.159
+Test Case 'DocumentDiagnosticTests.testCompositionDiagnosticBudgetRejectsBeforeExpensiveGraphSourceValidation' passed (0.001 seconds)
+Test Case 'DocumentDiagnosticTests.testCompositionDiagnosticPreflightStillEnforcesCheapCountPolicies' started at 2026-10-06 15:05:33.160
+Test Case 'DocumentDiagnosticTests.testCompositionDiagnosticPreflightStillEnforcesCheapCountPolicies' passed (0.001 seconds)
+Test Case 'DocumentDiagnosticTests.testCompositionDiagnosticsScopeRepeatedInstanceIDsByOwner' started at 2026-10-06 15:05:33.160
+Test Case 'DocumentDiagnosticTests.testCompositionDiagnosticsScopeRepeatedInstanceIDsByOwner' passed (0.001 seconds)
+Test Case 'DocumentDiagnosticTests.testDiagnosticCeilingSignalsUninspectedRemainder' started at 2026-10-06 15:05:33.161
+Test Case 'DocumentDiagnosticTests.testDiagnosticCeilingSignalsUninspectedRemainder' passed (0.0 seconds)
+Test Case 'DocumentDiagnosticTests.testDiagnosticInputAndValueByteWorkAreBounded' started at 2026-10-06 15:05:33.161
+Test Case 'DocumentDiagnosticTests.testDiagnosticInputAndValueByteWorkAreBounded' passed (0.0 seconds)
+Test Case 'DocumentDiagnosticTests.testHostileLinkPrefixesDoNotTriggerLegacyRegexDuringDiagnostics' started at 2026-10-06 15:05:33.162
+Test Case 'DocumentDiagnosticTests.testHostileLinkPrefixesDoNotTriggerLegacyRegexDuringDiagnostics' passed (0.033 seconds)
+Test Case 'DocumentDiagnosticTests.testSharedDecimalScannerRejectsLongMalformedLinkNumberAndPreservesGrammar' started at 2026-10-06 15:05:33.195
+Test Case 'DocumentDiagnosticTests.testSharedDecimalScannerRejectsLongMalformedLinkNumberAndPreservesGrammar' passed (0.004 seconds)
+Test Case 'DocumentDiagnosticTests.testSourceParseDiagnosticsPreserveRealLineEvidence' started at 2026-10-06 15:05:33.199
+Test Case 'DocumentDiagnosticTests.testSourceParseDiagnosticsPreserveRealLineEvidence' passed (0.001 seconds)
+Test Case 'DocumentDiagnosticTests.testValueDiagnosticsHavePlanePathsAndNoInventedLines' started at 2026-10-06 15:05:33.199
+Test Case 'DocumentDiagnosticTests.testValueDiagnosticsHavePlanePathsAndNoInventedLines' passed (0.0 seconds)
+Test Suite 'DocumentDiagnosticTests' passed at 2026-10-06 15:05:33.200
+	 Executed 11 tests, with 0 failures (0 unexpected) in 0.042 (0.042) seconds
+Test Suite 'DocumentEditingTests' started at 2026-10-06 15:05:33.200
+Test Case 'DocumentEditingTests.testAtomicCoordinateSwapRetainsIDsSourceOrderMetadataAndLegacyLinks' started at 2026-10-06 15:05:33.200
+Test Case 'DocumentEditingTests.testAtomicCoordinateSwapRetainsIDsSourceOrderMetadataAndLegacyLinks' passed (0.101 seconds)
+Test Case 'DocumentEditingTests.testCancelledTransactionPropagatesCancellation' started at 2026-10-06 15:05:33.301
+Test Case 'DocumentEditingTests.testCancelledTransactionPropagatesCancellation' passed (0.001 seconds)
+Test Case 'DocumentEditingTests.testCanonicalReopenHasSameRevisionAndCodableValuesRoundTrip' started at 2026-10-06 15:05:33.302
+Test Case 'DocumentEditingTests.testCanonicalReopenHasSameRevisionAndCodableValuesRoundTrip' passed (0.002 seconds)
+Test Case 'DocumentEditingTests.testFailureAfterValidFirstOperationPublishesNothing' started at 2026-10-06 15:05:33.304
+Test Case 'DocumentEditingTests.testFailureAfterValidFirstOperationPublishesNothing' passed (0.001 seconds)
+Test Case 'DocumentEditingTests.testFinalCoordinateConflictReturnsPrecisePathAndNoMutation' started at 2026-10-06 15:05:33.305
+Test Case 'DocumentEditingTests.testFinalCoordinateConflictReturnsPrecisePathAndNoMutation' passed (0.001 seconds)
+Test Case 'DocumentEditingTests.testInsertMoveRemoveAndHeaderTransactionPreservesUnrelatedPlanes' started at 2026-10-06 15:05:33.306
+Test Case 'DocumentEditingTests.testInsertMoveRemoveAndHeaderTransactionPreservesUnrelatedPlanes' passed (0.001 seconds)
+Test Case 'DocumentEditingTests.testInvalidFinalDirectValuesCannotEscapeStorageValidation' started at 2026-10-06 15:05:33.307
+Test Case 'DocumentEditingTests.testInvalidFinalDirectValuesCannotEscapeStorageValidation' passed (0.001 seconds)
+Test Case 'DocumentEditingTests.testInvalidInsertMoveAndDuplicateIdentityAreDiagnosed' started at 2026-10-06 15:05:33.308
+Test Case 'DocumentEditingTests.testInvalidInsertMoveAndDuplicateIdentityAreDiagnosed' passed (0.002 seconds)
+Test Case 'DocumentEditingTests.testNoIdentityLegacyDocumentRequiresExplicitAdoptionForTargetedEdits' started at 2026-10-06 15:05:33.310
+Test Case 'DocumentEditingTests.testNoIdentityLegacyDocumentRequiresExplicitAdoptionForTargetedEdits' passed (0.001 seconds)
+Test Case 'DocumentEditingTests.testOperationOperandAndExpectedRevisionBudgetsAreEnforced' started at 2026-10-06 15:05:33.311
+Test Case 'DocumentEditingTests.testOperationOperandAndExpectedRevisionBudgetsAreEnforced' passed (0.001 seconds)
+Test Case 'DocumentEditingTests.testReplacementCannotSilentlyChangeOrDropIdentity' started at 2026-10-06 15:05:33.312
+Test Case 'DocumentEditingTests.testReplacementCannotSilentlyChangeOrDropIdentity' passed (0.001 seconds)
+Test Case 'DocumentEditingTests.testSnapshotDecoderRejectsForgedRevision' started at 2026-10-06 15:05:33.313
+Test Case 'DocumentEditingTests.testSnapshotDecoderRejectsForgedRevision' passed (0.001 seconds)
+Test Case 'DocumentEditingTests.testStaleExactRevisionRejectsChangedContentAndUnicodeEquivalentBytes' started at 2026-10-06 15:05:33.314
+Test Case 'DocumentEditingTests.testStaleExactRevisionRejectsChangedContentAndUnicodeEquivalentBytes' passed (0.001 seconds)
+Test Suite 'DocumentEditingTests' passed at 2026-10-06 15:05:33.315
+	 Executed 13 tests, with 0 failures (0 unexpected) in 0.115 (0.115) seconds
+Test Suite 'DocumentFileCompositionTests' started at 2026-10-06 15:05:33.315
+Test Case 'DocumentFileCompositionTests.testBundledTextAndBinaryReopenWithoutSupplyingAnySourceFiles' started at 2026-10-06 15:05:33.315
+Test Case 'DocumentFileCompositionTests.testBundledTextAndBinaryReopenWithoutSupplyingAnySourceFiles' passed (0.007 seconds)
+Test Case 'DocumentFileCompositionTests.testCancellationStaysDistinctAndNeverReturnsPartialComposition' started at 2026-10-06 15:05:33.322
+Test Case 'DocumentFileCompositionTests.testCancellationStaysDistinctAndNeverReturnsPartialComposition' passed (0.001 seconds)
+Test Case 'DocumentFileCompositionTests.testCancelledPathResolutionPrecedesOversizedInput' started at 2026-10-06 15:05:33.323
+Test Case 'DocumentFileCompositionTests.testCancelledPathResolutionPrecedesOversizedInput' passed (0.115 seconds)
+Test Case 'DocumentFileCompositionTests.testChildStorageFailuresKeepOriginalErrorType' started at 2026-10-06 15:05:33.438
+Test Case 'DocumentFileCompositionTests.testChildStorageFailuresKeepOriginalErrorType' passed (0.001 seconds)
+Test Case 'DocumentFileCompositionTests.testDisconnectedEmbeddedLedgerUsesActualEntryDepthAndRepeatedCachedFiles' started at 2026-10-06 15:05:33.439
+Test Case 'DocumentFileCompositionTests.testDisconnectedEmbeddedLedgerUsesActualEntryDepthAndRepeatedCachedFiles' passed (0.005 seconds)
+Test Case 'DocumentFileCompositionTests.testDiscoveryMissingFilePrecedesUnvalidatedFinalGraphDepth' started at 2026-10-06 15:05:33.444
+Test Case 'DocumentFileCompositionTests.testDiscoveryMissingFilePrecedesUnvalidatedFinalGraphDepth' passed (0.002 seconds)
+Test Case 'DocumentFileCompositionTests.testDuplicateBasenamesAndUnicodeScalarOrderingRemainDistinct' started at 2026-10-06 15:05:33.446
+Test Case 'DocumentFileCompositionTests.testDuplicateBasenamesAndUnicodeScalarOrderingRemainDistinct' passed (0.004 seconds)
+Test Case 'DocumentFileCompositionTests.testDuplicateNormalizedAndCanonicallyEquivalentSourcesFailBeforeDecode' started at 2026-10-06 15:05:33.451
+Test Case 'DocumentFileCompositionTests.testDuplicateNormalizedAndCanonicallyEquivalentSourcesFailBeforeDecode' passed (0.0 seconds)
+Test Case 'DocumentFileCompositionTests.testExistingBundleRetainsUnusedEntriesOpaqueAttributesAndIdentitiesAndScansEveryLedger' started at 2026-10-06 15:05:33.451
+Test Case 'DocumentFileCompositionTests.testExistingBundleRetainsUnusedEntriesOpaqueAttributesAndIdentitiesAndScansEveryLedger' passed (0.008 seconds)
+Test Case 'DocumentFileCompositionTests.testFileCyclesIncludeUnusedEmbeddedEntryLedgers' started at 2026-10-06 15:05:33.459
+Test Case 'DocumentFileCompositionTests.testFileCyclesIncludeUnusedEmbeddedEntryLedgers' passed (0.003 seconds)
+Test Case 'DocumentFileCompositionTests.testFixedFileDiscoverySafetyCeilingRemainsBoundedForDisconnectedEntries' started at 2026-10-06 15:05:33.462
+Test Case 'DocumentFileCompositionTests.testFixedFileDiscoverySafetyCeilingRemainsBoundedForDisconnectedEntries' passed (0.306 seconds)
+Test Case 'DocumentFileCompositionTests.testLedgerRejectsDuplicateEscapedKeysAndMalformedValuesAndGlyphs' started at 2026-10-06 15:05:33.769
+Test Case 'DocumentFileCompositionTests.testLedgerRejectsDuplicateEscapedKeysAndMalformedValuesAndGlyphs' passed (0.0 seconds)
+Test Case 'DocumentFileCompositionTests.testLoweredDefinitionDepthReferenceTraversalAndAttributePoliciesApplyToCompleteGraph' started at 2026-10-06 15:05:33.769
+Test Case 'DocumentFileCompositionTests.testLoweredDefinitionDepthReferenceTraversalAndAttributePoliciesApplyToCompleteGraph' passed (0.007 seconds)
+Test Case 'DocumentFileCompositionTests.testMissingRootAndLinkedChildReportNormalizedMissingPaths' started at 2026-10-06 15:05:33.776
+Test Case 'DocumentFileCompositionTests.testMissingRootAndLinkedChildReportNormalizedMissingPaths' passed (0.001 seconds)
+Test Case 'DocumentFileCompositionTests.testNestedParentPathsAndRefreshedChildrenRetainDeterministicIDs' started at 2026-10-06 15:05:33.777
+Test Case 'DocumentFileCompositionTests.testNestedParentPathsAndRefreshedChildrenRetainDeterministicIDs' passed (0.005 seconds)
+Test Case 'DocumentFileCompositionTests.testNestedProfileUsesProfileRecordPolicyWhileOrdinaryAndChildDocumentsKeepTheirOwnPolicy' started at 2026-10-06 15:05:33.781
+Test Case 'DocumentFileCompositionTests.testNestedProfileUsesProfileRecordPolicyWhileOrdinaryAndChildDocumentsKeepTheirOwnPolicy' passed (0.009 seconds)
+Test Case 'DocumentFileCompositionTests.testOnlyReachableSourcesDecode' started at 2026-10-06 15:05:33.791
+Test Case 'DocumentFileCompositionTests.testOnlyReachableSourcesDecode' passed (0.001 seconds)
+Test Case 'DocumentFileCompositionTests.testOuterRecognitionDoesNotUseCallerPlaneLimitBeforeByteAndLinePolicies' started at 2026-10-06 15:05:33.792
+Test Case 'DocumentFileCompositionTests.testOuterRecognitionDoesNotUseCallerPlaneLimitBeforeByteAndLinePolicies' passed (0.001 seconds)
+Test Case 'DocumentFileCompositionTests.testPathsNormalizeNFCAndParentsWithoutPercentDecoding' started at 2026-10-06 15:05:33.793
+Test Case 'DocumentFileCompositionTests.testPathsNormalizeNFCAndParentsWithoutPercentDecoding' passed (0.0 seconds)
+Test Case 'DocumentFileCompositionTests.testReachableEncodedByteAndSuppliedCountAndAggregatePathLimitsFailBeforeIndexingOrPublishing' started at 2026-10-06 15:05:33.793
+Test Case 'DocumentFileCompositionTests.testReachableEncodedByteAndSuppliedCountAndAggregatePathLimitsFailBeforeIndexingOrPublishing' passed (0.001 seconds)
+Test Case 'DocumentFileCompositionTests.testRepeatedCachedFilesAreStillCheckedAgainstFinalCompleteEntryDepth' started at 2026-10-06 15:05:33.794
+Test Case 'DocumentFileCompositionTests.testRepeatedCachedFilesAreStillCheckedAgainstFinalCompleteEntryDepth' passed (0.005 seconds)
+Test Case 'DocumentFileCompositionTests.testSimpleRepeatedFilesProduceOneDefinitionAndPreserveOrdinaryDocumentFields' started at 2026-10-06 15:05:33.799
+Test Case 'DocumentFileCompositionTests.testSimpleRepeatedFilesProduceOneDefinitionAndPreserveOrdinaryDocumentFields' passed (0.113 seconds)
+Test Case 'DocumentFileCompositionTests.testStandalonePathAndLedgerRecordCapsUseInputLimit' started at 2026-10-06 15:05:33.912
+Test Case 'DocumentFileCompositionTests.testStandalonePathAndLedgerRecordCapsUseInputLimit' passed (0.111 seconds)
+Test Case 'DocumentFileCompositionTests.testTextAndUncompressedBinaryChildrenBundleIdenticallyWithoutExtensionRestrictions' started at 2026-10-06 15:05:34.023
+Test Case 'DocumentFileCompositionTests.testTextAndUncompressedBinaryChildrenBundleIdenticallyWithoutExtensionRestrictions' passed (0.004 seconds)
+Test Suite 'DocumentFileCompositionTests' passed at 2026-10-06 15:05:34.027
+	 Executed 24 tests, with 0 failures (0 unexpected) in 0.711 (0.711) seconds
+Test Suite 'DocumentIdentityTests' started at 2026-10-06 15:05:34.027
+Test Case 'DocumentIdentityTests.testAdoptionPreservesNamespaceMetadataAndDeterministicallySkipsExistingIDs' started at 2026-10-06 15:05:34.027
+Test Case 'DocumentIdentityTests.testAdoptionPreservesNamespaceMetadataAndDeterministicallySkipsExistingIDs' passed (0.001 seconds)
+Test Case 'DocumentIdentityTests.testCancelledIdentityAdoptionReturnsCancellation' started at 2026-10-06 15:05:34.028
+Test Case 'DocumentIdentityTests.testCancelledIdentityAdoptionReturnsCancellation' passed (0.0 seconds)
+Test Case 'DocumentIdentityTests.testDuplicateReferenceIdentityFailsWithinOwnerOnly' started at 2026-10-06 15:05:34.029
+Test Case 'DocumentIdentityTests.testDuplicateReferenceIdentityFailsWithinOwnerOnly' passed (0.0 seconds)
+Test Case 'DocumentIdentityTests.testDuplicatesAreRejectedRatherThanSilentlyRegenerated' started at 2026-10-06 15:05:34.029
+Test Case 'DocumentIdentityTests.testDuplicatesAreRejectedRatherThanSilentlyRegenerated' passed (0.001 seconds)
+Test Case 'DocumentIdentityTests.testExplicitIdentitiesRoundTripThroughTextAndBothBinaryBackends' started at 2026-10-06 15:05:34.030
+Test Case 'DocumentIdentityTests.testExplicitIdentitiesRoundTripThroughTextAndBothBinaryBackends' passed (0.001 seconds)
+Test Case 'DocumentIdentityTests.testIdentityAdoptionRespectsDocumentAndReferenceAttributeBudgets' started at 2026-10-06 15:05:34.031
+Test Case 'DocumentIdentityTests.testIdentityAdoptionRespectsDocumentAndReferenceAttributeBudgets' passed (0.001 seconds)
+Test Case 'DocumentIdentityTests.testRepeatedTargetsGainIndependentOwnerScopedReferenceIDs' started at 2026-10-06 15:05:34.032
+Test Case 'DocumentIdentityTests.testRepeatedTargetsGainIndependentOwnerScopedReferenceIDs' passed (0.004 seconds)
+Test Case 'DocumentIdentityTests.testUnsafeAndEmptyExistingIDsAreRejectedWithExactPaths' started at 2026-10-06 15:05:34.036
+Test Case 'DocumentIdentityTests.testUnsafeAndEmptyExistingIDsAreRejectedWithExactPaths' passed (0.001 seconds)
+Test Suite 'DocumentIdentityTests' passed at 2026-10-06 15:05:34.037
+	 Executed 8 tests, with 0 failures (0 unexpected) in 0.01 (0.01) seconds
+Test Suite 'DocumentStorageBoundsTests' started at 2026-10-06 15:05:34.037
+Test Case 'DocumentStorageBoundsTests.testCanceledTasksCannotReturnPartiallyEncodedOrDecodedDocuments' started at 2026-10-06 15:05:34.037
+Test Case 'DocumentStorageBoundsTests.testCanceledTasksCannotReturnPartiallyEncodedOrDecodedDocuments' passed (0.002 seconds)
+Test Case 'DocumentStorageBoundsTests.testCombinedScalarAndDirectiveBytesCannotBypassTheOutputBound' started at 2026-10-06 15:05:34.039
+Test Case 'DocumentStorageBoundsTests.testCombinedScalarAndDirectiveBytesCannotBypassTheOutputBound' passed (0.0 seconds)
+Test Case 'DocumentStorageBoundsTests.testLimitsArePositiveAndHaveAbsoluteCeilings' started at 2026-10-06 15:05:34.040
+Test Case 'DocumentStorageBoundsTests.testLimitsArePositiveAndHaveAbsoluteCeilings' passed (0.0 seconds)
+Test Case 'DocumentStorageBoundsTests.testPhysicalLinesAreBoundedBeforeParsingEvenForBlankInputs' started at 2026-10-06 15:05:34.040
+Test Case 'DocumentStorageBoundsTests.testPhysicalLinesAreBoundedBeforeParsingEvenForBlankInputs' passed (0.008 seconds)
+Test Case 'DocumentStorageBoundsTests.testPlanePreflightIgnoresDirectivesInsideBothKindsOfFences' started at 2026-10-06 15:05:34.048
+Test Case 'DocumentStorageBoundsTests.testPlanePreflightIgnoresDirectivesInsideBothKindsOfFences' passed (0.001 seconds)
+Test Case 'DocumentStorageBoundsTests.testRecordBoundIncludesWholePlaneBodiesAndEscapedScalarLines' started at 2026-10-06 15:05:34.048
+Test Case 'DocumentStorageBoundsTests.testRecordBoundIncludesWholePlaneBodiesAndEscapedScalarLines' passed (0.0 seconds)
+Test Case 'DocumentStorageBoundsTests.testTextAndPortableBinaryAcceptExactByteBounds' started at 2026-10-06 15:05:34.049
+Test Case 'DocumentStorageBoundsTests.testTextAndPortableBinaryAcceptExactByteBounds' passed (0.001 seconds)
+Test Suite 'DocumentStorageBoundsTests' passed at 2026-10-06 15:05:34.049
+	 Executed 7 tests, with 0 failures (0 unexpected) in 0.012 (0.012) seconds
+Test Suite 'DocumentStorageCompressionTests' started at 2026-10-06 15:05:34.049
+Test Case 'DocumentStorageCompressionTests.testUnavailableNativeCompressionHasAnExplicitPortableFailure' started at 2026-10-06 15:05:34.049
+Test Case 'DocumentStorageCompressionTests.testUnavailableNativeCompressionHasAnExplicitPortableFailure' passed (0.0 seconds)
+Test Suite 'DocumentStorageCompressionTests' passed at 2026-10-06 15:05:34.050
+	 Executed 1 test, with 0 failures (0 unexpected) in 0.0 (0.0) seconds
+Test Suite 'DocumentStorageDecimalTests' started at 2026-10-06 15:05:34.050
+Test Case 'DocumentStorageDecimalTests.testCancellationDuringAnInvalidParseRemainsCancellationError' started at 2026-10-06 15:05:34.050
+Test Case 'DocumentStorageDecimalTests.testCancellationDuringAnInvalidParseRemainsCancellationError' passed (0.002 seconds)
+Test Case 'DocumentStorageDecimalTests.testLongMalformedDecimalRejectsReadableAndChecksummedBinaryWithoutBacktracking' started at 2026-10-06 15:05:34.052
+Test Case 'DocumentStorageDecimalTests.testLongMalformedDecimalRejectsReadableAndChecksummedBinaryWithoutBacktracking' passed (0.006 seconds)
+Test Suite 'DocumentStorageDecimalTests' passed at 2026-10-06 15:05:34.058
+	 Executed 2 tests, with 0 failures (0 unexpected) in 0.008 (0.008) seconds
+Test Suite 'DocumentStorageTests' started at 2026-10-06 15:05:34.058
+Test Case 'DocumentStorageTests.testAllHeaderFieldsAndCorruptionAreChecked' started at 2026-10-06 15:05:34.058
+Test Case 'DocumentStorageTests.testAllHeaderFieldsAndCorruptionAreChecked' passed (0.001 seconds)
+Test Case 'DocumentStorageTests.testBinaryDecodeHandlesDataSlices' started at 2026-10-06 15:05:34.058
+Test Case 'DocumentStorageTests.testBinaryDecodeHandlesDataSlices' passed (0.0 seconds)
+Test Case 'DocumentStorageTests.testCheckedInExtensionManifestDescribesTheActualSixArtifacts' started at 2026-10-06 15:05:34.059
+Test Case 'DocumentStorageTests.testCheckedInExtensionManifestDescribesTheActualSixArtifacts' passed (0.004 seconds)
+Test Case 'DocumentStorageTests.testCheckedInPortableCanopyRoundTripsToItsReadableDocument' started at 2026-10-06 15:05:34.062
+Test Case 'DocumentStorageTests.testCheckedInPortableCanopyRoundTripsToItsReadableDocument' passed (0.002 seconds)
+Test Case 'DocumentStorageTests.testContainerPayloadMustBeValidUTF8AndThreeMDText' started at 2026-10-06 15:05:34.064
+Test Case 'DocumentStorageTests.testContainerPayloadMustBeValidUTF8AndThreeMDText' passed (0.0 seconds)
+Test Case 'DocumentStorageTests.testDirectDocumentValidationRejectsLossyOrAmbiguousSerialization' started at 2026-10-06 15:05:34.064
+Test Case 'DocumentStorageTests.testDirectDocumentValidationRejectsLossyOrAmbiguousSerialization' passed (0.001 seconds)
+Test Case 'DocumentStorageTests.testGeneralDocumentsPreserveUnicodeCustomAxesAndFractionalPositions' started at 2026-10-06 15:05:34.065
+Test Case 'DocumentStorageTests.testGeneralDocumentsPreserveUnicodeCustomAxesAndFractionalPositions' passed (0.003 seconds)
+Test Case 'DocumentStorageTests.testPortableContainerFixedVector' started at 2026-10-06 15:05:34.069
+Test Case 'DocumentStorageTests.testPortableContainerFixedVector' passed (0.0 seconds)
+Test Case 'DocumentStorageTests.testStorageRetainsTextGrammarAndLegacySerializerPreservesLiteralQuotes' started at 2026-10-06 15:05:34.069
+Test Case 'DocumentStorageTests.testStorageRetainsTextGrammarAndLegacySerializerPreservesLiteralQuotes' passed (0.001 seconds)
+Test Suite 'DocumentStorageTests' passed at 2026-10-06 15:05:34.070
+	 Executed 9 tests, with 0 failures (0 unexpected) in 0.012 (0.012) seconds
+Test Suite 'ExtensionConformanceTests' started at 2026-10-06 15:05:34.070
+Test Case 'ExtensionConformanceTests.testCanonicalNumericBitPatternsMatchSharedSwiftFormattingVectors' started at 2026-10-06 15:05:34.070
+Test Case 'ExtensionConformanceTests.testCanonicalNumericBitPatternsMatchSharedSwiftFormattingVectors' passed (0.008 seconds)
+Test Case 'ExtensionConformanceTests.testDocumentEnvelopeAndProfileGoldensMatchExactCanonicalBytes' started at 2026-10-06 15:05:34.077
+Test Case 'ExtensionConformanceTests.testDocumentEnvelopeAndProfileGoldensMatchExactCanonicalBytes' passed (0.019 seconds)
+Test Case 'ExtensionConformanceTests.testSharedBinaryChecksumGoldensRejectCorruption' started at 2026-10-06 15:05:34.096
+Test Case 'ExtensionConformanceTests.testSharedBinaryChecksumGoldensRejectCorruption' passed (0.002 seconds)
+Test Case 'ExtensionConformanceTests.testSharedCompositionTransactionsKeepUnchangedDefinitionsAndRepeatedInstances' started at 2026-10-06 15:05:34.098
+Test Case 'ExtensionConformanceTests.testSharedCompositionTransactionsKeepUnchangedDefinitionsAndRepeatedInstances' passed (0.015 seconds)
+Test Case 'ExtensionConformanceTests.testSharedDocumentTransactionsValidateFinalValuesAtomically' started at 2026-10-06 15:05:34.114
+Test Case 'ExtensionConformanceTests.testSharedDocumentTransactionsValidateFinalValuesAtomically' passed (0.008 seconds)
+Test Case 'ExtensionConformanceTests.testSharedFailedTransactionsHaveStableCodesPathsAndNoPartialPublication' started at 2026-10-06 15:05:34.121
+Test Case 'ExtensionConformanceTests.testSharedFailedTransactionsHaveStableCodesPathsAndNoPartialPublication' passed (0.014 seconds)
+Test Case 'ExtensionConformanceTests.testSharedIdentityAdoptionPreservesOpaqueFieldsAndOwnerScopes' started at 2026-10-06 15:05:34.135
+Test Case 'ExtensionConformanceTests.testSharedIdentityAdoptionPreservesOpaqueFieldsAndOwnerScopes' passed (0.007 seconds)
+Test Case 'ExtensionConformanceTests.testStrictCompositionJSONRejectsCanonicallyEquivalentDuplicateKeys' started at 2026-10-06 15:05:34.142
+Test Case 'ExtensionConformanceTests.testStrictCompositionJSONRejectsCanonicallyEquivalentDuplicateKeys' passed (0.002 seconds)
+Test Case 'ExtensionConformanceTests.testUnicodeKeyOrderingGoldensPreserveOriginalSpellingAndExactBytes' started at 2026-10-06 15:05:34.143
+Test Case 'ExtensionConformanceTests.testUnicodeKeyOrderingGoldensPreserveOriginalSpellingAndExactBytes' passed (0.004 seconds)
+Test Case 'ExtensionConformanceTests.testUnicodeSourceKeyCollisionsKeepFirstSpellingAndLastValue' started at 2026-10-06 15:05:34.147
+Test Case 'ExtensionConformanceTests.testUnicodeSourceKeyCollisionsKeepFirstSpellingAndLastValue' passed (0.002 seconds)
+Test Suite 'ExtensionConformanceTests' passed at 2026-10-06 15:05:34.149
+	 Executed 10 tests, with 0 failures (0 unexpected) in 0.079 (0.079) seconds
+Test Suite 'HTMLRendererTests' started at 2026-10-06 15:05:34.149
+Test Case 'HTMLRendererTests.testAmpersandEscaped' started at 2026-10-06 15:05:34.149
+Test Case 'HTMLRendererTests.testAmpersandEscaped' passed (0.0 seconds)
+Test Case 'HTMLRendererTests.testAxisEmittedInMeta' started at 2026-10-06 15:05:34.149
+Test Case 'HTMLRendererTests.testAxisEmittedInMeta' passed (0.0 seconds)
+Test Case 'HTMLRendererTests.testBodyRenderedAsMarkdown' started at 2026-10-06 15:05:34.150
+Test Case 'HTMLRendererTests.testBodyRenderedAsMarkdown' passed (0.001 seconds)
+Test Case 'HTMLRendererTests.testDecimalZInDataAttribute' started at 2026-10-06 15:05:34.150
+Test Case 'HTMLRendererTests.testDecimalZInDataAttribute' passed (0.0 seconds)
+Test Case 'HTMLRendererTests.testDoubleQuoteEscaped' started at 2026-10-06 15:05:34.151
+Test Case 'HTMLRendererTests.testDoubleQuoteEscaped' passed (0.0 seconds)
+Test Case 'HTMLRendererTests.testLabelRenderedAsHeading' started at 2026-10-06 15:05:34.151
+Test Case 'HTMLRendererTests.testLabelRenderedAsHeading' passed (0.0 seconds)
+Test Case 'HTMLRendererTests.testLabelSpecialCharsEscaped' started at 2026-10-06 15:05:34.152
+Test Case 'HTMLRendererTests.testLabelSpecialCharsEscaped' passed (0.0 seconds)
+Test Case 'HTMLRendererTests.testLessThanEscaped' started at 2026-10-06 15:05:34.152
+Test Case 'HTMLRendererTests.testLessThanEscaped' passed (0.0 seconds)
+Test Case 'HTMLRendererTests.testMissingTitleFallsBackToDefault' started at 2026-10-06 15:05:34.152
+Test Case 'HTMLRendererTests.testMissingTitleFallsBackToDefault' passed (0.0 seconds)
+Test Case 'HTMLRendererTests.testOutputContainsHeadAndBody' started at 2026-10-06 15:05:34.153
+Test Case 'HTMLRendererTests.testOutputContainsHeadAndBody' passed (0.0 seconds)
+Test Case 'HTMLRendererTests.testOutputIsStandaloneHTML' started at 2026-10-06 15:05:34.153
+Test Case 'HTMLRendererTests.testOutputIsStandaloneHTML' passed (0.0 seconds)
+Test Case 'HTMLRendererTests.testPlaneCountMatchesSections' started at 2026-10-06 15:05:34.153
+Test Case 'HTMLRendererTests.testPlaneCountMatchesSections' passed (0.0 seconds)
+Test Case 'HTMLRendererTests.testPreambleRenderedInSection' started at 2026-10-06 15:05:34.154
+Test Case 'HTMLRendererTests.testPreambleRenderedInSection' passed (0.0 seconds)
+Test Case 'HTMLRendererTests.testSectionCarriesAriaLabel' started at 2026-10-06 15:05:34.154
+Test Case 'HTMLRendererTests.testSectionCarriesAriaLabel' passed (0.0 seconds)
+Test Case 'HTMLRendererTests.testSectionCarriesDataZ' started at 2026-10-06 15:05:34.154
+Test Case 'HTMLRendererTests.testSectionCarriesDataZ' passed (0.0 seconds)
+Test Case 'HTMLRendererTests.testSingleQuoteEscaped' started at 2026-10-06 15:05:34.155
+Test Case 'HTMLRendererTests.testSingleQuoteEscaped' passed (0.0 seconds)
+Test Case 'HTMLRendererTests.testTitleEmittedInH1' started at 2026-10-06 15:05:34.155
+Test Case 'HTMLRendererTests.testTitleEmittedInH1' passed (0.0 seconds)
+Test Case 'HTMLRendererTests.testTitleEmittedInTitleElement' started at 2026-10-06 15:05:34.155
+Test Case 'HTMLRendererTests.testTitleEmittedInTitleElement' passed (0.0 seconds)
+Test Case 'HTMLRendererTests.testTitleSpecialCharsEscaped' started at 2026-10-06 15:05:34.156
+Test Case 'HTMLRendererTests.testTitleSpecialCharsEscaped' passed (0.0 seconds)
+Test Case 'HTMLRendererTests.testVersionEmittedInMeta' started at 2026-10-06 15:05:34.156
+Test Case 'HTMLRendererTests.testVersionEmittedInMeta' passed (0.0 seconds)
+Test Suite 'HTMLRendererTests' passed at 2026-10-06 15:05:34.156
+	 Executed 20 tests, with 0 failures (0 unexpected) in 0.007 (0.007) seconds
+Test Suite 'InterchangeConformanceTests' started at 2026-10-06 15:05:34.156
+Test Case 'InterchangeConformanceTests.testASCIIFencePrefixesWithCombiningMarksKeepInnerDirectivesAsBody' started at 2026-10-06 15:05:34.156
+Test Case 'InterchangeConformanceTests.testASCIIFencePrefixesWithCombiningMarksKeepInnerDirectivesAsBody' passed (0.001 seconds)
+Test Case 'InterchangeConformanceTests.testAdoptionAndDeterministicDocumentEditsHaveExactRevisionAndRejectReuse' started at 2026-10-06 15:05:34.158
+Test Case 'InterchangeConformanceTests.testAdoptionAndDeterministicDocumentEditsHaveExactRevisionAndRejectReuse' passed (0.088 seconds)
+Test Case 'InterchangeConformanceTests.testCatalogIncludesEveryDeclaredExtensionSourceAndBinaryGolden' started at 2026-10-06 15:05:34.246
+Test Case 'InterchangeConformanceTests.testCatalogIncludesEveryDeclaredExtensionSourceAndBinaryGolden' passed (0.002 seconds)
+Test Case 'InterchangeConformanceTests.testCatalogRequiresEveryLegacySourceAndHasUniqueCompleteCases' started at 2026-10-06 15:05:34.249
+Test Case 'InterchangeConformanceTests.testCatalogRequiresEveryLegacySourceAndHasUniqueCompleteCases' passed (0.048 seconds)
+Test Case 'InterchangeConformanceTests.testCombiningMarkEscapesChargeExactCanonicalUTF8OutputBytes' started at 2026-10-06 15:05:34.297
+Test Case 'InterchangeConformanceTests.testCombiningMarkEscapesChargeExactCanonicalUTF8OutputBytes' passed (0.002 seconds)
+Test Case 'InterchangeConformanceTests.testEveryInvalidCatalogSourceReportsItsRequiredTypedError' started at 2026-10-06 15:05:34.299
+Test Case 'InterchangeConformanceTests.testEveryInvalidCatalogSourceReportsItsRequiredTypedError' passed (0.018 seconds)
+Test Case 'InterchangeConformanceTests.testEveryValidCatalogSourceAndLegacyOutputPreserveExactCanonicalBytes' started at 2026-10-06 15:05:34.317
+Test Case 'InterchangeConformanceTests.testEveryValidCatalogSourceAndLegacyOutputPreserveExactCanonicalBytes' passed (0.143 seconds)
+Test Case 'InterchangeConformanceTests.testLegacySerializerPreservesRepresentableScalarQuotesAndFoundationEdgeWhitespace' started at 2026-10-06 15:05:34.459
+Test Case 'InterchangeConformanceTests.testLegacySerializerPreservesRepresentableScalarQuotesAndFoundationEdgeWhitespace' passed (0.005 seconds)
+Test Case 'InterchangeConformanceTests.testScalarFieldSeparatorsAndSpaceTokensMatchBoundedPreflight' started at 2026-10-06 15:05:34.464
+Test Case 'InterchangeConformanceTests.testScalarFieldSeparatorsAndSpaceTokensMatchBoundedPreflight' passed (0.005 seconds)
+Test Case 'InterchangeConformanceTests.testScalarQuoteAndEscapeDelimitersPreserveAdjacentCombiningMarks' started at 2026-10-06 15:05:34.470
+Test Case 'InterchangeConformanceTests.testScalarQuoteAndEscapeDelimitersPreserveAdjacentCombiningMarks' passed (0.006 seconds)
+Test Case 'InterchangeConformanceTests.testSharedDAGAndUnusedDefinitionsSurviveAdoptionAndRootReplacement' started at 2026-10-06 15:05:34.476
+Test Case 'InterchangeConformanceTests.testSharedDAGAndUnusedDefinitionsSurviveAdoptionAndRootReplacement' passed (0.12 seconds)
+Test Case 'InterchangeConformanceTests.testStorageRejectsReservedASCIIDelimitersInsideCombiningGraphemes' started at 2026-10-06 15:05:34.596
+Test Case 'InterchangeConformanceTests.testStorageRejectsReservedASCIIDelimitersInsideCombiningGraphemes' passed (0.001 seconds)
+Test Suite 'InterchangeConformanceTests' passed at 2026-10-06 15:05:34.597
+	 Executed 12 tests, with 0 failures (0 unexpected) in 0.44 (0.44) seconds
+Test Suite 'MarkdownRendererTests' started at 2026-10-06 15:05:34.597
+Test Case 'MarkdownRendererTests.testAmpersandInParagraphIsEscaped' started at 2026-10-06 15:05:34.597
+Test Case 'MarkdownRendererTests.testAmpersandInParagraphIsEscaped' passed (0.001 seconds)
+Test Case 'MarkdownRendererTests.testBlankLineSeparatesParagraphs' started at 2026-10-06 15:05:34.598
+Test Case 'MarkdownRendererTests.testBlankLineSeparatesParagraphs' passed (0.001 seconds)
+Test Case 'MarkdownRendererTests.testBlockquote' started at 2026-10-06 15:05:34.599
+Test Case 'MarkdownRendererTests.testBlockquote' passed (0.002 seconds)
+Test Case 'MarkdownRendererTests.testBoldDoubleAsterisk' started at 2026-10-06 15:05:34.600
+Test Case 'MarkdownRendererTests.testBoldDoubleAsterisk' passed (0.001 seconds)
+Test Case 'MarkdownRendererTests.testBoldDoubleUnderscore' started at 2026-10-06 15:05:34.601
+Test Case 'MarkdownRendererTests.testBoldDoubleUnderscore' passed (0.001 seconds)
+Test Case 'MarkdownRendererTests.testBoldMidSentence' started at 2026-10-06 15:05:34.603
+Test Case 'MarkdownRendererTests.testBoldMidSentence' passed (0.001 seconds)
+Test Case 'MarkdownRendererTests.testCheckedTaskItemLowercase' started at 2026-10-06 15:05:34.603
+Test Case 'MarkdownRendererTests.testCheckedTaskItemLowercase' passed (0.0 seconds)
+Test Case 'MarkdownRendererTests.testCheckedTaskItemUppercase' started at 2026-10-06 15:05:34.604
+Test Case 'MarkdownRendererTests.testCheckedTaskItemUppercase' passed (0.001 seconds)
+Test Case 'MarkdownRendererTests.testDoubleQuoteInParagraphIsEscaped' started at 2026-10-06 15:05:34.605
+Test Case 'MarkdownRendererTests.testDoubleQuoteInParagraphIsEscaped' passed (0.001 seconds)
+Test Case 'MarkdownRendererTests.testFencedCodeBlock' started at 2026-10-06 15:05:34.606
+Test Case 'MarkdownRendererTests.testFencedCodeBlock' passed (0.001 seconds)
+Test Case 'MarkdownRendererTests.testFencedCodeBlockEscapesHTML' started at 2026-10-06 15:05:34.606
+Test Case 'MarkdownRendererTests.testFencedCodeBlockEscapesHTML' passed (0.001 seconds)
+Test Case 'MarkdownRendererTests.testFencedCodeBlockPreservesMarkdownLookingContent' started at 2026-10-06 15:05:34.607
+Test Case 'MarkdownRendererTests.testFencedCodeBlockPreservesMarkdownLookingContent' passed (0.001 seconds)
+Test Case 'MarkdownRendererTests.testFencedCodeBlockWithLanguage' started at 2026-10-06 15:05:34.608
+Test Case 'MarkdownRendererTests.testFencedCodeBlockWithLanguage' passed (0.001 seconds)
+Test Case 'MarkdownRendererTests.testH1' started at 2026-10-06 15:05:34.609
+Test Case 'MarkdownRendererTests.testH1' passed (0.001 seconds)
+Test Case 'MarkdownRendererTests.testH2' started at 2026-10-06 15:05:34.610
+Test Case 'MarkdownRendererTests.testH2' passed (0.001 seconds)
+Test Case 'MarkdownRendererTests.testH3' started at 2026-10-06 15:05:34.611
+Test Case 'MarkdownRendererTests.testH3' passed (0.001 seconds)
+Test Case 'MarkdownRendererTests.testH4' started at 2026-10-06 15:05:34.613
+Test Case 'MarkdownRendererTests.testH4' passed (0.001 seconds)
+Test Case 'MarkdownRendererTests.testH5' started at 2026-10-06 15:05:34.614
+Test Case 'MarkdownRendererTests.testH5' passed (0.001 seconds)
+Test Case 'MarkdownRendererTests.testH6' started at 2026-10-06 15:05:34.615
+Test Case 'MarkdownRendererTests.testH6' passed (0.0 seconds)
+Test Case 'MarkdownRendererTests.testHeadingFollowedByParagraph' started at 2026-10-06 15:05:34.615
+Test Case 'MarkdownRendererTests.testHeadingFollowedByParagraph' passed (0.0 seconds)
+Test Case 'MarkdownRendererTests.testHeadingRequiresSpaceAfterHash' started at 2026-10-06 15:05:34.616
+Test Case 'MarkdownRendererTests.testHeadingRequiresSpaceAfterHash' passed (0.0 seconds)
+Test Case 'MarkdownRendererTests.testInlineCode' started at 2026-10-06 15:05:34.616
+Test Case 'MarkdownRendererTests.testInlineCode' passed (0.0 seconds)
+Test Case 'MarkdownRendererTests.testInlineCodeDoesNotRenderMarkdown' started at 2026-10-06 15:05:34.616
+Test Case 'MarkdownRendererTests.testInlineCodeDoesNotRenderMarkdown' passed (0.0 seconds)
+Test Case 'MarkdownRendererTests.testInlineCodeEscapesHTML' started at 2026-10-06 15:05:34.617
+Test Case 'MarkdownRendererTests.testInlineCodeEscapesHTML' passed (0.0 seconds)
+Test Case 'MarkdownRendererTests.testItalicAsterisk' started at 2026-10-06 15:05:34.617
+Test Case 'MarkdownRendererTests.testItalicAsterisk' passed (0.0 seconds)
+Test Case 'MarkdownRendererTests.testItalicUnderscore' started at 2026-10-06 15:05:34.617
+Test Case 'MarkdownRendererTests.testItalicUnderscore' passed (0.0 seconds)
+Test Case 'MarkdownRendererTests.testLessThanInParagraphIsEscaped' started at 2026-10-06 15:05:34.617
+Test Case 'MarkdownRendererTests.testLessThanInParagraphIsEscaped' passed (0.0 seconds)
+Test Case 'MarkdownRendererTests.testLink' started at 2026-10-06 15:05:34.618
+Test Case 'MarkdownRendererTests.testLink' passed (0.0 seconds)
+Test Case 'MarkdownRendererTests.testLinkHrefIsEscaped' started at 2026-10-06 15:05:34.618
+Test Case 'MarkdownRendererTests.testLinkHrefIsEscaped' passed (0.0 seconds)
+Test Case 'MarkdownRendererTests.testLinkTextIsEscaped' started at 2026-10-06 15:05:34.618
+Test Case 'MarkdownRendererTests.testLinkTextIsEscaped' passed (0.0 seconds)
+Test Case 'MarkdownRendererTests.testMultiLineBlockquote' started at 2026-10-06 15:05:34.618
+Test Case 'MarkdownRendererTests.testMultiLineBlockquote' passed (0.0 seconds)
+Test Case 'MarkdownRendererTests.testMultiLineParagraphJoinsWithSpace' started at 2026-10-06 15:05:34.618
+Test Case 'MarkdownRendererTests.testMultiLineParagraphJoinsWithSpace' passed (0.0 seconds)
+Test Case 'MarkdownRendererTests.testOrderedList' started at 2026-10-06 15:05:34.619
+Test Case 'MarkdownRendererTests.testOrderedList' passed (0.0 seconds)
+Test Case 'MarkdownRendererTests.testParagraphWithBoldAndLink' started at 2026-10-06 15:05:34.619
+Test Case 'MarkdownRendererTests.testParagraphWithBoldAndLink' passed (0.0 seconds)
+Test Case 'MarkdownRendererTests.testSingleLineParagraph' started at 2026-10-06 15:05:34.619
+Test Case 'MarkdownRendererTests.testSingleLineParagraph' passed (0.0 seconds)
+Test Case 'MarkdownRendererTests.testSingleQuoteInParagraphIsEscaped' started at 2026-10-06 15:05:34.619
+Test Case 'MarkdownRendererTests.testSingleQuoteInParagraphIsEscaped' passed (0.101 seconds)
+Test Case 'MarkdownRendererTests.testUncheckedTaskItem' started at 2026-10-06 15:05:34.720
+Test Case 'MarkdownRendererTests.testUncheckedTaskItem' passed (0.0 seconds)
+Test Case 'MarkdownRendererTests.testUnorderedListAsterisk' started at 2026-10-06 15:05:34.720
+Test Case 'MarkdownRendererTests.testUnorderedListAsterisk' passed (0.0 seconds)
+Test Case 'MarkdownRendererTests.testUnorderedListDash' started at 2026-10-06 15:05:34.721
+Test Case 'MarkdownRendererTests.testUnorderedListDash' passed (0.0 seconds)
+Test Suite 'MarkdownRendererTests' passed at 2026-10-06 15:05:34.721
+	 Executed 39 tests, with 0 failures (0 unexpected) in 0.124 (0.124) seconds
+Test Suite 'ParseErrorMetadataTests' started at 2026-10-06 15:05:34.721
+Test Case 'ParseErrorMetadataTests.testDuplicatePlaneMetadata' started at 2026-10-06 15:05:34.721
+Test Case 'ParseErrorMetadataTests.testDuplicatePlaneMetadata' passed (0.102 seconds)
+Test Case 'ParseErrorMetadataTests.testInvalidDirectiveMetadata' started at 2026-10-06 15:05:34.823
+Test Case 'ParseErrorMetadataTests.testInvalidDirectiveMetadata' passed (0.0 seconds)
+Test Case 'ParseErrorMetadataTests.testMissingVersionCode' started at 2026-10-06 15:05:34.823
+Test Case 'ParseErrorMetadataTests.testMissingVersionCode' passed (0.0 seconds)
+Test Suite 'ParseErrorMetadataTests' passed at 2026-10-06 15:05:34.824
+	 Executed 3 tests, with 0 failures (0 unexpected) in 0.103 (0.103) seconds
+Test Suite 'ParserNumericTests' started at 2026-10-06 15:05:34.824
+Test Case 'ParserNumericTests.testFiniteDecimalGrammarIsPreservedForEveryCoordinate' started at 2026-10-06 15:05:34.824
+Test Case 'ParserNumericTests.testFiniteDecimalGrammarIsPreservedForEveryCoordinate' passed (0.002 seconds)
+Test Case 'ParserNumericTests.testMalformedAndNonfiniteNumbersAreRejectedForEveryCoordinate' started at 2026-10-06 15:05:34.825
+Test Case 'ParserNumericTests.testMalformedAndNonfiniteNumbersAreRejectedForEveryCoordinate' passed (0.002 seconds)
+Test Suite 'ParserNumericTests' passed at 2026-10-06 15:05:34.827
+	 Executed 2 tests, with 0 failures (0 unexpected) in 0.003 (0.003) seconds
+Test Suite 'ParserTests' started at 2026-10-06 15:05:34.827
+Test Case 'ParserTests.testAxisDefaultsToLayer' started at 2026-10-06 15:05:34.827
+Test Case 'ParserTests.testAxisDefaultsToLayer' passed (0.0 seconds)
+Test Case 'ParserTests.testAxisRawValueNormalized' started at 2026-10-06 15:05:34.828
+Test Case 'ParserTests.testAxisRawValueNormalized' passed (0.0 seconds)
+Test Case 'ParserTests.testDecimalZValue' started at 2026-10-06 15:05:34.828
+Test Case 'ParserTests.testDecimalZValue' passed (0.001 seconds)
+Test Case 'ParserTests.testDuplicatePositionThrows' started at 2026-10-06 15:05:34.829
+Test Case 'ParserTests.testDuplicatePositionThrows' passed (0.0 seconds)
+Test Case 'ParserTests.testEmptyDocumentProducesNoPlanes' started at 2026-10-06 15:05:34.829
+Test Case 'ParserTests.testEmptyDocumentProducesNoPlanes' passed (0.0 seconds)
+Test Case 'ParserTests.testFrontmatterIgnoresCommentLines' started at 2026-10-06 15:05:34.829
+Test Case 'ParserTests.testFrontmatterIgnoresCommentLines' passed (0.0 seconds)
+Test Case 'ParserTests.testFrontmatterStripsQuotedValues' started at 2026-10-06 15:05:34.829
+Test Case 'ParserTests.testFrontmatterStripsQuotedValues' passed (0.0 seconds)
+Test Case 'ParserTests.testInvalidDirectiveTokenThrows' started at 2026-10-06 15:05:34.830
+Test Case 'ParserTests.testInvalidDirectiveTokenThrows' passed (0.0 seconds)
+Test Case 'ParserTests.testKnownAxesMatchSpec' started at 2026-10-06 15:05:34.830
+Test Case 'ParserTests.testKnownAxesMatchSpec' passed (0.0 seconds)
+Test Case 'ParserTests.testLeadingBlankLinesBeforeFrontmatter' started at 2026-10-06 15:05:34.830
+Test Case 'ParserTests.testLeadingBlankLinesBeforeFrontmatter' passed (0.0 seconds)
+Test Case 'ParserTests.testMissingFrontmatterThrows' started at 2026-10-06 15:05:34.830
+Test Case 'ParserTests.testMissingFrontmatterThrows' passed (0.0 seconds)
+Test Case 'ParserTests.testMissingPlanePositionThrows' started at 2026-10-06 15:05:34.831
+Test Case 'ParserTests.testMissingPlanePositionThrows' passed (0.0 seconds)
+Test Case 'ParserTests.testMissingVersionThrows' started at 2026-10-06 15:05:34.831
+Test Case 'ParserTests.testMissingVersionThrows' passed (0.0 seconds)
+Test Case 'ParserTests.testNegativeZValue' started at 2026-10-06 15:05:34.831
+Test Case 'ParserTests.testNegativeZValue' passed (0.0 seconds)
+Test Case 'ParserTests.testNonNumericPositionThrows' started at 2026-10-06 15:05:34.831
+Test Case 'ParserTests.testNonNumericPositionThrows' passed (0.0 seconds)
+Test Case 'ParserTests.testNonNumericXThrows' started at 2026-10-06 15:05:34.831
+Test Case 'ParserTests.testNonNumericXThrows' passed (0.0 seconds)
+Test Case 'ParserTests.testNonNumericYThrows' started at 2026-10-06 15:05:34.831
+Test Case 'ParserTests.testNonNumericYThrows' passed (0.0 seconds)
+Test Case 'ParserTests.testParseErrorDescriptions' started at 2026-10-06 15:05:34.832
+Test Case 'ParserTests.testParseErrorDescriptions' passed (0.0 seconds)
+Test Case 'ParserTests.testParsesFrontmatter' started at 2026-10-06 15:05:34.832
+Test Case 'ParserTests.testParsesFrontmatter' passed (0.0 seconds)
+Test Case 'ParserTests.testParsesMultiplePlanes' started at 2026-10-06 15:05:34.832
+Test Case 'ParserTests.testParsesMultiplePlanes' passed (0.0 seconds)
+Test Case 'ParserTests.testParsesPlaneCoordinatesAndAttributes' started at 2026-10-06 15:05:34.832
+Test Case 'ParserTests.testParsesPlaneCoordinatesAndAttributes' passed (0.0 seconds)
+Test Case 'ParserTests.testPlainMarkdownBecomesSinglePlane' started at 2026-10-06 15:05:34.833
+Test Case 'ParserTests.testPlainMarkdownBecomesSinglePlane' passed (0.001 seconds)
+Test Case 'ParserTests.testPlaneAtZReturnsNilForMissingPosition' started at 2026-10-06 15:05:34.833
+Test Case 'ParserTests.testPlaneAtZReturnsNilForMissingPosition' passed (0.0 seconds)
+Test Case 'ParserTests.testPlaneBodyTrimsLeadingAndTrailingBlanks' started at 2026-10-06 15:05:34.834
+Test Case 'ParserTests.testPlaneBodyTrimsLeadingAndTrailingBlanks' passed (0.0 seconds)
+Test Case 'ParserTests.testPlanesByZAreSorted' started at 2026-10-06 15:05:34.834
+Test Case 'ParserTests.testPlanesByZAreSorted' passed (0.0 seconds)
+Test Case 'ParserTests.testPreambleBeforeFirstPlane' started at 2026-10-06 15:05:34.834
+Test Case 'ParserTests.testPreambleBeforeFirstPlane' passed (0.0 seconds)
+Test Case 'ParserTests.testReservedAttributeKeysNotInExtras' started at 2026-10-06 15:05:34.834
+Test Case 'ParserTests.testReservedAttributeKeysNotInExtras' passed (0.0 seconds)
+Test Case 'ParserTests.testRoundTripThroughSerializer' started at 2026-10-06 15:05:34.838
+Test Case 'ParserTests.testRoundTripThroughSerializer' passed (0.001 seconds)
+Test Case 'ParserTests.testRoundTripWithMetadataAndAttributes' started at 2026-10-06 15:05:34.839
+Test Case 'ParserTests.testRoundTripWithMetadataAndAttributes' passed (0.001 seconds)
+Test Case 'ParserTests.testRoundTripWithPreamble' started at 2026-10-06 15:05:34.839
+Test Case 'ParserTests.testRoundTripWithPreamble' passed (0.0 seconds)
+Test Case 'ParserTests.testUnclosedFrontmatterThrows' started at 2026-10-06 15:05:34.840
+Test Case 'ParserTests.testUnclosedFrontmatterThrows' passed (0.001 seconds)
+Test Case 'ParserTests.testWindowsLineEndingsNormalized' started at 2026-10-06 15:05:34.840
+Test Case 'ParserTests.testWindowsLineEndingsNormalized' passed (0.0 seconds)
+Test Suite 'ParserTests' passed at 2026-10-06 15:05:34.841
+	 Executed 32 tests, with 0 failures (0 unexpected) in 0.01 (0.01) seconds
+Test Suite 'debug.xctest' passed at 2026-10-06 15:05:34.841
+	 Executed 262 tests, with 0 failures (0 unexpected) in 2.122 (2.122) seconds
+Test Suite 'All tests' passed at 2026-10-06 15:05:34.841
+	 Executed 262 tests, with 0 failures (0 unexpected) in 2.122 (2.122) seconds
+◇ Test run started.
+↳ Testing Library Version: 6.3.3 (48d727cc1cf4eda)
+↳ Target Platform: aarch64-unknown-linux-gnu
+✔ Test run with 0 tests in 0 suites passed after 0.001 seconds.
+EXIT swift-test=0
+DOCKER-EXIT swift-6.3.3=0

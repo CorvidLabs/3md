@@ -1,22 +1,23 @@
-# ThreeMD editing release preparation
+# ThreeMD editing release
 
-Status: 2.0.0 package preparation. The combined feature tree has landed on main. No tag, package publication or deployment is part of this work. The current package/migration checklist is [RELEASE-2.0.0.md](RELEASE-2.0.0.md); historical implementation receipts below retain their original commits.
+Status: released in ThreeMD 2.0.0 on 2026-10-06. Release notes, migration guidance and current verification are in [RELEASE-2.0.0.md](RELEASE-2.0.0.md); historical implementation receipts below retain their original commits.
 
 ## Release scope
 
-The prepared next package release is 2.0.0. The package version, frozen 1.0 text grammar, binary container version 1 and composition profile version `3md-composition-1` are separate contracts. Existing documents and parser/serializer signatures stay supported.
+The package release is 2.0.0. The package version, frozen 1.0 text grammar, binary container version 1 and composition profile version `3md-composition-1` are separate contracts. Existing documents and parser/serializer signatures stay supported.
 
-The release combines the binary/composition foundation in PR58 with stable identities, typed document/composition patches and structured diagnostics in PR61, portable TypeScript/Rust implementations in PR62 and public-API interchange in PR63. PR63 landed in PR62, PR62 landed in PR61, and Leif merged PR61 into main at `9dfbdb649891a95f27e7590e9e6ddc72b9e58d08`. The landed tree is byte-identical to feature tip `20d1ed4f04333e18c36a50a44bf10e1b0e9b72e6`. Existing archive records are preserved and do not pretend that feature evidence was originally collected on the squash commit.
+The release combines the binary/composition foundation in PR58 with stable identities, typed document/composition patches and structured diagnostics in PR61, portable TypeScript/Rust implementations in PR62 and public-API interchange in PR63. PR63 landed in PR62, PR62 landed in PR61, and Leif merged PR61 into main at `9dfbdb649891a95f27e7590e9e6ddc72b9e58d08`. The landed tree is byte-identical to feature tip `20d1ed4f04333e18c36a50a44bf10e1b0e9b72e6`. Existing archive records are preserved and do not pretend that feature evidence was originally collected on the squash commit. PR64 prepared the 2.0.0 package metadata at `be41af523aecf041202a06d4c83471b19e09b275`, PR65 added linked file composition at `e424fc5b20b16c657dd00c47415de833e25cf7af`, PR66 landed its review corrections at `9ac2454dfec51a9d575a030236f046462059f847` and PR68 finalized its SpecSync change at `87edafb2f47b4d73e47441ae754ad955b6d49f44`. Release commit `b1f5937bd47a0bd45fcaf4dd6f805d3bbad80da8` adds the Linux CLI build fix and the pinned publish workflows.
 
 ## Capability matrix
 
 | Capability | Swift | TypeScript | Rust |
 | --- | --- | --- | --- |
 | Existing 1.0 text parsing and serialization | Existing shared conformance | Existing shared conformance | Existing shared conformance |
-| General uncompressed binary container | Implemented, unreleased | Implemented, unreleased | Implemented, unreleased |
+| General uncompressed binary container | Released in 2.0.0 | Released in 2.0.0 | Released in 2.0.0 |
 | Apple LZFSE binary compression | Conditional Apple backend | Explicit compressionUnavailable | Explicit compressionUnavailable |
-| Self-contained composition graph/codec | Implemented, unreleased | Implemented, unreleased | Implemented, unreleased |
-| Identity-aware snapshots, patches and diagnostics | Implemented, unreleased | Implemented, unreleased | Implemented, unreleased |
+| Self-contained composition graph/codec | Released in 2.0.0 | Released in 2.0.0 | Released in 2.0.0 |
+| Linked file ledger, resolution and bundling | Released in 2.0.0 | Released in 2.0.0 | Released in 2.0.0 |
+| Identity-aware snapshots, patches and diagnostics | Released in 2.0.0 | Released in 2.0.0 | Released in 2.0.0 |
 
 Uncompressed storage is the portable baseline. Unsupported compression is an explicit failure. Shared extension fixtures independently check exact canonical document/profile/envelope bytes, finite-number formatting, Unicode key ordering, identity adoption, revision guards, atomic edits and diagnostic codes/paths in all three libraries. These are separate from the unchanged legacy parser vectors. Leif explicitly authorized TypeScript and Rust implementation in this follow-up; Sculpt remains Swift-only.
 
@@ -87,23 +88,21 @@ Rust exposes `storage`, `composition`, `editing` and `diagnostics` modules. `sto
 
 ## Sculpt integration boundary
 
-Before this release preparation, Sculpt's shared-model editing used its existing validated sculpture/reference values and ThreeMD 1.8.1. Leif's current request authorizes a separately implemented and verified adoption of the landed source. This library metadata change does not establish completion of that app stream. Sculpt's voxel `.3mdb`, `ascii-composition-1` and `ascii-world-1` schemas remain app-specific. The general binary container is a different discriminated format; identical filename suffixes do not make these payloads interchangeable.
+Before 2.0.0, Sculpt's shared-model editing used its existing validated sculpture/reference values and ThreeMD 1.8.1. Adoption of the released library is a separately implemented and verified app stream; this library release does not establish its completion. Sculpt's voxel `.3mdb`, `ascii-composition-1` and `ascii-world-1` schemas remain app-specific. The general binary container is a different discriminated format; identical filename suffixes do not make these payloads interchangeable.
 
 Dependency adoption and explicit file migration require semantic equivalence and legacy-reader regression checks. Existing files are not rewritten automatically. Any temporary source pin must name an actual verified upstream commit; a release pin requires the corresponding tag to exist. App-specific storage is not silently relabeled as the generic container.
 
 ## Release checklist
 
-- Complete all three libraries' semantic tests and shared extension fixtures with existing text conformance unchanged.
-- Run the pinned complete Trust lane and forced strict SpecSync validation on the actual product tip.
-- Verify cross-platform unsupported-compression behavior and publish the capability matrix.
-- Record scoped agent review accurately and preserve the unsigned provenance limitation under the existing policy.
-- Finalize only the new feature scope and retain its implementation evidence through publication.
-- The related feature PRs have landed; repeat required exact-tip release checks for the new metadata preparation.
-- Preserve the Linux/Windows execution and permitted-signed-attestation gaps until separately established. Current macOS interchange evidence does not close them.
-- Build/check distributable JS, element, Rust and VSCode packages before later publication; this metadata slice does not rebuild `element/dist/`.
-- Publish a version/tag only under a later direct release instruction from Leif.
+- Done: all three libraries' semantic tests and shared extension fixtures pass with the existing text conformance unchanged.
+- Done: the pinned Trust 1.2.2 gate passed on macOS at release commit `b1f5937`. Counts are in [RELEASE-2.0.0.md](RELEASE-2.0.0.md#landed-source-and-verification).
+- Done: cross-platform unsupported-compression behavior is explicit and the capability matrix is published.
+- Done: scoped agent reviews are recorded under their actual reviewer identities, and the unsigned provenance limitation is preserved under the existing policy.
+- Done: the storage/composition, editing, portable-library, interchange, metadata and linked-file scopes are finalized through SpecSync with their implementation evidence archived.
+- Open: Windows execution and a permitted signed attestation. x86_64 Linux was exercised only under emulation. Linux status is recorded under the known limits in [RELEASE-2.0.0.md](RELEASE-2.0.0.md#known-limits).
+- Release: the `v2.0.0` tag and GitHub release follow Leif's direct "Finish 2.0.0" instruction of 2026-10-06. The release workflows publish the npm packages, and publish the Rust crate when the `CRATES_IO_TOKEN` repository secret is configured. The VSIX is built locally and is not published to a marketplace.
 
-Indexed partial reads, portable material/timing profiles and a full animation timeline are later milestones. They are not promised by this release preparation.
+Indexed partial reads, portable material/timing profiles and a full animation timeline are later milestones. They are not part of 2.0.0.
 
 ## Prepared implementation evidence
 
@@ -130,7 +129,7 @@ own exact commit records. Historical receipts remain unchanged.
 
 ## Linked authoring and portable bundling
 
-The preparation now includes a host-supplied file ledger in all three ports, defined by [FILE-COMPOSITION.md](FILE-COMPOSITION.md). The libraries resolve explicit bytes, not disk paths. An ordinary document can map `1` and `2` to child filenames without a separate module registry. Re-resolving after child edits refreshes the linked graph; bundling embeds shared definitions once in the existing composition profile and removes the external ledger. The bundle then needs no source folder.
+2.0.0 includes a host-supplied file ledger in all three ports, defined by [FILE-COMPOSITION.md](FILE-COMPOSITION.md). The libraries resolve explicit bytes, not disk paths. An ordinary document can map `1` and `2` to child filenames without a separate module registry. Re-resolving after child edits refreshes the linked graph; bundling embeds shared definitions once in the existing composition profile and removes the external ledger. The bundle then needs no source folder.
 
 ```swift
 let linked = try DocumentFileComposition.resolve(
@@ -143,4 +142,4 @@ let portable = try DocumentCompositionCodec.encode(linked.composition)
 
 TypeScript uses `DocumentFileComposition.resolve(rootPath, sources)` with Uint8Array bytes and optional policies/AbortSignal. Rust uses `file_composition::resolve(root_path, sources, composition_limits, document_limits, options)`. All preserve generic Markdown and axes; placement/rendering remains the host's responsibility. See [LinkedVillage](../Examples/LinkedVillage/README.md) for nested and repeated file examples and the explicit development bundle command. Apple LZFSE remains optional; mandatory cross-language binary is uncompressed.
 
-This additive authoring contract does not implement remote fetching, filesystem watchers, automatic user-file migration or arbitrary spatial rendering in Sculpt. Native app insertion is a separate bounded feature. No 2.0 tag or package publication is claimed by this preparation.
+This additive authoring contract does not implement remote fetching, filesystem watchers, automatic user-file migration or arbitrary spatial rendering in Sculpt. Native app insertion is a separate bounded feature.
