@@ -7,11 +7,11 @@
   "title": "Finish ThreeMD 2.0.0 with a Linux CLI build fix, pinned publish workflows and release documentation",
   "description": "Finish ThreeMD 2.0.0 with a Linux CLI build fix, pinned publish workflows and release documentation",
   "kind": "operations",
-  "state": "verifying",
+  "state": "archived",
   "canonical_applied": true,
   "base_commit": "87edafb2f47b4d73e47441ae754ad955b6d49f44",
   "created_at": 1791298974,
-  "updated_at": 1791301996,
+  "updated_at": 1791302749,
   "affected_specs": [
     "ThreeMDCLI",
     "ThreeMD",

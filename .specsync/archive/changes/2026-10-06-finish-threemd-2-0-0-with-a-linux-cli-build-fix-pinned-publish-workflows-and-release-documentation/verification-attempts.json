@@ -1,0 +1,673 @@
+{
+  "schema_version": 1,
+  "attempts": [
+    {
+      "timestamp": 1791299937,
+      "commit": "83200ee44d1111aeb4960e387ecb2bba0dcf193e",
+      "contract_digest": "3ba6e2e13a18c48c5c9f9f3b7d708183f5afeec1d58635d340b81cdae1887037",
+      "execution_digest": "e7c9be4b30fbb350916d3fccae9a07dcf000883e561e55161b190bf962676e3b",
+      "workspace_digest": "7d7d0d34d522add457a75851e958f2137fef48698683ca8ab9d14cc24a8bfa36",
+      "passed": true,
+      "commands": [
+        {
+          "command": "specsync check --spec ThreeMD --spec ThreeMDCLI --spec ThreeMDElement",
+          "success": true,
+          "exit_code": 0
+        }
+      ],
+      "requirement_ids": []
+    },
+    {
+      "timestamp": 1791299942,
+      "commit": "e04f9f6d6bbfdfeaaf5c916ea616bbc9da33a838",
+      "contract_digest": "3ba6e2e13a18c48c5c9f9f3b7d708183f5afeec1d58635d340b81cdae1887037",
+      "execution_digest": "e7c9be4b30fbb350916d3fccae9a07dcf000883e561e55161b190bf962676e3b",
+      "workspace_digest": "7d7d0d34d522add457a75851e958f2137fef48698683ca8ab9d14cc24a8bfa36",
+      "passed": true,
+      "commands": [
+        {
+          "command": "specsync check --spec ThreeMD --spec ThreeMDCLI --spec ThreeMDElement",
+          "success": true,
+          "exit_code": 0
+        }
+      ],
+      "requirement_ids": []
+    },
+    {
+      "timestamp": 1791301969,
+      "commit": "05ee36d957e433094352379d93b3af84add61cfc",
+      "contract_digest": "3ba6e2e13a18c48c5c9f9f3b7d708183f5afeec1d58635d340b81cdae1887037",
+      "execution_digest": "29ebecd082c46130b06fba36888215afa6d3fe9285195a388ae7f9e157ba9033",
+      "workspace_digest": "ebf2ea59900d427979c9e176af0505de524b01736ade4a6fd6401ca325afb843",
+      "passed": true,
+      "commands": [
+        {
+          "command": "specsync check --spec ThreeMD --spec ThreeMDCLI --spec ThreeMDElement",
+          "success": true,
+          "exit_code": 0
+        }
+      ],
+      "requirement_ids": []
+    },
+    {
+      "timestamp": 1791301974,
+      "commit": "dffb1500dba92d9f5a26b5a2ab81b568bf67705f",
+      "contract_digest": "3ba6e2e13a18c48c5c9f9f3b7d708183f5afeec1d58635d340b81cdae1887037",
+      "execution_digest": "29ebecd082c46130b06fba36888215afa6d3fe9285195a388ae7f9e157ba9033",
+      "workspace_digest": "ebf2ea59900d427979c9e176af0505de524b01736ade4a6fd6401ca325afb843",
+      "passed": true,
+      "commands": [
+        {
+          "command": "specsync check --spec ThreeMD --spec ThreeMDCLI --spec ThreeMDElement",
+          "success": true,
+          "exit_code": 0
+        }
+      ],
+      "requirement_ids": []
+    },
+    {
+      "timestamp": 1791301988,
+      "commit": "2b10f75d12a76b6d9ee2ce07cc1efe7b594a6eaf",
+      "contract_digest": "3ba6e2e13a18c48c5c9f9f3b7d708183f5afeec1d58635d340b81cdae1887037",
+      "execution_digest": "29ebecd082c46130b06fba36888215afa6d3fe9285195a388ae7f9e157ba9033",
+      "workspace_digest": "3d25b23ce42bf497d2d61342afc38da468bcf9cc9e831b2baba16db7b8317718",
+      "passed": true,
+      "commands": [
+        {
+          "command": "specsync check --spec ThreeMD --spec ThreeMDCLI --spec ThreeMDElement",
+          "success": true,
+          "exit_code": 0
+        }
+      ],
+      "requirement_ids": []
+    },
+    {
+      "timestamp": 1791301994,
+      "commit": "81baa5ef02bac3d296c69b8b03ac15c21542eefd",
+      "contract_digest": "3ba6e2e13a18c48c5c9f9f3b7d708183f5afeec1d58635d340b81cdae1887037",
+      "execution_digest": "29ebecd082c46130b06fba36888215afa6d3fe9285195a388ae7f9e157ba9033",
+      "workspace_digest": "3d25b23ce42bf497d2d61342afc38da468bcf9cc9e831b2baba16db7b8317718",
+      "passed": true,
+      "commands": [
+        {
+          "command": "specsync check --spec ThreeMD --spec ThreeMDCLI --spec ThreeMDElement",
+          "success": true,
+          "exit_code": 0
+        }
+      ],
+      "requirement_ids": []
+    },
+    {
+      "timestamp": 1791301994,
+      "commit": "2233452155c7056a84a49f70699ac7c375dfd025",
+      "contract_digest": "3ba6e2e13a18c48c5c9f9f3b7d708183f5afeec1d58635d340b81cdae1887037",
+      "execution_digest": "29ebecd082c46130b06fba36888215afa6d3fe9285195a388ae7f9e157ba9033",
+      "workspace_digest": "3d25b23ce42bf497d2d61342afc38da468bcf9cc9e831b2baba16db7b8317718",
+      "acceptance_input_digest": "96c8514ce1dfb44e5c912e5e4d4f096fae03d21512c5210c61e64b6d160d2c81",
+      "acceptance_manifest": {
+        "schema_version": 1,
+        "entries": [
+          {
+            "path": ".github/workflows/cargo-publish.yml",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "810851137d8117d540a02fcd5cdc60a3ef817b5601e80e745bff151c5bd436ca",
+            "entry_digest": "bbab860cb3d612075e08efdee98ce01be0b8913df59787c4541dad3bf36bc3bf",
+            "owners": [
+              "@exact:delivery"
+            ]
+          },
+          {
+            "path": ".github/workflows/publish.yml",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "61e2a6d23c769d89ba5b55c4b0e3f59989d16f5eb227430be5b8e64957346a1f",
+            "entry_digest": "c7429b234d974efed29c78a1a060ee27ea925d0c1267229185b408ca3c98314a",
+            "owners": [
+              "@exact:delivery"
+            ]
+          },
+          {
+            "path": "AGENTS.md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "2a7c17dd0069dff04a4b57d8e4fc27bafd63f9db0222be3ee7a81cb214cda0d1",
+            "entry_digest": "d14854e81d3d5714d8b2d752076548527dcdb123abaeeed20777ba444850857c",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "CHANGELOG.md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "8246482db57591db2539ba3937c22417fb6bfdb9e7fcfcb5b85455cf185df126",
+            "entry_digest": "5ca3c4efe27223eeca158f8fbc5ffd8fd3440d8661340ec7f29197134696f3e3",
+            "owners": [
+              "@exact:delivery"
+            ]
+          },
+          {
+            "path": "Examples/LinkedVillage/README.md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "4eb2d790c766de76e3e9d2e916e5fb490050e421e072c791728851693301b901",
+            "entry_digest": "b7f5d75c67c8be9b03066cbd10dc9ba877bf0c1462ce21b72a7a014c303464f5",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "README.md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "ed0bb41a996f5d7f3c086db0861e8a220fa675157c063a8452b24f0a1fd0d985",
+            "entry_digest": "b47ceac7bdfb85680abcb0498d64f04b2e1c65fc993f24b462d941be28ead3fc",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "ROADMAP.md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "1c6b60a843e2f50226cad6965f6a0a165b1ded8a33ede9f51f2c12fe6d19ca0a",
+            "entry_digest": "e1c8d47e163d3360c44e63ee07ca4ed148903964e377c202b00999dcad9264e6",
+            "owners": [
+              "@exact:delivery"
+            ]
+          },
+          {
+            "path": "SPEC.md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "e850be9a2755898037ceae8df7a64e990e7ac0767cc640107da8ab098b87d9bd",
+            "entry_digest": "25fa7121354e6760fbddb33337b885321f4ae81e782f9dfadf8d0ebd4699cd60",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "Sources/CLI/main.swift",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "757fc40747893d076aa6bbcc0b8cd3c652daacb6366b48379ace91cffdfeaedf",
+            "entry_digest": "e2d48bcde69c1dd20224f71a19662b178a7366f7e3de6dd68ad0918acb859d63",
+            "owners": [
+              "ThreeMDCLI"
+            ]
+          },
+          {
+            "path": "conformance/interchange/README.md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "07bc4a7fca0e3708fd33c95c245b84b8a22ff044a37ee160e6e7bdf3bf5c073a",
+            "entry_digest": "0d1ca756187794a0d6f61d43cdd8c89a95f2466a03e2cb2305d418ad752e07e0",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "docs.3md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "3e4b9282fa28a6178f209bf3ad36c32b7370b5dee2946716d9812e33541a5385",
+            "entry_digest": "2096000914bd5c01060ed2683c68966672b187583d111c0b5c82069ad2b250fe",
+            "owners": [
+              "@exact:delivery"
+            ]
+          },
+          {
+            "path": "docs/EDITING-RELEASE.md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "5bc3dcd5d321aba298bb88700fb8f8fc2149bae3d7e06e58b865fe3a0869bd66",
+            "entry_digest": "132751b9564d7444b23c143cabbf582b24859f2c1ee3657b3b1c213480689fdc",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "docs/FILE-COMPOSITION.md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "713e8359078705830c50bd7cd08664269d695d152c7498ad1cafdb4a9483a944",
+            "entry_digest": "1c1a0c221adf73e5d6d7bb7855d2a1cce354aea072bcd2f78aaabf71b79d366e",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "docs/RELEASE-2.0.0.md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "5471096441afa400c0c527b0824921842c07f0c3d3309aef6a514f98bc41de25",
+            "entry_digest": "ded0bbe6e66473cc8b8233c40ae600788799faaf47f81cb7807a1f212338672d",
+            "owners": [
+              "@exact:delivery"
+            ]
+          },
+          {
+            "path": "docs/evidence/release-2.0.0/README.md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "7f82dbfc0f4c6191d337581306c90b27f22efa9007c77f0152ec74c91199a57a",
+            "entry_digest": "aaf1fe6f92a053858909ca200dc6b8b82254ac4b6e320fcda8fcd6896a0dd222",
+            "owners": [
+              "@exact:delivery"
+            ]
+          },
+          {
+            "path": "docs/evidence/release-2.0.0/cli-parity/cases.sh",
+            "kind": "file",
+            "mode": 33261,
+            "payload_digest": "ee4eb2a9b6dfc1d30a3582858ea75e898ffec84d7ecb0458ca63b68443baead7",
+            "entry_digest": "b8135b755eed5d88bf53eebad881c4987a10807279070477e8609a091b9aeb1c",
+            "owners": [
+              "@exact:delivery"
+            ]
+          },
+          {
+            "path": "docs/evidence/release-2.0.0/cli-parity/fixtures/dangling.3md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "2575195054de477c55e8974226d09ece36eaf800083370be4fb05c43b85b4e9c",
+            "entry_digest": "3a46facc46746584de436676be35a1faaf7485adaa44b1e87e41663a2d58e56d",
+            "owners": [
+              "@exact:test"
+            ]
+          },
+          {
+            "path": "docs/evidence/release-2.0.0/cli-parity/fixtures/invalid.3md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "4247dfc6677055e2199f1ae27cc6cb781a9191484377b4660972f2535c5ff0f1",
+            "entry_digest": "7d6d31969bc6a5521f089f13f8170637d0a57ecc1fd11500599099ffa7141e29",
+            "owners": [
+              "@exact:test"
+            ]
+          },
+          {
+            "path": "docs/evidence/release-2.0.0/cli-parity/fixtures/valid.3md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "90859031b4b8569d1472041be4f31ef9e5e6587e16e493c63111e875faa06515",
+            "entry_digest": "c741d4915309c47d3f0c2ce01ea39aadf068bd303a7c3626b51b42b079fb7545",
+            "owners": [
+              "@exact:test"
+            ]
+          },
+          {
+            "path": "docs/evidence/release-2.0.0/cli-parity/macos-b1f5937-before-fix.txt",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "3c3542004ea57835d46b2a57b6a46dfc7c046ecce44d36e3305456f579a5ff5b",
+            "entry_digest": "84592f70adeac7ee316f530a14981c0772717d04872a49e0ed5fbf4a7f85e76e",
+            "owners": [
+              "@exact:delivery"
+            ]
+          },
+          {
+            "path": "docs/evidence/release-2.0.0/cli-parity/macos-d6eb66f.txt",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "d5051f8871bf644492ea2b3cec9eba7e0cd5705d046cfd7b3e9dc40dacc8e3dd",
+            "entry_digest": "02ff5f09a2aca8e7b67ef87763498d6365be5546ea2f0b0528c0fb331634f6aa",
+            "owners": [
+              "@exact:delivery"
+            ]
+          },
+          {
+            "path": "docs/evidence/release-2.0.0/cli-parity/macos-main-87edafb.txt",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "d5051f8871bf644492ea2b3cec9eba7e0cd5705d046cfd7b3e9dc40dacc8e3dd",
+            "entry_digest": "85c203b949da5c687d22683a7387d3a347d01c0e86360fba4532a610eb8e5832",
+            "owners": [
+              "@exact:delivery"
+            ]
+          },
+          {
+            "path": "docs/evidence/release-2.0.0/linux-interchange-receipt.json",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "c9357a435f4b5b7c8e0ff50674005ac50c07db48a69be46fb2069d92d619ab70",
+            "entry_digest": "e793ddfddc75e8e97cc8839c4d58000ea22673e777e7b40fd61b721069a89071",
+            "owners": [
+              "@exact:delivery"
+            ]
+          },
+          {
+            "path": "docs/evidence/release-2.0.0/linux-interchange.log",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "4ed7bfe504da938706f235dd1896cc94b8aff8f53f4bfd19ea83b18312c83963",
+            "entry_digest": "5421d1ffcaf6009e86e0f607e92399c534f9fc146deed7ac75c7e90e846ade6e",
+            "owners": [
+              "@exact:delivery"
+            ]
+          },
+          {
+            "path": "docs/evidence/release-2.0.0/linux-rust.log",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "c2080c8e93bf052a914dbb1ab54e569b4aa308e53a988181d386e01f991c118a",
+            "entry_digest": "8245df47cd7d02b08fe8f67aefca986b51df540133fba7746321365e75cef71f",
+            "owners": [
+              "@exact:delivery"
+            ]
+          },
+          {
+            "path": "docs/evidence/release-2.0.0/linux-scripts/Dockerfile.interchange",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "99b7b380c675385df7fa7786e2444d68c22e7a1a376882266798825b6b7ed378",
+            "entry_digest": "06f479e00eed63cb37587cad1d6b818419c06de5c1d2de9105a6b168555b3a83",
+            "owners": [
+              "@exact:delivery"
+            ]
+          },
+          {
+            "path": "docs/evidence/release-2.0.0/linux-scripts/drive.sh",
+            "kind": "file",
+            "mode": 33261,
+            "payload_digest": "a47b7bc34dc3699583b950cf1aecd9c6089760e5cb900ccceb62ed155226e61f",
+            "entry_digest": "827f440f84d5f6bfb7bba6a8edd3ef5e7beb56643f96f0ba45a792594536487a",
+            "owners": [
+              "@exact:delivery"
+            ]
+          },
+          {
+            "path": "docs/evidence/release-2.0.0/linux-scripts/run-interchange.sh",
+            "kind": "file",
+            "mode": 33261,
+            "payload_digest": "733c0d0b6fd35cdfe5969da47a9a6eed0cb788431340e8d7048679f64c7392b7",
+            "entry_digest": "786874841c685a9c2e46ae096d7588532ed40e2b3957afd0305b6e30cd76562f",
+            "owners": [
+              "@exact:delivery"
+            ]
+          },
+          {
+            "path": "docs/evidence/release-2.0.0/linux-scripts/run-js.sh",
+            "kind": "file",
+            "mode": 33261,
+            "payload_digest": "1bfd558a436f38832afa6ff65d2058b31ecca2a179416ecaa32778cd1feed8fe",
+            "entry_digest": "1e8ad00334496a1a361a315a60b73beb802d5a3f63e012ec8dd5335404987ccb",
+            "owners": [
+              "@exact:delivery"
+            ]
+          },
+          {
+            "path": "docs/evidence/release-2.0.0/linux-scripts/run-rust.sh",
+            "kind": "file",
+            "mode": 33261,
+            "payload_digest": "e468ab6af7cbca6920bae5268540ca316d36f0322f19ea7fbee346e51c756123",
+            "entry_digest": "6079b5eae552ce3589e59801ff730476c5212fbfba9c4818ebe071e909d3b996",
+            "owners": [
+              "@exact:delivery"
+            ]
+          },
+          {
+            "path": "docs/evidence/release-2.0.0/linux-scripts/run-swift.sh",
+            "kind": "file",
+            "mode": 33261,
+            "payload_digest": "f172d0f4d50b69effdae109f4f81412cc84618df7053feb2af3dc8b0ba04832f",
+            "entry_digest": "f8b4a03dfd4400d2cb3f6bee82469298ec843d5ad18cf02a3b3d496d2f9f14be",
+            "owners": [
+              "@exact:delivery"
+            ]
+          },
+          {
+            "path": "docs/evidence/release-2.0.0/linux-swift-6.0.3.log",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "c49acebdd8a1d2dff4d902bc6ec8bdd4ab8f5714e1046f23fd2e2ca86baaed88",
+            "entry_digest": "9da0a4c3ce593eadde4da5e310a56db05af8b2cc3f56da40ff279251a8b200eb",
+            "owners": [
+              "@exact:delivery"
+            ]
+          },
+          {
+            "path": "docs/evidence/release-2.0.0/linux-swift-6.3.3.log",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "c9e2633d5d492d6200d354dbaad13833060b06019385ce1a59e20cf36a7028c1",
+            "entry_digest": "1013a9074106e10e47c27e9d989bc77335914fa74d0afc2a0d25b7023582eb62",
+            "owners": [
+              "@exact:delivery"
+            ]
+          },
+          {
+            "path": "docs/evidence/release-2.0.0/linux-typescript.log",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "00704dc92d1ce1c24f07fb3ca042110facabbc2ef1c3dcb7b1047eab99d65e61",
+            "entry_digest": "9f4889789302e22288223b92d3e6e26f6a65731fef624398f11667801d604ec2",
+            "owners": [
+              "@exact:delivery"
+            ]
+          },
+          {
+            "path": "docs/evidence/release-2.0.0/trust-761f473-docs-tip.log",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "bfd928c182ac6a93f0219529185ff7edd29ac85d9dd60d977a0b96b10e44b7ad",
+            "entry_digest": "1bec919c64d56d4d882a3ead574a4b91de6278f2cccd59f75f446eaf3c3d5a4b",
+            "owners": [
+              "@exact:delivery"
+            ]
+          },
+          {
+            "path": "docs/evidence/release-2.0.0/trust-d6eb66f.log",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "9419f52ebfbd5266936ae091d71dcbbfeb460e818b9eb5e61039c13016319371",
+            "entry_digest": "0b72cc373eb731624535a49f64f95073012a934ffc5e8ad29ea55ca31327c029",
+            "owners": [
+              "@exact:delivery"
+            ]
+          },
+          {
+            "path": "editor/vscode/README.md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "324a0fcadae336d17aee5e106069fa9aba3dc513500ff72db9a4ab93798ee7a6",
+            "entry_digest": "186d840647cc3b0d4c1bd8fdb5d116e1f1dda5fb90850dc59f55cf01116bb8b6",
+            "owners": [
+              "@exact:delivery"
+            ]
+          },
+          {
+            "path": "element/README.md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "fa62eec0b2ceae1e19444ba0f66e412fc65f65e61cd1a5597f0b58ea434c618d",
+            "entry_digest": "e9e449f7803e90ba7ac8073109431783f85e49f4be617a59ca3ac62314999fd2",
+            "owners": [
+              "@exact:delivery"
+            ]
+          },
+          {
+            "path": "js/README.md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "8a67da0fef17d0d2ed085acfcf791bd3ce77e499a7b669b83ebd09656ae4ca2e",
+            "entry_digest": "41ea697af70123fbc1ea2ade30c235b19b4f2c1d62e12c7288411b519281aa3e",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "specs/ThreeMD/ThreeMD.spec.md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "e49f9931990a731d0c590063f97bd974e5ea6cedbdb1d87861274ea04d1b58e6",
+            "entry_digest": "fbeefe75d79ddf30a80be16a4efcbb3ced3a6954310beb8f39e05e8f01c227ff",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "specs/ThreeMD/context.md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "e2dd8543c2c3373dd6d7bdffa0a4530c725da3c6954cc087ac96689b420d7af9",
+            "entry_digest": "488741a2341d94cc062f337d40a5521693beb9c39eee08cae87b86381f8e1c73",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "specs/ThreeMD/requirements.md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "9c6c41aaa775030a7eb67266a85e15f5cc0684d7cfa39cf75fca475158f5e720",
+            "entry_digest": "249e81b9e21abd8434c67ad45784b4809d45412cc89e519c553bb10ea41fdaef",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "specs/ThreeMD/tasks.md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "9764f36441dd07f5ac719346c72c09e83e2afdd0543be2569e18954c9ab5e903",
+            "entry_digest": "9c3747c84319ed7506789965e3686a46a4aaf1820a52af9acdd7b2f45896954a",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "specs/ThreeMD/testing.md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "fa08d61ce136ee4d66abc5d1525cd2ec4a51b5e09ec7d4b2c9f7026f56a44a58",
+            "entry_digest": "6abe3dd24d99a5c424b9e434c1ef2dfde2a07634e5550fc78789e92a3ee5a179",
+            "owners": [
+              "ThreeMD"
+            ]
+          },
+          {
+            "path": "specs/ThreeMDCLI/ThreeMDCLI.spec.md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "27393e6f674300cc23105194709e527b14c4033d103347fc2ed8e3b6482d7678",
+            "entry_digest": "9d62e649d7597f6770aa7f183aa1b7b4c5d48c6efd68b8ff29d6059339407c0a",
+            "owners": [
+              "ThreeMDCLI"
+            ]
+          },
+          {
+            "path": "specs/ThreeMDCLI/context.md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "a8757c52e44176989f7365a0c2016dd9c2392617c2f0777aba1441ab8eb13669",
+            "entry_digest": "8260c55403190a4ed28bcfbbe9c999ef3d91dcfb0b61e50c1c620468ee405a67",
+            "owners": [
+              "ThreeMDCLI"
+            ]
+          },
+          {
+            "path": "specs/ThreeMDCLI/requirements.md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "717db09a62ce56f1b53c200a3d0307d5e4e0dcded731eda703dc990338d4c8eb",
+            "entry_digest": "942c0a0f7172c55e378ba8d4a856ba706978509c5d8bbdb745f795228eee6c97",
+            "owners": [
+              "ThreeMDCLI"
+            ]
+          },
+          {
+            "path": "specs/ThreeMDCLI/tasks.md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "8ffecec3edbf4315444ee9205af9d43ef56b448b832cf8d7796bdc56b9d8f3ec",
+            "entry_digest": "d79f66024124cb326b0b9e8bb03894529df938eeb8ecba70e9a890bc9c513879",
+            "owners": [
+              "ThreeMDCLI"
+            ]
+          },
+          {
+            "path": "specs/ThreeMDCLI/testing.md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "0f3abf72028677011de1870cb36b73770945336493188f5280bfc8a5adde891a",
+            "entry_digest": "f393467863f3aeba934c71b744377711335165d5dde2d3e49515b1d45567fd02",
+            "owners": [
+              "ThreeMDCLI"
+            ]
+          },
+          {
+            "path": "specs/ThreeMDElement/ThreeMDElement.spec.md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "027e12d4a48a0b7b857f5fc43fb75f9c0d738fefdc28dd19af0973be7c662a39",
+            "entry_digest": "cc506b3cbe118a23c5bca1e7efbe468d6a39cf901b30097824787546ba373494",
+            "owners": [
+              "ThreeMDElement"
+            ]
+          },
+          {
+            "path": "specs/ThreeMDElement/context.md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "d11a69cc53b0e568dea1c7d6a74c0da448e320e22f8f628382d40ba9837be5bb",
+            "entry_digest": "247f848c058687618d00ea24e07d75cd04e9b7b83b8c614f138f93ab92fd4527",
+            "owners": [
+              "ThreeMDElement"
+            ]
+          },
+          {
+            "path": "specs/ThreeMDElement/requirements.md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "0cd62d900abd73d60e65ce071ff1bfeaa2c3afb9217c3e6cc524d7f35372668c",
+            "entry_digest": "4d5aad238c05fb3cf66e9c20ef6ce527cace6a1afeaf1c141aad846f9164222a",
+            "owners": [
+              "ThreeMDElement"
+            ]
+          },
+          {
+            "path": "specs/ThreeMDElement/tasks.md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "fe9de98e92cedf78c7256ad5a502a4e0fbfc1d499fc390e37cea55b1794c7cf3",
+            "entry_digest": "c02f04a23c42a4e7e678f37a16e835e1b5aa2fd3f12ce0a7891a84fb70a2685b",
+            "owners": [
+              "ThreeMDElement"
+            ]
+          },
+          {
+            "path": "specs/ThreeMDElement/testing.md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "b7f70de40aadc2cb1a4cfca5d67838f9517bfd89ea19013c4f7ce0d542249efd",
+            "entry_digest": "f4d15f6caa4f34bae0095b8685f81576702675eb33d9a2eb8aaafda6e7ed0d44",
+            "owners": [
+              "ThreeMDElement"
+            ]
+          },
+          {
+            "path": "web/docs.3md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "3e4b9282fa28a6178f209bf3ad36c32b7370b5dee2946716d9812e33541a5385",
+            "entry_digest": "d0de03a836319fb4cd2abd4c7d5e5bd2ced8968f15e407cd169d7391c3443363",
+            "owners": [
+              "@exact:delivery"
+            ]
+          }
+        ]
+      },
+      "passed": true,
+      "commands": [
+        {
+          "command": "specsync check --spec ThreeMD --spec ThreeMDCLI --spec ThreeMDElement",
+          "success": true,
+          "exit_code": 0
+        }
+      ],
+      "requirement_ids": []
+    }
+  ]
+}

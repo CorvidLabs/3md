@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "reviews": [
+    {
+      "schema_version": 2,
+      "change_id": "finish-threemd-2-0-0-with-a-linux-cli-build-fix-pinned-publish-workflows-and-release-documentation",
+      "reviewer": "agent:claude",
+      "provenance": {
+        "schema_version": 1,
+        "provider": "github_actions_check",
+        "required_check": "SpecSync scoped review"
+      },
+      "verdict": "pass",
+      "implementation_commit": "2233452155c7056a84a49f70699ac7c375dfd025",
+      "contract_digest": "3ba6e2e13a18c48c5c9f9f3b7d708183f5afeec1d58635d340b81cdae1887037",
+      "execution_digest": "29ebecd082c46130b06fba36888215afa6d3fe9285195a388ae7f9e157ba9033",
+      "workspace_digest": "3d25b23ce42bf497d2d61342afc38da468bcf9cc9e831b2baba16db7b8317718",
+      "timestamp": 1791302676
+    }
+  ]
+}
