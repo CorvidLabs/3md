@@ -4,6 +4,7 @@ import {
   DocumentDecodeLimits, DocumentFileComposition, DocumentFileCompositionError, DocumentStorageCodec,
   DocumentStorageError, DocumentStorageFormat,
   type Document, type DocumentCompositionErrorCode, type DocumentFileCompositionErrorCode, type DocumentFileSource,
+  type DocumentStorageErrorCode,
 } from "../src/index.ts";
 
 function document(body = "Markdown stays local", metadata: Record<string, string> = {}): Document {
@@ -125,7 +126,7 @@ describe("explicit supplied-file composition", () => {
     expect(DocumentFileComposition.ledger(document())).toEqual([]);
     expect(DocumentFileComposition.ledger(host('{}'))).toEqual([]);
     expect(DocumentFileComposition.ledger(host('{"~":"last","!":"first"}'))).toEqual([{ glyph: "!", source: "first" }, { glyph: "~", source: "last" }]);
-    for (const ledger of ['{"1":"a","\\u0031":"b"}', '[]', 'null', '{"1":true}', '{"1":2}', '{"1":{}}', '{"1":"a",}', '{"1":"a"} false', '{"1":"\\ud800"}', '{"1":"a'] ) {
+    for (const ledger of ['{"1":"a","\\u0031":"b"}', '[]', 'null', '{"1":true}', '{"1":2}', '{"1":{}}', '{"1":"a",}', '{"1":"a"} false', '{"1":"\\ud800"}', '{"1":"\\udc00"}', '{"1":"a\u0001b"}', '{"1":"a\tb"}', '{"1":"a'] ) {
       rejects("invalidLedger", () => DocumentFileComposition.ledger(host(ledger)));
     }
     for (const glyph of [" ", "é", "😀", "two", "\n"]) rejects("invalidGlyph", () => DocumentFileComposition.ledger(host(JSON.stringify({ [glyph]: "child" }))));
@@ -162,7 +163,63 @@ describe("explicit supplied-file composition", () => {
     rejects("inputLimit", () => DocumentFileComposition.ledger(host(" ".repeat(bound + 1))));
   });
 
-  test("lowered policies enforce discovery depth, imported entries, edges, conceptual traversal and final profile size", () => {
+  test("outer recognition applies child byte and line policies before its lowered plane ceiling", () => {
+    const base = document();
+    const value = { ...base, planes: [{ ...base.planes[0]!, z: 0 }, { ...base.planes[0]!, z: 1 }] };
+    for (const binary of [false, true]) {
+      const input = source("root", value, binary);
+      const policies: [DocumentDecodeLimits, DocumentStorageErrorCode][] = [
+        [new DocumentDecodeLimits({ maximumEncodedBytes: 1, maximumPlanes: 1 }), "oversizedInput"],
+        [new DocumentDecodeLimits({ maximumDecodedBytes: 1, maximumPlanes: 1 }), "oversizedOutput"],
+        [new DocumentDecodeLimits({ maximumLines: 1, maximumPlanes: 1 }), "tooManyLines"],
+      ];
+      for (const [policy, expected] of policies) {
+        try { DocumentFileComposition.resolve("root", [input], undefined, policy); throw new Error("Expected storage failure"); }
+        catch (error) { expect(error).toBeInstanceOf(DocumentStorageError); expect((error as DocumentStorageError).code).toBe(expected); }
+      }
+    }
+  });
+
+  test("disconnected embedded ledgers use final entry depth rather than incoming file depth", () => {
+    const embedded = new DocumentComposition("r", [
+      { id: "r", document: document(), references: [] },
+      { id: "u", document: host('{"1":"x"}'), references: [] },
+    ]);
+    const result = DocumentFileComposition.resolve("root", [
+      source("root", host('{"1":"bundle","2":"bundle"}')),
+      source("bundle", DocumentCompositionCodec.document(embedded)), source("x"),
+    ], new DocumentCompositionLimits({ maximumDepth: 2 }));
+    expect(result.composition.entries).toHaveLength(4);
+    expect(result.resolvedPaths).toEqual(["bundle", "root", "x"]);
+    expect(result.composition.rootEntry.references.map((value) => value.targetID)).toEqual(["file-000000", "file-000000"]);
+    expect(result.composition.entry("file-000001")?.references[0]?.targetID).toBe("file-000003");
+  });
+
+  test("repeated cached dependencies validate final depth after complete discovery", () => {
+    const sources = [source("root", host('{"1":"short","2":"long"}')),
+      source("short", host('{"1":"leaf"}')), source("long", host('{"1":"short","2":"short"}')), source("leaf")];
+    graphRejects("depthExceeded", () => DocumentFileComposition.resolve("root", sources, new DocumentCompositionLimits({ maximumDepth: 3 })));
+    const valid = DocumentFileComposition.resolve("root", sources, new DocumentCompositionLimits({ maximumDepth: 4 }));
+    expect(valid.composition.entries).toHaveLength(4);
+    expect(valid.composition.entry("file-000001")?.references.map((value) => value.targetID)).toEqual(["file-000003", "file-000003"]);
+    const missing = [...sources.slice(0, 2), source("long", host('{"1":"short","2":"missing"}')), sources[3]!];
+    rejects("missingFile", () => DocumentFileComposition.resolve("root", missing, new DocumentCompositionLimits({ maximumDepth: 3 })));
+  });
+
+  test("independent fixed64 discovery safety bounds disconnected file chains", () => {
+    const files = (count: number): DocumentFileSource[] => Array.from({ length: count }, (_, index) => {
+      const ledger: Record<string, string> = index + 1 < count ? { "3md-files": `{"1":"f${index + 1}"}` } : {};
+      const graph = new DocumentComposition("r", [
+        { id: "r", document: document(), references: [] },
+        { id: "u", document: document("Unused", ledger), references: [] },
+      ]);
+      return source(`f${index}`, DocumentCompositionCodec.document(graph));
+    });
+    expect(DocumentFileComposition.resolve("f0", files(64), new DocumentCompositionLimits({ maximumDepth: 2 })).composition.entries).toHaveLength(128);
+    graphRejects("depthExceeded", () => DocumentFileComposition.resolve("f0", files(65), new DocumentCompositionLimits({ maximumDepth: 2 })));
+  });
+
+  test("lowered policies enforce final graph depth, imported entries, edges, conceptual traversal and final profile size", () => {
     const sources = [source("root", host('{"1":"short","2":"long"}')), source("short", host('{"1":"leaf"}')),
       source("long", host('{"1":"short"}')), source("leaf")];
     graphRejects("depthExceeded", () => DocumentFileComposition.resolve("root", sources, new DocumentCompositionLimits({ maximumDepth: 3 })));

@@ -1,6 +1,7 @@
 //! Bounded JSON-lines development adapter for the shared file interchange gate.
 use serde::{Deserialize, Serialize};
 use serde_json::{json, Value};
+use std::collections::HashSet;
 use std::io::{self, BufRead, Write};
 use threemd::composition::{self, DocumentCompositionLimits};
 use threemd::editing::{
@@ -12,8 +13,147 @@ use threemd::storage::{
     self, DocumentCompression, DocumentDecodeLimits, DocumentStorageFormat, OperationOptions,
 };
 use threemd::{Document, DocumentComposition, Plane};
+use unicode_normalization::UnicodeNormalization;
 
 const MAXIMUM_LINE_BYTES: usize = 32 * 1024 * 1024;
+
+/// Preserve duplicate/equivalent keys before dynamic JSON objects can discard them.
+struct ProtocolJsonScanner<'a> {
+    bytes: &'a [u8],
+    index: usize,
+}
+
+impl<'a> ProtocolJsonScanner<'a> {
+    fn whitespace(&mut self) {
+        while self
+            .bytes
+            .get(self.index)
+            .is_some_and(|byte| matches!(byte, b' ' | b'\t' | b'\r' | b'\n'))
+        {
+            self.index += 1;
+        }
+    }
+
+    fn take(&mut self, byte: u8) -> Result<(), &'static str> {
+        self.whitespace();
+        if self.bytes.get(self.index) != Some(&byte) {
+            return Err("adapterFailure");
+        }
+        self.index += 1;
+        Ok(())
+    }
+
+    fn string(&mut self) -> Result<String, &'static str> {
+        self.whitespace();
+        let start = self.index;
+        self.take(b'"')?;
+        while let Some(&byte) = self.bytes.get(self.index) {
+            self.index += 1;
+            if byte < 32 {
+                return Err("adapterFailure");
+            }
+            if byte == b'"' {
+                return serde_json::from_slice(&self.bytes[start..self.index])
+                    .map_err(|_| "adapterFailure");
+            }
+            if byte == b'\\' {
+                if self.index == self.bytes.len() {
+                    return Err("adapterFailure");
+                }
+                self.index += 1;
+            }
+        }
+        Err("adapterFailure")
+    }
+
+    fn value(&mut self, depth: usize) -> Result<(), &'static str> {
+        self.whitespace();
+        if depth > 64 {
+            return Err("adapterFailure");
+        }
+        match self
+            .bytes
+            .get(self.index)
+            .copied()
+            .ok_or("adapterFailure")?
+        {
+            b'{' => {
+                self.index += 1;
+                self.whitespace();
+                if self.bytes.get(self.index) == Some(&b'}') {
+                    self.index += 1;
+                    return Ok(());
+                }
+                let mut keys = HashSet::new();
+                loop {
+                    let key: String = self.string()?.nfc().collect();
+                    if !keys.insert(key) {
+                        return Err("adapterFailure");
+                    }
+                    self.take(b':')?;
+                    self.value(depth + 1)?;
+                    self.whitespace();
+                    if self.bytes.get(self.index) == Some(&b'}') {
+                        self.index += 1;
+                        return Ok(());
+                    }
+                    self.take(b',')?;
+                }
+            }
+            b'[' => {
+                self.index += 1;
+                self.whitespace();
+                if self.bytes.get(self.index) == Some(&b']') {
+                    self.index += 1;
+                    return Ok(());
+                }
+                loop {
+                    self.value(depth + 1)?;
+                    self.whitespace();
+                    if self.bytes.get(self.index) == Some(&b']') {
+                        self.index += 1;
+                        return Ok(());
+                    }
+                    self.take(b',')?;
+                }
+            }
+            b'"' => {
+                self.string()?;
+                Ok(())
+            }
+            _ => {
+                let start = self.index;
+                while self.bytes.get(self.index).is_some_and(|byte| {
+                    !matches!(byte, b' ' | b'\t' | b'\r' | b'\n' | b',' | b']' | b'}')
+                }) {
+                    self.index += 1;
+                }
+                if self.index == start {
+                    return Err("adapterFailure");
+                }
+                let literal: Value = serde_json::from_slice(&self.bytes[start..self.index])
+                    .map_err(|_| "adapterFailure")?;
+                if !matches!(literal, Value::Null | Value::Bool(_) | Value::Number(_)) {
+                    return Err("adapterFailure");
+                }
+                Ok(())
+            }
+        }
+    }
+}
+
+fn validate_protocol_json(bytes: &[u8]) -> Result<(), &'static str> {
+    if bytes.len() > MAXIMUM_LINE_BYTES {
+        return Err("adapterFailure");
+    }
+    let mut scanner = ProtocolJsonScanner { bytes, index: 0 };
+    scanner.value(0)?;
+    scanner.whitespace();
+    if scanner.index != bytes.len() {
+        return Err("adapterFailure");
+    }
+    Ok(())
+}
 
 #[derive(Deserialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
@@ -26,6 +166,14 @@ struct Request {
 #[derive(Deserialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
 struct FileRequest {
+    #[serde(rename = "rootPath")]
+    _root_path: String,
+    files: Vec<Value>,
+}
+
+#[derive(Deserialize)]
+#[serde(rename_all = "camelCase", deny_unknown_fields)]
+struct ValidatedFileRequest {
     root_path: String,
     files: Vec<FileSourceRequest>,
 }
@@ -218,11 +366,17 @@ fn file_error(error: DocumentFileCompositionError) -> &'static str {
 }
 
 fn files_response(bytes: &[u8]) -> Result<Response, &'static str> {
+    validate_protocol_json(bytes)?;
     let request: FileRequest = serde_json::from_slice(bytes).map_err(|_| "adapterFailure")?;
     let graph_limits = DocumentCompositionLimits::default();
     if request.files.len() > graph_limits.maximum_definitions {
         return Err("fileLimit");
     }
+    // Values permit counting before source validation. Re-read the bounded original input so
+    // duplicate source fields, including escaped spellings, are not lost by Value objects.
+    drop(request);
+    let request: ValidatedFileRequest =
+        serde_json::from_slice(bytes).map_err(|_| "adapterFailure")?;
     let mut sources = Vec::with_capacity(request.files.len());
     for source in request.files {
         sources.push(DocumentFileSource {
@@ -338,6 +492,7 @@ fn composition_graph_response(graph: &DocumentComposition) -> Result<Response, &
 }
 
 fn response(line: &[u8]) -> Result<Response, &'static str> {
+    validate_protocol_json(line)?;
     let request: Request = serde_json::from_slice(line).map_err(|_| "adapterFailure")?;
     if request.schema != "3md-interchange-1" {
         return Err("adapterFailure");
@@ -571,9 +726,64 @@ mod tests {
             Err("invalidText")
         ));
         let sources: Vec<_> = (0..1025)
-            .map(|index| json!({"path":format!("file-{index}"),"bytesHex":""}))
+            .map(|index| json!({"path":format!("file-{index}"),"bytesHex":if index == 0 { "invalid" } else { "" }}))
             .collect();
         let oversized = serde_json::to_vec(&json!({"rootPath":"root", "files":sources})).unwrap();
         assert!(matches!(files_response(&oversized), Err("fileLimit")));
+    }
+
+    #[test]
+    fn supplied_file_count_precedes_source_shape_validation_but_not_top_level_validation() {
+        for first in [
+            json!({"path":"root", "bytesHex":"", "unknown":0}),
+            json!({"path":1, "bytesHex":""}),
+            json!(1),
+            json!(true),
+            Value::Null,
+        ] {
+            let bounded =
+                serde_json::to_vec(&json!({"rootPath":"root", "files":[first.clone()]})).unwrap();
+            assert!(matches!(files_response(&bounded), Err("adapterFailure")));
+            let mut sources: Vec<_> = (0..1025)
+                .map(|index| json!({"path":format!("file-{index}"), "bytesHex":""}))
+                .collect();
+            sources[0] = first;
+            let oversized =
+                serde_json::to_vec(&json!({"rootPath":"root", "files":sources})).unwrap();
+            assert!(matches!(files_response(&oversized), Err("fileLimit")));
+            let invalid_top =
+                serde_json::to_vec(&json!({"rootPath":"root", "files":sources, "unknown":0}))
+                    .unwrap();
+            assert!(matches!(
+                files_response(&invalid_top),
+                Err("adapterFailure")
+            ));
+        }
+    }
+
+    #[test]
+    fn malformed_protocol_keys_numbers_and_depth_precede_source_count() {
+        let remainder = (0..1024)
+            .map(|index| format!(r#"{{"path":"f{index}","bytesHex":""}}"#))
+            .collect::<Vec<_>>()
+            .join(",");
+        let input = |first: &str| format!(r#"{{"rootPath":"root","files":[{first},{remainder}]}}"#);
+        for first in [
+            r#"{"path":"root","path":"other","bytesHex":""}"#,
+            r#"{"path":"root","\u0070ath":"other","bytesHex":""}"#,
+            r#"{"path":"root","bytesHex":"","é":0,"e\u0301":0}"#,
+            r#"{"path":1e309,"bytesHex":""}"#,
+        ] {
+            assert!(matches!(
+                files_response(input(first).as_bytes()),
+                Err("adapterFailure")
+            ));
+        }
+        for (depth, expected) in [(64, "fileLimit"), (65, "adapterFailure")] {
+            let first = format!("{}0{}", "[".repeat(depth - 2), "]".repeat(depth - 2));
+            assert!(
+                matches!(files_response(input(&first).as_bytes()), Err(error) if error == expected)
+            );
+        }
     }
 }

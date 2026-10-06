@@ -89,6 +89,10 @@ impl From<DocumentCompositionError> for DocumentFileCompositionError {
 }
 type Result<T> = std::result::Result<T, DocumentFileCompositionError>;
 
+// Independent discovery safety ceiling. Embedded disconnected entries do not extend the final
+// root entry path; the caller's maximum_depth applies after remapping the complete entry graph.
+const MAXIMUM_FILE_DISCOVERY_DEPTH: usize = 64;
+
 /// Read a strict glyph-to-filename ledger. Filenames are interpreted only during explicit resolution.
 pub fn ledger(
     document: &Document,
@@ -212,14 +216,14 @@ impl Resolver<'_> {
             return Err(DocumentCompositionError::Cycle(path.into()).into());
         }
         if let Some(file) = self.files.get(path) {
-            if active_depth >= self.limits.maximum_depth
-                || file.depth > self.limits.maximum_depth - active_depth
+            if active_depth >= MAXIMUM_FILE_DISCOVERY_DEPTH
+                || file.depth > MAXIMUM_FILE_DISCOVERY_DEPTH - active_depth
             {
                 return Err(DocumentCompositionError::DepthExceeded.into());
             }
             return Ok(file.depth);
         }
-        if active_depth >= self.limits.maximum_depth {
+        if active_depth >= MAXIMUM_FILE_DISCOVERY_DEPTH {
             return Err(DocumentCompositionError::DepthExceeded.into());
         }
         let source = self
@@ -280,7 +284,7 @@ impl Resolver<'_> {
                 // Match the other ports' immediate DFS in local-ID then glyph order.
                 let child_depth = self.visit(&reference.source, active_depth + 1)?;
                 depth = depth.max(child_depth + 1);
-                if depth > self.limits.maximum_depth {
+                if depth > MAXIMUM_FILE_DISCOVERY_DEPTH {
                     return Err(DocumentCompositionError::DepthExceeded.into());
                 }
             }

@@ -1,0 +1,9 @@
+PASS text bundle, exit 0: Bundled 4 files, 4 definitions, 1641 bytes: /private/tmp/3md-linked-host-probe-FF9DBCFA-1674-4AEC-A915-3693C297B399/portable.3md
+PASS binary bundle, exit 0: Bundled 4 files, 4 definitions, 1681 bytes: /private/tmp/3md-linked-host-probe-FF9DBCFA-1674-4AEC-A915-3693C297B399/portable.3mdb
+PASS refuse existing output, exit 1: Interchange failed: Cannot publish new bundle: File exists
+PASS root directory, exit 0: Bundled 4 files, 4 definitions, 2036 bytes: /private/tmp/3md-linked-host-probe-FF9DBCFA-1674-4AEC-A915-3693C297B399/from-root.3md
+PASS refuse source symlink, exit 1: Interchange failed: Cannot open source: scene.3md: Too many levels of symbolic links
+PASS refuse FIFO without blocking, exit 1: Interchange failed: Choose regular source files without symlinks: scene.3md
+PASS refuse output directory, exit 1: Interchange failed: Cannot publish new bundle: File exists
+PASS refuse output symlink, exit 1: Interchange failed: Cannot publish new bundle: File exists
+Artifacts retained: /private/tmp/3md-linked-host-probe-FF9DBCFA-1674-4AEC-A915-3693C297B399
