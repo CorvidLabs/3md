@@ -6,6 +6,10 @@ name: publish
 # time). Authenticates via npm Trusted Publishers (OIDC) with provenance, so no
 # NPM_TOKEN secret is needed. OIDC publishing requires npm >= 11.5.1, which is
 # newer than the npm that ships with Node 20, so each job upgrades npm first.
+# The upgrade is pinned to npm 11: npm@latest is now npm 12, whose engines
+# (^22.22.2 || ^24.15.0 || >=26.0.0) exclude the Node 20 used here. v1.8.1 was
+# published with npm 11 on Node 20. Moving both jobs to Node 24 is a separate,
+# separately verified change.
 
 on:
   release:
@@ -32,7 +36,7 @@ jobs:
           registry-url: "https://registry.npmjs.org"
           scope: "@corvidlabs"
       - name: Upgrade npm for OIDC trusted publishing
-        run: npm install -g npm@latest && npm --version
+        run: npm install -g "npm@^11.5.1" && npm --version
       - run: bun install --frozen-lockfile
       - name: Sync package version to the release tag
         if: github.event_name == 'release'
@@ -60,9 +64,11 @@ jobs:
           registry-url: "https://registry.npmjs.org"
           scope: "@corvidlabs"
       - name: Upgrade npm for OIDC trusted publishing
-        run: npm install -g npm@latest && npm --version
-      # Installs typescript for the .d.ts build. The bundle imports the parser
-      # from source (../../js/src), so it needs no other dependency.
+        run: npm install -g "npm@^11.5.1" && npm --version
+      # The element has no dependencies: the bundle imports the parser from
+      # source (../../js/src) and the .d.ts is a hand-authored copy, so this
+      # install is a no-op kept for parity. It never reads the parser package
+      # from the registry, so it cannot race the parallel npm job.
       - run: bun install
       - name: Sync package version to the release tag
         if: github.event_name == 'release'
