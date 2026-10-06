@@ -1,6 +1,6 @@
 ---
 id: cover-the-derived-web-bundle-refreshed-by-the-linked-composition-hardening
-state: approved
+state: implementing
 type: operations
 base_commit: 17d81597cc361ea885ea0e38112e3ec1e11e21f4
 ---
