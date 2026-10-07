@@ -39,6 +39,10 @@ and scrub through them.
   <a href="https://corvidlabs.github.io/3md/"><img src="docs/demo.png" alt="The 3md interactive demo: planes stacked along the Z axis with a synced source view" width="760"></a>
 </p>
 
+The pictures below compare the readable text with the two binary payloads,
+including a 1 GiB and a 10 GiB input. Those two are refused. The ceiling is
+64 MiB.
+
 ```
 ---
 3md: 0.1
@@ -83,6 +87,142 @@ stack of frames. 3md keeps Markdown's plain-text simplicity and adds one axis,
 with the author declaring what that axis means. Nothing comparable ships today;
 the closest prior art renders existing Markdown into 3D rather than giving the
 text a depth dimension of its own.
+
+## Text, kind 1, and kind 2
+
+A `.3md` file stays text. `.binary` writes payload kind 2: the same document as
+structured records inside a 40-byte header. `encodeTextContainer` writes payload
+kind 1: that same header in front of the canonical UTF-8. Kind 1 is what a
+ThreeMD 2.0 reader accepts. A 2.0 reader stops on kind 2 with
+`unsupportedPayloadKind(2)` before it checks the CRC.
+
+<p align="center">
+  <img src="docs/readme/z-axis.gif" alt="Animation of Examples/animation.3md: four frames of a bouncing dot, then the text, kind 1, and kind 2 byte lengths 415, 455, and 351" width="760">
+</p>
+
+```mermaid
+flowchart LR
+  source[".3md text"] --> parsed[Parse]
+  parsed --> document[Document]
+  document --> textOut["Canonical text"]
+  document --> kind1["Kind 1 container"]
+  document --> kind2["Kind 2 container"]
+  kind1 --> both["2.0 and 2.1 readers"]
+  kind2 --> current["2.1 readers"]
+  kind2 --> legacy["2.0 reader: unsupportedPayloadKind"]
+```
+
+```mermaid
+flowchart TD
+  bytes[Input bytes] --> length{Longer than 64 MiB?}
+  length -->|yes| refused[oversizedInput]
+  length -->|no| magic{Magic is 3mdbin CR LF?}
+  magic -->|no| asText[Decode as text]
+  magic -->|yes| kind{Payload kind}
+  kind -->|1| asKind1[Canonical UTF-8 payload]
+  kind -->|2| asKind2[Structured records]
+  kind -->|other| bad[unsupportedPayloadKind]
+```
+
+<p align="center">
+  <img src="docs/readme/container-header.png" alt="The 40-byte version 1 header: magic, version, kind, compression, flags, reserved, encoded length, decoded length, and CRC-32" width="880">
+</p>
+
+Kind 2 removes repeated syntax. It is the record form of the document. On the
+293 files in `Examples/`, it is smaller than the canonical text every time, and
+the whole corpus shrinks by 31,645 bytes (2.7%). A page of repeated characters
+barely changes size. A tiny file can grow by a few bytes.
+
+<p align="center">
+  <img src="docs/readme/small-documents.png" alt="Grouped bars of canonical text, kind 1, and kind 2 bytes for canopy, animation, planner, grove, poem, and helix" width="880">
+</p>
+
+| Document | Canonical text | Kind 1 | Kind 2 |
+| --- | ---: | ---: | ---: |
+| [canopy.3md](Examples/Extensions/canopy.3md) | 111 | 151 | 101 |
+| [animation.3md](Examples/animation.3md) | 415 | 455 | 351 |
+| [daily-planner.3md](Examples/daily-planner.3md) | 436 | 476 | 392 |
+| [shared-grove.3md](Examples/Extensions/shared-grove.3md) | 685 | 725 | 686 |
+| [kinetic-erasure-poem.3md](Examples/kinetic-erasure-poem.3md) | 940 | 980 | 751 |
+| [dna-double-helix.3md](Examples/dna-double-helix.3md) | 2,358 | 2,398 | 1,995 |
+| [conways-game-of-life.3md](Examples/conways-game-of-life.3md) | 17,509 | 17,549 | 17,255 |
+
+Kind 1 is the canonical text plus the 40-byte header on every row. Shared grove
+is the row where kind 2 is one byte larger than the text and 39 bytes smaller
+than kind 1. The poem is the largest relative drop in the example set: 751 /
+940 = 0.799. Conway, the biggest example file, drops 254 bytes.
+
+<p align="center">
+  <img src="docs/readme/corpus-bytes.png" alt="Canonical, kind 1, and kind 2 bytes for the 293 examples, synthetic-2000, and sculpt-4096" width="880">
+</p>
+
+<p align="center">
+  <img src="docs/readme/size-ratio.png" alt="Histogram of kind 2 divided by canonical text for 293 example files. Median 0.974, smallest 0.799, largest 0.992" width="880">
+</p>
+
+Those corpus totals are the committed size gate in
+[conformance/structured/sizes.json](conformance/structured/sizes.json). The test
+`g6_kind_2_sizes_match_sizes_json` checks them.
+
+| Input | Canonical text | Kind 1 | Kind 2 | Kind 2 / text |
+| --- | ---: | ---: | ---: | ---: |
+| 293 example files | 1,188,086 | 1,199,806 | 1,156,441 | 0.973 |
+| synthetic-2000 | 4,037,480 | 4,037,520 | 3,998,362 | 0.990 |
+| sculpt-4096, 32 by 20 | 3,031,345 | 3,031,385 | 2,934,090 | 0.968 |
+
+synthetic-2000 and sculpt-4096 are the pinned generators in `scripts/bench/`.
+The files are not committed. The sizes are.
+
+### One local timing run
+
+The release gate for speed is
+[docs/design/threemd-2.1/perf-gate.md](docs/design/threemd-2.1/perf-gate.md).
+It wants three processes per language, on named inputs, and it is still open.
+The chart below is one Rust 1.98.0 release process on an Apple M1 Ultra
+(macOS 26.5.2, 64 GB). Each bar is the median of five calls after one warmup.
+The documents are planes of the letter `a`, generated for this page.
+
+<p align="center">
+  <img src="docs/readme/decode-time.png" alt="Log-scale decode times. At 8 planes of 6 MiB, text decode is 104.403 ms and kind 2 decode is 19.287 ms" width="880">
+</p>
+
+| Shape | Canonical bytes | Kind 2 bytes | Text decode | Kind 2 decode |
+| --- | ---: | ---: | ---: | ---: |
+| 64 planes of 256 `a` | 17,318 | 16,763 | 0.078 ms | 0.012 ms |
+| 512 planes of 256 `a` | 138,690 | 134,140 | 0.591 ms | 0.091 ms |
+| 4,096 planes of 256 `a` | 1,113,050 | 1,073,148 | 4.649 ms | 0.690 ms |
+| 8 planes of 1 MiB | 8,388,760 | 8,388,715 | 17.322 ms | 3.139 ms |
+| 8 planes of 6 MiB | 50,331,800 | 50,331,763 | 104.403 ms | 19.287 ms |
+
+At 50,331,800 canonical bytes, kind 2 is 37 bytes smaller. The decode call took
+19.287 ms against 104.403 ms for the text. A one-plane document of 64 `a`
+characters goes the other way on size: 125 canonical bytes, 127 kind 2 bytes.
+
+### Where 1 GiB and 10 GiB stop
+
+The default ceiling is 64 MiB encoded and 64 MiB decoded
+(67,108,864 bytes). Callers can lower that. They cannot raise it. A record,
+line, scalar, preamble, or plane body defaults to 8 MiB. Planes default to
+65,536. Physical lines default to 100,000.
+
+<p align="center">
+  <img src="docs/readme/size-ceiling.png" alt="Four measured refusals: 64 MiB returns oversizedRecord in 4.2 ms; 64 MiB plus 1 byte, 1 GiB, and 10 GiB return oversizedInput in 4 ns" width="880">
+</p>
+
+| Buffer of the byte `x` | Library result | What the call did |
+| --- | --- | --- |
+| 67,108,864 bytes (64 MiB) | `oversizedRecord` in 4.2 ms | The length is allowed. One 64 MiB line is past the 8 MiB record limit. One call. |
+| 67,108,865 bytes | `oversizedInput` | Length check only. |
+| 1,073,741,824 bytes (1 GiB) | `oversizedInput` | Same length check. Filling the buffer took 90 ms. |
+| 10,737,418,240 bytes (10 GiB) | `oversizedInput` | Same length check. Filling the buffer took 1.27 s. |
+
+The 4 ns figure is the mean of 10,000 `decode` calls after the buffer already
+existed. It was 0.004 µs at 64 MiB + 1, at 1 GiB, and at 10 GiB. The check
+reads the length. It does not read the payload. Holding a 10 GiB buffer is the
+caller's cost. The library does not store that buffer as a document.
+
+An 8 MiB plane of `a` does encode. Canonical text for that one plane is
+8,388,669 bytes, and kind 2 is 8,388,674 bytes.
 
 ## Installation
 
@@ -189,8 +329,10 @@ let text = Serializer().render(document)
 
 ## Binary storage and reusable documents
 
-ThreeMD 2.0.0 provides bounded general-document storage and self-contained
-composition in Swift, TypeScript and Rust. The examples below use Swift; see
+The byte counts, the GIF, and the 1 GiB / 10 GiB refusal are in
+[Text, kind 1, and kind 2](#text-kind-1-and-kind-2). ThreeMD 2.0.0 provides
+bounded general-document storage and self-contained composition in Swift,
+TypeScript and Rust. The examples below use Swift; see
 [EDITING-RELEASE.md](docs/EDITING-RELEASE.md) for the TypeScript and Rust
 equivalents. The existing text parsers, command-line tool and hosted viewer
 retain their current text behavior.
@@ -374,12 +516,11 @@ The 1.0 text grammar remains frozen. Specification 1.1 adds independently
 versioned binary storage, composition and linked file authoring without changing
 that grammar. ThreeMD 2.0.0, released on 2026-10-06, implements those extensions
 in Swift, TypeScript and Rust; the package version is separate from the format
-version. Specification 1.2, prepared on `leif/structured-binary-2.1`, adds
-payload kind 2 inside that same container. Package manifests on this branch
-read 2.1.0, and the `v2.1.0` tag is not cut. See the
-[2.1 preparation notes](docs/RELEASE-2.1.0.md). Older `3md: 0.1` documents
-remain valid: the parser is version-lenient and never rejects a document by
-its version string.
+version. Specification 1.2 is on main (pull request 72). It adds payload kind 2
+inside that same container. Package manifests read 2.1.0. The `v2.1.0` tag is
+not cut. See the [2.1 preparation notes](docs/RELEASE-2.1.0.md). Older
+`3md: 0.1` documents remain valid: the parser is version-lenient and never
+rejects a document by its version string.
 
 ## License
 
