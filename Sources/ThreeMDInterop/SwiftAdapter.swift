@@ -20,6 +20,7 @@ private func documentInterchange(_ data: Data) throws -> InterchangeResponse {
     let document = try DocumentStorageCodec.decode(data)
     let canonical = try DocumentStorageCodec.encode(document)
     let binary = try DocumentStorageCodec.encode(document, format: .binary(compression: .none))
+    let textContainer = try DocumentStorageCodec.encodeTextContainer(document)
     let rawCanonical: Data?
     if DocumentStorageCodec.isBinary(data) {
         rawCanonical = nil
@@ -54,6 +55,7 @@ private func documentInterchange(_ data: Data) throws -> InterchangeResponse {
         ok: true,
         canonicalHex: canonical.hex,
         binaryHex: binary.hex,
+        textContainerHex: textContainer.hex,
         legacyHex: Data(Serializer().render(document).utf8).hex,
         rawCanonicalHex: rawCanonical?.hex,
         revisionHex: Data(snapshot.revision.canonicalContent.utf8).hex,
@@ -152,16 +154,19 @@ private func requestedIntegers(_ value: JSONValue?, names: Set<String>) throws -
 
 private func compositionResponse(_ composition: DocumentComposition) throws -> InterchangeResponse {
     let canonical = try DocumentCompositionCodec.encode(composition)
-    let binary = try DocumentStorageCodec.encode(
-        DocumentCompositionCodec.document(for: composition),
-        format: .binary(compression: .none),
-        limits: DocumentDecodeLimits(
-            maximumEncodedBytes: DocumentCompositionLimits.standard.maximumProfileBytes,
-            maximumDecodedBytes: DocumentCompositionLimits.standard.maximumProfileBytes,
-            maximumPlanes: 1,
-            maximumRecordBytes: DocumentCompositionLimits.standard.maximumProfileBytes
-        )
+    let profileLimits = try DocumentDecodeLimits(
+        maximumEncodedBytes: DocumentCompositionLimits.standard.maximumProfileBytes,
+        maximumDecodedBytes: DocumentCompositionLimits.standard.maximumProfileBytes,
+        maximumPlanes: 1,
+        maximumRecordBytes: DocumentCompositionLimits.standard.maximumProfileBytes
     )
+    let profile = try DocumentCompositionCodec.document(for: composition)
+    let binary = try DocumentStorageCodec.encode(
+        profile,
+        format: .binary(compression: .none),
+        limits: profileLimits
+    )
+    let textContainer = try DocumentStorageCodec.encodeTextContainer(profile, limits: profileLimits)
     let adopted = try DocumentIdentity.adopt(composition)
     let snapshot = try DocumentCompositionSnapshot(adopted)
     let root = adopted.rootEntry
@@ -201,6 +206,7 @@ private func compositionResponse(_ composition: DocumentComposition) throws -> I
         ok: true,
         canonicalHex: canonical.hex,
         binaryHex: binary.hex,
+        textContainerHex: textContainer.hex,
         revisionHex: Data(snapshot.revision.canonicalContent.utf8).hex,
         adoptedHex: try DocumentCompositionCodec.encode(adopted).hex,
         editedHex: try DocumentCompositionCodec.encode(edited.composition).hex,

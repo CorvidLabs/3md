@@ -73,6 +73,12 @@ Source lives in `element/src/three-md.ts`, a single module:
   conform to it but does not implement its grammar.
 - `uitests/component.spec.mjs` is the cross-browser test suite that guards the
   element's invariants in Chromium and WebKit.
+- `scripts/check-element-bundle.mjs` checks that the built bundle matches the
+  committed copies and, since ThreeMD 2.1, that it carries no storage code and
+  stays at most 50,000 bytes. `element/src/three-md.ts` imports only `parse`, but
+  `js/src/index.ts` re-exports the storage classes, so the library's storage
+  modules are in the element's module graph and are removed only because they
+  have no top-level side effects.
 
 ## Design Decisions
 

@@ -72,6 +72,19 @@ fn graph_source(path: &str, graph: &DocumentComposition, binary: bool) -> Docume
         data,
     }
 }
+/// The profile envelope as payload kind 1, the ThreeMD 2.0 binary bundle.
+fn text_container_graph_source(path: &str, graph: &DocumentComposition) -> DocumentFileSource {
+    DocumentFileSource {
+        path: path.into(),
+        data: storage::encode_text_container(
+            &composition::document(graph, &graph_limits(), &limits(), &options()).unwrap(),
+            DocumentCompression::None,
+            &limits(),
+            &options(),
+        )
+        .unwrap(),
+    }
+}
 
 #[test]
 fn repeated_links_are_deterministic_and_preserve_the_ordinary_document() {
@@ -182,23 +195,51 @@ fn binary_children_and_nested_bundles_preserve_unused_entries_and_reference_ids(
         ),
     ]);
     let external = document("External", None);
-    let binary = storage::encode(
+    // Children and bundles as text, payload kind 2 (`Binary`) and payload kind 1.
+    let structured = storage::encode(
         &external,
         DocumentStorageFormat::Binary(DocumentCompression::None),
         &limits(),
         &options(),
     )
     .unwrap();
-    for binary_bundle in [false, true] {
+    let text_container =
+        storage::encode_text_container(&external, DocumentCompression::None, &limits(), &options())
+            .unwrap();
+    assert_eq!(
+        storage::container_info(&structured)
+            .unwrap()
+            .unwrap()
+            .payload_kind,
+        2
+    );
+    assert_eq!(
+        storage::container_info(&text_container)
+            .unwrap()
+            .unwrap()
+            .payload_kind,
+        1
+    );
+    for (bundle_format, leaf) in [
+        (0, &structured),
+        (1, &structured),
+        (2, &text_container),
+        (1, &text_container),
+    ] {
+        let bundle_source = match bundle_format {
+            0 => graph_source("bundles/child.data", &bundle, false),
+            1 => graph_source("bundles/child.data", &bundle, true),
+            _ => text_container_graph_source("bundles/child.data", &bundle),
+        };
         let sources = vec![
             source(
                 "root.3md",
                 &document("Parent", Some(r#"{"1":"bundles/child.data"}"#)),
             ),
-            graph_source("bundles/child.data", &bundle, binary_bundle),
+            bundle_source,
             DocumentFileSource {
                 path: "leaf.3mdb".into(),
-                data: binary.clone(),
+                data: leaf.clone(),
             },
         ];
         let result = resolve("root.3md", &sources).unwrap();
@@ -223,11 +264,16 @@ fn binary_children_and_nested_bundles_preserve_unused_entries_and_reference_ids(
             composition::decode(&text, &graph_limits(), &limits(), &options()).unwrap(),
             result.composition
         );
-        let binary = graph_source("detached", &result.composition, true).data;
-        assert_eq!(
-            composition::decode(&binary, &graph_limits(), &limits(), &options()).unwrap(),
-            result.composition
-        );
+        for detached in [
+            graph_source("detached", &result.composition, true),
+            text_container_graph_source("detached", &result.composition),
+        ] {
+            assert_eq!(
+                composition::decode(&detached.data, &graph_limits(), &limits(), &options())
+                    .unwrap(),
+                result.composition
+            );
+        }
     }
 }
 
@@ -599,13 +645,37 @@ fn final_depth_checks_include_cached_dependencies_and_cancelled_operations_are_a
 #[test]
 fn outer_recognition_preserves_child_byte_and_line_policy_precedence_over_planes() {
     let value = parse("---\n3md: 1\naxis: space\n---\n@plane z=0\nA\n@plane z=1\nB\n").unwrap();
-    for format in [
-        DocumentStorageFormat::Text,
-        DocumentStorageFormat::Binary(DocumentCompression::None),
+    // Text and payload kind 1 check lines while decoding text; payload kind 2 checks the
+    // plane count at S8, before the line count at L5.
+    for (data, planes_before_lines) in [
+        (
+            storage::encode(&value, DocumentStorageFormat::Text, &limits(), &options()).unwrap(),
+            false,
+        ),
+        (
+            storage::encode_text_container(
+                &value,
+                DocumentCompression::None,
+                &limits(),
+                &options(),
+            )
+            .unwrap(),
+            false,
+        ),
+        (
+            storage::encode(
+                &value,
+                DocumentStorageFormat::Binary(DocumentCompression::None),
+                &limits(),
+                &options(),
+            )
+            .unwrap(),
+            true,
+        ),
     ] {
         let input = DocumentFileSource {
             path: "root".into(),
-            data: storage::encode(&value, format, &limits(), &options()).unwrap(),
+            data,
         };
         let policies = [
             (
@@ -630,7 +700,11 @@ fn outer_recognition_preserves_child_byte_and_line_policy_precedence_over_planes
                     maximum_planes: 1,
                     ..limits()
                 },
-                DocumentStorageError::TooManyLines,
+                if planes_before_lines {
+                    DocumentStorageError::TooManyPlanes
+                } else {
+                    DocumentStorageError::TooManyLines
+                },
             ),
         ];
         for (policy, expected) in policies {

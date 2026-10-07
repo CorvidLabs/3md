@@ -83,6 +83,18 @@ Grouped by behavior, with the asserting check of each test.
 - `emits planechange when stepping` - clicking the next part dispatches a
   `planechange` event whose detail has `index === 1` and `z === 1`.
 
+#### Bundle invariant (no storage code, size budget)
+
+- `scripts/check-element-bundle.mjs` (the `element-bundle` step of
+  `fledge lanes run verify`) builds the element exactly as the package does and
+  checks that the fresh build equals `web/assets/three-md.js` and, when present,
+  `element/dist/three-md.js`. ThreeMD 2.1 adds two assertions on the fresh
+  build: it contains none of `TextDecoder`, `Int32Array`, `Float32Array`,
+  `DocumentStorageError`, `Scalar fields cannot contain`, `structured payload`
+  and `getBigUint64`, and its size is at most 50,000 bytes (2.0.0: 48,816
+  bytes). A storage module with a top-level side effect, or a parser import edge
+  into `storage.ts`, fails the step.
+
 ### Gaps and future test ideas
 
 The suite is invariant-focused and intentionally narrow. Known gaps:

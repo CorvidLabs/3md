@@ -26,11 +26,11 @@ available published version with:
 bun add @corvidlabs/three-md-element
 ```
 
-Version 2.0.0 is published to npm by the repository's release workflow. An
-older `@corvidlabs` scope mapped to GitHub Packages must be changed when adopting
-a release published to npm. The element remains a text renderer, with no
-binary-file, composition, linked-file or editing UI. See the
-[release guide](../docs/RELEASE-2.0.0.md).
+The package version on this branch is 2.1.0. npm still serves 2.0.0 until the
+GitHub release publishes it. An older `@corvidlabs` scope mapped to GitHub
+Packages must be changed when adopting a release published to npm. The element
+remains a text renderer, with no binary-file, composition, linked-file or
+editing UI. See the [2.1 preparation notes](../docs/RELEASE-2.1.0.md).
 
 The published package is a single self-contained module (the parser is bundled
 in, no other dependency), so you can also vendor `dist/three-md.js` and load it

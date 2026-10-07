@@ -1,5 +1,11 @@
 # 3md
 
+## 2.1.0 preparation
+
+On 2026-10-07 Leif approved the structured-payload library work and asked for a pull request, then preparation for 2.1. The branch is `leif/structured-binary-2.1` (pull request 72). Package manifests in this preparation read 2.1.0. The tag, GitHub release, npm publish, and crate publish are not part of this request.
+
+The approved SpecSync change is `add-a-structured-binary-document-payload-kind-2-to-threemd-2-1-in-swift-typescript-and-rust-with-fast-checksums-cli`. The library ports, fixtures, and SPEC 1.2 text are on the branch. Still open before a tag: CLI binary input, `convert` and `inspect`, interchange protocol 2, the 2.0.0 compatibility job, the CI performance gate, release evidence, and `fledge trust verify` on the exact tip. This preparation does not merge, tag, publish, or weaken a trust gate.
+
 ## Linked composition parity hardening after 2.0.0
 
 On 2026-10-06 Leif directly requested continued 3md development and release preparation through implementation, verification and feature-branch PRs, which Leif will merge. When two sessions overlapped, Leif chose that the release session owns the 2.0.0 release and this session delivers the linked-composition parity hardening as a follow-up PR after the tag. Asked directly, Leif also approved running the suites on Linux through Docker, adding a Linux CI job, and recording a signed `agent:claude` attestation with the local key only when its public key matches the pinned trusted key.

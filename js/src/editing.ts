@@ -2,7 +2,8 @@ import { ParseError, type Document, type Plane } from "./index.js";
 import { DocumentComposition, DocumentCompositionCodec, DocumentCompositionError, DocumentCompositionLimits,
   type DocumentEntry, type DocumentReference } from "./composition.js";
 import { boundedInteger, checkCancellation, frozenDocument, InvalidUnicodeError, utf8Length, validID } from "./portable.js";
-import { canonicalNumber, DocumentDecodeLimits, DocumentStorageCodec, DocumentStorageError, DocumentStorageFormat } from "./storage.js";
+import { canonicalNumber } from "./number.js";
+import { DocumentDecodeLimits, DocumentStorageCodec, DocumentStorageError, DocumentStorageFormat } from "./storage.js";
 
 export type DocumentDiagnosticCode = "invalidIdentity" | "duplicateIdentity" | "missingIdentity" | "missingTarget" |
   "identityChanged" | "staleRevision" | "invalidIndex" | "duplicatePosition" | "invalidDocument" |

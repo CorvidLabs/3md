@@ -36,19 +36,26 @@ export class InvalidUnicodeError extends Error {
 
 /** Counts without allocating an encoded copy and rejects unpaired UTF-16 surrogates. */
 export function utf8Length(text: string, signal?: AbortSignal): number {
+  const length = text.length;
   let count = 0;
-  for (let index = 0; index < text.length; index += 1) {
-    if (index % 4096 === 0) checkCancellation(signal);
-    const unit = text.charCodeAt(index);
-    if (unit < 0x80) count += 1;
-    else if (unit < 0x800) count += 2;
-    else if (unit >= 0xd800 && unit <= 0xdbff) {
-      const next = text.charCodeAt(index + 1);
-      if (!(next >= 0xdc00 && next <= 0xdfff)) throw new InvalidUnicodeError();
-      count += 4;
+  let index = 0;
+  // Cancellation is checked before every block of 4,096 code units; the inner loop has no per-unit check.
+  while (index < length) {
+    checkCancellation(signal);
+    const end = index + 4096 < length ? index + 4096 : length;
+    while (index < end) {
+      const unit = text.charCodeAt(index);
       index += 1;
-    } else if (unit >= 0xdc00 && unit <= 0xdfff) throw new InvalidUnicodeError();
-    else count += 3;
+      if (unit < 0x80) count += 1;
+      else if (unit < 0x800) count += 2;
+      else if (unit >= 0xd800 && unit <= 0xdbff) {
+        const next = text.charCodeAt(index);
+        if (!(next >= 0xdc00 && next <= 0xdfff)) throw new InvalidUnicodeError();
+        count += 4;
+        index += 1;
+      } else if (unit >= 0xdc00 && unit <= 0xdfff) throw new InvalidUnicodeError();
+      else count += 3;
+    }
   }
   return count;
 }

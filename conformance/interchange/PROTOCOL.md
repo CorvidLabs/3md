@@ -76,7 +76,8 @@ Successful response fields:
 
 - `ok`: true.
 - `canonicalHex`: canonical document text or composition profile UTF-8 bytes.
-- `binaryHex`: the same document/profile wrapped in uncompressed binary.
+- `binaryHex`: the same document/profile as uncompressed payload kind 2.
+- `textContainerHex`: payload kind 1, the ThreeMD 2.0 binary bytes. Catalog `binaryFile` anchors are still these bytes.
 - `legacyHex`: legacy Serializer/serialize output for documents, null for composition.
 - `rawCanonicalHex`: document source parsed through raw Parser/parse then canonical storage encoded when the input is text; null for binary/composition. This catches disagreements masked by bounded decoder reconstruction.
 - `revisionHex`: exact UTF-8 revision of the explicitly adopted snapshot.

@@ -18,9 +18,10 @@ public struct Axis: RawRepresentable, Sendable, Hashable, Codable {
 
     /// Creates an axis from a raw identifier.
     /// - Parameter rawValue: The axis identifier. Leading and trailing
-    ///   whitespace is trimmed; the value is lowercased for consistency.
+    ///   whitespace (the frozen set of SPEC 11.3.6) is trimmed; the value is
+    ///   lowercased for consistency.
     public init(rawValue: String) {
-        self.rawValue = rawValue.trimmingCharacters(in: .whitespaces).lowercased()
+        self.rawValue = ThreeMDWhitespace.trimmed(rawValue).lowercased()
     }
 
     // MARK: - Known Axes

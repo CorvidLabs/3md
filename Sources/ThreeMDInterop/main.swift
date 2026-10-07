@@ -338,16 +338,17 @@ private final class InterchangeCoordinator {
             return
         }
         guard reply.ok, reply.error == nil, reply.canonicalHex != nil, reply.binaryHex != nil,
-            reply.adoptedHex != nil, reply.editedHex != nil, reply.semantic != nil, reply.staleRejected == true,
-            reply.revisionHex == reply.adoptedHex
+            reply.textContainerHex != nil, reply.adoptedHex != nil, reply.editedHex != nil,
+            reply.semantic != nil, reply.staleRejected == true, reply.revisionHex == reply.adoptedHex
         else {
             throw InterchangeFailure.invalid("\(label): invalid/incomplete producer response \(reply.error ?? "")")
         }
         if let expected = item.expectedCanonical, reply.canonicalHex != expected {
             throw InterchangeFailure.invalid("\(label): fixed canonical bytes differ")
         }
-        if let expected = item.expectedBinary, reply.binaryHex != expected {
-            throw InterchangeFailure.invalid("\(label): fixed binary bytes differ")
+        // binaryFile is still the kind-1 anchor. binaryHex is payload kind 2.
+        if let expected = item.expectedBinary, reply.textContainerHex != expected {
+            throw InterchangeFailure.invalid("\(label): fixed text-container bytes differ")
         }
         if let expected = item.expectedSemantic, reply.semantic != expected {
             throw InterchangeFailure.invalid("\(label): frozen fixture semantics changed")
@@ -372,7 +373,9 @@ private final class InterchangeCoordinator {
             throw InterchangeFailure.invalid("\(label): semantic content differs")
         }
         let fields: [(String, String?, String?)] = [
-            ("canonical", expected.canonicalHex, actual.canonicalHex), ("binary", expected.binaryHex, actual.binaryHex),
+            ("canonical", expected.canonicalHex, actual.canonicalHex),
+            ("binary", expected.binaryHex, actual.binaryHex),
+            ("textContainer", expected.textContainerHex, actual.textContainerHex),
             ("adopted", expected.adoptedHex, actual.adoptedHex), ("revision", expected.revisionHex, actual.revisionHex),
             ("edited", expected.editedHex, actual.editedHex),
         ]

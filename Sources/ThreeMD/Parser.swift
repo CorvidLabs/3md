@@ -78,10 +78,10 @@ public struct Parser: Sendable {
 
     private func extractFrontmatter(_ lines: inout [String]) throws -> Frontmatter {
         var index = lines.startIndex
-        while index < lines.endIndex, lines[index].trimmingCharacters(in: .whitespaces).isEmpty {
+        while index < lines.endIndex, ThreeMDWhitespace.isBlank(lines[index]) {
             index += 1
         }
-        guard index < lines.endIndex, lines[index].trimmingCharacters(in: .whitespaces) == "---" else {
+        guard index < lines.endIndex, ThreeMDWhitespace.trimmed(lines[index]) == "---" else {
             throw ParseError.missingFrontmatter
         }
 
@@ -89,7 +89,7 @@ public struct Parser: Sendable {
         var fields: [(key: String, value: String)] = []
 
         while index < lines.endIndex {
-            let trimmed = lines[index].trimmingCharacters(in: .whitespaces)
+            let trimmed = ThreeMDWhitespace.trimmed(lines[index])
             if trimmed == "---" {
                 lines = index + 1 < lines.endIndex ? Array(lines[(index + 1)...]) : []
                 return Frontmatter(fields: fields, bodyStartLine: index + 2)
@@ -98,9 +98,10 @@ public struct Parser: Sendable {
                 guard let separator = trimmed.unicodeScalars.firstIndex(of: ":") else {
                     throw ParseError.invalidFrontmatter("expected 'key: value', found '\(trimmed)'")
                 }
-                let key = String(trimmed[..<separator]).trimmingCharacters(in: .whitespaces)
-                let raw = String(trimmed[trimmed.unicodeScalars.index(after: separator)...])
-                    .trimmingCharacters(in: .whitespaces)
+                let key = ThreeMDWhitespace.trimmed(String(trimmed[..<separator]))
+                let raw = ThreeMDWhitespace.trimmed(
+                    String(trimmed[trimmed.unicodeScalars.index(after: separator)...])
+                )
                 fields.append((key: key, value: unquote(raw)))
             }
             index += 1
@@ -148,7 +149,7 @@ public struct Parser: Sendable {
 
         for (offset, raw) in lines.enumerated() {
             let lineNumber = bodyStartLine + offset
-            let trimmed = raw.trimmingCharacters(in: .whitespaces)
+            let trimmed = ThreeMDWhitespace.trimmed(raw)
 
             // A directive must begin at column 0 and sit outside a fenced code
             // block, so a `@plane` line inside ``` or ~~~ (or indented as a code
@@ -236,14 +237,14 @@ public struct Parser: Sendable {
     }
 
     private func parseDirective(_ trimmed: String, line: Int) throws -> [String: String] {
-        let remainder = String(trimmed.dropFirst("@plane".count)).trimmingCharacters(in: .whitespaces)
+        let remainder = ThreeMDWhitespace.trimmed(String(trimmed.dropFirst("@plane".count)))
         return try tokenize(remainder, line: line).reduce(into: [:]) { result, token in
             guard let separator = token.unicodeScalars.firstIndex(of: "=") else {
                 throw ParseError.invalidPlaneDirective(line: line, detail: "expected key=value, found '\(token)'")
             }
-            let key = String(token[..<separator]).trimmingCharacters(in: .whitespaces).lowercased()
+            let key = ThreeMDWhitespace.trimmed(String(token[..<separator])).lowercased()
             let value = unquote(
-                String(token[token.unicodeScalars.index(after: separator)...]).trimmingCharacters(in: .whitespaces)
+                ThreeMDWhitespace.trimmed(String(token[token.unicodeScalars.index(after: separator)...]))
             )
             guard !key.isEmpty else {
                 throw ParseError.invalidPlaneDirective(line: line, detail: "empty attribute key in '\(token)'")
@@ -342,10 +343,10 @@ public struct Parser: Sendable {
     /// Returns `nil` when nothing but whitespace remains.
     private func collapse(_ lines: [String]) -> String? {
         var slice = lines[...]
-        while let first = slice.first, first.trimmingCharacters(in: .whitespaces).isEmpty {
+        while let first = slice.first, ThreeMDWhitespace.isBlank(first) {
             slice = slice.dropFirst()
         }
-        while let last = slice.last, last.trimmingCharacters(in: .whitespaces).isEmpty {
+        while let last = slice.last, ThreeMDWhitespace.isBlank(last) {
             slice = slice.dropLast()
         }
         guard !slice.isEmpty else { return nil }

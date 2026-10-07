@@ -275,6 +275,7 @@ struct Response {
     ok: bool,
     canonical_hex: String,
     binary_hex: String,
+    text_container_hex: String,
     legacy_hex: Option<String>,
     raw_canonical_hex: Option<String>,
     revision_hex: String,
@@ -362,6 +363,9 @@ fn document_response(bytes: &[u8]) -> Result<Response, &'static str> {
         &options,
     )
     .map_err(|error| error.code())?;
+    let text_container =
+        storage::encode_text_container(&document, DocumentCompression::None, &limits, &options)
+            .map_err(|error| error.code())?;
     let raw_canonical_hex = if storage::is_binary(bytes) {
         None
     } else {
@@ -418,6 +422,7 @@ fn document_response(bytes: &[u8]) -> Result<Response, &'static str> {
         ok: true,
         canonical_hex: hex(&canonical),
         binary_hex: hex(&binary),
+        text_container_hex: hex(&text_container),
         legacy_hex: Some(hex(threemd::serialize(&document).as_bytes())),
         raw_canonical_hex,
         revision_hex: hex(snapshot.revision().canonical_content.as_bytes()),
@@ -555,16 +560,24 @@ fn composition_graph_response(graph: &DocumentComposition) -> Result<Response, &
         .map_err(|error| error.code())?;
     let profile = composition::document(graph, &graph_limits, &limits, &options)
         .map_err(|error| error.code())?;
+    let profile_limits = DocumentDecodeLimits {
+        maximum_encoded_bytes: graph_limits.maximum_profile_bytes,
+        maximum_decoded_bytes: graph_limits.maximum_profile_bytes,
+        maximum_record_bytes: graph_limits.maximum_profile_bytes,
+        maximum_planes: 1,
+        ..DocumentDecodeLimits::default()
+    };
     let binary = storage::encode(
         &profile,
         DocumentStorageFormat::Binary(DocumentCompression::None),
-        &DocumentDecodeLimits {
-            maximum_encoded_bytes: graph_limits.maximum_profile_bytes,
-            maximum_decoded_bytes: graph_limits.maximum_profile_bytes,
-            maximum_record_bytes: graph_limits.maximum_profile_bytes,
-            maximum_planes: 1,
-            ..DocumentDecodeLimits::default()
-        },
+        &profile_limits,
+        &options,
+    )
+    .map_err(|error| error.code())?;
+    let text_container = storage::encode_text_container(
+        &profile,
+        DocumentCompression::None,
+        &profile_limits,
         &options,
     )
     .map_err(|error| error.code())?;
@@ -633,6 +646,7 @@ fn composition_graph_response(graph: &DocumentComposition) -> Result<Response, &
         ok: true,
         canonical_hex: hex(&canonical),
         binary_hex: hex(&binary),
+        text_container_hex: hex(&text_container),
         legacy_hex: None,
         raw_canonical_hex: None,
         revision_hex: hex(snapshot.revision().canonical_content.as_bytes()),

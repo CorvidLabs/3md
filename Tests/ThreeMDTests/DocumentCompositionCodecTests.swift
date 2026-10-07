@@ -17,7 +17,7 @@ final class DocumentCompositionCodecTests: XCTestCase {
         let profileSource = try XCTUnwrap(String(data: readable, encoding: .utf8))
         XCTAssertEqual(profileSource.components(separatedBy: "Reusable canopy").count - 1, 1)
         XCTAssertEqual(try DocumentCompositionCodec.encode(composition), readable)
-        var binaryFiles = ["shared-grove.3mdb"]
+        var binaryFiles = ["shared-grove.3mdb", "shared-grove.structured.3mdb"]
         #if canImport(Compression)
         binaryFiles.append("shared-grove.lzfse.3mdb")
         #endif
@@ -57,6 +57,10 @@ final class DocumentCompositionCodecTests: XCTestCase {
         let profile = try DocumentCompositionCodec.document(for: composition)
         let data = try DocumentStorageCodec.encode(profile, format: .binary(compression: .none))
         XCTAssertTrue(DocumentStorageCodec.isBinary(data))
+        XCTAssertEqual(try DocumentStorageCodec.containerInfo(data)?.payloadKind, .structuredDocument)
+        let textContainer = try DocumentStorageCodec.encodeTextContainer(profile)
+        XCTAssertEqual(try DocumentStorageCodec.containerInfo(textContainer)?.payloadKind, .canonicalText)
+        XCTAssertEqual(try DocumentCompositionCodec.decode(textContainer), composition)
         XCTAssertEqual(try DocumentCompositionCodec.decode(data), composition)
         XCTAssertEqual(try DocumentCompositionCodec.decode(DocumentStorageCodec.decode(data)), composition)
     }

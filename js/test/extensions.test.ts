@@ -56,7 +56,9 @@ describe("Swift portable extension conformance", () => {
     expect(DocumentStorageCodec.decode(bytes("document-unicode.3md"))).toEqual(expected);
     expect(DocumentStorageCodec.decode(bytes("document-unicode.3mdb"))).toEqual(expected);
     expect(DocumentStorageCodec.encode(expected)).toEqual(bytes("document-unicode.3md"));
-    expect(DocumentStorageCodec.encode(expected, DocumentStorageFormat.binary())).toEqual(bytes("document-unicode.3mdb"));
+    expect(DocumentStorageCodec.encodeTextContainer(expected)).toEqual(bytes("document-unicode.3mdb"));
+    expect(DocumentStorageCodec.decode(bytes("document-unicode.structured.3mdb"))).toEqual(expected);
+    expect(DocumentStorageCodec.encode(expected, DocumentStorageFormat.binary())).toEqual(bytes("document-unicode.structured.3mdb"));
     expect(new DocumentSnapshot(expected).revision.canonicalContent).toBe(new TextDecoder().decode(bytes("document-unicode.3md")));
   });
 
@@ -65,8 +67,11 @@ describe("Swift portable extension conformance", () => {
     const decoded = DocumentCompositionCodec.decode(bytes("composition-instances.3mdb"));
     expect(decoded).toEqual(expected);
     expect(DocumentCompositionCodec.encode(expected)).toEqual(bytes("composition-instances.3md"));
-    expect(DocumentStorageCodec.encode(DocumentCompositionCodec.document(expected), DocumentStorageFormat.binary()))
+    expect(DocumentStorageCodec.encodeTextContainer(DocumentCompositionCodec.document(expected)))
       .toEqual(bytes("composition-instances.3mdb"));
+    expect(DocumentStorageCodec.encode(DocumentCompositionCodec.document(expected), DocumentStorageFormat.binary()))
+      .toEqual(bytes("composition-instances.structured.3mdb"));
+    expect(DocumentCompositionCodec.decode(bytes("composition-instances.structured.3mdb"))).toEqual(expected);
     expect(new DocumentCompositionSnapshot(decoded).revision.canonicalContent)
       .toBe(new TextDecoder().decode(bytes("composition-instances.3md")));
     expect(expected.rootEntry.references.map((reference) => reference.targetID)).toEqual(["leaf", "leaf", "other"]);
@@ -80,10 +85,17 @@ describe("Swift portable extension conformance", () => {
     const expected = document(json<Document>(manifest.documentExpectedFile));
     expect(DocumentStorageCodec.decode(bytes(manifest.documentSourceFile))).toEqual(expected);
     expect(DocumentStorageCodec.encode(expected)).toEqual(bytes(manifest.documentSourceFile));
-    expect(DocumentStorageCodec.encode(expected, DocumentStorageFormat.binary())).toEqual(bytes(manifest.documentBinaryFile));
+    expect(DocumentStorageCodec.encodeTextContainer(expected)).toEqual(bytes(manifest.documentBinaryFile));
     expect(DocumentStorageCodec.decode(bytes(manifest.documentBinaryFile))).toEqual(expected);
-    expect(DocumentStorageCodec.decode(bytes(manifest.sourceCollisionFile)))
-      .toEqual(document(json<Document>(manifest.sourceCollisionExpectedFile)));
+    // Payload kind 2 stores keys in raw UTF-8 byte order (e + U+0301 before z), unlike the text order.
+    expect(DocumentStorageCodec.encode(expected, DocumentStorageFormat.binary())).toEqual(bytes("unicode-key-order.structured.3mdb"));
+    expect(DocumentStorageCodec.decode(bytes("unicode-key-order.structured.3mdb"))).toEqual(expected);
+    const collision = document(json<Document>(manifest.sourceCollisionExpectedFile));
+    expect(DocumentStorageCodec.decode(bytes(manifest.sourceCollisionFile))).toEqual(collision);
+    // The source collision keeps its merged map (first spelling, last value) in payload kind 2.
+    expect(DocumentStorageCodec.encode(DocumentStorageCodec.decode(bytes(manifest.sourceCollisionFile)), DocumentStorageFormat.binary()))
+      .toEqual(bytes("unicode-source-collision.structured.3mdb"));
+    expect(DocumentStorageCodec.decode(bytes("unicode-source-collision.structured.3mdb"))).toEqual(collision);
     try { DocumentCompositionCodec.decode(bytes(manifest.compositionDuplicateFile)); throw new Error("Expected invalid profile"); }
     catch (error) { expect((error as { code: string }).code).toBe(manifest.compositionDuplicateError); }
   });

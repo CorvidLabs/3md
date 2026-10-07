@@ -283,13 +283,22 @@
       "sourceFile" : "conformance/interchange/invalid-binary-flags.3mdb"
     },
     {
-      "expectedError" : "unsupportedPayloadKind",
+      "expectedError" : "checksumMismatch",
       "formats" : [
 
       ],
       "id" : "invalid-binary-kind",
       "kind" : "document",
       "sourceFile" : "conformance/interchange/invalid-binary-kind.3mdb"
+    },
+    {
+      "expectedError" : "unsupportedPayloadKind",
+      "formats" : [
+
+      ],
+      "id" : "invalid-binary-kind-3",
+      "kind" : "document",
+      "sourceFile" : "conformance/interchange/invalid-binary-kind-3.3mdb"
     },
     {
       "expectedError" : "nonzeroReserved",

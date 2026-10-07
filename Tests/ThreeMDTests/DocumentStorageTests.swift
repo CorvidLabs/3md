@@ -49,7 +49,13 @@ final class DocumentStorageTests: XCTestCase {
         XCTAssertEqual(document.planes.map(\.body), [".#\n##", "##\n.#"])
         XCTAssertEqual(try DocumentStorageCodec.decode(portable), document)
         XCTAssertEqual(try DocumentStorageCodec.encode(document), readable)
-        XCTAssertEqual(try DocumentStorageCodec.encode(document, format: .binary(compression: .none)), portable)
+        // The committed 2.0 file is payload kind 1; `.binary` now writes the structured sibling (payload kind 2).
+        XCTAssertEqual(try DocumentStorageCodec.encodeTextContainer(document), portable)
+        XCTAssertEqual(try DocumentStorageCodec.containerInfo(portable)?.payloadKind, .canonicalText)
+        let structured = try Self.extensionFixture("canopy.structured.3mdb")
+        XCTAssertEqual(try DocumentStorageCodec.encode(document, format: .binary(compression: .none)), structured)
+        XCTAssertEqual(try DocumentStorageCodec.decode(structured), document)
+        XCTAssertEqual(try DocumentStorageCodec.containerInfo(structured)?.payloadKind, .structuredDocument)
     }
 
     #if canImport(Compression)
@@ -58,8 +64,11 @@ final class DocumentStorageTests: XCTestCase {
         let compressed = try Self.extensionFixture("canopy.lzfse.3mdb")
         let document = try DocumentStorageCodec.decode(readable)
         XCTAssertEqual(try DocumentStorageCodec.decode(compressed), document)
+        XCTAssertEqual(try DocumentStorageCodec.containerInfo(compressed)?.payloadKind, .canonicalText)
         let encodedAgain = try DocumentStorageCodec.encode(document, format: .binary(compression: .lzfse))
         XCTAssertEqual(try DocumentStorageCodec.decode(encodedAgain), document)
+        XCTAssertEqual(try DocumentStorageCodec.containerInfo(encodedAgain)?.payloadKind, .structuredDocument)
+        XCTAssertEqual(try DocumentStorageCodec.containerInfo(encodedAgain)?.compression, 1)
     }
     #endif
 
@@ -69,9 +78,17 @@ final class DocumentStorageTests: XCTestCase {
             "336d6462696e0d0a01000100000000000000000021000000000000002100000000000000"
                 + "27cca0ba2d2d2d0a336d643a2022312e30220a617869733a20226c61796572220a2d2d2d0a"
         )
-        let encoded = try DocumentStorageCodec.encode(document, format: .binary(compression: .none))
+        let encoded = try DocumentStorageCodec.encodeTextContainer(document)
         XCTAssertEqual(encoded, expected)
         XCTAssertEqual(try DocumentStorageCodec.decode(expected), document)
+        // The same document as payload kind 2: 53 bytes, CRC 0xAF46E95D.
+        let structured = try Self.hex(
+            "336d6462696e0d0a0100020000000000000000000d000000000000000d00000000000000"
+                + "5de946af0003312e30056c617965720000"
+        )
+        XCTAssertEqual(try DocumentStorageCodec.encode(document, format: .binary(compression: .none)), structured)
+        XCTAssertEqual(try DocumentStorageCodec.decode(structured), document)
+        XCTAssertEqual(try DocumentStorageCodec.containerInfo(structured)?.checksum, 0xAF46_E95D)
         XCTAssertEqual(
             try DocumentStorageChecksum.checksum(header: Data(), payload: Data("123456789".utf8)),
             0xCBF4_3926
@@ -169,10 +186,21 @@ final class DocumentStorageTests: XCTestCase {
     }
 
     func testAllHeaderFieldsAndCorruptionAreChecked() throws {
-        let original = try DocumentStorageCodec.encode(
-            Document(version: "1.0", axis: .layer, planes: []),
-            format: .binary(compression: .none)
-        )
+        let document = Document(version: "1.0", axis: .layer, planes: [])
+        let textContainer = try DocumentStorageCodec.encodeTextContainer(document)
+        try Self.assertHeaderChecks(textContainer)
+        // A kind-2 reader passes D6 for kind 2, and the unresealed CRC then fails D12.
+        var changed = textContainer
+        changed[10] = 2
+        Self.assertError(.checksumMismatch) { try DocumentStorageCodec.decode(changed) }
+        let structured = try DocumentStorageCodec.encode(document, format: .binary(compression: .none))
+        try Self.assertHeaderChecks(structured)
+        changed = structured
+        changed[10] = 1
+        Self.assertError(.checksumMismatch) { try DocumentStorageCodec.decode(changed) }
+    }
+
+    private static func assertHeaderChecks(_ original: Data) throws {
         for count in 8..<40 {
             Self.assertError(.invalidContainer) { try DocumentStorageCodec.decode(Data(original.prefix(count))) }
         }
@@ -180,8 +208,10 @@ final class DocumentStorageTests: XCTestCase {
         changed[8] = 2
         Self.assertError(.unsupportedVersion(2)) { try DocumentStorageCodec.decode(changed) }
         changed = original
-        changed[10] = 2
-        Self.assertError(.unsupportedPayloadKind(2)) { try DocumentStorageCodec.decode(changed) }
+        changed[10] = 3
+        Self.assertError(.unsupportedPayloadKind(3)) { try DocumentStorageCodec.decode(changed) }
+        changed[10] = 0
+        Self.assertError(.unsupportedPayloadKind(0)) { try DocumentStorageCodec.decode(changed) }
         changed = original
         changed[11] = 255
         Self.assertError(.unsupportedCompression(255)) { try DocumentStorageCodec.decode(changed) }
@@ -214,10 +244,7 @@ final class DocumentStorageTests: XCTestCase {
     }
 
     func testContainerPayloadMustBeValidUTF8AndThreeMDText() throws {
-        let original = try DocumentStorageCodec.encode(
-            Document(version: "1.0", axis: .layer, planes: []),
-            format: .binary(compression: .none)
-        )
+        let original = try DocumentStorageCodec.encodeTextContainer(Document(version: "1.0", axis: .layer, planes: []))
         var invalid = try Self.replacingPayload(original, with: Data([0xFF]))
         Self.write(UInt64(1), into: &invalid, at: 28)
         try Self.updateChecksum(&invalid)

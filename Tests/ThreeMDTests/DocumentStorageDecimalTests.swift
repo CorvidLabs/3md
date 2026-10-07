@@ -6,10 +6,7 @@ import XCTest
 final class DocumentStorageDecimalTests: XCTestCase {
     func testLongMalformedDecimalRejectsReadableAndChecksummedBinaryWithoutBacktracking() throws {
         let source = Self.malformedDecimalSource(digits: 4_096)
-        let original = try DocumentStorageCodec.encode(
-            Document(version: "1.0", axis: .layer, planes: []),
-            format: .binary(compression: .none)
-        )
+        let original = try DocumentStorageCodec.encodeTextContainer(Document(version: "1.0", axis: .layer, planes: []))
         var binary = try DocumentStorageTests.replacingPayload(original, with: source)
         DocumentStorageTests.write(UInt64(source.count), into: &binary, at: 28)
         try DocumentStorageTests.updateChecksum(&binary)

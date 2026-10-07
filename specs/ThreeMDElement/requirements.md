@@ -266,12 +266,18 @@ Acceptance Criteria
 
 - The format definition in `SPEC.md` is authoritative, and parsing conformance
   is owned by `@corvidlabs/threemd` and its shared vectors, not by this element.
-- The element renders format version 1.0. Its package version is 1.0.0; that is
-  the package release, not a format version bump.
+- The element renders format version 1.0. Its package version follows the
+  ThreeMD release version; that is the package release, not a format version
+  bump.
 - The Markdown rendered inside a plane body is a deliberately small subset
   matching the reference lab renderer, not full CommonMark.
 - The element requires a DOM with Custom Elements, Shadow DOM, and Pointer
   Events. `requestAnimationFrame` is optional.
+- The published bundle contains no general storage code from
+  `@corvidlabs/threemd`: none of the markers `TextDecoder`, `Int32Array`,
+  `Float32Array`, `DocumentStorageError`, `Scalar fields cannot contain`,
+  `structured payload` and `getBigUint64` appear in it, and it is at most
+  50,000 bytes. The element stays text-only in ThreeMD 2.1.
 
 ## Out of Scope
 
@@ -280,6 +286,8 @@ Acceptance Criteria
 - Full CommonMark rendering of plane bodies, including tables, images, and nested
   structures beyond the documented subset.
 - Editing, authoring, or persisting 3md documents.
+- Decoding general binary storage (`.3mdb`, payload kind 1 or 2) or
+  composition profiles; the element renders 3md text only.
 - Resolving or rendering cross-plane `[[z=N]]` links (a format feature handled in
   the data layer and prose, not by this renderer).
 - Server-side rendering, networking beyond fetching `src`, and any 3D engine

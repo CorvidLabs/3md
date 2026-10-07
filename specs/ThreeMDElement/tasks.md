@@ -53,6 +53,9 @@ by cross-browser tests.
 
 Near-term work that builds directly on the 1.0 surface.
 
+- [ ] Extend `scripts/check-element-bundle.mjs` with the no-storage-code markers
+      and the 50,000-byte budget, and keep the bundle free of storage code
+      while the library adds the ThreeMD 2.1 structured payload
 - [ ] Test coverage for the non-default render modes and the `mode` attribute
       override (including axis-name mapping)
 - [ ] Test coverage for the error paths (blank source, invalid 3md, failing

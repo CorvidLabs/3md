@@ -14,13 +14,29 @@ final class DocumentStorageCompressionTests: XCTestCase {
             planes: [Plane(z: -1.25, body: String(repeating: "A repeated Unicode line 雪.\n", count: 4_096) + "end")]
         )
         let text = try DocumentStorageCodec.encode(document)
-        let compressed = try DocumentStorageCodec.encode(document, format: .binary(compression: .lzfse))
+        // Payload kind 1: the 2.0 bound is the decompressed text, so Emax only has to hold the compressed file.
+        let compressed = try DocumentStorageCodec.encodeTextContainer(document, compression: .lzfse)
         XCTAssertLessThan(compressed.count, text.count / 10)
         XCTAssertEqual(try DocumentStorageCodec.decode(compressed), document)
-        XCTAssertEqual(try DocumentStorageCodec.encode(document, format: .binary(compression: .lzfse)), compressed)
+        XCTAssertEqual(try DocumentStorageCodec.encodeTextContainer(document, compression: .lzfse), compressed)
         XCTAssertEqual(Array(compressed.suffix(4)), [0x62, 0x76, 0x78, 0x24])
         let limits = try DocumentDecodeLimits(maximumEncodedBytes: compressed.count, maximumDecodedBytes: text.count)
         XCTAssertEqual(try DocumentStorageCodec.decode(compressed, limits: limits), document)
+        // Payload kind 2: the uncompressed container must also fit Emax (D10 bound min(Emax - 40, 2 * Dmax)).
+        let structured = try DocumentStorageCodec.encode(document, format: .binary(compression: .lzfse))
+        let payload = try XCTUnwrap(try DocumentStorageCodec.containerInfo(structured)).decodedPayloadByteCount
+        XCTAssertLessThan(structured.count, text.count / 10)
+        XCTAssertEqual(try DocumentStorageCodec.decode(structured), document)
+        XCTAssertEqual(try DocumentStorageCodec.encode(document, format: .binary(compression: .lzfse)), structured)
+        XCTAssertEqual(Array(structured.suffix(4)), [0x62, 0x76, 0x78, 0x24])
+        let structuredLimits = try DocumentDecodeLimits(
+            maximumEncodedBytes: 40 + Int(payload),
+            maximumDecodedBytes: text.count
+        )
+        XCTAssertEqual(try DocumentStorageCodec.decode(structured, limits: structuredLimits), document)
+        DocumentStorageTests.assertError(.oversizedOutput) {
+            try DocumentStorageCodec.decode(structured, limits: limits)
+        }
     }
 
     func testLZFSERejectsTrailingAndConcatenatedStreamsWithValidChecksums() throws {
@@ -65,7 +81,8 @@ final class DocumentStorageCompressionTests: XCTestCase {
         )
         let text = try DocumentStorageCodec.encode(document)
         let original = try DocumentStorageCodec.encode(document, format: .binary(compression: .lzfse))
-        for declared in [1, 65_536, text.count - 1, text.count + 1] {
+        let payload = Int(try XCTUnwrap(try DocumentStorageCodec.containerInfo(original)).decodedPayloadByteCount)
+        for declared in [1, 65_536, text.count - 1, text.count + 1, payload - 1, payload + 1] {
             var changed = original
             DocumentStorageTests.write(UInt64(declared), into: &changed, at: 28)
             try DocumentStorageTests.updateChecksum(&changed)

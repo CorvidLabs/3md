@@ -23,6 +23,12 @@ numbered so tests and reviews can reference it directly.
   changing the existing text grammar or application-specific readers.
 - As a developer, I want a self-contained library of reusable named documents
   with explicit references, safe graph validation and no automatic external I/O.
+- As a developer, I want binary documents that load several times faster than
+  bounded text decoding, without building or parsing text, and that decode to
+  exactly the document their canonical text gives in every language.
+- As a developer whose consumers still run ThreeMD 2.0, I want an explicit
+  writer for the 2.0 binary bytes and a header inspection that tells me which
+  payload kind a file holds.
 
 ## Acceptance Criteria
 
@@ -267,7 +273,25 @@ materializes REQ-ThreeMD-021 through REQ-ThreeMD-025 from the approved delta.
 ## Constraints
 
 - The format definition in `SPEC.md` is authoritative; this module implements
-  the frozen 1.0 text grammar and additive 1.1 storage/composition specification.
+  the frozen 1.0 text grammar and the additive 1.2 storage/composition
+  specification. SPEC.md 1.2 adds the structured document payload (payload
+  kind 2, section 11.3) inside the unchanged version 1 container; sections 1 to
+  10 do not change.
+- ThreeMD 2.1 is additive: no public enum gains a case, no existing signature
+  changes and no error code is added. The one behavior change is that
+  `.binary(compression:)` writes payload kind 2; `encodeTextContainer` writes the
+  2.0 kind-1 bytes, and every 2.0 `.3mdb` file stays readable and
+  byte-unchanged.
+- Kind-2 keys are ordered by raw UTF-8 bytes and strings are stored verbatim, so
+  written bytes never depend on Unicode data. Acceptance depends on Unicode data
+  only where 2.0 text validation does; cross-port agreement is guaranteed for
+  strings of code points assigned in Unicode 13.0 on the pinned CI toolchains.
+- Every port trims with the frozen whitespace set W of SPEC.md 11.3.6 (U+0009,
+  U+0020, U+00A0, U+1680, U+2000 to U+200B, U+202F, U+205F, U+3000), not the
+  platform's character tables.
+- The 2.1 `validate` is the 2.0 `validate` with two corrections only: Rust spells
+  canonical numbers with the shortest round-trip digits (2.0 misspelled 92
+  powers of two), and Swift trims with W instead of `CharacterSet.whitespaces`.
 - Frontmatter is parsed line-by-line as simple `key: value` pairs, not as full
   YAML. Nested structures, lists, and multi-line values are not supported.
 - Existing parser signatures and frozen syntax stay unchanged. Narrow interchange
@@ -287,6 +311,10 @@ materializes REQ-ThreeMD-021 through REQ-ThreeMD-025 from the approved delta.
   portable TypeScript/Rust implementations and a separate interchange gate.
 - Validation of axis semantics; the axis label is treated as free metadata.
 - Networking, file I/O, and any rendering or viewer behavior.
+- Payload kind 3 (a structured composition payload), a key-table layout, an
+  indexed archive for partial loading, a lazy or partial-access decode API and a
+  portable LZFSE backend. Kind 3 is reserved and rejected; the others need a
+  later specification revision.
 
 ### REQ-ThreeMD-021
 
