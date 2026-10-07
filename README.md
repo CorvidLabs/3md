@@ -39,9 +39,8 @@ and scrub through them.
   <a href="https://corvidlabs.github.io/3md/"><img src="docs/demo.png" alt="The 3md interactive demo: planes stacked along the Z axis with a synced source view" width="760"></a>
 </p>
 
-The pictures below compare the readable text with the two binary payloads,
-including a 1 GiB and a 10 GiB input. Those two are refused. The ceiling is
-64 MiB.
+[Same document, three saves](#same-document-three-saves) shows one file stored
+as text and as two kinds of binary, and why a file bigger than 64 MB is refused.
 
 ```
 ---
@@ -88,56 +87,83 @@ with the author declaring what that axis means. Nothing comparable ships today;
 the closest prior art renders existing Markdown into 3D rather than giving the
 text a depth dimension of its own.
 
-## Text, kind 1, and kind 2
+## Same document, three saves
 
-A `.3md` file stays text. `.binary` writes payload kind 2: the same document as
-structured records inside a 40-byte header. `encodeTextContainer` writes payload
-kind 1: that same header in front of the canonical UTF-8. Kind 1 is what a
-ThreeMD 2.0 reader accepts. A 2.0 reader stops on kind 2 with
-`unsupportedPayloadKind(2)` before it checks the CRC.
+Yes. The pictures compare the non-binary text file with two binary saves of
+that same document. They do not compare different documents, and the colors
+are not a score. Each color is one way to save the file.
+
+| Color | Save | What you are looking at |
+| --- | --- | --- |
+| Blue | Text file | The `.3md` file. Ordinary UTF-8. This is the baseline. |
+| Orange | Kind 1 | That same text inside a binary file, after a 40-byte header. Always 40 bytes larger. A ThreeMD 2.0 reader can open it. |
+| Green | Kind 2 | The same document as binary records. Usually a little smaller than the text. A wall of the same letter can be a few bytes larger. A 2.1 reader opens it. A 2.0 reader does not. |
+
+Kind 1 is not compressed text. It is the text plus 40 bytes. Kind 2 is not a
+zip of the text either. It stores the planes as records, so repeated `@plane`
+lines are not written out again.
 
 <p align="center">
-  <img src="docs/readme/z-axis.gif" alt="Animation of Examples/animation.3md: four frames of a bouncing dot, then the text, kind 1, and kind 2 byte lengths 415, 455, and 351" width="760">
+  <img src="docs/readme/same-document.png" alt="Three labeled cards for one animation file: text 415 bytes, kind 1 455 bytes (the text plus a 40-byte header), kind 2 records 351 bytes." width="880">
 </p>
+
+[Examples/animation.3md](Examples/animation.3md) is the bouncing dot in that
+picture. The text file is 415 bytes. Kind 1 is 455, which is 415 + 40. Kind 2
+is 351.
+
+<p align="center">
+  <img src="docs/readme/z-axis.gif" alt="The four text planes of the bouncing dot, then the same file saved as text (415 bytes), kind 1 (455), and kind 2 (351)." width="760">
+</p>
+
+The moving picture is those four text planes, then the three saves. Blue,
+orange, and green are not three different animations.
+
+The next diagram is that same choice as a path. One parsed document can be
+written three ways.
 
 ```mermaid
 flowchart LR
   source[".3md text"] --> parsed[Parse]
   parsed --> document[Document]
-  document --> textOut["Canonical text"]
-  document --> kind1["Kind 1 container"]
-  document --> kind2["Kind 2 container"]
+  document --> textOut["Text file"]
+  document --> kind1["Kind 1: text plus a 40-byte header"]
+  document --> kind2["Kind 2: records"]
   kind1 --> both["2.0 and 2.1 readers"]
   kind2 --> current["2.1 readers"]
   kind2 --> legacy["2.0 reader: unsupportedPayloadKind"]
 ```
 
+The diagram after it is how a reader decides what it was given. A file longer
+than 64 MB is refused before any of those branches. 64 MB here means 64 MiB:
+67,108,864 bytes, not 64,000,000.
+
 ```mermaid
 flowchart TD
   bytes[Input bytes] --> length{Longer than 64 MiB?}
-  length -->|yes| refused[oversizedInput]
-  length -->|no| magic{Magic is 3mdbin CR LF?}
-  magic -->|no| asText[Decode as text]
-  magic -->|yes| kind{Payload kind}
-  kind -->|1| asKind1[Canonical UTF-8 payload]
-  kind -->|2| asKind2[Structured records]
+  length -->|yes| refused["oversizedInput. The bytes are not read."]
+  length -->|no| magic{Starts with 3mdbin CR LF?}
+  magic -->|no| asText[Read it as the text file]
+  magic -->|yes| kind{Kind byte}
+  kind -->|1| asKind1[The payload is the text]
+  kind -->|2| asKind2[The payload is records]
   kind -->|other| bad[unsupportedPayloadKind]
 ```
 
 <p align="center">
-  <img src="docs/readme/container-header.png" alt="The 40-byte version 1 header: magic, version, kind, compression, flags, reserved, encoded length, decoded length, and CRC-32" width="880">
+  <img src="docs/readme/container-header.png" alt="The 40-byte header that makes kind 1 larger than the text. The kind byte is 1 for text inside the header, or 2 for records." width="880">
 </p>
 
-Kind 2 removes repeated syntax. It is the record form of the document. On the
-293 files in `Examples/`, it is smaller than the canonical text every time, and
-the whole corpus shrinks by 31,645 bytes (2.7%). A page of repeated characters
-barely changes size. A tiny file can grow by a few bytes.
+That header is why kind 1 is 40 bytes larger than the text. Both binary saves
+use it. The text file has no header. The byte at offset 10 is the kind: 1
+means the payload is the text, 2 means the payload is records.
+
+### Six files, three saves each
 
 <p align="center">
-  <img src="docs/readme/small-documents.png" alt="Grouped bars of canonical text, kind 1, and kind 2 bytes for canopy, animation, planner, grove, poem, and helix" width="880">
+  <img src="docs/readme/small-documents.png" alt="Six files. Each group is one file saved three ways: text, text plus 40 bytes, and records. Grove's records are one byte larger than its text. The poem's records are 751 bytes against 940." width="880">
 </p>
 
-| Document | Canonical text | Kind 1 | Kind 2 |
+| Document | Text file | Kind 1, text plus 40 | Kind 2 records |
 | --- | ---: | ---: | ---: |
 | [canopy.3md](Examples/Extensions/canopy.3md) | 111 | 151 | 101 |
 | [animation.3md](Examples/animation.3md) | 415 | 455 | 351 |
@@ -147,82 +173,121 @@ barely changes size. A tiny file can grow by a few bytes.
 | [dna-double-helix.3md](Examples/dna-double-helix.3md) | 2,358 | 2,398 | 1,995 |
 | [conways-game-of-life.3md](Examples/conways-game-of-life.3md) | 17,509 | 17,549 | 17,255 |
 
-Kind 1 is the canonical text plus the 40-byte header on every row. Shared grove
-is the row where kind 2 is one byte larger than the text and 39 bytes smaller
-than kind 1. The poem is the largest relative drop in the example set: 751 /
-940 = 0.799. Conway, the biggest example file, drops 254 bytes.
+Kind 1 is the text column plus 40 on every row. Grove is the row where the
+records are one byte larger than the text. The poem is the large drop in this
+set: 751 bytes is 79.9% of 940. Conway is in the table and left off the
+picture, so 17,509 bytes do not flatten the other bars.
+
+### Adding many files together
 
 <p align="center">
-  <img src="docs/readme/corpus-bytes.png" alt="Canonical, kind 1, and kind 2 bytes for the 293 examples, synthetic-2000, and sculpt-4096" width="880">
+  <img src="docs/readme/corpus-bytes.png" alt="Three sets of files, each with text, kind 1, and kind 2 totals. 293 examples: records are 31,645 bytes smaller. sculpt-4096 is 4,096 layers of 32 by 20, not a 1024 cube." width="880">
 </p>
 
 <p align="center">
-  <img src="docs/readme/size-ratio.png" alt="Histogram of kind 2 divided by canonical text for 293 example files. Median 0.974, smallest 0.799, largest 0.992" width="880">
+  <img src="docs/readme/size-ratio.png" alt="How many of 293 example files have kind 2 at each percent of the text size. 100% would match the text. The typical file is 97.4%. The tall bar is 123 files." width="880">
 </p>
 
-Those corpus totals are the committed size gate in
-[conformance/structured/sizes.json](conformance/structured/sizes.json). The test
-`g6_kind_2_sizes_match_sizes_json` checks them.
+| Input | What it is | Text bytes | Kind 1 | Kind 2 records | Kind 2 / text |
+| --- | --- | ---: | ---: | ---: | ---: |
+| 293 example files | The committed size list | 1,188,086 | 1,199,806 | 1,156,441 | 0.973 |
+| synthetic-2000 | One file: 2,000 planes of mixed Markdown | 4,037,480 | 4,037,520 | 3,998,362 | 0.990 |
+| sculpt-4096, 32 by 20 | One file: 4,096 layers of a 32 by 20 picture. Not a 1024 cube | 3,031,345 | 3,031,385 | 2,934,090 | 0.968 |
 
-| Input | Canonical text | Kind 1 | Kind 2 | Kind 2 / text |
-| --- | ---: | ---: | ---: | ---: |
-| 293 example files | 1,188,086 | 1,199,806 | 1,156,441 | 0.973 |
-| synthetic-2000 | 4,037,480 | 4,037,520 | 3,998,362 | 0.990 |
-| sculpt-4096, 32 by 20 | 3,031,345 | 3,031,385 | 2,934,090 | 0.968 |
+Kind 1 for the 293 files is the text total plus 293 times 40, which is 11,720
+bytes. The records are 31,645 bytes smaller than the text (2.7%). A typical
+file in that list has records at 97.4% of its text. The biggest saving is the
+poem, at 79.9%. The smallest saving is `annotated-contract.3md`, at 99.2%.
+Every file in the list is under 100%. Those totals are the committed check in
+[conformance/structured/sizes.json](conformance/structured/sizes.json). The
+test `g6_kind_2_sizes_match_sizes_json` checks them. The two generated files
+are not committed. The sizes are.
 
-synthetic-2000 and sculpt-4096 are the pinned generators in `scripts/bench/`.
-The files are not committed. The sizes are.
+### Reading the text vs reading the records
 
-### One local timing run
+This picture is a speed comparison, not another size comparison. Each row is
+one made-up document of the letter `a`. Blue is how long the text file took to
+read. Green is how long the records took. Kind 1 is left off, because kind 1
+is the text plus a header, so reading it means reading the text.
 
-The release gate for speed is
-[docs/design/threemd-2.1/perf-gate.md](docs/design/threemd-2.1/perf-gate.md).
-It wants three processes per language, on named inputs, and it is still open.
-The chart below is one Rust 1.98.0 release process on an Apple M1 Ultra
-(macOS 26.5.2, 64 GB). Each bar is the median of five calls after one warmup.
-The documents are planes of the letter `a`, generated for this page.
+The two bars in a row compare only with each other. Do not compare bar lengths
+down the picture. A full blue bar means "this row's text time," not "a big
+file."
 
 <p align="center">
-  <img src="docs/readme/decode-time.png" alt="Log-scale decode times. At 8 planes of 6 MiB, text decode is 104.403 ms and kind 2 decode is 19.287 ms" width="880">
+  <img src="docs/readme/decode-time.png" alt="Five documents. In each row the text file took about 5 to 7 times as long to read as the records. The largest row is about 50 MB: 104.403 ms for text, 19.287 ms for records. One Rust run, not the speed gate." width="880">
 </p>
 
-| Shape | Canonical bytes | Kind 2 bytes | Text decode | Kind 2 decode |
+| Document | Text bytes | Kind 2 bytes | Text read | Records read |
 | --- | ---: | ---: | ---: | ---: |
 | 64 planes of 256 `a` | 17,318 | 16,763 | 0.078 ms | 0.012 ms |
 | 512 planes of 256 `a` | 138,690 | 134,140 | 0.591 ms | 0.091 ms |
 | 4,096 planes of 256 `a` | 1,113,050 | 1,073,148 | 4.649 ms | 0.690 ms |
-| 8 planes of 1 MiB | 8,388,760 | 8,388,715 | 17.322 ms | 3.139 ms |
-| 8 planes of 6 MiB | 50,331,800 | 50,331,763 | 104.403 ms | 19.287 ms |
+| 8 planes of 1 MB | 8,388,760 | 8,388,715 | 17.322 ms | 3.139 ms |
+| 8 planes of 6 MB, about 50 MB | 50,331,800 | 50,331,763 | 104.403 ms | 19.287 ms |
 
-At 50,331,800 canonical bytes, kind 2 is 37 bytes smaller. The decode call took
-19.287 ms against 104.403 ms for the text. A one-plane document of 64 `a`
-characters goes the other way on size: 125 canonical bytes, 127 kind 2 bytes.
+One Rust 1.98.0 release process on an Apple M1 Ultra (macOS 26.5.2, 64 GB).
+Each time is the median of five calls after one warmup. The project speed gate
+is still open. It wants three processes per language, and these numbers are
+not that gate. At about 50 MB, kind 2 is 37 bytes smaller than the text.
 
-### Where 1 GiB and 10 GiB stop
+### Why the library stops at 64 MB
 
-The default ceiling is 64 MiB encoded and 64 MiB decoded
-(67,108,864 bytes). Callers can lower that. They cannot raise it. A record,
-line, scalar, preamble, or plane body defaults to 8 MiB. Planes default to
-65,536. Physical lines default to 100,000.
+The decoder refuses an input longer than 67,108,864 bytes (64 MiB) before it
+reads the contents. A text file and both binary kinds hit the same wall. A
+caller can set a lower limit. No caller can raise this one. The stop is there
+so a huge or hostile file cannot make the library reserve a gigabyte.
+
+Inside that ceiling, one line or one plane body stops at 8 MB. One file stops
+at 65,536 planes and at 100,000 physical lines.
+
+### What the 1024 × 1024 × 1024 test was
+
+1024 × 1024 × 1024 is 1,073,741,824 bytes. That is 1 GB in the binary sense
+(1024 cubed), about 16 times the ceiling. A document of 1024 planes, each
+1024 lines of 1024 letters, is about that big before the `@plane` lines. The
+library does not store it.
+
+The test filled a buffer of exactly that many bytes with the letter `x` and
+asked the library to open it. The answer was `oversizedInput` in 6
+nanoseconds, after the buffer already existed. The library did not parse the
+cube and did not save it. Filling the 1 GB buffer took 109 ms. That fill time
+is the test program allocating the bytes, not the library storing a document.
+
+The same length check refuses 64 MB + 1 byte, also in 6 nanoseconds. A buffer
+of exactly 64 MB passes the length check and then fails as one giant line:
+`oversizedRecord` in 4.2 ms. A 10 GB buffer (10,737,418,240 bytes), measured
+earlier on this same machine, got the same `oversizedInput` answer. Filling
+that buffer took 1.27 s.
+
+A 1024-wide page does fit. One plane, 1024 lines of 1024 letters `a`, measured
+with this same Rust 1.98.0 release build (median of five reads after one
+warmup, still one run, not the speed gate):
+
+| Save | Bytes | Read time |
+| --- | ---: | --- |
+| Text file | 1,049,641 | 2.307 ms |
+| Kind 1 | 1,049,681 | The text plus the 40-byte header |
+| Kind 2 records | 1,049,654 | 0.384 ms |
+
+On that page the records are 13 bytes larger than the text, because a wall of
+one letter has almost no syntax to remove. They were still quicker to read in
+this run.
+
+The same number of letters, split into 1024 planes of one 1024-letter line,
+does get smaller. The `@plane` lines go away: text 1,063,879 bytes, kind 2
+1,054,706 bytes.
+
+60 of those 1024 × 1024 pages fit, at 62,976,799 text bytes. 64 of them do
+not. The letters alone are already 67,108,864, and the writer returns
+`oversizedOutput`.
+
+A one-plane body of 64 letters `a` is the tiny file that grows: text 106
+bytes, kind 1 146 bytes, kind 2 117 bytes.
 
 <p align="center">
-  <img src="docs/readme/size-ceiling.png" alt="Four measured refusals: 64 MiB returns oversizedRecord in 4.2 ms; 64 MiB plus 1 byte, 1 GiB, and 10 GiB return oversizedInput in 4 ns" width="880">
+  <img src="docs/readme/size-ceiling.png" alt="Why decoding stops at 64 MiB. A 1024 by 1024 page fits. A buffer of 1024 times 1024 times 1024 bytes is refused as oversizedInput in 6 nanoseconds and is not stored." width="880">
 </p>
-
-| Buffer of the byte `x` | Library result | What the call did |
-| --- | --- | --- |
-| 67,108,864 bytes (64 MiB) | `oversizedRecord` in 4.2 ms | The length is allowed. One 64 MiB line is past the 8 MiB record limit. One call. |
-| 67,108,865 bytes | `oversizedInput` | Length check only. |
-| 1,073,741,824 bytes (1 GiB) | `oversizedInput` | Same length check. Filling the buffer took 90 ms. |
-| 10,737,418,240 bytes (10 GiB) | `oversizedInput` | Same length check. Filling the buffer took 1.27 s. |
-
-The 4 ns figure is the mean of 10,000 `decode` calls after the buffer already
-existed. It was 0.004 µs at 64 MiB + 1, at 1 GiB, and at 10 GiB. The check
-reads the length. It does not read the payload. Holding a 10 GiB buffer is the
-caller's cost. The library does not store that buffer as a document.
-
-An 8 MiB plane of `a` does encode. Canonical text for that one plane is
-8,388,669 bytes, and kind 2 is 8,388,674 bytes.
 
 ## Installation
 
@@ -329,8 +394,8 @@ let text = Serializer().render(document)
 
 ## Binary storage and reusable documents
 
-The byte counts, the GIF, and the 1 GiB / 10 GiB refusal are in
-[Text, kind 1, and kind 2](#text-kind-1-and-kind-2). ThreeMD 2.0.0 provides
+The byte counts, the GIF, and the 1 GB refusal are in
+[Same document, three saves](#same-document-three-saves). ThreeMD 2.0.0 provides
 bounded general-document storage and self-contained composition in Swift,
 TypeScript and Rust. The examples below use Swift; see
 [EDITING-RELEASE.md](docs/EDITING-RELEASE.md) for the TypeScript and Rust
@@ -353,10 +418,11 @@ let compressed = try DocumentStorageCodec.encode(
 ```
 
 `.binary` writes payload kind 2: structured document records inside the
-unchanged version 1 container. It is smaller than the canonical text and
-decodes without parsing that text. `encodeTextContainer` writes payload kind
-1, the ThreeMD 2.0 canonical UTF-8 payload, for a reader that does not know
-kind 2. A 2.0 reader stops on kind 2 with `unsupportedPayloadKind(2)`.
+unchanged version 1 container. The records are often a little smaller than the
+text, and a page of repeated letters can be a few bytes larger. Decoding them
+does not parse that text. `encodeTextContainer` writes payload kind 1, the
+ThreeMD 2.0 canonical UTF-8 payload, for a reader that does not know kind 2.
+A 2.0 reader stops on kind 2 with `unsupportedPayloadKind(2)`.
 
 ```swift
 let legacy = try DocumentStorageCodec.encodeTextContainer(document)
@@ -364,8 +430,10 @@ let legacy = try DocumentStorageCodec.encodeTextContainer(document)
 
 The magic is `3mdbin\r\n`. It is separate from Sculpt/Rook's older
 voxel-specific `3MDB` container. Defaults cap encoded and decoded data at
-64 MiB, with limits for records, planes and physical lines. Unavailable
-compression, malformed headers, excess limits and cancellation produce errors.
+64 MiB (67,108,864 bytes). Callers can lower that cap and cannot raise it.
+One line or plane body stops at 8 MiB. The reason, and the 1024 cube
+measurement, are in [Same document, three saves](#same-document-three-saves).
+Unavailable compression, malformed headers, excess limits and cancellation produce errors.
 CRC detects corruption and does not authenticate content. Kind 1 and kind 2
 both use that checksum.
 
