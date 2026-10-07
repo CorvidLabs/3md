@@ -8,7 +8,7 @@ final class InterchangeConformanceTests: XCTestCase {
         let catalog = try manifest()
         XCTAssertEqual(catalog.schema, "3md-interchange-catalog-1")
         XCTAssertEqual(catalog.numericVectors, "conformance/extensions/numeric-vectors.json")
-        XCTAssertEqual(catalog.cases.count, 82)
+        XCTAssertEqual(catalog.cases.count, 83)
         XCTAssertEqual(Set(catalog.cases.map(\.id)).count, catalog.cases.count)
         let legacyFiles = try FileManager.default.contentsOfDirectory(
             at: root.appendingPathComponent("conformance"),
@@ -51,9 +51,11 @@ final class InterchangeConformanceTests: XCTestCase {
             let decoded = try DocumentStorageCodec.decode(source)
             let canonical: Data
             let binary: Data
+            let textContainer: Data
             if record.kind == "document" {
                 canonical = try DocumentStorageCodec.encode(decoded)
                 binary = try DocumentStorageCodec.encode(decoded, format: .binary(compression: .none))
+                textContainer = try DocumentStorageCodec.encodeTextContainer(decoded)
                 let legacy = Data(Serializer().render(decoded).utf8)
                 XCTAssertEqual(
                     try DocumentStorageCodec.encode(DocumentStorageCodec.decode(legacy)),
@@ -65,10 +67,9 @@ final class InterchangeConformanceTests: XCTestCase {
             } else {
                 let graph = try DocumentCompositionCodec.decode(decoded)
                 canonical = try DocumentCompositionCodec.encode(graph)
-                binary = try DocumentStorageCodec.encode(
-                    DocumentCompositionCodec.document(for: graph),
-                    format: .binary(compression: .none)
-                )
+                let profile = try DocumentCompositionCodec.document(for: graph)
+                binary = try DocumentStorageCodec.encode(profile, format: .binary(compression: .none))
+                textContainer = try DocumentStorageCodec.encodeTextContainer(profile)
                 XCTAssertEqual(
                     try DocumentCompositionCodec.encode(DocumentCompositionCodec.decode(binary)),
                     canonical,
@@ -76,9 +77,19 @@ final class InterchangeConformanceTests: XCTestCase {
                 )
             }
             if let path = record.canonicalFile { XCTAssertEqual(canonical, try data(path), record.id) }
-            if let path = record.binaryFile { XCTAssertEqual(binary, try data(path), record.id) }
-            XCTAssertEqual(binary.count, canonical.count + DocumentStorageCodec.headerByteCount, record.id)
-            XCTAssertEqual(Data(binary.dropFirst(DocumentStorageCodec.headerByteCount)), canonical, record.id)
+            // Catalog binaryFile is still the ThreeMD 2.0 kind-1 container.
+            if let path = record.binaryFile { XCTAssertEqual(textContainer, try data(path), record.id) }
+            XCTAssertEqual(textContainer.count, canonical.count + DocumentStorageCodec.headerByteCount, record.id)
+            XCTAssertEqual(
+                Data(textContainer.dropFirst(DocumentStorageCodec.headerByteCount)),
+                canonical,
+                record.id
+            )
+            XCTAssertEqual(
+                try DocumentStorageCodec.containerInfo(binary)?.payloadKind,
+                .structuredDocument,
+                record.id
+            )
             XCTAssertEqual(
                 try DocumentStorageCodec.encode(DocumentStorageCodec.decode(binary)),
                 try DocumentStorageCodec.encode(DocumentStorageCodec.decode(canonical)),
@@ -121,7 +132,7 @@ final class InterchangeConformanceTests: XCTestCase {
 
     func testEveryInvalidCatalogSourceReportsItsRequiredTypedError() throws {
         let records = try manifest().cases.filter { $0.expectedError != nil }
-        XCTAssertEqual(records.count, 33)
+        XCTAssertEqual(records.count, 34)
         for record in records {
             XCTAssertThrowsError(
                 try {
@@ -275,10 +286,21 @@ final class InterchangeConformanceTests: XCTestCase {
             maximumEncodedBytes: binary.count,
             maximumDecodedBytes: source.count
         )
-        XCTAssertEqual(
-            try DocumentStorageCodec.encode(document, format: .binary(compression: .none), limits: envelope),
-            binary
+        XCTAssertEqual(try DocumentStorageCodec.encodeTextContainer(document, limits: envelope), binary)
+        let structured = try DocumentStorageCodec.encode(document, format: .binary(compression: .none))
+        let structuredLimits = try DocumentDecodeLimits(
+            maximumEncodedBytes: structured.count,
+            maximumDecodedBytes: source.count
         )
+        XCTAssertEqual(
+            try DocumentStorageCodec.encode(
+                document,
+                format: .binary(compression: .none),
+                limits: structuredLimits
+            ),
+            structured
+        )
+        XCTAssertEqual(try DocumentStorageCodec.decode(structured, limits: structuredLimits), document)
     }
 
     func testSharedDAGAndUnusedDefinitionsSurviveAdoptionAndRootReplacement() throws {

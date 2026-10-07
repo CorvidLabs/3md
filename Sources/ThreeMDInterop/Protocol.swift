@@ -68,6 +68,8 @@ struct InterchangeResponse: Codable, Equatable, Sendable {
     var error: String?
     var canonicalHex: String?
     var binaryHex: String?
+    /// Payload kind 1. Catalog `binaryFile` anchors still hold these ThreeMD 2.0 bytes.
+    var textContainerHex: String? = nil
     var legacyHex: String?
     var rawCanonicalHex: String?
     var revisionHex: String?
