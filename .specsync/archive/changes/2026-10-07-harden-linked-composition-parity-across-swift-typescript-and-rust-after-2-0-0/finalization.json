@@ -1,0 +1,12 @@
+{
+  "schema_version": 2,
+  "change_id": "harden-linked-composition-parity-across-swift-typescript-and-rust-after-2-0-0",
+  "implementation_commit": "fbbcf2b5fed9475f8c203973933ad8b1af5ed4f1",
+  "implementation_tree": "240274cf40a345fc9bdf80be2575afa1afefb304",
+  "contract_digest": "19068b259d9336284455d88b63596d1a2c56155393e2a0787bde2507e43475ba",
+  "workspace_digest": "f0470b1780f094dc5cee809c2302b7dbe2f700ab2759777fb0033db54de9c093",
+  "closing_digest": "0e23f264d9f342b83d0475e6fe1ba6640cddb6a5184e05622a907c16867aed86",
+  "review_digest": "2718a3e55bef2eae1343b095b886d14be9ed342b0778f3134d9f7430eb19aa4f",
+  "finalization_digest": "0420489e0c964558c5e425d6f3b20229ed0c4d7f9180e589a9d9f1deadfe2676",
+  "timestamp": 1791342174
+}

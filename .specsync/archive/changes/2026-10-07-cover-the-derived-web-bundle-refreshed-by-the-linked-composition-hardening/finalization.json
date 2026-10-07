@@ -1,0 +1,12 @@
+{
+  "schema_version": 2,
+  "change_id": "cover-the-derived-web-bundle-refreshed-by-the-linked-composition-hardening",
+  "implementation_commit": "1e22b5f6de388c070d3db3285e6a903be57ca14d",
+  "implementation_tree": "bc4d675a54abf4066079e3a2bde2892e96c21c94",
+  "contract_digest": "de1198f1915cb07f244900aafb97124104efc31766cb18311be3819c55670625",
+  "workspace_digest": "f0470b1780f094dc5cee809c2302b7dbe2f700ab2759777fb0033db54de9c093",
+  "closing_digest": "5281b3cd4b5c577637095302fc87faee5772f828d5b285501cd27d9d2b3bfd65",
+  "review_digest": "8bf67d166f741a3926236bd91b81f3964659912f1952f59ed9e15646b62c45d8",
+  "finalization_digest": "d1b80b2951a8a7a5f8a379f3c9d7cf42b506b2bdc2c989d7737e4503d643dea2",
+  "timestamp": 1791342221
+}

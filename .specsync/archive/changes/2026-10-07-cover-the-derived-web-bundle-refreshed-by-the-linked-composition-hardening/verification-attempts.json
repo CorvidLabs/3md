@@ -48,6 +48,54 @@
         }
       ],
       "requirement_ids": []
+    },
+    {
+      "timestamp": 1791342200,
+      "commit": "6f66c0abb066cf36b76f03ba3646f62e43e6e725",
+      "contract_digest": "de1198f1915cb07f244900aafb97124104efc31766cb18311be3819c55670625",
+      "execution_digest": "0a8fb96e0637bc57435b1cb09217bcbf09daf544cc9aff239564092578c59dc6",
+      "workspace_digest": "f0470b1780f094dc5cee809c2302b7dbe2f700ab2759777fb0033db54de9c093",
+      "passed": true,
+      "commands": [
+        {
+          "command": "specsync check (no spec in scope)",
+          "success": true,
+          "exit_code": 0
+        }
+      ],
+      "requirement_ids": []
+    },
+    {
+      "timestamp": 1791342200,
+      "commit": "1e22b5f6de388c070d3db3285e6a903be57ca14d",
+      "contract_digest": "de1198f1915cb07f244900aafb97124104efc31766cb18311be3819c55670625",
+      "execution_digest": "0a8fb96e0637bc57435b1cb09217bcbf09daf544cc9aff239564092578c59dc6",
+      "workspace_digest": "f0470b1780f094dc5cee809c2302b7dbe2f700ab2759777fb0033db54de9c093",
+      "acceptance_input_digest": "a3a849a3e9113dfbdc9f64f5f7faf8b7353665071d937f62f88ddd8f45fd3787",
+      "acceptance_manifest": {
+        "schema_version": 1,
+        "entries": [
+          {
+            "path": "web/assets/three-md.js",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "5802c8560060c1dba5c785a2701565998c6e35e76839922d42db28cdad7d5045",
+            "entry_digest": "4c7c33a9e871f159ddd5b0d200ff2ca721c949a5259e7c6075b12c82be631910",
+            "owners": [
+              "@exact:delivery"
+            ]
+          }
+        ]
+      },
+      "passed": true,
+      "commands": [
+        {
+          "command": "specsync check (no spec in scope)",
+          "success": true,
+          "exit_code": 0
+        }
+      ],
+      "requirement_ids": []
     }
   ]
 }
