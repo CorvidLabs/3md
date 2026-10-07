@@ -12,6 +12,9 @@ These requirements describe the ThreeMDCLI Swift executable target: the command-
 - As a developer, I want to inspect 3md document structure, properties, and links so I can debug document structures.
 - As a publisher, I want to compile a 3md document to HTML via stdout so I can render it for static web preview.
 - As a CI system, I want check-links to return non-zero exit codes on link failures so I can prevent broken builds.
+- As a developer, I want every subcommand to accept `.3mdb` files (payload kind 1 or 2) so binary documents need no separate tooling.
+- As a developer, I want to convert between text, structured binary (payload kind 2) and the ThreeMD 2.0 text container (payload kind 1) without risking a partial or overwritten output.
+- As a tool author, I want `inspect` to report a binary header, its payload kind and whether the file decodes, and I want storage failures in `--json` output to carry stable codes.
 
 ## Acceptance Criteria
 
@@ -95,8 +98,14 @@ Acceptance Criteria
 
 - Operates locally on file paths.
 - Does not watch files for changes or host a server.
+- Input is classified by the binary magic, never by its extension. Binary input is decoded with `DocumentStorageCodec.decode` under standard limits; text input keeps the 2.0 path and output byte for byte.
+- Storage failures use the stable `DocumentStorageError` case names as `code`, the same strings as the TypeScript `DocumentStorageErrorCode`; no CLI-specific storage code is invented.
+- `convert` writes only its named output, through a temporary file in the same directory and a rename, and never replaces an existing file without `--force`.
+- LZFSE output depends on the platform's Compression framework; on Linux `--lzfse` reports `compressionUnavailable`.
 
 ## Out of Scope
 
 - Formatting or editing .3md files in-place.
 - Downloading remote .3md URLs (networking is not in scope for the CLI).
+- Composition-specific commands; a binary composition bundle is read as its profile envelope document.
+- Payload kind 3, which the library reserves and rejects with `unsupportedPayloadKind(3)`.

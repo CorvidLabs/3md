@@ -19,5 +19,10 @@ This document tracks the tasks and implementation progress of the command line i
 
 ## Next
 
-- [ ] Add CLI integration tests using a shell script or swift test target.
+- [ ] Read every subcommand's input as bytes and decode binary input (payload kind 1 or 2) with `DocumentStorageCodec.decode`, keeping the text path byte-identical.
+- [ ] Add the storage branch to `ErrorOutput` (`code`, `message`, `detail`, `line`) and the `threemd: <path>: <code>: <description>` stderr line.
+- [ ] Add `convert` with format inference, usage exits, `--lzfse`, `--force` and the atomic write.
+- [ ] Add `inspect` with plain output and the three JSON shapes.
+- [ ] Update the usage text and the README CLI section.
+- [ ] Add CLI integration tests in `Tests/ThreeMDTests/CLITests.swift` that run the built `threemd` binary with `Process` on macOS and Linux.
 - [ ] Add bash/zsh autocomplete templates for the CLI subcommands.
