@@ -1,0 +1,1488 @@
+{
+ "examples": {
+  "files": 293,
+  "canonical": 1188086,
+  "kind2": 1156441,
+  "ratio": 0.9733647227557601,
+  "smaller": 293,
+  "minRatio": 0.798936170212766,
+  "maxRatio": 0.9923287671232877
+ },
+ "large": {
+  "synthetic-2000": {
+   "canonical": 4037480,
+   "kind2": 3998362
+  },
+  "sculpt-4096-32x20": {
+   "canonical": 3031345,
+   "kind2": 2934090
+  }
+ },
+ "perFile": [
+  {
+   "file": "Examples/3md-in-3md.3md",
+   "canonical": 1423,
+   "kind2": 1370
+  },
+  {
+   "file": "Examples/478-breath-cycle.3md",
+   "canonical": 4622,
+   "kind2": 4486
+  },
+  {
+   "file": "Examples/ab-variants.3md",
+   "canonical": 3617,
+   "kind2": 3516
+  },
+  {
+   "file": "Examples/accessibility.3md",
+   "canonical": 3691,
+   "kind2": 3604
+  },
+  {
+   "file": "Examples/aegis-sensor-sweep.3md",
+   "canonical": 6979,
+   "kind2": 6781
+  },
+  {
+   "file": "Examples/animation.3md",
+   "canonical": 415,
+   "kind2": 351
+  },
+  {
+   "file": "Examples/annotated-contract.3md",
+   "canonical": 9125,
+   "kind2": 9055
+  },
+  {
+   "file": "Examples/apartment-stack.3md",
+   "canonical": 3652,
+   "kind2": 3548
+  },
+  {
+   "file": "Examples/api-overview.3md",
+   "canonical": 5545,
+   "kind2": 5437
+  },
+  {
+   "file": "Examples/api-versions.3md",
+   "canonical": 4659,
+   "kind2": 4595
+  },
+  {
+   "file": "Examples/apollo-11-powered-descent-1969.3md",
+   "canonical": 5691,
+   "kind2": 5578
+  },
+  {
+   "file": "Examples/apt-kill-chain-timeline.3md",
+   "canonical": 7224,
+   "kind2": 7096
+  },
+  {
+   "file": "Examples/art-album.3md",
+   "canonical": 2133,
+   "kind2": 2000
+  },
+  {
+   "file": "Examples/art-comic-strip.3md",
+   "canonical": 1817,
+   "kind2": 1747
+  },
+  {
+   "file": "Examples/art-design-system.3md",
+   "canonical": 3085,
+   "kind2": 3015
+  },
+  {
+   "file": "Examples/art-loading-spinner.3md",
+   "canonical": 2064,
+   "kind2": 1937
+  },
+  {
+   "file": "Examples/art-poem-stanzas.3md",
+   "canonical": 1154,
+   "kind2": 1091
+  },
+  {
+   "file": "Examples/art-sheet-music.3md",
+   "canonical": 1656,
+   "kind2": 1575
+  },
+  {
+   "file": "Examples/art-storyboard.3md",
+   "canonical": 2734,
+   "kind2": 2633
+  },
+  {
+   "file": "Examples/art-voxel-heart.3md",
+   "canonical": 3267,
+   "kind2": 3137
+  },
+  {
+   "file": "Examples/asl-fingerspell-deck.3md",
+   "canonical": 3572,
+   "kind2": 3456
+  },
+  {
+   "file": "Examples/aurora-borealis-flipbook.3md",
+   "canonical": 3364,
+   "kind2": 3250
+  },
+  {
+   "file": "Examples/baby-milestones.3md",
+   "canonical": 5735,
+   "kind2": 5603
+  },
+  {
+   "file": "Examples/balcony-garden-seasons.3md",
+   "canonical": 2913,
+   "kind2": 2850
+  },
+  {
+   "file": "Examples/bass-drop-pulse.3md",
+   "canonical": 5271,
+   "kind2": 5151
+  },
+  {
+   "file": "Examples/bespoke-jacket-pattern.3md",
+   "canonical": 4279,
+   "kind2": 4175
+  },
+  {
+   "file": "Examples/bit-autopsy.3md",
+   "canonical": 3508,
+   "kind2": 3405
+  },
+  {
+   "file": "Examples/biz-invoice.3md",
+   "canonical": 1720,
+   "kind2": 1646
+  },
+  {
+   "file": "Examples/biz-okrs.3md",
+   "canonical": 1648,
+   "kind2": 1586
+  },
+  {
+   "file": "Examples/biz-org-chart.3md",
+   "canonical": 1669,
+   "kind2": 1594
+  },
+  {
+   "file": "Examples/biz-pnl.3md",
+   "canonical": 1720,
+   "kind2": 1652
+  },
+  {
+   "file": "Examples/biz-roadmap.3md",
+   "canonical": 1372,
+   "kind2": 1310
+  },
+  {
+   "file": "Examples/biz-sales-funnel.3md",
+   "canonical": 1579,
+   "kind2": 1498
+  },
+  {
+   "file": "Examples/biz-stock-watch.3md",
+   "canonical": 1827,
+   "kind2": 1743
+  },
+  {
+   "file": "Examples/blackpoll-warbler-atlantic-sprint.3md",
+   "canonical": 5262,
+   "kind2": 5156
+  },
+  {
+   "file": "Examples/blue-hole-descent-log.3md",
+   "canonical": 5961,
+   "kind2": 5826
+  },
+  {
+   "file": "Examples/box-breathing-orb.3md",
+   "canonical": 13081,
+   "kind2": 12818
+  },
+  {
+   "file": "Examples/brown-butter-scallops-timed-cook.3md",
+   "canonical": 5232,
+   "kind2": 5131
+  },
+  {
+   "file": "Examples/bug-lifecycle.3md",
+   "canonical": 5492,
+   "kind2": 5318
+  },
+  {
+   "file": "Examples/burgundy-flight-pinot-noir.3md",
+   "canonical": 6203,
+   "kind2": 6113
+  },
+  {
+   "file": "Examples/burgundy-vertical-pinot.3md",
+   "canonical": 6029,
+   "kind2": 5923
+  },
+  {
+   "file": "Examples/burn-the-bridge.3md",
+   "canonical": 4728,
+   "kind2": 4624
+  },
+  {
+   "file": "Examples/card-trick.3md",
+   "canonical": 3669,
+   "kind2": 3557
+  },
+  {
+   "file": "Examples/celestial-cartography.3md",
+   "canonical": 7253,
+   "kind2": 7149
+  },
+  {
+   "file": "Examples/changelog.3md",
+   "canonical": 1137,
+   "kind2": 1091
+  },
+  {
+   "file": "Examples/checkout-flow-wireframe-layers.3md",
+   "canonical": 5443,
+   "kind2": 5356
+  },
+  {
+   "file": "Examples/chef-service-rush.3md",
+   "canonical": 1869,
+   "kind2": 1793
+  },
+  {
+   "file": "Examples/chess-opening.3md",
+   "canonical": 4076,
+   "kind2": 3946
+  },
+  {
+   "file": "Examples/cicd-pipeline-dag.3md",
+   "canonical": 2305,
+   "kind2": 2084
+  },
+  {
+   "file": "Examples/cipher-across-planes.3md",
+   "canonical": 3356,
+   "kind2": 3310
+  },
+  {
+   "file": "Examples/cipher-vault-cascade.3md",
+   "canonical": 7259,
+   "kind2": 7169
+  },
+  {
+   "file": "Examples/circuit-board.3md",
+   "canonical": 3171,
+   "kind2": 3089
+  },
+  {
+   "file": "Examples/code-review.3md",
+   "canonical": 3676,
+   "kind2": 3589
+  },
+  {
+   "file": "Examples/coding-tutorial.3md",
+   "canonical": 5874,
+   "kind2": 5763
+  },
+  {
+   "file": "Examples/color-grading-layers.3md",
+   "canonical": 2587,
+   "kind2": 2511
+  },
+  {
+   "file": "Examples/comic-panels.3md",
+   "canonical": 2399,
+   "kind2": 2313
+  },
+  {
+   "file": "Examples/company-roadmap.3md",
+   "canonical": 4798,
+   "kind2": 4712
+  },
+  {
+   "file": "Examples/concert-cue-sheet-rx.3md",
+   "canonical": 7530,
+   "kind2": 7409
+  },
+  {
+   "file": "Examples/content-calendar.3md",
+   "canonical": 5156,
+   "kind2": 5048
+  },
+  {
+   "file": "Examples/conways-game-of-life.3md",
+   "canonical": 17509,
+   "kind2": 17255
+  },
+  {
+   "file": "Examples/corner-kick-variation-atlas.3md",
+   "canonical": 4962,
+   "kind2": 4869
+  },
+  {
+   "file": "Examples/corridor-ambush-shot-list.3md",
+   "canonical": 4825,
+   "kind2": 4699
+  },
+  {
+   "file": "Examples/corvid-logo-3d.3md",
+   "canonical": 3989,
+   "kind2": 3774
+  },
+  {
+   "file": "Examples/corvid-roadmap-now-next-later.3md",
+   "canonical": 4512,
+   "kind2": 4424
+  },
+  {
+   "file": "Examples/corvid-voxel-ship.3md",
+   "canonical": 1234,
+   "kind2": 1094
+  },
+  {
+   "file": "Examples/corvid-voxel-wordmark.3md",
+   "canonical": 3974,
+   "kind2": 3861
+  },
+  {
+   "file": "Examples/court-timeline.3md",
+   "canonical": 5381,
+   "kind2": 5224
+  },
+  {
+   "file": "Examples/crop-rotation.3md",
+   "canonical": 5029,
+   "kind2": 4943
+  },
+  {
+   "file": "Examples/crystal-mushroom-voxel.3md",
+   "canonical": 1333,
+   "kind2": 1218
+  },
+  {
+   "file": "Examples/curtain-call-trivia.3md",
+   "canonical": 2711,
+   "kind2": 2592
+  },
+  {
+   "file": "Examples/daily-planner.3md",
+   "canonical": 436,
+   "kind2": 392
+  },
+  {
+   "file": "Examples/dance-steps.3md",
+   "canonical": 4784,
+   "kind2": 4661
+  },
+  {
+   "file": "Examples/data-api-lifecycle.3md",
+   "canonical": 2215,
+   "kind2": 2134
+  },
+  {
+   "file": "Examples/data-center.3md",
+   "canonical": 4976,
+   "kind2": 4906
+  },
+  {
+   "file": "Examples/data-cicd-pipeline.3md",
+   "canonical": 1773,
+   "kind2": 1692
+  },
+  {
+   "file": "Examples/data-db-migrations.3md",
+   "canonical": 1924,
+   "kind2": 1859
+  },
+  {
+   "file": "Examples/data-file-transfer.3md",
+   "canonical": 2050,
+   "kind2": 1982
+  },
+  {
+   "file": "Examples/data-folder-as-file.3md",
+   "canonical": 3103,
+   "kind2": 3015
+  },
+  {
+   "file": "Examples/data-git-history.3md",
+   "canonical": 2151,
+   "kind2": 2052
+  },
+  {
+   "file": "Examples/data-server-rack.3md",
+   "canonical": 2459,
+   "kind2": 2348
+  },
+  {
+   "file": "Examples/data-weather-forecast.3md",
+   "canonical": 2816,
+   "kind2": 2703
+  },
+  {
+   "file": "Examples/datacenter-heat-grid.3md",
+   "canonical": 2953,
+   "kind2": 2832
+  },
+  {
+   "file": "Examples/dataset-card-orders.3md",
+   "canonical": 3626,
+   "kind2": 3411
+  },
+  {
+   "file": "Examples/deadline-monster.3md",
+   "canonical": 2075,
+   "kind2": 2007
+  },
+  {
+   "file": "Examples/demo-script.3md",
+   "canonical": 5055,
+   "kind2": 4922
+  },
+  {
+   "file": "Examples/deploy-stages.3md",
+   "canonical": 4529,
+   "kind2": 4420
+  },
+  {
+   "file": "Examples/design-iterations.3md",
+   "canonical": 4382,
+   "kind2": 4274
+  },
+  {
+   "file": "Examples/difficulty-modes.3md",
+   "canonical": 3228,
+   "kind2": 3162
+  },
+  {
+   "file": "Examples/dna-double-helix.3md",
+   "canonical": 2358,
+   "kind2": 1995
+  },
+  {
+   "file": "Examples/drum-machine-groove.3md",
+   "canonical": 1438,
+   "kind2": 1343
+  },
+  {
+   "file": "Examples/dungeon-crawl-descent.3md",
+   "canonical": 4772,
+   "kind2": 4682
+  },
+  {
+   "file": "Examples/dungeon-level-one.3md",
+   "canonical": 5066,
+   "kind2": 4963
+  },
+  {
+   "file": "Examples/dungeon-run-log.3md",
+   "canonical": 5560,
+   "kind2": 5408
+  },
+  {
+   "file": "Examples/dungeon-text-crawl.3md",
+   "canonical": 2643,
+   "kind2": 2495
+  },
+  {
+   "file": "Examples/dungeon.3md",
+   "canonical": 1625,
+   "kind2": 1517
+  },
+  {
+   "file": "Examples/edu-animal-cell-layers.3md",
+   "canonical": 3001,
+   "kind2": 2926
+  },
+  {
+   "file": "Examples/edu-periodic-table-periods.3md",
+   "canonical": 3012,
+   "kind2": 2937
+  },
+  {
+   "file": "Examples/edu-photosynthesis-unit.3md",
+   "canonical": 3951,
+   "kind2": 3870
+  },
+  {
+   "file": "Examples/edu-projectile-motion.3md",
+   "canonical": 2868,
+   "kind2": 2777
+  },
+  {
+   "file": "Examples/edu-solar-system.3md",
+   "canonical": 3709,
+   "kind2": 3599
+  },
+  {
+   "file": "Examples/edu-sqrt2-irrational-proof.3md",
+   "canonical": 2724,
+   "kind2": 2630
+  },
+  {
+   "file": "Examples/edu-titration-procedure.3md",
+   "canonical": 3613,
+   "kind2": 3519
+  },
+  {
+   "file": "Examples/encounter-initiative-wheel.3md",
+   "canonical": 7098,
+   "kind2": 7008
+  },
+  {
+   "file": "Examples/eta-2824-exploded.3md",
+   "canonical": 7272,
+   "kind2": 7146
+  },
+  {
+   "file": "Examples/evolution-timeline.3md",
+   "canonical": 4406,
+   "kind2": 4275
+  },
+  {
+   "file": "Examples/exec-summary.3md",
+   "canonical": 4898,
+   "kind2": 4818
+  },
+  {
+   "file": "Examples/experiment.3md",
+   "canonical": 5247,
+   "kind2": 5139
+  },
+  {
+   "file": "Examples/fallingwater-floor-by-floor.3md",
+   "canonical": 6747,
+   "kind2": 6638
+  },
+  {
+   "file": "Examples/family-tree.3md",
+   "canonical": 3483,
+   "kind2": 3394
+  },
+  {
+   "file": "Examples/faq-deepdive.3md",
+   "canonical": 5453,
+   "kind2": 5367
+  },
+  {
+   "file": "Examples/fault-tree-cascade.3md",
+   "canonical": 1695,
+   "kind2": 1619
+  },
+  {
+   "file": "Examples/fireworks.3md",
+   "canonical": 4372,
+   "kind2": 4236
+  },
+  {
+   "file": "Examples/first-aid.3md",
+   "canonical": 5790,
+   "kind2": 5659
+  },
+  {
+   "file": "Examples/floor-plan.3md",
+   "canonical": 3648,
+   "kind2": 3562
+  },
+  {
+   "file": "Examples/forcing-the-seven.3md",
+   "canonical": 3352,
+   "kind2": 3254
+  },
+  {
+   "file": "Examples/freerider-topo-el-cap.3md",
+   "canonical": 8179,
+   "kind2": 8066
+  },
+  {
+   "file": "Examples/froggy-hop-splash.3md",
+   "canonical": 2742,
+   "kind2": 2625
+  },
+  {
+   "file": "Examples/fulton-block-43.3md",
+   "canonical": 5487,
+   "kind2": 5369
+  },
+  {
+   "file": "Examples/furniture-assembly.3md",
+   "canonical": 5999,
+   "kind2": 5866
+  },
+  {
+   "file": "Examples/game-3d-diamond.3md",
+   "canonical": 1729,
+   "kind2": 1578
+  },
+  {
+   "file": "Examples/game-maze.3md",
+   "canonical": 1736,
+   "kind2": 1628
+  },
+  {
+   "file": "Examples/game-of-life.3md",
+   "canonical": 7508,
+   "kind2": 7109
+  },
+  {
+   "file": "Examples/game-platformer-map.3md",
+   "canonical": 1995,
+   "kind2": 1908
+  },
+  {
+   "file": "Examples/game-rocket-launch.3md",
+   "canonical": 2711,
+   "kind2": 2569
+  },
+  {
+   "file": "Examples/game-snake.3md",
+   "canonical": 2297,
+   "kind2": 2174
+  },
+  {
+   "file": "Examples/game-text-adventure.3md",
+   "canonical": 1832,
+   "kind2": 1724
+  },
+  {
+   "file": "Examples/game-tic-tac-toe.3md",
+   "canonical": 1613,
+   "kind2": 1486
+  },
+  {
+   "file": "Examples/garden-layout.3md",
+   "canonical": 5968,
+   "kind2": 5852
+  },
+  {
+   "file": "Examples/gather-to-anneal.3md",
+   "canonical": 6390,
+   "kind2": 6249
+  },
+  {
+   "file": "Examples/geological-eras.3md",
+   "canonical": 3967,
+   "kind2": 3881
+  },
+  {
+   "file": "Examples/gongfu-session-wuyi-dahongpao.3md",
+   "canonical": 5264,
+   "kind2": 5141
+  },
+  {
+   "file": "Examples/grant-stages.3md",
+   "canonical": 4965,
+   "kind2": 4854
+  },
+  {
+   "file": "Examples/harvest-grid-planner.3md",
+   "canonical": 3977,
+   "kind2": 3899
+  },
+  {
+   "file": "Examples/heartbeat.3md",
+   "canonical": 4600,
+   "kind2": 4477
+  },
+  {
+   "file": "Examples/hiit-inferno-circuit.3md",
+   "canonical": 6195,
+   "kind2": 6037
+  },
+  {
+   "file": "Examples/hiring-pipeline.3md",
+   "canonical": 5433,
+   "kind2": 5293
+  },
+  {
+   "file": "Examples/history-of-rome.3md",
+   "canonical": 5420,
+   "kind2": 5334
+  },
+  {
+   "file": "Examples/hive-year.3md",
+   "canonical": 5677,
+   "kind2": 5595
+  },
+  {
+   "file": "Examples/home-bookshelf-assembly.3md",
+   "canonical": 3604,
+   "kind2": 3523
+  },
+  {
+   "file": "Examples/home-car-maintenance.3md",
+   "canonical": 2176,
+   "kind2": 2102
+  },
+  {
+   "file": "Examples/home-catan-walkthrough.3md",
+   "canonical": 3594,
+   "kind2": 3513
+  },
+  {
+   "file": "Examples/home-dishcloth-knit.3md",
+   "canonical": 2646,
+   "kind2": 2565
+  },
+  {
+   "file": "Examples/home-pacific-coast-roadtrip.3md",
+   "canonical": 2553,
+   "kind2": 2488
+  },
+  {
+   "file": "Examples/home-soccer-playbyplay.3md",
+   "canonical": 2508,
+   "kind2": 2427
+  },
+  {
+   "file": "Examples/home-ucl-bracket.3md",
+   "canonical": 2630,
+   "kind2": 2568
+  },
+  {
+   "file": "Examples/home-wedding-seating.3md",
+   "canonical": 3834,
+   "kind2": 3657
+  },
+  {
+   "file": "Examples/homicide-on-lake-meridian.3md",
+   "canonical": 6046,
+   "kind2": 5921
+  },
+  {
+   "file": "Examples/hospital-wings.3md",
+   "canonical": 4910,
+   "kind2": 4799
+  },
+  {
+   "file": "Examples/hotel-amenities.3md",
+   "canonical": 7559,
+   "kind2": 7403
+  },
+  {
+   "file": "Examples/household-budget-z-axis.3md",
+   "canonical": 4791,
+   "kind2": 4684
+  },
+  {
+   "file": "Examples/ils-approach-stack.3md",
+   "canonical": 4320,
+   "kind2": 4208
+  },
+  {
+   "file": "Examples/incident-response-runbook.3md",
+   "canonical": 2546,
+   "kind2": 2383
+  },
+  {
+   "file": "Examples/influencer-island-bracket.3md",
+   "canonical": 6744,
+   "kind2": 6640
+  },
+  {
+   "file": "Examples/install-guide.3md",
+   "canonical": 4369,
+   "kind2": 4267
+  },
+  {
+   "file": "Examples/junction-interlocking.3md",
+   "canonical": 5655,
+   "kind2": 5536
+  },
+  {
+   "file": "Examples/kanban.3md",
+   "canonical": 854,
+   "kind2": 805
+  },
+  {
+   "file": "Examples/keynote.3md",
+   "canonical": 4919,
+   "kind2": 4789
+  },
+  {
+   "file": "Examples/kickflip-breakdown.3md",
+   "canonical": 3670,
+   "kind2": 3533
+  },
+  {
+   "file": "Examples/kilauea-eruption-clock.3md",
+   "canonical": 6120,
+   "kind2": 6000
+  },
+  {
+   "file": "Examples/kinetic-erasure-poem.3md",
+   "canonical": 940,
+   "kind2": 751
+  },
+  {
+   "file": "Examples/knitting.3md",
+   "canonical": 3955,
+   "kind2": 3819
+  },
+  {
+   "file": "Examples/last-train-to-oslo.3md",
+   "canonical": 3914,
+   "kind2": 3826
+  },
+  {
+   "file": "Examples/launch-constraint-room.3md",
+   "canonical": 1711,
+   "kind2": 1617
+  },
+  {
+   "file": "Examples/layered-notes.3md",
+   "canonical": 550,
+   "kind2": 496
+  },
+  {
+   "file": "Examples/legal-brief.3md",
+   "canonical": 5205,
+   "kind2": 5090
+  },
+  {
+   "file": "Examples/lesson-plan.3md",
+   "canonical": 5286,
+   "kind2": 5153
+  },
+  {
+   "file": "Examples/letterform-anatomy.3md",
+   "canonical": 6138,
+   "kind2": 6024
+  },
+  {
+   "file": "Examples/library-floors.3md",
+   "canonical": 4219,
+   "kind2": 4107
+  },
+  {
+   "file": "Examples/life-course-syllabus.3md",
+   "canonical": 2727,
+   "kind2": 2630
+  },
+  {
+   "file": "Examples/life-garden-plan.3md",
+   "canonical": 2270,
+   "kind2": 2208
+  },
+  {
+   "file": "Examples/life-house-tour.3md",
+   "canonical": 2066,
+   "kind2": 2000
+  },
+  {
+   "file": "Examples/life-kyoto-itinerary.3md",
+   "canonical": 2486,
+   "kind2": 2408
+  },
+  {
+   "file": "Examples/life-monthly-budget.3md",
+   "canonical": 2568,
+   "kind2": 2506
+  },
+  {
+   "file": "Examples/life-short-story.3md",
+   "canonical": 2761,
+   "kind2": 2683
+  },
+  {
+   "file": "Examples/life-song-structure.3md",
+   "canonical": 2089,
+   "kind2": 1959
+  },
+  {
+   "file": "Examples/life-spanish-flashcards.3md",
+   "canonical": 2528,
+   "kind2": 2434
+  },
+  {
+   "file": "Examples/life-transit-map.3md",
+   "canonical": 2312,
+   "kind2": 2182
+  },
+  {
+   "file": "Examples/lightning-talk.3md",
+   "canonical": 2944,
+   "kind2": 2836
+  },
+  {
+   "file": "Examples/lisbon-three-day-walkable.3md",
+   "canonical": 5742,
+   "kind2": 5667
+  },
+  {
+   "file": "Examples/logic-gate-builder.3md",
+   "canonical": 4249,
+   "kind2": 4136
+  },
+  {
+   "file": "Examples/mall-directory.3md",
+   "canonical": 4707,
+   "kind2": 4618
+  },
+  {
+   "file": "Examples/map-overlays.3md",
+   "canonical": 4077,
+   "kind2": 3984
+  },
+  {
+   "file": "Examples/marathon-split-pacer.3md",
+   "canonical": 5194,
+   "kind2": 5087
+  },
+  {
+   "file": "Examples/marionette-curtain-call.3md",
+   "canonical": 2971,
+   "kind2": 2842
+  },
+  {
+   "file": "Examples/med-acl-recovery.3md",
+   "canonical": 2944,
+   "kind2": 2863
+  },
+  {
+   "file": "Examples/med-brain-ct-slices.3md",
+   "canonical": 3256,
+   "kind2": 3175
+  },
+  {
+   "file": "Examples/med-clinical-trial-phases.3md",
+   "canonical": 3908,
+   "kind2": 3811
+  },
+  {
+   "file": "Examples/med-ecg-animation.3md",
+   "canonical": 3040,
+   "kind2": 2959
+  },
+  {
+   "file": "Examples/med-forearm-anatomy.3md",
+   "canonical": 3027,
+   "kind2": 2965
+  },
+  {
+   "file": "Examples/med-medication-schedule.3md",
+   "canonical": 2934,
+   "kind2": 2853
+  },
+  {
+   "file": "Examples/med-migraine-diary.3md",
+   "canonical": 2976,
+   "kind2": 2895
+  },
+  {
+   "file": "Examples/med-patient-chart.3md",
+   "canonical": 3060,
+   "kind2": 2976
+  },
+  {
+   "file": "Examples/med-strength-program.3md",
+   "canonical": 3412,
+   "kind2": 3331
+  },
+  {
+   "file": "Examples/medication-schedule.3md",
+   "canonical": 4080,
+   "kind2": 3969
+  },
+  {
+   "file": "Examples/meeting-agenda.3md",
+   "canonical": 3944,
+   "kind2": 3830
+  },
+  {
+   "file": "Examples/memory-palace-cross-section.3md",
+   "canonical": 1916,
+   "kind2": 1787
+  },
+  {
+   "file": "Examples/mesoscale-storm-clock.3md",
+   "canonical": 6649,
+   "kind2": 6536
+  },
+  {
+   "file": "Examples/metro-zone-grid.3md",
+   "canonical": 4235,
+   "kind2": 4164
+  },
+  {
+   "file": "Examples/mission-control-loop.3md",
+   "canonical": 1676,
+   "kind2": 1585
+  },
+  {
+   "file": "Examples/monologue-autopsy.3md",
+   "canonical": 4802,
+   "kind2": 4698
+  },
+  {
+   "file": "Examples/moon-phases.3md",
+   "canonical": 4497,
+   "kind2": 4383
+  },
+  {
+   "file": "Examples/museum-night-patrol.3md",
+   "canonical": 7494,
+   "kind2": 7374
+  },
+  {
+   "file": "Examples/museum-of-the-anthropocene-walkthrough.3md",
+   "canonical": 7474,
+   "kind2": 7355
+  },
+  {
+   "file": "Examples/museum-tour.3md",
+   "canonical": 5258,
+   "kind2": 5146
+  },
+  {
+   "file": "Examples/mushroom-anatomy-layers.3md",
+   "canonical": 5248,
+   "kind2": 5170
+  },
+  {
+   "file": "Examples/music-score.3md",
+   "canonical": 4485,
+   "kind2": 4302
+  },
+  {
+   "file": "Examples/negroni-build.3md",
+   "canonical": 3221,
+   "kind2": 3104
+  },
+  {
+   "file": "Examples/news-pyramid.3md",
+   "canonical": 4182,
+   "kind2": 4089
+  },
+  {
+   "file": "Examples/obsidian-rift.3md",
+   "canonical": 3890,
+   "kind2": 3844
+  },
+  {
+   "file": "Examples/office-directory.3md",
+   "canonical": 4841,
+   "kind2": 4711
+  },
+  {
+   "file": "Examples/onboarding.3md",
+   "canonical": 7412,
+   "kind2": 7301
+  },
+  {
+   "file": "Examples/one-night-setlist.3md",
+   "canonical": 4020,
+   "kind2": 3938
+  },
+  {
+   "file": "Examples/order-fulfillment.3md",
+   "canonical": 4537,
+   "kind2": 4406
+  },
+  {
+   "file": "Examples/origami-crane-step-by-step.3md",
+   "canonical": 3864,
+   "kind2": 3754
+  },
+  {
+   "file": "Examples/origami.3md",
+   "canonical": 3424,
+   "kind2": 3338
+  },
+  {
+   "file": "Examples/paper-abstract.3md",
+   "canonical": 5921,
+   "kind2": 5824
+  },
+  {
+   "file": "Examples/parking-levels.3md",
+   "canonical": 4286,
+   "kind2": 4175
+  },
+  {
+   "file": "Examples/parking-lot.3md",
+   "canonical": 5691,
+   "kind2": 5574
+  },
+  {
+   "file": "Examples/patient-vitals-shift-watch.3md",
+   "canonical": 4175,
+   "kind2": 4068
+  },
+  {
+   "file": "Examples/pendulum.3md",
+   "canonical": 3714,
+   "kind2": 3578
+  },
+  {
+   "file": "Examples/perpetual-calendar-depth.3md",
+   "canonical": 6324,
+   "kind2": 6230
+  },
+  {
+   "file": "Examples/perseid-peak-2026.3md",
+   "canonical": 6500,
+   "kind2": 6374
+  },
+  {
+   "file": "Examples/photo-edit.3md",
+   "canonical": 5411,
+   "kind2": 5276
+  },
+  {
+   "file": "Examples/pitch-deck.3md",
+   "canonical": 4249,
+   "kind2": 4112
+  },
+  {
+   "file": "Examples/pixel-invaders-assault.3md",
+   "canonical": 3355,
+   "kind2": 3225
+  },
+  {
+   "file": "Examples/podcast-season.3md",
+   "canonical": 5845,
+   "kind2": 5742
+  },
+  {
+   "file": "Examples/powers-of-ten.3md",
+   "canonical": 4719,
+   "kind2": 4510
+  },
+  {
+   "file": "Examples/project-timeline.3md",
+   "canonical": 5652,
+   "kind2": 5522
+  },
+  {
+   "file": "Examples/pudding-the-corgi-walk.3md",
+   "canonical": 1457,
+   "kind2": 1319
+  },
+  {
+   "file": "Examples/pulse-week-sparklines.3md",
+   "canonical": 3833,
+   "kind2": 3751
+  },
+  {
+   "file": "Examples/push-hard-push-fast.3md",
+   "canonical": 4817,
+   "kind2": 4687
+  },
+  {
+   "file": "Examples/pythagoras-proof-unfolding.3md",
+   "canonical": 3692,
+   "kind2": 3588
+  },
+  {
+   "file": "Examples/quarterly-review.3md",
+   "canonical": 4369,
+   "kind2": 4243
+  },
+  {
+   "file": "Examples/rain.3md",
+   "canonical": 2674,
+   "kind2": 2563
+  },
+  {
+   "file": "Examples/recipe-depth.3md",
+   "canonical": 4016,
+   "kind2": 3942
+  },
+  {
+   "file": "Examples/recipe-steps.3md",
+   "canonical": 3626,
+   "kind2": 3524
+  },
+  {
+   "file": "Examples/recipe.3md",
+   "canonical": 1359,
+   "kind2": 1284
+  },
+  {
+   "file": "Examples/redacted-doc.3md",
+   "canonical": 3746,
+   "kind2": 3675
+  },
+  {
+   "file": "Examples/reef-depth-zones.3md",
+   "canonical": 6558,
+   "kind2": 6455
+  },
+  {
+   "file": "Examples/reef-tank-cross-section.3md",
+   "canonical": 4512,
+   "kind2": 4427
+  },
+  {
+   "file": "Examples/reentry-blackout-window.3md",
+   "canonical": 2875,
+   "kind2": 2781
+  },
+  {
+   "file": "Examples/region-pulse.3md",
+   "canonical": 4180,
+   "kind2": 4098
+  },
+  {
+   "file": "Examples/resume.3md",
+   "canonical": 1583,
+   "kind2": 1527
+  },
+  {
+   "file": "Examples/rocket-stages.3md",
+   "canonical": 5446,
+   "kind2": 5346
+  },
+  {
+   "file": "Examples/rosetta-pour-animated.3md",
+   "canonical": 3359,
+   "kind2": 3239
+  },
+  {
+   "file": "Examples/sales-script.3md",
+   "canonical": 5087,
+   "kind2": 4957
+  },
+  {
+   "file": "Examples/schema-migrations.3md",
+   "canonical": 5006,
+   "kind2": 4898
+  },
+  {
+   "file": "Examples/seating-chart.3md",
+   "canonical": 4255,
+   "kind2": 4166
+  },
+  {
+   "file": "Examples/seed-germination-ascii-timelapse.3md",
+   "canonical": 3287,
+   "kind2": 3183
+  },
+  {
+   "file": "Examples/seed-pitch-deck-corvid.3md",
+   "canonical": 4405,
+   "kind2": 4285
+  },
+  {
+   "file": "Examples/sermon.3md",
+   "canonical": 3349,
+   "kind2": 3215
+  },
+  {
+   "file": "Examples/setlist-energy-arc.3md",
+   "canonical": 4107,
+   "kind2": 4003
+  },
+  {
+   "file": "Examples/shell-burst-finale.3md",
+   "canonical": 4195,
+   "kind2": 4059
+  },
+  {
+   "file": "Examples/ship-decks.3md",
+   "canonical": 4317,
+   "kind2": 4205
+  },
+  {
+   "file": "Examples/sicilian-najdorf-opening-frames.3md",
+   "canonical": 5282,
+   "kind2": 5163
+  },
+  {
+   "file": "Examples/sillage-descent.3md",
+   "canonical": 4430,
+   "kind2": 4330
+  },
+  {
+   "file": "Examples/skill-tree.3md",
+   "canonical": 3355,
+   "kind2": 3272
+  },
+  {
+   "file": "Examples/sky-citadel-run.3md",
+   "canonical": 3993,
+   "kind2": 3909
+  },
+  {
+   "file": "Examples/solar-system-depth-dive.3md",
+   "canonical": 7420,
+   "kind2": 7287
+  },
+  {
+   "file": "Examples/solar-system.3md",
+   "canonical": 5174,
+   "kind2": 5036
+  },
+  {
+   "file": "Examples/song-stems.3md",
+   "canonical": 4744,
+   "kind2": 4622
+  },
+  {
+   "file": "Examples/sourdough-three-day-rise.3md",
+   "canonical": 6372,
+   "kind2": 6294
+  },
+  {
+   "file": "Examples/spanish-ser-vs-estar-flashcards.3md",
+   "canonical": 4709,
+   "kind2": 4511
+  },
+  {
+   "file": "Examples/sprite-jump.3md",
+   "canonical": 4397,
+   "kind2": 4276
+  },
+  {
+   "file": "Examples/stage-set.3md",
+   "canonical": 4278,
+   "kind2": 4178
+  },
+  {
+   "file": "Examples/storm-front-radar-sweep.3md",
+   "canonical": 4196,
+   "kind2": 4077
+  },
+  {
+   "file": "Examples/storm-watch-log.3md",
+   "canonical": 5600,
+   "kind2": 5500
+  },
+  {
+   "file": "Examples/strength-mesocycle-12wk.3md",
+   "canonical": 3084,
+   "kind2": 2889
+  },
+  {
+   "file": "Examples/supply-chain-port-map.3md",
+   "canonical": 1447,
+   "kind2": 1371
+  },
+  {
+   "file": "Examples/suspension-bridge-load-path.3md",
+   "canonical": 6872,
+   "kind2": 6762
+  },
+  {
+   "file": "Examples/tea-shop-end-of-lane.3md",
+   "canonical": 2297,
+   "kind2": 2203
+  },
+  {
+   "file": "Examples/tell-jezreel-trench-g.3md",
+   "canonical": 5651,
+   "kind2": 5531
+  },
+  {
+   "file": "Examples/tendu-sequence.3md",
+   "canonical": 4223,
+   "kind2": 4087
+  },
+  {
+   "file": "Examples/theme-variants.3md",
+   "canonical": 5873,
+   "kind2": 5809
+  },
+  {
+   "file": "Examples/threat-model.3md",
+   "canonical": 8523,
+   "kind2": 8390
+  },
+  {
+   "file": "Examples/three-card-veil.3md",
+   "canonical": 3276,
+   "kind2": 3223
+  },
+  {
+   "file": "Examples/tide-pool.3md",
+   "canonical": 2751,
+   "kind2": 2677
+  },
+  {
+   "file": "Examples/tonkotsu-eighteen-hours.3md",
+   "canonical": 5236,
+   "kind2": 5113
+  },
+  {
+   "file": "Examples/traffic-light.3md",
+   "canonical": 2869,
+   "kind2": 2780
+  },
+  {
+   "file": "Examples/training-plan.3md",
+   "canonical": 5466,
+   "kind2": 5401
+  },
+  {
+   "file": "Examples/translation-layers.3md",
+   "canonical": 2565,
+   "kind2": 2498
+  },
+  {
+   "file": "Examples/twirl-and-reach.3md",
+   "canonical": 1094,
+   "kind2": 954
+  },
+  {
+   "file": "Examples/typing-cursor.3md",
+   "canonical": 2041,
+   "kind2": 1952
+  },
+  {
+   "file": "Examples/undercut-window.3md",
+   "canonical": 4365,
+   "kind2": 4256
+  },
+  {
+   "file": "Examples/vermeer-girl-pearl-dissection.3md",
+   "canonical": 5802,
+   "kind2": 5705
+  },
+  {
+   "file": "Examples/walk-cycle.3md",
+   "canonical": 2590,
+   "kind2": 2500
+  },
+  {
+   "file": "Examples/wedding-toast.3md",
+   "canonical": 3190,
+   "kind2": 3082
+  },
+  {
+   "file": "Examples/week-of-small-weights.3md",
+   "canonical": 4805,
+   "kind2": 4691
+  },
+  {
+   "file": "Examples/whimsy-hollow-park-map.3md",
+   "canonical": 5404,
+   "kind2": 5336
+  },
+  {
+   "file": "Examples/word-assembles-letter-by-letter.3md",
+   "canonical": 1345,
+   "kind2": 1193
+  },
+  {
+   "file": "Examples/word-falling-into-itself.3md",
+   "canonical": 1931,
+   "kind2": 1844
+  },
+  {
+   "file": "Examples/workout.3md",
+   "canonical": 3353,
+   "kind2": 3245
+  },
+  {
+   "file": "Examples/yes-and-escalator.3md",
+   "canonical": 3013,
+   "kind2": 2894
+  }
+ ]
+}

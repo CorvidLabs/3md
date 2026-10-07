@@ -1,0 +1,1581 @@
+{
+  "schema": "3md-structured-vectors-1",
+  "entryPoint": "DocumentStorageCodec.decode",
+  "note": "Hostile, edge and limit vectors for payload kind 2: the 142 vectors of conformance/structured/invalid (one file each), then the 14 of conformance/structured/limits (several share one file and differ only in limits). file is relative to the repository root. Every file is a complete .3mdb with lengths and CRC resealed unless the vector says otherwise. limits are DocumentDecodeLimits fields; absent fields are standard. The limits decide the outcome, so every consumer must pass them to storage decode: the unit tests directly, the interchange driver in the 3md-interchange-2 request's limits object, and the 2.0.0 compatibility job through its per-language library harness (the 2.0.0 adapters cannot take limits). expected20 is the 2.0.0 reader's outcome under the same limits. errorType is none for ok vectors. rule is the deciding SPEC 11.3 step. textValidate20 is the TypeScript validate outcome (unchanged in 2.1) for vectors that describe a Document.",
+  "vectors": [
+    {
+      "name": "container-truncated-header",
+      "file": "conformance/structured/invalid/container-truncated-header.3mdb",
+      "rule": "D4",
+      "description": "Magic present, 39 bytes.",
+      "expected": "invalidContainer",
+      "expected20": "invalidContainer",
+      "errorType": "DocumentStorageError"
+    },
+    {
+      "name": "container-version-2",
+      "file": "conformance/structured/invalid/container-version-2.3mdb",
+      "rule": "D5",
+      "description": "Container version 2.",
+      "expected": "unsupportedVersion",
+      "expected20": "unsupportedVersion",
+      "errorType": "DocumentStorageError"
+    },
+    {
+      "name": "container-kind-0",
+      "file": "conformance/structured/invalid/container-kind-0.3mdb",
+      "rule": "D6",
+      "description": "Reserved payload kind 0.",
+      "expected": "unsupportedPayloadKind",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "DocumentStorageError"
+    },
+    {
+      "name": "container-kind-3",
+      "file": "conformance/structured/invalid/container-kind-3.3mdb",
+      "rule": "D6",
+      "description": "Payload kind 3 is reserved in 2.1.",
+      "expected": "unsupportedPayloadKind",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "DocumentStorageError"
+    },
+    {
+      "name": "container-kind-4",
+      "file": "conformance/structured/invalid/container-kind-4.3mdb",
+      "rule": "D6",
+      "description": "Reserved payload kind 4.",
+      "expected": "unsupportedPayloadKind",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "DocumentStorageError"
+    },
+    {
+      "name": "container-kind-255",
+      "file": "conformance/structured/invalid/container-kind-255.3mdb",
+      "rule": "D6",
+      "description": "Reserved payload kind 255.",
+      "expected": "unsupportedPayloadKind",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "DocumentStorageError"
+    },
+    {
+      "name": "container-kind-3-bad-crc",
+      "file": "conformance/structured/invalid/container-kind-3-bad-crc.3mdb",
+      "rule": "D6",
+      "description": "Kind 3 with a corrupt CRC: the kind is rejected before the CRC is computed.",
+      "expected": "unsupportedPayloadKind",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "DocumentStorageError"
+    },
+    {
+      "name": "container-compression-2",
+      "file": "conformance/structured/invalid/container-compression-2.3mdb",
+      "rule": "D7",
+      "description": "Compression identifier 2.",
+      "expected": "unsupportedCompression",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "DocumentStorageError"
+    },
+    {
+      "name": "container-flags",
+      "file": "conformance/structured/invalid/container-flags.3mdb",
+      "rule": "D8",
+      "description": "Flags 1.",
+      "expected": "unsupportedFlags",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "DocumentStorageError"
+    },
+    {
+      "name": "container-reserved",
+      "file": "conformance/structured/invalid/container-reserved.3mdb",
+      "rule": "D9",
+      "description": "Reserved 1.",
+      "expected": "nonzeroReserved",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "DocumentStorageError"
+    },
+    {
+      "name": "container-decoded-over-emax",
+      "file": "conformance/structured/invalid/container-decoded-over-emax.3mdb",
+      "rule": "D10",
+      "description": "Kind-2 decoded length Emax - 39 under standard limits (the bound is Emax - 40).",
+      "expected": "oversizedOutput",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "DocumentStorageError"
+    },
+    {
+      "name": "container-decoded-over-2dmax-bad-crc",
+      "file": "conformance/structured/invalid/container-decoded-over-2dmax-bad-crc.3mdb",
+      "rule": "D10",
+      "description": "Payload 70 bytes, maximumDecodedBytes 34: 2 * Dmax < decoded length is rejected before the CRC.",
+      "limits": {
+        "maximumDecodedBytes": 34
+      },
+      "expected": "oversizedOutput",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "DocumentStorageError"
+    },
+    {
+      "name": "container-encoded-zero",
+      "file": "conformance/structured/invalid/container-encoded-zero.3mdb",
+      "rule": "D11",
+      "description": "Encoded length 0.",
+      "expected": "lengthMismatch",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "DocumentStorageError"
+    },
+    {
+      "name": "container-decoded-zero",
+      "file": "conformance/structured/invalid/container-decoded-zero.3mdb",
+      "rule": "D11",
+      "description": "Decoded length 0.",
+      "expected": "lengthMismatch",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "DocumentStorageError"
+    },
+    {
+      "name": "container-encoded-mismatch",
+      "file": "conformance/structured/invalid/container-encoded-mismatch.3mdb",
+      "rule": "D11",
+      "description": "Encoded length one more than the bytes present.",
+      "expected": "lengthMismatch",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "DocumentStorageError"
+    },
+    {
+      "name": "container-uncompressed-lengths-differ",
+      "file": "conformance/structured/invalid/container-uncompressed-lengths-differ.3mdb",
+      "rule": "D11",
+      "description": "Compression 0 with decoded length one less than encoded.",
+      "expected": "lengthMismatch",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "DocumentStorageError"
+    },
+    {
+      "name": "container-trailing-byte",
+      "file": "conformance/structured/invalid/container-trailing-byte.3mdb",
+      "rule": "D11",
+      "description": "One unused byte after the declared payload.",
+      "expected": "lengthMismatch",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "DocumentStorageError"
+    },
+    {
+      "name": "container-crc-field",
+      "file": "conformance/structured/invalid/container-crc-field.3mdb",
+      "rule": "D12",
+      "description": "CRC field flipped.",
+      "expected": "checksumMismatch",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "DocumentStorageError"
+    },
+    {
+      "name": "container-crc-payload",
+      "file": "conformance/structured/invalid/container-crc-payload.3mdb",
+      "rule": "D12",
+      "description": "Payload byte flipped, CRC not resealed.",
+      "expected": "checksumMismatch",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "DocumentStorageError"
+    },
+    {
+      "name": "container-lzfse-portable",
+      "file": "conformance/structured/invalid/container-lzfse-portable.3mdb",
+      "rule": "D13",
+      "description": "Compression 1 with a valid CRC: ports without LZFSE report compressionUnavailable.",
+      "expected": "compressionUnavailable",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "DocumentStorageError",
+      "requiresNoLZFSE": true
+    },
+    {
+      "name": "var-non-minimal",
+      "file": "conformance/structured/invalid/var-non-minimal.3mdb",
+      "rule": "V3",
+      "description": "Version length 1 written as 81 00 (two bytes, last byte 00).",
+      "expected": "invalidContainer",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "DocumentStorageError"
+    },
+    {
+      "name": "var-non-minimal-zero",
+      "file": "conformance/structured/invalid/var-non-minimal-zero.3mdb",
+      "rule": "V3",
+      "description": "Version length 80 00.",
+      "expected": "invalidContainer",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "DocumentStorageError"
+    },
+    {
+      "name": "var-five-bytes",
+      "file": "conformance/structured/invalid/var-five-bytes.3mdb",
+      "rule": "V2",
+      "description": "Version length ff ff ff ff 01.",
+      "expected": "invalidContainer",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "DocumentStorageError"
+    },
+    {
+      "name": "var-four-continuation-truncated",
+      "file": "conformance/structured/invalid/var-four-continuation-truncated.3mdb",
+      "rule": "V2",
+      "description": "Fourth Var byte has its continuation bit and no fifth byte follows: invalidContainer, not lengthMismatch.",
+      "expected": "invalidContainer",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "DocumentStorageError"
+    },
+    {
+      "name": "var-truncated",
+      "file": "conformance/structured/invalid/var-truncated.3mdb",
+      "rule": "V1",
+      "description": "Plane count Var cut after a continuation byte.",
+      "expected": "lengthMismatch",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "DocumentStorageError"
+    },
+    {
+      "name": "var-max-length",
+      "file": "conformance/structured/invalid/var-max-length.3mdb",
+      "rule": "Str1",
+      "description": "Version length 2^28 - 1 with one byte remaining.",
+      "expected": "lengthMismatch",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "DocumentStorageError"
+    },
+    {
+      "name": "count-metadata",
+      "file": "conformance/structured/invalid/count-metadata.3mdb",
+      "rule": "C",
+      "description": "metadataCount 2 with 3 bytes remaining (floor(3 / 2) = 1).",
+      "expected": "lengthMismatch",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "DocumentStorageError"
+    },
+    {
+      "name": "count-planes",
+      "file": "conformance/structured/invalid/count-planes.3mdb",
+      "rule": "C",
+      "description": "planeCount 1 with 3 bytes remaining after the Var. A reader that measured remaining before the Var would read plane flags 80 and report invalidContainer.",
+      "expected": "lengthMismatch",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "DocumentStorageError"
+    },
+    {
+      "name": "count-attributes",
+      "file": "conformance/structured/invalid/count-attributes.3mdb",
+      "rule": "C",
+      "description": "attributeCount 1 with 2 bytes remaining (floor(2 / 3) = 0).",
+      "expected": "lengthMismatch",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "DocumentStorageError"
+    },
+    {
+      "name": "count-planes-edge-ok",
+      "file": "conformance/structured/invalid/count-planes-edge-ok.3mdb",
+      "rule": "C",
+      "description": "planeCount 1 with exactly 4 bytes remaining is valid (empty body).",
+      "expected": "ok",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "none"
+    },
+    {
+      "name": "count-planes-over-pmax-and-remaining",
+      "file": "conformance/structured/invalid/count-planes-over-pmax-and-remaining.3mdb",
+      "rule": "C",
+      "description": "planeCount 2 with 4 bytes remaining after the Var and maximumPlanes 1: Count framing (floor(4 / 4) = 1 < 2) precedes the Pmax check, so the result is lengthMismatch, not tooManyPlanes.",
+      "limits": {
+        "maximumPlanes": 1
+      },
+      "expected": "lengthMismatch",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "DocumentStorageError"
+    },
+    {
+      "name": "str-remaining-plus-one",
+      "file": "conformance/structured/invalid/str-remaining-plus-one.3mdb",
+      "rule": "Str1",
+      "description": "Body length 2 with 1 byte remaining.",
+      "expected": "lengthMismatch",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "DocumentStorageError"
+    },
+    {
+      "name": "str-remaining-before-limit",
+      "file": "conformance/structured/invalid/str-remaining-before-limit.3mdb",
+      "rule": "Str1",
+      "description": "Version length 3 with 2 bytes remaining and maximumRecordBytes 2: the remaining check precedes the record limit.",
+      "limits": {
+        "maximumRecordBytes": 2
+      },
+      "expected": "lengthMismatch",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "DocumentStorageError"
+    },
+    {
+      "name": "str-two-byte-var-exact-ok",
+      "file": "conformance/structured/invalid/str-two-byte-var-exact-ok.3mdb",
+      "rule": "Str1",
+      "description": "Body of 200 bytes (two-byte Var), length equal to remaining.",
+      "expected": "ok",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "none"
+    },
+    {
+      "name": "str-two-byte-var-plus-one",
+      "file": "conformance/structured/invalid/str-two-byte-var-plus-one.3mdb",
+      "rule": "Str1",
+      "description": "Body Var says 200 with 199 bytes remaining.",
+      "expected": "lengthMismatch",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "DocumentStorageError"
+    },
+    {
+      "name": "str-over-record",
+      "file": "conformance/structured/invalid/str-over-record.3mdb",
+      "rule": "Str2",
+      "description": "Body of 6 bytes with maximumRecordBytes 5.",
+      "limits": {
+        "maximumRecordBytes": 5
+      },
+      "expected": "oversizedRecord",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "DocumentStorageError",
+      "textValidate20": "oversizedRecord"
+    },
+    {
+      "name": "str-preamble-over-r-minus-1",
+      "file": "conformance/structured/invalid/str-preamble-over-r-minus-1.3mdb",
+      "rule": "S7",
+      "description": "Preamble of 5 bytes with maximumRecordBytes 5 (the preamble limit is R - 1).",
+      "limits": {
+        "maximumRecordBytes": 5
+      },
+      "expected": "oversizedRecord",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "DocumentStorageError",
+      "textValidate20": "oversizedRecord"
+    },
+    {
+      "name": "utf8-scalar-overlong",
+      "file": "conformance/structured/invalid/utf8-scalar-overlong.3mdb",
+      "rule": "Str3",
+      "description": "Title bytes c080.",
+      "expected": "invalidUTF8",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "DocumentStorageError"
+    },
+    {
+      "name": "utf8-scalar-surrogate",
+      "file": "conformance/structured/invalid/utf8-scalar-surrogate.3mdb",
+      "rule": "Str3",
+      "description": "Title bytes eda080.",
+      "expected": "invalidUTF8",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "DocumentStorageError"
+    },
+    {
+      "name": "utf8-scalar-above-max",
+      "file": "conformance/structured/invalid/utf8-scalar-above-max.3mdb",
+      "rule": "Str3",
+      "description": "Title bytes f4908080.",
+      "expected": "invalidUTF8",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "DocumentStorageError"
+    },
+    {
+      "name": "utf8-scalar-truncated",
+      "file": "conformance/structured/invalid/utf8-scalar-truncated.3mdb",
+      "rule": "Str3",
+      "description": "Title bytes e282.",
+      "expected": "invalidUTF8",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "DocumentStorageError"
+    },
+    {
+      "name": "utf8-scalar-lone-continuation",
+      "file": "conformance/structured/invalid/utf8-scalar-lone-continuation.3mdb",
+      "rule": "Str3",
+      "description": "Title bytes 80.",
+      "expected": "invalidUTF8",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "DocumentStorageError"
+    },
+    {
+      "name": "utf8-scalar-ff",
+      "file": "conformance/structured/invalid/utf8-scalar-ff.3mdb",
+      "rule": "Str3",
+      "description": "Title bytes ff.",
+      "expected": "invalidUTF8",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "DocumentStorageError"
+    },
+    {
+      "name": "utf8-body-split",
+      "file": "conformance/structured/invalid/utf8-body-split.3mdb",
+      "rule": "Str3",
+      "description": "U+20AC split across a label and the following field: each Str is validated on its own.",
+      "expected": "invalidUTF8",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "DocumentStorageError"
+    },
+    {
+      "name": "utf8-before-line-break",
+      "file": "conformance/structured/invalid/utf8-before-line-break.3mdb",
+      "rule": "Str3",
+      "description": "Ill-formed UTF-8 is reported before the scalar line-break rule.",
+      "expected": "invalidUTF8",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "DocumentStorageError"
+    },
+    {
+      "name": "scalar-lf",
+      "file": "conformance/structured/invalid/scalar-lf.3mdb",
+      "rule": "Str4",
+      "description": "Title containing LF.",
+      "expected": "invalidDocument",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "DocumentStorageError",
+      "textValidate20": "invalidDocument"
+    },
+    {
+      "name": "scalar-cr",
+      "file": "conformance/structured/invalid/scalar-cr.3mdb",
+      "rule": "Str4",
+      "description": "Label containing CR.",
+      "expected": "invalidDocument",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "DocumentStorageError",
+      "textValidate20": "invalidDocument"
+    },
+    {
+      "name": "flags-document-bit2",
+      "file": "conformance/structured/invalid/flags-document-bit2.3mdb",
+      "rule": "S1",
+      "description": "documentFlags bit 2.",
+      "expected": "invalidContainer",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "DocumentStorageError",
+      "textValidate20": "ok"
+    },
+    {
+      "name": "flags-document-bit7",
+      "file": "conformance/structured/invalid/flags-document-bit7.3mdb",
+      "rule": "S1",
+      "description": "documentFlags bit 7.",
+      "expected": "invalidContainer",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "DocumentStorageError",
+      "textValidate20": "ok"
+    },
+    {
+      "name": "flags-plane-bit7",
+      "file": "conformance/structured/invalid/flags-plane-bit7.3mdb",
+      "rule": "P1",
+      "description": "planeFlags bit 7.",
+      "expected": "invalidContainer",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "DocumentStorageError"
+    },
+    {
+      "name": "flags-plane-z-form-0",
+      "file": "conformance/structured/invalid/flags-plane-z-form-0.3mdb",
+      "rule": "P1",
+      "description": "z form 0.",
+      "expected": "invalidContainer",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "DocumentStorageError"
+    },
+    {
+      "name": "number-f32-integer",
+      "file": "conformance/structured/invalid/number-f32-integer.3mdb",
+      "rule": "N",
+      "description": "Form 2 holding 3.0 (form 1 value).",
+      "expected": "invalidContainer",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "DocumentStorageError"
+    },
+    {
+      "name": "number-f32-negative-zero",
+      "file": "conformance/structured/invalid/number-f32-negative-zero.3mdb",
+      "rule": "N",
+      "description": "Form 2 holding -0.",
+      "expected": "invalidContainer",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "DocumentStorageError"
+    },
+    {
+      "name": "number-f32-nan",
+      "file": "conformance/structured/invalid/number-f32-nan.3mdb",
+      "rule": "N",
+      "description": "Form 2 holding NaN.",
+      "expected": "invalidDocument",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "DocumentStorageError"
+    },
+    {
+      "name": "number-f32-infinity",
+      "file": "conformance/structured/invalid/number-f32-infinity.3mdb",
+      "rule": "N",
+      "description": "Form 2 holding +infinity.",
+      "expected": "invalidDocument",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "DocumentStorageError"
+    },
+    {
+      "name": "number-f32-truncated",
+      "file": "conformance/structured/invalid/number-f32-truncated.3mdb",
+      "rule": "N",
+      "description": "planeCount 1 passes Count(4) with 4 bytes left; the form-2 z then needs 4 bytes with 3 remaining.",
+      "expected": "lengthMismatch",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "DocumentStorageError"
+    },
+    {
+      "name": "number-f64-truncated",
+      "file": "conformance/structured/invalid/number-f64-truncated.3mdb",
+      "rule": "N",
+      "description": "Form-3 z needs 8 bytes with 7 remaining.",
+      "expected": "lengthMismatch",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "DocumentStorageError"
+    },
+    {
+      "name": "number-f64-integer",
+      "file": "conformance/structured/invalid/number-f64-integer.3mdb",
+      "rule": "N",
+      "description": "Form 3 holding 3.0.",
+      "expected": "invalidContainer",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "DocumentStorageError"
+    },
+    {
+      "name": "number-f64-binary32",
+      "file": "conformance/structured/invalid/number-f64-binary32.3mdb",
+      "rule": "N",
+      "description": "Form 3 holding 0.5 (binary32-exact).",
+      "expected": "invalidContainer",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "DocumentStorageError"
+    },
+    {
+      "name": "number-f64-negative-zero",
+      "file": "conformance/structured/invalid/number-f64-negative-zero.3mdb",
+      "rule": "N",
+      "description": "Form 3 holding -0.",
+      "expected": "invalidContainer",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "DocumentStorageError"
+    },
+    {
+      "name": "number-f64-nan",
+      "file": "conformance/structured/invalid/number-f64-nan.3mdb",
+      "rule": "N",
+      "description": "Form 3 holding NaN.",
+      "expected": "invalidDocument",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "DocumentStorageError"
+    },
+    {
+      "name": "number-f64-negative-infinity",
+      "file": "conformance/structured/invalid/number-f64-negative-infinity.3mdb",
+      "rule": "N",
+      "description": "Form 3 holding -infinity.",
+      "expected": "invalidDocument",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "DocumentStorageError"
+    },
+    {
+      "name": "number-f64-int-boundary",
+      "file": "conformance/structured/invalid/number-f64-int-boundary.3mdb",
+      "rule": "N",
+      "description": "Form 3 holding 2^27 - 1.",
+      "expected": "invalidContainer",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "DocumentStorageError"
+    },
+    {
+      "name": "number-f32-two-pow-27-ok",
+      "file": "conformance/structured/invalid/number-f32-two-pow-27-ok.3mdb",
+      "rule": "N",
+      "description": "2^27 is outside the integer form and binary32-exact: form 2 is canonical.",
+      "expected": "ok",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "none"
+    },
+    {
+      "name": "number-f64-two-pow-53-plus-2-ok",
+      "file": "conformance/structured/invalid/number-f64-two-pow-53-plus-2-ok.3mdb",
+      "rule": "N",
+      "description": "2^53 + 2 is not binary32-exact: form 3 is canonical.",
+      "expected": "ok",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "none"
+    },
+    {
+      "name": "number-f32-for-f64-value",
+      "file": "conformance/structured/invalid/number-f32-for-f64-value.3mdb",
+      "rule": "N",
+      "description": "binary32(0.1) is itself a binary32 value, valid as form 2 (it is not 0.1).",
+      "expected": "ok",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "none"
+    },
+    {
+      "name": "order-metadata-decreasing",
+      "file": "conformance/structured/invalid/order-metadata-decreasing.3mdb",
+      "rule": "S6",
+      "description": "Metadata keys b, a.",
+      "expected": "invalidContainer",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "DocumentStorageError",
+      "textValidate20": "ok"
+    },
+    {
+      "name": "order-metadata-identical",
+      "file": "conformance/structured/invalid/order-metadata-identical.3mdb",
+      "rule": "S6",
+      "description": "Metadata keys a, a.",
+      "expected": "invalidContainer",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "DocumentStorageError",
+      "textValidate20": "ok"
+    },
+    {
+      "name": "order-nfc-instead-of-bytes",
+      "file": "conformance/structured/invalid/order-nfc-instead-of-bytes.3mdb",
+      "rule": "S6",
+      "description": "Keys in NFC order (z before e+U+0301); byte order requires 65 CC 81 before 7A.",
+      "expected": "invalidContainer",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "DocumentStorageError",
+      "textValidate20": "ok"
+    },
+    {
+      "name": "order-utf16-instead-of-bytes",
+      "file": "conformance/structured/invalid/order-utf16-instead-of-bytes.3mdb",
+      "rule": "S6",
+      "description": "Keys in UTF-16 order (U+1F600 before U+FF61); bytes F0.. sort after EF...",
+      "expected": "invalidContainer",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "DocumentStorageError",
+      "textValidate20": "ok"
+    },
+    {
+      "name": "order-equivalent-keys",
+      "file": "conformance/structured/invalid/order-equivalent-keys.3mdb",
+      "rule": "S6b",
+      "description": "Keys e+U+0301 and U+00E9 in byte order: canonically equivalent.",
+      "expected": "invalidDocument",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "DocumentStorageError",
+      "textValidate20": "ok"
+    },
+    {
+      "name": "order-equivalent-kelvin",
+      "file": "conformance/structured/invalid/order-equivalent-kelvin.3mdb",
+      "rule": "S6b",
+      "description": "Key K and KELVIN SIGN U+212A (NFC is K).",
+      "expected": "invalidDocument",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "DocumentStorageError",
+      "textValidate20": "ok"
+    },
+    {
+      "name": "order-attributes-decreasing",
+      "file": "conformance/structured/invalid/order-attributes-decreasing.3mdb",
+      "rule": "P7",
+      "description": "Attribute keys b, a.",
+      "expected": "invalidContainer",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "DocumentStorageError",
+      "textValidate20": "ok"
+    },
+    {
+      "name": "order-attributes-equivalent",
+      "file": "conformance/structured/invalid/order-attributes-equivalent.3mdb",
+      "rule": "P7a",
+      "description": "Attribute keys e+U+0301 and U+00E9.",
+      "expected": "invalidDocument",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "DocumentStorageError",
+      "textValidate20": "ok"
+    },
+    {
+      "name": "order-keys-ok",
+      "file": "conformance/structured/invalid/order-keys-ok.3mdb",
+      "rule": "S6",
+      "description": "Valid byte order: B, a, e+U+0301, z, U+FF61, U+1F600.",
+      "expected": "ok",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "none",
+      "textValidate20": "ok"
+    },
+    {
+      "name": "field-empty-version",
+      "file": "conformance/structured/invalid/field-empty-version.3mdb",
+      "rule": "S2",
+      "description": "Empty version.",
+      "expected": "invalidDocument",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "DocumentStorageError",
+      "textValidate20": "invalidDocument"
+    },
+    {
+      "name": "axis-uppercase",
+      "file": "conformance/structured/invalid/axis-uppercase.3mdb",
+      "rule": "R2",
+      "description": "Axis \"Time\".",
+      "expected": "invalidDocument",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "DocumentStorageError",
+      "textValidate20": "invalidDocument"
+    },
+    {
+      "name": "axis-leading-space",
+      "file": "conformance/structured/invalid/axis-leading-space.3mdb",
+      "rule": "R2",
+      "description": "Axis \" time\".",
+      "expected": "invalidDocument",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "DocumentStorageError",
+      "textValidate20": "invalidDocument"
+    },
+    {
+      "name": "axis-trailing-tab",
+      "file": "conformance/structured/invalid/axis-trailing-tab.3mdb",
+      "rule": "R2",
+      "description": "Axis \"time\\t\".",
+      "expected": "invalidDocument",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "DocumentStorageError",
+      "textValidate20": "invalidDocument"
+    },
+    {
+      "name": "axis-trailing-nbsp",
+      "file": "conformance/structured/invalid/axis-trailing-nbsp.3mdb",
+      "rule": "R2",
+      "description": "Axis \"time \".",
+      "expected": "invalidDocument",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "DocumentStorageError",
+      "textValidate20": "invalidDocument"
+    },
+    {
+      "name": "axis-non-ascii-uppercase",
+      "file": "conformance/structured/invalid/axis-non-ascii-uppercase.3mdb",
+      "rule": "R2",
+      "description": "Axis \"Ünits\".",
+      "expected": "invalidDocument",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "DocumentStorageError",
+      "textValidate20": "invalidDocument"
+    },
+    {
+      "name": "axis-unicode-ok",
+      "file": "conformance/structured/invalid/axis-unicode-ok.3mdb",
+      "rule": "R2",
+      "description": "Lowercase non-ASCII axis.",
+      "expected": "ok",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "none",
+      "textValidate20": "ok"
+    },
+    {
+      "name": "metadata-key-colon",
+      "file": "conformance/structured/invalid/metadata-key-colon.3mdb",
+      "rule": "R3",
+      "description": "Metadata key \"a:b\".",
+      "expected": "invalidDocument",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "DocumentStorageError",
+      "textValidate20": "invalidDocument"
+    },
+    {
+      "name": "metadata-key-hash",
+      "file": "conformance/structured/invalid/metadata-key-hash.3mdb",
+      "rule": "R3",
+      "description": "Metadata key \"#x\".",
+      "expected": "invalidDocument",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "DocumentStorageError",
+      "textValidate20": "invalidDocument"
+    },
+    {
+      "name": "metadata-key-leading-space",
+      "file": "conformance/structured/invalid/metadata-key-leading-space.3mdb",
+      "rule": "R3",
+      "description": "Metadata key \" x\".",
+      "expected": "invalidDocument",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "DocumentStorageError",
+      "textValidate20": "invalidDocument"
+    },
+    {
+      "name": "metadata-key-trailing-ideographic-space",
+      "file": "conformance/structured/invalid/metadata-key-trailing-ideographic-space.3mdb",
+      "rule": "R3",
+      "description": "Metadata key \"x　\".",
+      "expected": "invalidDocument",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "DocumentStorageError",
+      "textValidate20": "invalidDocument"
+    },
+    {
+      "name": "metadata-key-axis",
+      "file": "conformance/structured/invalid/metadata-key-axis.3mdb",
+      "rule": "R3",
+      "description": "Metadata key \"AXIS\".",
+      "expected": "invalidDocument",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "DocumentStorageError",
+      "textValidate20": "invalidDocument"
+    },
+    {
+      "name": "metadata-key-title",
+      "file": "conformance/structured/invalid/metadata-key-title.3mdb",
+      "rule": "R3",
+      "description": "Metadata key \"Title\".",
+      "expected": "invalidDocument",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "DocumentStorageError",
+      "textValidate20": "invalidDocument"
+    },
+    {
+      "name": "metadata-key-version",
+      "file": "conformance/structured/invalid/metadata-key-version.3mdb",
+      "rule": "R3",
+      "description": "Metadata key \"3MD\".",
+      "expected": "invalidDocument",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "DocumentStorageError",
+      "textValidate20": "invalidDocument"
+    },
+    {
+      "name": "metadata-key-empty-ok",
+      "file": "conformance/structured/invalid/metadata-key-empty-ok.3mdb",
+      "rule": "R3",
+      "description": "The empty metadata key is valid.",
+      "expected": "ok",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "none",
+      "textValidate20": "ok"
+    },
+    {
+      "name": "attribute-key-empty",
+      "file": "conformance/structured/invalid/attribute-key-empty.3mdb",
+      "rule": "R9",
+      "description": "Attribute key \"\".",
+      "expected": "invalidDocument",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "DocumentStorageError",
+      "textValidate20": "invalidDocument"
+    },
+    {
+      "name": "attribute-key-uppercase",
+      "file": "conformance/structured/invalid/attribute-key-uppercase.3mdb",
+      "rule": "R9",
+      "description": "Attribute key \"Kind\".",
+      "expected": "invalidDocument",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "DocumentStorageError",
+      "textValidate20": "invalidDocument"
+    },
+    {
+      "name": "attribute-key-label",
+      "file": "conformance/structured/invalid/attribute-key-label.3mdb",
+      "rule": "R9",
+      "description": "Attribute key \"label\".",
+      "expected": "invalidDocument",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "DocumentStorageError",
+      "textValidate20": "invalidDocument"
+    },
+    {
+      "name": "attribute-key-z",
+      "file": "conformance/structured/invalid/attribute-key-z.3mdb",
+      "rule": "R9",
+      "description": "Attribute key \"z\".",
+      "expected": "invalidDocument",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "DocumentStorageError",
+      "textValidate20": "invalidDocument"
+    },
+    {
+      "name": "attribute-key-equals",
+      "file": "conformance/structured/invalid/attribute-key-equals.3mdb",
+      "rule": "R9",
+      "description": "Attribute key \"a=b\".",
+      "expected": "invalidDocument",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "DocumentStorageError",
+      "textValidate20": "invalidDocument"
+    },
+    {
+      "name": "attribute-key-space",
+      "file": "conformance/structured/invalid/attribute-key-space.3mdb",
+      "rule": "R9",
+      "description": "Attribute key \"a b\".",
+      "expected": "invalidDocument",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "DocumentStorageError",
+      "textValidate20": "invalidDocument"
+    },
+    {
+      "name": "attribute-key-tab",
+      "file": "conformance/structured/invalid/attribute-key-tab.3mdb",
+      "rule": "R9",
+      "description": "Attribute key \"a\\tb\".",
+      "expected": "invalidDocument",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "DocumentStorageError",
+      "textValidate20": "invalidDocument"
+    },
+    {
+      "name": "attribute-key-leading-nbsp",
+      "file": "conformance/structured/invalid/attribute-key-leading-nbsp.3mdb",
+      "rule": "R9",
+      "description": "Attribute key \" x\".",
+      "expected": "invalidDocument",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "DocumentStorageError",
+      "textValidate20": "invalidDocument"
+    },
+    {
+      "name": "attribute-key-sigma",
+      "file": "conformance/structured/invalid/attribute-key-sigma.3mdb",
+      "rule": "R9",
+      "description": "Attribute key \"kΣ\".",
+      "expected": "invalidDocument",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "DocumentStorageError",
+      "textValidate20": "invalidDocument"
+    },
+    {
+      "name": "duplicate-z",
+      "file": "conformance/structured/invalid/duplicate-z.3mdb",
+      "rule": "L0",
+      "description": "Two planes at z=1.",
+      "expected": "invalidDocument",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "DocumentStorageError",
+      "textValidate20": "invalidDocument"
+    },
+    {
+      "name": "preamble-without-planes",
+      "file": "conformance/structured/invalid/preamble-without-planes.3mdb",
+      "rule": "S8",
+      "description": "Preamble present, planeCount 0.",
+      "expected": "invalidDocument",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "DocumentStorageError",
+      "textValidate20": "invalidDocument"
+    },
+    {
+      "name": "too-many-planes",
+      "file": "conformance/structured/invalid/too-many-planes.3mdb",
+      "rule": "S8",
+      "description": "Two planes with maximumPlanes 1.",
+      "limits": {
+        "maximumPlanes": 1
+      },
+      "expected": "tooManyPlanes",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "DocumentStorageError",
+      "textValidate20": "tooManyPlanes"
+    },
+    {
+      "name": "segment-empty-preamble",
+      "file": "conformance/structured/invalid/segment-empty-preamble.3mdb",
+      "rule": "G1",
+      "description": "Empty preamble.",
+      "expected": "invalidDocument",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "DocumentStorageError",
+      "textValidate20": "invalidDocument"
+    },
+    {
+      "name": "segment-trailing-cr",
+      "file": "conformance/structured/invalid/segment-trailing-cr.3mdb",
+      "rule": "G2",
+      "description": "Body ending in CR.",
+      "expected": "invalidDocument",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "DocumentStorageError",
+      "textValidate20": "invalidDocument"
+    },
+    {
+      "name": "segment-inner-cr-ok",
+      "file": "conformance/structured/invalid/segment-inner-cr-ok.3mdb",
+      "rule": "G2",
+      "description": "A lone inner CR is ordinary content.",
+      "expected": "ok",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "none",
+      "textValidate20": "ok"
+    },
+    {
+      "name": "segment-crlf",
+      "file": "conformance/structured/invalid/segment-crlf.3mdb",
+      "rule": "G3",
+      "description": "Body containing CRLF.",
+      "expected": "invalidDocument",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "DocumentStorageError",
+      "textValidate20": "invalidDocument"
+    },
+    {
+      "name": "segment-leading-blank",
+      "file": "conformance/structured/invalid/segment-leading-blank.3mdb",
+      "rule": "G4",
+      "description": "First line empty.",
+      "expected": "invalidDocument",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "DocumentStorageError",
+      "textValidate20": "invalidDocument"
+    },
+    {
+      "name": "segment-trailing-blank",
+      "file": "conformance/structured/invalid/segment-trailing-blank.3mdb",
+      "rule": "G4",
+      "description": "Last line empty.",
+      "expected": "invalidDocument",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "DocumentStorageError",
+      "textValidate20": "invalidDocument"
+    },
+    {
+      "name": "segment-leading-nbsp-line",
+      "file": "conformance/structured/invalid/segment-leading-nbsp-line.3mdb",
+      "rule": "G4",
+      "description": "First line is only NBSP.",
+      "expected": "invalidDocument",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "DocumentStorageError",
+      "textValidate20": "invalidDocument"
+    },
+    {
+      "name": "segment-trailing-ideographic-line",
+      "file": "conformance/structured/invalid/segment-trailing-ideographic-line.3mdb",
+      "rule": "G4",
+      "description": "Last line is only U+3000.",
+      "expected": "invalidDocument",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "DocumentStorageError",
+      "textValidate20": "invalidDocument"
+    },
+    {
+      "name": "segment-plane-line",
+      "file": "conformance/structured/invalid/segment-plane-line.3mdb",
+      "rule": "G5",
+      "description": "A line equal to @plane.",
+      "expected": "invalidDocument",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "DocumentStorageError",
+      "textValidate20": "invalidDocument"
+    },
+    {
+      "name": "segment-plane-directive",
+      "file": "conformance/structured/invalid/segment-plane-directive.3mdb",
+      "rule": "G5",
+      "description": "A line @plane z=2.",
+      "expected": "invalidDocument",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "DocumentStorageError",
+      "textValidate20": "invalidDocument"
+    },
+    {
+      "name": "segment-plane-tab",
+      "file": "conformance/structured/invalid/segment-plane-tab.3mdb",
+      "rule": "G5",
+      "description": "A line @plane<TAB>z=2.",
+      "expected": "invalidDocument",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "DocumentStorageError",
+      "textValidate20": "invalidDocument"
+    },
+    {
+      "name": "segment-indented-plane-ok",
+      "file": "conformance/structured/invalid/segment-indented-plane-ok.3mdb",
+      "rule": "G5",
+      "description": "An indented @plane line is ordinary text.",
+      "expected": "ok",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "none",
+      "textValidate20": "ok"
+    },
+    {
+      "name": "segment-planet-ok",
+      "file": "conformance/structured/invalid/segment-planet-ok.3mdb",
+      "rule": "G5",
+      "description": "@planet is not a directive.",
+      "expected": "ok",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "none",
+      "textValidate20": "ok"
+    },
+    {
+      "name": "segment-fence-backtick-tilde-ok",
+      "file": "conformance/structured/invalid/segment-fence-backtick-tilde-ok.3mdb",
+      "rule": "G5",
+      "description": "Inside a backtick fence, ~~~ does not close it, so @plane stays fenced (last plane may end inside a fence).",
+      "expected": "ok",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "none",
+      "textValidate20": "ok"
+    },
+    {
+      "name": "segment-fence-tilde-closed",
+      "file": "conformance/structured/invalid/segment-fence-tilde-closed.3mdb",
+      "rule": "G5",
+      "description": "A tilde fence closed by ~~~ (the backticks inside do not matter); the following @plane is outside the fence.",
+      "expected": "invalidDocument",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "DocumentStorageError",
+      "textValidate20": "invalidDocument"
+    },
+    {
+      "name": "segment-fence-nbsp-indented-ok",
+      "file": "conformance/structured/invalid/segment-fence-nbsp-indented-ok.3mdb",
+      "rule": "G5",
+      "description": "An NBSP-indented fence opens a fence.",
+      "expected": "ok",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "none",
+      "textValidate20": "ok"
+    },
+    {
+      "name": "segment-fence-open-not-final",
+      "file": "conformance/structured/invalid/segment-fence-open-not-final.3mdb",
+      "rule": "G6",
+      "description": "Open fence in a body that is not the last.",
+      "expected": "invalidDocument",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "DocumentStorageError",
+      "textValidate20": "invalidDocument"
+    },
+    {
+      "name": "segment-fence-open-final-ok",
+      "file": "conformance/structured/invalid/segment-fence-open-final-ok.3mdb",
+      "rule": "G6",
+      "description": "Open fence in the last body.",
+      "expected": "ok",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "none",
+      "textValidate20": "ok"
+    },
+    {
+      "name": "segment-fence-open-preamble",
+      "file": "conformance/structured/invalid/segment-fence-open-preamble.3mdb",
+      "rule": "G6",
+      "description": "Open fence in the preamble.",
+      "expected": "invalidDocument",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "DocumentStorageError",
+      "textValidate20": "invalidDocument"
+    },
+    {
+      "name": "segment-bom-nul-ok",
+      "file": "conformance/structured/invalid/segment-bom-nul-ok.3mdb",
+      "rule": "Str3",
+      "description": "U+FEFF and U+0000 are ordinary content.",
+      "expected": "ok",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "none",
+      "textValidate20": "ok"
+    },
+    {
+      "name": "phase-q-apostrophe",
+      "file": "conformance/structured/invalid/phase-q-apostrophe.3mdb",
+      "rule": "Q",
+      "description": "Key a'b: the open quote swallows the value.",
+      "expected": "invalidDocument",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "DocumentStorageError",
+      "textValidate20": "invalidDocument"
+    },
+    {
+      "name": "phase-q-double-quote",
+      "file": "conformance/structured/invalid/phase-q-double-quote.3mdb",
+      "rule": "Q",
+      "description": "Key a\"b with value v.",
+      "expected": "invalidDocument",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "DocumentStorageError",
+      "textValidate20": "invalidDocument"
+    },
+    {
+      "name": "phase-q-paired-ok",
+      "file": "conformance/structured/invalid/phase-q-paired-ok.3mdb",
+      "rule": "Q",
+      "description": "Key a''b round-trips.",
+      "expected": "ok",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "none",
+      "textValidate20": "ok"
+    },
+    {
+      "name": "phase-q-spaced-pair-ok",
+      "file": "conformance/structured/invalid/phase-q-spaced-pair-ok.3mdb",
+      "rule": "Q",
+      "description": "Key a'b c'd round-trips.",
+      "expected": "ok",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "none",
+      "textValidate20": "ok"
+    },
+    {
+      "name": "phase-q-quoted-space-ok",
+      "file": "conformance/structured/invalid/phase-q-quoted-space-ok.3mdb",
+      "rule": "Q",
+      "description": "Key \"x y\" round-trips.",
+      "expected": "ok",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "none",
+      "textValidate20": "ok"
+    },
+    {
+      "name": "phase-q-swallow-next",
+      "file": "conformance/structured/invalid/phase-q-swallow-next.3mdb",
+      "rule": "Q",
+      "description": "Keys a' and b': one token spans both.",
+      "expected": "invalidDocument",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "DocumentStorageError",
+      "textValidate20": "invalidDocument"
+    },
+    {
+      "name": "phase-q-inject-z",
+      "file": "conformance/structured/invalid/phase-q-inject-z.3mdb",
+      "rule": "Q",
+      "description": "A quoted key that would inject z.",
+      "expected": "invalidDocument",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "DocumentStorageError",
+      "textValidate20": "invalidDocument"
+    },
+    {
+      "name": "phase-q-inject-label",
+      "file": "conformance/structured/invalid/phase-q-inject-label.3mdb",
+      "rule": "Q",
+      "description": "A quoted key that would inject label.",
+      "expected": "invalidDocument",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "DocumentStorageError",
+      "textValidate20": "invalidDocument"
+    },
+    {
+      "name": "phase-q-uppercase-quoted",
+      "file": "conformance/structured/invalid/phase-q-uppercase-quoted.3mdb",
+      "rule": "Q",
+      "description": "A quoted key that lowercases to a different key.",
+      "expected": "invalidDocument",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "DocumentStorageError",
+      "textValidate20": "invalidDocument"
+    },
+    {
+      "name": "limit-record-below-3",
+      "file": "conformance/structured/invalid/limit-record-below-3.3mdb",
+      "rule": "L1",
+      "description": "maximumRecordBytes 2.",
+      "limits": {
+        "maximumRecordBytes": 2
+      },
+      "expected": "oversizedRecord",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "DocumentStorageError",
+      "textValidate20": "oversizedRecord"
+    },
+    {
+      "name": "limit-frontmatter-line",
+      "file": "conformance/structured/invalid/limit-frontmatter-line.3mdb",
+      "rule": "L2",
+      "description": "Version line 3md: \"1\" is 8 bytes; maximumRecordBytes 7.",
+      "limits": {
+        "maximumRecordBytes": 7
+      },
+      "expected": "oversizedRecord",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "DocumentStorageError",
+      "textValidate20": "oversizedRecord"
+    },
+    {
+      "name": "limit-directive-line",
+      "file": "conformance/structured/invalid/limit-directive-line.3mdb",
+      "rule": "L3",
+      "description": "Directive @plane z=0 label=\"abc\" is 22 bytes; maximumRecordBytes 21.",
+      "limits": {
+        "maximumRecordBytes": 21
+      },
+      "expected": "oversizedRecord",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "DocumentStorageError",
+      "textValidate20": "oversizedRecord"
+    },
+    {
+      "name": "limit-text-length",
+      "file": "conformance/structured/invalid/limit-text-length.3mdb",
+      "rule": "L4",
+      "description": "T = 40; maximumDecodedBytes 39.",
+      "limits": {
+        "maximumDecodedBytes": 39
+      },
+      "expected": "oversizedOutput",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "DocumentStorageError",
+      "textValidate20": "oversizedOutput"
+    },
+    {
+      "name": "limit-lines",
+      "file": "conformance/structured/invalid/limit-lines.3mdb",
+      "rule": "L5",
+      "description": "Lines = 8; maximumLines 7.",
+      "limits": {
+        "maximumLines": 7
+      },
+      "expected": "tooManyLines",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "DocumentStorageError",
+      "textValidate20": "tooManyLines"
+    },
+    {
+      "name": "precedence-l0-over-l3",
+      "file": "conformance/structured/invalid/precedence-l0-over-l3.3mdb",
+      "rule": "L0",
+      "description": "Duplicate z and an oversized directive: L0 wins.",
+      "limits": {
+        "maximumRecordBytes": 20
+      },
+      "expected": "invalidDocument",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "DocumentStorageError",
+      "textValidate20": "invalidDocument"
+    },
+    {
+      "name": "precedence-l3-over-l4",
+      "file": "conformance/structured/invalid/precedence-l3-over-l4.3mdb",
+      "rule": "L3",
+      "description": "Oversized directive and T over Dmax: L3 wins.",
+      "limits": {
+        "maximumRecordBytes": 25,
+        "maximumDecodedBytes": 50
+      },
+      "expected": "oversizedRecord",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "DocumentStorageError",
+      "textValidate20": "oversizedOutput"
+    },
+    {
+      "name": "precedence-l4-over-l5",
+      "file": "conformance/structured/invalid/precedence-l4-over-l5.3mdb",
+      "rule": "L4",
+      "description": "T over Dmax and too many lines: L4 wins.",
+      "limits": {
+        "maximumDecodedBytes": 39,
+        "maximumLines": 7
+      },
+      "expected": "oversizedOutput",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "DocumentStorageError",
+      "textValidate20": "oversizedOutput"
+    },
+    {
+      "name": "precedence-s-order",
+      "file": "conformance/structured/invalid/precedence-s-order.3mdb",
+      "rule": "S9",
+      "description": "Plane 1 has an invalid key and plane 2 is missing: the first failure in field order (R9 in plane 1) wins.",
+      "expected": "invalidDocument",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "DocumentStorageError"
+    },
+    {
+      "name": "precedence-utf8-before-limits",
+      "file": "conformance/structured/invalid/precedence-utf8-before-limits.3mdb",
+      "rule": "S4",
+      "description": "Phase S errors precede Phase L errors.",
+      "limits": {
+        "maximumDecodedBytes": 10
+      },
+      "expected": "invalidUTF8",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "DocumentStorageError"
+    },
+    {
+      "name": "end-trailing-byte",
+      "file": "conformance/structured/invalid/end-trailing-byte.3mdb",
+      "rule": "S10",
+      "description": "One byte after the last plane (lengths resealed).",
+      "expected": "lengthMismatch",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "DocumentStorageError",
+      "textValidate20": "ok"
+    },
+    {
+      "name": "bound-2dmax-exact",
+      "file": "conformance/structured/limits/bound-2dmax-exact.3mdb",
+      "rule": "L4",
+      "description": "Payload 70 bytes with maximumDecodedBytes 35: passes D10 (2 * Dmax >= payload) and fails L4 (T > Dmax).",
+      "limits": {
+        "maximumDecodedBytes": 35
+      },
+      "expected": "oversizedOutput",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "DocumentStorageError"
+    },
+    {
+      "name": "eighty-planes-emax-1000",
+      "file": "conformance/structured/limits/eighty-planes-emax-1000.3mdb",
+      "rule": "L4",
+      "description": "80 empty planes: file 382 bytes, T = 1056 > maximumEncodedBytes 1000; kind 2 decodes. Text encode under the same limits fails.",
+      "limits": {
+        "maximumEncodedBytes": 1000
+      },
+      "expected": "ok",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "none"
+    },
+    {
+      "name": "edges-maximumDecodedBytes-at",
+      "file": "conformance/structured/limits/edges.3mdb",
+      "rule": "L4",
+      "description": "maximumDecodedBytes = 180 (smallest accepted value).",
+      "limits": {
+        "maximumDecodedBytes": 180
+      },
+      "expected": "ok",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "none"
+    },
+    {
+      "name": "edges-maximumDecodedBytes-below",
+      "file": "conformance/structured/limits/edges.3mdb",
+      "rule": "L4",
+      "description": "maximumDecodedBytes = 179 (one below).",
+      "limits": {
+        "maximumDecodedBytes": 179
+      },
+      "expected": "oversizedOutput",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "DocumentStorageError"
+    },
+    {
+      "name": "edges-maximumLines-at",
+      "file": "conformance/structured/limits/edges.3mdb",
+      "rule": "L5",
+      "description": "maximumLines = 22 (smallest accepted value).",
+      "limits": {
+        "maximumLines": 22
+      },
+      "expected": "ok",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "none"
+    },
+    {
+      "name": "edges-maximumLines-below",
+      "file": "conformance/structured/limits/edges.3mdb",
+      "rule": "L5",
+      "description": "maximumLines = 21 (one below).",
+      "limits": {
+        "maximumLines": 21
+      },
+      "expected": "tooManyLines",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "DocumentStorageError"
+    },
+    {
+      "name": "edges-maximumPlanes-at",
+      "file": "conformance/structured/limits/edges.3mdb",
+      "rule": "S8",
+      "description": "maximumPlanes = 3 (smallest accepted value).",
+      "limits": {
+        "maximumPlanes": 3
+      },
+      "expected": "ok",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "none"
+    },
+    {
+      "name": "edges-maximumPlanes-below",
+      "file": "conformance/structured/limits/edges.3mdb",
+      "rule": "S8",
+      "description": "maximumPlanes = 2 (one below).",
+      "limits": {
+        "maximumPlanes": 2
+      },
+      "expected": "tooManyPlanes",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "DocumentStorageError"
+    },
+    {
+      "name": "edges-maximumRecordBytes-at",
+      "file": "conformance/structured/limits/edges.3mdb",
+      "rule": "L3",
+      "description": "maximumRecordBytes = 36 (smallest accepted value).",
+      "limits": {
+        "maximumRecordBytes": 36
+      },
+      "expected": "ok",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "none"
+    },
+    {
+      "name": "edges-maximumRecordBytes-below",
+      "file": "conformance/structured/limits/edges.3mdb",
+      "rule": "L3",
+      "description": "maximumRecordBytes = 35 (one below).",
+      "limits": {
+        "maximumRecordBytes": 35
+      },
+      "expected": "oversizedRecord",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "DocumentStorageError"
+    },
+    {
+      "name": "edges-maximumEncodedBytes-at",
+      "file": "conformance/structured/limits/edges.3mdb",
+      "rule": "D2",
+      "description": "maximumEncodedBytes = 147 (smallest accepted value).",
+      "limits": {
+        "maximumEncodedBytes": 147
+      },
+      "expected": "ok",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "none"
+    },
+    {
+      "name": "edges-maximumEncodedBytes-below",
+      "file": "conformance/structured/limits/edges.3mdb",
+      "rule": "D2",
+      "description": "maximumEncodedBytes = 146 (one below).",
+      "limits": {
+        "maximumEncodedBytes": 146
+      },
+      "expected": "oversizedInput",
+      "expected20": "oversizedInput",
+      "errorType": "DocumentStorageError"
+    },
+    {
+      "name": "preamble-record-31",
+      "file": "conformance/structured/limits/preamble-record.3mdb",
+      "rule": "Str2",
+      "description": "Preamble of 30 bytes, maximumRecordBytes 31 (Str(segment, R - 1) at S7).",
+      "limits": {
+        "maximumRecordBytes": 31
+      },
+      "expected": "ok",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "none"
+    },
+    {
+      "name": "preamble-record-30",
+      "file": "conformance/structured/limits/preamble-record.3mdb",
+      "rule": "Str2",
+      "description": "Preamble of 30 bytes, maximumRecordBytes 30 (Str(segment, R - 1) at S7).",
+      "limits": {
+        "maximumRecordBytes": 30
+      },
+      "expected": "oversizedRecord",
+      "expected20": "unsupportedPayloadKind",
+      "errorType": "DocumentStorageError"
+    }
+  ]
+}

@@ -21,6 +21,11 @@ js/dist/
 # Stray swiftc byproducts
 *.dia
 
+# ThreeMD 2.1 performance gate: generated inputs (scripts/bench/generate-*.mjs) and
+# harness receipts at the repository root only (not scripts/bench/). Release
+# receipts are copied to docs/evidence/release-2.1.0/.
+/bench/
+
 # Rust crate (rust/)
 rust/target/
 
