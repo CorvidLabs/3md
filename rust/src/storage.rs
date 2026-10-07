@@ -1,5 +1,6 @@
 //! Bounded canonical text and portable version 1 binary document storage.
-use crate::{Document, ParseError};
+use crate::{checksum, structured, Document, ParseError};
+use std::cell::Cell;
 use std::collections::{BTreeMap, BTreeSet};
 use std::sync::{
     atomic::{AtomicBool, Ordering},
@@ -34,6 +35,10 @@ impl OperationOptions {
         }
     }
     pub(crate) fn check(&self) -> Result<(), DocumentStorageError> {
+        #[cfg(test)]
+        if cancellation_hook::tick() {
+            return Err(DocumentStorageError::Cancelled);
+        }
         if self
             .cancellation
             .as_ref()
@@ -46,14 +51,51 @@ impl OperationOptions {
     }
 }
 
+/// Deterministic cancellation for the crate's unit tests: counts the checks made on this
+/// thread and reports cancellation from an armed check index on.
+#[cfg(test)]
+pub(crate) mod cancellation_hook {
+    use std::cell::Cell;
+
+    thread_local! {
+        static CHECKS: Cell<usize> = const { Cell::new(0) };
+        static CANCEL_AT: Cell<Option<usize>> = const { Cell::new(None) };
+    }
+
+    /// Resets the count and cancels at check `at` (0-based) and every later check.
+    pub(crate) fn arm(at: Option<usize>) {
+        CHECKS.with(|checks| checks.set(0));
+        CANCEL_AT.with(|cancel| cancel.set(at));
+    }
+
+    /// The checks made since the last `arm`.
+    pub(crate) fn checks() -> usize {
+        CHECKS.with(Cell::get)
+    }
+
+    pub(super) fn tick() -> bool {
+        let index = CHECKS.with(|checks| {
+            let index = checks.get();
+            checks.set(index + 1);
+            index
+        });
+        CANCEL_AT.with(Cell::get).is_some_and(|at| index >= at)
+    }
+}
+
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum DocumentCompression {
     None = 0,
     Lzfse = 1,
 }
+/// A storage writer format. Text remains the portable interchange format; `Binary` writes
+/// the structured document payload (SPEC 11.3).
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum DocumentStorageFormat {
+    /// Canonical readable 3md text.
     Text,
+    /// The version 1 container with a structured document payload (payload kind 2) and the
+    /// selected compression identifier. [`encode_text_container`] writes payload kind 1.
     Binary(DocumentCompression),
 }
 
@@ -155,11 +197,86 @@ impl std::error::Error for DocumentStorageError {}
 
 pub const CONTAINER_VERSION: u16 = 1;
 pub const HEADER_BYTE_COUNT: usize = 40;
-const MAGIC: &[u8; 8] = b"3mdbin\r\n";
+pub(crate) const MAGIC: &[u8; 8] = b"3mdbin\r\n";
+
+/// Payload kind 1: canonical UTF-8 text behind the binary header (ThreeMD 2.0, SPEC 11.1).
+pub const PAYLOAD_KIND_CANONICAL_TEXT: u8 = 1;
+/// Payload kind 2: structured document records (ThreeMD 2.1, SPEC 11.3).
+pub const PAYLOAD_KIND_STRUCTURED_DOCUMENT: u8 = 2;
+/// The payload kinds this release decodes.
+pub const SUPPORTED_PAYLOAD_KINDS: [u8; 2] = [
+    PAYLOAD_KIND_CANONICAL_TEXT,
+    PAYLOAD_KIND_STRUCTURED_DOCUMENT,
+];
+
+/// Raw fixed header fields of a binary container, reported without validation.
+///
+/// # Example
+///
+/// ```
+/// use threemd::storage::{self, DocumentCompression, DocumentDecodeLimits, DocumentStorageFormat};
+///
+/// let document = threemd::parse("---\n3md: 1\naxis: layer\n---\n@plane z=0\nBody\n").unwrap();
+/// let bytes = storage::encode(
+///     &document,
+///     DocumentStorageFormat::Binary(DocumentCompression::None),
+///     &DocumentDecodeLimits::default(),
+///     &Default::default(),
+/// )
+/// .unwrap();
+/// let info = storage::container_info(&bytes).unwrap().unwrap();
+/// assert_eq!(info.payload_kind, storage::PAYLOAD_KIND_STRUCTURED_DOCUMENT);
+/// assert_eq!(info.decoded_payload_byte_count, bytes.len() as u64 - 40);
+/// assert_eq!(storage::container_info(b"---\n3md: 1\n---\n"), Ok(None));
+/// ```
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+#[non_exhaustive]
+pub struct DocumentContainerInfo {
+    /// The independent container version; 1 for every payload kind in ThreeMD 2.1.
+    pub container_version: u16,
+    /// The payload kind byte.
+    pub payload_kind: u8,
+    /// The raw compression identifier.
+    pub compression: u8,
+    /// The raw feature flags.
+    pub flags: u32,
+    /// The raw reserved field.
+    pub reserved: u32,
+    /// The declared encoded payload byte count.
+    pub encoded_payload_byte_count: u64,
+    /// The declared decoded (uncompressed) payload byte count.
+    pub decoded_payload_byte_count: u64,
+    /// The declared CRC-32/ISO-HDLC value.
+    pub checksum: u32,
+}
 
 /// Recognizes the full magic prefix only. It does not validate a container.
 pub fn is_binary(data: &[u8]) -> bool {
     data.starts_with(MAGIC)
+}
+
+/// Reads the 40-byte header without validating it, the payload or the checksum.
+///
+/// Returns `Ok(None)` when the input does not begin with the binary magic, and
+/// `Err(InvalidContainer)` when the magic is present but fewer than 40 bytes exist.
+/// At most the first 40 bytes are read.
+pub fn container_info(data: &[u8]) -> Result<Option<DocumentContainerInfo>, DocumentStorageError> {
+    if !is_binary(data) {
+        return Ok(None);
+    }
+    if data.len() < HEADER_BYTE_COUNT {
+        return Err(DocumentStorageError::InvalidContainer);
+    }
+    Ok(Some(DocumentContainerInfo {
+        container_version: u16::from_le_bytes([data[8], data[9]]),
+        payload_kind: data[10],
+        compression: data[11],
+        flags: read_u32(data, 12),
+        reserved: read_u32(data, 16),
+        encoded_payload_byte_count: read_u64(data, 20),
+        decoded_payload_byte_count: read_u64(data, 28),
+        checksum: read_u32(data, 36),
+    }))
 }
 
 pub fn validate(
@@ -170,15 +287,18 @@ pub fn validate(
     canonical_data(document, limits, options).map(|_| ())
 }
 
+/// Produces canonical readable text, or the version 1 binary container with a
+/// structured document payload (payload kind 2, SPEC 11.3). Use
+/// [`encode_text_container`] for files that ThreeMD 2.0 must read.
 pub fn encode(
     document: &Document,
     format: DocumentStorageFormat,
     limits: &DocumentDecodeLimits,
     options: &OperationOptions,
 ) -> Result<Vec<u8>, DocumentStorageError> {
-    let source = canonical_data(document, limits, options)?;
     match format {
         DocumentStorageFormat::Text => {
+            let source = canonical_data(document, limits, options)?;
             if source.len() > limits.maximum_encoded_bytes {
                 return Err(DocumentStorageError::OversizedInput);
             }
@@ -186,32 +306,49 @@ pub fn encode(
             Ok(source)
         }
         DocumentStorageFormat::Binary(compression) => {
-            if limits.maximum_encoded_bytes < HEADER_BYTE_COUNT {
-                return Err(DocumentStorageError::OversizedInput);
-            }
-            if compression == DocumentCompression::Lzfse {
-                return Err(DocumentStorageError::CompressionUnavailable(compression));
-            }
-            if source.len() > limits.maximum_encoded_bytes - HEADER_BYTE_COUNT {
-                return Err(DocumentStorageError::OversizedInput);
-            }
-            let mut result = Vec::with_capacity(HEADER_BYTE_COUNT + source.len());
-            result.extend_from_slice(MAGIC);
-            result.extend_from_slice(&CONTAINER_VERSION.to_le_bytes());
-            result.extend_from_slice(&[1, compression as u8]);
-            result.extend_from_slice(&0_u32.to_le_bytes());
-            result.extend_from_slice(&0_u32.to_le_bytes());
-            result.extend_from_slice(&(source.len() as u64).to_le_bytes());
-            result.extend_from_slice(&(source.len() as u64).to_le_bytes());
-            let checksum = crc32(&result, &source, options)?;
-            result.extend_from_slice(&checksum.to_le_bytes());
-            result.extend_from_slice(&source);
-            options.check()?;
-            Ok(result)
+            structured::encode(document, compression, limits, options)
         }
     }
 }
 
+/// Writes payload kind 1, byte-identical to ThreeMD 2.0 `encode(.., Binary(c), ..)`, for
+/// files that ThreeMD 2.0.x must read. Errors are exactly those of the 2.0 binary writer.
+///
+/// [`encode`] with [`DocumentStorageFormat::Binary`] writes the structured payload, which
+/// is smaller and decodes several times faster.
+pub fn encode_text_container(
+    document: &Document,
+    compression: DocumentCompression,
+    limits: &DocumentDecodeLimits,
+    options: &OperationOptions,
+) -> Result<Vec<u8>, DocumentStorageError> {
+    let source = canonical_data(document, limits, options)?;
+    if limits.maximum_encoded_bytes < HEADER_BYTE_COUNT {
+        return Err(DocumentStorageError::OversizedInput);
+    }
+    if compression == DocumentCompression::Lzfse {
+        return Err(DocumentStorageError::CompressionUnavailable(compression));
+    }
+    if source.len() > limits.maximum_encoded_bytes - HEADER_BYTE_COUNT {
+        return Err(DocumentStorageError::OversizedInput);
+    }
+    let mut result = Vec::with_capacity(HEADER_BYTE_COUNT + source.len());
+    result.extend_from_slice(MAGIC);
+    result.extend_from_slice(&CONTAINER_VERSION.to_le_bytes());
+    result.extend_from_slice(&[PAYLOAD_KIND_CANONICAL_TEXT, compression as u8]);
+    result.extend_from_slice(&0_u32.to_le_bytes());
+    result.extend_from_slice(&0_u32.to_le_bytes());
+    result.extend_from_slice(&(source.len() as u64).to_le_bytes());
+    result.extend_from_slice(&(source.len() as u64).to_le_bytes());
+    let checksum = checksum::container(&result, &source, options)?;
+    result.extend_from_slice(&checksum.to_le_bytes());
+    result.extend_from_slice(&source);
+    options.check()?;
+    Ok(result)
+}
+
+/// Decodes canonical or legacy text, or a version 1 binary container. Payload
+/// kinds 1 and 2 are accepted; other kinds return `UnsupportedPayloadKind`.
 pub fn decode(
     data: &[u8],
     limits: &DocumentDecodeLimits,
@@ -232,8 +369,9 @@ pub fn decode(
     if version != CONTAINER_VERSION {
         return Err(DocumentStorageError::UnsupportedVersion(version));
     }
-    if data[10] != 1 {
-        return Err(DocumentStorageError::UnsupportedPayloadKind(data[10]));
+    let kind = data[10];
+    if !SUPPORTED_PAYLOAD_KINDS.contains(&kind) {
+        return Err(DocumentStorageError::UnsupportedPayloadKind(kind));
     }
     let compression = match data[11] {
         0 => DocumentCompression::None,
@@ -249,7 +387,17 @@ pub fn decode(
     }
     let encoded = read_u64(data, 20);
     let decoded = read_u64(data, 28);
-    if decoded > limits.maximum_decoded_bytes as u64 {
+    // D10: kind 1 decodes to at most Dmax text bytes; a kind-2 payload is at most
+    // twice its canonical text and its uncompressed container must fit Emax.
+    let bound = if kind == PAYLOAD_KIND_CANONICAL_TEXT {
+        limits.maximum_decoded_bytes
+    } else {
+        limits
+            .maximum_encoded_bytes
+            .saturating_sub(HEADER_BYTE_COUNT)
+            .min(limits.maximum_decoded_bytes.saturating_mul(2))
+    };
+    if decoded > bound as u64 {
         return Err(DocumentStorageError::OversizedOutput);
     }
     if encoded == 0
@@ -260,13 +408,17 @@ pub fn decode(
         return Err(DocumentStorageError::LengthMismatch);
     }
     let payload = &data[HEADER_BYTE_COUNT..];
-    if crc32(&data[..36], payload, options)? != read_u32(data, 36) {
+    if checksum::container(&data[..36], payload, options)? != read_u32(data, 36) {
         return Err(DocumentStorageError::ChecksumMismatch);
     }
     if compression == DocumentCompression::Lzfse {
         return Err(DocumentStorageError::CompressionUnavailable(compression));
     }
-    parse_data(payload, limits, options)
+    if kind == PAYLOAD_KIND_CANONICAL_TEXT {
+        parse_data(payload, limits, options)
+    } else {
+        structured::decode(payload, limits, options)
+    }
 }
 
 fn read_u32(data: &[u8], offset: usize) -> u32 {
@@ -282,27 +434,6 @@ fn read_u64(data: &[u8], offset: usize) -> u64 {
     bytes.copy_from_slice(&data[offset..offset + 8]);
     u64::from_le_bytes(bytes)
 }
-pub(crate) fn crc32(
-    header: &[u8],
-    payload: &[u8],
-    options: &OperationOptions,
-) -> Result<u32, DocumentStorageError> {
-    let mut crc = u32::MAX;
-    for data in [header, payload] {
-        for (index, byte) in data.iter().enumerate() {
-            if index % 65_536 == 0 {
-                options.check()?;
-            }
-            crc ^= u32::from(*byte);
-            for _ in 0..8 {
-                crc = (crc >> 1) ^ (0xEDB8_8320 & (0_u32.wrapping_sub(crc & 1)));
-            }
-        }
-    }
-    options.check()?;
-    Ok(crc ^ u32::MAX)
-}
-
 pub(crate) fn parse_data(
     data: &[u8],
     limits: &DocumentDecodeLimits,
@@ -453,18 +584,76 @@ pub(crate) fn position_key(value: f64) -> u64 {
     }
 }
 
+/// Input bytes a [`CheckedChars`] reads between two cancellation checks (SPEC 11.3.13).
+pub(crate) const CHECKED_CHARS_STEP: usize = 65_536;
+
+/// A string's scalars with a cancellation check whenever `step` more bytes have been read.
+/// A failed check ends the iteration early and is kept in `failure` for the caller to
+/// report, so a consumer that cannot fail (such as `nfc()` or `is_nfc_quick`) still stops.
+pub(crate) struct CheckedChars<'a, 'o> {
+    chars: std::str::CharIndices<'a>,
+    next_check: usize,
+    step: usize,
+    options: &'o OperationOptions,
+    failure: &'o Cell<Option<DocumentStorageError>>,
+}
+
+impl<'a, 'o> CheckedChars<'a, 'o> {
+    pub(crate) fn new(
+        text: &'a str,
+        step: usize,
+        options: &'o OperationOptions,
+        failure: &'o Cell<Option<DocumentStorageError>>,
+    ) -> Self {
+        Self {
+            chars: text.char_indices(),
+            next_check: step,
+            step,
+            options,
+            failure,
+        }
+    }
+}
+
+impl Iterator for CheckedChars<'_, '_> {
+    type Item = char;
+
+    #[inline]
+    fn next(&mut self) -> Option<char> {
+        let (index, character) = self.chars.next()?;
+        if index >= self.next_check {
+            if let Err(error) = self.options.check() {
+                self.failure.set(Some(error));
+                self.chars = "".char_indices();
+                return None;
+            }
+            self.next_check = index.saturating_add(self.step);
+        }
+        Some(character)
+    }
+}
+
 /// Swift String keys compare canonically equivalent Unicode sequences as equal.
 /// Keep original spelling while sorting their NFC Unicode scalar sequences.
+///
+/// Cancellation is checked on both sides: every 4,096 output scalars, and every
+/// [`CHECKED_CHARS_STEP`] input bytes, because NFC reads a whole run of combining marks
+/// before it yields the first scalar of that run.
 pub(crate) fn normalized_key(
     key: &str,
     options: &OperationOptions,
 ) -> Result<String, DocumentStorageError> {
+    let failure = Cell::new(None);
     let mut normalized = String::new();
-    for (index, character) in key.nfc().enumerate() {
+    let input = CheckedChars::new(key, CHECKED_CHARS_STEP, options, &failure);
+    for (index, character) in input.nfc().enumerate() {
         if index.is_multiple_of(4096) {
             options.check()?;
         }
         normalized.push(character);
+    }
+    if let Some(error) = failure.take() {
+        return Err(error);
     }
     options.check()?;
     Ok(normalized)
@@ -494,43 +683,53 @@ pub(crate) fn canonical_number(value: f64) -> String {
     swift_double(value)
 }
 
-/// Swift's shortest decimal spelling switches to scientific notation immediately
-/// above the exact integer range, rather than Rust Debug's 1e16 boundary.
+/// Swift's shortest round-trip spelling: scientific notation below 1e-4 and
+/// immediately above the exact integer range (rather than Rust Debug's 1e16
+/// boundary), with an explicit exponent sign and at least two exponent digits;
+/// decimal notation otherwise.
+///
+/// `{:e}` and `{:?}` choose the shortest digits but round an exact decimal tie
+/// away from zero. The explicitly rounded spelling with the same digit count
+/// rounds ties to even, as Swift and JavaScript do, and is used only when it
+/// still parses back to the same value; otherwise the shortest spelling stands.
 pub(crate) fn swift_double(value: f64) -> String {
-    let text = if value.abs() > 9_007_199_254_740_992.0 {
-        format!("{value:e}")
-    } else {
-        format!("{value:?}")
-    };
-    if let Some((mantissa, exponent)) = text.split_once('e') {
-        if let Ok(exponent) = exponent.parse::<i32>() {
-            // Debug chooses shortest digits but rounds exact decimal ties away
-            // from zero. Explicit precision retains that digit count and uses
-            // ties-to-even, matching Swift's canonical shortest spelling.
-            let precision = mantissa
-                .split_once('.')
-                .map_or(0, |(_, fraction)| fraction.len());
-            let rounded = format!("{value:.precision$e}");
-            let (mantissa, _) = rounded.split_once('e').unwrap_or((&rounded, ""));
-            return format!(
-                "{mantissa}e{}{exponent:02}",
-                if exponent < 0 { "-" } else { "+" },
-                exponent = exponent.abs()
-            );
+    if value.is_nan() {
+        return "nan".into();
+    }
+    if value.is_infinite() {
+        return if value > 0.0 { "inf" } else { "-inf" }.into();
+    }
+    let magnitude = value.abs();
+    if magnitude != 0.0 && !(1e-4..=9_007_199_254_740_992.0).contains(&magnitude) {
+        let shortest = format!("{value:e}");
+        let precision = shortest
+            .split_once('e')
+            .map_or(shortest.as_str(), |(mantissa, _)| mantissa)
+            .split_once('.')
+            .map_or(0, |(_, fraction)| fraction.len());
+        let rounded = format!("{value:.precision$e}");
+        let chosen = if rounded.parse::<f64>() == Ok(value) {
+            rounded
+        } else {
+            shortest
+        };
+        let (mantissa, exponent) = chosen.split_once('e').unwrap_or((&chosen, "0"));
+        let exponent = exponent.parse::<i32>().unwrap_or(0);
+        return format!(
+            "{mantissa}e{}{exponent:02}",
+            if exponent < 0 { "-" } else { "+" },
+            exponent = exponent.unsigned_abs()
+        );
+    }
+    let shortest = format!("{value:?}");
+    if let Some((_, fraction)) = shortest.split_once('.') {
+        let precision = fraction.len();
+        let rounded = format!("{value:.precision$}");
+        if rounded.parse::<f64>() == Ok(value) {
+            return rounded;
         }
     }
-    if value.is_nan() {
-        "nan".into()
-    } else if value == f64::INFINITY {
-        "inf".into()
-    } else if value == f64::NEG_INFINITY {
-        "-inf".into()
-    } else if let Some((_, fraction)) = text.split_once('.') {
-        let precision = fraction.len();
-        format!("{value:.precision$}")
-    } else {
-        text
-    }
+    shortest
 }
 
 pub(crate) fn canonical_data(

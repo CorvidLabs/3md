@@ -11,7 +11,9 @@ function document(body = "Markdown stays local", metadata: Record<string, string
   return { version: "2.0", axis: "custom", title: "Linked model", preamble: "Host controls glyph placement.", metadata,
     planes: [{ z: 1, x: 2, y: null, label: "Section", attributes: {}, body }] };
 }
-function source(path: string, value = document(), binary = false): DocumentFileSource {
+/** `binary` writes payload kind 2; `"textContainer"` writes payload kind 1, the ThreeMD 2.0 binary bytes. */
+function source(path: string, value = document(), binary: boolean | "textContainer" = false): DocumentFileSource {
+  if (binary === "textContainer") return { path, data: DocumentStorageCodec.encodeTextContainer(value) };
   return { path, data: DocumentStorageCodec.encode(value, binary ? DocumentStorageFormat.binary() : DocumentStorageFormat.text) };
 }
 function host(ledger: string): Document { return document("1 2\n[ordinary Markdown](not-a-file-link.3md)", { "3md-files": ledger, retained: "opaque" }); }
@@ -46,15 +48,37 @@ describe("explicit supplied-file composition", () => {
   });
 
   test("nested parent paths and duplicate basenames resolve relative to each containing file", () => {
-    const result = DocumentFileComposition.resolve("root.3md", [
-      source("root.3md", host('{"1":"a/child.3md","2":"b/child.3md"}')),
-      source("a/child.3md", host('{"x":"../shared/model.3md"}')),
-      source("b/child.3md", document("Different child")), source("shared/model.3md", document("Shared leaf"), true),
+    for (const leaf of [true, "textContainer"] as const) {
+      const result = DocumentFileComposition.resolve("root.3md", [
+        source("root.3md", host('{"1":"a/child.3md","2":"b/child.3md"}')),
+        source("a/child.3md", host('{"x":"../shared/model.3md"}')),
+        source("b/child.3md", document("Different child")), source("shared/model.3md", document("Shared leaf"), leaf),
+      ]);
+      expect(result.resolvedPaths).toEqual(["a/child.3md", "b/child.3md", "root.3md", "shared/model.3md"]);
+      expect(result.composition.entry(result.fileRootIDs["a/child.3md"]!)?.references[0]?.targetID)
+        .toBe(result.fileRootIDs["shared/model.3md"]);
+      expect(result.composition.entry(result.fileRootIDs["b/child.3md"]!)?.document.planes[0]?.body).toBe("Different child");
+      expect(result.composition.entry(result.fileRootIDs["shared/model.3md"]!)?.document.planes[0]?.body).toBe("Shared leaf");
+    }
+  });
+
+  test("payload kind 1 children and bundles (the 2.0 binary bytes) still resolve", () => {
+    const nested = new DocumentComposition("zRoot", [
+      { id: "zRoot", document: host('{"1":"external.3mdb"}'), references: [{ targetID: "aLeaf", attributes: { opaque: "kept" } }] },
+      { id: "aLeaf", document: document("Existing leaf"), references: [] },
     ]);
-    expect(result.resolvedPaths).toEqual(["a/child.3md", "b/child.3md", "root.3md", "shared/model.3md"]);
-    expect(result.composition.entry(result.fileRootIDs["a/child.3md"]!)?.references[0]?.targetID)
-      .toBe(result.fileRootIDs["shared/model.3md"]);
-    expect(result.composition.entry(result.fileRootIDs["b/child.3md"]!)?.document.planes[0]?.body).toBe("Different child");
+    const kind1 = DocumentFileComposition.resolve("root.3mdb", [
+      source("root.3mdb", DocumentCompositionCodec.document(nested), "textContainer"),
+      source("external.3mdb", document("Binary child"), "textContainer"),
+    ]);
+    const kind2 = DocumentFileComposition.resolve("root.3mdb", [
+      source("root.3mdb", DocumentCompositionCodec.document(nested), true), source("external.3mdb", document("Binary child"), true),
+    ]);
+    expect(DocumentStorageCodec.containerInfo(source("x", document(), "textContainer").data)?.payloadKind).toBe(1);
+    expect(DocumentStorageCodec.containerInfo(source("x", document(), true).data)?.payloadKind).toBe(2);
+    expect(kind1.composition.entries).toHaveLength(3);
+    expect(kind1).toEqual(kind2);
+    expect(kind1.composition.entry(kind1.fileRootIDs["external.3mdb"]!)?.document.planes[0]?.body).toBe("Binary child");
   });
 
   test("binary nested bundles retain unused entries, stable identities and opaque edges before new ledger edges", () => {
@@ -166,12 +190,14 @@ describe("explicit supplied-file composition", () => {
   test("outer recognition applies child byte and line policies before its lowered plane ceiling", () => {
     const base = document();
     const value = { ...base, planes: [{ ...base.planes[0]!, z: 0 }, { ...base.planes[0]!, z: 1 }] };
-    for (const binary of [false, true]) {
+    // Text and payload kind 1 count lines before planes. Payload kind 2 checks the plane count at S8, in Phase S,
+    // before the line count at L5 (SPEC.md 11.3.8), so its third policy reports tooManyPlanes.
+    for (const binary of [false, "textContainer", true] as const) {
       const input = source("root", value, binary);
       const policies: [DocumentDecodeLimits, DocumentStorageErrorCode][] = [
         [new DocumentDecodeLimits({ maximumEncodedBytes: 1, maximumPlanes: 1 }), "oversizedInput"],
         [new DocumentDecodeLimits({ maximumDecodedBytes: 1, maximumPlanes: 1 }), "oversizedOutput"],
-        [new DocumentDecodeLimits({ maximumLines: 1, maximumPlanes: 1 }), "tooManyLines"],
+        [new DocumentDecodeLimits({ maximumLines: 1, maximumPlanes: 1 }), binary === true ? "tooManyPlanes" : "tooManyLines"],
       ];
       for (const [policy, expected] of policies) {
         try { DocumentFileComposition.resolve("root", [input], undefined, policy); throw new Error("Expected storage failure"); }

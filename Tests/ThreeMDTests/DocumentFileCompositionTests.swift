@@ -70,6 +70,11 @@ final class DocumentFileCompositionTests: XCTestCase {
             sources: [root, try source("child.whatever", child, binary: true)]
         )
         XCTAssertEqual(text, binary)
+        let textContainer = try DocumentFileComposition.resolve(
+            rootPath: root.path,
+            sources: [root, try source("child.whatever", child, textContainer: true)]
+        )
+        XCTAssertEqual(text, textContainer)
     }
 
     func testExistingBundleRetainsUnusedEntriesOpaqueAttributesAndIdentitiesAndScansEveryLedger() throws {
@@ -90,21 +95,23 @@ final class DocumentFileCompositionTests: XCTestCase {
                 .init(id: "unused", document: document(metadata: ["3md-files": #"{"1":"other.3md"}"#])),
             ]
         )
-        let result = try DocumentFileComposition.resolve(
-            rootPath: "root.3md",
-            sources: [
-                try source("root.3md", document(metadata: ["3md-files": #"{"B":"models/library.3mdb"}"#])),
-                .init(
-                    path: "models/library.3mdb",
-                    data: try DocumentStorageCodec.encode(
-                        DocumentCompositionCodec.document(for: bundle),
-                        format: .binary(compression: .none)
-                    )
-                ),
-                try source("extra.3md", document(body: "Extra")),
-                try source("models/other.3md", document(body: "Other")),
-            ]
-        )
+        let envelope = try DocumentCompositionCodec.document(for: bundle)
+        let structured = try DocumentStorageCodec.encode(envelope, format: .binary(compression: .none))
+        let textContainer = try DocumentStorageCodec.encodeTextContainer(envelope)
+        let resolutions = try [structured, textContainer].map { library in
+            try DocumentFileComposition.resolve(
+                rootPath: "root.3md",
+                sources: [
+                    try source("root.3md", document(metadata: ["3md-files": #"{"B":"models/library.3mdb"}"#])),
+                    .init(path: "models/library.3mdb", data: library),
+                    try source("extra.3md", document(body: "Extra")),
+                    try source("models/other.3md", document(body: "Other")),
+                ]
+            )
+        }
+        // Payload kinds 1 and 2 of the same envelope resolve identically.
+        XCTAssertEqual(resolutions[0], resolutions[1])
+        let result = resolutions[0]
         XCTAssertEqual(result.resolvedPaths, ["extra.3md", "models/library.3mdb", "models/other.3md", "root.3md"])
         XCTAssertEqual(result.composition.entries.count, 6)
         let importedRoot = try XCTUnwrap(result.composition.entry(id: result.fileRootIDs["models/library.3mdb"] ?? ""))
@@ -126,6 +133,10 @@ final class DocumentFileCompositionTests: XCTestCase {
             format: .binary(compression: .none)
         )
         XCTAssertEqual(try DocumentCompositionCodec.decode(binary), result.composition)
+        let textContainer = try DocumentStorageCodec.encodeTextContainer(
+            DocumentCompositionCodec.document(for: result.composition)
+        )
+        XCTAssertEqual(try DocumentCompositionCodec.decode(textContainer), result.composition)
     }
 
     func testDuplicateBasenamesAndUnicodeScalarOrderingRemainDistinct() throws {
@@ -201,12 +212,17 @@ final class DocumentFileCompositionTests: XCTestCase {
 
     func testOuterRecognitionDoesNotUseCallerPlaneLimitBeforeByteAndLinePolicies() throws {
         let value = Document(version: "1.0", axis: .space, planes: [Plane(z: 0, body: "A"), Plane(z: 1, body: "B")])
-        for binary in [false, true] {
-            let input = try source("root", value, binary: binary)
+        // Text and payload kind 1 check lines before planes; payload kind 2 checks the plane count at S8, before L5.
+        let inputs = [
+            (try source("root", value), DocumentStorageError.tooManyLines),
+            (try source("root", value, textContainer: true), .tooManyLines),
+            (try source("root", value, binary: true), .tooManyPlanes),
+        ]
+        for (input, lineOutcome) in inputs {
             let policies: [(DocumentDecodeLimits, DocumentStorageError)] = [
                 (try .init(maximumEncodedBytes: 1, maximumPlanes: 1), .oversizedInput),
                 (try .init(maximumDecodedBytes: 1, maximumPlanes: 1), .oversizedOutput),
-                (try .init(maximumLines: 1, maximumPlanes: 1), .tooManyLines),
+                (try .init(maximumLines: 1, maximumPlanes: 1), lineOutcome),
             ]
             for (policy, expected) in policies {
                 XCTAssertThrowsError(
@@ -965,8 +981,16 @@ final class DocumentFileCompositionTests: XCTestCase {
         )
     }
 
-    private func source(_ path: String, _ document: Document, binary: Bool = false) throws -> DocumentFileSource {
-        .init(
+    private func source(
+        _ path: String,
+        _ document: Document,
+        binary: Bool = false,
+        textContainer: Bool = false
+    ) throws -> DocumentFileSource {
+        guard !textContainer else {
+            return .init(path: path, data: try DocumentStorageCodec.encodeTextContainer(document))
+        }
+        return .init(
             path: path,
             data: try DocumentStorageCodec.encode(document, format: binary ? .binary(compression: .none) : .text)
         )

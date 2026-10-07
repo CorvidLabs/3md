@@ -84,7 +84,7 @@ public struct Serializer: Sendable {
         let needsQuote =
             forceQuote || value.utf8.contains(32) || value.utf8.contains(9)
             || value.utf8.contains(34) || value.utf8.contains(92) || value.isEmpty
-            || !value.utf8.elementsEqual(value.trimmingCharacters(in: .whitespaces).utf8)
+            || !value.utf8.elementsEqual(ThreeMDWhitespace.trimmed(value).utf8)
             || (value.utf8.count >= 2 && value.utf8.first == 39 && value.utf8.last == 39)
         guard needsQuote else { return value }
         var escaped = ""

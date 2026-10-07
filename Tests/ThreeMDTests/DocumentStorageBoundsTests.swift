@@ -64,6 +64,25 @@ final class DocumentStorageBoundsTests: XCTestCase {
         DocumentStorageTests.assertError(.oversizedInput) {
             try DocumentStorageCodec.encode(document, format: .binary(compression: .none), limits: smallerBinary)
         }
+
+        // The same bounds hold for the payload kind 1 text container.
+        let textContainer = try DocumentStorageCodec.encodeTextContainer(document)
+        let exactText = try DocumentDecodeLimits(
+            maximumEncodedBytes: textContainer.count,
+            maximumDecodedBytes: source.count
+        )
+        XCTAssertEqual(try DocumentStorageCodec.encodeTextContainer(document, limits: exactText), textContainer)
+        XCTAssertEqual(try DocumentStorageCodec.decode(textContainer, limits: exactText), document)
+        DocumentStorageTests.assertError(.oversizedOutput) {
+            try DocumentStorageCodec.decode(textContainer, limits: outputTooSmall)
+        }
+        let smallerText = try DocumentDecodeLimits(maximumEncodedBytes: textContainer.count - 1)
+        DocumentStorageTests.assertError(.oversizedInput) {
+            try DocumentStorageCodec.encodeTextContainer(document, limits: smallerText)
+        }
+        DocumentStorageTests.assertError(.oversizedInput) {
+            try DocumentStorageCodec.decode(textContainer, limits: smallerText)
+        }
     }
 
     func testPhysicalLinesAreBoundedBeforeParsingEvenForBlankInputs() throws {

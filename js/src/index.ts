@@ -10,7 +10,7 @@
 // in conformance/ pin that behavior down.
 
 import { canonicalKeys, canonicalStrings, isFoundationWhitespace, trimFoundationWhitespace } from "./portable.js";
-import { canonicalNumber } from "./storage.js";
+import { canonicalNumber } from "./number.js";
 
 // MARK: - Types
 
@@ -847,8 +847,8 @@ export function serialize(document: Document): string {
 
 // Optional portable layers share the frozen text grammar and lossless interchange helpers.
 export {
-  DocumentCompression, DocumentDecodeLimits, DocumentStorageCodec, DocumentStorageError, DocumentStorageFormat,
-  type DocumentStorageErrorCode,
+  DocumentCompression, DocumentDecodeLimits, DocumentPayloadKind, DocumentStorageCodec, DocumentStorageError,
+  DocumentStorageFormat, type DocumentContainerInfo, type DocumentStorageErrorCode,
 } from "./storage.js";
 export {
   DocumentComposition, DocumentCompositionCodec, DocumentCompositionError, DocumentCompositionLimits,

@@ -65,7 +65,7 @@ internal enum DocumentStorageValidation {
         for key in document.metadata.keys.sorted() {
             try DocumentStorageCancellation.check()
             guard !["3md", "axis", "title"].contains(key.lowercased()), !key.utf8.contains(58),
-                key.trimmingCharacters(in: .whitespaces).utf8.first != 35
+                ThreeMDWhitespace.trimmed(key).utf8.first != 35
             else {
                 throw DocumentStorageError.invalidDocument("Metadata keys cannot shadow reserved fields or comments.")
             }
@@ -165,7 +165,7 @@ internal enum DocumentStorageValidation {
         var recordBytes = 0
         for raw in normalized.split(separator: "\n", omittingEmptySubsequences: false) {
             try DocumentStorageCancellation.check()
-            let trimmed = raw.trimmingCharacters(in: .whitespaces)
+            let trimmed = ThreeMDWhitespace.trimmed(raw)
             if !started { if trimmed == "---" { started = true }; continue }
             if !body { if trimmed == "---" { body = true }; continue }
             var directive = false

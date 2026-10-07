@@ -27,12 +27,18 @@ function resign(data: Uint8Array): Uint8Array {
 }
 
 describe("bounded portable storage", () => {
-  test("fixed envelope vector matches Swift and sliced data retains its byte offset", () => {
+  test("fixed envelope vectors match Swift and sliced data retains its byte offset", () => {
     const document: Document = { version: "1.0", axis: "layer", title: null, metadata: {}, preamble: null, planes: [] };
+    // Payload kind 1 (the ThreeMD 2.0 bytes), now written by encodeTextContainer.
     const expected = Uint8Array.fromHex("336d6462696e0d0a0100010000000000000000002100000000000000210000000000000027cca0ba2d2d2d0a336d643a2022312e30220a617869733a20226c61796572220a2d2d2d0a");
-    expect(DocumentStorageCodec.encode(document, DocumentStorageFormat.binary())).toEqual(expected);
-    const padded = new Uint8Array(expected.length + 4); padded.set(expected, 2);
-    expect(DocumentStorageCodec.decode(padded.subarray(2, -2))).toEqual(document);
+    expect(DocumentStorageCodec.encodeTextContainer(document)).toEqual(expected);
+    // Payload kind 2 (53 bytes, CRC 0xAF46E95D), written by the binary format since ThreeMD 2.1.
+    const structured = Uint8Array.fromHex("336d6462696e0d0a0100020000000000000000000d000000000000000d000000000000005de946af0003312e30056c617965720000");
+    expect(DocumentStorageCodec.encode(document, DocumentStorageFormat.binary())).toEqual(structured);
+    for (const bytes of [expected, structured]) {
+      const padded = new Uint8Array(bytes.length + 4); padded.set(bytes, 2);
+      expect(DocumentStorageCodec.decode(padded.subarray(2, -2))).toEqual(document);
+    }
     expect(DocumentStorageCodec.isBinary(encoder.encode("3MDB"))).toBe(false);
     expect(DocumentStorageCodec.isBinary(encoder.encode("3mdbin\r"))).toBe(false);
   });
@@ -41,9 +47,14 @@ describe("bounded portable storage", () => {
     for (const name of ["canopy", "shared-grove"]) {
       const text = readFileSync(new URL(`../../Examples/Extensions/${name}.3md`, import.meta.url));
       const binary = readFileSync(new URL(`../../Examples/Extensions/${name}.3mdb`, import.meta.url));
+      const structured = readFileSync(new URL(`../../Examples/Extensions/${name}.structured.3mdb`, import.meta.url));
       const document = DocumentStorageCodec.decode(text);
       expect(DocumentStorageCodec.decode(binary)).toEqual(document);
-      expect(DocumentStorageCodec.encode(document, DocumentStorageFormat.binary())).toEqual(new Uint8Array(binary));
+      expect(DocumentStorageCodec.encodeTextContainer(document)).toEqual(new Uint8Array(binary));
+      expect(DocumentStorageCodec.decode(structured)).toEqual(document);
+      expect(DocumentStorageCodec.encode(document, DocumentStorageFormat.binary())).toEqual(new Uint8Array(structured));
+      expect(DocumentStorageCodec.containerInfo(binary)?.payloadKind).toBe(1);
+      expect(DocumentStorageCodec.containerInfo(structured)?.payloadKind).toBe(2);
     }
   });
 
@@ -55,9 +66,10 @@ describe("bounded portable storage", () => {
   });
 
   test("header fields, checksums, trailing bytes and unsafe 64-bit lengths are checked", () => {
-    const source = DocumentStorageCodec.encode(plain(), DocumentStorageFormat.binary());
+    const source = DocumentStorageCodec.encodeTextContainer(plain());
+    // Byte 10 = 2 is now a supported kind: the header passes D6 and the stale CRC fails D12.
     const corruptions: [number, number, DocumentStorageErrorCode][] = [
-      [8, 2, "unsupportedVersion"], [10, 2, "unsupportedPayloadKind"], [11, 9, "unsupportedCompression"],
+      [8, 2, "unsupportedVersion"], [10, 3, "unsupportedPayloadKind"], [10, 2, "checksumMismatch"], [11, 9, "unsupportedCompression"],
       [12, 1, "unsupportedFlags"], [16, 1, "nonzeroReserved"], [20, 0, "lengthMismatch"],
       [28, 0, "lengthMismatch"], [36, 0, "checksumMismatch"], [40, 0, "checksumMismatch"],
     ];
@@ -72,6 +84,29 @@ describe("bounded portable storage", () => {
     rejects("oversizedOutput", () => DocumentStorageCodec.decode(huge));
     const invalidUTF8 = source.slice(); invalidUTF8[40] = 0xff;
     rejects("invalidUTF8", () => DocumentStorageCodec.decode(resign(invalidUTF8)));
+  });
+
+  test("the same header, checksum and payload checks hold for payload kind 2", () => {
+    const source = DocumentStorageCodec.encode(plain(), DocumentStorageFormat.binary());
+    expect(source[10]).toBe(2);
+    const corruptions: [number, number, DocumentStorageErrorCode][] = [
+      [8, 2, "unsupportedVersion"], [10, 3, "unsupportedPayloadKind"], [10, 0, "unsupportedPayloadKind"],
+      [11, 9, "unsupportedCompression"], [12, 1, "unsupportedFlags"], [16, 1, "nonzeroReserved"], [20, 0, "lengthMismatch"],
+      [28, 0, "lengthMismatch"], [36, 0, "checksumMismatch"], [40, 0x01, "checksumMismatch"],
+    ];
+    for (const [offset, value, code] of corruptions) {
+      const corrupted = source.slice(); corrupted[offset] = value; rejects(code, () => DocumentStorageCodec.decode(corrupted));
+    }
+    rejects("invalidContainer", () => DocumentStorageCodec.decode(source.subarray(0, 20)));
+    rejects("lengthMismatch", () => DocumentStorageCodec.decode(source.subarray(0, -1)));
+    const trailing = new Uint8Array(source.length + 1); trailing.set(source);
+    rejects("lengthMismatch", () => DocumentStorageCodec.decode(trailing));
+    const huge = source.slice(); new DataView(huge.buffer).setBigUint64(28, 0xffffffffffffffffn, true);
+    rejects("oversizedOutput", () => DocumentStorageCodec.decode(huge));
+    const flags = source.slice(); flags[40] = 0x04; // an undefined documentFlags bit, CRC resealed
+    rejects("invalidContainer", () => DocumentStorageCodec.decode(resign(flags)));
+    const body = source.slice(); body[body.length - 2] = 0xff; // inside the body "Body", CRC resealed
+    rejects("invalidUTF8", () => DocumentStorageCodec.decode(resign(body)));
   });
 
   test("resource constructors reject noninteger, nonpositive and raised limits", () => {

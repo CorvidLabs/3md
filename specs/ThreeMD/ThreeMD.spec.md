@@ -20,6 +20,8 @@ files:
   - Sources/ThreeMD/DocumentStorageCodec.swift
   - Sources/ThreeMD/DocumentStorageValidation.swift
   - Sources/ThreeMD/DocumentStorageCompression.swift
+  - Sources/ThreeMD/DocumentStorageStructured.swift
+  - Sources/ThreeMD/ThreeMDWhitespace.swift
   - Sources/ThreeMD/DocumentComposition.swift
   - Sources/ThreeMD/DocumentCompositionLimits.swift
   - Sources/ThreeMD/DocumentCompositionCodec.swift
@@ -35,11 +37,16 @@ files:
   - js/src/index.ts
   - js/src/portable.ts
   - js/src/storage.ts
+  - js/src/number.ts
+  - js/src/checksum.ts
+  - js/src/structured.ts
   - js/src/composition.ts
   - js/src/file-composition.ts
   - js/src/editing.ts
   - rust/src/lib.rs
   - rust/src/storage.rs
+  - rust/src/checksum.rs
+  - rust/src/structured.rs
   - rust/src/composition.rs
   - rust/src/file_composition.rs
   - rust/src/editing.rs
@@ -184,6 +191,21 @@ are pure synchronous APIs; they never open paths or resolve URLs.
 | `checksumMismatch` | Header/payload corruption checksum differs. |
 | `compressionUnavailable` | Requested compression absent on platform. |
 | `compressionFailed` | System compression fails. |
+| `DocumentPayloadKind` | Swift RawRepresentable, Hashable, Sendable, CustomStringConvertible struct for header byte 10 that represents every UInt8, so future kinds stay additive; TypeScript frozen constant object with a number type alias. |
+| `canonicalText` | Payload kind 1: canonical UTF-8 3md text behind the binary header (ThreeMD 2.0, SPEC.md 11.1). |
+| `structuredDocument` | Payload kind 2: structured document records (ThreeMD 2.1, SPEC.md 11.3). |
+| `description` | DocumentPayloadKind name: canonicalText, structuredDocument or reserved(N). |
+| `DocumentContainerInfo` | Swift Hashable, Sendable struct, TypeScript readonly interface and Rust non-exhaustive Copy struct of the raw fixed header fields, reported without validating them, the payload or the checksum. |
+| `payloadKind` | DocumentContainerInfo payload kind byte; Swift DocumentPayloadKind, TypeScript number. |
+| `compression` | DocumentContainerInfo raw compression identifier; compare it with DocumentCompression.rawValue. |
+| `flags` | DocumentContainerInfo raw feature flags. |
+| `reserved` | DocumentContainerInfo raw reserved field. |
+| `encodedPayloadByteCount` | DocumentContainerInfo declared encoded payload byte count; Swift UInt64, TypeScript bigint. |
+| `decodedPayloadByteCount` | DocumentContainerInfo declared decoded (uncompressed) payload byte count; Swift UInt64, TypeScript bigint. |
+| `checksum` | DocumentContainerInfo declared CRC-32/ISO-HDLC value, not verified by inspection. |
+| `supportedPayloadKinds` | Payload kinds this release decodes, canonicalText and structuredDocument: Swift Set of DocumentPayloadKind, TypeScript frozen readonly number array [1, 2]. |
+| `containerInfo` | containerInfo(_ data: Data) throws -> DocumentContainerInfo? reads at most the first 40 bytes; nil (TypeScript null) without the binary magic; invalidContainer when the magic is present and fewer than 40 bytes exist. |
+| `encodeTextContainer` | encodeTextContainer(_:compression:limits:) throws -> Data writes payload kind 1, byte-identical to the ThreeMD 2.0 `.binary` output, with the 2.0 binary writer's validation and error order; TypeScript takes optional compression, limits and AbortSignal. |
 | `DocumentReference` | Hashable, Sendable target and opaque attributes. |
 | `targetID` | ID in the supplied library, never a path or URL. |
 | `DocumentEntry` | Hashable, Sendable named Document and ordered references. |
@@ -301,6 +323,11 @@ are pure synchronous APIs; they never open paths or resolve URLs.
 | `editing` | Rust immutable snapshots, identity adoption and atomic patches module. |
 | `CONTAINER_VERSION` | Rust general envelope version, 1. |
 | `HEADER_BYTE_COUNT` | Rust complete envelope header length, 40. |
+| `PAYLOAD_KIND_CANONICAL_TEXT` | Rust payload kind 1 constant, canonical UTF-8 text. |
+| `PAYLOAD_KIND_STRUCTURED_DOCUMENT` | Rust payload kind 2 constant, structured document records. |
+| `SUPPORTED_PAYLOAD_KINDS` | Rust array of the two payload kinds this release decodes, [1, 2]. |
+| `container_info` | Rust header-only inspection: Ok(None) without the binary magic, Err(InvalidContainer) when the magic is present and fewer than 40 bytes exist. |
+| `encode_text_container` | Rust payload kind 1 writer with explicit compression, limits and OperationOptions, byte-identical to the 2.0 encode with Binary and with its errors. |
 | `IDENTITY_ATTRIBUTE_KEY` | Rust namespaced identity key, 3md-id. |
 | `is_binary` | Rust complete binary magic predicate. |
 | `is_composition` | Rust composition profile discriminator. |
@@ -342,7 +369,27 @@ are pure synchronous APIs; they never open paths or resolve URLs.
 | `BoundedTextWriter` | Internal TypeScript byte-budgeted canonical text accumulator. |
 | `frozenReference` | Internal TypeScript copied immutable reference. |
 | `frozenEntry` | Internal TypeScript copied immutable definition. |
-| `crc32` | Crate-internal Rust envelope checksum for every payload kind, not authenticity. |
+| `crc32` | Envelope checksum for every payload kind, not authenticity. Rust keeps it crate-internal in checksum.rs. TypeScript exports crc32 from js/src/checksum.ts for the storage codec. |
+| `crc32Update` | Internal TypeScript slicing-by-16 CRC step over a half-open byte range. The register is the raw state, before the final XOR. |
+| `crc32UpdateBytes` | Internal TypeScript byte-at-a-time CRC step, the reference the slicing update matches. |
+| `containerChecksum` | Internal TypeScript CRC of header bytes 0..<36 followed by the encoded payload. |
+| `validateRecords` | Internal TypeScript record-limit and lone-surrogate check used before a kind-2 writer merges equivalent keys. |
+| `structuredProbe` | Internal TypeScript test counter of Phase Q parses. Production decode does not read it. |
+| `validateUTF8` | Internal TypeScript fatal UTF-8 check of one complete byte range, used by chunked string validation. |
+| `decodeUTF8` | Internal TypeScript UTF-8 decode of one complete byte range. |
+| `compareCodePoints` | Internal TypeScript code-point order, equal to raw UTF-8 byte order for well-formed strings. |
+| `StructuredMetrics` | Internal TypeScript canonical-text size metrics for one structured payload. |
+| `readStructured` | Internal TypeScript kind-2 payload reader over a half-open byte range. |
+| `numberForm` | Internal TypeScript canonical number form: 1 integer, 2 binary32, 3 binary64. |
+| `writeStructuredPayload` | Internal TypeScript kind-2 payload writer. Bytes 0..<40 of the returned buffer are left zero for the header. |
+| `cancellation_hook` | Crate-internal Rust test hook that can fail a storage operation at a chosen check. Absent outside tests. |
+| `arm` | Crate-internal Rust function that arms cancellation_hook at a check index. |
+| `checks` | Crate-internal Rust count of cancellation_hook observations. |
+| `MAGIC` | Crate-internal Rust binary magic bytes, 3mdbin followed by CR LF. |
+| `CHECKED_CHARS_STEP` | Crate-internal Rust cancellation stride for long character scans, 65,536. |
+| `CheckedChars` | Crate-internal Rust iterator that charges cancellation while reading characters. |
+| `update` | Crate-internal Rust slicing-by-16 CRC update. |
+| `container` | Crate-internal Rust checksum of the 36 header bytes and the encoded payload. |
 | `parse_data` | Crate-internal Rust bounded UTF-8/text decode and Unicode key reconstruction. |
 | `position_key` | Crate-internal Rust exact finite coordinate set key. |
 | `normalized_key` | Crate-internal Rust bounded NFC key normalization. |

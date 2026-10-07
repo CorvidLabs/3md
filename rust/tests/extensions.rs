@@ -129,6 +129,21 @@ fn entry(id: &str, targets: &[&str]) -> DocumentEntry {
 fn encode(document: &Document) -> Vec<u8> {
     storage::encode(document, DocumentStorageFormat::Text, &limits(), &options()).unwrap()
 }
+/// Payload kind 2, the 2.1 `Binary` writer.
+fn encode_structured(document: &Document) -> Vec<u8> {
+    storage::encode(
+        document,
+        DocumentStorageFormat::Binary(DocumentCompression::None),
+        &limits(),
+        &options(),
+    )
+    .unwrap()
+}
+/// Payload kind 1, the 2.0 binary bytes.
+fn encode_text_container(document: &Document) -> Vec<u8> {
+    storage::encode_text_container(document, DocumentCompression::None, &limits(), &options())
+        .unwrap()
+}
 fn profile(json: &str) -> Vec<u8> {
     let document = Document {
         version: "0.1".into(),
@@ -179,6 +194,42 @@ fn swift_numeric_vectors_match_exact_storage_spelling() {
 }
 
 #[test]
+fn every_signed_power_of_two_and_ten_matches_the_shared_canonical_spelling() {
+    let vectors = json_fixture("numeric-powers.json");
+    assert_eq!(vectors["schema"], "3md-canonical-numbers-1");
+    let vectors = vectors["vectors"].as_array().unwrap();
+    assert_eq!(vectors.len(), 4_318);
+    let mut mismatches = Vec::new();
+    for vector in vectors {
+        let bits = u64::from_str_radix(vector["bitPattern"].as_str().unwrap(), 16).unwrap();
+        let mut document = sample();
+        document.planes.truncate(1);
+        document.planes[0].z = f64::from_bits(bits);
+        let expected = vector["formatted"].as_str().unwrap();
+        let actual = match storage::encode(
+            &document,
+            DocumentStorageFormat::Text,
+            &limits(),
+            &options(),
+        ) {
+            Ok(source) => String::from_utf8(source)
+                .unwrap()
+                .lines()
+                .find(|line| line.starts_with("@plane"))
+                .and_then(|line| line.split_whitespace().nth(1))
+                .and_then(|token| token.strip_prefix("z="))
+                .unwrap()
+                .to_owned(),
+            Err(error) => format!("{error:?}"),
+        };
+        if actual != expected {
+            mismatches.push(format!("{}: {actual} != {expected}", vector["name"]));
+        }
+    }
+    assert!(mismatches.is_empty(), "{mismatches:#?}");
+}
+
+#[test]
 fn canonical_decimal_ties_use_nearest_even_shortest_spelling() {
     for (bits, expected) in [
         (0xc303_45da_fa96_cd52, "-678103920859562.2"),
@@ -218,19 +269,17 @@ fn swift_document_and_composition_goldens_are_byte_identical() {
         expected
     );
     assert_eq!(encode(&expected), text);
+    assert_eq!(encode_text_container(&expected), binary);
+    let structured = fixture("document-unicode.structured.3mdb");
     assert_eq!(
-        storage::encode(
-            &expected,
-            DocumentStorageFormat::Binary(DocumentCompression::None),
-            &limits(),
-            &options()
-        )
-        .unwrap(),
-        binary
+        storage::decode(&structured, &limits(), &options()).unwrap(),
+        expected
     );
+    assert_eq!(encode_structured(&expected), structured);
     let expected = graph(&json_fixture("composition-instances.json"));
     let text = fixture("composition-instances.3md");
     let binary = fixture("composition-instances.3mdb");
+    let structured = fixture("composition-instances.structured.3mdb");
     assert_eq!(
         composition::decode(&text, &graph_limits(), &limits(), &options()).unwrap(),
         expected
@@ -243,17 +292,13 @@ fn swift_document_and_composition_goldens_are_byte_identical() {
         composition::encode(&expected, &graph_limits(), &limits(), &options()).unwrap(),
         text
     );
-    let profile = composition::document(&expected, &graph_limits(), &limits(), &options()).unwrap();
     assert_eq!(
-        storage::encode(
-            &profile,
-            DocumentStorageFormat::Binary(DocumentCompression::None),
-            &limits(),
-            &options()
-        )
-        .unwrap(),
-        binary
+        composition::decode(&structured, &graph_limits(), &limits(), &options()).unwrap(),
+        expected
     );
+    let profile = composition::document(&expected, &graph_limits(), &limits(), &options()).unwrap();
+    assert_eq!(encode_text_container(&profile), binary);
+    assert_eq!(encode_structured(&profile), structured);
 }
 
 #[test]
@@ -270,16 +315,14 @@ fn swift_unicode_key_order_and_source_collision_semantics_match() {
         expected
     );
     assert_eq!(encode(&expected), text);
+    assert_eq!(encode_text_container(&expected), binary);
+    // Payload kind 2 stores the keys in raw UTF-8 byte order, not the text's NFC order.
+    let structured = fixture("unicode-key-order.structured.3mdb");
     assert_eq!(
-        storage::encode(
-            &expected,
-            DocumentStorageFormat::Binary(DocumentCompression::None),
-            &limits(),
-            &options()
-        )
-        .unwrap(),
-        binary
+        storage::decode(&structured, &limits(), &options()).unwrap(),
+        expected
     );
+    assert_eq!(encode_structured(&expected), structured);
     let collision = fixture("unicode-source-collision.3md");
     let decoded = storage::decode(&collision, &limits(), &options()).unwrap();
     assert_eq!(
@@ -293,6 +336,13 @@ fn swift_unicode_key_order_and_source_collision_semantics_match() {
     assert!(!decoded.metadata.contains_key("é"));
     assert_eq!(
         storage::decode(&encode(&decoded), &limits(), &options()).unwrap(),
+        decoded
+    );
+    // The merged map (first spelling, last value) as payload kind 2.
+    let structured = fixture("unicode-source-collision.structured.3mdb");
+    assert_eq!(encode_structured(&decoded), structured);
+    assert_eq!(
+        storage::decode(&structured, &limits(), &options()).unwrap(),
         decoded
     );
     // Raw and bounded parsing now share Swift's source-order key semantics.
@@ -317,22 +367,19 @@ fn original_extension_artifacts_and_lzfse_unavailability() {
     for name in ["canopy", "shared-grove"] {
         let text = fs::read(base.join(format!("{name}.3md"))).unwrap();
         let binary = fs::read(base.join(format!("{name}.3mdb"))).unwrap();
+        let structured = fs::read(base.join(format!("{name}.structured.3mdb"))).unwrap();
         let document = storage::decode(&text, &limits(), &options()).unwrap();
         assert_eq!(encode(&document), text);
         assert_eq!(
             storage::decode(&binary, &limits(), &options()).unwrap(),
             document
         );
+        assert_eq!(encode_text_container(&document), binary);
         assert_eq!(
-            storage::encode(
-                &document,
-                DocumentStorageFormat::Binary(DocumentCompression::None),
-                &limits(),
-                &options()
-            )
-            .unwrap(),
-            binary
+            storage::decode(&structured, &limits(), &options()).unwrap(),
+            document
         );
+        assert_eq!(encode_structured(&document), structured);
         let compressed = fs::read(base.join(format!("{name}.lzfse.3mdb"))).unwrap();
         assert_eq!(
             storage::decode(&compressed, &limits(), &options()),
@@ -351,47 +398,60 @@ fn original_extension_artifacts_and_lzfse_unavailability() {
                 DocumentCompression::Lzfse
             ))
         );
+        assert_eq!(
+            storage::encode_text_container(
+                &document,
+                DocumentCompression::Lzfse,
+                &limits(),
+                &options()
+            ),
+            Err(DocumentStorageError::CompressionUnavailable(
+                DocumentCompression::Lzfse
+            ))
+        );
     }
 }
 
-#[test]
-fn binary_header_fields_and_corruption_are_rejected() {
-    let original = fixture("document-unicode.3mdb");
+fn assert_header_corruption_is_rejected(original: &[u8], kind: u8) {
     for count in 8..40 {
         assert_eq!(
             storage::decode(&original[..count], &limits(), &options()),
             Err(DocumentStorageError::InvalidContainer)
         );
     }
+    // Byte 10 is covered by the CRC: the other supported kind is a checksum failure, and a
+    // reserved kind is rejected at D6 before the CRC.
     for (offset, byte, expected) in [
         (8, 2, DocumentStorageError::UnsupportedVersion(2)),
-        (10, 2, DocumentStorageError::UnsupportedPayloadKind(2)),
+        (10, 3, DocumentStorageError::UnsupportedPayloadKind(3)),
+        (10, 3 - kind, DocumentStorageError::ChecksumMismatch),
         (11, 255, DocumentStorageError::UnsupportedCompression(255)),
         (12, 1, DocumentStorageError::UnsupportedFlags(1)),
         (16, 1, DocumentStorageError::NonzeroReserved),
         (36, original[36] ^ 1, DocumentStorageError::ChecksumMismatch),
         (40, original[40] ^ 1, DocumentStorageError::ChecksumMismatch),
     ] {
-        let mut changed = original.clone();
+        let mut changed = original.to_vec();
         changed[offset] = byte;
         assert_eq!(
             storage::decode(&changed, &limits(), &options()),
-            Err(expected)
+            Err(expected),
+            "kind {kind}, byte {offset}"
         );
     }
-    let mut changed = original.clone();
+    let mut changed = original.to_vec();
     changed[28..36].copy_from_slice(&u64::MAX.to_le_bytes());
     assert_eq!(
         storage::decode(&changed, &limits(), &options()),
         Err(DocumentStorageError::OversizedOutput)
     );
-    let mut changed = original.clone();
+    let mut changed = original.to_vec();
     changed[20..28].copy_from_slice(&u64::MAX.to_le_bytes());
     assert_eq!(
         storage::decode(&changed, &limits(), &options()),
         Err(DocumentStorageError::LengthMismatch)
     );
-    let mut changed = original.clone();
+    let mut changed = original.to_vec();
     changed.push(0);
     assert_eq!(
         storage::decode(&changed, &limits(), &options()),
@@ -401,6 +461,16 @@ fn binary_header_fields_and_corruption_are_rejected() {
         storage::decode(&original[..original.len() - 1], &limits(), &options()),
         Err(DocumentStorageError::LengthMismatch)
     );
+}
+
+#[test]
+fn binary_header_fields_and_corruption_are_rejected() {
+    let original = fixture("document-unicode.3mdb");
+    assert_eq!(original[10], 1);
+    assert_header_corruption_is_rejected(&original, 1);
+    let structured = fixture("document-unicode.structured.3mdb");
+    assert_eq!(structured[10], 2);
+    assert_header_corruption_is_rejected(&structured, 2);
     assert!(!storage::is_binary(b"3MDB"));
     assert!(!storage::is_binary(b"3mdbin\r"));
     assert_eq!(

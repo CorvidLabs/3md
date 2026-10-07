@@ -19,14 +19,18 @@
 //! assert_eq!(document.planes[0].label.as_deref(), Some("Monday"));
 //! ```
 
+#![forbid(unsafe_code)]
+
 use std::collections::{BTreeMap, HashSet};
 use unicode_normalization::UnicodeNormalization;
 
+mod checksum;
 pub mod composition;
 pub mod diagnostics;
 pub mod editing;
 pub mod file_composition;
 pub mod storage;
+mod structured;
 
 pub use composition::{
     DocumentComposition, DocumentCompositionError, DocumentCompositionLimits, DocumentEntry,
@@ -45,8 +49,9 @@ pub use file_composition::{
     DocumentFileSource,
 };
 pub use storage::{
-    CancellationToken, DocumentCompression, DocumentDecodeLimits, DocumentStorageError,
-    DocumentStorageFormat, OperationOptions,
+    CancellationToken, DocumentCompression, DocumentContainerInfo, DocumentDecodeLimits,
+    DocumentStorageError, DocumentStorageFormat, OperationOptions, PAYLOAD_KIND_CANONICAL_TEXT,
+    PAYLOAD_KIND_STRUCTURED_DOCUMENT, SUPPORTED_PAYLOAD_KINDS,
 };
 
 // MARK: - Types

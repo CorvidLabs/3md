@@ -51,22 +51,29 @@ final class ExtensionConformanceTests: XCTestCase {
                 XCTAssertEqual(try DocumentStorageCodec.decode(source), expected, record.name)
                 XCTAssertEqual(try DocumentStorageCodec.decode(binary), expected, record.name)
                 XCTAssertEqual(try DocumentStorageCodec.encode(expected), source, record.name)
+                // The committed binary golden is payload kind 1; `.binary` writes its structured sibling.
+                XCTAssertEqual(try DocumentStorageCodec.encodeTextContainer(expected), binary, record.name)
+                let structured = try data(Self.structuredSibling(record.binaryFile))
                 XCTAssertEqual(
                     try DocumentStorageCodec.encode(expected, format: .binary(compression: .none)),
-                    binary,
+                    structured,
                     record.name
                 )
+                XCTAssertEqual(try DocumentStorageCodec.decode(structured), expected, record.name)
             case "composition":
                 let expected = try decode(DocumentComposition.self, file: record.expectedFile)
                 XCTAssertEqual(try DocumentCompositionCodec.decode(source), expected, record.name)
                 XCTAssertEqual(try DocumentCompositionCodec.decode(binary), expected, record.name)
                 XCTAssertEqual(try DocumentCompositionCodec.encode(expected), source, record.name)
                 let profile = try DocumentCompositionCodec.document(for: expected)
+                XCTAssertEqual(try DocumentStorageCodec.encodeTextContainer(profile), binary, record.name)
+                let structured = try data(Self.structuredSibling(record.binaryFile))
                 XCTAssertEqual(
                     try DocumentStorageCodec.encode(profile, format: .binary(compression: .none)),
-                    binary,
+                    structured,
                     record.name
                 )
+                XCTAssertEqual(try DocumentCompositionCodec.decode(structured), expected, record.name)
             default: XCTFail("Unsupported extension fixture kind: \(record.kind)")
             }
         }
@@ -75,10 +82,12 @@ final class ExtensionConformanceTests: XCTestCase {
     func testSharedBinaryChecksumGoldensRejectCorruption() throws {
         let manifest = try decode(Manifest.self, file: "manifest.json")
         for record in manifest.fixtures {
-            var binary = try data(record.binaryFile)
-            binary[binary.index(before: binary.endIndex)] ^= 1
-            XCTAssertThrowsError(try DocumentStorageCodec.decode(binary), record.name) { error in
-                XCTAssertEqual(error as? DocumentStorageError, .checksumMismatch, record.name)
+            for file in [record.binaryFile, Self.structuredSibling(record.binaryFile)] {
+                var binary = try data(file)
+                binary[binary.index(before: binary.endIndex)] ^= 1
+                XCTAssertThrowsError(try DocumentStorageCodec.decode(binary), file) { error in
+                    XCTAssertEqual(error as? DocumentStorageError, .checksumMismatch, file)
+                }
             }
         }
     }
@@ -89,9 +98,13 @@ final class ExtensionConformanceTests: XCTestCase {
         let source = try data(fixture.documentSourceFile)
         let binary = try data(fixture.documentBinaryFile)
         XCTAssertEqual(try DocumentStorageCodec.encode(expected), source)
-        XCTAssertEqual(try DocumentStorageCodec.encode(expected, format: .binary(compression: .none)), binary)
+        XCTAssertEqual(try DocumentStorageCodec.encodeTextContainer(expected), binary)
         XCTAssertEqual(try DocumentStorageCodec.decode(source), expected)
         XCTAssertEqual(try DocumentStorageCodec.decode(binary), expected)
+        // Kind 2 stores keys in raw UTF-8 byte order, which differs from the text order here (e + U+0301 before z).
+        let structured = try data(Self.structuredSibling(fixture.documentBinaryFile))
+        XCTAssertEqual(try DocumentStorageCodec.encode(expected, format: .binary(compression: .none)), structured)
+        XCTAssertEqual(try DocumentStorageCodec.decode(structured), expected)
         let originalKey = try XCTUnwrap(expected.metadata.keys.first(where: { $0 == "é" }))
         XCTAssertEqual(Array(originalKey.utf8), [0x65, 0xCC, 0x81])
         XCTAssertEqual(expected.metadata[originalKey], "last")
@@ -127,6 +140,12 @@ final class ExtensionConformanceTests: XCTestCase {
         XCTAssertEqual(document.planes.first?.attributes[key], "last")
         let canonical = try DocumentStorageCodec.encode(document)
         XCTAssertEqual(try DocumentStorageCodec.decode(canonical), expected)
+        // The structured sibling holds the merged map: the first spelling with the last value.
+        let structured = try data("unicode-source-collision.structured.3mdb")
+        XCTAssertEqual(try DocumentStorageCodec.encode(document, format: .binary(compression: .none)), structured)
+        XCTAssertEqual(try DocumentStorageCodec.decode(structured), expected)
+        let structuredKey = try XCTUnwrap(try DocumentStorageCodec.decode(structured).metadata.keys.first)
+        XCTAssertEqual(Array(structuredKey.utf8), [0x65, 0xCC, 0x81])
     }
 
     func testStrictCompositionJSONRejectsCanonicallyEquivalentDuplicateKeys() throws {
@@ -270,6 +289,11 @@ final class ExtensionConformanceTests: XCTestCase {
             return .removeReference(ownerID: try XCTUnwrap(command.ownerID), id: try XCTUnwrap(command.id))
         default: throw FixtureError.unsupportedCommand(command.kind)
         }
+    }
+
+    /// The payload kind 2 file committed next to a payload kind 1 golden (`name.3mdb` to `name.structured.3mdb`).
+    private static func structuredSibling(_ file: String) -> String {
+        String(file.dropLast(".3mdb".count)) + ".structured.3mdb"
     }
 
     private func data(_ file: String) throws -> Data {

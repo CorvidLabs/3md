@@ -4,8 +4,15 @@ import Foundation
 import Compression
 #endif
 
+/// The container's payload compression, shared by payload kinds 1 and 2.
+///
+/// Decoding never allocates past `expectedBytes`, the declared decoded length that step D10 has already bounded by the
+/// payload kind's limit: `maximumDecodedBytes` for kind 1, `min(maximumEncodedBytes - 40, 2 * maximumDecodedBytes)`
+/// for kind 2. Encoding caps the compressed output at `maximumBytes`, which is `maximumEncodedBytes - 40` for both.
 internal enum DocumentStorageCompression {
-    static func encode(_ data: Data, compression: DocumentCompression, maximumBytes: Int) throws -> Data {
+    /// Compresses a complete payload, or returns it unchanged for `.none`.
+    /// - Throws: `oversizedInput` past `maximumBytes`, `compressionUnavailable(.lzfse)` without a backend.
+    internal static func encode(_ data: Data, compression: DocumentCompression, maximumBytes: Int) throws -> Data {
         try DocumentStorageCancellation.check()
         switch compression {
         case .none:
@@ -20,7 +27,10 @@ internal enum DocumentStorageCompression {
         }
     }
 
-    static func decode(_ data: Data, compression: DocumentCompression, expectedBytes: Int) throws -> Data {
+    /// Decompresses a payload (which may be a `Data` slice) to exactly `expectedBytes` bytes (step D13).
+    /// - Throws: `lengthMismatch` for a stream that does not end exactly once or does not produce exactly
+    ///   `expectedBytes`, `compressionFailed` for a stream the backend rejects, `compressionUnavailable(.lzfse)`.
+    internal static func decode(_ data: Data, compression: DocumentCompression, expectedBytes: Int) throws -> Data {
         try DocumentStorageCancellation.check()
         switch compression {
         case .none:
