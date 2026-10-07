@@ -5,10 +5,11 @@ file is ordinary Markdown extended along one free axis, so you can stack content
 into **planes** and tell the reader what the depth means (time for a planner,
 frames for an animation, layers for annotations, space for a scene).
 
-ThreeMD 2.0.0 includes parsing/serialization, portable uncompressed binary
-storage, self-contained composition, linked file composition, optional stable
-identities, immutable revision-checked snapshots, transactional typed patches
-and diagnostics. Swift, TypeScript and Rust share canonical wire fixtures and a
+ThreeMD 2.1 includes parsing/serialization, portable storage, self-contained
+composition, linked file composition, optional stable identities, immutable
+revision-checked snapshots, transactional typed patches and diagnostics.
+`.binary` writes payload kind 2. `encodeTextContainer` writes the 2.0 kind-1
+bytes. Swift, TypeScript and Rust share canonical wire fixtures and a
 public-API writer-reader matrix. This is finite behavioral evidence, not
 exhaustive proof for arbitrary inputs or every runtime.
 
@@ -18,9 +19,9 @@ exhaustive proof for arbitrary inputs or every runtime.
 bun add @corvidlabs/threemd
 ```
 
-Version 2.0.0 is published to public npm by the repository's release
-workflow. Older GitHub Packages scope configuration must be changed when
-adopting a public npm release.
+The package version on this branch is 2.1.0. Public npm still serves 2.0.0
+until the GitHub release publishes it. Older GitHub Packages scope
+configuration must be changed when adopting a public npm release.
 
 ## Usage
 
@@ -77,10 +78,13 @@ same event loop cannot interrupt a synchronous call. LZFSE returns an explicit
 unsupported-backend error in this port. Use uncompressed storage for interchange.
 
 Frozen text grammar 1.0, general binary container version 1 and profile
-`3md-composition-1` retain their own versions. The element/viewer remains a text
-UI; it does not expose these new library operations. See the repository's
-[release guide](https://github.com/CorvidLabs/3md/blob/main/docs/RELEASE-2.0.0.md)
-for the capability matrix, migration steps and known limits.
+`3md-composition-1` retain their own versions. On this branch `.binary` writes
+payload kind 2 and `encodeTextContainer` writes payload kind 1. Header-only
+inspection is `DocumentStorageCodec.containerInfo`. LZFSE stays unavailable in
+this port. The element and viewer remain a text UI. See the
+[2.1 preparation notes](../docs/RELEASE-2.1.0.md). The published
+[2.0.0 release guide](https://github.com/CorvidLabs/3md/blob/main/docs/RELEASE-2.0.0.md)
+still describes the packages the registries serve today.
 
 ## License
 

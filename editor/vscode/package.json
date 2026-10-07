@@ -2,7 +2,7 @@
   "name": "threemd",
   "displayName": "3md",
   "description": "Syntax highlighting for the 3md format (Markdown extended along a Z axis of planes).",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "publisher": "corvidlabs",
   "license": "MIT",
   "engines": {

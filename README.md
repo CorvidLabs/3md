@@ -10,7 +10,10 @@ ThreeMD 2.0.0 adds [linked file composition](docs/FILE-COMPOSITION.md): map a
 character to another 3md filename, resolve host-supplied files in any of the
 three libraries, and share a self-contained bundle. See the
 [nested LinkedVillage example](Examples/LinkedVillage/README.md) and the
-[2.0.0 release notes](docs/RELEASE-2.0.0.md).
+[2.0.0 release notes](docs/RELEASE-2.0.0.md). ThreeMD 2.1
+prepares payload kind 2: `.binary` writes structured document records, and
+`encodeTextContainer` still writes the 2.0 kind-1 bytes. The `v2.1.0` tag is
+not cut. See the [2.1 preparation notes](docs/RELEASE-2.1.0.md).
 
 **Markdown with a Z axis.** A `.3md` file is ordinary Markdown extended along
 one free axis: stack your content into **planes** and tell the reader what the
@@ -88,7 +91,7 @@ text a depth dimension of its own.
 Add the package to your `Package.swift`:
 
 ```swift
-.package(url: "https://github.com/CorvidLabs/3md", from: "2.0.0")
+.package(url: "https://github.com/CorvidLabs/3md", from: "2.1.0")
 ```
 
 Then depend on the `ThreeMD` library product:
@@ -97,10 +100,12 @@ Then depend on the `ThreeMD` library product:
 .product(name: "ThreeMD", package: "3md")
 ```
 
-Existing projects can stay on `from: "1.0.0"`. Read the
-[migration guide](docs/RELEASE-2.0.0.md#migrating-an-existing-host) before
-upgrading: legacy serialization output can change for string values that earlier
-writers serialized lossily.
+`from: "2.1.0"` resolves only after the `v2.1.0` tag exists. Until that GitHub
+release, `from: "2.0.0"` is the published package. Read the
+[2.1 migration notes](docs/MIGRATION-2.1.md) before upgrading: a 2.0 reader
+rejects kind 2, and Rust's canonical number spelling changes for 92 powers of
+two. The [2.0 migration guide](docs/RELEASE-2.0.0.md#migrating-an-existing-host)
+still covers the earlier lossy-serialization change.
 
 ### JavaScript / TypeScript
 
@@ -116,11 +121,11 @@ public npm registry. Install with:
 bun add @corvidlabs/threemd
 ```
 
-`@corvidlabs/threemd` and `@corvidlabs/three-md-element` 2.0.0 are published by
-the release workflows. If an older installation maps `@corvidlabs` to GitHub
-Packages, point that scope at the public npm registry. The web component keeps
-text rendering; the library exports the storage, composition, linked-file and
-editing APIs.
+The package manifests on this branch read 2.1.0. npm still serves 2.0.0 until
+the GitHub release runs the publish workflow. If an older installation maps
+`@corvidlabs` to GitHub Packages, point that scope at the public npm registry.
+The web component keeps text rendering; the library exports the storage,
+composition, linked-file and editing APIs.
 
 No install needed just to use it: try the hosted [editor and
 viewer](https://corvidlabs.github.io/3md/viewer.html), or load the self-contained
@@ -147,13 +152,11 @@ targets crates.io. Install an available published version with:
 cargo add threemd
 ```
 
-The 2.0.0 crate pins `unicode-normalization =0.1.25` as its runtime
-dependency. Its serde/serde_json dependencies are development-only. The release
-workflow publishes `threemd` 2.0.0 to crates.io when the `CRATES_IO_TOKEN`
-repository secret is configured. Releases between 1.0.0 and 2.0.0 never reached
-crates.io, which stayed at 1.0.0, because the old workflow rewrote the crate
-version and left the tree dirty; 2.0.0 fixes that workflow. The secret is not
-configured yet, so confirm that crates.io lists 2.0.0 before depending on it.
+The prepared crate version is 2.1.0 and still pins
+`unicode-normalization =0.1.25`. Its serde/serde_json dependencies are
+development-only. crates.io stays at the last published release until the
+GitHub release runs the publish workflow and `CRATES_IO_TOKEN` is configured.
+Confirm the registry version before depending on it.
 
 ```rust
 let document = threemd::parse(source)?;
@@ -207,12 +210,22 @@ let compressed = try DocumentStorageCodec.encode(
 )
 ```
 
-The general `.3mdb` container holds canonical UTF-8 3md text with explicit
-lengths and a corruption checksum. Its magic is `3mdbin\r\n`; it is separate
-from Sculpt/Rook's older voxel-specific `3MDB` container. Defaults cap encoded
-and decoded data at 64 MiB, with limits for records, planes and physical lines.
-Unavailable compression, malformed headers, excess limits and cancellation
-produce errors. CRC detects corruption and does not authenticate content.
+`.binary` writes payload kind 2: structured document records inside the
+unchanged version 1 container. It is smaller than the canonical text and
+decodes without parsing that text. `encodeTextContainer` writes payload kind
+1, the ThreeMD 2.0 canonical UTF-8 payload, for a reader that does not know
+kind 2. A 2.0 reader stops on kind 2 with `unsupportedPayloadKind(2)`.
+
+```swift
+let legacy = try DocumentStorageCodec.encodeTextContainer(document)
+```
+
+The magic is `3mdbin\r\n`. It is separate from Sculpt/Rook's older
+voxel-specific `3MDB` container. Defaults cap encoded and decoded data at
+64 MiB, with limits for records, planes and physical lines. Unavailable
+compression, malformed headers, excess limits and cancellation produce errors.
+CRC detects corruption and does not authenticate content. Kind 1 and kind 2
+both use that checksum.
 
 Composition preserves a library of named documents and ordered references:
 
@@ -361,8 +374,12 @@ The 1.0 text grammar remains frozen. Specification 1.1 adds independently
 versioned binary storage, composition and linked file authoring without changing
 that grammar. ThreeMD 2.0.0, released on 2026-10-06, implements those extensions
 in Swift, TypeScript and Rust; the package version is separate from the format
-version. Older `3md: 0.1` documents remain valid: the parser is version-lenient
-and never rejects a document by its version string.
+version. Specification 1.2, prepared on `leif/structured-binary-2.1`, adds
+payload kind 2 inside that same container. Package manifests on this branch
+read 2.1.0, and the `v2.1.0` tag is not cut. See the
+[2.1 preparation notes](docs/RELEASE-2.1.0.md). Older `3md: 0.1` documents
+remain valid: the parser is version-lenient and never rejects a document by
+its version string.
 
 ## License
 

@@ -3,6 +3,14 @@
 Where the format and its tooling are headed. Confidence is a rough 0 to 100 read
 on how sure we are a step is the right next move and will land cleanly.
 
+## Next (2.1.0 packages, SPEC 1.2)
+
+Payload kind 2 is implemented in the three libraries on
+`leif/structured-binary-2.1`. `.binary` writes structured document records.
+Kind 1 remains available through `encodeTextContainer`. The tag waits on the
+CLI binary commands, interchange protocol 2, the 2.0 reader compatibility job,
+the performance gate, and Trust on the release tip. State confidence: 70.
+
 ## Now (2.0.0 packages, format 1.0 grammar)
 
 The text grammar is 1.0 and frozen. SPEC.md 1.1 adds independently versioned
