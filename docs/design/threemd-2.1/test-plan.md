@@ -96,8 +96,9 @@ only source of truth. A CI step runs it without `--write` and fails on any diffe
   V3, C, Str1 to Str4, N, S1, S2, S4, S6 to S10, S6b, P1, P7, P7a, R2, R3, R9, G1 to G6, Q, L0 to L5). For an `ok`
   vector it is the step whose boundary the vector sits on (for example `edges-maximumDecodedBytes-at` is L4 and
   `eighty-planes-emax-1000` is L4, because L4 compares T with Dmax and nothing compares T with Emax);
-- `limits` (DocumentDecodeLimits fields; absent fields are standard). 29 vectors carry `limits` and 127 do not. The
-  limits decide the outcome: under standard limits 18 of the 29 give a different code (for example
+- `limits` (DocumentDecodeLimits fields; absent fields are standard). 30 vectors carry `limits` and 126 do not. The
+  limits decide the outcome: under standard limits 19 of the 30 give a different code (for example
+  `container-decoded-over-emax` gives `lengthMismatch` instead of `oversizedOutput`,
   `container-decoded-over-2dmax-bad-crc` gives `checksumMismatch` instead of `oversizedOutput`, and `too-many-planes`
   decodes). Every consumer must therefore apply them: the unit tests pass them to storage decode, and the
   interchange driver sends them in the request's `limits` object (section 6);
@@ -116,7 +117,7 @@ Vector coverage, by rule:
 | Area | Vectors (names in the manifest) | Expected |
 |---|---|---|
 | Container D4 to D13 | truncated header; version 2; kinds 0, 3, 4, 255; kind 3 with a corrupt CRC (the kind wins); compression 2; flags; reserved; decoded length `Emax − 39`; decoded length over `2 × Dmax` with a corrupt CRC (the bound wins); encoded or decoded length 0; encoded mismatch; uncompressed lengths differ; trailing byte; CRC field; payload byte; LZFSE without a backend | `invalidContainer`, `unsupportedVersion`, `unsupportedPayloadKind`, `unsupportedCompression`, `unsupportedFlags`, `nonzeroReserved`, `oversizedOutput`, `lengthMismatch`, `checksumMismatch`, `compressionUnavailable` |
-| Var V1 to V3 | `81 00`; `80 00`; `ff ff ff ff 01`; a 4th byte with `0x80` and no 5th byte; a cut Var; `ff ff ff 7f` as a length | `invalidContainer`, `lengthMismatch` |
+| Var V1 to V3 | `81 00`; `80 00`; `ff ff ff ff 01` as a coordinate (`invalidContainer`) and as a version length of 2^29 − 1 (`lengthMismatch`); a length whose 4th byte continues and has no 5th byte (`lengthMismatch`); a coordinate whose 4th byte continues (`invalidContainer`); ten continuation bytes on a length (`invalidContainer`); a cut Var; `ff ff ff 7f` as a length | `invalidContainer`, `lengthMismatch` |
 | Count and remaining | metadata, plane and attribute counts over `floor(remaining ÷ min)`; a plane count that a reader measuring remaining before the Var would accept (it would then report `invalidContainer`); a count exactly at the edge (`ok`); a plane count of 2 over both `floor(remaining ÷ 4)` (4 bytes remain) and `Pmax` = 1 (`count-planes-over-pmax-and-remaining`: Count framing precedes the S8 Pmax check, so not `tooManyPlanes`); a length of remaining + 1 with 1- and 2-byte Vars; a length over remaining with a lowered R (remaining wins); a 200-byte body exactly at remaining (`ok`) | `lengthMismatch`, `ok` |
 | Strings | over R; preamble over R − 1; overlong, surrogate, above U+10FFFF, truncated, lone continuation and `FF`; a scalar split across two fields; ill-formed UTF-8 before a line break; LF and CR in scalars | `oversizedRecord`, `invalidUTF8`, `invalidDocument` |
 | Flags | documentFlags bits 2 and 7; planeFlags bit 7; z form 0 | `invalidContainer` |
@@ -236,9 +237,10 @@ to form such a sequence), which only lowers the count. The fixture generator use
 - **Amplification:** 65,536 planes whose keys contain quotes and whose labels push every directive over R are
   rejected by L3 or L4 before any Phase Q parse; release builds finish in under 1 second and peak memory stays under
   4 times the input. The test asserts that the Phase Q parse count is 0 (a test-only counter).
-- **Memory:** peak RSS (Swift and Rust) or heap (TypeScript) stays under 4 times the input for the 64 MiB worst
-  cases: maximum attributes (one plane, 16 million minimal attributes cannot fit a 64 MiB Dmax, so the case is
-  bounded by D10), maximum planes, and one 8 MiB body.
+- **Memory:** peak RSS (Swift and Rust) or resident memory (TypeScript) stays under 4 times the input for sample
+  files of about 64 MiB, decoded under an explicit 64 MiB encoded and decoded limit and an explicit 8 MiB record
+  limit. Those samples are not a product ceiling. The cases are maximum attributes (the directive line is over the
+  explicit record limit, so L3 rejects after Phase S), maximum planes, and one 8 MiB body.
 - **Buffer ownership:** after a TypeScript decode returns, the test overwrites the caller's buffer and checks that
   the decoded value is unchanged. Swift decodes from `Data` slices with a nonzero `startIndex`.
 - **Concurrency:** Swift encodes and decodes from 32 tasks at once (the TSan job); Rust runs the same under
@@ -342,13 +344,13 @@ into a separate worktree and runs two parts. It proves that 2.0 readers stop at 
 that a file over the reader's `Emax` stops earlier with `oversizedInput`.
 
 1. **Through the v2.0.0 adapters.** The job builds the three v2.0.0 interchange adapters and sends them the 54
-   kind-2 anchors and the 127 limit-free vectors. The 2.0 adapters speak only `3md-interchange-1` (the TypeScript
+   kind-2 anchors and the 126 limit-free vectors. The 2.0 adapters speak only `3md-interchange-1` (the TypeScript
    adapter accepts exactly the keys `schema`, `kind` and `bytesHex` and that schema), so these requests use schema
    `3md-interchange-1` and carry no `limits`. Each anchor goes as a document request, and the composition-envelope
    anchors (`composition-empty-root`, `composition-shared-dag-unused`, `extension-composition-instances`,
    `shared-grove`) also as composition requests. Every 2.0 adapter must return `unsupportedPayloadKind` for each
    anchor and the vector's `expected20` for each vector.
-2. **Through the v2.0.0 libraries, with limits.** The 29 limit-bearing vectors cannot go through the 2.0 adapters,
+2. **Through the v2.0.0 libraries, with limits.** The 30 limit-bearing vectors cannot go through the 2.0 adapters,
    which have no way to receive limits. A small per-language harness, built against the v2.0.0 libraries in the same
    worktree, calls storage decode with each vector's limits and prints one outcome code per vector:
    `scripts/compat/decode-2-0.mjs` (imports the worktree's built `js/dist/index.js`), `scripts/compat/rust/` (a
@@ -358,7 +360,7 @@ that a file over the reader's `Emax` stops earlier with `oversizedInput`.
    run all 156 vectors under their limits (the limit-free ones a second time, cheaply), and every outcome must equal
    `expected20`.
 
-Under standard limits, 28 of the 29 limit-bearing vectors still give their `expected20` (`unsupportedPayloadKind`);
+Under standard limits, 29 of the 30 limit-bearing vectors still give their `expected20` (`unsupportedPayloadKind`);
 only `edges-maximumEncodedBytes-below` (`oversizedInput` at `Emax` = 146) depends on the limits, which is why part 2
 exists. The prototypes confirmed `expected20` by calling the 2.0.0 libraries directly, which is the method of part 2:
 TypeScript and Rust for all 156 vectors, Swift for 155 (its prototype skips the LZFSE vector on macOS). All three

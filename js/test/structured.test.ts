@@ -265,10 +265,10 @@ describe("structured goldens (test-plan section 1)", () => {
 // MARK: - Section 2: vectors
 
 describe("structured vectors (test-plan section 2)", () => {
-  test("the manifest holds 156 vectors: 29 with limits, 25 ok, 131 typed errors", () => {
+  test("the manifest holds 156 vectors: 30 with limits, 25 ok, 131 typed errors", () => {
     expect(vectors.schema).toBe("3md-structured-vectors-1");
     expect(vectors.vectors).toHaveLength(156);
-    expect(vectors.vectors.filter((vector) => vector.limits !== undefined)).toHaveLength(29);
+    expect(vectors.vectors.filter((vector) => vector.limits !== undefined)).toHaveLength(30);
     expect(vectors.vectors.filter((vector) => vector.expected === "ok")).toHaveLength(25);
     expect(vectors.vectors.filter((vector) => vector.errorType === "DocumentStorageError")).toHaveLength(131);
   });
@@ -312,8 +312,11 @@ describe("structured unit checklist (test-plan section 3)", () => {
     const withZ = (bytes: number[]): Uint8Array => seal([0x00, 0x01, 0x31, 0x00, 0x00, 0x01, 0x01, ...bytes, 0x00, 0x00]);
     rejects("invalidContainer", () => decode(withZ([0x81, 0x00]))); // V3
     rejects("invalidContainer", () => decode(withZ([0x80, 0x00]))); // V3
-    rejects("invalidContainer", () => decode(withZ([0xff, 0xff, 0xff, 0xff, 0x01]))); // V2
-    rejects("invalidContainer", () => decode(seal([0x00, 0x01, 0x31, 0x00, 0x00, 0x01, 0x01, 0xff, 0xff, 0xff, 0x80]))); // V2
+    rejects("invalidContainer", () => decode(withZ([0xff, 0xff, 0xff, 0xff, 0x01]))); // V2, coordinate
+    rejects("invalidContainer", () => decode(seal([0x00, 0x01, 0x31, 0x00, 0x00, 0x01, 0x01, 0xff, 0xff, 0xff, 0x80]))); // V2, coordinate
+    // A 5-byte length is a legal Var. 2^28 with no body bytes is lengthMismatch, not invalidContainer.
+    rejects("lengthMismatch", () => decode(seal([0x00, 0x01, 0x31, 0x00, 0x00, 0x01, 0x01, 0x00, 0x00, 0x80, 0x80, 0x80, 0x80, 0x01])));
+    rejects("invalidContainer", () => decode(seal([0x00, 0x01, 0x31, 0x00, 0x00, 0x01, 0x01, 0x00, 0x00, ...Array(10).fill(0x80)])));
     rejects("lengthMismatch", () => decode(seal([0x00, 0x01, 0x31, 0x00, 0x00, 0x01, 0x01, 0x00, 0x00, 0x80]))); // V1
     rejects("lengthMismatch", () => decode(seal([0x00, 0x01, 0x31, 0x00, 0x00, 0x01, 0x01, 0xff, 0xff]))); // V1
   });
@@ -1268,7 +1271,8 @@ function memoryCase(codec: typeof DocumentStorageCodec, name: string, collect: (
   Object.defineProperty(controller.signal, "throwIfAborted", { value: () => { const now = resident(); if (now > peak) peak = now; } });
   let outcome = "ok";
   let planes = 0;
-  try { planes = codec.decode(file, undefined, controller.signal).planes.length; } catch (error) {
+  const policy = name === "attributes" ? { maximumRecordBytes: 8 * 1024 * 1024 } : undefined;
+  try { planes = codec.decode(file, policy, controller.signal).planes.length; } catch (error) {
     outcome = (error as { code?: string }).code ?? String(error);
   }
   const after = resident();
@@ -1337,7 +1341,7 @@ describe("cancellation, resource bounds and buffer ownership (test-plan section 
   }, 60_000);
 
   test("mid-CRC on a 64 MiB input", () => {
-    // Hand-built, because the writer's self-check refuses it: T exceeds the 64 MiB Dmax by 28 bytes, so the
+    // Hand-built, because the writer's self-check refuses it: T exceeds an explicit 64 MiB Dmax by 28 bytes, so the
     // reference outcome is L4 after a complete CRC and Phase S.
     const total = 64 * 1024 * 1024;
     const big = new Uint8Array(total);
@@ -1361,7 +1365,7 @@ describe("cancellation, resource bounds and buffer ownership (test-plan section 
     view.setUint16(8, 1, true); big[10] = 2;
     view.setBigUint64(20, BigInt(total - 40), true); view.setBigUint64(28, BigInt(total - 40), true);
     view.setUint32(36, containerChecksum(big), true);
-    const policy = limits({ maximumRecordBytes: total });
+    const policy = limits({ maximumRecordBytes: total, maximumDecodedBytes: total });
     expect(codeOf(() => decode(big, policy))).toBe("oversizedOutput");
     const callers = recordCallers((signal) => DocumentStorageCodec.decode(big, policy, signal));
     expect(count(callers, "containerChecksum")).toBe(1_025);
@@ -1388,12 +1392,13 @@ describe("cancellation, resource bounds and buffer ownership (test-plan section 
     const payload = [0x00, ...str("1"), 0x00, 0x00, ...varBytes(65_536)];
     for (let index = 0; index < 65_536; index += 1) payload.push(0x01, ...varBytes(index * 2), 0x00, 0x00);
     const file = seal(payload);
-    expect(codeOf(() => decode(file))).toBe("tooManyLines");
-    const callers = recordCallers((signal) => DocumentStorageCodec.decode(file, standard, signal));
+    const lines = limits({ maximumLines: 100_000 });
+    expect(codeOf(() => decode(file, lines))).toBe("tooManyLines");
+    const callers = recordCallers((signal) => DocumentStorageCodec.decode(file, lines, signal));
     // readStructured's own checks: one before each plane, then one at the start of Phase L.
     expect(count(callers, "readStructured")).toBe(65_536 + 1);
-    abortsAt((signal) => DocumentStorageCodec.decode(file, standard, signal), nth(callers, "readStructured", 40_000));
-    abortsAt((signal) => DocumentStorageCodec.decode(file, standard, signal), nth(callers, "readStructured", 65_536)); // Phase L
+    abortsAt((signal) => DocumentStorageCodec.decode(file, lines, signal), nth(callers, "readStructured", 40_000));
+    abortsAt((signal) => DocumentStorageCodec.decode(file, lines, signal), nth(callers, "readStructured", 65_536)); // Phase L
     // The Phase L check runs after S10: a trailing byte never reaches it.
     const trailing = seal([...payload, 0x00]);
     expect(codeOf(() => decode(trailing))).toBe("lengthMismatch");
@@ -1593,7 +1598,8 @@ describe("cancellation, resource bounds and buffer ownership (test-plan section 
       peak = Math.max(peak, process.memoryUsage().heapUsed - start);
     } });
     // The single directive line is longer than R, so L3 rejects the plane after Phase S has read every attribute.
-    expect(codeOf(() => DocumentStorageCodec.decode(file, standard, controller.signal))).toBe("oversizedRecord");
+    const record = limits({ maximumRecordBytes: 8 * 1024 * 1024 });
+    expect(codeOf(() => DocumentStorageCodec.decode(file, record, controller.signal))).toBe("oversizedRecord");
     expect(peak).toBeLessThan(4 * file.byteLength);
   }, 60_000);
 

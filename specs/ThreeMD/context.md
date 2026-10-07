@@ -34,8 +34,12 @@ component and hosted viewer stay text-only.
   versioned envelope. Its magic is distinct from Sculpt/Rook's existing
   application-specific voxel container. Portable uncompressed payloads are
   mandatory; conditional system LZFSE is optional.
-- CRC-32 checks corruption, not authenticity. Explicit lengths, flags and
-  resource limits prevent ambiguous or unbounded decoding.
+- CRC-32 checks corruption, not authenticity. Explicit lengths and flags keep
+  the container unambiguous. `DocumentDecodeLimits` defaults to the largest
+  host integer, so a 1 GB or 5 GB document is parsed and saved when the process
+  can hold it. A caller can set a lower positive limit. Composition profile
+  ceilings and edit budgets keep their own ceilings. Length and count integers
+  use 1 to 10 bytes. Coordinate integers stay at 4 bytes.
 - A new canonical storage writer quotes all scalar values and checks semantic
   round trips. Narrow legacy compatibility repairs preserve their APIs and syntax.
 - Composition stores each named Document once, preserving each axis and opaque

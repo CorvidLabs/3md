@@ -26,8 +26,11 @@ That function is the 2.0 binary writer, including its validation and error
 order, and it still writes payload kind 1.
 
 Old kind-1 `.3mdb` files still decode. `isBinary` is still the magic check.
-`encode` and `decode` keep their signatures. Default limits stay 64 MiB encoded
-and decoded, with the same record, plane and line caps. Composition text stays
+`encode` and `decode` keep their signatures. Default storage limits are the
+largest integer the language can use, so a 1 GB or 5 GB document is parsed and
+saved when the process can hold it. A caller can still pass a lower positive
+limit. Zero and negative limits are `invalidLimits`. Composition profile
+ceilings and edit budgets stay as they were. Composition text stays
 the readable `3md-composition-1` profile. A `.binary` composition bundle is
 that profile stored as kind 2. Kind 3 stays reserved and is refused with
 `unsupportedPayloadKind(3)`.

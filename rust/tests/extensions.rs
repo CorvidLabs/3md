@@ -441,9 +441,17 @@ fn assert_header_corruption_is_rejected(original: &[u8], kind: u8) {
     }
     let mut changed = original.to_vec();
     changed[28..36].copy_from_slice(&u64::MAX.to_le_bytes());
+    // Kind 1 rejects a decoded length above Dmax. On a 64-bit host the default Dmax is
+    // u64::MAX, so this header is not oversized and D11 reports that the file is shorter.
+    // Kind 2's bound is Emax - 40, which is still below u64::MAX.
+    let declared = if kind == 1 && u64::MAX <= limits().maximum_decoded_bytes as u64 {
+        DocumentStorageError::LengthMismatch
+    } else {
+        DocumentStorageError::OversizedOutput
+    };
     assert_eq!(
         storage::decode(&changed, &limits(), &options()),
-        Err(DocumentStorageError::OversizedOutput)
+        Err(declared)
     );
     let mut changed = original.to_vec();
     changed[20..28].copy_from_slice(&u64::MAX.to_le_bytes());
@@ -569,6 +577,83 @@ fn storage_resource_policies_and_faithful_value_validation() {
         storage::decode(malformed.as_bytes(), &limits(), &options()),
         Err(DocumentStorageError::InvalidText(_))
     ));
+}
+
+#[test]
+fn a_document_past_the_old_ceiling_round_trips() {
+    let standard = DocumentDecodeLimits::default();
+    assert_eq!(standard.maximum_encoded_bytes, usize::MAX);
+    assert_eq!(standard.maximum_decoded_bytes, usize::MAX);
+    assert_eq!(standard.maximum_lines, usize::MAX);
+    assert_eq!(standard.maximum_planes, usize::MAX);
+    assert_eq!(standard.maximum_record_bytes, usize::MAX);
+    let five_gigabytes = 5 * 1024 * 1024 * 1024;
+    let wide = DocumentDecodeLimits {
+        maximum_encoded_bytes: five_gigabytes,
+        maximum_decoded_bytes: five_gigabytes,
+        maximum_lines: 2_000_000,
+        maximum_planes: 200_000,
+        maximum_record_bytes: five_gigabytes,
+    };
+    assert_eq!(wide.maximum_encoded_bytes, five_gigabytes);
+    assert_eq!(
+        storage::decode(
+            b"x",
+            &DocumentDecodeLimits {
+                maximum_encoded_bytes: 0,
+                ..limits()
+            },
+            &options()
+        ),
+        Err(DocumentStorageError::InvalidLimits)
+    );
+    let document = Document {
+        version: "1".into(),
+        axis: "layer".into(),
+        title: None,
+        metadata: BTreeMap::new(),
+        preamble: None,
+        planes: vec![Plane {
+            z: 0.0,
+            label: None,
+            x: None,
+            y: None,
+            attributes: BTreeMap::new(),
+            body: "a".repeat(64 * 1024 * 1024 + 1),
+        }],
+    };
+    let text = storage::encode(
+        &document,
+        DocumentStorageFormat::Text,
+        &limits(),
+        &options(),
+    )
+    .unwrap();
+    assert!(text.len() > 64 * 1024 * 1024);
+    assert_eq!(
+        storage::decode(&text, &limits(), &options()).unwrap(),
+        document
+    );
+    let binary = storage::encode(
+        &document,
+        DocumentStorageFormat::Binary(DocumentCompression::None),
+        &limits(),
+        &options(),
+    )
+    .unwrap();
+    assert_eq!(
+        storage::decode(&binary, &limits(), &options()).unwrap(),
+        document
+    );
+    // Blank-only bodies are collapsed by the text format. 100,001 lines of "a" stay, and they pass the old line cap.
+    let mut lines = document;
+    lines.planes[0].body = format!("{}a", "a\n".repeat(100_000));
+    let encoded =
+        storage::encode(&lines, DocumentStorageFormat::Text, &limits(), &options()).unwrap();
+    assert_eq!(
+        storage::decode(&encoded, &limits(), &options()).unwrap(),
+        lines
+    );
 }
 
 #[test]

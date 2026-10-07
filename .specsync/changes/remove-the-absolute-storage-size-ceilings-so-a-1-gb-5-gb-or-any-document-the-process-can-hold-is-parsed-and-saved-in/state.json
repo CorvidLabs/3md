@@ -1,0 +1,55 @@
+{
+  "schema_version": 1,
+  "workflow_version": 2,
+  "workflow_origin_version": 2,
+  "id": "remove-the-absolute-storage-size-ceilings-so-a-1-gb-5-gb-or-any-document-the-process-can-hold-is-parsed-and-saved-in",
+  "slug": "remove-the-absolute-storage-size-ceilings-so-a-1-gb-5-gb-or-any-document-the-process-can-hold-is-parsed-and-saved-in",
+  "title": "Remove the absolute storage size ceilings so a 1 GB, 5 GB, or any document the process can hold is parsed and saved in Swift, TypeScript, and Rust. Callers may still set a lower limit. Length and count integers grow past 256 MB. Coordinate integers stay at 4 bytes.",
+  "description": "Remove the absolute storage size ceilings so a 1 GB, 5 GB, or any document the process can hold is parsed and saved in Swift, TypeScript, and Rust. Callers may still set a lower limit. Length and count integers grow past 256 MB. Coordinate integers stay at 4 bytes.",
+  "kind": "feature",
+  "state": "draft",
+  "base_commit": "d5f0730696b5da6da8f4e6181b1c4f24485cfcf4",
+  "created_at": 1791388600,
+  "updated_at": 1791388625,
+  "affected_specs": [
+    "ThreeMD"
+  ],
+  "affected_paths": [
+    "SPEC.md",
+    "specs/ThreeMD",
+    "Sources/ThreeMD/DocumentStorage.swift",
+    "Sources/ThreeMD/DocumentStorageCodec.swift",
+    "Sources/ThreeMD/DocumentStorageStructured.swift",
+    "js/src/storage.ts",
+    "js/src/structured.ts",
+    "rust/src/storage.rs",
+    "rust/src/structured.rs",
+    "Tests/ThreeMDTests",
+    "js/test",
+    "rust/tests",
+    "rust/src/structured.rs",
+    "README.md",
+    "docs/MIGRATION-2.1.md",
+    "docs/readme"
+  ],
+  "no_spec_change": false,
+  "no_spec_change_rationale": null,
+  "acceptance_criteria": [
+    "Default limits parse and save a document larger than 64 MiB, including a real 1 GB round trip and a 5 GB limit value, as text and as kind 2. Non-positive limits are still rejected. Callers can still set a lower limit. Small kind-2 files stay byte-identical. Coordinate integers stay 4 bytes. A length above 256 MB uses a longer integer. CI does not allocate 1 GB or 5 GB."
+  ],
+  "selected_artifacts": [
+    "context",
+    "requirements",
+    "plan",
+    "tasks",
+    "testing",
+    "docs",
+    "research",
+    "design"
+  ],
+  "dependencies": [],
+  "answers": {
+    "architecture_risk": "yes",
+    "public_contract": "yes"
+  }
+}

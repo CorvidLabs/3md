@@ -40,7 +40,8 @@ and scrub through them.
 </p>
 
 [Same document, three saves](#same-document-three-saves) shows one file stored
-as text and as two kinds of binary, and why a file bigger than 64 MB is refused.
+as text and as two kinds of binary. A file is parsed and saved at whatever
+size the process can hold.
 
 ```
 ---
@@ -133,13 +134,14 @@ flowchart LR
   kind2 --> legacy["2.0 reader: unsupportedPayloadKind"]
 ```
 
-The diagram after it is how a reader decides what it was given. A file longer
-than 64 MB is refused before any of those branches. 64 MB here means 64 MiB:
-67,108,864 bytes, not 64,000,000.
+The diagram after it is how a reader decides what it was given. The default
+limit is the largest integer the language can use, so a 1 GB or 5 GB file is
+not refused there. The length check stops a file only when the caller passed a
+smaller limit and the file is longer than that limit.
 
 ```mermaid
 flowchart TD
-  bytes[Input bytes] --> length{Longer than 64 MiB?}
+  bytes[Input bytes] --> length{Longer than the caller's limit?}
   length -->|yes| refused["oversizedInput. The bytes are not read."]
   length -->|no| magic{Starts with 3mdbin CR LF?}
   magic -->|no| asText[Read it as the text file]
@@ -231,38 +233,37 @@ Each time is the median of five calls after one warmup. The project speed gate
 is still open. It wants three processes per language, and these numbers are
 not that gate. At about 50 MB, kind 2 is 37 bytes smaller than the text.
 
-### Why the library stops at 64 MB
+### How big a file can be
 
-The decoder refuses an input longer than 67,108,864 bytes (64 MiB) before it
-reads the contents. A text file and both binary kinds hit the same wall. A
-caller can set a lower limit. No caller can raise this one. The stop is there
-so a huge or hostile file cannot make the library reserve a gigabyte.
+There is no fixed size stop. A 1 GB document, a 5 GB document, or any larger
+document is parsed and saved when the process can hold it. Kind 2 is records,
+not a compressor. A document made of 1 GB of letters stays about 1 GB as
+records. The header is 40 bytes either way.
 
-Inside that ceiling, one line or one plane body stops at 8 MB. One file stops
-at 65,536 planes and at 100,000 physical lines.
+The default limit is the largest integer the language uses for a size:
 
-### What the 1024 × 1024 × 1024 test was
+| Library | Default limit |
+| --- | --- |
+| Swift | `Int.max` |
+| Rust | `usize::MAX` |
+| TypeScript | `Number.MAX_SAFE_INTEGER` (9,007,199,254,740,991) |
 
-1024 × 1024 × 1024 is 1,073,741,824 bytes. That is 1 GB in the binary sense
-(1024 cubed), about 16 times the ceiling. A document of 1024 planes, each
-1024 lines of 1024 letters, is about that big before the `@plane` lines. The
-library does not store it.
+That one default covers the file, the decoded text, the number of lines, the
+number of planes, and each line or plane body. A caller can pass a smaller
+positive limit. Zero, a negative number, and a number JavaScript cannot hold
+exactly are `invalidLimits`. A caller who wants the old stop can pass
+67,108,864 (64 MiB).
 
-The test filled a buffer of exactly that many bytes with the letter `x` and
-asked the library to open it. The answer was `oversizedInput` in 6
-nanoseconds, after the buffer already existed. The library did not parse the
-cube and did not save it. Filling the 1 GB buffer took 109 ms. That fill time
-is the test program allocating the bytes, not the library storing a document.
+On a 32-bit process the language integer stops near 2 GB. That is the
+language. A 5 GB length does not fit in a signed 32-bit integer. A hostile
+file can still use all of the machine's memory, because the library reads and
+writes the document it is given.
 
-The same length check refuses 64 MB + 1 byte, also in 6 nanoseconds. A buffer
-of exactly 64 MB passes the length check and then fails as one giant line:
-`oversizedRecord` in 4.2 ms. A 10 GB buffer (10,737,418,240 bytes), measured
-earlier on this same machine, got the same `oversizedInput` answer. Filling
-that buffer took 1.27 s.
+### A page of 1024 by 1024 letters
 
-A 1024-wide page does fit. One plane, 1024 lines of 1024 letters `a`, measured
-with this same Rust 1.98.0 release build (median of five reads after one
-warmup, still one run, not the speed gate):
+One plane, 1024 lines of 1024 letters `a`, measured with the Rust 1.98.0
+release build (median of five reads after one warmup, one run, not the speed
+gate):
 
 | Save | Bytes | Read time |
 | --- | ---: | --- |
@@ -278,16 +279,24 @@ The same number of letters, split into 1024 planes of one 1024-letter line,
 does get smaller. The `@plane` lines go away: text 1,063,879 bytes, kind 2
 1,054,706 bytes.
 
-60 of those 1024 × 1024 pages fit, at 62,976,799 text bytes. 64 of them do
-not. The letters alone are already 67,108,864, and the writer returns
-`oversizedOutput`.
+A cube of 1024 such pages is 1024 × 1024 × 1024 letters, which is
+1,073,741,824 bytes before the `@plane` lines. One local run on this Apple
+M1 Ultra parsed that cube and saved it again in Swift, TypeScript, and Rust.
+All three wrote the same bytes: text 1,074,804,681, kind 2 records
+1,074,796,532. The records are 8,149 bytes smaller than the text. Rust 1.98.0
+release wrote the text in 3.413 seconds and read it in 2.539 seconds, and
+wrote the records in 0.408 seconds and read them in 0.406 seconds. That run
+is one process, not the speed gate.
+
+The same Rust build also parsed and saved one plane of 5 GB of the letter
+`a` (5,368,709,120 bytes). The text file was 5,368,709,164 bytes. The kind 2
+file was 5,368,709,179 bytes, 15 bytes larger, because a wall of one letter
+has almost no syntax to remove. Writing the text took 23.501 seconds and
+reading it took 16.208 seconds. Writing the records took 2.360 seconds and
+reading them took 2.348 seconds.
 
 A one-plane body of 64 letters `a` is the tiny file that grows: text 106
 bytes, kind 1 146 bytes, kind 2 117 bytes.
-
-<p align="center">
-  <img src="docs/readme/size-ceiling.png" alt="Why decoding stops at 64 MiB. A 1024 by 1024 page fits. A buffer of 1024 times 1024 times 1024 bytes is refused as oversizedInput in 6 nanoseconds and is not stored." width="880">
-</p>
 
 ## Installation
 
@@ -429,11 +438,11 @@ let legacy = try DocumentStorageCodec.encodeTextContainer(document)
 ```
 
 The magic is `3mdbin\r\n`. It is separate from Sculpt/Rook's older
-voxel-specific `3MDB` container. Defaults cap encoded and decoded data at
-64 MiB (67,108,864 bytes). Callers can lower that cap and cannot raise it.
-One line or plane body stops at 8 MiB. The reason, and the 1024 cube
-measurement, are in [Same document, three saves](#same-document-three-saves).
-Unavailable compression, malformed headers, excess limits and cancellation produce errors.
+voxel-specific `3MDB` container. The default storage limit is the largest
+integer the language can use. A caller can pass a lower positive limit.
+[How big a file can be](#how-big-a-file-can-be) explains that, including a
+32-bit process and a page of 1024 by 1024 letters.
+Unavailable compression, malformed headers, a non-positive limit, and cancellation produce errors.
 CRC detects corruption and does not authenticate content. Kind 1 and kind 2
 both use that checksum.
 

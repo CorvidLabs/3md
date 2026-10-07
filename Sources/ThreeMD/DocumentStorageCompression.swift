@@ -8,7 +8,8 @@ import Compression
 ///
 /// Decoding never allocates past `expectedBytes`, the declared decoded length that step D10 has already bounded by the
 /// payload kind's limit: `maximumDecodedBytes` for kind 1, `min(maximumEncodedBytes - 40, 2 * maximumDecodedBytes)`
-/// for kind 2. Encoding caps the compressed output at `maximumBytes`, which is `maximumEncodedBytes - 40` for both.
+/// for kind 2. That kind-2 bound saturates at the host maximum. Encoding caps the compressed output at
+/// `maximumBytes`, which is `maximumEncodedBytes - 40` for both.
 internal enum DocumentStorageCompression {
     /// Compresses a complete payload, or returns it unchanged for `.none`.
     /// - Throws: `oversizedInput` past `maximumBytes`, `compressionUnavailable(.lzfse)` without a backend.

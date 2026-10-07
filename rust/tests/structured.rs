@@ -459,7 +459,7 @@ fn every_vector_reports_its_code_under_its_limits() {
         }
     }
     assert!(failures.is_empty(), "{failures:#?}");
-    assert_eq!(with_limits, 29);
+    assert_eq!(with_limits, 30);
 }
 
 // MARK: - Container inspection (test plan section 3)
@@ -1488,11 +1488,13 @@ fn p5_p6_writer_acceptance_equals_validate_under_lowered_limits() {
 const MUTATION_SEED: u32 = 0x51a7;
 const MUTATIONS_PER_BASE: usize = 300;
 const MUTATION_COUNT: usize = 102_600;
-/// FNV-1a 64 over the expected outcome lines (`code` or `ok`, each with a trailing LF) of
-/// every mutant, and of every tenth mutant, as reported identically by the TypeScript, Rust
-/// and Swift prototypes for seed 0x51a7 with 300 mutants per base.
-const OUTCOMES_DIGEST: u64 = 0xb5a7_341c_1617_ec21;
-const SAMPLED_OUTCOMES_DIGEST: u64 = 0x17f8_22d9_a195_3cdf;
+/// FNV-1a 64 over the outcome lines (`code` or `ok`, each with a trailing LF) of every
+/// mutant, and of every tenth mutant. Seed `0x51a7`, 300 mutants per base, decoded with the
+/// default limits (the largest value the host integer can hold). A mutant that used to stop
+/// on the old byte, line, plane, or record ceiling now reports the later check. The sampled
+/// run still accepts 1,336 mutants.
+const OUTCOMES_DIGEST: u64 = 0xcf37_6bdf_1ab6_7297;
+const SAMPLED_OUTCOMES_DIGEST: u64 = 0x97ae_29fb_0676_da63;
 
 fn fnv1a(hash: &mut u64, bytes: &[u8]) {
     for &byte in bytes {

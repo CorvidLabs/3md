@@ -174,7 +174,8 @@ public struct DocumentContainerInfo: Hashable, Sendable {
     }
 }
 
-/// Explicit resource policy. Callers may lower bounds or raise the record bound up to the absolute 64 MiB ceiling.
+/// Explicit resource policy. Every bound defaults to the largest positive `Int`, so a document is parsed and saved
+/// up to the memory the process can allocate. Callers may set a lower bound. There is no absolute ceiling.
 public struct DocumentDecodeLimits: Equatable, Sendable {
     /// Maximum input or encoded output bytes, including any binary header.
     public let maximumEncodedBytes: Int
@@ -187,22 +188,20 @@ public struct DocumentDecodeLimits: Equatable, Sendable {
     /// Maximum UTF-8 bytes in a physical line, scalar field, preamble or complete plane body.
     public let maximumRecordBytes: Int
 
-    /// Uses 64 MiB input/output, 100,000 lines, 65,536 planes and 8 MiB records.
+    /// Uses the largest positive `Int` for every bound.
     public static let standard = Self(unchecked: ())
 
-    /// Creates a policy with positive limits no higher than 64 MiB, 100,000 lines or 65,536 planes.
-    /// - Throws: `DocumentStorageError.invalidLimits` when any limit is outside its absolute bounds.
+    /// Creates a policy. Every bound must be positive.
+    /// - Throws: `DocumentStorageError.invalidLimits` when any bound is not positive.
     public init(
-        maximumEncodedBytes: Int = 64 * 1_024 * 1_024,
-        maximumDecodedBytes: Int = 64 * 1_024 * 1_024,
-        maximumLines: Int = 100_000,
-        maximumPlanes: Int = 65_536,
-        maximumRecordBytes: Int = 8 * 1_024 * 1_024
+        maximumEncodedBytes: Int = Int.max,
+        maximumDecodedBytes: Int = Int.max,
+        maximumLines: Int = Int.max,
+        maximumPlanes: Int = Int.max,
+        maximumRecordBytes: Int = Int.max
     ) throws {
-        let bytes = 64 * 1_024 * 1_024
-        guard (1...bytes).contains(maximumEncodedBytes), (1...bytes).contains(maximumDecodedBytes),
-            (1...100_000).contains(maximumLines), (1...65_536).contains(maximumPlanes),
-            (1...bytes).contains(maximumRecordBytes)
+        guard maximumEncodedBytes > 0, maximumDecodedBytes > 0, maximumLines > 0, maximumPlanes > 0,
+            maximumRecordBytes > 0
         else { throw DocumentStorageError.invalidLimits }
         self.maximumEncodedBytes = maximumEncodedBytes
         self.maximumDecodedBytes = maximumDecodedBytes
@@ -212,17 +211,25 @@ public struct DocumentDecodeLimits: Equatable, Sendable {
     }
 
     private init(unchecked: Void) {
-        maximumEncodedBytes = 64 * 1_024 * 1_024
-        maximumDecodedBytes = 64 * 1_024 * 1_024
-        maximumLines = 100_000
-        maximumPlanes = 65_536
-        maximumRecordBytes = 8 * 1_024 * 1_024
+        maximumEncodedBytes = Int.max
+        maximumDecodedBytes = Int.max
+        maximumLines = Int.max
+        maximumPlanes = Int.max
+        maximumRecordBytes = Int.max
+    }
+
+    /// Kind 2 decoded-length bound: `min(Emax - 40, 2 * Dmax)`. The product saturates so `Int.max` does not overflow.
+    internal var structuredDecodedBound: Int {
+        let header = DocumentStorageCodec.headerByteCount
+        let headroom = maximumEncodedBytes >= header ? maximumEncodedBytes - header : 0
+        let doubled = maximumDecodedBytes > Int.max / 2 ? Int.max : maximumDecodedBytes * 2
+        return min(headroom, doubled)
     }
 }
 
 /// A storage-policy, document-fidelity or binary-container failure. Cancellation remains `CancellationError`.
 public enum DocumentStorageError: Error, LocalizedError, Equatable, Sendable {
-    /// A caller-supplied resource limit is nonpositive or exceeds an absolute ceiling.
+    /// A caller-supplied resource limit is not positive.
     case invalidLimits
     /// Encoded bytes exceed the input or encoded-output limit.
     case oversizedInput
@@ -264,7 +271,7 @@ public enum DocumentStorageError: Error, LocalizedError, Equatable, Sendable {
     /// A localized explanation suitable for presenting a failed storage operation.
     public var errorDescription: String? {
         switch self {
-        case .invalidLimits: return "Use positive storage limits within the documented absolute bounds."
+        case .invalidLimits: return "Use positive storage limits."
         case .oversizedInput: return "The encoded document exceeds the input byte limit."
         case .oversizedOutput: return "The decoded document exceeds the output byte limit."
         case .tooManyLines: return "The document exceeds the physical line limit."

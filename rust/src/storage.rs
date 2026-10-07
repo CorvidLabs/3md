@@ -111,22 +111,22 @@ pub struct DocumentDecodeLimits {
 impl Default for DocumentDecodeLimits {
     fn default() -> Self {
         Self {
-            maximum_encoded_bytes: 64 * 1024 * 1024,
-            maximum_decoded_bytes: 64 * 1024 * 1024,
-            maximum_lines: 100_000,
-            maximum_planes: 65_536,
-            maximum_record_bytes: 8 * 1024 * 1024,
+            maximum_encoded_bytes: usize::MAX,
+            maximum_decoded_bytes: usize::MAX,
+            maximum_lines: usize::MAX,
+            maximum_planes: usize::MAX,
+            maximum_record_bytes: usize::MAX,
         }
     }
 }
 impl DocumentDecodeLimits {
+    /// Every bound must be positive. There is no absolute ceiling: the default is `usize::MAX`.
     pub fn validate(&self) -> Result<(), DocumentStorageError> {
-        let bytes = 64 * 1024 * 1024;
-        if !(1..=bytes).contains(&self.maximum_encoded_bytes)
-            || !(1..=bytes).contains(&self.maximum_decoded_bytes)
-            || !(1..=100_000).contains(&self.maximum_lines)
-            || !(1..=65_536).contains(&self.maximum_planes)
-            || !(1..=bytes).contains(&self.maximum_record_bytes)
+        if self.maximum_encoded_bytes == 0
+            || self.maximum_decoded_bytes == 0
+            || self.maximum_lines == 0
+            || self.maximum_planes == 0
+            || self.maximum_record_bytes == 0
         {
             Err(DocumentStorageError::InvalidLimits)
         } else {

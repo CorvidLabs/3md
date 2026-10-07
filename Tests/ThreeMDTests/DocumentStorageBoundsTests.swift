@@ -5,25 +5,44 @@ import XCTest
 
 @available(macOS 10.15, iOS 13, tvOS 13, watchOS 6, *)
 final class DocumentStorageBoundsTests: XCTestCase {
-    func testLimitsArePositiveAndHaveAbsoluteCeilings() throws {
+    func testLimitsArePositiveAndHaveNoAbsoluteCeiling() throws {
         let standard = DocumentDecodeLimits.standard
-        XCTAssertEqual(standard.maximumEncodedBytes, 64 * 1_024 * 1_024)
-        XCTAssertEqual(standard.maximumDecodedBytes, 64 * 1_024 * 1_024)
-        XCTAssertEqual(standard.maximumLines, 100_000)
-        XCTAssertEqual(standard.maximumPlanes, 65_536)
-        XCTAssertEqual(standard.maximumRecordBytes, 8 * 1_024 * 1_024)
+        XCTAssertEqual(standard.maximumEncodedBytes, Int.max)
+        XCTAssertEqual(standard.maximumDecodedBytes, Int.max)
+        XCTAssertEqual(standard.maximumLines, Int.max)
+        XCTAssertEqual(standard.maximumPlanes, Int.max)
+        XCTAssertEqual(standard.maximumRecordBytes, Int.max)
         XCTAssertEqual(try DocumentDecodeLimits(), standard)
-        XCTAssertEqual(
-            try DocumentDecodeLimits(maximumRecordBytes: 64 * 1_024 * 1_024).maximumRecordBytes,
-            64 * 1_024 * 1_024
+        let fiveGigabytes = 5 * 1_024 * 1_024 * 1_024
+        let wide = try DocumentDecodeLimits(
+            maximumEncodedBytes: fiveGigabytes,
+            maximumDecodedBytes: fiveGigabytes,
+            maximumLines: 2_000_000,
+            maximumPlanes: 200_000,
+            maximumRecordBytes: fiveGigabytes
         )
+        XCTAssertEqual(wide.maximumEncodedBytes, fiveGigabytes)
+        XCTAssertEqual(wide.maximumRecordBytes, fiveGigabytes)
         DocumentStorageTests.assertError(.invalidLimits) { try DocumentDecodeLimits(maximumEncodedBytes: 0) }
-        DocumentStorageTests.assertError(.invalidLimits) {
-            try DocumentDecodeLimits(maximumDecodedBytes: 64 * 1_024 * 1_024 + 1)
-        }
-        DocumentStorageTests.assertError(.invalidLimits) { try DocumentDecodeLimits(maximumLines: 100_001) }
-        DocumentStorageTests.assertError(.invalidLimits) { try DocumentDecodeLimits(maximumPlanes: 65_537) }
-        DocumentStorageTests.assertError(.invalidLimits) { try DocumentDecodeLimits(maximumRecordBytes: -1) }
+        DocumentStorageTests.assertError(.invalidLimits) { try DocumentDecodeLimits(maximumDecodedBytes: -1) }
+        DocumentStorageTests.assertError(.invalidLimits) { try DocumentDecodeLimits(maximumLines: 0) }
+        DocumentStorageTests.assertError(.invalidLimits) { try DocumentDecodeLimits(maximumPlanes: -5) }
+        DocumentStorageTests.assertError(.invalidLimits) { try DocumentDecodeLimits(maximumRecordBytes: 0) }
+    }
+
+    func testADocumentPastTheOldCeilingRoundTrips() throws {
+        let body = String(repeating: "a", count: 64 * 1_024 * 1_024 + 1)
+        let document = Document(version: "1", axis: .layer, planes: [Plane(z: 0, body: body)])
+        let text = try DocumentStorageCodec.encode(document)
+        XCTAssertGreaterThan(text.count, 64 * 1_024 * 1_024)
+        XCTAssertEqual(try DocumentStorageCodec.decode(text), document)
+        let binary = try DocumentStorageCodec.encode(document, format: .binary(compression: .none))
+        XCTAssertEqual(try DocumentStorageCodec.decode(binary), document)
+        // Blank-only bodies are collapsed by the text format.
+        // 100,001 lines of "a" stay, and they pass the old line cap.
+        let manyLines = Array(repeating: "a", count: 100_001).joined(separator: "\n")
+        let lines = Document(version: "1", axis: .layer, planes: [Plane(z: 0, body: manyLines)])
+        XCTAssertEqual(try DocumentStorageCodec.decode(DocumentStorageCodec.encode(lines)), lines)
     }
 
     func testTextAndPortableBinaryAcceptExactByteBounds() throws {
@@ -92,8 +111,13 @@ final class DocumentStorageBoundsTests: XCTestCase {
         var excess = source
         excess.append(10)
         DocumentStorageTests.assertError(.tooManyLines) { try DocumentStorageCodec.decode(excess, limits: limits) }
+        // The old default refused 100,000 newline bytes before parsing. That refusal is now a caller limit.
+        let historicalLineCap = try DocumentDecodeLimits(maximumLines: 100_000)
         DocumentStorageTests.assertError(.tooManyLines) {
-            try DocumentStorageCodec.decode(Data(repeating: 10, count: 100_000))
+            try DocumentStorageCodec.decode(
+                Data(repeating: 10, count: 100_000),
+                limits: historicalLineCap
+            )
         }
     }
 

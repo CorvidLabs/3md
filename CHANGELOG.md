@@ -6,6 +6,7 @@ Prepared as 2.1.0. Not tagged. See [docs/RELEASE-2.1.0.md](docs/RELEASE-2.1.0.md
 
 ### Changed
 
+- Document storage no longer has a fixed size stop. In Swift, TypeScript, and Rust the default limit is the largest integer the host can hold. A document is parsed and saved when the process can hold it, including a 1 GB cube in all three and a 5 GB plane in Rust. A caller can still pass a lower positive limit.
 - `DocumentStorageFormat.binary` writes payload kind 2, the structured document of SPEC 1.2, in Swift, TypeScript and Rust. ThreeMD 2.0 `.3mdb` files stay readable. `encodeTextContainer` writes the 2.0 kind-1 bytes for a 2.0 reader.
 - Rust canonical numbers use the shortest round-trip spelling. That changes the canonical text of 92 powers of two that 2.0 misspelled.
 - Swift trims with the frozen whitespace set W from SPEC 11.3.6.

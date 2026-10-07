@@ -67,7 +67,7 @@ const DETAIL = {
 const CONTAINER = {
   documentFlags: "The structured payload sets an undefined document flag bit.",
   planeFlags: "The structured payload sets an undefined plane flag bit or has no z coordinate.",
-  varTooLong: "A Var in the structured payload has a fourth byte with its continuation bit set.",
+  varTooLong: "A Var continues past the last byte its field allows.",
   varNotMinimal: "A Var in the structured payload is not minimal.",
   numberForm: "A number in the structured payload is not in its canonical form.",
   keyOrder: "Keys in a structured payload map must be in strictly increasing UTF-8 byte order.",
@@ -547,8 +547,11 @@ class StructuredReader {
     return this.bytes[this.position++]!;
   }
 
-  /** Var: unsigned LEB128, 1 to 4 bytes, minimal (V1 to V3). */
-  public varint(): number {
+  /**
+   * Var: unsigned LEB128, minimal (V1 to V3). A length or count uses 1 to 10 bytes. A coordinate passes 4 so form 1
+   * stays inside -2^27 ... 2^27 - 1. Arithmetic is multiply and divide because a JavaScript shift is 32 bits.
+   */
+  public varint(maximumBytes = 10): number {
     const bytes = this.bytes;
     const end = this.end;
     let position = this.position;
@@ -559,17 +562,21 @@ class StructuredReader {
       return byte;
     }
     let value = byte & 0x7f;
-    for (let shift = 7; shift <= 21; shift += 7) {
+    for (let index = 1; index < maximumBytes; index += 1) {
       if (position >= end) fail("lengthMismatch"); // V1
       byte = bytes[position++]!;
-      if (byte >= 0x80) {
-        if (shift === 21) fail("invalidContainer", CONTAINER.varTooLong); // V2
-        value |= (byte & 0x7f) << shift;
-        continue;
+      if (index === maximumBytes - 1 && byte >= 0x80) fail("invalidContainer", CONTAINER.varTooLong); // V2
+      const bits = byte & 0x7f;
+      const scale = 2 ** (7 * index);
+      if (bits !== 0 && (scale > Number.MAX_SAFE_INTEGER || value > Number.MAX_SAFE_INTEGER - bits * scale)) {
+        fail("oversizedOutput");
       }
-      if (byte === 0) fail("invalidContainer", CONTAINER.varNotMinimal); // V3
-      this.position = position;
-      return value | (byte << shift);
+      value += bits * scale;
+      if (byte < 0x80) {
+        if (byte === 0) fail("invalidContainer", CONTAINER.varNotMinimal); // V3
+        this.position = position;
+        return value;
+      }
     }
     return fail("invalidContainer", CONTAINER.varTooLong);
   }
@@ -584,7 +591,7 @@ class StructuredReader {
   /** Number(form) for forms 1 to 3; the caller handles form 0. */
   public number(form: number): number {
     if (form === 1) {
-      const zigzag = this.varint();
+      const zigzag = this.varint(4);
       return (zigzag >>> 1) ^ -(zigzag & 1);
     }
     this.view ??= new DataView(this.bytes.buffer, this.bytes.byteOffset, this.bytes.byteLength);
@@ -742,12 +749,12 @@ class StringWalker {
   private length(): number {
     const bytes = this.bytes;
     let value = 0;
-    let shift = 0;
+    let index = 0;
     let byte: number;
     do {
       byte = bytes[this.position++]!;
-      value |= (byte & 0x7f) << shift;
-      shift += 7;
+      value += (byte & 0x7f) * 2 ** (7 * index);
+      index += 1;
     } while (byte >= 0x80);
     return value;
   }
@@ -1080,9 +1087,15 @@ export function numberForm(value: number): number {
   return Math.fround(value) === value ? 2 : 3;
 }
 
-/** Bytes of a minimal Var; 5 for values a Var cannot hold, which then always exceed the W3 cap. */
+/** Bytes of a minimal Var. Any safe integer fits in at most 8 bytes. */
 function varByteCount(value: number): number {
-  return value < 0x80 ? 1 : value < 0x4000 ? 2 : value < 0x20_0000 ? 3 : value < 0x1000_0000 ? 4 : 5;
+  let count = 1;
+  let rest = value;
+  while (rest >= 0x80) {
+    rest = Math.floor(rest / 128);
+    count += 1;
+  }
+  return count;
 }
 
 /**
@@ -1282,11 +1295,12 @@ export function writeStructuredPayload(document: Document, limits: DocumentDecod
   let position = 40;
   let next = 0;
   const writeVar = (value: number): void => {
-    while (value >= 0x80) {
-      output[position++] = (value & 0x7f) | 0x80;
-      value >>>= 7;
+    let rest = value;
+    while (rest >= 0x80) {
+      output[position++] = (rest % 128) + 128;
+      rest = Math.floor(rest / 128);
     }
-    output[position++] = value;
+    output[position++] = rest;
   };
   const writeString = (): void => {
     const item = strings[next]!;

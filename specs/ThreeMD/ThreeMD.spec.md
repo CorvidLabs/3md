@@ -158,12 +158,12 @@ are pure synchronous APIs; they never open paths or resolve URLs.
 | `DocumentStorageFormat` | Equatable, Sendable explicit storage selection. |
 | `binary` | .binary(compression: DocumentCompression); since 2.1 the version 1 container with payload kind 2, the structured document payload (SPEC.md 11.3). |
 | `DocumentDecodeLimits` | Equatable, Sendable bounded resource policy. |
-| `maximumEncodedBytes` | Container/text ceiling, standard and absolute maximum 64 MiB. |
-| `maximumDecodedBytes` | Decoded UTF-8 ceiling checked before allocation, standard/maximum 64 MiB; for payload kind 2 it bounds the canonical text length T (L4) and, at D10, the declared payload length at min(maximumEncodedBytes − 40, 2 × maximumDecodedBytes). |
-| `maximumLines` | Physical lines, standard/maximum 100,000. |
-| `maximumPlanes` | Planes, standard/maximum 65,536. |
-| `maximumRecordBytes` | Per-line/scalar/preamble/body bytes, standard 8 MiB, explicit ceiling 64 MiB. |
-| `standard` | Storage/composition/edit policy with documented bounded defaults. |
+| `maximumEncodedBytes` | Encoded input ceiling. Default is the largest host integer (Swift `Int.max`, Rust `usize::MAX`, TypeScript `Number.MAX_SAFE_INTEGER`). A caller can set a lower positive value. There is no smaller absolute ceiling. |
+| `maximumDecodedBytes` | Decoded UTF-8 ceiling checked before allocation. Same default. For payload kind 2 it bounds the canonical text length T (L4) and, at D10, the declared payload length at min(maximumEncodedBytes − 40, 2 × maximumDecodedBytes). That product and difference saturate at the host maximum. |
+| `maximumLines` | Physical lines. Same default. |
+| `maximumPlanes` | Planes. Same default. |
+| `maximumRecordBytes` | Per-line, scalar, preamble, and plane-body bytes. Same default. |
+| `standard` | Named default policy. Storage defaults are the largest host integer. Composition and edit defaults keep their documented ceilings. |
 | `DocumentStorageCodec` | Pure content-detecting general storage. |
 | `containerVersion` | UInt16 binary envelope version 1; DocumentContainerInfo raw container version field. |
 | `headerByteCount` | Header length 40 bytes. |
@@ -411,7 +411,9 @@ are pure synchronous APIs; they never open paths or resolve URLs.
 
 DocumentDecodeLimits accepts maximumEncodedBytes, maximumDecodedBytes,
 maximumLines, maximumPlanes and maximumRecordBytes with the defaults above.
-All are positive and within absolute ceilings. DocumentCompositionLimits takes
+Each storage field is a positive integer up to the host maximum. A non-positive
+value is invalidLimits. JavaScript also rejects a value above
+Number.MAX_SAFE_INTEGER. DocumentCompositionLimits takes
 all eight maximum-properties above with their defaults; references and attribute
 limits can be zero, while other limits are positive. DocumentReference defaults
 attributes to [:]; DocumentEntry defaults references to [].

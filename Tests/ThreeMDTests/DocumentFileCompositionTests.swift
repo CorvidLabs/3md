@@ -475,12 +475,13 @@ final class DocumentFileCompositionTests: XCTestCase {
         }
     }
 
-    func testStandalonePathAndLedgerRecordCapsUseInputLimit() throws {
-        let oversized = String(repeating: "a", count: DocumentDecodeLimits.standard.maximumRecordBytes + 1)
-        assertFileFailure(.inputLimit) { try DocumentFileComposition.resolvePath(oversized, relativeTo: "root.3md") }
-        assertFileFailure(.inputLimit) {
-            try DocumentFileComposition.ledger(in: document(metadata: ["3md-files": oversized]))
-        }
+    func testStandalonePathsAndLedgersPastTheOldRecordSizeAreSaved() throws {
+        let long = String(repeating: "a", count: 8 * 1_024 * 1_024 + 1)
+        XCTAssertEqual(try DocumentFileComposition.resolvePath(long, relativeTo: "root.3md"), long)
+        let references = try DocumentFileComposition.ledger(
+            in: document(metadata: ["3md-files": #"{"1":"\#(long)"}"#])
+        )
+        XCTAssertEqual(references.first?.source, long)
     }
 
     func testChildStorageFailuresKeepOriginalErrorType() throws {
@@ -509,10 +510,9 @@ final class DocumentFileCompositionTests: XCTestCase {
 
     @MainActor
     func testCancelledPathResolutionPrecedesOversizedInput() async {
-        let oversized = String(repeating: "a", count: DocumentDecodeLimits.standard.maximumRecordBytes + 1)
         let task = Task.detached {
             while !Task.isCancelled { await Task.yield() }
-            return try DocumentFileComposition.resolvePath(oversized, relativeTo: "root.3md")
+            return try DocumentFileComposition.resolvePath("child.3md", relativeTo: "root.3md")
         }
         task.cancel()
         switch await task.result {

@@ -599,7 +599,9 @@ bad("container-flags", mutate(base, (c, v) => { v.setUint32(12, 1, true); }, tru
 bad("container-reserved", mutate(base, (c, v) => { v.setUint32(16, 1, true); }, true), "nonzeroReserved", "D9",
   "Reserved 1.");
 bad("container-decoded-over-emax", mutate(base, (c, v) => { v.setBigUint64(28, BigInt(64 * 1024 * 1024 - 39), true); }, true),
-  "oversizedOutput", "D10", "Kind-2 decoded length Emax - 39 under standard limits (the bound is Emax - 40).");
+  "oversizedOutput", "D10",
+  "Kind-2 decoded length 64 MiB - 39 with maximumEncodedBytes 64 MiB (the bound is Emax - 40).",
+  { limits: { maximumEncodedBytes: 64 * 1024 * 1024 } });
 {
   const big = seal(payload({ ...BASE, planes: [{ z: 0, body: "x".repeat(60) }] }));
   const p = big.byteLength - 40; // 71
@@ -636,10 +638,10 @@ const raw = (bytes) => seal(new Uint8Array(bytes));
 bad("var-non-minimal", raw([0x00, 0x81, 0x00, 0x31, 0x00, 0x00, 0x00]), "invalidContainer", "V3",
   "Version length 1 written as 81 00 (two bytes, last byte 00).");
 bad("var-non-minimal-zero", raw([0x00, 0x80, 0x00, 0x00, 0x00, 0x00]), "invalidContainer", "V3", "Version length 80 00.");
-bad("var-five-bytes", raw([0x00, 0xff, 0xff, 0xff, 0xff, 0x01, 0x00]), "invalidContainer", "V2",
-  "Version length ff ff ff ff 01.");
-bad("var-four-continuation-truncated", raw([0x00, 0xff, 0xff, 0xff, 0xff]), "invalidContainer", "V2",
-  "Fourth Var byte has its continuation bit and no fifth byte follows: invalidContainer, not lengthMismatch.");
+bad("var-five-bytes", raw([0x00, 0xff, 0xff, 0xff, 0xff, 0x01, 0x00]), "lengthMismatch", "Str1",
+  "Version length ff ff ff ff 01 is the legal length 2^29 - 1. One byte remains, so the string is lengthMismatch.");
+bad("var-four-continuation-truncated", raw([0x00, 0xff, 0xff, 0xff, 0xff]), "lengthMismatch", "V1",
+  "A length Var whose fourth byte continues, with no fifth byte: lengthMismatch. A coordinate Var with the same shape is invalidContainer.");
 bad("var-truncated", raw([0x00, 0x01, 0x31, 0x00, 0x00, 0x80]), "lengthMismatch", "V1",
   "Plane count Var cut after a continuation byte.");
 bad("var-max-length", raw([0x00, 0xff, 0xff, 0xff, 0x7f, 0x31]), "lengthMismatch", "Str1",
