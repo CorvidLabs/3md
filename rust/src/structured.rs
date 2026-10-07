@@ -344,9 +344,9 @@ fn check_segment(
             options.check()?;
         }
         let base = index * CHUNK;
-        let mut pairs = block.chunks_exact(16);
+        let (pairs, remainder) = block.as_chunks::<16>();
         let mut offset = base;
-        for pair in &mut pairs {
+        for pair in pairs {
             let low = line_feed_bits(&pair[..8]);
             let high = line_feed_bits(&pair[8..]);
             if low | high != 0 {
@@ -359,7 +359,7 @@ fn check_segment(
             }
             offset += 16;
         }
-        for &byte in pairs.remainder() {
+        for &byte in remainder {
             if byte == b'\n' {
                 handle(offset, &mut fence)?;
             }

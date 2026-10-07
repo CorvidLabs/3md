@@ -76,11 +76,11 @@ fn step(crc: u32, chunk: &[u8]) -> u32 {
 
 /// Slicing-by-16 over one stream, then bytewise over the last 0 to 15 bytes.
 fn update_single(mut crc: u32, data: &[u8]) -> u32 {
-    let mut chunks = data.chunks_exact(16);
-    for chunk in &mut chunks {
+    let (chunks, remainder) = data.as_chunks::<16>();
+    for chunk in chunks {
         crc = step(crc, chunk);
     }
-    for &byte in chunks.remainder() {
+    for &byte in remainder {
         crc = (crc >> 8) ^ TABLES[0][((crc ^ u32::from(byte)) & 0xff) as usize];
     }
     crc
@@ -141,7 +141,9 @@ pub(crate) fn update(mut crc: u32, mut data: &[u8]) -> u32 {
             let (first, rest) = data.split_at(lane);
             let (second, tail) = rest.split_at(lane);
             let mut right = 0_u32;
-            for (a, b) in first.chunks_exact(16).zip(second.chunks_exact(16)) {
+            let (first_blocks, _) = first.as_chunks::<16>();
+            let (second_blocks, _) = second.as_chunks::<16>();
+            for (a, b) in first_blocks.iter().zip(second_blocks) {
                 crc = step(crc, a);
                 right = step(right, b);
             }
