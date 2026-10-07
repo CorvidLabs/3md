@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "reviews": [
+    {
+      "schema_version": 2,
+      "change_id": "cover-the-derived-web-bundle-refreshed-by-the-linked-composition-hardening",
+      "reviewer": "agent:claude",
+      "provenance": {
+        "schema_version": 1,
+        "provider": "github_actions_check",
+        "required_check": "SpecSync scoped review"
+      },
+      "verdict": "pass",
+      "implementation_commit": "1e22b5f6de388c070d3db3285e6a903be57ca14d",
+      "contract_digest": "de1198f1915cb07f244900aafb97124104efc31766cb18311be3819c55670625",
+      "execution_digest": "0a8fb96e0637bc57435b1cb09217bcbf09daf544cc9aff239564092578c59dc6",
+      "workspace_digest": "f0470b1780f094dc5cee809c2302b7dbe2f700ab2759777fb0033db54de9c093",
+      "timestamp": 1791342210
+    }
+  ]
+}
