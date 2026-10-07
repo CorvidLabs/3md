@@ -1,0 +1,70 @@
+{
+  "approvals": [
+    {
+      "gate": "definition",
+      "actor": "agent:claude",
+      "timestamp": 1791352844,
+      "digest": "36c824610038a91bec1a82682d8679bb9ce2f2a677494de36d3b068d729a0363",
+      "note": "Recorded under Leif's explicit scope approval on 2026-10-06: he chose 'Approve and build it' for ThreeMD 2.1 (structured documents as payload kind 2 now, kind 3 reserved for bundles; DocumentStorageFormat.binary writes kind 2; no lazy API; merge with the maintainer review bypass and release 2.1.0 when every gate is green), then said 'ok let's move forward with this'. The agent-made decisions are listed in context.md and remain open to Leif's veto.",
+      "approved_scope": {
+        "schema_version": 1,
+        "change_id": "add-a-structured-binary-document-payload-kind-2-to-threemd-2-1-in-swift-typescript-and-rust-with-fast-checksums-cli",
+        "title": "Add a structured binary document payload (kind 2) to ThreeMD 2.1 in Swift, TypeScript and Rust, with fast checksums, CLI binary support and a performance gate",
+        "description": "Add a structured binary document payload (kind 2) to ThreeMD 2.1 in Swift, TypeScript and Rust, with fast checksums, CLI binary support and a performance gate",
+        "kind": "feature",
+        "affected_specs": [
+          "ThreeMD",
+          "ThreeMDCLI",
+          "ThreeMDElement"
+        ],
+        "affected_paths": [
+          ".github/workflows",
+          ".gitignore",
+          "AGENTS.md",
+          "CHANGELOG.md",
+          "Examples/Extensions",
+          "Examples/LinkedVillage/README.md",
+          "Examples/README.md",
+          "README.md",
+          "ROADMAP.md",
+          "SPEC.md",
+          "Sources/CLI",
+          "Sources/ThreeMD",
+          "Sources/ThreeMDInterop",
+          "Tests/ThreeMDTests",
+          "conformance",
+          "docs",
+          "docs.3md",
+          "editor/vscode/README.md",
+          "editor/vscode/package.json",
+          "element/README.md",
+          "element/package.json",
+          "fledge.toml",
+          "js",
+          "rust",
+          "scripts",
+          "specs",
+          "web/assets/three-md.js",
+          "web/docs.3md"
+        ],
+        "no_spec_change": false,
+        "no_spec_change_rationale": null,
+        "acceptance_criteria": [
+          "ThreeMD 2.1 stores a Document as payload kind 2 (structured binary) inside the unchanged 3mdb version 1 container, specified in SPEC.md section 11.3. Swift, TypeScript and Rust write byte-identical kind-2 files and decode them to exactly the Document that decoding the same canonical text yields; validity equals the 2.0 canonical-text validation under the same limits (differential fuzz with zero disagreements). DocumentStorageFormat.binary writes kind 2, encodeTextContainer writes the 2.0 kind-1 bytes, every committed 2.0 .3mdb stays readable byte-unchanged, and 2.0 readers fail cleanly with unsupportedPayloadKind(2). Kind-2 decode is at least 4x faster than bounded text decode and faster than the legacy parser in all three languages, kind-1 decode is within 10% of bounded text decode thanks to a fast CRC, and a CI performance gate enforces this. The threemd CLI reads .3mdb, converts between text and binary and inspects containers. Keys are ordered by raw UTF-8 bytes, a lowered maximumDecodedBytes still bounds decompression, and Rust canonical numbers round-trip for all powers of two. The nine-pair interchange gate covers kind 2 and kind 1, Linux and macOS suites pass, pinned Trust 1.2.2 and strict SpecSync pass on the exact tip, and 2.1.0 is released. Compositions keep the readable profile; payload kind 3 is reserved."
+        ],
+        "dependencies": [],
+        "supersedes": [],
+        "answers": {
+          "architecture_risk": "yes",
+          "public_contract": "yes"
+        }
+      },
+      "approved_delta_digests": {
+        "ThreeMD": "2935289e7a25ee2407527ca14cc368e8bfec8e26927818624209d711ac2c8c9e",
+        "ThreeMDCLI": "24bab84792ebd38e5e2eeb5fc4649d0629b4305cb3624addff4ed421a78ae3a1",
+        "ThreeMDElement": "30a3dca42281afe9f62550f7e638bd737a3b410e27f47e2783cecb10b55cc849"
+      }
+    }
+  ],
+  "reopenings": []
+}
