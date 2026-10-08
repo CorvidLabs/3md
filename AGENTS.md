@@ -1,13 +1,14 @@
 # 3md
 
-## 2.2.0 preparation
+## 2.2.0
 
-On 2026-10-08 Leif asked to prep a release after the Godot addon merged. This
-preparation is 2.2.0. The format is unchanged. Swift, TypeScript, and Rust
-library behavior stays the 2.1.0 library. The new surface is the Godot 4.7
-addon. Package manifests read 2.2.0. This preparation does not create the tag
-and does not publish the GitHub release. npm and crates.io still serve 2.1.0
-until that release is published.
+On 2026-10-08 Leif asked to prep a release after the Godot addon merged, then
+to merge that preparation and continue. This is the release commit for tag
+`v2.2.0`. The format is unchanged. Swift, TypeScript, and Rust library
+behavior stays the 2.1.0 library. The new surface is the Godot 4.7 addon.
+Package manifests read 2.2.0. The tag is `v2.2.0` on this commit after hosted
+CI is green. Publishing the GitHub release is not part of this step. npm and
+crates.io still serve 2.1.0 until that release is published.
 
 Follow-ups stay follow-ups: CLI binary input, `convert` and `inspect`,
 interchange protocol 2, the 2.0.0 reader compatibility job, the CI performance

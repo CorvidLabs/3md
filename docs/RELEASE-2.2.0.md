@@ -1,11 +1,20 @@
 # ThreeMD 2.2.0
 
-Status: prepared, not tagged. npm and crates.io still serve 2.1.0.
+Status: release commit for tag `v2.2.0`. Not published. npm and crates.io
+still serve 2.1.0.
 
-This commit updates the notes and the package manifests. It does not create
-the `v2.2.0` tag and it does not publish a GitHub release. Those steps are
-what would move Swift's `from:` requirement and the npm and crates.io
-packages. Until then, install the published 2.1.0 packages.
+Tag `v2.2.0` names this commit. It does not publish a GitHub
+release. Publishing is what moves the npm and crates.io packages off 2.1.0.
+Swift resolves `from: "2.2.0"` from the `v2.2.0` tag. The preparation squash
+is `4e91f91`. Hosted CI on that pull request was green: Trust
+[37842288806](https://github.com/CorvidLabs/3md/actions/runs/37842288806),
+Linux [37842289004](https://github.com/CorvidLabs/3md/actions/runs/37842289004),
+UI [37842288754](https://github.com/CorvidLabs/3md/actions/runs/37842288754),
+Sculpt [37842288802](https://github.com/CorvidLabs/3md/actions/runs/37842288802),
+and CodeQL
+[37842284471](https://github.com/CorvidLabs/3md/actions/runs/37842284471).
+This commit changes the release status wording. Hosted CI still has to pass
+on this commit before the tag is pushed.
 
 The format is unchanged. Text grammar 1.0, binary envelope version 1, payload
 kinds 1 and 2, and composition profile `3md-composition-1` are the same as
@@ -77,5 +86,4 @@ These are not in this preparation.
 
 Hosted CI has to pass on this commit before the `v2.2.0` tag is pushed.
 Publishing the GitHub release is a separate step. It is what runs the npm,
-crate, and Homebrew workflows. Do not tag while these notes say the tag is
-absent.
+crate, and Homebrew workflows.

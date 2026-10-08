@@ -473,11 +473,11 @@ Acceptance Criteria:
 
 ### REQ-ThreeMD-044
 
-The public docs SHALL describe ThreeMD 2.2.0 as the library in this repository, with the text file and binary named as the two saves, and SHALL name Kind 1 as deprecated. They SHALL say the 2.2.0 tag is not pushed yet, and SHALL say npm and crates.io still serve 2.1.0.
+The public docs SHALL describe ThreeMD 2.2.0 as the library in this repository, with the text file and binary named as the two saves, and SHALL name Kind 1 as deprecated. They SHALL identify the release commit for tag `v2.2.0`, and SHALL say npm and crates.io still serve 2.1.0 until the GitHub release is published.
 
 Acceptance Criteria:
-- The README leads with ThreeMD 2.2.0, the text file, binary, and Kind 1 as deprecated, and says the tag is not pushed yet.
-- Install docs say npm `@corvidlabs/threemd` 2.1.0 and crates.io `threemd` 2.1.0 are the published packages.
+- The README leads with ThreeMD 2.2.0, the text file, binary, and Kind 1 as deprecated, and identifies the release commit for tag `v2.2.0`.
+- Install docs say npm `@corvidlabs/threemd` 2.1.0 and crates.io `threemd` 2.1.0 stay published until the GitHub release, and Swift `from: "2.2.0"` resolves from tag `v2.2.0`.
 
 ### REQ-ThreeMD-045
 
