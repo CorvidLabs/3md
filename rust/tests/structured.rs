@@ -1493,8 +1493,8 @@ const MUTATION_COUNT: usize = 102_600;
 /// default limits (the largest value the host integer can hold). A mutant that used to stop
 /// on the old byte, line, plane, or record ceiling now reports the later check. The sampled
 /// run still accepts 1,336 mutants.
-const OUTCOMES_DIGEST: u64 = 0xcf37_6bdf_1ab6_7297;
-const SAMPLED_OUTCOMES_DIGEST: u64 = 0x97ae_29fb_0676_da63;
+const OUTCOMES_DIGEST: u64 = 0x9afd_1194_59e1_2919;
+const SAMPLED_OUTCOMES_DIGEST: u64 = 0xa3e7_72b9_75b6_6149;
 
 fn fnv1a(hash: &mut u64, bytes: &[u8]) {
     for &byte in bytes {
