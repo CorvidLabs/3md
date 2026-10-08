@@ -11,8 +11,9 @@ character to another 3md filename, resolve host-supplied files in any of the
 three libraries, and share a self-contained bundle. See the
 [nested LinkedVillage example](Examples/LinkedVillage/README.md) and the
 [2.0.0 release notes](docs/RELEASE-2.0.0.md). ThreeMD 2.1
-prepares payload kind 2: `.binary` writes structured document records, and
-`encodeTextContainer` still writes the 2.0 kind-1 bytes. The `v2.1.0` tag is
+prepares the binary save: `.binary` writes the frames as fields (payload kind 2).
+Kind 1 is deprecated. `encodeTextContainer` still writes it for a 2.0 reader.
+The `v2.1.0` tag is
 not cut. See the [2.1 preparation notes](docs/RELEASE-2.1.0.md).
 
 **Markdown with a Z axis.** A `.3md` file is ordinary Markdown extended along
@@ -39,9 +40,9 @@ and scrub through them.
   <a href="https://corvidlabs.github.io/3md/"><img src="docs/demo.png" alt="The 3md interactive demo: planes stacked along the Z axis with a synced source view" width="760"></a>
 </p>
 
-[Same document, three saves](#same-document-three-saves) is the bouncing dot:
-four frames, saved as the text file and as those same frames written as fields.
-A file is parsed and saved at whatever size the process can hold.
+[Text file and binary](#text-file-and-binary) is the bouncing dot: four frames,
+saved as the `.3md` you edit and as the binary file `.binary` writes.
+Kind 1 is deprecated. A file is parsed and saved at whatever size the process can hold.
 
 ```
 ---
@@ -88,140 +89,109 @@ with the author declaring what that axis means. Nothing comparable ships today;
 the closest prior art renders existing Markdown into 3D rather than giving the
 text a depth dimension of its own.
 
-## Same document, three saves
+## Text file and binary
 
-Every picture in this section is one animation: the bouncing dot in
-[Examples/animation.3md](Examples/animation.3md). It has four frames. The dot
-moves. Nothing later in the section is a different document.
+Two saves of one document. The pictures in this section are the same frames both ways.
 
-The text file writes each frame as an `@plane` line plus the grid. A record is
-that same frame written as fields: the frame number, the name, and the grid.
-The `@plane` line is not written again. That is the whole difference. The four
-frames still match.
+The **text file** is the `.3md` you edit. It is ordinary UTF-8. A frame is an `@plane` line plus that frame's Markdown. Open it in any editor.
 
-| Color | Save | What you are looking at |
-| --- | --- | --- |
-| Blue | Text file | The four frames. Each one starts with an `@plane` line. The bouncing dot's text file is 415 bytes. |
-| Orange | Text plus 40 bytes | Those same four frames, with 40 bytes written in front. 455 bytes. A ThreeMD 2.0 reader can open this one. |
-| Green | Fields | Those same four frames, without a repeated `@plane` line. 351 bytes. The format calls one frame's fields a record. A 2.0 reader does not open this one. |
+**Binary** is that same document stored as fields. `.binary` writes it. Each frame keeps its number, its name, and its body, and the `@plane` line is not written again. The file begins with 40 bytes, `3mdbin` and a short header, then the fields. This is payload kind 2. A record is one frame's fields inside that file.
+
+**Kind 1 is deprecated.** It was the ThreeMD 2.0 binary file: the text file copied after that same 40-byte header. The frames are not stored as fields. Readers still open old kind 1 files. `encodeTextContainer` still writes one when a 2.0 reader must open the file. New files use `.binary`. The charts leave kind 1 out.
 
 <p align="center">
-  <img src="docs/readme/same-document.png" alt="The bouncing dot's four frames twice. Left, the text file, each frame under an @plane line, 415 bytes. Right, the same four grids as fields, frame number and name, 351 bytes." width="880">
+  <img src="docs/readme/same-document.png" alt="The bouncing dot's four frames twice. Left, the text file, each frame under an @plane line, 415 bytes. Right, the binary save, frame number and name, 351 bytes." width="880">
 </p>
+
+[Examples/animation.3md](Examples/animation.3md) is the bouncing dot. The text file is 415 bytes. The binary file is 351 bytes, because the `@plane` lines are left out.
 
 <p align="center">
-  <img src="docs/readme/z-axis.gif" alt="The bouncing dot plays through four frames from the text file, then plays the same four frames written as fields." width="760">
+  <img src="docs/readme/z-axis.gif" alt="The bouncing dot. Each frame shows the text file on the left, including the o and dot lines, and the same lines stored as binary on the right." width="760">
 </p>
 
-The moving picture plays the four frames from the text file, then plays those
-same four frames as fields. It is one bounce, shown twice.
+The moving picture steps through the four frames. Left is the text file. Right is the binary save of that same frame.
 
-The next diagram is that same choice as a path. One parsed document can be
-written three ways.
+<p align="center">
+  <img src="docs/readme/examples.gif" alt="The forgetting poem, eleven frames, then the week planner. Each frame is the text file on the left and the binary save on the right." width="760">
+</p>
+
+The second picture is two more files from [Examples/](Examples/). The poem drops one word at a time, then builds a shorter sentence back. Text file 940 bytes, binary 751. The week planner is three days: text file 436 bytes, binary 392. The words on the right are the body stored from the left.
 
 ```mermaid
 flowchart LR
-  source[".3md text"] --> parsed[Parse]
+  source[".3md text file"] --> parsed[Parse]
   parsed --> document[Document]
-  document --> textOut["Text file: four frames, each with an @plane line"]
-  document --> kind1["Same text, plus a 40-byte header"]
-  document --> kind2["Fields: the same frames, no repeated @plane line"]
-  kind1 --> both["2.0 and 2.1 readers"]
-  kind2 --> current["2.1 readers"]
-  kind2 --> legacy["2.0 reader: unsupportedPayloadKind"]
+  document --> textOut["Text file"]
+  document --> binary["Binary: the same frames as fields"]
 ```
 
-The diagram after it is how a reader decides what it was given. The default
-limit is the largest integer the language can use, so a 1 GB or 5 GB file is
-not refused there. The length check stops a file only when the caller passed a
-smaller limit and the file is longer than that limit.
+A reader tells the two apart by the first bytes. A text file does not start with `3mdbin`. A binary file does, and its kind byte is 2. A deprecated kind 1 file starts with the same magic and its kind byte is 1. It is opened as the text that was copied in.
 
 ```mermaid
 flowchart TD
-  bytes[Input bytes] --> length{Longer than the caller's limit?}
-  length -->|yes| refused["oversizedInput. The bytes are not read."]
-  length -->|no| magic{Starts with 3mdbin CR LF?}
+  bytes[Input bytes] --> magic{Starts with 3mdbin?}
   magic -->|no| asText[Read it as the text file]
   magic -->|yes| kind{Kind byte}
-  kind -->|1| asKind1[The payload is the text]
-  kind -->|2| asKind2[The payload is the same frames, as fields]
+  kind -->|2| asBinary[Read the frames as fields]
+  kind -->|1| legacy[Deprecated. Read the copied text.]
   kind -->|other| bad[unsupportedPayloadKind]
 ```
 
 <p align="center">
-  <img src="docs/readme/container-header.png" alt="The 40-byte header that makes kind 1 larger than the text. The kind byte is 1 for text inside the header, or 2 for records." width="880">
+  <img src="docs/readme/container-header.png" alt="The 40-byte header at the start of a binary file. The kind byte is 2, which means the frames are stored as fields." width="880">
 </p>
 
-That header is why the orange save is 40 bytes larger than the text. The text
-file has no header. The field save uses the same header, then the frames. The
-byte at offset 10 says which one: 1 means the payload is the text, 2 means the
-payload is the fields.
+The text file has no header. Those 40 bytes are why a binary file is not just a renamed `.3md`. The kind byte is 2 for the field save.
 
-### Six files, three saves each
+### Six files
 
-Each group is one file, saved three ways. Green is the field save from the
-picture above. The chart labels that bar "records."
+Each pair is one file. Blue is the text file. Green is the binary save.
 
 <p align="center">
-  <img src="docs/readme/small-documents.png" alt="Six files. Each group is one file saved three ways: the text, that text plus 40 bytes, and the same file as fields. Grove's field save is one byte larger than its text. The poem's field save is 751 bytes against 940 of text." width="880">
+  <img src="docs/readme/small-documents.png" alt="Six files. Each pair is the text file and the binary save. Grove's binary file is one byte larger than its text. The poem's binary file is 751 bytes against 940 of text." width="880">
 </p>
 
-| Document | Text file | Text plus 40 bytes | Fields |
-| --- | ---: | ---: | ---: |
-| [canopy.3md](Examples/Extensions/canopy.3md) | 111 | 151 | 101 |
-| [animation.3md](Examples/animation.3md) | 415 | 455 | 351 |
-| [daily-planner.3md](Examples/daily-planner.3md) | 436 | 476 | 392 |
-| [shared-grove.3md](Examples/Extensions/shared-grove.3md) | 685 | 725 | 686 |
-| [kinetic-erasure-poem.3md](Examples/kinetic-erasure-poem.3md) | 940 | 980 | 751 |
-| [dna-double-helix.3md](Examples/dna-double-helix.3md) | 2,358 | 2,398 | 1,995 |
-| [conways-game-of-life.3md](Examples/conways-game-of-life.3md) | 17,509 | 17,549 | 17,255 |
+| Document | Text file | Binary |
+| --- | ---: | ---: |
+| [canopy.3md](Examples/Extensions/canopy.3md) | 111 | 101 |
+| [animation.3md](Examples/animation.3md) | 415 | 351 |
+| [daily-planner.3md](Examples/daily-planner.3md) | 436 | 392 |
+| [shared-grove.3md](Examples/Extensions/shared-grove.3md) | 685 | 686 |
+| [kinetic-erasure-poem.3md](Examples/kinetic-erasure-poem.3md) | 940 | 751 |
+| [dna-double-helix.3md](Examples/dna-double-helix.3md) | 2,358 | 1,995 |
+| [conways-game-of-life.3md](Examples/conways-game-of-life.3md) | 17,509 | 17,255 |
 
-The middle column is the text column plus 40 on every row. Grove is the row
-where the field save is one byte larger than the text. The poem is the large
-drop in this set: 751 bytes is 79.9% of 940. Conway is in the table and left
-off the picture, so 17,509 bytes do not flatten the other bars.
+Grove is the row where binary is one byte larger than the text. The poem is the large drop: 751 bytes is 79.9% of 940. Conway is in the table and left off the picture, so 17,509 bytes do not flatten the other bars.
 
 ### Adding many files together
 
 <p align="center">
-  <img src="docs/readme/corpus-bytes.png" alt="Three sets of files, each with text, kind 1, and kind 2 totals. 293 examples: records are 31,645 bytes smaller. sculpt-4096 is 4,096 layers of 32 by 20, not a 1024 cube." width="880">
+  <img src="docs/readme/corpus-bytes.png" alt="Three sets of files, text and binary. 293 examples: binary is 31,645 bytes smaller. sculpt-4096 is 4,096 layers of 32 by 20, not a 1024 cube." width="880">
 </p>
 
 <p align="center">
-  <img src="docs/readme/size-ratio.png" alt="How many of 293 example files have kind 2 at each percent of the text size. 100% would match the text. The typical file is 97.4%. The tall bar is 123 files." width="880">
+  <img src="docs/readme/size-ratio.png" alt="How many of 293 example files have a binary save at each percent of the text size. 100% would match the text. The typical file is 97.4%. The tall bar is 123 files at 97%." width="880">
 </p>
 
-| Input | What it is | Text bytes | Text plus 40 | Fields | Fields / text |
-| --- | --- | ---: | ---: | ---: | ---: |
-| 293 example files | The committed size list | 1,188,086 | 1,199,806 | 1,156,441 | 0.973 |
-| synthetic-2000 | One file: 2,000 planes of mixed Markdown | 4,037,480 | 4,037,520 | 3,998,362 | 0.990 |
-| sculpt-4096, 32 by 20 | One file: 4,096 layers of a 32 by 20 picture. Not a 1024 cube | 3,031,345 | 3,031,385 | 2,934,090 | 0.968 |
+| Input | What it is | Text bytes | Binary | Binary / text |
+| --- | --- | ---: | ---: | ---: |
+| 293 example files | The committed size list | 1,188,086 | 1,156,441 | 0.973 |
+| synthetic-2000 | One file: 2,000 planes of mixed Markdown | 4,037,480 | 3,998,362 | 0.990 |
+| sculpt-4096, 32 by 20 | One file: 4,096 layers of a 32 by 20 picture. Not a 1024 cube | 3,031,345 | 2,934,090 | 0.968 |
 
-Kind 1 for the 293 files is the text total plus 293 times 40, which is 11,720
-bytes. The field save is 31,645 bytes smaller than the text (2.7%). A typical
-file in that list has a field save at 97.4% of its text. The biggest saving is the
-poem, at 79.9%. The smallest saving is `annotated-contract.3md`, at 99.2%.
-Every file in the list is under 100%. Those totals are the committed check in
-[conformance/structured/sizes.json](conformance/structured/sizes.json). The
-test `g6_kind_2_sizes_match_sizes_json` checks them. The two generated files
-are not committed. The sizes are.
+Binary for the 293 files is 31,645 bytes smaller than the text (2.7%). A typical file in that list is 97.4% of its text. The biggest saving is the poem, at 79.9%. The smallest saving is `annotated-contract.3md`, at 99.2%. Every file in the list is under 100%. The tall bar is 123 files at 97%. Those totals are the committed check in [conformance/structured/sizes.json](conformance/structured/sizes.json). The test `g6_kind_2_sizes_match_sizes_json` checks them. The two generated files are not committed. The sizes are.
 
-### Reading the text file vs reading the fields
+### Reading the text file vs reading the binary
 
-This picture is a speed comparison, not another size comparison. Each row is
-one made-up document of the letter `a`. Blue is how long the text file took to
-read. Green is how long the field save took. The text-plus-40 save is left off,
-because reading it means reading the text.
+This picture is a speed comparison, not another size comparison. Each row is one made-up document of the letter `a`. Blue is how long the text file took to read. Green is how long the binary file took.
 
-The two bars in a row compare only with each other. Do not compare bar lengths
-down the picture. A full blue bar means "this row's text time," not "a big
-file."
+The two bars in a row compare only with each other. Do not compare bar lengths down the picture. A full blue bar means "this row's text time," not "a big file."
 
 <p align="center">
-  <img src="docs/readme/decode-time.png" alt="Five documents. In each row the text file took about 5 to 7 times as long to read as the records. The largest row is about 50 MB: 104.403 ms for text, 19.287 ms for records. One Rust run, not the speed gate." width="880">
+  <img src="docs/readme/decode-time.png" alt="Five documents. In each row the text file took about 5 to 7 times as long to read as the binary file. The largest row is about 50 MB: 104.403 ms for text, 19.287 ms for binary. One Rust run, not the speed gate." width="880">
 </p>
 
-| Document | Text bytes | Field bytes | Text read | Field read |
+| Document | Text bytes | Binary bytes | Text read | Binary read |
 | --- | ---: | ---: | ---: | ---: |
 | 64 planes of 256 `a` | 17,318 | 16,763 | 0.078 ms | 0.012 ms |
 | 512 planes of 256 `a` | 138,690 | 134,140 | 0.591 ms | 0.091 ms |
@@ -229,17 +199,11 @@ file."
 | 8 planes of 1 MB | 8,388,760 | 8,388,715 | 17.322 ms | 3.139 ms |
 | 8 planes of 6 MB, about 50 MB | 50,331,800 | 50,331,763 | 104.403 ms | 19.287 ms |
 
-One Rust 1.98.0 release process on an Apple M1 Ultra (macOS 26.5.2, 64 GB).
-Each time is the median of five calls after one warmup. The project speed gate
-is still open. It wants three processes per language, and these numbers are
-not that gate. At about 50 MB, kind 2 is 37 bytes smaller than the text.
+One Rust 1.98.0 release process on an Apple M1 Ultra (macOS 26.5.2, 64 GB). Each time is the median of five calls after one warmup. The project speed gate is still open. It wants three processes per language, and these numbers are not that gate. At about 50 MB, binary is 37 bytes smaller than the text.
 
 ### How big a file can be
 
-There is no fixed size stop. A 1 GB document, a 5 GB document, or any larger
-document is parsed and saved when the process can hold it. The field save is
-not a compressor. A document made of 1 GB of letters stays about 1 GB as
-fields. The header is 40 bytes either way.
+There is no fixed size stop. A 1 GB document, a 5 GB document, or any larger document is parsed and saved when the process can hold it. Binary is not a compressor. A document made of 1 GB of letters stays about 1 GB as binary. The header is 40 bytes either way.
 
 The default limit is the largest integer the language uses for a size:
 
@@ -249,55 +213,28 @@ The default limit is the largest integer the language uses for a size:
 | Rust | `usize::MAX` |
 | TypeScript | `Number.MAX_SAFE_INTEGER` (9,007,199,254,740,991) |
 
-That one default covers the file, the decoded text, the number of lines, the
-number of planes, and each line or plane body. A caller can pass a smaller
-positive limit. Zero, a negative number, and a number JavaScript cannot hold
-exactly are `invalidLimits`. A caller who wants the old stop can pass
-67,108,864 (64 MiB).
+That one default covers the file, the decoded text, the number of lines, the number of planes, and each line or plane body. A caller can pass a smaller positive limit. Zero, a negative number, and a number JavaScript cannot hold exactly are `invalidLimits`. A caller who wants the old stop can pass 67,108,864 (64 MiB).
 
-On a 32-bit process the language integer stops near 2 GB. That is the
-language. A 5 GB length does not fit in a signed 32-bit integer. A hostile
-file can still use all of the machine's memory, because the library reads and
-writes the document it is given.
+On a 32-bit process the language integer stops near 2 GB. That is the language. A 5 GB length does not fit in a signed 32-bit integer. A hostile file can still use all of the machine's memory, because the library reads and writes the document it is given.
 
 ### A page of 1024 by 1024 letters
 
-One plane, 1024 lines of 1024 letters `a`, measured with the Rust 1.98.0
-release build (median of five reads after one warmup, one run, not the speed
-gate):
+One plane, 1024 lines of 1024 letters `a`, measured with the Rust 1.98.0 release build (median of five reads after one warmup, one run, not the speed gate):
 
 | Save | Bytes | Read time |
 | --- | ---: | --- |
 | Text file | 1,049,641 | 2.307 ms |
-| Kind 1 | 1,049,681 | The text plus the 40-byte header |
-| Fields | 1,049,654 | 0.384 ms |
+| Binary | 1,049,654 | 0.384 ms |
 
-On that page the fields are 13 bytes larger than the text, because a wall of
-one letter has almost no syntax to remove. They were still quicker to read in
-this run.
+On that page binary is 13 bytes larger than the text, because a wall of one letter has almost no syntax to remove. It was still quicker to read in this run.
 
-The same number of letters, split into 1024 planes of one 1024-letter line,
-does get smaller. The `@plane` lines go away: text 1,063,879 bytes, kind 2
-1,054,706 bytes.
+The same number of letters, split into 1024 planes of one 1024-letter line, does get smaller. The `@plane` lines go away: text 1,063,879 bytes, binary 1,054,706 bytes.
 
-A cube of 1024 such pages is 1024 × 1024 × 1024 letters, which is
-1,073,741,824 bytes before the `@plane` lines. One local run on this Apple
-M1 Ultra parsed that cube and saved it again in Swift, TypeScript, and Rust.
-All three wrote the same bytes: text 1,074,804,681, fields
-1,074,796,532. The fields are 8,149 bytes smaller than the text. Rust 1.98.0
-release wrote the text in 3.413 seconds and read it in 2.539 seconds, and
-wrote the fields in 0.408 seconds and read them in 0.406 seconds. That run
-is one process, not the speed gate.
+A cube of 1024 such pages is 1024 × 1024 × 1024 letters, which is 1,073,741,824 bytes before the `@plane` lines. One local run on this Apple M1 Ultra parsed that cube and saved it again in Swift, TypeScript, and Rust. All three wrote the same bytes: text 1,074,804,681, binary 1,074,796,532. Binary is 8,149 bytes smaller than the text. Rust 1.98.0 release wrote the text in 3.413 seconds and read it in 2.539 seconds, and wrote the binary in 0.408 seconds and read it in 0.406 seconds. That run is one process, not the speed gate.
 
-The same Rust build also parsed and saved one plane of 5 GB of the letter
-`a` (5,368,709,120 bytes). The text file was 5,368,709,164 bytes. The kind 2
-file was 5,368,709,179 bytes, 15 bytes larger, because a wall of one letter
-has almost no syntax to remove. Writing the text took 23.501 seconds and
-reading it took 16.208 seconds. Writing the fields took 2.360 seconds and
-reading them took 2.348 seconds.
+The same Rust build also parsed and saved one plane of 5 GB of the letter `a` (5,368,709,120 bytes). The text file was 5,368,709,164 bytes. The binary file was 5,368,709,179 bytes, 15 bytes larger, because a wall of one letter has almost no syntax to remove. Writing the text took 23.501 seconds and reading it took 16.208 seconds. Writing the binary took 2.360 seconds and reading it took 2.348 seconds.
 
-A one-plane body of 64 letters `a` is the tiny file that grows: text 106
-bytes, kind 1 146 bytes, kind 2 117 bytes.
+A one-plane body of 64 letters `a` is the tiny file that grows: text 106 bytes, binary 117 bytes.
 
 ## Installation
 
@@ -404,8 +341,8 @@ let text = Serializer().render(document)
 
 ## Binary storage and reusable documents
 
-The byte counts, the GIF, and the 1 GB refusal are in
-[Same document, three saves](#same-document-three-saves). ThreeMD 2.0.0 provides
+The byte counts and the pictures are in
+[Text file and binary](#text-file-and-binary). ThreeMD 2.0.0 provides
 bounded general-document storage and self-contained composition in Swift,
 TypeScript and Rust. The examples below use Swift; see
 [EDITING-RELEASE.md](docs/EDITING-RELEASE.md) for the TypeScript and Rust
@@ -427,12 +364,12 @@ let compressed = try DocumentStorageCodec.encode(
 )
 ```
 
-`.binary` writes payload kind 2: structured document records inside the
-unchanged version 1 container. The records are often a little smaller than the
-text, and a page of repeated letters can be a few bytes larger. Decoding them
-does not parse that text. `encodeTextContainer` writes payload kind 1, the
-ThreeMD 2.0 canonical UTF-8 payload, for a reader that does not know kind 2.
-A 2.0 reader stops on kind 2 with `unsupportedPayloadKind(2)`.
+`.binary` writes the binary save: payload kind 2, the frames as fields, inside
+the version 1 container. It is often a little smaller than the text, and a page
+of repeated letters can be a few bytes larger. Decoding it does not parse the
+text file. Kind 1 is deprecated. `encodeTextContainer` still writes it, the
+text copied after the header, when a 2.0 reader must open the file. A 2.0
+reader stops on kind 2 with `unsupportedPayloadKind(2)`.
 
 ```swift
 let legacy = try DocumentStorageCodec.encodeTextContainer(document)
@@ -444,8 +381,7 @@ integer the language can use. A caller can pass a lower positive limit.
 [How big a file can be](#how-big-a-file-can-be) explains that, including a
 32-bit process and a page of 1024 by 1024 letters.
 Unavailable compression, malformed headers, a non-positive limit, and cancellation produce errors.
-CRC detects corruption and does not authenticate content. Kind 1 and kind 2
-both use that checksum.
+CRC detects corruption and does not authenticate content. The binary file uses that checksum.
 
 Composition preserves a library of named documents and ordered references:
 

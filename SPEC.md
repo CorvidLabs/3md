@@ -302,9 +302,10 @@ introduces no text directive and does not change `Parser` or `Serializer`.
 `DocumentStorageCodec` accepts UTF-8 text or the complete binary magic and returns
 a `Document`. The writer takes an explicit `.text` or `.binary(compression:)`
 format. Since 1.2, `.binary` writes payload kind 2, the structured document
-payload (11.3). A separate writer, `encodeTextContainer`, writes payload kind 1,
-canonical text behind the binary header, byte-identical to the ThreeMD 2.0
-`.binary` output, for consumers that still run ThreeMD 2.0. Text remains the
+payload (11.3). Payload kind 1 is deprecated for new files. It remains the
+ThreeMD 2.0 save: canonical text behind the binary header. Readers still accept
+it, and `encodeTextContainer` still writes it, byte-identical to the ThreeMD 2.0
+`.binary` output, for a consumer that still runs ThreeMD 2.0. Text remains the
 portable interchange form. The binary extension is `.3mdb` for both payload
 kinds; readers MUST identify content by its magic and payload kind rather than
 an extension.

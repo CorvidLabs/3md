@@ -22,10 +22,11 @@ published to a marketplace.
 
 ## What is on the branch
 
-SPEC.md 1.2 adds payload kind 2 inside the version 1 container. The Swift,
-TypeScript and Rust libraries implement it. `.binary` writes kind 2.
-`encodeTextContainer` writes the ThreeMD 2.0 kind-1 bytes. Kind-1 files stay
-readable. Kind 3 is reserved.
+SPEC.md 1.2 adds the binary save, payload kind 2, inside the version 1
+container. The text file stays the `.3md`. The Swift, TypeScript and Rust
+libraries implement kind 2, and `.binary` writes it. Kind 1 is deprecated.
+`encodeTextContainer` still writes those ThreeMD 2.0 bytes, and readers still
+open them. Kind 3 is reserved.
 
 Shared structured fixtures are committed. The three writers agree on those
 fixtures. The element bundle committed with the library work is 48,840 bytes
@@ -54,7 +55,7 @@ Also in the libraries, and called out because they change bytes or acceptance:
 | Capability | Swift | TypeScript | Rust |
 | --- | --- | --- | --- |
 | Text grammar 1.0 | Unchanged | Unchanged | Unchanged |
-| Payload kind 1 (`encodeTextContainer`) | Yes | Yes | Yes |
+| Payload kind 1, deprecated (`encodeTextContainer`) | Yes, old files and 2.0 readers | Yes, old files and 2.0 readers | Yes, old files and 2.0 readers |
 | Payload kind 2 (`.binary`) | Yes | Yes | Yes |
 | Header-only `containerInfo` | Yes | Yes | Yes |
 | Read a ThreeMD 2.0 `.3mdb` | Yes | Yes | Yes |

@@ -84,9 +84,10 @@ kind 2, the structured document payload of SPEC.md section 11.3: length-prefixed
 records that decode without building or parsing text, with one canonical
 encoding per `Document`, the same accepted documents as the 2.1 `validate`, and
 byte-identical writers in all three languages. `.binary(compression:)` now
-writes payload kind 2. The new `encodeTextContainer` writes payload kind 1, the
-ThreeMD 2.0 binary bytes, for consumers that still run ThreeMD 2.0. Payload
-kind 3 is reserved and rejected.
+writes payload kind 2. The new `encodeTextContainer` is deprecated for new
+files. It writes payload kind 1, the ThreeMD 2.0 binary bytes, for consumers
+that still run ThreeMD 2.0. Readers still open those files. Payload kind 3 is
+reserved and rejected.
 
 ## Public API
 
@@ -205,7 +206,7 @@ are pure synchronous APIs; they never open paths or resolve URLs.
 | `checksum` | DocumentContainerInfo declared CRC-32/ISO-HDLC value, not verified by inspection. |
 | `supportedPayloadKinds` | Payload kinds this release decodes, canonicalText and structuredDocument: Swift Set of DocumentPayloadKind, TypeScript frozen readonly number array [1, 2]. |
 | `containerInfo` | containerInfo(_ data: Data) throws -> DocumentContainerInfo? reads at most the first 40 bytes; nil (TypeScript null) without the binary magic; invalidContainer when the magic is present and fewer than 40 bytes exist. |
-| `encodeTextContainer` | encodeTextContainer(_:compression:limits:) throws -> Data writes payload kind 1, byte-identical to the ThreeMD 2.0 `.binary` output, with the 2.0 binary writer's validation and error order; TypeScript takes optional compression, limits and AbortSignal. |
+| `encodeTextContainer` | Deprecated for new files. encodeTextContainer(_:compression:limits:) throws -> Data writes payload kind 1, byte-identical to the ThreeMD 2.0 `.binary` output, with the 2.0 binary writer's validation and error order; TypeScript takes optional compression, limits and AbortSignal. Readers still open it. |
 | `DocumentReference` | Hashable, Sendable target and opaque attributes. |
 | `targetID` | ID in the supplied library, never a path or URL. |
 | `DocumentEntry` | Hashable, Sendable named Document and ordered references. |

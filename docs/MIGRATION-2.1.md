@@ -11,19 +11,21 @@ accepted string) in frontmatter. The parser stays version-lenient. Text grammar
 
 ## What changes
 
-`DocumentStorageFormat.binary` now writes payload kind 2: structured document
-records inside the unchanged version 1 container (magic `3mdbin\r\n`, 40-byte
-header). Kind 2 is smaller than the canonical text and decodes the records
-directly. The same call in ThreeMD 2.0 wrote payload kind 1.
+`DocumentStorageFormat.binary` now writes the binary save, payload kind 2:
+the document's frames as fields inside the unchanged version 1 container
+(magic `3mdbin\r\n`, 40-byte header). The text file stays the `.3md` you edit.
+Kind 2 reads the fields directly. The same `.binary` call in ThreeMD 2.0 wrote
+payload kind 1.
+
+Kind 1 is deprecated. It is the text file copied after the 40-byte header, not
+the field save. Readers still open old kind 1 files. Writers whose files a 2.0
+reader must open should call `encodeTextContainer`. That function is the 2.0
+binary writer, including its validation and error order.
 
 A ThreeMD 2.0 reader stops on a new `.binary` file with
 `unsupportedPayloadKind(2)` before it checks the checksum. Present that error
 as "this file needs a newer ThreeMD". Rust composition decode wraps it as
 `DocumentCompositionError::Storage(UnsupportedPayloadKind(2))`.
-
-Writers whose files a 2.0 reader must open should call `encodeTextContainer`.
-That function is the 2.0 binary writer, including its validation and error
-order, and it still writes payload kind 1.
 
 Old kind-1 `.3mdb` files still decode. `isBinary` is still the magic check.
 `encode` and `decode` keep their signatures. Default storage limits are the
@@ -62,7 +64,7 @@ text and fails as text.
 ```swift
 // 2.0 and 2.1: same call. In 2.1 the result is payload kind 2.
 let bytes = try DocumentStorageCodec.encode(document, format: .binary(compression: .none))
-// For a ThreeMD 2.0 reader, write payload kind 1 instead.
+// Deprecated. For a ThreeMD 2.0 reader, write payload kind 1 instead.
 let legacy = try DocumentStorageCodec.encodeTextContainer(document)
 // Which kind is this file?
 if let info = try DocumentStorageCodec.containerInfo(bytes),
@@ -77,12 +79,13 @@ let reopened = try DocumentCompositionCodec.decode(bundle)
 
 ```ts
 const bytes = DocumentStorageCodec.encode(document, DocumentStorageFormat.binary()); // payload kind 2
-const legacy = DocumentStorageCodec.encodeTextContainer(document); // payload kind 1
+const legacy = DocumentStorageCodec.encodeTextContainer(document); // deprecated payload kind 1
 const kind = DocumentStorageCodec.containerInfo(bytes)?.payloadKind; // 2
 ```
 
 ```rust
 let bytes = storage::encode(&document, DocumentStorageFormat::Binary(DocumentCompression::None), &limits, &options)?;
+// Deprecated. For a ThreeMD 2.0 reader, write payload kind 1 instead.
 let legacy = storage::encode_text_container(&document, DocumentCompression::None, &limits, &options)?;
 let kind = storage::container_info(&bytes)?.map(|info| info.payload_kind); // Some(2)
 ```
@@ -103,5 +106,6 @@ Text-only hosts, the `<three-md>` element and the VS Code extension do not
 need a storage change. The element stays a text renderer, and the extension
 stays syntax highlighting. Optional LZFSE is still the Apple Compression
 backend in Swift, and TypeScript and Rust still return an explicit
-unsupported-backend error. Use uncompressed kind 1 or kind 2 for files all
-three libraries must read.
+unsupported-backend error. For a file all three libraries must read, use
+the text file or uncompressed binary. Old kind-1 files still open. Kind 3
+does not.
