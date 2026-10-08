@@ -1,7 +1,7 @@
 # 3md Format Specification
 
 Version: 1.2 (additive storage, composition and linked file authoring specification)
-Status: the 1.0 text grammar is frozen; sections 11 and 12 are implemented by ThreeMD 2.1.0 in Swift, TypeScript and Rust; section 11.3 (structured document payload, kind 2) is new in 1.2
+Status: the 1.0 text grammar is frozen; sections 11 and 12 are implemented by ThreeMD 2.1.0 in Swift, TypeScript and Rust; section 11.3 (structured document payload, kind 2) is new in 1.2. ThreeMD 2.2.0 adds a Godot 4 addon for the same text, kind 1, kind 2, composition, linked files, and revision-checked document edits. That addon does not change this specification.
 File extensions: `.3md` text; `.3mdb` general binary storage
 Media type (proposed): `text/3md`
 
