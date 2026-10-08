@@ -81,11 +81,11 @@ same event loop cannot interrupt a synchronous call. LZFSE returns an explicit
 unsupported-backend error in this port. Use uncompressed storage for interchange.
 
 Frozen text grammar 1.0, general binary container version 1 and profile
-`3md-composition-1` retain their own versions. On this branch `.binary` writes
+`3md-composition-1` retain their own versions. `.binary` writes
 payload kind 2 and `encodeTextContainer` writes payload kind 1. Header-only
 inspection is `DocumentStorageCodec.containerInfo`. LZFSE stays unavailable in
 this port. The element and viewer remain a text UI. See the
-[2.1 preparation notes](../docs/RELEASE-2.1.0.md). The published
+[2.1.0 release notes](../docs/RELEASE-2.1.0.md). The published
 [2.0.0 release guide](https://github.com/CorvidLabs/3md/blob/main/docs/RELEASE-2.0.0.md)
 still describes the packages the registries serve today.
 

@@ -30,11 +30,10 @@ ThreeMD 2.0.0 adds [linked file composition](docs/FILE-COMPOSITION.md): map a
 character to another 3md filename, resolve host-supplied files in any of the
 three libraries, and share a self-contained bundle. See the
 [nested LinkedVillage example](Examples/LinkedVillage/README.md) and the
-[2.0.0 release notes](docs/RELEASE-2.0.0.md). ThreeMD 2.1
-prepares the binary save: `.binary` writes the frames as fields (payload kind 2).
+[2.0.0 release notes](docs/RELEASE-2.0.0.md). ThreeMD 2.1.0
+ships the binary save: `.binary` writes the frames as fields (payload kind 2).
 Kind 1 is deprecated. `encodeTextContainer` still writes it for a 2.0 reader.
-The `v2.1.0` tag is
-not cut. See the [2.1 preparation notes](docs/RELEASE-2.1.0.md).
+See the [2.1.0 release notes](docs/RELEASE-2.1.0.md).
 
 **Markdown with a Z axis.** A `.3md` file is ordinary Markdown extended along
 one free axis: stack your content into **planes** and tell the reader what the
@@ -307,8 +306,8 @@ Then depend on the `ThreeMD` library product:
 .product(name: "ThreeMD", package: "3md")
 ```
 
-`from: "2.1.0"` resolves only after the `v2.1.0` tag exists. Until that GitHub
-release, `from: "2.0.0"` is the published package. Read the
+`from: "2.1.0"` resolves from the `v2.1.0` tag. npm still serves 2.0.0 until
+the GitHub release. Read the
 [2.1 migration notes](docs/MIGRATION-2.1.md) before upgrading: a 2.0 reader
 rejects kind 2, and Rust's canonical number spelling changes for 92 powers of
 two. The [2.0 migration guide](docs/RELEASE-2.0.0.md#migrating-an-existing-host)
@@ -328,7 +327,7 @@ public npm registry. Install with:
 bun add @corvidlabs/threemd
 ```
 
-The package manifests on this branch read 2.1.0. npm still serves 2.0.0 until
+The package manifests read 2.1.0. npm still serves 2.0.0 until
 the GitHub release runs the publish workflow. If an older installation maps
 `@corvidlabs` to GitHub Packages, point that scope at the public npm registry.
 The web component keeps text rendering; the library exports the storage,
@@ -359,7 +358,7 @@ targets crates.io. Install an available published version with:
 cargo add threemd
 ```
 
-The prepared crate version is 2.1.0 and still pins
+The crate version is 2.1.0 and still pins
 `unicode-normalization =0.1.25`. Its serde/serde_json dependencies are
 development-only. crates.io stays at the last published release until the
 GitHub release runs the publish workflow and `CRATES_IO_TOKEN` is configured.
@@ -585,11 +584,11 @@ The 1.0 text grammar remains frozen. Specification 1.1 adds independently
 versioned binary storage, composition and linked file authoring without changing
 that grammar. ThreeMD 2.0.0, released on 2026-10-06, implements those extensions
 in Swift, TypeScript and Rust; the package version is separate from the format
-version. Specification 1.2 is on main (pull request 72). It adds payload kind 2
-inside that same container. Main still stops a document at 64 MiB. This branch
-removes that stop, on pull request 73, which is not merged. Package manifests
-read 2.1.0. The `v2.1.0` tag is not cut. See the
-[2.1 preparation notes](docs/RELEASE-2.1.0.md). Older
+version. Specification 1.2 is on main. It adds payload kind 2
+inside that same container, and storage has no fixed size stop. ThreeMD 2.1.0
+is the release commit for tag `v2.1.0`. The library source is `b70373b`.
+npm and crates.io stay at 2.0.0 until a GitHub release. See the
+[2.1.0 release notes](docs/RELEASE-2.1.0.md). Older
 `3md: 0.1` documents remain valid: the parser is version-lenient and never
 rejects a document by its version string.
 
@@ -1907,7 +1906,11 @@ container/profile versions do not change. Placement remains a host concern.
 
 ## [Unreleased]
 
-Prepared as 2.1.0. Not tagged. See [docs/RELEASE-2.1.0.md](docs/RELEASE-2.1.0.md).
+## [v2.1.0] - 2026-10-07
+
+ThreeMD 2.1.0 ships the binary save and removes the fixed document size stop in Swift, TypeScript, and Rust. The text file stays the `.3md`. `.binary` writes payload kind 2. Kind 1 stays readable, and `encodeTextContainer` still writes it for a 2.0 reader. See [docs/RELEASE-2.1.0.md](docs/RELEASE-2.1.0.md).
+
+The library source is `b70373b`. Hosted CI on that commit is green: Trust 37718229482, UI 37718229456, Linux 37718229473, Pages 37718229477, CodeQL 37718228935. This release commit changes the notes only. npm and crates.io stay at 2.0.0 until a GitHub release is published.
 
 ### Changed
 
@@ -1932,6 +1935,14 @@ Prepared as 2.1.0. Not tagged. See [docs/RELEASE-2.1.0.md](docs/RELEASE-2.1.0.md
 
 - The development `threemd-interchange --bundle` host adds Musl import guards (not yet compiled) and an explicit unsupported-platform error for other platforms, keeps its existing Darwin and Glibc builds, and names the path in open and publish errors.
 - The Rust interchange adapter checks limit literals with correctly rounded numbers, matching Swift and TypeScript.
+
+### Follow-ups
+
+- CLI `convert` and `inspect` stay text-only. They do not read a binary file.
+- Interchange stays `3md-interchange-1`. Protocol 2 is not in this release.
+- The 2.0.0 reader compatibility job is not done.
+- The CI performance gate in `docs/design/threemd-2.1/perf-gate.md` is not in this release. Local timings in the README are not that gate.
+- `docs/evidence/release-2.1.0/` is not in this release.
 
 ## [v2.0.0] - 2026-10-06
 
@@ -2030,15 +2041,11 @@ Verification: the pinned Trust 1.2.2 gate passed on macOS at commit `d6eb66f`, t
 Where the format and its tooling are headed. Confidence is a rough 0 to 100 read
 on how sure we are a step is the right next move and will land cleanly.
 
-## Next (2.1.0 packages, SPEC 1.2)
+## Next (after 2.1.0)
 
-The binary save, payload kind 2, is implemented in the three libraries.
-`.binary` writes the frames as fields. Kind 1 is deprecated: readers still
-open it, and `encodeTextContainer` still writes it for a 2.0 reader. Storage
-has no fixed size stop. Pull request 73 carries that library and the docs.
-The tag is not cut. It still waits on a maintainer merge, Trust on the
-release tip, and the follow-ups below: CLI binary commands, interchange
-protocol 2, the 2.0 reader compatibility job, and the performance gate.
+ThreeMD 2.1.0 ships the binary save and removes the fixed size stop. Kind 1
+stays readable. Follow-ups: CLI binary commands, interchange protocol 2, the
+2.0 reader compatibility job, and the CI performance gate.
 State confidence: 70.
 
 ## Now (2.0.0 packages, format 1.0 grammar)
@@ -2256,11 +2263,13 @@ to acknowledge a report within a few business days.
 @plane z=6 label="AGENTS" file="AGENTS.md"
 # 3md
 
-## 2.1.0 preparation
+## 2.1.0
 
-On 2026-10-07 Leif approved the structured-payload library work and asked for a pull request, then preparation for 2.1. That library landed on main in pull request 72. Pull request 73 (`leif/readme-visuals`) removes the fixed document size stop and carries the README. Package manifests read 2.1.0. The tag, GitHub release, npm publish, and crate publish are not part of this request.
+On 2026-10-07 Leif asked for the 2.1.0 release commit and the tag. The library on main is payload kind 2 and storage with no fixed size stop (pull requests 72, 73, and 74, library source `b70373b`). Package manifests read 2.1.0. This release commit updates the notes. The tag is `v2.1.0` on this commit after hosted CI is green. Publishing the GitHub release is not part of this request.
 
-The approved SpecSync change is `add-a-structured-binary-document-payload-kind-2-to-threemd-2-1-in-swift-typescript-and-rust-with-fast-checksums-cli`. It is not accepted or archived. Still open before a tag: CLI binary input, `convert` and `inspect`, interchange protocol 2, the 2.0.0 compatibility job, the CI performance gate, release evidence, a maintainer merge of pull request 73, and `fledge trust verify` on the exact tagged tip. This preparation does not merge, tag, publish, or weaken a trust gate.
+Follow-ups, not part of the tag: CLI binary input, `convert` and `inspect`, interchange protocol 2, the 2.0.0 reader compatibility job, the CI performance gate, and release evidence under `docs/evidence/release-2.1.0/`.
+
+The approved SpecSync change is `add-a-structured-binary-document-payload-kind-2-to-threemd-2-1-in-swift-typescript-and-rust-with-fast-checksums-cli`. It is not accepted or archived. Do not publish or weaken a trust gate from this note.
 
 ## Linked composition parity hardening after 2.0.0
 

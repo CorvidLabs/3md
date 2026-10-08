@@ -31,7 +31,7 @@ code --install-extension threemd-2.1.0.vsix
 This version alignment does not add binary, composition or linked-file editing,
 a preview or a language server. The extension is distributed as a locally built
 VSIX; it is not published to the VS Code Marketplace or Open VSX. See the
-[2.1 preparation notes](../../docs/RELEASE-2.1.0.md).
+[2.1.0 release notes](../../docs/RELEASE-2.1.0.md).
 
 ## Development
 

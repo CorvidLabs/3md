@@ -1,10 +1,12 @@
 # 3md
 
-## 2.1.0 preparation
+## 2.1.0
 
-On 2026-10-07 Leif approved the structured-payload library work and asked for a pull request, then preparation for 2.1. That library landed on main in pull request 72. Pull request 73 (`leif/readme-visuals`) removes the fixed document size stop and carries the README. Package manifests read 2.1.0. The tag, GitHub release, npm publish, and crate publish are not part of this request.
+On 2026-10-07 Leif asked for the 2.1.0 release commit and the tag. The library on main is payload kind 2 and storage with no fixed size stop (pull requests 72, 73, and 74, library source `b70373b`). Package manifests read 2.1.0. This release commit updates the notes. The tag is `v2.1.0` on this commit after hosted CI is green. Publishing the GitHub release is not part of this request.
 
-The approved SpecSync change is `add-a-structured-binary-document-payload-kind-2-to-threemd-2-1-in-swift-typescript-and-rust-with-fast-checksums-cli`. It is not accepted or archived. Still open before a tag: CLI binary input, `convert` and `inspect`, interchange protocol 2, the 2.0.0 compatibility job, the CI performance gate, release evidence, a maintainer merge of pull request 73, and `fledge trust verify` on the exact tagged tip. This preparation does not merge, tag, publish, or weaken a trust gate.
+Follow-ups, not part of the tag: CLI binary input, `convert` and `inspect`, interchange protocol 2, the 2.0.0 reader compatibility job, the CI performance gate, and release evidence under `docs/evidence/release-2.1.0/`.
+
+The approved SpecSync change is `add-a-structured-binary-document-payload-kind-2-to-threemd-2-1-in-swift-typescript-and-rust-with-fast-checksums-cli`. It is not accepted or archived. Do not publish or weaken a trust gate from this note.
 
 ## Linked composition parity hardening after 2.0.0
 

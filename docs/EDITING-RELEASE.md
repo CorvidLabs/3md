@@ -18,10 +18,10 @@ The release combines the binary/composition foundation in PR58 with stable ident
 | Self-contained composition graph/codec | Released in 2.0.0 | Released in 2.0.0 | Released in 2.0.0 |
 | Linked file ledger, resolution and bundling | Released in 2.0.0 | Released in 2.0.0 | Released in 2.0.0 |
 | Identity-aware snapshots, patches and diagnostics | Released in 2.0.0 | Released in 2.0.0 | Released in 2.0.0 |
-| Structured document payload, kind 2, from `.binary` | Prepared for 2.1, not tagged | Prepared for 2.1, not tagged | Prepared for 2.1, not tagged |
-| `encodeTextContainer` (kind 1) and header-only `containerInfo` | Prepared for 2.1, not tagged | Prepared for 2.1, not tagged | Prepared for 2.1, not tagged |
+| Structured document payload, kind 2, from `.binary` | Released in 2.1.0 | Released in 2.1.0 | Released in 2.1.0 |
+| `encodeTextContainer` (kind 1) and header-only `containerInfo` | Released in 2.1.0 | Released in 2.1.0 | Released in 2.1.0 |
 
-The 2.1 rows landed on main in pull request 72. Pull request 73 removes the fixed storage size stop and is not merged. CLI binary input, `convert` and `inspect` are not in either. See [RELEASE-2.1.0.md](RELEASE-2.1.0.md).
+The 2.1 rows are on main. Pull request 73 removed the fixed storage size stop. CLI binary input, `convert` and `inspect` are follow-ups. See [RELEASE-2.1.0.md](RELEASE-2.1.0.md).
 
 Uncompressed storage is the portable baseline. Unsupported compression is an explicit failure. Shared extension fixtures independently check exact canonical document/profile/envelope bytes, finite-number formatting, Unicode key ordering, identity adoption, revision guards, atomic edits and diagnostic codes/paths in all three libraries. These are separate from the unchanged legacy parser vectors. Leif explicitly authorized TypeScript and Rust implementation in this follow-up; Sculpt remains Swift-only.
 

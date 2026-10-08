@@ -2,7 +2,11 @@
 
 ## [Unreleased]
 
-Prepared as 2.1.0. Not tagged. See [docs/RELEASE-2.1.0.md](docs/RELEASE-2.1.0.md).
+## [v2.1.0] - 2026-10-07
+
+ThreeMD 2.1.0 ships the binary save and removes the fixed document size stop in Swift, TypeScript, and Rust. The text file stays the `.3md`. `.binary` writes payload kind 2. Kind 1 stays readable, and `encodeTextContainer` still writes it for a 2.0 reader. See [docs/RELEASE-2.1.0.md](docs/RELEASE-2.1.0.md).
+
+The library source is `b70373b`. Hosted CI on that commit is green: Trust 37718229482, UI 37718229456, Linux 37718229473, Pages 37718229477, CodeQL 37718228935. This release commit changes the notes only. npm and crates.io stay at 2.0.0 until a GitHub release is published.
 
 ### Changed
 
@@ -27,6 +31,14 @@ Prepared as 2.1.0. Not tagged. See [docs/RELEASE-2.1.0.md](docs/RELEASE-2.1.0.md
 
 - The development `threemd-interchange --bundle` host adds Musl import guards (not yet compiled) and an explicit unsupported-platform error for other platforms, keeps its existing Darwin and Glibc builds, and names the path in open and publish errors.
 - The Rust interchange adapter checks limit literals with correctly rounded numbers, matching Swift and TypeScript.
+
+### Follow-ups
+
+- CLI `convert` and `inspect` stay text-only. They do not read a binary file.
+- Interchange stays `3md-interchange-1`. Protocol 2 is not in this release.
+- The 2.0.0 reader compatibility job is not done.
+- The CI performance gate in `docs/design/threemd-2.1/perf-gate.md` is not in this release. Local timings in the README are not that gate.
+- `docs/evidence/release-2.1.0/` is not in this release.
 
 ## [v2.0.0] - 2026-10-06
 

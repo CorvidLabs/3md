@@ -3,15 +3,11 @@
 Where the format and its tooling are headed. Confidence is a rough 0 to 100 read
 on how sure we are a step is the right next move and will land cleanly.
 
-## Next (2.1.0 packages, SPEC 1.2)
+## Next (after 2.1.0)
 
-The binary save, payload kind 2, is implemented in the three libraries.
-`.binary` writes the frames as fields. Kind 1 is deprecated: readers still
-open it, and `encodeTextContainer` still writes it for a 2.0 reader. Storage
-has no fixed size stop. Pull request 73 carries that library and the docs.
-The tag is not cut. It still waits on a maintainer merge, Trust on the
-release tip, and the follow-ups below: CLI binary commands, interchange
-protocol 2, the 2.0 reader compatibility job, and the performance gate.
+ThreeMD 2.1.0 ships the binary save and removes the fixed size stop. Kind 1
+stays readable. Follow-ups: CLI binary commands, interchange protocol 2, the
+2.0 reader compatibility job, and the CI performance gate.
 State confidence: 70.
 
 ## Now (2.0.0 packages, format 1.0 grammar)

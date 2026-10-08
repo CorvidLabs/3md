@@ -1,13 +1,16 @@
-# ThreeMD 2.1.0 preparation
+# ThreeMD 2.1.0
 
-Status: preparing. Not tagged. Not published.
+Status: release commit for tag `v2.1.0` on 2026-10-07. Not published.
 
-On 2026-10-07 Leif approved the structured-payload library work and asked for a
-pull request, then preparation for 2.1. Package manifests read 2.1.0. The
-library and the docs for the tag are pull request 73, branch
-`leif/readme-visuals`. Pull request 72 is the earlier structured-payload
-review. This preparation does not merge, tag, publish, or weaken a trust
-gate.
+The library source is `b70373b` (pull request 74). Hosted CI on that commit is
+green: Trust
+[37718229482](https://github.com/CorvidLabs/3md/actions/runs/37718229482),
+UI [37718229456](https://github.com/CorvidLabs/3md/actions/runs/37718229456),
+Linux [37718229473](https://github.com/CorvidLabs/3md/actions/runs/37718229473),
+Pages [37718229477](https://github.com/CorvidLabs/3md/actions/runs/37718229477),
+and CodeQL
+[37718228935](https://github.com/CorvidLabs/3md/actions/runs/37718228935).
+This commit updates the notes. Package manifests already read 2.1.0.
 
 Storage has no fixed size stop. A file is parsed and saved when the process
 can hold it. Local runs saved a 1 GB cube in Swift, TypeScript, and Rust, and
@@ -16,17 +19,15 @@ those files.
 
 The approved SpecSync change is
 `add-a-structured-binary-document-payload-kind-2-to-threemd-2-1-in-swift-typescript-and-rust-with-fast-checksums-cli`.
-It is not accepted or archived. `fledge trust verify` has passed on this pull
-request. It still has to pass on the exact commit that is tagged.
+It is not accepted or archived.
 
 Publishing still happens only when a GitHub release is published. Until then
 npm serves `@corvidlabs/threemd` and `@corvidlabs/three-md-element` at 2.0.0,
 and crates.io stays at the last published `threemd` release. Swift resolves
-`from: "2.1.0"` only after the `v2.1.0` tag exists. The VS Code extension is a
-local VSIX (`threemd-2.1.0.vsix` once built from this branch) and is not
-published to a marketplace.
+`from: "2.1.0"` from the `v2.1.0` tag. The VS Code extension is a local VSIX
+and is not published to a marketplace.
 
-## What is on the branch
+## What shipped
 
 SPEC.md 1.2 adds the binary save, payload kind 2, inside the version 1
 container. The text file stays the `.3md`. The Swift, TypeScript and Rust
@@ -48,9 +49,9 @@ Also in the libraries, and called out because they change bytes or acceptance:
 
 ## Versions
 
-| Surface | Prepared version | Published today |
+| Surface | This release | Published today |
 | --- | --- | --- |
-| Swift `ThreeMD` | Git tag not cut | `v2.0.0` |
+| Swift `ThreeMD` | tag `v2.1.0` | GitHub release `v2.0.0` |
 | `@corvidlabs/threemd` | `2.1.0` in `js/package.json` | npm `2.0.0` |
 | Rust `threemd` | `2.1.0` in `rust/Cargo.toml` | last crates.io release |
 | `@corvidlabs/three-md-element` | `2.1.0` in `element/package.json` | npm `2.0.0` |
@@ -70,20 +71,18 @@ Also in the libraries, and called out because they change bytes or acceptance:
 | Optional LZFSE | Apple Compression when available | Explicit unsupported-backend error | Explicit unsupported-backend error |
 | Element and VS Code storage UI | No | No | n/a |
 
-## Still open before a tag
+## Follow-ups
+
+These are not in this tag.
 
 - CLI binary input, `convert` and `inspect`. Today's commands stay text-only.
 - Interchange protocol 2. The development adapter is still `3md-interchange-1`.
 - The 2.0.0 reader compatibility job.
 - The CI performance gate in `docs/design/threemd-2.1/perf-gate.md`: harnesses,
-  `perf.yml`, and the three-run calibrated receipt. That gate is not this
-  preparation.
-- Release evidence under `docs/evidence/release-2.1.0/`: fuzz counts, perf
-  receipts, and an interchange receipt. That directory does not exist yet.
-- `fledge lanes run verify` and `fledge trust verify` on the exact release tip.
-- README pictures and a regenerated `docs.3md` are on pull request 73.
-  The CLI and interchange protocol 2 docs stay open with those features.
-- A maintainer merge of pull request 73, then the tag. This branch does not do either.
+  `perf.yml`, and the three-run calibrated receipt. The local timings below
+  are not that gate.
+- Release evidence under `docs/evidence/release-2.1.0/`. That directory does
+  not exist yet.
 
 ## Local library check, not the gate
 
@@ -136,6 +135,6 @@ Bun's was about 0.071 s.
 
 ## Next step
 
-Finish the open CLI, interchange, compatibility and performance work on this
-pull request, then run `fledge lanes run verify` and `fledge trust verify` on
-that tip before anyone cuts `v2.1.0`.
+Hosted CI has to pass on this commit before the `v2.1.0` tag is pushed.
+Publishing the GitHub release is a separate step. It is what runs the npm,
+crate, and Homebrew workflows.

@@ -10,11 +10,10 @@ ThreeMD 2.0.0 adds [linked file composition](docs/FILE-COMPOSITION.md): map a
 character to another 3md filename, resolve host-supplied files in any of the
 three libraries, and share a self-contained bundle. See the
 [nested LinkedVillage example](Examples/LinkedVillage/README.md) and the
-[2.0.0 release notes](docs/RELEASE-2.0.0.md). ThreeMD 2.1
-prepares the binary save: `.binary` writes the frames as fields (payload kind 2).
+[2.0.0 release notes](docs/RELEASE-2.0.0.md). ThreeMD 2.1.0
+ships the binary save: `.binary` writes the frames as fields (payload kind 2).
 Kind 1 is deprecated. `encodeTextContainer` still writes it for a 2.0 reader.
-The `v2.1.0` tag is
-not cut. See the [2.1 preparation notes](docs/RELEASE-2.1.0.md).
+See the [2.1.0 release notes](docs/RELEASE-2.1.0.md).
 
 **Markdown with a Z axis.** A `.3md` file is ordinary Markdown extended along
 one free axis: stack your content into **planes** and tell the reader what the
@@ -287,8 +286,8 @@ Then depend on the `ThreeMD` library product:
 .product(name: "ThreeMD", package: "3md")
 ```
 
-`from: "2.1.0"` resolves only after the `v2.1.0` tag exists. Until that GitHub
-release, `from: "2.0.0"` is the published package. Read the
+`from: "2.1.0"` resolves from the `v2.1.0` tag. npm still serves 2.0.0 until
+the GitHub release. Read the
 [2.1 migration notes](docs/MIGRATION-2.1.md) before upgrading: a 2.0 reader
 rejects kind 2, and Rust's canonical number spelling changes for 92 powers of
 two. The [2.0 migration guide](docs/RELEASE-2.0.0.md#migrating-an-existing-host)
@@ -308,7 +307,7 @@ public npm registry. Install with:
 bun add @corvidlabs/threemd
 ```
 
-The package manifests on this branch read 2.1.0. npm still serves 2.0.0 until
+The package manifests read 2.1.0. npm still serves 2.0.0 until
 the GitHub release runs the publish workflow. If an older installation maps
 `@corvidlabs` to GitHub Packages, point that scope at the public npm registry.
 The web component keeps text rendering; the library exports the storage,
@@ -339,7 +338,7 @@ targets crates.io. Install an available published version with:
 cargo add threemd
 ```
 
-The prepared crate version is 2.1.0 and still pins
+The crate version is 2.1.0 and still pins
 `unicode-normalization =0.1.25`. Its serde/serde_json dependencies are
 development-only. crates.io stays at the last published release until the
 GitHub release runs the publish workflow and `CRATES_IO_TOKEN` is configured.
@@ -565,11 +564,11 @@ The 1.0 text grammar remains frozen. Specification 1.1 adds independently
 versioned binary storage, composition and linked file authoring without changing
 that grammar. ThreeMD 2.0.0, released on 2026-10-06, implements those extensions
 in Swift, TypeScript and Rust; the package version is separate from the format
-version. Specification 1.2 is on main (pull request 72). It adds payload kind 2
-inside that same container. Main still stops a document at 64 MiB. This branch
-removes that stop, on pull request 73, which is not merged. Package manifests
-read 2.1.0. The `v2.1.0` tag is not cut. See the
-[2.1 preparation notes](docs/RELEASE-2.1.0.md). Older
+version. Specification 1.2 is on main. It adds payload kind 2
+inside that same container, and storage has no fixed size stop. ThreeMD 2.1.0
+is the release commit for tag `v2.1.0`. The library source is `b70373b`.
+npm and crates.io stay at 2.0.0 until a GitHub release. See the
+[2.1.0 release notes](docs/RELEASE-2.1.0.md). Older
 `3md: 0.1` documents remain valid: the parser is version-lenient and never
 rejects a document by its version string.
 

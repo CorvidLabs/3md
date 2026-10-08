@@ -1,10 +1,8 @@
 # Migrating to ThreeMD 2.1
 
-Status: payload kind 2 is on main (pull request 72, merged 2026-10-07). Main
-still stops a document at 64 MiB. Pull request 73 removes that stop and is not
-merged. Package manifests read 2.1.0. The `v2.1.0` tag is not cut, and npm and
-crates.io still serve 2.0.0. These notes describe the library on pull request
-73. They are not a release announcement.
+Status: ThreeMD 2.1.0. Payload kind 2 and the removal of the fixed size stop
+are on main. Package manifests read 2.1.0. npm and crates.io still serve 2.0.0
+until a GitHub release. These notes describe that library.
 
 The package number is not the document version. Keep `3md: 1.0` (or an older
 accepted string) in frontmatter. The parser stays version-lenient. Text grammar
