@@ -1,9 +1,9 @@
 {
  "examples": {
   "files": 293,
-  "canonical": 1188086,
-  "kind2": 1156441,
-  "ratio": 0.9733647227557601,
+  "canonical": 1178967,
+  "kind2": 1147274,
+  "ratio": 0.9731179922762894,
   "smaller": 293,
   "minRatio": 0.798936170212766,
   "maxRatio": 0.9923287671232877
@@ -46,8 +46,8 @@
   },
   {
    "file": "Examples/animation.3md",
-   "canonical": 415,
-   "kind2": 351
+   "canonical": 579,
+   "kind2": 516
   },
   {
    "file": "Examples/annotated-contract.3md",
@@ -316,8 +316,8 @@
   },
   {
    "file": "Examples/conways-game-of-life.3md",
-   "canonical": 17509,
-   "kind2": 17255
+   "canonical": 3304,
+   "kind2": 3049
   },
   {
    "file": "Examples/corner-kick-variation-atlas.3md",
@@ -371,8 +371,8 @@
   },
   {
    "file": "Examples/daily-planner.3md",
-   "canonical": 436,
-   "kind2": 392
+   "canonical": 797,
+   "kind2": 685
   },
   {
    "file": "Examples/dance-steps.3md",
@@ -461,8 +461,8 @@
   },
   {
    "file": "Examples/dna-double-helix.3md",
-   "canonical": 2358,
-   "kind2": 1995
+   "canonical": 6919,
+   "kind2": 6576
   },
   {
    "file": "Examples/drum-machine-groove.3md",

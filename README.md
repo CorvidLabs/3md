@@ -100,10 +100,10 @@ The **text file** is the `.3md` you edit. It is ordinary UTF-8. A frame is an `@
 **Kind 1 is deprecated.** It was the ThreeMD 2.0 binary file: the text file copied after that same 40-byte header. The frames are not stored as fields. Readers still open old kind 1 files. `encodeTextContainer` still writes one when a 2.0 reader must open the file. New files use `.binary`. The charts leave kind 1 out.
 
 <p align="center">
-  <img src="docs/readme/same-document.png" alt="The bouncing dot's four frames twice. Left, the text file, each frame under an @plane line, 415 bytes. Right, the binary save, frame number and name, 351 bytes." width="880">
+  <img src="docs/readme/same-document.png" alt="The bouncing dot's four frames twice. Left, the text file, each frame under an @plane line, 579 bytes. Right, the binary save, frame number and name, 516 bytes." width="880">
 </p>
 
-[Examples/animation.3md](Examples/animation.3md) is the bouncing dot. The text file is 415 bytes. The binary file is 351 bytes, because the `@plane` lines are left out.
+[Examples/animation.3md](Examples/animation.3md) is the bouncing dot. It crosses a dotted field, left to right, then back. The text file is 579 bytes. The binary file is 516 bytes, because the `@plane` lines are left out.
 
 <p align="center">
   <img src="docs/readme/z-axis.gif" alt="The bouncing dot. Each frame shows the text file on the left, including the o and dot lines, and the same lines stored as binary on the right." width="760">
@@ -115,7 +115,7 @@ The moving picture steps through the four frames. Left is the text file. Right i
   <img src="docs/readme/examples.gif" alt="The forgetting poem, eleven frames, then the week planner. Each frame is the text file on the left and the binary save on the right." width="760">
 </p>
 
-The second picture is two more files from [Examples/](Examples/). The poem drops one word at a time, then builds a shorter sentence back. Text file 940 bytes, binary 751. The week planner is three days: text file 436 bytes, binary 392. The words on the right are the body stored from the left.
+The second picture is two more files from [Examples/](Examples/). The poem drops one word at a time, then builds a shorter sentence back. Text file 940 bytes, binary 751. The week planner is seven days, Monday through Sunday: text file 797 bytes, binary 685. The words on the right are the body stored from the left.
 
 ### One note at four sizes
 
@@ -175,38 +175,38 @@ The text file has no header. Those 40 bytes are why a binary file is not just a 
 Each pair is one file. Blue is the text file. Green is the binary save.
 
 <p align="center">
-  <img src="docs/readme/small-documents.png" alt="Six files. Each pair is the text file and the binary save. Grove's binary file is one byte larger than its text. The poem's binary file is 751 bytes against 940 of text." width="880">
+  <img src="docs/readme/small-documents.png" alt="Six files. Each pair is the text file and the binary save. Grove's binary file is one byte larger than its text, 1,013 against 1,012. The poem's binary file is 751 bytes against 940 of text." width="880">
 </p>
 
 | Document | Text file | Binary |
 | --- | ---: | ---: |
-| [canopy.3md](Examples/Extensions/canopy.3md) | 111 | 101 |
-| [animation.3md](Examples/animation.3md) | 415 | 351 |
-| [daily-planner.3md](Examples/daily-planner.3md) | 436 | 392 |
-| [shared-grove.3md](Examples/Extensions/shared-grove.3md) | 685 | 686 |
+| [canopy.3md](Examples/Extensions/canopy.3md) | 290 | 263 |
+| [animation.3md](Examples/animation.3md) | 579 | 516 |
+| [daily-planner.3md](Examples/daily-planner.3md) | 797 | 685 |
+| [shared-grove.3md](Examples/Extensions/shared-grove.3md) | 1,012 | 1,013 |
 | [kinetic-erasure-poem.3md](Examples/kinetic-erasure-poem.3md) | 940 | 751 |
-| [dna-double-helix.3md](Examples/dna-double-helix.3md) | 2,358 | 1,995 |
-| [conways-game-of-life.3md](Examples/conways-game-of-life.3md) | 17,509 | 17,255 |
+| [dna-double-helix.3md](Examples/dna-double-helix.3md) | 6,919 | 6,576 |
+| [conways-game-of-life.3md](Examples/conways-game-of-life.3md) | 3,304 | 3,049 |
 
-Grove is the row where binary is one byte larger than the text. The poem is the large drop: 751 bytes is 79.9% of 940. Conway is in the table and left off the picture, so 17,509 bytes do not flatten the other bars.
+Open canopy and the two layers are small fenced pictures: a dot is open and a hash is a solid tile. The bouncing dot crosses four frames. The planner is Monday through Sunday. Grove is one JSON block: it stores the canopy once and places it three times, and it is the row where binary is one byte larger (1,013 against 1,012). The poem is the large drop: 751 bytes is 79.9% of 940. The helix is twenty dotted rungs, a hash for the backbone and letters for the bases. Conway is in the table and left off the picture. Its text file is 3,304 bytes and its binary save is 3,049. Open it and each generation is a small grid: a dot is an empty cell and o is a live cell.
 
 ### Adding many files together
 
 <p align="center">
-  <img src="docs/readme/corpus-bytes.png" alt="Three sets of files, text and binary. 293 examples: binary is 31,645 bytes smaller. sculpt-4096 is 4,096 layers of 32 by 20, not a 1024 cube." width="880">
+  <img src="docs/readme/corpus-bytes.png" alt="Three sets of files, text and binary. 293 examples: binary is 31,693 bytes smaller. sculpt-4096 is 4,096 layers of 32 by 20, not a 1024 cube." width="880">
 </p>
 
 <p align="center">
-  <img src="docs/readme/size-ratio.png" alt="How many of 293 example files have a binary save at each percent of the text size. 100% would match the text. Together the files are 97.3% of the text. A typical file is 97.4%. The tall bar is 123 files at 97%." width="880">
+  <img src="docs/readme/size-ratio.png" alt="How many of 293 example files have a binary save at each percent of the text size. 100% would match the text. Together the files are 97.3% of the text. A typical file is 97.4%. The tall bar is 108 files at 98%." width="880">
 </p>
 
 | Input | What it is | Text bytes | Binary | Binary / text |
 | --- | --- | ---: | ---: | ---: |
-| 293 example files | The committed size list | 1,188,086 | 1,156,441 | 0.973 |
+| 293 example files | The committed size list | 1,178,967 | 1,147,274 | 0.973 |
 | synthetic-2000 | One file: 2,000 planes of mixed Markdown | 4,037,480 | 3,998,362 | 0.990 |
 | sculpt-4096, 32 by 20 | One file: 4,096 layers of a 32 by 20 picture. Not a 1024 cube | 3,031,345 | 2,934,090 | 0.968 |
 
-Binary for the 293 files is 31,645 bytes smaller than the text (2.7%). Together those files are 97.3% of the text. That is the committed ratio, and it is the 97.3% in the picture. A typical file, the median, is 97.4%. The biggest saving is the poem, at 79.9%. The smallest saving is `annotated-contract.3md`, at 99.2%. Every file in the list is under 100%. The tall bar is 123 files at 97%. Those totals are the committed check in [conformance/structured/sizes.json](conformance/structured/sizes.json). The test `g6_kind_2_sizes_match_sizes_json` checks them. The two generated files are not committed. The sizes are.
+Binary for the 293 files is 31,693 bytes smaller than the text (2.7%). Together those files are 97.3% of the text. That is the committed ratio, and it is the 97.3% in the picture. A typical file, the median, is 97.4%. The biggest saving is the poem, at 79.9%. The smallest saving is `annotated-contract.3md`, at 99.2%. Every file in the list is under 100%. The tall bar is 108 files at 98%. Those totals are the committed check in [conformance/structured/sizes.json](conformance/structured/sizes.json). The test `g6_kind_2_sizes_match_sizes_json` checks them. The two generated files are not committed. The sizes are.
 
 ### Reading the text file vs reading the binary
 

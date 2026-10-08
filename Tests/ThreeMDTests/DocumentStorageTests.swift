@@ -46,7 +46,10 @@ final class DocumentStorageTests: XCTestCase {
         XCTAssertEqual(document.axis, .space)
         XCTAssertEqual(document.title, "Reusable canopy")
         XCTAssertEqual(document.metadata["material"], "mint")
-        XCTAssertEqual(document.planes.map(\.body), [".#\n##", "##\n.#"])
+        XCTAssertEqual(
+            document.planes.map(\.body),
+            ["# top\n\n```\n.#\n##\n```", "# bottom\n\n```\n##\n.#\n```"]
+        )
         XCTAssertEqual(try DocumentStorageCodec.decode(portable), document)
         XCTAssertEqual(try DocumentStorageCodec.encode(document), readable)
         // The committed 2.0 file is payload kind 1; `.binary` now writes the structured sibling (payload kind 2).

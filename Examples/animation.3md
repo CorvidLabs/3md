@@ -1,36 +1,48 @@
 ---
 3md: 1.0
 axis: frame
-legend: o=●
+legend: .=· o=● -=ground
 title: Bouncing dot
 fps: "12"
 ---
-Each plane is one animation frame. A viewer steps z to play it back.
+Four frames of one dot. It travels the top row from left to right, then comes back. A dot is an empty cell. The dashes are the ground.
 
 @plane z=0 label="frame-0"
+# frame 0
+
 ```
 o........
 .........
 .........
+---------
 ```
 
 @plane z=1 label="frame-1"
+# frame 1
+
 ```
+....o....
 .........
-..o......
 .........
+---------
 ```
 
 @plane z=2 label="frame-2"
+# frame 2
+
 ```
+........o
 .........
 .........
-....o....
+---------
 ```
 
 @plane z=3 label="frame-3"
+# frame 3
+
 ```
+....o....
 .........
-..o......
 .........
+---------
 ```
