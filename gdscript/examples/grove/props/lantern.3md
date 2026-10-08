@@ -1,0 +1,8 @@
+---
+3md: "1.1"
+axis: "layer"
+title: "Lantern"
+---
+
+@plane z=0 label="Flame" 3md-id="flame"
+A warm light the grove scene pulls in by filename.

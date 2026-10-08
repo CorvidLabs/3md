@@ -1,8 +1,9 @@
 # Contributing to 3md
 
-Thanks for your interest. 3md is a plain-text format with three parsers kept
-in lockstep by a shared conformance suite. Sculpt.3md, the Mac app in
-`apps/sculpt`, is not a fourth parser. The most important rule:
+Thanks for your interest. 3md is a plain-text format with four libraries kept
+in lockstep by a shared conformance suite: Swift, TypeScript, Rust, and
+GDScript. Sculpt.3md, the Mac app in `apps/sculpt`, is not a fifth parser.
+The most important rule:
 **a format change must land in every implementation and be pinned by a
 conformance vector.**
 
@@ -11,6 +12,7 @@ conformance vector.**
 - `Sources/ThreeMD/` - the canonical Swift parser, serializer, and HTML renderer.
 - `js/` - the TypeScript package (`@corvidlabs/threemd`).
 - `rust/` - the Rust crate (`threemd`).
+- `gdscript/` - the Godot 4.7 addon (`addons/threemd`) and its headless checks.
 - `apps/sculpt/` - Sculpt.3md, the nested Mac app. Package name Rook. It builds against this checkout. Linux unit tests run in `.github/workflows/sculpt.yml`. They do not build the Mac app, and they are not the format Trust gate.
 - `conformance/` - shared JSON vectors. Both `Tests/ThreeMDTests/ConformanceTests`
   and `js/test/conformance.test.ts` and `rust/tests/conformance.rs` run them.
@@ -36,7 +38,15 @@ bundle drift, and editor checks. Per language:
 swift test                                   # Swift
 cd js && bun install && bun test             # TypeScript
 cd rust && cargo test                        # Rust
+fledge run gdscript                          # Godot 4 addon
 ```
+
+`fledge run gdscript` needs Godot 4.7 on `PATH` (`GODOT` overrides the binary).
+The suite includes `gdscript/examples`. Godot 4.7.2 is the stable release these
+scripts were run with.
+It is not part of the `verify` lane, because hosted CI does not install Godot yet.
+`fledge run gdscript-interchange` runs the same gate as `fledge run interchange`
+and adds the Godot adapter, for sixteen writer/reader pairs.
 
 The interactive demos in `web/` have their own cross-browser tests (Playwright
 on Chromium and WebKit, the engine behind Safari). Run them if you touch the
@@ -53,9 +63,9 @@ npx playwright test
 
 1. Update `SPEC.md` first: it is the contract.
 2. Add or update a vector in `conformance/` that pins the new behavior.
-3. Implement it in all three parsers (Swift, TypeScript, Rust) so every
-   conformance suite passes. The nested app consumes the Swift library. It does
-   not replace that step.
+3. Implement it in Swift, TypeScript, Rust, and GDScript so every conformance
+   suite passes. The nested app consumes the Swift library. It does not
+   replace that step.
 4. Add language-level unit tests where useful.
 
 A change that only lands in one implementation will fail the others' conformance

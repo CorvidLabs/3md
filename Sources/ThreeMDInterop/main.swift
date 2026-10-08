@@ -71,7 +71,7 @@ private final class InterchangeCoordinator {
         encoder.outputFormatting = [.sortedKeys]
         let cases = try loadCases()
         let executable = CommandLine.arguments[0]
-        let adapters = [
+        var adapters = [
             Adapter(name: "Swift", executable: executable, arguments: ["--adapter"]),
             Adapter(
                 name: "TypeScript-Node",
@@ -84,6 +84,18 @@ private final class InterchangeCoordinator {
                 arguments: []
             ),
         ]
+        // The verify lane stays on the three shipped languages. A local Godot
+        // binary joins them and the pair count becomes 16.
+        if ProcessInfo.processInfo.environment["THREEMD_GODOT"]?.isEmpty == false {
+            adapters.append(
+                Adapter(
+                    name: "GDScript",
+                    executable: root.appendingPathComponent("gdscript/tools/interchange.sh").path,
+                    arguments: []
+                )
+            )
+        }
+        let pairCount = adapters.count * adapters.count
         try checkExactJSONRegression()
         try await checkAdapterBounds(adapters[0])
         #if canImport(Darwin) || canImport(Glibc) || canImport(Musl)
@@ -147,10 +159,11 @@ private final class InterchangeCoordinator {
                 pairCounts["\(item.producer) -> \(adapter.name)", default: 0] += 1
             }
         }
-        guard pairCounts.count == 9 else { throw InterchangeFailure.invalid("Missing producer/consumer pair") }
+        guard pairCounts.count == pairCount else { throw InterchangeFailure.invalid("Missing producer/consumer pair") }
         let receipt: [String: JSONValue] = [
             "schema": .string("3md-interchange-receipt-1"), "cases": .number(Double(cases.count)),
-            "producerConsumerPairs": .number(9), "imports": .number(Double(transfers.count * adapters.count)),
+            "producerConsumerPairs": .number(Double(pairCount)),
+            "imports": .number(Double(transfers.count * adapters.count)),
             "pairCounts": .object(pairCounts.mapValues { .number(Double($0)) }),
             "compression": .string("none; optional Apple LZFSE excluded"), "passed": .bool(true),
         ]

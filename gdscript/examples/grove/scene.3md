@@ -1,0 +1,15 @@
+---
+3md: "1.1"
+axis: "layer"
+title: "Grove"
+3md-files: "{\"1\":\"props/lantern.3md\"}"
+---
+
+@plane z=0 label="Ground"
+The forest floor. Glyph 1 is the lantern prop.
+
+@plane z=1 label="Canopy"
+Birds and light. This plane is another layer, not a Godot node.
+
+@plane z=2 label="HUD"
+Health and the map.

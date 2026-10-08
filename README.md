@@ -67,10 +67,10 @@ title: My Week
 ```
 
 This repository holds the format specification ([SPEC.md](SPEC.md)), example
-documents ([Examples/](Examples)), three parsers kept in lockstep (`ThreeMD`, a
-cross-platform Swift parser; a TypeScript port in [`js/`](js); and a Rust crate
-in [`rust/`](rust)), and a shared cross-implementation conformance suite
-([conformance/](conformance)) that all three pass.
+documents ([Examples/](Examples)), and four libraries checked against one
+conformance suite ([conformance/](conformance)): `ThreeMD`, a cross-platform
+Swift parser; a TypeScript port in [`js/`](js); a Rust crate in [`rust/`](rust);
+and a Godot 4 addon in [`gdscript/`](gdscript).
 
 ThreeMD 2.0.0 adds general `.3mdb` storage, self-contained document
 composition, linked file composition, stable optional identities, atomic
@@ -87,6 +87,21 @@ canonical text, uncompressed binary, composition references, linked-file bundles
 and imported edits. The [interchange catalog](conformance/interchange/README.md) states the cases,
 exact-byte checks and platform exceptions. This does not claim portable LZFSE
 or a shared JSON snapshot/patch transport.
+
+The Godot addon reads and writes the same text, payload kind 1, and payload kind 2
+documents. It also builds composition profiles, resolves linked files from bytes
+the caller supplies, and applies revision-checked document edits. LZFSE is
+refused. Parser, storage, composition, and editing scripts do not open files.
+`ThreeMDFiles` reads project paths a game has already chosen. Copy
+[`gdscript/addons/threemd`](gdscript/addons/threemd) into a project's `addons`
+folder and enable the plugin. On Godot 4.7 the plugin imports `.3md` and
+`.3mdb` as `ThreeMDDocumentAsset` resources and does not change the open scene.
+Planes stay data. [`gdscript/examples`](gdscript/examples) walks layers, a linked
+grove, both payload kinds, composition, edits, and a node map. Run
+`fledge run gdscript` for the headless suite. That suite is local. The verify
+lane above stays on the nine Swift, TypeScript, and Rust pairs until hosted CI
+installs Godot. With Godot 4 on `PATH`, `fledge run gdscript-interchange` adds
+the GDScript adapter and checks all sixteen writer/reader pairs.
 
 ## Why
 
@@ -353,6 +368,28 @@ development-only.
 let document = threemd::parse(source)?;
 println!("{}", document.axis); // "time"
 ```
+
+### Godot
+
+Copy [`gdscript/addons/threemd`](gdscript/addons/threemd) into the game's
+`addons` folder and enable ThreeMD in Project Settings. The plugin imports
+`.3md` and `.3mdb` files and does not change the open scene. The samples in
+[`gdscript/examples`](gdscript/examples) cover layers, linked files, both
+payload kinds, composition, and edits. The larger document set remains in
+[`Examples/`](Examples).
+
+```gdscript
+var document = ThreeMDParser.parse(source)
+var bytes = ThreeMDStorage.encode_binary(document)
+var loaded = ThreeMDFiles.load_document("res://levels/grove.3md")
+var asset: ThreeMDDocumentAsset = load("res://levels/grove.3md")
+```
+
+`ThreeMDParser`, `ThreeMDStorage`, `ThreeMDComposition`, `ThreeMDFileComposition`,
+and `ThreeMDEditing` are pure. `ThreeMDFiles` is the only library script that
+reads paths. The importer runs in the editor. A failure is a `ThreeMDError`
+with a `code` string, the same codes the other libraries use. These scripts
+run on Godot 4.7.2, the current stable release.
 
 ## Library usage
 
