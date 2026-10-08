@@ -3,10 +3,16 @@
 Status: preparing. Not tagged. Not published.
 
 On 2026-10-07 Leif approved the structured-payload library work and asked for a
-pull request, then preparation for 2.1. The branch is
-`leif/structured-binary-2.1`, pull request 72. Package manifests on this branch
-read 2.1.0. This preparation does not merge, tag, publish, or weaken a trust
+pull request, then preparation for 2.1. Package manifests read 2.1.0. The
+library and the docs for the tag are pull request 73, branch
+`leif/readme-visuals`. Pull request 72 is the earlier structured-payload
+review. This preparation does not merge, tag, publish, or weaken a trust
 gate.
+
+Storage has no fixed size stop. A file is parsed and saved when the process
+can hold it. Local runs saved a 1 GB cube in Swift, TypeScript, and Rust, and
+a 5 GB plane in Rust. A 10 GB file has not been measured. CI does not allocate
+those files.
 
 The approved SpecSync change is
 `add-a-structured-binary-document-payload-kind-2-to-threemd-2-1-in-swift-typescript-and-rust-with-fast-checksums-cli`.
@@ -75,11 +81,9 @@ Also in the libraries, and called out because they change bytes or acceptance:
 - Release evidence under `docs/evidence/release-2.1.0/`: fuzz counts, perf
   receipts, and an interchange receipt. That directory does not exist yet.
 - `fledge lanes run verify` and `fledge trust verify` on the exact release tip.
-- Remaining documentation from the change plan: example tables, the
-  conformance index, and a regenerated `docs.3md`. Those files are not updated
-  here, because several of their planned sentences describe the CLI and the
-  protocol that are still open.
-- A maintainer merge, then the tag. This pull request does not do either.
+- README pictures and a regenerated `docs.3md` are on pull request 73.
+  The CLI and interchange protocol 2 docs stay open with those features.
+- A maintainer merge of pull request 73, then the tag. This branch does not do either.
 
 ## Local library check, not the gate
 

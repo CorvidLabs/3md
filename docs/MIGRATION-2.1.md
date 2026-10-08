@@ -29,8 +29,9 @@ as "this file needs a newer ThreeMD". Rust composition decode wraps it as
 
 Old kind-1 `.3mdb` files still decode. `isBinary` is still the magic check.
 `encode` and `decode` keep their signatures. Default storage limits are the
-largest integer the language can use, so a 1 GB or 5 GB document is parsed and
-saved when the process can hold it. A caller can still pass a lower positive
+largest integer the language can use, so a document is parsed and saved
+when the process can hold it. A 1 GB cube and a 5 GB plane were saved in
+local runs. A 10 GB file has not been measured. A caller can still pass a lower positive
 limit. Zero and negative limits are `invalidLimits`. Composition profile
 ceilings and edit budgets stay as they were. Composition text stays
 the readable `3md-composition-1` profile. A `.binary` composition bundle is

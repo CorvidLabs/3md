@@ -230,7 +230,15 @@ One Rust 1.98.0 release process on an Apple M1 Ultra (macOS 26.5.2, 64 GB). Each
 
 ### How big a file can be
 
-There is no fixed size stop. A 1 GB document, a 5 GB document, or any larger document is parsed and saved when the process can hold it. [One note at four sizes](#one-note-at-four-sizes) is a harbor day at 1,024 bytes, then the same sentence at 10 MB, 100 MB, and 1 GB. Binary is not a compressor. A document made of 1 GB of letters stays about 1 GB as binary. The header is 40 bytes either way.
+There is no fixed size stop in the library. A document is parsed and saved when the process can hold it. These local runs are the ones that were actually saved:
+
+- A 1 GB cube, 1024 × 1024 × 1024 letters, in Swift, TypeScript, and Rust. All three wrote the same bytes.
+- The harbor note at 1,024 bytes, 10 MB, 100 MB, and 1 GB, in Rust. [One note at four sizes](#one-note-at-four-sizes) shows that run.
+- One plane of 5 GB of the letter `a`, in Rust.
+
+A 10 GB file has not been measured. The library does not refuse that size. The process has to be able to hold the file. CI does not allocate the 1 GB or 5 GB files.
+
+Binary is not a compressor. A document made of 1 GB of letters stays about 1 GB as binary. The header is 40 bytes either way.
 
 The default limit is the largest integer the language uses for a size:
 
@@ -259,7 +267,7 @@ The same number of letters, split into 1024 planes of one 1024-letter line, does
 
 A cube of 1024 such pages is 1024 × 1024 × 1024 letters, which is 1,073,741,824 bytes before the `@plane` lines. One local run on this Apple M1 Ultra parsed that cube and saved it again in Swift, TypeScript, and Rust. All three wrote the same bytes: text 1,074,804,681, binary 1,074,796,532. Binary is 8,149 bytes smaller than the text. Rust 1.98.0 release wrote the text in 3.413 seconds and read it in 2.539 seconds, and wrote the binary in 0.408 seconds and read it in 0.406 seconds. That run is one process, not the speed gate.
 
-The same Rust build also parsed and saved one plane of 5 GB of the letter `a` (5,368,709,120 bytes). The text file was 5,368,709,164 bytes. The binary file was 5,368,709,179 bytes, 15 bytes larger, because a wall of one letter has almost no syntax to remove. Writing the text took 23.501 seconds and reading it took 16.208 seconds. Writing the binary took 2.360 seconds and reading it took 2.348 seconds.
+The same Rust build also parsed and saved one plane of 5 GB of the letter `a` (5,368,709,120 bytes). The text file was 5,368,709,164 bytes. The binary file was 5,368,709,179 bytes, 15 bytes larger, because a wall of one letter has almost no syntax to remove. Writing the text took 23.501 seconds and reading it took 16.208 seconds. Writing the binary took 2.360 seconds and reading it took 2.348 seconds. That 5 GB plane is the largest file measured. A 10 GB file has not been run.
 
 A one-plane body of 64 letters `a` is the tiny file that grows: text 106 bytes, binary 117 bytes.
 
