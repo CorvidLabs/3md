@@ -22,10 +22,9 @@ exhaustive proof for arbitrary inputs or every runtime.
 bun add @corvidlabs/threemd
 ```
 
-npm serves `@corvidlabs/threemd` 2.1.0. This package manifest reads 2.2.0,
-and that version is published only when the GitHub release is published.
-Older GitHub Packages scope configuration must be changed when adopting the
-public npm release. See the [2.2.0 release notes](../docs/RELEASE-2.2.0.md).
+npm serves `@corvidlabs/threemd` 2.2.0. Older GitHub Packages scope
+configuration must be changed when adopting the public npm release. See the
+[2.2.0 release notes](../docs/RELEASE-2.2.0.md).
 
 ## Usage
 

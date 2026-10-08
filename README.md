@@ -11,12 +11,12 @@ one free axis: stack your content into **planes** and tell the reader what the
 depth means. Time for a daily planner. Frames for an animation. Layers for
 annotations. Space for a scene.
 
-ThreeMD 2.2.0 is the library in this repository. This commit is the release
-commit for tag `v2.2.0`. The GitHub release is not published. The text file
-is the `.3md` you edit. Binary stores those same frames as fields
-(`.binary`, payload kind 2). Kind 1 is deprecated. A file is parsed and saved
-at whatever size the process can hold. Linked file composition from 2.0.0
-remains. npm and crates.io still serve 2.1.0. See
+ThreeMD 2.2.0 is the current library. Tag `v2.2.0` and the GitHub release
+were published on 2026-10-08. The text file is the `.3md` you edit. Binary
+stores those same frames as fields (`.binary`, payload kind 2). Kind 1 is
+deprecated. A file is parsed and saved at whatever size the process can hold.
+Linked file composition from 2.0.0 remains. npm serves 2.2.0. crates.io still
+serves `threemd` 2.1.0. See
 [Text file and binary](#text-file-and-binary), the
 [2.2.0 release notes](docs/RELEASE-2.2.0.md), and
 [linked file composition](docs/FILE-COMPOSITION.md).
@@ -312,8 +312,8 @@ Then depend on the `ThreeMD` library product:
 .product(name: "ThreeMD", package: "3md")
 ```
 
-`from: "2.2.0"` resolves from the `v2.2.0` tag. npm and crates.io still serve
-2.1.0 until the GitHub release is published. Read the
+`from: "2.2.0"` resolves from the published `v2.2.0` tag. npm serves 2.2.0.
+crates.io still serves `threemd` 2.1.0. Read the
 [2.1 migration notes](docs/MIGRATION-2.1.md) before upgrading: a 2.0 reader
 rejects kind 2, and Rust's canonical number spelling changes for 92 powers of
 two. The [2.0 migration guide](docs/RELEASE-2.0.0.md#migrating-an-existing-host)
@@ -334,9 +334,8 @@ public npm registry. Install with:
 bun add @corvidlabs/threemd
 ```
 
-npm serves `@corvidlabs/threemd` 2.1.0. This repository's `package.json` reads
-2.2.0, and that package is published only when the GitHub release is published.
-If an older installation maps
+npm serves `@corvidlabs/threemd` 2.2.0 and `@corvidlabs/three-md-element`
+2.2.0. If an older installation maps
 `@corvidlabs` to GitHub Packages, point that scope at the public npm registry.
 The web component keeps text rendering; the library exports the storage,
 composition, linked-file and editing APIs.
@@ -366,9 +365,9 @@ targets crates.io. Install an available published version with:
 cargo add threemd
 ```
 
-crates.io serves `threemd` 2.1.0. This repository's crate manifest reads
-2.2.0, and that crate is published only when the GitHub release is published.
-The crate still pins
+crates.io serves `threemd` 2.1.0. The 2.2.0 crate publish did not run:
+`CRATES_IO_TOKEN` is not configured. The crate manifest in this repository
+reads 2.2.0. The crate still pins
 `unicode-normalization =0.1.25`. Its serde/serde_json dependencies are
 development-only.
 
@@ -616,10 +615,10 @@ that grammar. ThreeMD 2.0.0, released on 2026-10-06, implements those extensions
 in Swift, TypeScript and Rust. The package version is separate from the format
 version. Specification 1.2 adds payload kind 2 inside that same container, and
 storage has no fixed size stop. ThreeMD 2.1.0 is tag `v2.1.0`, published on
-2026-10-08. npm and crates.io serve 2.1.0. Sculpt.3md was nested on main after
-that tag. ThreeMD 2.2.0 is the release commit for tag `v2.2.0` and adds the
-Godot 4.7 addon. The GitHub release is not published, so npm and crates.io
-still serve 2.1.0. Older `3md: 0.1` documents remain valid: the parser is version-lenient
+2026-10-08. Sculpt.3md was nested on main after that tag. ThreeMD 2.2.0 is tag
+`v2.2.0` at `54a6f30`, GitHub release published the same day, and adds the
+Godot 4.7 addon. npm serves 2.2.0. crates.io still serves `threemd` 2.1.0.
+Older `3md: 0.1` documents remain valid: the parser is version-lenient
 and never rejects a document by its version string. See the
 [2.2.0 release notes](docs/RELEASE-2.2.0.md).
 

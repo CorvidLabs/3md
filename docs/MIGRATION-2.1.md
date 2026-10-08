@@ -1,9 +1,8 @@
 # Migrating to ThreeMD 2.1
 
 Status: ThreeMD 2.1.0, published. Payload kind 2 and the removal of the fixed
-size stop are on main. npm and crates.io serve 2.1.0 until the 2.2.0 GitHub
-release. Repository manifests read 2.2.0. Tag `v2.2.0` names that release
-commit. These notes describe the 2.1 library change.
+size stop shipped in that release. These notes describe the 2.1 library
+change. npm now serves 2.2.0. crates.io still serves `threemd` 2.1.0.
 
 The package number is not the document version. Keep `3md: 1.0` (or an older
 accepted string) in frontmatter. The parser stays version-lenient. Text grammar
