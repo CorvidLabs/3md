@@ -1,9 +1,9 @@
 {
  "examples": {
   "files": 293,
-  "canonical": 1188086,
-  "kind2": 1156441,
-  "ratio": 0.9733647227557601,
+  "canonical": 1173881,
+  "kind2": 1142235,
+  "ratio": 0.9730415604307421,
   "smaller": 293,
   "minRatio": 0.798936170212766,
   "maxRatio": 0.9923287671232877
@@ -316,8 +316,8 @@
   },
   {
    "file": "Examples/conways-game-of-life.3md",
-   "canonical": 17509,
-   "kind2": 17255
+   "canonical": 3304,
+   "kind2": 3049
   },
   {
    "file": "Examples/corner-kick-variation-atlas.3md",

@@ -186,14 +186,14 @@ Each pair is one file. Blue is the text file. Green is the binary save.
 | [shared-grove.3md](Examples/Extensions/shared-grove.3md) | 685 | 686 |
 | [kinetic-erasure-poem.3md](Examples/kinetic-erasure-poem.3md) | 940 | 751 |
 | [dna-double-helix.3md](Examples/dna-double-helix.3md) | 2,358 | 1,995 |
-| [conways-game-of-life.3md](Examples/conways-game-of-life.3md) | 17,509 | 17,255 |
+| [conways-game-of-life.3md](Examples/conways-game-of-life.3md) | 3,304 | 3,049 |
 
-Grove is the row where binary is one byte larger than the text. The poem is the large drop: 751 bytes is 79.9% of 940. Conway is in the table and left off the picture, so 17,509 bytes do not flatten the other bars.
+Grove is the row where binary is one byte larger than the text. The poem is the large drop: 751 bytes is 79.9% of 940. Conway is in the table and left off the picture. Its text file is 3,304 bytes and its binary save is 3,049. Open it and each generation is a small grid: a dot is an empty cell and o is a live cell.
 
 ### Adding many files together
 
 <p align="center">
-  <img src="docs/readme/corpus-bytes.png" alt="Three sets of files, text and binary. 293 examples: binary is 31,645 bytes smaller. sculpt-4096 is 4,096 layers of 32 by 20, not a 1024 cube." width="880">
+  <img src="docs/readme/corpus-bytes.png" alt="Three sets of files, text and binary. 293 examples: binary is 31,646 bytes smaller. sculpt-4096 is 4,096 layers of 32 by 20, not a 1024 cube." width="880">
 </p>
 
 <p align="center">
@@ -202,11 +202,11 @@ Grove is the row where binary is one byte larger than the text. The poem is the 
 
 | Input | What it is | Text bytes | Binary | Binary / text |
 | --- | --- | ---: | ---: | ---: |
-| 293 example files | The committed size list | 1,188,086 | 1,156,441 | 0.973 |
+| 293 example files | The committed size list | 1,173,881 | 1,142,235 | 0.973 |
 | synthetic-2000 | One file: 2,000 planes of mixed Markdown | 4,037,480 | 3,998,362 | 0.990 |
 | sculpt-4096, 32 by 20 | One file: 4,096 layers of a 32 by 20 picture. Not a 1024 cube | 3,031,345 | 2,934,090 | 0.968 |
 
-Binary for the 293 files is 31,645 bytes smaller than the text (2.7%). Together those files are 97.3% of the text. That is the committed ratio, and it is the 97.3% in the picture. A typical file, the median, is 97.4%. The biggest saving is the poem, at 79.9%. The smallest saving is `annotated-contract.3md`, at 99.2%. Every file in the list is under 100%. The tall bar is 123 files at 97%. Those totals are the committed check in [conformance/structured/sizes.json](conformance/structured/sizes.json). The test `g6_kind_2_sizes_match_sizes_json` checks them. The two generated files are not committed. The sizes are.
+Binary for the 293 files is 31,646 bytes smaller than the text (2.7%). Together those files are 97.3% of the text. That is the committed ratio, and it is the 97.3% in the picture. A typical file, the median, is 97.4%. The biggest saving is the poem, at 79.9%. The smallest saving is `annotated-contract.3md`, at 99.2%. Every file in the list is under 100%. The tall bar is 123 files at 97%. Those totals are the committed check in [conformance/structured/sizes.json](conformance/structured/sizes.json). The test `g6_kind_2_sizes_match_sizes_json` checks them. The two generated files are not committed. The sizes are.
 
 ### Reading the text file vs reading the binary
 

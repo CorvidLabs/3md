@@ -39,8 +39,8 @@ Operations, timed in the same process on the same inputs:
 
 | Input | How it is produced | Size of canonical text |
 |---|---|---|
-| Examples corpus | the 293 `Examples/*.3md` files; one sample decodes all of them (one aggregate) | 1,188,086 B |
-| Largest example | `Examples/conways-game-of-life.3md` | 17,509 B |
+| Examples corpus | the 293 `Examples/*.3md` files; one sample decodes all of them (one aggregate) | 1,173,881 B |
+| Largest example | `Examples/box-breathing-orb.3md` | 13,081 B |
 | Median example | `Examples/corvid-voxel-wordmark.3md` | 3,974 B |
 | synthetic-2000 | `scripts/bench/generate-synthetic.mjs` (seed `0x3d3d2000`, 2,000 planes of mixed Markdown); the generator asserts the SHA-256 of the generated source, `b64e50d34e2d1fdf4a06d11638bdb1b3cb4cc912d5921f58317f46064de0c459` (generated source: 4,037,470 B) | 4,037,480 B (canonical text) |
 | sculpt-4096 | `scripts/bench/generate-sculpt.mjs` (seed `0x5c0197`, 4,096 layers of 32 × 20 voxels, one label and three attributes each); asserts the SHA-256 of the generated source, `dae524d9ea9bab4a027b9213082c19eb2621ff788890a6f25eb20bddd4ea667d` (generated source: 3,031,335 B) | 3,031,345 B (canonical text) |
@@ -98,7 +98,7 @@ Changes against the final design's gate, from the two critiques:
   floors and G6 block as section 6 states. G2 is stable across the two runtimes, so it is the one row with a single
   ceiling shared by Node and Bun; G1 keeps per-runtime ceilings and the 4-times floor.
 - TypeScript G2 is ≤ 0.50, not the 0.45 the critique proposed: sculpt-4096 reaches 0.39 to 0.41 (section 5), and the
-  largest Example (`conways-game-of-life.3md`, 17,509 B) reached 0.431 on Node in the critic's per-file run
+  largest Example at the time (`conways-game-of-life.3md`, then 17,509 B) reached 0.431 on Node in the critic's per-file run
   (`review-perf/ts-node-perfile.json`: 56.18 µs against 130.21 µs). A 0.45 ceiling would leave about 4% margin on that
   file before calibration on slower runners; 0.50 keeps about 16%.
 - G4 is kind-2 encode ÷ kind-2 decode. Against the text encoder (about 300 ms on 4 MB in Swift and TypeScript) the
