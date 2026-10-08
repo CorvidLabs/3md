@@ -209,7 +209,7 @@ extension FileInterchangeCases {
             ),
             ("document-limits-invalid-zero-planes", nil, values(["maximumPlanes": 0]), "invalidLimits"),
             (
-                "document-limits-invalid-above-ceiling", nil, values(["maximumEncodedBytes": 67_108_865]),
+                "document-limits-invalid-zero-encoded", nil, values(["maximumEncodedBytes": 0]),
                 "invalidLimits"
             ),
             ("limits-unknown-name", values(["maximumDepth": 2, "maximumPlanes": 1]), nil, "adapterFailure"),

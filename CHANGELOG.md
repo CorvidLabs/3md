@@ -6,7 +6,8 @@ Prepared as 2.1.0. Not tagged. See [docs/RELEASE-2.1.0.md](docs/RELEASE-2.1.0.md
 
 ### Changed
 
-- `DocumentStorageFormat.binary` writes payload kind 2, the structured document of SPEC 1.2, in Swift, TypeScript and Rust. ThreeMD 2.0 `.3mdb` files stay readable. `encodeTextContainer` writes the 2.0 kind-1 bytes for a 2.0 reader.
+- Document storage no longer has a fixed size stop. In Swift, TypeScript, and Rust the default limit is the largest integer the host can hold. A document is parsed and saved when the process can hold it. Measured locally: a 1 GB cube in all three, and a 5 GB plane in Rust. A 10 GB file has not been measured. A caller can still pass a lower positive limit.
+- `DocumentStorageFormat.binary` writes the binary save, payload kind 2, in Swift, TypeScript and Rust. The text file stays the `.3md`. Kind 1 is deprecated: readers still open a ThreeMD 2.0 `.3mdb`, and `encodeTextContainer` still writes one for a 2.0 reader.
 - Rust canonical numbers use the shortest round-trip spelling. That changes the canonical text of 92 powers of two that 2.0 misspelled.
 - Swift trims with the frozen whitespace set W from SPEC 11.3.6.
 - Linked file composition resolves each ledger reference without work or memory that grows with the containing path, in Swift, TypeScript and Rust. A repeated raw source within one file reuses its first resolution.
@@ -16,7 +17,7 @@ Prepared as 2.1.0. Not tagged. See [docs/RELEASE-2.1.0.md](docs/RELEASE-2.1.0.md
 
 ### Added
 
-- Header-only `containerInfo` and the payload-kind constants. Kind 2 decodes the document records directly. The element bundle does not include the storage codec.
+- Header-only `containerInfo` and the payload-kind constants. Kind 2 decodes the frames directly. The element bundle does not include the storage codec.
 
 - Rust `editing::adopt_composition_entries`, an additive function that returns adopted entries so callers can build the graph and receive the specific composition error.
 - The development interchange `files` request accepts strict optional `limits` and `documentLimits` objects, and the shared cases cover lowered limits, refusal order, path grammar, ledger escapes, cycle spellings, the cached-subtree discovery ceiling and the attribute bound in all nine writer/reader pairs.

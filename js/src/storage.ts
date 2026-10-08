@@ -74,6 +74,9 @@ export class DocumentStorageError extends Error {
   }
 }
 
+/** 2^53 - 1. The largest integer JavaScript can hold exactly, and the default storage bound. */
+const MAXIMUM_INTEGER = 9_007_199_254_740_991;
+
 export class DocumentDecodeLimits {
   public readonly maximumEncodedBytes: number;
   public readonly maximumDecodedBytes: number;
@@ -83,21 +86,21 @@ export class DocumentDecodeLimits {
   public static readonly standard = /* @__PURE__ */ new DocumentDecodeLimits();
   public constructor(options: Partial<Pick<DocumentDecodeLimits, "maximumEncodedBytes" | "maximumDecodedBytes" |
     "maximumLines" | "maximumPlanes" | "maximumRecordBytes">> = {}) {
-    const maximumBytes = 64 * 1024 * 1024;
-    this.maximumEncodedBytes = options.maximumEncodedBytes ?? maximumBytes;
-    this.maximumDecodedBytes = options.maximumDecodedBytes ?? maximumBytes;
-    this.maximumLines = options.maximumLines ?? 100_000;
-    this.maximumPlanes = options.maximumPlanes ?? 65_536;
-    this.maximumRecordBytes = options.maximumRecordBytes ?? 8 * 1024 * 1024;
-    for (const [value, ceiling] of [[this.maximumEncodedBytes, maximumBytes], [this.maximumDecodedBytes, maximumBytes],
-      [this.maximumLines, 100_000], [this.maximumPlanes, 65_536], [this.maximumRecordBytes, maximumBytes]]) {
-      if (value === undefined || ceiling === undefined || !boundedInteger(value, 1, ceiling)) {
-        throw new DocumentStorageError("invalidLimits");
-      }
+    this.maximumEncodedBytes = options.maximumEncodedBytes ?? MAXIMUM_INTEGER;
+    this.maximumDecodedBytes = options.maximumDecodedBytes ?? MAXIMUM_INTEGER;
+    this.maximumLines = options.maximumLines ?? MAXIMUM_INTEGER;
+    this.maximumPlanes = options.maximumPlanes ?? MAXIMUM_INTEGER;
+    this.maximumRecordBytes = options.maximumRecordBytes ?? MAXIMUM_INTEGER;
+    for (const value of [this.maximumEncodedBytes, this.maximumDecodedBytes, this.maximumLines, this.maximumPlanes,
+      this.maximumRecordBytes]) {
+      if (!boundedInteger(value, 1, MAXIMUM_INTEGER)) throw new DocumentStorageError("invalidLimits");
     }
     Object.freeze(this);
   }
 }
+
+/** A complete limit object, or any subset of its fields. Missing fields use the host maximum. */
+type DocumentDecodeLimitSelection = ConstructorParameters<typeof DocumentDecodeLimits>[0];
 
 /** A writer checks each append and each escape before allocating the completed result. */
 export class BoundedTextWriter {
@@ -340,9 +343,10 @@ export class DocumentStorageCodec {
   public static isBinary(data: Uint8Array): boolean {
     return data.byteLength >= MAGIC.byteLength && MAGIC.every((byte, index) => byte === data[index]);
   }
-  public static validate(document: Document, limits = DocumentDecodeLimits.standard, signal?: AbortSignal): void {
+  public static validate(document: Document,
+    requested: DocumentDecodeLimitSelection = DocumentDecodeLimits.standard, signal?: AbortSignal): void {
     checkCancellation(signal);
-    limits = new DocumentDecodeLimits(limits);
+    const limits = new DocumentDecodeLimits(requested);
     canonicalText(document, limits, signal);
   }
   /**
@@ -350,9 +354,9 @@ export class DocumentStorageCodec {
    * kind 2). Use `encodeTextContainer` for files that ThreeMD 2.0 must read.
    */
   public static encode(document: Document, format: DocumentStorageFormat = DocumentStorageFormat.text,
-    limits = DocumentDecodeLimits.standard, signal?: AbortSignal): Uint8Array {
+    requested: DocumentDecodeLimitSelection = DocumentDecodeLimits.standard, signal?: AbortSignal): Uint8Array {
     checkCancellation(signal);
-    limits = new DocumentDecodeLimits(limits);
+    const limits = new DocumentDecodeLimits(requested);
     if (format.kind === "text") {
       const source = canonicalText(document, limits, signal);
       if (source.byteLength > limits.maximumEncodedBytes) throw new DocumentStorageError("oversizedInput");
@@ -368,9 +372,9 @@ export class DocumentStorageCodec {
    * @throws DocumentStorageError exactly as the 2.0 binary writer did, or the AbortSignal reason.
    */
   public static encodeTextContainer(document: Document, compression: DocumentCompression = DocumentCompression.None,
-    limits = DocumentDecodeLimits.standard, signal?: AbortSignal): Uint8Array {
+    requested: DocumentDecodeLimitSelection = DocumentDecodeLimits.standard, signal?: AbortSignal): Uint8Array {
     checkCancellation(signal);
-    limits = new DocumentDecodeLimits(limits);
+    const limits = new DocumentDecodeLimits(requested);
     return textContainer(canonicalText(document, limits, signal), compression, limits, signal);
   }
   /**
@@ -391,9 +395,10 @@ export class DocumentStorageCodec {
     });
   }
   /** Decodes text, or a binary container of payload kind 1 or 2; other kinds throw `unsupportedPayloadKind`. */
-  public static decode(data: Uint8Array, limits = DocumentDecodeLimits.standard, signal?: AbortSignal): Document {
+  public static decode(data: Uint8Array,
+    requested: DocumentDecodeLimitSelection = DocumentDecodeLimits.standard, signal?: AbortSignal): Document {
     checkCancellation(signal);
-    limits = new DocumentDecodeLimits(limits);
+    const limits = new DocumentDecodeLimits(requested);
     if (data.byteLength > limits.maximumEncodedBytes) throw new DocumentStorageError("oversizedInput");
     if (!this.isBinary(data)) return parseBounded(data, limits, signal);
     if (data.byteLength < HEADER_BYTES) throw new DocumentStorageError("invalidContainer");
@@ -412,9 +417,10 @@ export class DocumentStorageCodec {
     const encoded = view.getBigUint64(20, true);
     const decoded = view.getBigUint64(28, true);
     // D10: kind 2 is bounded by the uncompressed container (Emax - 40) and twice the canonical text bound (2 * Dmax),
-    // checked before the CRC and before any payload byte is read.
+    // checked before the CRC and before any payload byte is read. The product saturates at the largest safe integer.
+    const doubled = limits.maximumDecodedBytes > MAXIMUM_INTEGER / 2 ? MAXIMUM_INTEGER : limits.maximumDecodedBytes * 2;
     const bound = kind === DocumentPayloadKind.canonicalText ? limits.maximumDecodedBytes
-      : Math.min(limits.maximumEncodedBytes - HEADER_BYTES, 2 * limits.maximumDecodedBytes);
+      : Math.min(limits.maximumEncodedBytes - HEADER_BYTES, doubled);
     if (decoded > BigInt(bound)) throw new DocumentStorageError("oversizedOutput");
     if (encoded === 0n || decoded === 0n || encoded !== BigInt(data.byteLength - HEADER_BYTES) ||
       (compression === 0 && encoded !== decoded)) {

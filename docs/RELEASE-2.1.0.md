@@ -3,15 +3,21 @@
 Status: preparing. Not tagged. Not published.
 
 On 2026-10-07 Leif approved the structured-payload library work and asked for a
-pull request, then preparation for 2.1. The branch is
-`leif/structured-binary-2.1`, pull request 72. Package manifests on this branch
-read 2.1.0. This preparation does not merge, tag, publish, or weaken a trust
+pull request, then preparation for 2.1. Package manifests read 2.1.0. The
+library and the docs for the tag are pull request 73, branch
+`leif/readme-visuals`. Pull request 72 is the earlier structured-payload
+review. This preparation does not merge, tag, publish, or weaken a trust
 gate.
+
+Storage has no fixed size stop. A file is parsed and saved when the process
+can hold it. Local runs saved a 1 GB cube in Swift, TypeScript, and Rust, and
+a 5 GB plane in Rust. A 10 GB file has not been measured. CI does not allocate
+those files.
 
 The approved SpecSync change is
 `add-a-structured-binary-document-payload-kind-2-to-threemd-2-1-in-swift-typescript-and-rust-with-fast-checksums-cli`.
-It is not accepted or archived. `fledge trust verify` has not been run on this
-preparation tip.
+It is not accepted or archived. `fledge trust verify` has passed on this pull
+request. It still has to pass on the exact commit that is tagged.
 
 Publishing still happens only when a GitHub release is published. Until then
 npm serves `@corvidlabs/threemd` and `@corvidlabs/three-md-element` at 2.0.0,
@@ -22,10 +28,11 @@ published to a marketplace.
 
 ## What is on the branch
 
-SPEC.md 1.2 adds payload kind 2 inside the version 1 container. The Swift,
-TypeScript and Rust libraries implement it. `.binary` writes kind 2.
-`encodeTextContainer` writes the ThreeMD 2.0 kind-1 bytes. Kind-1 files stay
-readable. Kind 3 is reserved.
+SPEC.md 1.2 adds the binary save, payload kind 2, inside the version 1
+container. The text file stays the `.3md`. The Swift, TypeScript and Rust
+libraries implement kind 2, and `.binary` writes it. Kind 1 is deprecated.
+`encodeTextContainer` still writes those ThreeMD 2.0 bytes, and readers still
+open them. Kind 3 is reserved.
 
 Shared structured fixtures are committed. The three writers agree on those
 fixtures. The element bundle committed with the library work is 48,840 bytes
@@ -54,7 +61,7 @@ Also in the libraries, and called out because they change bytes or acceptance:
 | Capability | Swift | TypeScript | Rust |
 | --- | --- | --- | --- |
 | Text grammar 1.0 | Unchanged | Unchanged | Unchanged |
-| Payload kind 1 (`encodeTextContainer`) | Yes | Yes | Yes |
+| Payload kind 1, deprecated (`encodeTextContainer`) | Yes, old files and 2.0 readers | Yes, old files and 2.0 readers | Yes, old files and 2.0 readers |
 | Payload kind 2 (`.binary`) | Yes | Yes | Yes |
 | Header-only `containerInfo` | Yes | Yes | Yes |
 | Read a ThreeMD 2.0 `.3mdb` | Yes | Yes | Yes |
@@ -74,11 +81,9 @@ Also in the libraries, and called out because they change bytes or acceptance:
 - Release evidence under `docs/evidence/release-2.1.0/`: fuzz counts, perf
   receipts, and an interchange receipt. That directory does not exist yet.
 - `fledge lanes run verify` and `fledge trust verify` on the exact release tip.
-- Remaining documentation from the change plan: example tables, the
-  conformance index, and a regenerated `docs.3md`. Those files are not updated
-  here, because several of their planned sentences describe the CLI and the
-  protocol that are still open.
-- A maintainer merge, then the tag. This pull request does not do either.
+- README pictures and a regenerated `docs.3md` are on pull request 73.
+  The CLI and interchange protocol 2 docs stay open with those features.
+- A maintainer merge of pull request 73, then the tag. This branch does not do either.
 
 ## Local library check, not the gate
 

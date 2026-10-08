@@ -88,38 +88,50 @@ internal enum DocumentStorageStructured {
         }
     }
 
-    /// Reads a Var (unsigned LEB128, 1 to 4 bytes, minimal) at `position` and moves past it (V1 to V3).
+    /// Reads a length or count Var (unsigned LEB128, 1 to 10 bytes, minimal) at `position` and moves past it.
     /// - Parameters:
     ///   - bytes: The payload.
     ///   - position: The cursor; advanced past every byte read.
     ///   - end: The payload length.
-    /// - Returns: A value in `0 ..< 2^28`.
-    /// - Throws: `lengthMismatch` when no byte remains (V1), `invalidContainer` for a 4th byte with `0x80` (V2) or a
-    ///   final zero byte in a multi-byte Var (V3).
+    ///   - maximumBytes: 10 for a length or count. A coordinate passes 4, so form 1 stays inside -2^27 ... 2^27 - 1.
+    /// - Returns: A value that fits in `Int`.
+    /// - Throws: `lengthMismatch` when no byte remains (V1), `invalidContainer` for a continuation on the last
+    ///   allowed byte, a value that does not fit in 64 bits, or a final zero byte (V2, V3), and `oversizedOutput`
+    ///   when the value fits in 64 bits but not in `Int`.
     @inline(__always)
-    internal static func readVariable(_ bytes: UnsafePointer<UInt8>, _ position: inout Int, _ end: Int) throws -> Int {
+    internal static func readVariable(
+        _ bytes: UnsafePointer<UInt8>,
+        _ position: inout Int,
+        _ end: Int,
+        maximumBytes: Int = 10
+    ) throws -> Int {
         guard position < end else { throw DocumentStorageError.lengthMismatch }
         var current = bytes[position]
         position += 1
         if current < 0x80 { return Int(current) }
-        var value = Int(current & 0x7F)
+        var value = UInt64(current & 0x7F)
         var shift = 7
-        for index in 1...3 {
+        for index in 1..<maximumBytes {
             guard position < end else { throw DocumentStorageError.lengthMismatch }
             current = bytes[position]
             position += 1
-            if index == 3, current & 0x80 != 0 { throw DocumentStorageError.invalidContainer }
-            value |= Int(current & 0x7F) << shift
+            if index == maximumBytes - 1, current & 0x80 != 0 { throw DocumentStorageError.invalidContainer }
+            let bits = UInt64(current & 0x7F)
+            if shift >= 64 || (bits > 0 && bits > UInt64.max >> shift) {
+                throw DocumentStorageError.invalidContainer
+            }
+            value |= bits << shift
             if current & 0x80 == 0 {
                 guard current != 0 else { throw DocumentStorageError.invalidContainer }
-                return value
+                guard value <= UInt64(Int.max) else { throw DocumentStorageError.oversizedOutput }
+                return Int(value)
             }
             shift += 7
         }
         throw DocumentStorageError.invalidContainer
     }
 
-    /// Appends the minimal Var of `value`; the caller keeps `value` below 2^28.
+    /// Appends the minimal Var of a non-negative `value`. Any `Int` fits in at most 9 bytes.
     internal static func appendVariable(_ value: Int, to bytes: inout [UInt8]) {
         var rest = value
         while rest >= 0x80 {
@@ -556,10 +568,10 @@ internal struct StructuredReader {
         return value
     }
 
-    /// Var: minimal unsigned LEB128 of 1 to 4 bytes (V1 to V3).
+    /// A length or count Var, 1 to 10 bytes. A coordinate passes `maximumBytes` 4.
     @inline(__always)
-    private mutating func variable() throws -> Int {
-        try DocumentStorageStructured.readVariable(bytes, &position, end)
+    private mutating func variable(maximumBytes: Int = 10) throws -> Int {
+        try DocumentStorageStructured.readVariable(bytes, &position, end, maximumBytes: maximumBytes)
     }
 
     /// Count(min): a Var no greater than `floor(remaining / min)`, divided rather than multiplied.
@@ -584,7 +596,7 @@ internal struct StructuredReader {
     private mutating func coordinate(_ form: Int, directive: inout Int, floats: inout [Double]) throws -> Double {
         switch form {
         case 1:
-            let encoded = UInt32(try variable())
+            let encoded = UInt32(try variable(maximumBytes: 4))
             let integer = Int32(bitPattern: (encoded >> 1) ^ (0 &- (encoded & 1)))
             directive += DocumentStorageStructured.integerLength(Int(integer))
             return Double(integer)

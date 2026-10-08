@@ -109,14 +109,41 @@ describe("bounded portable storage", () => {
     rejects("invalidUTF8", () => DocumentStorageCodec.decode(resign(body)));
   });
 
-  test("resource constructors reject noninteger, nonpositive and raised limits", () => {
-    for (const maximumEncodedBytes of [0, -1, 1.5, NaN, Infinity, 64 * 1024 * 1024 + 1]) {
+  test("resource constructors reject noninteger and nonpositive limits and accept any safe size", () => {
+    for (const maximumEncodedBytes of [0, -1, 1.5, NaN, Infinity, Number.MAX_SAFE_INTEGER + 1]) {
       rejects("invalidLimits", () => new DocumentDecodeLimits({ maximumEncodedBytes }));
     }
-    rejects("invalidLimits", () => new DocumentDecodeLimits({ maximumPlanes: 65_537 }));
-    rejects("invalidLimits", () => new DocumentDecodeLimits({ maximumLines: 100_001 }));
-    expect(new DocumentDecodeLimits({ maximumRecordBytes: 64 * 1024 * 1024 }).maximumRecordBytes).toBe(64 * 1024 * 1024);
+    const fiveGigabytes = 5 * 1024 * 1024 * 1024;
+    const wide = new DocumentDecodeLimits({
+      maximumEncodedBytes: fiveGigabytes, maximumDecodedBytes: fiveGigabytes, maximumLines: 2_000_000,
+      maximumPlanes: 200_000, maximumRecordBytes: fiveGigabytes,
+    });
+    expect(wide.maximumEncodedBytes).toBe(fiveGigabytes);
+    expect(wide.maximumRecordBytes).toBe(fiveGigabytes);
+    expect(DocumentDecodeLimits.standard.maximumEncodedBytes).toBe(Number.MAX_SAFE_INTEGER);
+    expect(DocumentDecodeLimits.standard.maximumDecodedBytes).toBe(Number.MAX_SAFE_INTEGER);
+    expect(DocumentDecodeLimits.standard.maximumLines).toBe(Number.MAX_SAFE_INTEGER);
+    expect(DocumentDecodeLimits.standard.maximumPlanes).toBe(Number.MAX_SAFE_INTEGER);
+    expect(DocumentDecodeLimits.standard.maximumRecordBytes).toBe(Number.MAX_SAFE_INTEGER);
   });
+
+  test("a document past the old 64 MiB ceiling round-trips as text and as kind 2", () => {
+    const document: Document = {
+      version: "1", axis: "layer", title: null, metadata: {}, preamble: null,
+      planes: [{ z: 0, x: null, y: null, label: null, attributes: {}, body: "a".repeat(64 * 1024 * 1024 + 1) }],
+    };
+    const text = DocumentStorageCodec.encode(document);
+    expect(text.length).toBeGreaterThan(64 * 1024 * 1024);
+    expect(DocumentStorageCodec.decode(text)).toEqual(document);
+    const binary = DocumentStorageCodec.encode(document, DocumentStorageFormat.binary());
+    expect(DocumentStorageCodec.decode(binary)).toEqual(document);
+    // Blank-only bodies are collapsed by the text format. 100,001 lines of "a" stay, and they pass the old line cap.
+    const lines: Document = {
+      ...document,
+      planes: [{ z: 0, x: null, y: null, label: null, attributes: {}, body: `${"a\n".repeat(100_000)}a` }],
+    };
+    expect(DocumentStorageCodec.decode(DocumentStorageCodec.encode(lines))).toEqual(lines);
+  }, 120_000);
   test("public storage boundaries validate structurally typed plain-object policies", () => {
     const limits = { ...DocumentDecodeLimits.standard, maximumEncodedBytes: Infinity, maximumDecodedBytes: Infinity,
       maximumLines: Infinity, maximumPlanes: Infinity, maximumRecordBytes: Infinity };

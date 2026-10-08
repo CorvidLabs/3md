@@ -302,9 +302,10 @@ introduces no text directive and does not change `Parser` or `Serializer`.
 `DocumentStorageCodec` accepts UTF-8 text or the complete binary magic and returns
 a `Document`. The writer takes an explicit `.text` or `.binary(compression:)`
 format. Since 1.2, `.binary` writes payload kind 2, the structured document
-payload (11.3). A separate writer, `encodeTextContainer`, writes payload kind 1,
-canonical text behind the binary header, byte-identical to the ThreeMD 2.0
-`.binary` output, for consumers that still run ThreeMD 2.0. Text remains the
+payload (11.3). Payload kind 1 is deprecated for new files. It remains the
+ThreeMD 2.0 save: canonical text behind the binary header. Readers still accept
+it, and `encodeTextContainer` still writes it, byte-identical to the ThreeMD 2.0
+`.binary` output, for a consumer that still runs ThreeMD 2.0. Text remains the
 portable interchange form. The binary extension is `.3mdb` for both payload
 kinds; readers MUST identify content by its magic and payload kind rather than
 an extension.
@@ -361,7 +362,7 @@ failing check decides the error, and no later check runs.
 | D7 | The compression identifier is not 0 or 1 | `unsupportedCompression(c)` |
 | D8 | The flags are not 0 | `unsupportedFlags(f)` |
 | D9 | The reserved field is not 0 | `nonzeroReserved` |
-| D10 | The decoded payload length is greater than the kind's bound: `maximumDecodedBytes` for kind 1; `min(maximumEncodedBytes − 40, 2 × maximumDecodedBytes)` for kind 2 (11.3.2) | `oversizedOutput` |
+| D10 | The decoded payload length is greater than the kind's bound: `maximumDecodedBytes` for kind 1; `min(maximumEncodedBytes − 40, 2 × maximumDecodedBytes)` for kind 2 (11.3.2). The subtraction and the product saturate at the largest host integer | `oversizedOutput` |
 | D11 | The encoded length is 0, the decoded length is 0, the encoded length differs from the input length − 40, or compression is 0 and the two lengths differ | `lengthMismatch` |
 | D12 | The CRC does not match | `checksumMismatch` |
 | D13 | Compression is 1: with no LZFSE backend, `compressionUnavailable(lzfse)`; otherwise decompress, and a stream that does not end exactly once or does not produce exactly the declared length is `lengthMismatch`, and a stream the backend cannot process is `compressionFailed` | as stated |
@@ -388,16 +389,25 @@ applications keep their existing readers and explicitly migrate documents.
 
 ### 11.2 Validation and resource policy
 
-Storage defaults to 64 MiB encoded bytes, 64 MiB decoded bytes, 100,000 physical
-lines, 65,536 planes, and 8 MiB per line, scalar, preamble, or plane body.
-Callers can lower these limits. The record limit can be raised explicitly up to
-the absolute 64 MiB ceiling; other limits cannot exceed their defaults. The
-declared decoded size is checked against the payload kind's bound before
+Storage defaults are the largest integer the language can use as a size:
+Swift `Int.max`, Rust `usize::MAX`, and TypeScript `Number.MAX_SAFE_INTEGER`.
+That default covers encoded bytes, decoded bytes, physical lines, planes, and
+the bytes of one line, scalar, preamble, or plane body. There is no smaller
+absolute ceiling. A caller can set a lower positive limit. A limit that is not
+a positive integer, or that JavaScript cannot hold exactly, is `invalidLimits`.
+A value that fits in 64 bits but not in the host integer is `oversizedOutput`.
+On a 32-bit process that integer stops near 2 GiB. That is the language, not a
+library policy. A document of 1 GiB, 5 GiB, or any larger size is parsed and
+saved when the process can hold it. A hostile file can exhaust the process.
+
+The declared decoded size is checked against the payload kind's bound before
 any decompression allocation (11.1, step D10). For payload kind 2 the remaining
 limits apply to the document's canonical text, which the reader computes from
 the payload without building it (11.3.7). Counts and byte sums
 use bounded arithmetic, and long operations cooperatively check cancellation.
-Errors return no partial document or encoded payload.
+Errors return no partial document or encoded payload. Composition profile
+ceilings (12.2) and edit budgets stay as specified. They are not this storage
+default.
 
 Direct `Document` values must have finite coordinates, unique plane positions,
 and fields representable by the existing text grammar. The new storage writer
@@ -521,18 +531,25 @@ little-endian.
 
 **u8.** One byte. No byte remaining: `lengthMismatch`.
 
-**Var: unsigned LEB128, 1 to 4 bytes.** Each byte carries 7 value bits, least significant group first, and bit
-`0x80` means another byte follows. Values range from 0 to 2^28 − 1. A reader processes the bytes in order; for each
-byte:
+**Length and count Var: unsigned LEB128, 1 to 10 bytes.** Each byte carries 7 value bits, least significant group
+first, and bit `0x80` means another byte follows. A reader processes the bytes in order; for each byte:
 
 | Step | Condition | Error |
 |------|-----------|-------|
 | V1 | No byte remains | `lengthMismatch` |
-| V2 | The byte is the 4th and has `0x80` set (whether or not a 5th byte exists) | `invalidContainer` |
+| V2 | The byte is the 10th and has `0x80` set, or the value does not fit in 64 bits | `invalidContainer` |
 | V3 | The byte ends a Var of 2 or more bytes and equals `0x00` (non-minimal) | `invalidContainer` |
 
-Writers emit the minimal form. `00` is 0, `7f` is 127, `80 01` is 128 and `ff ff ff 7f` is 2^28 − 1. `80 00`,
-`81 00` and `ff ff ff ff 01` are rejected.
+A value that fits in 64 bits but not in the host integer is `oversizedOutput`. On a 32-bit process that integer
+stops near 2 GiB. That is the language, not a library policy.
+
+**Coordinate Var: unsigned LEB128, 1 to 4 bytes.** Form 1 uses this shorter Var. The same V1 to V3 rules apply with
+4 in place of 10, so a 4th byte with `0x80` set is `invalidContainer` whether or not a 5th byte exists.
+Integer-form coordinates stay inside −2^27 through 2^27 − 1.
+
+Writers emit the minimal form. `00` is 0, `7f` is 127, `80 01` is 128, `ff ff ff 7f` is 2^28 − 1,
+`80 80 80 80 01` is 2^28 and `80 80 80 80 14` is 5,368,709,120 (5 GiB). `80 00` and `81 00` are rejected.
+`ff ff ff ff 01` is 2^29 − 1 as a length or count. The same bytes are rejected as a coordinate.
 
 **Count(min).** Read `k` as a Var. If `k > floor(remaining ÷ min)`, the result is `lengthMismatch`. `min` is the
 smallest encoding of one element (given with each count). Implementations MUST divide rather than multiply, so that
@@ -861,7 +878,8 @@ uncompressed payload, and the uncompressed container must fit `Emax` whether or 
 
 #### 11.3.11 Limits
 
-`DocumentDecodeLimits` is unchanged and no limit is added.
+`DocumentDecodeLimits` keeps the same five fields. No limit is added. Each field defaults to the largest positive
+integer the host can use. A caller can lower any field. A non-positive value is `invalidLimits`.
 
 | Limit | Text and kind 1 | Kind 2 |
 |-------|-----------------|--------|
@@ -871,10 +889,10 @@ uncompressed payload, and the uncompressed container must fit `Emax` whether or 
 | `maximumPlanes` (Pmax) | planes | planeCount (S8) |
 | `maximumRecordBytes` (R) | each line, scalar, preamble and body | each scalar ≤ R, preamble ≤ R − 1, body ≤ R (Phase S); frontmatter lines and directive lines ≤ R and R ≥ 3 (L1 to L3) |
 
-Format ceilings: a Var holds at most 2^28 − 1 (every 64 MiB limit fits), and integer-form coordinates have magnitude
-at most 2^27. A kind-2 file may be accepted under an `Emax` that its canonical text would exceed (80 empty planes:
-a 382-byte file, `T = 1056`); decoding it and saving it as text under the same limits then fails with
-`oversizedInput`. Conversion succeeds whenever the target encoding fits `Emax`.
+A length or count Var holds any host integer, in at most 10 bytes. A coordinate Var holds at most 2^28 − 1, and
+integer-form coordinates have magnitude at most 2^27. A kind-2 file may be accepted under an `Emax` that its
+canonical text would exceed (80 empty planes: a 382-byte file, `T = 1056`); decoding it and saving it as text under
+the same limits then fails with `oversizedInput`. Conversion succeeds whenever the target encoding fits `Emax`.
 
 #### 11.3.12 Error codes
 
@@ -883,10 +901,10 @@ No code is added. Kind 2 maps onto the existing stable codes of `DocumentStorage
 | Condition | Code |
 |-----------|------|
 | A truncated field; a Var or Str longer than remaining; count framing; trailing bytes; container length rules | `lengthMismatch` |
-| A 4th Var byte with `0x80`; a non-minimal Var; an undefined flag bit; z form 0; a non-canonical number form or −0; keys out of byte order or identical | `invalidContainer` |
+| A 10th length or count Var byte with `0x80`; a 4th coordinate Var byte with `0x80`; a non-minimal Var; a value that does not fit in 64 bits; an undefined flag bit; z form 0; a non-canonical number form or −0; keys out of byte order or identical | `invalidContainer` |
 | Ill-formed UTF-8 | `invalidUTF8` |
 | A string over R, or the preamble over R − 1; `R < 3`; a frontmatter or directive line over R | `oversizedRecord` |
-| A kind-2 decoded length over `min(Emax − 40, 2 × Dmax)`; `T > Dmax` | `oversizedOutput` |
+| A kind-2 decoded length over `min(Emax − 40, 2 × Dmax)`; `T > Dmax`; a length or count that fits in 64 bits but not the host integer | `oversizedOutput` |
 | `Lines > Lmax` | `tooManyLines` |
 | `planeCount > Pmax` | `tooManyPlanes` |
 | A file longer than Emax; a writer payload over `Emax − 40`; `Emax < 40` on write | `oversizedInput` |

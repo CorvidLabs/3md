@@ -164,11 +164,8 @@ public enum DocumentStorageCodec {
         guard info.flags == 0 else { throw DocumentStorageError.unsupportedFlags(info.flags) }
         guard info.reserved == 0 else { throw DocumentStorageError.nonzeroReserved }
         // D10: kind 2 may never decode to more than the uncompressed container can hold, nor to more than twice the
-        // canonical text it stands for. The input is at least 40 bytes and at most Emax here, so Emax - 40 >= 0.
-        let bound =
-            kind == .canonicalText
-            ? limits.maximumDecodedBytes
-            : min(limits.maximumEncodedBytes - headerByteCount, 2 * limits.maximumDecodedBytes)
+        // canonical text it stands for. The product saturates when the decoded bound is the largest `Int`.
+        let bound = kind == .canonicalText ? limits.maximumDecodedBytes : limits.structuredDecodedBound
         guard info.decodedPayloadByteCount <= UInt64(bound) else { throw DocumentStorageError.oversizedOutput }
         let encoded = info.encodedPayloadByteCount
         let decoded = info.decodedPayloadByteCount

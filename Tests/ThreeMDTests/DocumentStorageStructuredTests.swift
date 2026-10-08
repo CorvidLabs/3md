@@ -139,7 +139,7 @@ internal final class DocumentStorageStructuredTests: XCTestCase {
         )
         XCTAssertEqual(fixture.schema, "3md-structured-vectors-1")
         XCTAssertEqual(fixture.vectors.count, 156)
-        XCTAssertEqual(fixture.vectors.filter { $0.limits != nil }.count, 29)
+        XCTAssertEqual(fixture.vectors.filter { $0.limits != nil }.count, 30)
         var checked = 0
         for vector in fixture.vectors {
             #if canImport(Compression)
@@ -203,6 +203,7 @@ extension DocumentStorageStructuredTests {
     internal func testVarEncodesMinimallyAndDecodesEveryBoundary() throws {
         let boundaries: [(Int, Int)] = [
             (0, 1), (127, 1), (128, 2), (16_383, 2), (16_384, 3), (2_097_151, 3), (2_097_152, 4), ((1 << 28) - 1, 4),
+            (1 << 28, 5), (5 * 1_024 * 1_024 * 1_024, 5),
         ]
         for (value, length) in boundaries {
             var bytes: [UInt8] = []
@@ -213,16 +214,27 @@ extension DocumentStorageStructuredTests {
         }
         XCTAssertEqual(try Self.readVariable([0x80, 0x01]), 128)
         XCTAssertEqual(try Self.readVariable([0xFF, 0xFF, 0xFF, 0x7F]), (1 << 28) - 1)
-        // V1: no byte remains; V2: a 4th byte with 0x80, with or without a 5th byte; V3: a final zero byte.
+        XCTAssertEqual(try Self.readVariable([0x80, 0x80, 0x80, 0x80, 0x01]), 1 << 28)
+        XCTAssertEqual(try Self.readVariable([0xFF, 0xFF, 0xFF, 0xFF, 0x01]), (1 << 29) - 1)
+        // V1: no byte remains. V2: a continuation on the last allowed byte. V3: a final zero byte.
+        // A coordinate stays at 4 bytes, so the same 5-byte integer is rejected there.
         let rejections: [([UInt8], DocumentStorageError)] = [
             ([], .lengthMismatch), ([0x80], .lengthMismatch), ([0xFF, 0xFF, 0xFF], .lengthMismatch),
-            ([0xFF, 0xFF, 0xFF, 0xFF, 0x01], .invalidContainer), ([0xFF, 0xFF, 0xFF, 0x80], .invalidContainer),
+            ([0xFF, 0xFF, 0xFF, 0x80], .lengthMismatch),
             ([0x81, 0x00], .invalidContainer), ([0x80, 0x00], .invalidContainer),
             ([0x80, 0x80, 0x00], .invalidContainer), ([0x80, 0x80, 0x80, 0x00], .invalidContainer),
+            ([0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80], .invalidContainer),
         ]
         for (bytes, expected) in rejections {
             DocumentStorageTests.assertError(expected) { try Self.readVariable(bytes) }
         }
+        DocumentStorageTests.assertError(.invalidContainer) {
+            try Self.readVariable([0xFF, 0xFF, 0xFF, 0xFF, 0x01], maximumBytes: 4)
+        }
+        let coordinate = try StructuredFixtures.container(
+            [0x00, 0x01, 0x31, 0x00, 0x00, 0x01, 0x01, 0xFF, 0xFF, 0xFF, 0xFF, 0x01, 0x00, 0x00]
+        )
+        DocumentStorageTests.assertError(.invalidContainer) { try DocumentStorageCodec.decode(coordinate) }
         // `ff ff ff 7f` as a string length is far past the remaining bytes (Str1).
         let file = try StructuredFixtures.container([0x00, 0xFF, 0xFF, 0xFF, 0x7F, 0x31, 0x00, 0x00, 0x00])
         DocumentStorageTests.assertError(.lengthMismatch) { try DocumentStorageCodec.decode(file) }
@@ -1337,9 +1349,13 @@ extension DocumentStorageStructuredTests {
         }
         XCTAssertEqual(selfCheck.count("emission"), 65_536)
         // Every input decodes and encodes identically after a cancelled attempt.
-        DocumentStorageTests.assertError(.tooManyLines) { try DocumentStorageCodec.decode(planes) }
+        // 65,536 empty planes are 131,077 lines. A caller-supplied line bound stops them; the default does not.
+        let lineCap = try DocumentDecodeLimits(maximumLines: 100_000)
         DocumentStorageTests.assertError(.tooManyLines) {
-            try DocumentStorageCodec.encode(many, format: .binary(compression: .none))
+            try DocumentStorageCodec.decode(planes, limits: lineCap)
+        }
+        DocumentStorageTests.assertError(.tooManyLines) {
+            try DocumentStorageCodec.encode(many, format: .binary(compression: .none), limits: lineCap)
         }
         let fewer = Document(version: "1", axis: .layer, planes: Array(many.planes.prefix(40_000)))
         XCTAssertEqual(
@@ -1367,10 +1383,11 @@ extension DocumentStorageStructuredTests {
         }
         payload.append(0x00)
         let metadata = try StructuredFixtures.container(payload)
+        let lineCap = try DocumentDecodeLimits(maximumLines: 100_000)
         let counting = DocumentStorageProbe()
         let outcome = await Task.detached {
             DocumentStorageProbe.$current.withValue(counting) {
-                StructuredFixtures.outcome { try DocumentStorageCodec.decode(metadata) }
+                StructuredFixtures.outcome { try DocumentStorageCodec.decode(metadata, limits: lineCap) }
             }
         }.value
         XCTAssertEqual(outcome, "tooManyLines")
@@ -1405,7 +1422,9 @@ extension DocumentStorageStructuredTests {
         let keyedFile = try DocumentStorageCodec.encode(keyed, format: .binary(compression: .none))
         try await Self.assertCancelled(at: "keyScan", occurrence: 2) { _ = try DocumentStorageCodec.decode(keyedFile) }
         // Every input decodes identically after a cancelled attempt.
-        DocumentStorageTests.assertError(.tooManyLines) { try DocumentStorageCodec.decode(metadata) }
+        DocumentStorageTests.assertError(.tooManyLines) {
+            try DocumentStorageCodec.decode(metadata, limits: try DocumentDecodeLimits(maximumLines: 100_000))
+        }
         XCTAssertEqual(try DocumentStorageCodec.decode(plane).planes.first?.attributes.count, 100_000)
         StructuredFixtures.assertExactlyEqual(try DocumentStorageCodec.decode(keyedFile), keyed, "long key")
     }
@@ -1517,8 +1536,16 @@ extension DocumentStorageStructuredTests {
     /// and no map entries; a valid document's result is the only allocation in proportion to its strings.
     internal func testDecodingPeakMemoryGrowthStaysUnderThreeTimesTheInput() throws {
         guard HeapSampler.isAvailable else { throw XCTSkip("This platform reports no memory statistics.") }
-        let budget = DocumentDecodeLimits.standard.maximumEncodedBytes - DocumentStorageCodec.headerByteCount
-        let standard = DocumentDecodeLimits.standard
+        // A 64 MiB sample of the reader's memory behavior. It is not a library size ceiling.
+        let encoded = 64 * 1_024 * 1_024
+        let standard = try DocumentDecodeLimits(
+            maximumEncodedBytes: encoded,
+            maximumDecodedBytes: encoded,
+            maximumLines: 100_000,
+            maximumPlanes: 65_536,
+            maximumRecordBytes: 8 * 1_024 * 1_024
+        )
+        let budget = encoded - DocumentStorageCodec.headerByteCount
         let cases: [(name: String, limits: DocumentDecodeLimits, expected: String, payload: () throws -> [UInt8])] = [
             // One plane with as many 7-letter keys as fit the 64 MiB container (D10 bounds the count).
             (
@@ -1537,7 +1564,12 @@ extension DocumentStorageStructuredTests {
                 { StructuredFixtures.attributePayload(prefix: [0xC3, 0xA9], width: 5, count: (budget / 8 - 16) / 9) }
             ),
             // The most planes, each with a body: L4 rejects the canonical text.
-            ("maximum planes", standard, "oversizedOutput", { StructuredFixtures.planesPayload(budget: budget) }),
+            (
+                "maximum planes", standard, "oversizedOutput",
+                {
+                    StructuredFixtures.planesPayload(budget: budget, planes: 65_536)
+                }
+            ),
             // One 8 MiB body, decoded into its document.
             (
                 "8 MiB body", standard, "ok",
@@ -1579,11 +1611,16 @@ extension DocumentStorageStructuredTests {
 
 @available(macOS 10.15, iOS 13, tvOS 13, watchOS 6, *)
 extension DocumentStorageStructuredTests {
-    internal static func readVariable(_ bytes: [UInt8]) throws -> Int {
+    internal static func readVariable(_ bytes: [UInt8], maximumBytes: Int = 10) throws -> Int {
         try bytes.withUnsafeBufferPointer { buffer in
             guard let base = buffer.baseAddress else { throw DocumentStorageError.lengthMismatch }
             var position = 0
-            return try DocumentStorageStructured.readVariable(base, &position, buffer.count)
+            return try DocumentStorageStructured.readVariable(
+                base,
+                &position,
+                buffer.count,
+                maximumBytes: maximumBytes
+            )
         }
     }
 
@@ -1957,9 +1994,8 @@ internal enum StructuredFixtures {
         return payload
     }
 
-    /// The most planes the standard limits allow, each with a body of `x`, filling `budget` payload bytes.
-    internal static func planesPayload(budget: Int) -> [UInt8] {
-        let planes = DocumentDecodeLimits.standard.maximumPlanes
+    /// `planes` bodies of `x`, filling `budget` payload bytes.
+    internal static func planesPayload(budget: Int, planes: Int) -> [UInt8] {
         let body = budget / planes - 8
         var payload: [UInt8] = [0x00, 0x01, 0x31, 0x00, 0x00]
         payload.reserveCapacity(budget)

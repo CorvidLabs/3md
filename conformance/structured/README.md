@@ -83,14 +83,14 @@ Schema `3md-structured-vectors-1`, entry point `DocumentStorageCodec.decode`. To
 | `file` | The vector file, relative to the repository root |
 | `rule` | The SPEC 11.3 step label that decides the outcome (D2, D4 to D13, V1 to V3, C, Str1 to Str4, N, S1, S2, S4, S6 to S10, S6b, P1, P7, P7a, R2, R3, R9, G1 to G6, Q, L0 to L5). For an `ok` vector it is the step whose boundary the vector sits on |
 | `description` | What the bytes hold |
-| `limits` | `DocumentDecodeLimits` fields to apply; absent fields are standard. Present on 29 vectors |
+| `limits` | `DocumentDecodeLimits` fields to apply; absent fields are standard. Present on 30 vectors |
 | `expected` | The error code a 2.1 reader reports, or `ok` when the file must decode |
 | `expected20` | What a ThreeMD 2.0.0 reader reports under the same limits |
 | `errorType` | `DocumentStorageError` for the 131 error vectors, `none` for the 25 `ok` vectors |
 | `requiresNoLZFSE` | `true` on the one vector that only holds for readers without an LZFSE backend |
 | `textValidate20` | For the 80 vectors whose bytes describe a well-formed `Document`: the outcome of the TypeScript `validate` on it (unchanged in 2.1) |
 
-The limits decide the outcome: under standard limits, 18 of the 29 limit-bearing vectors give a different code.
+The limits decide the outcome: under standard limits, 19 of the 30 limit-bearing vectors give a different code.
 Every consumer must apply them. The unit tests pass them to storage decode, the interchange driver sends them in the
 request's `limits` object, and the 2.0.0 compatibility job passes them through its per-language library harness.
 

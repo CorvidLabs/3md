@@ -8,8 +8,11 @@ frames for an animation, layers for annotations, space for a scene).
 ThreeMD 2.1 includes parsing/serialization, portable storage, self-contained
 composition, linked file composition, optional stable identities, immutable
 revision-checked snapshots, transactional typed patches and diagnostics.
-`.binary` writes payload kind 2. `encodeTextContainer` writes the 2.0 kind-1
-bytes. Swift, TypeScript and Rust share canonical wire fixtures and a
+`.binary` writes the binary save, payload kind 2. The text file stays the
+`.3md`. Kind 1 is deprecated. `encodeTextContainer` still writes it for a 2.0
+reader. There is no fixed size stop. A document is parsed and saved when the
+process can hold it. A caller can still pass a lower positive limit. Swift,
+TypeScript and Rust share canonical wire fixtures and a
 public-API writer-reader matrix. This is finite behavioral evidence, not
 exhaustive proof for arbitrary inputs or every runtime.
 

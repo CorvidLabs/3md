@@ -1,0 +1,42 @@
+---
+3md: 1.0
+axis: frame
+title: Harbor
+---
+
+A day at the harbor. Each frame is one hour of it.
+
+@plane z=0 label="dawn"
+# Dawn
+
+The lamp is out. The water holds the last of the dark, and the pier is only a darker line.
+
+@plane z=1 label="morning"
+# Morning
+
+A boat crosses, small and slow. Someone on the deck waves once and does not wave again.
+
+@plane z=2 label="noon"
+# Noon
+
+The light stays on the water. Gulls sit on the posts. The harbor is loud and ordinary.
+
+@plane z=3 label="afternoon"
+# Afternoon
+
+Nets dry on the rail. A child counts the gulls and loses the count at nine.
+
+@plane z=4 label="dusk"
+# Dusk
+
+The posts turn to silhouettes. The boat comes home along the same line it left.
+
+@plane z=5 label="evening"
+# Evening
+
+The lamp on the pier is lit. The same light comes back, and the boat is a shadow against it.
+
+@plane z=6 label="night"
+# Night
+
+The water goes black. The lamp stays, and that is the whole of the harbor. One more lamp answers from far out, small and steady, then it is gone, in the dark.

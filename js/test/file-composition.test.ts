@@ -116,7 +116,7 @@ describe("explicit supplied-file composition", () => {
       { id: "b", document: document(body), references: [] },
     ]);
     const text = DocumentCompositionCodec.encode(nested);
-    expect(text.length).toBeGreaterThan(DocumentDecodeLimits.standard.maximumRecordBytes);
+    expect(text.length).toBeGreaterThan(8 * 1024 * 1024);
     const result = DocumentFileComposition.resolve("large.3md", [{ path: "large.3md", data: text }]);
     expect(result.composition.entries).toHaveLength(2);
     expect(result.composition.rootEntry.document.planes[0]?.body).toBe(body);
@@ -182,9 +182,9 @@ describe("explicit supplied-file composition", () => {
     const root = source("r");
     rejects("inputLimit", () => DocumentFileComposition.resolve("r", [root], new DocumentCompositionLimits({ maximumProfileBytes: root.data.length - 1 })));
     expect(DocumentFileComposition.resolve("r", [root, { path: "unreachable", data: new Uint8Array(500) }]).resolvedPaths).toEqual(["r"]);
-    const bound = DocumentDecodeLimits.standard.maximumRecordBytes;
-    rejects("inputLimit", () => DocumentFileComposition.resolvePath("a".repeat(bound), "b"));
-    rejects("inputLimit", () => DocumentFileComposition.ledger(host(" ".repeat(bound + 1))));
+    const long = "a".repeat(8 * 1024 * 1024 + 1);
+    expect(DocumentFileComposition.resolvePath(long, "root.3md")).toBe(long);
+    expect(DocumentFileComposition.ledger(host(JSON.stringify({ "1": long })))[0]?.source).toBe(long);
   });
 
   test("outer recognition applies child byte and line policies before its lowered plane ceiling", () => {

@@ -84,9 +84,10 @@ kind 2, the structured document payload of SPEC.md section 11.3: length-prefixed
 records that decode without building or parsing text, with one canonical
 encoding per `Document`, the same accepted documents as the 2.1 `validate`, and
 byte-identical writers in all three languages. `.binary(compression:)` now
-writes payload kind 2. The new `encodeTextContainer` writes payload kind 1, the
-ThreeMD 2.0 binary bytes, for consumers that still run ThreeMD 2.0. Payload
-kind 3 is reserved and rejected.
+writes payload kind 2. The new `encodeTextContainer` is deprecated for new
+files. It writes payload kind 1, the ThreeMD 2.0 binary bytes, for consumers
+that still run ThreeMD 2.0. Readers still open those files. Payload kind 3 is
+reserved and rejected.
 
 ## Public API
 
@@ -158,12 +159,12 @@ are pure synchronous APIs; they never open paths or resolve URLs.
 | `DocumentStorageFormat` | Equatable, Sendable explicit storage selection. |
 | `binary` | .binary(compression: DocumentCompression); since 2.1 the version 1 container with payload kind 2, the structured document payload (SPEC.md 11.3). |
 | `DocumentDecodeLimits` | Equatable, Sendable bounded resource policy. |
-| `maximumEncodedBytes` | Container/text ceiling, standard and absolute maximum 64 MiB. |
-| `maximumDecodedBytes` | Decoded UTF-8 ceiling checked before allocation, standard/maximum 64 MiB; for payload kind 2 it bounds the canonical text length T (L4) and, at D10, the declared payload length at min(maximumEncodedBytes − 40, 2 × maximumDecodedBytes). |
-| `maximumLines` | Physical lines, standard/maximum 100,000. |
-| `maximumPlanes` | Planes, standard/maximum 65,536. |
-| `maximumRecordBytes` | Per-line/scalar/preamble/body bytes, standard 8 MiB, explicit ceiling 64 MiB. |
-| `standard` | Storage/composition/edit policy with documented bounded defaults. |
+| `maximumEncodedBytes` | Encoded input ceiling. Default is the largest host integer (Swift `Int.max`, Rust `usize::MAX`, TypeScript `Number.MAX_SAFE_INTEGER`). A caller can set a lower positive value. There is no smaller absolute ceiling. |
+| `maximumDecodedBytes` | Decoded UTF-8 ceiling checked before allocation. Same default. For payload kind 2 it bounds the canonical text length T (L4) and, at D10, the declared payload length at min(maximumEncodedBytes − 40, 2 × maximumDecodedBytes). That product and difference saturate at the host maximum. |
+| `maximumLines` | Physical lines. Same default. |
+| `maximumPlanes` | Planes. Same default. |
+| `maximumRecordBytes` | Per-line, scalar, preamble, and plane-body bytes. Same default. |
+| `standard` | Named default policy. Storage defaults are the largest host integer. Composition and edit defaults keep their documented ceilings. |
 | `DocumentStorageCodec` | Pure content-detecting general storage. |
 | `containerVersion` | UInt16 binary envelope version 1; DocumentContainerInfo raw container version field. |
 | `headerByteCount` | Header length 40 bytes. |
@@ -205,7 +206,7 @@ are pure synchronous APIs; they never open paths or resolve URLs.
 | `checksum` | DocumentContainerInfo declared CRC-32/ISO-HDLC value, not verified by inspection. |
 | `supportedPayloadKinds` | Payload kinds this release decodes, canonicalText and structuredDocument: Swift Set of DocumentPayloadKind, TypeScript frozen readonly number array [1, 2]. |
 | `containerInfo` | containerInfo(_ data: Data) throws -> DocumentContainerInfo? reads at most the first 40 bytes; nil (TypeScript null) without the binary magic; invalidContainer when the magic is present and fewer than 40 bytes exist. |
-| `encodeTextContainer` | encodeTextContainer(_:compression:limits:) throws -> Data writes payload kind 1, byte-identical to the ThreeMD 2.0 `.binary` output, with the 2.0 binary writer's validation and error order; TypeScript takes optional compression, limits and AbortSignal. |
+| `encodeTextContainer` | Deprecated for new files. encodeTextContainer(_:compression:limits:) throws -> Data writes payload kind 1, byte-identical to the ThreeMD 2.0 `.binary` output, with the 2.0 binary writer's validation and error order; TypeScript takes optional compression, limits and AbortSignal. Readers still open it. |
 | `DocumentReference` | Hashable, Sendable target and opaque attributes. |
 | `targetID` | ID in the supplied library, never a path or URL. |
 | `DocumentEntry` | Hashable, Sendable named Document and ordered references. |
@@ -411,7 +412,9 @@ are pure synchronous APIs; they never open paths or resolve URLs.
 
 DocumentDecodeLimits accepts maximumEncodedBytes, maximumDecodedBytes,
 maximumLines, maximumPlanes and maximumRecordBytes with the defaults above.
-All are positive and within absolute ceilings. DocumentCompositionLimits takes
+Each storage field is a positive integer up to the host maximum. A non-positive
+value is invalidLimits. JavaScript also rejects a value above
+Number.MAX_SAFE_INTEGER. DocumentCompositionLimits takes
 all eight maximum-properties above with their defaults; references and attribute
 limits can be zero, while other limits are positive. DocumentReference defaults
 attributes to [:]; DocumentEntry defaults references to [].

@@ -34,8 +34,13 @@ component and hosted viewer stay text-only.
   versioned envelope. Its magic is distinct from Sculpt/Rook's existing
   application-specific voxel container. Portable uncompressed payloads are
   mandatory; conditional system LZFSE is optional.
-- CRC-32 checks corruption, not authenticity. Explicit lengths, flags and
-  resource limits prevent ambiguous or unbounded decoding.
+- CRC-32 checks corruption, not authenticity. Explicit lengths and flags keep
+  the container unambiguous. `DocumentDecodeLimits` defaults to the largest
+  host integer, so a document is parsed and saved when the process can hold
+  it. A 1 GB cube and a 5 GB plane were saved in local runs. A 10 GB file has
+  not been measured. A caller can set a lower positive limit. Composition profile
+  ceilings and edit budgets keep their own ceilings. Length and count integers
+  use 1 to 10 bytes. Coordinate integers stay at 4 bytes.
 - A new canonical storage writer quotes all scalar values and checks semantic
   round trips. Narrow legacy compatibility repairs preserve their APIs and syntax.
 - Composition stores each named Document once, preserving each axis and opaque
@@ -64,8 +69,10 @@ component and hosted viewer stay text-only.
   directive parse through the 2.0 parser (Phase Q).
 - No lazy or partial-access API: a full decode of a 4 MB file takes 6 to 10 ms,
   and partial validity was measured to cost more than it saves.
-- `.binary` writes kind 2 so the faster format is the default; consumers on
-  ThreeMD 2.0 receive `encodeTextContainer` output, the unchanged 2.0 bytes.
+- `.binary` writes kind 2, the binary save, so the faster format is the
+  default. Kind 1 is deprecated for new files. Readers still open it.
+  Consumers on ThreeMD 2.0 receive `encodeTextContainer` output, the unchanged
+  2.0 bytes.
 - Every port uses the frozen whitespace set W instead of platform character
   tables, and Rust spells canonical numbers with the shortest round-trip digits,
   so the three ports accept the same documents.

@@ -23,8 +23,6 @@ const CHUNK: usize = 65_536;
 /// Integer form range, `-2^27 ..= 2^27 - 1`.
 const INTEGER_MIN: f64 = -134_217_728.0;
 const INTEGER_MAX: f64 = 134_217_727.0;
-/// The largest value a Var holds, `2^28 - 1`.
-const VAR_MAX: usize = (1 << 28) - 1;
 /// Every canonical number spelling is 1 to 24 bytes long (SPEC.md 11.3.7).
 const NUMBER_BOUND: usize = 24;
 
@@ -520,28 +518,44 @@ impl<'a> Reader<'a, '_> {
         Ok(byte)
     }
 
-    /// Var, steps V1 to V3.
+    /// A length or count Var: unsigned LEB128, 1 to 10 bytes (V1 to V3).
     #[inline]
     fn var(&mut self) -> Result<usize> {
+        self.read_var(10)
+    }
+
+    /// A form-1 coordinate Var. Four bytes stop at `2^28 - 1`, which is inside -2^27..=2^27-1.
+    #[inline]
+    fn coordinate_var(&mut self) -> Result<usize> {
+        self.read_var(4)
+    }
+
+    /// Unsigned LEB128 of at most `maximum_bytes`. A continuation on the last byte, a non-minimal
+    /// tail, or a magnitude past 64 bits is `invalidContainer`. A value that fits in 64 bits but
+    /// not in `usize` is `oversizedOutput`.
+    fn read_var(&mut self, maximum_bytes: usize) -> Result<usize> {
         let first = self.byte()?;
         if first < 0x80 {
             return Ok(usize::from(first));
         }
-        let mut value = usize::from(first & 0x7f);
-        let mut shift = 7;
-        for index in 1..4 {
+        let mut value = u64::from(first & 0x7f);
+        for index in 1..maximum_bytes {
             let byte = self.byte()?;
-            if index == 3 && byte & 0x80 != 0 {
+            if index + 1 == maximum_bytes && byte & 0x80 != 0 {
                 return Err(Error::InvalidContainer);
             }
-            value |= usize::from(byte & 0x7f) << shift;
+            let shift = index * 7;
+            let bits = u64::from(byte & 0x7f);
+            if shift >= 64 || (bits > 0 && bits > u64::MAX >> shift) {
+                return Err(Error::InvalidContainer);
+            }
+            value |= bits << shift;
             if byte < 0x80 {
                 if byte == 0 {
                     return Err(Error::InvalidContainer);
                 }
-                return Ok(value);
+                return usize::try_from(value).map_err(|_| Error::OversizedOutput);
             }
-            shift += 7;
         }
         Err(Error::InvalidContainer)
     }
@@ -571,7 +585,7 @@ impl<'a> Reader<'a, '_> {
     fn number(&mut self, form: u8) -> Result<f64> {
         match form {
             1 => {
-                let encoded = self.var()? as u64;
+                let encoded = self.coordinate_var()? as u64;
                 let integer = (encoded >> 1) as i64 ^ -((encoded & 1) as i64);
                 Ok(integer as f64)
             }
@@ -1459,16 +1473,12 @@ impl Writer {
 
     #[inline]
     fn var(&mut self, value: usize) -> Result<()> {
-        // A count or length above the Var range cannot fit any cap: every limit is at most 64 MiB.
-        if value > VAR_MAX {
-            return Err(Error::OversizedInput);
+        let mut size = 1;
+        let mut rest = value;
+        while rest >= 0x80 {
+            rest >>= 7;
+            size += 1;
         }
-        let size = match value {
-            0..=0x7f => 1,
-            0x80..=0x3fff => 2,
-            0x4000..=0x1f_ffff => 3,
-            _ => 4,
-        };
         self.reserve(size)?;
         let mut value = value;
         while value >= 0x80 {
@@ -1653,6 +1663,9 @@ pub(crate) fn encode(
 mod tests {
     use super::*;
 
+    /// The largest form-1 coordinate Var, `2^28 - 1`. Length and count Vars are wider.
+    const VAR_MAX: usize = (1 << 28) - 1;
+
     fn read_var(bytes: &[u8]) -> Result<usize> {
         let options = OperationOptions::default();
         let mut reader = Reader {
@@ -1685,6 +1698,8 @@ mod tests {
             (2_097_151, vec![0xff, 0xff, 0x7f]),
             (2_097_152, vec![0x80, 0x80, 0x80, 0x01]),
             (VAR_MAX, vec![0xff, 0xff, 0xff, 0x7f]),
+            (VAR_MAX + 1, vec![0x80, 0x80, 0x80, 0x80, 0x01]),
+            (5_368_709_120, vec![0x80, 0x80, 0x80, 0x80, 0x14]),
         ] {
             assert_eq!(write_var(value), expected, "{value}");
             assert_eq!(read_var(&expected), Ok(value), "{value}");
@@ -1696,16 +1711,24 @@ mod tests {
             (&[0x80, 0x00][..], Error::InvalidContainer),
             (&[0x81, 0x00][..], Error::InvalidContainer),
             (&[0xff, 0xff, 0x80, 0x00][..], Error::InvalidContainer),
-            (&[0xff, 0xff, 0xff, 0xff, 0x01][..], Error::InvalidContainer),
-            (&[0xff, 0xff, 0xff, 0x80][..], Error::InvalidContainer),
+            (&[0xff, 0xff, 0xff, 0x80][..], Error::LengthMismatch),
+            (
+                &[0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80][..],
+                Error::InvalidContainer,
+            ),
         ] {
             assert_eq!(read_var(bytes), Err(expected), "{bytes:02x?}");
         }
-        let mut writer = Writer {
-            output: vec![0; HEADER_BYTE_COUNT],
-            cap: 64,
+        assert_eq!(read_var(&[0xff, 0xff, 0xff, 0xff, 0x01]), Ok((1 << 29) - 1));
+        let options = OperationOptions::default();
+        let mut coordinate = Reader {
+            data: &[0xff, 0xff, 0xff, 0xff, 0x01],
+            position: 0,
+            record: usize::MAX,
+            scanned: 0,
+            options: &options,
         };
-        assert_eq!(writer.var(VAR_MAX + 1), Err(Error::OversizedInput));
+        assert_eq!(coordinate.coordinate_var(), Err(Error::InvalidContainer));
     }
 
     #[test]
@@ -1863,8 +1886,12 @@ mod tests {
             read::<true>(&bytes, &lowered, &options).err(),
             Some(Error::OversizedOutput)
         );
+        let lines = DocumentDecodeLimits {
+            maximum_lines: 100_000,
+            ..limits.clone()
+        };
         assert_eq!(
-            read::<true>(&bytes, &limits, &options).err(),
+            read::<true>(&bytes, &lines, &options).err(),
             Some(Error::TooManyLines)
         );
         assert_eq!(PHASE_Q_PARSES.with(std::cell::Cell::get), 0);
@@ -2144,12 +2171,14 @@ mod tests {
 
     #[test]
     fn cancellation_reaches_the_crc_of_a_64_mib_input() {
-        let limits = DocumentDecodeLimits::default();
+        let encoded = 64 * 1024 * 1024;
+        let limits = DocumentDecodeLimits {
+            maximum_encoded_bytes: encoded,
+            maximum_decoded_bytes: encoded,
+            ..DocumentDecodeLimits::default()
+        };
         let options = OperationOptions::default();
-        let file = container(&vec![
-            b'a';
-            limits.maximum_encoded_bytes - HEADER_BYTE_COUNT
-        ]);
+        let file = container(&vec![b'a'; encoded - HEADER_BYTE_COUNT]);
         cancellation_hook::arm(None);
         assert_eq!(
             storage::decode(&file, &limits, &options),
@@ -2198,9 +2227,13 @@ mod tests {
         cancellation_hook::arm(None);
         let many = document(65_536, &[], "");
         let file = container(&payload(&many));
+        let lines = DocumentDecodeLimits {
+            maximum_lines: 100_000,
+            ..limits.clone()
+        };
         cancellation_hook::arm(None);
         assert_eq!(
-            storage::decode(&file, &limits, &options),
+            storage::decode(&file, &lines, &options),
             Err(Error::TooManyLines)
         );
         let checks = cancellation_hook::checks();

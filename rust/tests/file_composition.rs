@@ -445,20 +445,17 @@ fn project_paths_have_explicit_rules_and_bounded_standalone_work() {
             "{invalid:?}"
         );
     }
-    let large = "a".repeat(limits().maximum_record_bytes);
-    assert!(matches!(
-        file_composition::resolve_path(&large, "root", &options()),
-        Err(Error::InputLimit)
-    ));
-    let mut value = document("", None);
-    value.metadata.insert(
-        "3md-files".into(),
-        " ".repeat(limits().maximum_record_bytes + 1),
+    let large = "a".repeat(8 * 1024 * 1024 + 1);
+    assert_eq!(
+        file_composition::resolve_path(&large, "root", &options()).unwrap(),
+        large
     );
-    assert!(matches!(
-        file_composition::ledger(&value, &options()),
-        Err(Error::InputLimit)
-    ));
+    let mut value = document("", None);
+    value
+        .metadata
+        .insert("3md-files".into(), format!(r#"{{"1":"{large}"}}"#));
+    let ledger = file_composition::ledger(&value, &options()).unwrap();
+    assert_eq!(ledger[0].source, large);
 }
 
 #[test]

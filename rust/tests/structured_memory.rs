@@ -97,7 +97,14 @@ fn container(payload: Vec<u8>) -> Vec<u8> {
 
 #[test]
 fn kind_2_decoding_stays_under_four_times_the_input() {
-    let limits = DocumentDecodeLimits::default();
+    // A 64 MiB sample of the reader's memory behavior. It is not a library size ceiling.
+    let limits = DocumentDecodeLimits {
+        maximum_encoded_bytes: 64 * 1024 * 1024,
+        maximum_decoded_bytes: 64 * 1024 * 1024,
+        maximum_lines: 100_000,
+        maximum_planes: 65_536,
+        maximum_record_bytes: 8 * 1024 * 1024,
+    };
     let options = OperationOptions::default();
     let budget = limits.maximum_encoded_bytes - 40;
 

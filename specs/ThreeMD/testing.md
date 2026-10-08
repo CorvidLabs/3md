@@ -117,7 +117,7 @@ the macOS performance job. The full test plan is
 - **Limits, cancellation and platforms.** Typed cancellation with no partial
   result at every SPEC.md 11.3.13 point; an amplification case that L3 or L4
   rejects with no Phase Q parse; peak memory under 4 times the input for the
-  64 MiB worst cases; TypeScript buffer ownership and Swift `Data` slices with a
+  64 MiB sample files under an explicit limit; TypeScript buffer ownership and Swift `Data` slices with a
   nonzero `startIndex`; Swift 32-task concurrency under TSan and Rust
   `Send + Sync`; `cargo test --target i686-unknown-linux-gnu --test structured`
   and a watchOS arm64_32 compile for 32-bit arithmetic; the full suites in the
@@ -136,7 +136,7 @@ the macOS performance job. The full test plan is
 - **ThreeMD 2.0.0 compatibility.** `fledge run compat-2-0` and the `compat-2-0`
   Linux workflow job, not the verify lane, check out `v2.0.0` and prove that its
   adapters return `unsupportedPayloadKind` for the 54 kind-2 anchors and
-  `expected20` for the 127 limit-free vectors, and that its libraries return
+  `expected20` for the 126 limit-free vectors, and that its libraries return
   `expected20` for all 156 vectors under their limits.
 - **Performance gate.** The separate `perf` lane, `scripts/bench/gate.mjs` and
   `.github/workflows/perf.yml` enforce kind-2 decode at most 0.25 of the bounded text decode time (G1) and
