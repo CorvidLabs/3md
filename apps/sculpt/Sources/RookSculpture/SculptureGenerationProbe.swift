@@ -1,5 +1,10 @@
 import Foundation
+
+#if canImport(Darwin)
 import os
+#else
+import Synchronization
+#endif
 
 /// Notes every built-in example builder and generator that runs inside a probe scope, so tests can show that
 /// listing the gallery builds nothing and that opening one entry builds only that entry.
@@ -21,7 +26,13 @@ internal enum SculptureGenerationProbe {
 internal final class SculptureGenerationRecorder: Sendable {
     // MARK: - Properties
 
-    private let storage = OSAllocatedUnfairLock<[String]>(initialState: [])
+    // OSAllocatedUnfairLock is macOS 13 and matches the app's macOS 14 target.
+    // Linux unit tests use Synchronization.Mutex, which is not available on macOS 14.
+    #if canImport(Darwin)
+    private let storage = OSAllocatedUnfairLock(initialState: [String]())
+    #else
+    private let storage = Mutex<[String]>([])
+    #endif
 
     /// Every name recorded so far.
     internal var names: [String] {

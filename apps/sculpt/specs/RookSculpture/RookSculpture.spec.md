@@ -14,6 +14,7 @@ files:
   - Sources/RookSculpture/Sculpture.swift
   - Sources/RookSculpture/SculptureCodec.swift
   - Sources/RookSculpture/SculptureBinaryCodec.swift
+  - Sources/RookSculpture/SculptureSHA256.swift
   - Sources/RookSculpture/SculptureStorageFormat.swift
   - Sources/RookSculpture/SculptureProjection.swift
   - Sources/RookSculpture/SculptureExamples.swift
@@ -463,7 +464,7 @@ Composition and world validation uses SculptureCompositionError and SculptureWor
 
 ## Dependencies
 
-The package product `ThreeMD` comes from the `3md` package at `../..`. It handles readable documents, portable general binary/composition storage, identities, revisions, atomic editing and diagnostics. Foundation, Apple's Compression framework for legacy LZFSE, and CryptoKit for legacy SHA256 are SDK dependencies. No additional package dependency, product process or network operation is introduced.
+The package product `ThreeMD` comes from the `3md` package at `../..`. It handles readable documents, portable general binary/composition storage, identities, revisions, atomic editing and diagnostics. Foundation is the shared SDK dependency. macOS compact storage uses Apple's Compression framework for LZFSE. Linux unit tests use liblzfse for that same framing. SHA256 is the local `SculptureSHA256` implementation on every host. No additional package dependency, product process or network operation is introduced.
 
 ## Change Log
 

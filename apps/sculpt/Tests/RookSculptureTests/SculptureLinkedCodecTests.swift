@@ -196,7 +196,11 @@ struct SculptureLinkedCodecTests {
         let readable = try LinkedFixture.linkedData(files: ["#": "leaf.3md"])
         #expect(throws: SculptureLinkedError.needsProjectFolder) { try SculptureSceneReader.decode(readable) }
         let document = try DocumentStorageCodec.decode(readable)
-        for compression in [DocumentCompression.none, .lzfse] {
+        var compressions: [DocumentCompression] = [.none]
+        #if canImport(Compression)
+        compressions.append(.lzfse)
+        #endif
+        for compression in compressions {
             let binary = try DocumentStorageCodec.encode(document, format: .binary(compression: compression))
             #expect(!SculptureLinkedCodec.isLinked(binary))
             #expect(throws: SculptureLinkedError.binaryLinkedRoot) { try SculptureSceneReader.decode(binary) }

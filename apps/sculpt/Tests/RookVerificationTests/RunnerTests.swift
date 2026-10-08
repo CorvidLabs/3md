@@ -13,7 +13,11 @@ private func executeFixture(output: String, status: Int32) throws -> SwiftTestRu
     let program = root.appendingPathComponent("Fixture.swift")
     let source = """
         import Foundation
+        #if os(Linux)
+        import Glibc
+        #else
         import Darwin
+        #endif
         FileHandle.standardOutput.write(Data(\(String(reflecting: output)).utf8))
         exit(\(status))
         """

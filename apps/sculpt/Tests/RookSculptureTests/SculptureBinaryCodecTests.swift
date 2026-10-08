@@ -1,8 +1,30 @@
-import Compression
-import CryptoKit
 import Foundation
-import RookSculpture
 import Testing
+
+@testable import RookSculpture
+
+#if canImport(CryptoKit)
+import CryptoKit
+#endif
+
+
+@Test func sha256MatchesThePublishedEmptyAndABCVectors() {
+    #expect(
+        SculptureSHA256.hex(Data()) == "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    )
+    #expect(
+        SculptureSHA256.hex(Data("abc".utf8)) == "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad"
+    )
+}
+
+#if canImport(CryptoKit)
+@Test func sha256MatchesCryptoKit() {
+    let samples = [Data(), Data("abc".utf8), Data(repeating: 0xAB, count: 100_000)]
+    for sample in samples {
+        #expect(SculptureSHA256.hash(sample) == Data(SHA256.hash(data: sample)))
+    }
+}
+#endif
 
 @Test func compactRoundTripPreservesEveryGlyphRectangularDimensionsAndTitle() throws {
     let glyphs = Sculpture.palette + [Sculpture.empty]
@@ -144,7 +166,7 @@ import Testing
     #expect(throws: SculptureBinaryCodecError.checksumMismatch) { try SculptureBinaryCodec.decode(reshaped) }
     let alteredVoxels = Data("#@*+oo".utf8)
     var alteredPayload = valid
-    let payload = try binaryCompressed(alteredVoxels)
+    let payload = try SculptureBinaryCodec.compressedPayload(for: alteredVoxels)
     // Keep the original checksum while replacing an otherwise valid compressed stream.
     binaryWrite(UInt32(payload.count), into: &alteredPayload, at: 24)
     alteredPayload = Data(alteredPayload.prefix(60 + Int(binaryUInt16(valid, at: 18))))
@@ -198,14 +220,26 @@ import Testing
 @Test func compactDecompressionRejectsExpansionBeyondTheDeclaredVolumeAndShortOutput() throws {
     let single = try SculptureBinaryCodec.encode(Sculpture(title: "One", width: 1, height: 1, layers: [[35]]))
     let expansion = Data([35, 35])
-    let oversized = binaryRepack(single, voxels: expansion, payload: try binaryCompressed(expansion))
+    let oversized = binaryRepack(
+        single,
+        voxels: expansion,
+        payload: try SculptureBinaryCodec.compressedPayload(for: expansion)
+    )
     #expect(throws: SculptureBinaryCodecError.invalidLength) { try SculptureBinaryCodec.decode(oversized) }
     let double = try SculptureBinaryCodec.encode(Sculpture(title: "Two", width: 2, height: 1, layers: [[35, 35]]))
     let short = Data([35])
-    let incomplete = binaryRepack(double, voxels: short, payload: try binaryCompressed(short))
+    let incomplete = binaryRepack(
+        double,
+        voxels: short,
+        payload: try SculptureBinaryCodec.compressedPayload(for: short)
+    )
     #expect(throws: SculptureBinaryCodecError.invalidLength) { try SculptureBinaryCodec.decode(incomplete) }
     let invalidGlyph = Data([33])
-    let malformed = binaryRepack(single, voxels: invalidGlyph, payload: try binaryCompressed(invalidGlyph))
+    let malformed = binaryRepack(
+        single,
+        voxels: invalidGlyph,
+        payload: try SculptureBinaryCodec.compressedPayload(for: invalidGlyph)
+    )
     #expect(throws: SculptureError.invalidGlyph) { try SculptureBinaryCodec.decode(malformed) }
 }
 
@@ -262,32 +296,14 @@ private func binaryRepack(_ original: Data, voxels: Data, payload: Data) -> Data
     let title = Data(original.dropFirst(60).prefix(Int(binaryUInt16(original, at: 18))))
     var header = Data(original.prefix(28))
     binaryWrite(UInt32(payload.count), into: &header, at: 24)
-    var hash = SHA256()
-    hash.update(data: header)
-    hash.update(data: title)
-    hash.update(data: voxels)
-    header.append(Data(hash.finalize()))
+    var material = Data()
+    material.append(header)
+    material.append(title)
+    material.append(voxels)
+    header.append(SculptureSHA256.hash(material))
     header.append(title)
     header.append(payload)
     return header
-}
-
-private func binaryCompressed(_ input: Data) throws -> Data {
-    var destination = [UInt8](repeating: 0, count: input.count + 1024)
-    let count = destination.withUnsafeMutableBufferPointer { destination in
-        input.withUnsafeBytes { source in
-            compression_encode_buffer(
-                destination.baseAddress!,
-                destination.count,
-                source.bindMemory(to: UInt8.self).baseAddress!,
-                source.count,
-                nil,
-                COMPRESSION_LZFSE
-            )
-        }
-    }
-    #expect(count > 0)
-    return Data(destination.prefix(try #require(count > 0 ? count : nil)))
 }
 
 private actor BinaryCodecCancellationBarrier {

@@ -1,6 +1,11 @@
-import Compression
-import CryptoKit
 import Foundation
+
+#if canImport(Compression)
+import Compression
+#endif
+#if canImport(CLzfse)
+import CLzfse
+#endif
 
 /// App-specific `.3mdb` storage, independent of readable ThreeMD documents.
 ///
@@ -36,7 +41,7 @@ public enum SculptureBinaryCodec {
         }
         let compressed = try transcode(
             voxels,
-            operation: COMPRESSION_STREAM_ENCODE,
+            operation: .encode,
             maximumOutput: maximumBytes - headerSize - title.count
         )
         var header = Data(magic)
@@ -85,11 +90,11 @@ public enum SculptureBinaryCodec {
         let voxels = try transcode(
             data,
             range: (headerSize + titleCount)..<data.count,
-            operation: COMPRESSION_STREAM_DECODE,
+            operation: .decode,
             maximumOutput: voxelCount,
             expectedOutput: voxelCount
         )
-        let expectedChecksum = Data(data.dropFirst(checksumOffset).prefix(SHA256.byteCount))
+        let expectedChecksum = Data(data.dropFirst(checksumOffset).prefix(SculptureSHA256.byteCount))
         guard checksum(header: Data(data.prefix(checksumOffset)), title: title, voxels: voxels) == expectedChecksum
         else {
             throw SculptureBinaryCodecError.checksumMismatch
@@ -128,22 +133,63 @@ public enum SculptureBinaryCodec {
         data.prefix(magic.count).elementsEqual(magic)
     }
 
+    internal static func compressedPayload(for voxels: Data) throws -> Data {
+        try transcode(voxels, operation: .encode, maximumOutput: maximumBytes)
+    }
+
     private static func checksum(header: Data, title: Data, voxels: Data) -> Data {
-        var hash = SHA256()
-        hash.update(data: header)
-        hash.update(data: title)
-        hash.update(data: voxels)
-        return Data(hash.finalize())
+        var material = Data(capacity: header.count + title.count + voxels.count)
+        material.append(header)
+        material.append(title)
+        material.append(voxels)
+        return SculptureSHA256.hash(material)
+    }
+
+    private enum TranscodeOperation {
+        case encode
+        case decode
     }
 
     /// Processing stays inside both buffer lifetimes. Output is bounded before each append.
     private static func transcode(
         _ input: Data,
         range: Range<Int>? = nil,
-        operation: compression_stream_operation,
+        operation: TranscodeOperation,
         maximumOutput: Int,
         expectedOutput: Int? = nil
     ) throws -> Data {
+        // Linux Data slices keep a non-zero start index. Integer ranges below are offsets from the
+        // first byte, which is how Apple Data already addresses every value.
+        let input = input.startIndex == 0 ? input : Data(input)
+        #if canImport(Compression)
+        return try appleTranscode(
+            input,
+            range: range,
+            operation: operation,
+            maximumOutput: maximumOutput,
+            expectedOutput: expectedOutput
+        )
+        #else
+        return try linuxTranscode(
+            input,
+            range: range,
+            operation: operation,
+            maximumOutput: maximumOutput,
+            expectedOutput: expectedOutput
+        )
+        #endif
+    }
+
+    #if canImport(Compression)
+    private static func appleTranscode(
+        _ input: Data,
+        range: Range<Int>?,
+        operation: TranscodeOperation,
+        maximumOutput: Int,
+        expectedOutput: Int?
+    ) throws -> Data {
+        let streamOperation: compression_stream_operation =
+            operation == .encode ? COMPRESSION_STREAM_ENCODE : COMPRESSION_STREAM_DECODE
         let range = range ?? 0..<input.count
         let destination = UnsafeMutablePointer<UInt8>.allocate(capacity: chunkSize)
         defer { destination.deallocate() }
@@ -154,7 +200,7 @@ public enum SculptureBinaryCodec {
             src_size: 0,
             state: nil
         )
-        guard compression_stream_init(&stream, operation, COMPRESSION_LZFSE) == COMPRESSION_STATUS_OK else {
+        guard compression_stream_init(&stream, streamOperation, COMPRESSION_LZFSE) == COMPRESSION_STATUS_OK else {
             throw SculptureBinaryCodecError.compressionFailed
         }
         defer { compression_stream_destroy(&stream) }
@@ -163,7 +209,7 @@ public enum SculptureBinaryCodec {
             guard let base = bytes.baseAddress, !range.isEmpty else {
                 throw SculptureBinaryCodecError.invalidLength
             }
-            let isDecoding = operation == COMPRESSION_STREAM_DECODE
+            let isDecoding = streamOperation == COMPRESSION_STREAM_DECODE
             let withheldCount = isDecoding ? endMarker.count : 0
             if isDecoding {
                 guard range.count > withheldCount,
@@ -204,12 +250,77 @@ public enum SculptureBinaryCodec {
                         throw SculptureBinaryCodecError.corruptPayload
                     }
                 default:
-                    throw operation == COMPRESSION_STREAM_DECODE
+                    throw streamOperation == COMPRESSION_STREAM_DECODE
                         ? SculptureBinaryCodecError.corruptPayload : SculptureBinaryCodecError.compressionFailed
                 }
             }
         }
     }
+    #else
+    private static func linuxTranscode(
+        _ input: Data,
+        range: Range<Int>?,
+        operation: TranscodeOperation,
+        maximumOutput: Int,
+        expectedOutput: Int?
+    ) throws -> Data {
+        let range = range ?? 0..<input.count
+        guard !range.isEmpty, maximumOutput > 0 else { throw SculptureBinaryCodecError.invalidLength }
+        let slice = Data(input[range])
+        switch operation {
+        case .encode:
+            return try lzfseEncode(slice, maximumOutput: maximumOutput)
+        case .decode:
+            guard slice.count > endMarker.count, slice.suffix(endMarker.count).elementsEqual(endMarker) else {
+                throw SculptureBinaryCodecError.invalidLength
+            }
+            let expected = expectedOutput ?? maximumOutput
+            let decoded = try lzfseDecode(slice, expected: expected, maximumOutput: maximumOutput)
+            // The declared volume can be smaller than a valid LZFSE frame. Re-encode against the
+            // original frame so trailing or concatenated bytes fail closed.
+            let encodeLimit = min(
+                maximumBytes,
+                max(slice.count, decoded.count + max(decoded.count / 8, 64) + 4096)
+            )
+            let again = try lzfseEncode(decoded, maximumOutput: encodeLimit)
+            guard again == slice else { throw SculptureBinaryCodecError.invalidLength }
+            return decoded
+        }
+    }
+
+    private static func lzfseEncode(_ input: Data, maximumOutput: Int) throws -> Data {
+        try Task.checkCancellation()
+        guard maximumOutput > 0, !input.isEmpty else { throw SculptureBinaryCodecError.invalidLength }
+        let capacity = min(maximumOutput, input.count + max(input.count / 8, 64) + 4096)
+        return try input.withUnsafeBytes { raw in
+            guard let source = raw.bindMemory(to: UInt8.self).baseAddress else {
+                throw SculptureBinaryCodecError.invalidLength
+            }
+            let destination = UnsafeMutablePointer<UInt8>.allocate(capacity: capacity)
+            defer { destination.deallocate() }
+            let written = lzfse_encode_buffer(destination, capacity, source, input.count, nil)
+            guard written > 0, written <= maximumOutput else { throw SculptureBinaryCodecError.compressionFailed }
+            try Task.checkCancellation()
+            return Data(UnsafeBufferPointer(start: destination, count: written))
+        }
+    }
+
+    private static func lzfseDecode(_ input: Data, expected: Int, maximumOutput: Int) throws -> Data {
+        try Task.checkCancellation()
+        guard expected > 0, expected <= maximumOutput else { throw SculptureBinaryCodecError.invalidLength }
+        return try input.withUnsafeBytes { raw in
+            guard let source = raw.bindMemory(to: UInt8.self).baseAddress else {
+                throw SculptureBinaryCodecError.invalidLength
+            }
+            let destination = UnsafeMutablePointer<UInt8>.allocate(capacity: expected)
+            defer { destination.deallocate() }
+            let written = lzfse_decode_buffer(destination, expected, source, input.count, nil)
+            guard written == expected else { throw SculptureBinaryCodecError.invalidLength }
+            try Task.checkCancellation()
+            return Data(UnsafeBufferPointer(start: destination, count: written))
+        }
+    }
+    #endif
 
     private static func append<T: FixedWidthInteger>(_ value: T, to data: inout Data) {
         var value = value.littleEndian

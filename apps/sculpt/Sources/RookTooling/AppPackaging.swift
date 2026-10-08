@@ -57,7 +57,12 @@ struct AppPackaging: Sendable {
         guard display.status == 0 else { return display.status }
 
         if manager.fileExists(atPath: destination.path) {
+            #if canImport(Darwin)
             _ = try manager.replaceItemAt(destination, withItemAt: staging)
+            #else
+            // Linux rename refuses to replace a non-empty directory.
+            try Self.replaceExistingItem(at: destination, with: staging, manager: manager)
+            #endif
         } else {
             try manager.moveItem(at: staging, to: destination)
         }
@@ -75,6 +80,22 @@ struct AppPackaging: Sendable {
             values["CFBundleIdentifier"] as? String == "labs.corvid.rook",
             values["CFBundleExecutable"] as? String == "Rook"
         else { throw ToolingError.unsafeBundle(bundle.path) }
+    }
+
+    /// Moves the previous bundle aside, puts the staged bundle in its place, and restores the
+    /// previous bundle when that second move fails.
+    private static func replaceExistingItem(at destination: URL, with staging: URL, manager: FileManager) throws {
+        let backup = destination.deletingLastPathComponent().appendingPathComponent(
+            ".rook-replace-\(UUID().uuidString)"
+        )
+        try manager.moveItem(at: destination, to: backup)
+        do {
+            try manager.moveItem(at: staging, to: destination)
+        } catch {
+            try? manager.moveItem(at: backup, to: destination)
+            throw error
+        }
+        try manager.removeItem(at: backup)
     }
 
     private static func rejectSymbolicLink(_ url: URL) throws {

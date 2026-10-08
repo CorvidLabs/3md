@@ -1,0 +1,5 @@
+module CLzfse [system] {
+    header "shim.h"
+    link "lzfse"
+    export *
+}

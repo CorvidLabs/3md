@@ -1,7 +1,10 @@
 import Foundation
-import ModelIO
 import RookSculpture
 import Testing
+
+#if canImport(ModelIO)
+import ModelIO
+#endif
 
 @Test func singleVoxelOBJHasClosedOutwardSurfaceAndCenteredBounds() throws {
     let sculpture = try Sculpture(title: "Cube", width: 1, height: 1, layers: [[35]])
@@ -57,6 +60,7 @@ import Testing
     }
     let file = folder.appendingPathComponent("character-orb.obj")
     try data.write(to: file, options: .atomic)
+    #if canImport(ModelIO)
     #expect(MDLAsset.canImportFileExtension("obj"))
     let asset = MDLAsset(url: file)
     let meshes = asset.childObjects(of: MDLMesh.self).compactMap { $0 as? MDLMesh }
@@ -67,6 +71,7 @@ import Testing
     #expect(submeshes.reduce(0) { $0 + $1.indexCount } == mesh.faces.count * 6)
     #expect(asset.boundingBox.minBounds == SIMD3<Float>(repeating: -7))
     #expect(asset.boundingBox.maxBounds == SIMD3<Float>(repeating: 7))
+    #endif
 }
 
 @Test func sixtyFourSolidVolumeExportsItsSurfaceRatherThanEveryCube() throws {

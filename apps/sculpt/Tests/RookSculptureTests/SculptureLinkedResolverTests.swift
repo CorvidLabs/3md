@@ -1,9 +1,13 @@
-import CryptoKit
 import Foundation
 import Testing
 import ThreeMD
 
 @testable import RookSculpture
+
+#if canImport(CryptoKit)
+import CryptoKit
+#endif
+
 
 struct SculptureLinkedResolverTests {
     @Test func resolvesOnlyReachableFilesIntoACompositionWithPathsAndDigests() async throws {
@@ -59,7 +63,11 @@ struct SculptureLinkedResolverTests {
         #expect(resolution.modelPaths == [chairID: "models/chair.3md", tableID: "models/table.3md", rootID: paths[2]])
         for path in paths {
             let data = try #require(files[path])
+            #if canImport(CryptoKit)
             let hex = SHA256.hash(data: data).map { String(format: "%02x", $0) }.joined()
+            #else
+            let hex = SculptureSHA256.hex(data)
+            #endif
             #expect(resolution.digests[path] == hex)
         }
         #expect(Set(resolution.digests.keys) == Set(paths))
@@ -264,9 +272,13 @@ struct SculptureLinkedResolverTests {
         ])
         let bundled = try await bundleProject.resolve("bundle-root.3md")
         let bundle = try SculptureLinkedBundle.encode(bundled, format: .readable)
-        let cases: [(Data, SculptureLinkedFileKind)] = [
-            (try SculptureBinaryCodec.encode(voxel), .compactStorage),
-            (try LinkedFixture.binaryVoxel(voxel, compression: .lzfse), .compressedBinary),
+        var cases: [(Data, SculptureLinkedFileKind)] = [
+            (try SculptureBinaryCodec.encode(voxel), .compactStorage)
+        ]
+        #if canImport(Compression)
+        cases.append((try LinkedFixture.binaryVoxel(voxel, compression: .lzfse), .compressedBinary))
+        #endif
+        cases += [
             (
                 try DocumentStorageCodec.encode(linkedDocument, format: .binary(compression: .none)),
                 .binaryLinkedComposition

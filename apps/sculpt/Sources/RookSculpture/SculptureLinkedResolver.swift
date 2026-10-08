@@ -1,4 +1,3 @@
-import CryptoKit
 import Foundation
 import ThreeMD
 
@@ -282,10 +281,7 @@ public enum SculptureLinkedResolver {
     }
 
     private static func digest(_ data: Data) -> String {
-        SHA256.hash(data: data).map { byte in
-            let hex = String(byte, radix: 16)
-            return byte < 16 ? "0" + hex : hex
-        }.joined()
+        SculptureSHA256.hex(data)
     }
 
     /// Reports ThreeMD and scene failures by project path. Positional bundle IDs are replaced by their files.
