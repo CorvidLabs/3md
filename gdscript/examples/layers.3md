@@ -1,0 +1,14 @@
+---
+3md: "1.0"
+axis: "layer"
+title: "Grove"
+---
+
+@plane z=0 label="Ground"
+The forest floor. A game can parent its ground nodes here.
+
+@plane z=1 label="Canopy"
+Birds and light. This plane is another layer, not a Godot node.
+
+@plane z=2 label="HUD"
+Health and the map. The addon does not instance a CanvasLayer.

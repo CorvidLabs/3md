@@ -34,6 +34,14 @@ cmd = "bun install --frozen-lockfile && bun run typecheck && bun run build && bu
 dir = "js"
 description = "TypeScript port: typecheck, build distributable JavaScript/declarations and execute shared tests."
 
+[tasks.gdscript]
+cmd = "bash gdscript/tools/check.sh"
+description = "Godot 4.7 addon: headless text, binary, composition, linked-file, edit, and example checks. Not in the verify lane."
+
+[tasks.gdscript-interchange]
+cmd = "THREEMD_GODOT=\"${GODOT:-godot}\" swift run threemd-interchange"
+description = "Sixteen-pair interchange with the Godot adapter. Not in the verify lane; hosted CI does not install Godot."
+
 [lanes.verify]
 description = "Three language suites, nine-pair public-package interchange, generated bundle drift and editor grammar. Trust runs SpecSync after this lane."
 steps = ["lint", "build", "test", "js", "rust", "interchange", "element-bundle", "editor"]

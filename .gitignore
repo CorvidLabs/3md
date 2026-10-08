@@ -43,3 +43,7 @@ uitests/.last-run.json
 # web/assets/three-md.js and IS committed.
 element/node_modules/
 element/dist/
+
+# Godot import cache for the GDScript addon. The addon source is tracked.
+gdscript/.godot/
+gdscript/**/*.uid
