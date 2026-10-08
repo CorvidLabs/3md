@@ -95,7 +95,7 @@ Two saves of one document. The pictures in this section are the same frames both
 
 The **text file** is the `.3md` you edit. It is ordinary UTF-8. A frame is an `@plane` line plus that frame's Markdown. Open it in any editor.
 
-**Binary** is that same document stored as fields. `.binary` writes it. Each frame keeps its number, its name, and its body, and the `@plane` line is not written again. The file begins with 40 bytes, `3mdbin` and a short header, then the fields. This is payload kind 2. A record is one frame's fields inside that file.
+**Binary** is that same document stored as fields. `.binary` writes it. Each frame keeps its number, its name, and its body, and the `@plane` line is not written again. The file begins with 40 bytes, `3mdbin` and a short header, then the fields. This is payload kind 2.
 
 **Kind 1 is deprecated.** It was the ThreeMD 2.0 binary file: the text file copied after that same 40-byte header. The frames are not stored as fields. Readers still open old kind 1 files. `encodeTextContainer` still writes one when a 2.0 reader must open the file. New files use `.binary`. The charts leave kind 1 out.
 
@@ -197,7 +197,7 @@ Grove is the row where binary is one byte larger than the text. The poem is the 
 </p>
 
 <p align="center">
-  <img src="docs/readme/size-ratio.png" alt="How many of 293 example files have a binary save at each percent of the text size. 100% would match the text. The typical file is 97.4%. The tall bar is 123 files at 97%." width="880">
+  <img src="docs/readme/size-ratio.png" alt="How many of 293 example files have a binary save at each percent of the text size. 100% would match the text. Together the files are 97.3% of the text. A typical file is 97.4%. The tall bar is 123 files at 97%." width="880">
 </p>
 
 | Input | What it is | Text bytes | Binary | Binary / text |
@@ -206,7 +206,7 @@ Grove is the row where binary is one byte larger than the text. The poem is the 
 | synthetic-2000 | One file: 2,000 planes of mixed Markdown | 4,037,480 | 3,998,362 | 0.990 |
 | sculpt-4096, 32 by 20 | One file: 4,096 layers of a 32 by 20 picture. Not a 1024 cube | 3,031,345 | 2,934,090 | 0.968 |
 
-Binary for the 293 files is 31,645 bytes smaller than the text (2.7%). A typical file in that list is 97.4% of its text. The biggest saving is the poem, at 79.9%. The smallest saving is `annotated-contract.3md`, at 99.2%. Every file in the list is under 100%. The tall bar is 123 files at 97%. Those totals are the committed check in [conformance/structured/sizes.json](conformance/structured/sizes.json). The test `g6_kind_2_sizes_match_sizes_json` checks them. The two generated files are not committed. The sizes are.
+Binary for the 293 files is 31,645 bytes smaller than the text (2.7%). Together those files are 97.3% of the text. That is the committed ratio, and it is the 97.3% in the picture. A typical file, the median, is 97.4%. The biggest saving is the poem, at 79.9%. The smallest saving is `annotated-contract.3md`, at 99.2%. Every file in the list is under 100%. The tall bar is 123 files at 97%. Those totals are the committed check in [conformance/structured/sizes.json](conformance/structured/sizes.json). The test `g6_kind_2_sizes_match_sizes_json` checks them. The two generated files are not committed. The sizes are.
 
 ### Reading the text file vs reading the binary
 
@@ -566,8 +566,10 @@ versioned binary storage, composition and linked file authoring without changing
 that grammar. ThreeMD 2.0.0, released on 2026-10-06, implements those extensions
 in Swift, TypeScript and Rust; the package version is separate from the format
 version. Specification 1.2 is on main (pull request 72). It adds payload kind 2
-inside that same container. Package manifests read 2.1.0. The `v2.1.0` tag is
-not cut. See the [2.1 preparation notes](docs/RELEASE-2.1.0.md). Older
+inside that same container. Main still stops a document at 64 MiB. This branch
+removes that stop, on pull request 73, which is not merged. Package manifests
+read 2.1.0. The `v2.1.0` tag is not cut. See the
+[2.1 preparation notes](docs/RELEASE-2.1.0.md). Older
 `3md: 0.1` documents remain valid: the parser is version-lenient and never
 rejects a document by its version string.
 

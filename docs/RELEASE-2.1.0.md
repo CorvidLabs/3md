@@ -16,8 +16,8 @@ those files.
 
 The approved SpecSync change is
 `add-a-structured-binary-document-payload-kind-2-to-threemd-2-1-in-swift-typescript-and-rust-with-fast-checksums-cli`.
-It is not accepted or archived. `fledge trust verify` has not been run on this
-preparation tip.
+It is not accepted or archived. `fledge trust verify` has passed on this pull
+request. It still has to pass on the exact commit that is tagged.
 
 Publishing still happens only when a GitHub release is published. Until then
 npm serves `@corvidlabs/threemd` and `@corvidlabs/three-md-element` at 2.0.0,

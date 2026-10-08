@@ -17,7 +17,7 @@ Prepared as 2.1.0. Not tagged. See [docs/RELEASE-2.1.0.md](docs/RELEASE-2.1.0.md
 
 ### Added
 
-- Header-only `containerInfo` and the payload-kind constants. Kind 2 decodes the document records directly. The element bundle does not include the storage codec.
+- Header-only `containerInfo` and the payload-kind constants. Kind 2 decodes the frames directly. The element bundle does not include the storage codec.
 
 - Rust `editing::adopt_composition_entries`, an additive function that returns adopted entries so callers can build the graph and receive the specific composition error.
 - The development interchange `files` request accepts strict optional `limits` and `documentLimits` objects, and the shared cases cover lowered limits, refusal order, path grammar, ledger escapes, cycle spellings, the cached-subtree discovery ceiling and the attribute bound in all nine writer/reader pairs.

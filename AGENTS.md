@@ -2,9 +2,9 @@
 
 ## 2.1.0 preparation
 
-On 2026-10-07 Leif approved the structured-payload library work and asked for a pull request, then preparation for 2.1. The branch is `leif/structured-binary-2.1` (pull request 72). Package manifests in this preparation read 2.1.0. The tag, GitHub release, npm publish, and crate publish are not part of this request.
+On 2026-10-07 Leif approved the structured-payload library work and asked for a pull request, then preparation for 2.1. That library landed on main in pull request 72. Pull request 73 (`leif/readme-visuals`) removes the fixed document size stop and carries the README. Package manifests read 2.1.0. The tag, GitHub release, npm publish, and crate publish are not part of this request.
 
-The approved SpecSync change is `add-a-structured-binary-document-payload-kind-2-to-threemd-2-1-in-swift-typescript-and-rust-with-fast-checksums-cli`. The library ports, fixtures, and SPEC 1.2 text are on the branch. Still open before a tag: CLI binary input, `convert` and `inspect`, interchange protocol 2, the 2.0.0 compatibility job, the CI performance gate, release evidence, and `fledge trust verify` on the exact tip. This preparation does not merge, tag, publish, or weaken a trust gate.
+The approved SpecSync change is `add-a-structured-binary-document-payload-kind-2-to-threemd-2-1-in-swift-typescript-and-rust-with-fast-checksums-cli`. It is not accepted or archived. Still open before a tag: CLI binary input, `convert` and `inspect`, interchange protocol 2, the 2.0.0 compatibility job, the CI performance gate, release evidence, a maintainer merge of pull request 73, and `fledge trust verify` on the exact tagged tip. This preparation does not merge, tag, publish, or weaken a trust gate.
 
 ## Linked composition parity hardening after 2.0.0
 

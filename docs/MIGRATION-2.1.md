@@ -1,9 +1,10 @@
 # Migrating to ThreeMD 2.1
 
-Status: preparation on branch `leif/structured-binary-2.1` (pull request 72).
-Package manifests on that branch read 2.1.0. The `v2.1.0` tag is not cut, and
-npm and crates.io still serve 2.0.0. These notes describe the library behavior
-already on the branch. They are not a release announcement.
+Status: payload kind 2 is on main (pull request 72, merged 2026-10-07). Main
+still stops a document at 64 MiB. Pull request 73 removes that stop and is not
+merged. Package manifests read 2.1.0. The `v2.1.0` tag is not cut, and npm and
+crates.io still serve 2.0.0. These notes describe the library on pull request
+73. They are not a release announcement.
 
 The package number is not the document version. Keep `3md: 1.0` (or an older
 accepted string) in frontmatter. The parser stays version-lenient. Text grammar
