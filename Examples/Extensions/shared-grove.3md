@@ -11,14 +11,14 @@ profile: "3md-composition-1"
     {
       "id": "canopy",
       "references": [],
-      "source": "---\n3md: \"1.0\"\naxis: \"space\"\ntitle: \"Reusable canopy\"\nmaterial: \"mint\"\n---\n\n@plane z=0\n.#\n##\n\n@plane z=1\n##\n.#\n"
+      "source": "---\n3md: \"1.0\"\naxis: \"space\"\ntitle: \"Reusable canopy\"\nmaterial: \"mint\"\n---\n\nTwo layers of one small canopy. A dot is open. A hash is a solid tile. Another document can place this piece by name.\n\n@plane z=0 label=\"top\"\n# top\n\n```\n.#\n##\n```\n\n@plane z=1 label=\"bottom\"\n# bottom\n\n```\n##\n.#\n```\n"
     },
     {
       "id": "grove",
       "references": [
         {"attributes": {"binding": "A"}, "targetID": "canopy"}
       ],
-      "source": "---\n3md: \"1.0\"\naxis: \"space\"\ntitle: \"Shared grove\"\nsemantics: \"application-defined character bindings\"\n---\n\n@plane z=0\nA.A\n.A.\n"
+      "source": "---\n3md: \"1.0\"\naxis: \"space\"\ntitle: \"Shared grove\"\nsemantics: \"application-defined character bindings\"\n---\n\nThe letter A stands for the canopy. This plane places it three times. A dot is open ground.\n\n@plane z=0 label=\"ground\"\n# ground\n\n```\nA.A\n.A.\n```\n"
     }
   ],
   "rootID": "grove",

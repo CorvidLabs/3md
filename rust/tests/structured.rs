@@ -1492,9 +1492,9 @@ const MUTATION_COUNT: usize = 102_600;
 /// mutant, and of every tenth mutant. Seed `0x51a7`, 300 mutants per base, decoded with the
 /// default limits (the largest value the host integer can hold). A mutant that used to stop
 /// on the old byte, line, plane, or record ceiling now reports the later check. The sampled
-/// run still accepts 1,336 mutants.
-const OUTCOMES_DIGEST: u64 = 0x9afd_1194_59e1_2919;
-const SAMPLED_OUTCOMES_DIGEST: u64 = 0xa3e7_72b9_75b6_6149;
+/// run still accepts 1,338 mutants.
+const OUTCOMES_DIGEST: u64 = 0x2c22_79aa_40cb_fea3;
+const SAMPLED_OUTCOMES_DIGEST: u64 = 0xc881_35f3_6e30_2267;
 
 fn fnv1a(hash: &mut u64, bytes: &[u8]) {
     for &byte in bytes {
@@ -1664,7 +1664,7 @@ fn p1_to_p4_mutants_report_the_shared_outcomes() {
         fnv1a(&mut hash, b"\n");
         *counts.entry(outcome).or_default() += 1;
     });
-    assert_eq!(counts.get("ok"), Some(&1_336), "{counts:?}");
+    assert_eq!(counts.get("ok"), Some(&1_338), "{counts:?}");
     assert_eq!(counts.values().sum::<usize>(), 10_260);
     assert_eq!(hash, SAMPLED_OUTCOMES_DIGEST, "{counts:?}");
 }

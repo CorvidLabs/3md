@@ -5,10 +5,20 @@ title: "Reusable canopy"
 material: "mint"
 ---
 
-@plane z=0
-.#
-##
+Two layers of one small canopy. A dot is open. A hash is a solid tile. Another document can place this piece by name.
 
-@plane z=1
+@plane z=0 label="top"
+# top
+
+```
+.#
+##
+```
+
+@plane z=1 label="bottom"
+# bottom
+
+```
 ##
 .#
+```

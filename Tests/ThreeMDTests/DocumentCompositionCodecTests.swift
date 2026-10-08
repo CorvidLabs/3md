@@ -12,7 +12,10 @@ final class DocumentCompositionCodecTests: XCTestCase {
         XCTAssertEqual(composition.entries.map(\.id), ["canopy", "grove"])
         let canopy = try DocumentStorageCodec.decode(DocumentStorageTests.extensionFixture("canopy.3md"))
         XCTAssertEqual(composition.entry(id: "canopy")?.document, canopy)
-        XCTAssertEqual(composition.rootEntry.document.planes.first?.body, "A.A\n.A.")
+        XCTAssertEqual(
+            composition.rootEntry.document.planes.first?.body,
+            "# ground\n\n```\nA.A\n.A.\n```"
+        )
         XCTAssertEqual(composition.rootEntry.references, [.init(targetID: "canopy", attributes: ["binding": "A"])])
         let profileSource = try XCTUnwrap(String(data: readable, encoding: .utf8))
         XCTAssertEqual(profileSource.components(separatedBy: "Reusable canopy").count - 1, 1)

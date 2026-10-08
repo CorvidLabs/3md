@@ -39,7 +39,7 @@ Operations, timed in the same process on the same inputs:
 
 | Input | How it is produced | Size of canonical text |
 |---|---|---|
-| Examples corpus | the 293 `Examples/*.3md` files; one sample decodes all of them (one aggregate) | 1,173,881 B |
+| Examples corpus | the 293 `Examples/*.3md` files; one sample decodes all of them (one aggregate) | 1,178,967 B |
 | Largest example | `Examples/box-breathing-orb.3md` | 13,081 B |
 | Median example | `Examples/corvid-voxel-wordmark.3md` | 3,974 B |
 | synthetic-2000 | `scripts/bench/generate-synthetic.mjs` (seed `0x3d3d2000`, 2,000 planes of mixed Markdown); the generator asserts the SHA-256 of the generated source, `b64e50d34e2d1fdf4a06d11638bdb1b3cb4cc912d5921f58317f46064de0c459` (generated source: 4,037,470 B) | 4,037,480 B (canonical text) |

@@ -4,7 +4,7 @@ axis: time
 title: Week of June 22
 author: leif
 ---
-Plan for the week. Each plane is a day; scrub the Z axis to move through time.
+Plan for the week of June 22. Each plane is one day. Scrub the Z axis to move from Monday to Sunday.
 
 @plane z=0 label="Monday"
 # Monday
@@ -21,3 +21,23 @@ Plan for the week. Each plane is a day; scrub the Z axis to move through time.
 # Wednesday
 - [ ] Ship 0.1 tag
 - [ ] Write release notes
+
+@plane z=3 label="Thursday"
+# Thursday
+- [ ] Pair on the helix example
+- [ ] Walk after lunch
+
+@plane z=4 label="Friday"
+# Friday
+- [ ] Demo the week in the viewer
+- [x] Send the notes
+
+@plane z=5 label="Saturday"
+# Saturday
+- [ ] No meetings
+- [ ] Read on the pier
+
+@plane z=6 label="Sunday"
+# Sunday
+- [ ] Plan the next week
+- [x] Rest
