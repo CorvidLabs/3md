@@ -6,7 +6,7 @@
 
 ThreeMD 2.2.0 adds the Godot 4.7 addon. The format is unchanged. Swift, TypeScript, and Rust library behavior stays the 2.1.0 library. See [docs/RELEASE-2.2.0.md](docs/RELEASE-2.2.0.md).
 
-This preparation updates the notes and the package manifests. It does not create the `v2.2.0` tag and it does not publish a GitHub release. npm and crates.io still serve 2.1.0.
+This is the release commit for tag `v2.2.0`. It does not publish a GitHub release. npm and crates.io still serve 2.1.0.
 
 ### Added
 
