@@ -121,3 +121,37 @@ SpecSync is pinned to 6.0.0, Fledge to 1.7.2, and Trust 1.2.2 to immutable commi
 bccd89c111d47778c97c5064fb62ab51695e04ea. Existing risk and trusted-signature
 policies are preserved. Unavailable signer authority must remain an honest
 limitation rather than an invented identity or weakened gate.
+
+## Shipped boundaries still outside the archive
+
+Four workflow-v2 changes are still active on 2026-10-08. `specsync change archive`
+moves an accepted change only. None of these is accepted, so none can be archived.
+Definition approval and scoped review stay human gates. An agent must not approve
+them or record a review that did not happen.
+
+- `add-a-structured-binary-document-payload-kind-2-to-threemd-2-1-in-swift-typescript-and-rust-with-fast-checksums-cli`
+  is approved and has no verification evidence. Kind 2 storage shipped in 2.1.0.
+  The same definition still requires CLI binary input, `convert`, `inspect`,
+  interchange protocol 2, and the performance gate. Those follow-ups are open.
+  Scope froze at approval, and there is no withdraw verb.
+- `remove-the-absolute-storage-size-ceilings-so-a-1-gb-5-gb-or-any-document-the-process-can-hold-is-parsed-and-saved-in`
+  is an unapproved draft. The library behavior shipped in 2.1.0: no fixed size
+  stop, caller limits still apply, coordinate integers stay at 4 bytes.
+- `update-the-public-docs-for-the-2-1-monorepo-and-make-repository-spec-coverage-100`
+  is verifying. Its approval still requires the README to lead with 2.1.0 and
+  three languages. Verification commit `b36b622` is stale against main. Public
+  docs now say 2.2.0, four libraries, npm 2.2.0, and crates.io `threemd` 2.1.0.
+- `add-gdscript-as-a-fourth-supported-threemd-language-a-godot-4-addon-that-parses-serializes-stores-composes-and-edits`
+  is an unapproved draft. The Godot 4.7.2 addon shipped in 2.2.0 (tag `54a6f30`).
+  The draft requires full parity with Swift, TypeScript, and Rust, including
+  diagnostics and a hosted four-language interchange gate. The shipped addon
+  refuses LZFSE, edits composition with `replaceEntry` only, leaves full
+  diagnostics unported, and stays off the hosted nine-pair verify lane. Local
+  checks use Godot when `THREEMD_GODOT` is set.
+
+Lessons that belong in this module once those definitions match what shipped:
+the hosted verify lane stays three languages until CI installs Godot; a tag
+push does not publish packages; do not tag a commit whose notes say the tag
+is absent; crates.io stays on the last release that `cargo-publish.yml` actually
+uploaded; Sculpt is an app and its compact `.3mdb` is not the upstream binary
+standard.

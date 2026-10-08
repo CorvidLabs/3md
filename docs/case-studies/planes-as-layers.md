@@ -32,7 +32,7 @@ The samples were run on Godot 4.7.2. The addon targets that release. It does not
 
 Swift, TypeScript, Rust, and GDScript parse each plane as data: a `z`, an optional label, and a body. `play_layers.gd` does that check and then quits. It builds no nodes.
 
-`layer_map.gd` sits in `gdscript/examples`. It is outside the addon. The script is `ThreeMDLayerMap`. Attach it to a node the game owns and set `document_path`. On ready it calls `build`. `build` asks `ThreeMDFiles.load_document` for that path. For each plane it makes a child `Node`, names it from the label (or `plane` when the label is empty), and stores metadata `threemd_z` and `threemd_body`. The game then `add_child`s those nodes.
+`layer_map.gd` sits in `gdscript/examples`. It is outside the addon. The script is `ThreeMDLayerMap`. Attach it to a node the game owns and set `document_path`. On ready it calls `build`. `build` asks `ThreeMDFiles.load_document` for that path. For each plane it makes a `Node`, names it from the label (or `plane` when the label is empty), stores metadata `threemd_z` and `threemd_body`, and returns the nodes. `_ready` calls `add_child` for each one on the node the game owns.
 
 The editor importer recognizes `.3md` and `.3mdb` and saves a `ThreeMDDocumentAsset`. A script can `load` that resource and call `parsed()`. Enabling the plugin does not change the open scene.
 

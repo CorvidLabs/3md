@@ -15,7 +15,7 @@ Each plane is a short Markdown picture of `.` and `#`. [Shared grove](shared-gro
 
 The kind 2 file is the version 1 binary envelope. The first eight bytes are `3mdbin\r\n`. The version field is 1. The payload-kind byte is 2. The compression byte is 0. The header is 40 bytes, then the structured payload. Kind 2 stores each frame as fields: the number, the name, and the body. It does not write the `@plane` line again. The [structured manifest](../../conformance/structured/manifest.json) lists `canopy.3md` as the source, `canopy.structured.3mdb` as the kind 2 file, two planes, and `compositionEnvelope` false.
 
-Storage has no fixed size stop. The default limit is the largest positive integer the host can use. A caller can pass a lower positive limit. This canopy is only the small example.
+Storage has no fixed size stop. A caller can pass a lower positive limit. This canopy is only the small example.
 
 ## What you can open
 
