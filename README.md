@@ -6,23 +6,28 @@
 [![License: MIT](https://img.shields.io/github/license/CorvidLabs/3md)](LICENSE)
 [![Live demo](https://img.shields.io/badge/demo-live-0E6F66)](https://corvidlabs.github.io/3md/)
 
-ThreeMD 2.0.0 adds [linked file composition](docs/FILE-COMPOSITION.md): map a
-character to another 3md filename, resolve host-supplied files in any of the
-three libraries, and share a self-contained bundle. See the
-[nested LinkedVillage example](Examples/LinkedVillage/README.md) and the
-[2.0.0 release notes](docs/RELEASE-2.0.0.md). ThreeMD 2.1.0
-ships the binary save: `.binary` writes the frames as fields (payload kind 2).
-Kind 1 is deprecated. `encodeTextContainer` still writes it for a 2.0 reader.
-See the [2.1.0 release notes](docs/RELEASE-2.1.0.md).
-
-## Sculpt.3md
-
-The Mac app is a nested package in [apps/sculpt](apps/sculpt). Its package name stays Rook, and it builds against the ThreeMD library in this checkout. The root package stays the cross-platform format library.
-
 **Markdown with a Z axis.** A `.3md` file is ordinary Markdown extended along
 one free axis: stack your content into **planes** and tell the reader what the
 depth means. Time for a daily planner. Frames for an animation. Layers for
 annotations. Space for a scene.
+
+ThreeMD 2.1.0 is the current library. The text file is the `.3md` you edit.
+Binary stores those same frames as fields (`.binary`, payload kind 2). Kind 1
+is deprecated. A file is parsed and saved at whatever size the process can
+hold. Linked file composition from 2.0.0 remains. See
+[Text file and binary](#text-file-and-binary), the
+[2.1.0 release notes](docs/RELEASE-2.1.0.md), and
+[linked file composition](docs/FILE-COMPOSITION.md).
+
+## Sculpt.3md
+
+Sculpt.3md is the Mac app in this repository, at [apps/sculpt](apps/sculpt).
+It paints a volume as translucent cubes or ASCII. Its package name stays Rook,
+and it builds against the ThreeMD library in this checkout. Default saves stay
+the app's compact `.3mdb`. That compact file is not the upstream ThreeMD binary
+standard. Readable `.3md`, and uncompressed ThreeMD binary, are explicit
+exports. The root package stays the cross-platform format library: Swift,
+TypeScript, and Rust.
 
 **[Try the interactive demo](https://corvidlabs.github.io/3md/)** (also on
 [corvidlabs.xyz/3md](https://corvidlabs.xyz/3md/)), open the
@@ -290,8 +295,7 @@ Then depend on the `ThreeMD` library product:
 .product(name: "ThreeMD", package: "3md")
 ```
 
-`from: "2.1.0"` resolves from the `v2.1.0` tag. npm still serves 2.0.0 until
-the GitHub release. Read the
+`from: "2.1.0"` resolves from the `v2.1.0` tag. Read the
 [2.1 migration notes](docs/MIGRATION-2.1.md) before upgrading: a 2.0 reader
 rejects kind 2, and Rust's canonical number spelling changes for 92 powers of
 two. The [2.0 migration guide](docs/RELEASE-2.0.0.md#migrating-an-existing-host)
@@ -311,8 +315,7 @@ public npm registry. Install with:
 bun add @corvidlabs/threemd
 ```
 
-The package manifests read 2.1.0. npm still serves 2.0.0 until
-the GitHub release runs the publish workflow. If an older installation maps
+npm serves `@corvidlabs/threemd` 2.1.0. If an older installation maps
 `@corvidlabs` to GitHub Packages, point that scope at the public npm registry.
 The web component keeps text rendering; the library exports the storage,
 composition, linked-file and editing APIs.
@@ -342,11 +345,9 @@ targets crates.io. Install an available published version with:
 cargo add threemd
 ```
 
-The crate version is 2.1.0 and still pins
+crates.io serves `threemd` 2.1.0. The crate still pins
 `unicode-normalization =0.1.25`. Its serde/serde_json dependencies are
-development-only. crates.io stays at the last published release until the
-GitHub release runs the publish workflow and `CRATES_IO_TOKEN` is configured.
-Confirm the registry version before depending on it.
+development-only.
 
 ```rust
 let document = threemd::parse(source)?;
@@ -567,14 +568,13 @@ cross-implementation contract that keeps the parsers behaving identically.
 The 1.0 text grammar remains frozen. Specification 1.1 adds independently
 versioned binary storage, composition and linked file authoring without changing
 that grammar. ThreeMD 2.0.0, released on 2026-10-06, implements those extensions
-in Swift, TypeScript and Rust; the package version is separate from the format
-version. Specification 1.2 is on main. It adds payload kind 2
-inside that same container, and storage has no fixed size stop. ThreeMD 2.1.0
-is the release commit for tag `v2.1.0`. The library source is `b70373b`.
-npm and crates.io stay at 2.0.0 until a GitHub release. See the
-[2.1.0 release notes](docs/RELEASE-2.1.0.md). Older
-`3md: 0.1` documents remain valid: the parser is version-lenient and never
-rejects a document by its version string.
+in Swift, TypeScript and Rust. The package version is separate from the format
+version. Specification 1.2 adds payload kind 2 inside that same container, and
+storage has no fixed size stop. ThreeMD 2.1.0 is tag `v2.1.0`, published on
+2026-10-08. npm and crates.io serve 2.1.0. Sculpt.3md was nested on main after
+that tag. Older `3md: 0.1` documents remain valid: the parser is version-lenient
+and never rejects a document by its version string. See the
+[2.1.0 release notes](docs/RELEASE-2.1.0.md).
 
 ## License
 

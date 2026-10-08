@@ -57,12 +57,22 @@ Markdown with a Z axis. See [README.md](README.md) for the pitch and
 [SPEC.md](SPEC.md) for the format definition. The implementation is the
 `ThreeMD` Swift package.
 
+## Monorepo
+
+Main contains the format library and Sculpt.3md at `apps/sculpt` (merged
+2026-10-08, after tag `v2.1.0`). npm and crates.io serve the library at 2.1.0.
+The app's compact `.3mdb` is not the upstream binary standard. Format changes
+still land in Swift, TypeScript, and Rust. The notes above this section are
+the history of earlier sessions. They are not a claim that the registries are
+still on 2.0.0.
+
 ## Project map
 
 - `Sources/ThreeMD/` - the parser and serializer library.
 - `Tests/ThreeMDTests/` - XCTest suite.
 - `Examples/` - sample `.3md` documents.
 - `specs/ThreeMD/` - the spec-sync contract for the library.
+- `apps/sculpt/` - Sculpt.3md. Package name Rook. Its hi and specs stay there.
 - `SPEC.md` - the authoritative format specification.
 
 ## Conventions

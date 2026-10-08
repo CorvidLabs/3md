@@ -5,12 +5,21 @@ on how sure we are a step is the right next move and will land cleanly.
 
 ## Next (after 2.1.0)
 
-ThreeMD 2.1.0 ships the binary save and removes the fixed size stop. Kind 1
-stays readable. Follow-ups: CLI binary commands, interchange protocol 2, the
-2.0 reader compatibility job, and the CI performance gate.
+ThreeMD 2.1.0 is published. Kind 1 stays readable. Follow-ups: CLI binary
+commands, interchange protocol 2, the 2.0 reader compatibility job, and the CI
+performance gate. Sculpt.3md is nested at `apps/sculpt` and is not one of those
+format follow-ups.
 State confidence: 70.
 
-## Now (2.0.0 packages, format 1.0 grammar)
+## Shipped (2.1.0 library, then the nested app)
+
+ThreeMD 2.1.0 (tag `v2.1.0`, GitHub release 2026-10-08) ships the binary save
+and removes the fixed size stop. npm serves `@corvidlabs/threemd` and
+`@corvidlabs/three-md-element` at 2.1.0. crates.io serves `threemd` at 2.1.0.
+Sculpt.3md was added on main after that tag. Its package name stays Rook.
+State confidence: 90.
+
+## Shipped earlier (2.0.0 packages, format 1.0 grammar)
 
 The text grammar is 1.0 and frozen. SPEC.md 1.1 adds independently versioned
 general binary storage, self-contained composition and linked file authoring.
@@ -60,11 +69,12 @@ Two independent numbers, kept distinct on purpose:
   `3md-composition-1`, the `3md-files` metadata ledger) without new grammar.
   The grammar proposals in [docs/PROPOSALS.md](docs/PROPOSALS.md) (per-plane
   timing hints, `@asset`, `@include`) remain unimplemented, so the format is 1.0.
-- Each implementation is its own package with its own semver. The Swift package
-  (git tag v2.0.0), `@corvidlabs/threemd`, the `threemd` crate,
-  `@corvidlabs/three-md-element` and the VS Code extension align at **2.0.0**.
-  A bug fix bumps a package's patch; new tooling bumps its minor; neither
-  changes the format version.
+- Each implementation is its own package with its own semver. The published
+  Swift tag, `@corvidlabs/threemd`, the `threemd` crate, and
+  `@corvidlabs/three-md-element` are at **2.1.0**. The VS Code extension is a
+  local VSIX and is not in a marketplace. Sculpt.3md is an app in this
+  repository, not a fourth format package. A bug fix bumps a package's patch;
+  new tooling bumps its minor; neither changes the format version.
 
 ## Tooling shipped on the 1.0 line
 

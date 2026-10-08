@@ -170,3 +170,11 @@ Acceptance Criteria
 - Tests check each ladder model's exact size, determinism and occupancy; cancellation; and that listing the catalog generates nothing.
 - Existing example fixtures stay byte-identical.
 
+### REQ-RookSculpture-046
+
+`Sources/CLzfse/shim.h` SHALL be listed in the RookSculpture spec. `specsync check` run from `apps/sculpt` SHALL report 94/94 implementation files. Compact `.3mdb` SHALL stay the app save and SHALL NOT be an upstream ThreeMD standard.
+
+Acceptance Criteria
+- The RookSculpture spec files list includes `Sources/CLzfse/shim.h`.
+- `specsync check` from `apps/sculpt` reports 94/94 implementation files.
+

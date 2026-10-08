@@ -6,7 +6,17 @@ name: pages
 on:
   push:
     branches: [main]
-    paths: ["web/**", ".github/workflows/pages.yml"]
+    paths:
+      - "web/**"
+      - ".github/workflows/pages.yml"
+      - ".atlasignore"
+      - "apps/sculpt/pathmap/**"
+      - "apps/sculpt/Sources/**"
+      - "apps/sculpt/specs/**"
+      - "Sources/**"
+      - "js/src/**"
+      - "rust/src/**"
+      - "specs/**"
   workflow_dispatch:
 
 permissions:

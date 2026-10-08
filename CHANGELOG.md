@@ -2,11 +2,14 @@
 
 ## [Unreleased]
 
+- Public docs lead with ThreeMD 2.1.0 and the nested Sculpt.3md app. npm and crates.io serve the library at 2.1.0. The app's compact `.3mdb` is not the upstream binary standard.
+- Repository spec coverage counts the format libraries and the Sculpt implementation sources. Tests, docs, examples, and package manifests stay out of that count.
+
 ## [v2.1.0] - 2026-10-07
 
 ThreeMD 2.1.0 ships the binary save and removes the fixed document size stop in Swift, TypeScript, and Rust. The text file stays the `.3md`. `.binary` writes payload kind 2. Kind 1 stays readable, and `encodeTextContainer` still writes it for a 2.0 reader. See [docs/RELEASE-2.1.0.md](docs/RELEASE-2.1.0.md).
 
-The library source is `b70373b`. Hosted CI on that commit is green: Trust 37718229482, UI 37718229456, Linux 37718229473, Pages 37718229477, CodeQL 37718228935. This release commit changes the notes only. npm and crates.io stay at 2.0.0 until a GitHub release is published.
+The library source is `b70373b`. Hosted CI on that commit is green: Trust 37718229482, UI 37718229456, Linux 37718229473, Pages 37718229477, CodeQL 37718228935. This release commit changes the notes only. The GitHub release was published on 2026-10-08. npm and crates.io serve 2.1.0.
 
 ### Changed
 

@@ -1,0 +1,54 @@
+{
+  "schema_version": 1,
+  "workflow_version": 2,
+  "workflow_origin_version": 2,
+  "id": "update-the-public-docs-for-the-2-1-monorepo-and-make-repository-spec-coverage-100",
+  "slug": "update-the-public-docs-for-the-2-1-monorepo-and-make-repository-spec-coverage-100",
+  "title": "Update the public docs for the 2.1 monorepo and make repository spec coverage 100%.",
+  "description": "Update the public docs for the 2.1 monorepo and make repository spec coverage 100%.",
+  "kind": "feature",
+  "state": "verifying",
+  "canonical_applied": true,
+  "base_commit": "e2eada6648eb8d66899274641574c6e6ec42c49a",
+  "created_at": 1791475161,
+  "updated_at": 1791476582,
+  "affected_specs": [
+    "ThreeMD"
+  ],
+  "affected_paths": [
+    "README.md",
+    "CONTRIBUTING.md",
+    "ROADMAP.md",
+    "AGENTS.md",
+    "CHANGELOG.md",
+    "js/README.md",
+    "element/README.md",
+    "docs/RELEASE-2.1.0.md",
+    "docs.3md",
+    "web/docs.3md",
+    ".atlasignore",
+    ".github/workflows/pages.yml",
+    "apps/sculpt/specs/RookSculpture/RookSculpture.spec.md",
+    "apps/sculpt/pathmap/SculptSources.spec.md",
+    "hi/",
+    "INTENT.md"
+  ],
+  "no_spec_change": false,
+  "no_spec_change_rationale": null,
+  "acceptance_criteria": [
+    "The README leads with ThreeMD 2.1.0, the text file, and binary, and it names Kind 1 as deprecated. It shows Sculpt.3md nested at apps/sculpt with package name Rook, building against this checkout. Install docs say npm @corvidlabs/threemd 2.1.0 and crates.io threemd 2.1.0 are published. Contributor docs still require format changes in Swift, TypeScript, and Rust, and they do not call the app a fourth parser. fledge atlas at the repo root reports 100% implementation coverage. specsync check at the repo root stays 55/55. specsync check in apps/sculpt reports 94/94. Historical release receipts are not rewritten into a claim that Sculpt compact .3mdb is the upstream standard. The root canonical spec for this change is ThreeMD only. The Linux shim stays on the app spec as REQ-RookSculpture-046 and is not a root format spec."
+  ],
+  "selected_artifacts": [
+    "context",
+    "requirements",
+    "plan",
+    "tasks",
+    "testing",
+    "docs"
+  ],
+  "dependencies": [],
+  "answers": {
+    "architecture_risk": "no",
+    "public_contract": "no"
+  }
+}

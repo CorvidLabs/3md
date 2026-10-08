@@ -1,0 +1,105 @@
+{
+  "approvals": [
+    {
+      "gate": "definition",
+      "actor": "user:0xLeif",
+      "timestamp": 1791476134,
+      "digest": "37c3585058847cc60ea401d77590eb99cd2201d0d71c126deb936bea34d668b4",
+      "note": "Leif approved this definition in chat on 2026-10-08 with the words ok approve it. The public docs and coverage edits were already on disk before this record. REQ-RookSculpture-046 is the shim contract because 043 is already the native insertion budget. This is definition approval only.",
+      "approved_scope": {
+        "schema_version": 1,
+        "change_id": "update-the-public-docs-for-the-2-1-monorepo-and-make-repository-spec-coverage-100",
+        "title": "Update the public docs for the 2.1 monorepo and make repository spec coverage 100%.",
+        "description": "Update the public docs for the 2.1 monorepo and make repository spec coverage 100%.",
+        "kind": "feature",
+        "affected_specs": [
+          "RookSculpture",
+          "ThreeMD"
+        ],
+        "affected_paths": [
+          ".atlasignore",
+          ".github/workflows/pages.yml",
+          "AGENTS.md",
+          "CHANGELOG.md",
+          "CONTRIBUTING.md",
+          "INTENT.md",
+          "README.md",
+          "ROADMAP.md",
+          "apps/sculpt/pathmap/SculptSources.spec.md",
+          "apps/sculpt/specs/RookSculpture/RookSculpture.spec.md",
+          "docs.3md",
+          "docs/RELEASE-2.1.0.md",
+          "element/README.md",
+          "hi/",
+          "js/README.md",
+          "web/docs.3md"
+        ],
+        "no_spec_change": false,
+        "no_spec_change_rationale": null,
+        "acceptance_criteria": [
+          "The README leads with ThreeMD 2.1.0, the text file, and binary, and it names Kind 1 as deprecated. It shows Sculpt.3md nested at apps/sculpt with package name Rook, building against this checkout. Install docs say npm @corvidlabs/threemd 2.1.0 and crates.io threemd 2.1.0 are published. Contributor docs still require format changes in Swift, TypeScript, and Rust, and they do not call the app a fourth parser. fledge atlas at the repo root reports 100% implementation coverage. specsync check at the repo root stays 55/55. specsync check in apps/sculpt reports 94/94. Historical release receipts are not rewritten into a claim that Sculpt compact .3mdb is the upstream standard."
+        ],
+        "dependencies": [],
+        "supersedes": [],
+        "answers": {
+          "architecture_risk": "no",
+          "public_contract": "no"
+        }
+      },
+      "approved_delta_digests": {
+        "RookSculpture": "6dee74077ce944f7507421ab9b954bd972d59d1f694b9b7e3df51da44f1f53e5",
+        "ThreeMD": "6004c698242b25cf7a64028c9f198b986de1772b136786f9a63600f253db74a0"
+      }
+    },
+    {
+      "gate": "definition",
+      "actor": "user:0xLeif",
+      "timestamp": 1791476453,
+      "digest": "9b4b06a3e7fba5520cac1ac207d4a18d303c68b9088d664d3bcb241dc9d1701b",
+      "note": "Leif approved the corrected definition in chat on 2026-10-08 with the words ok approve the corrected definition. The root canonical spec is ThreeMD only. The Linux shim stays on the app spec as REQ-RookSculpture-046 and is not a root format spec. This re-pins that definition. It is not closing approval.",
+      "approved_scope": {
+        "schema_version": 1,
+        "change_id": "update-the-public-docs-for-the-2-1-monorepo-and-make-repository-spec-coverage-100",
+        "title": "Update the public docs for the 2.1 monorepo and make repository spec coverage 100%.",
+        "description": "Update the public docs for the 2.1 monorepo and make repository spec coverage 100%.",
+        "kind": "feature",
+        "affected_specs": [
+          "ThreeMD"
+        ],
+        "affected_paths": [
+          ".atlasignore",
+          ".github/workflows/pages.yml",
+          "AGENTS.md",
+          "CHANGELOG.md",
+          "CONTRIBUTING.md",
+          "INTENT.md",
+          "README.md",
+          "ROADMAP.md",
+          "apps/sculpt/pathmap/SculptSources.spec.md",
+          "apps/sculpt/specs/RookSculpture/RookSculpture.spec.md",
+          "docs.3md",
+          "docs/RELEASE-2.1.0.md",
+          "element/README.md",
+          "hi/",
+          "js/README.md",
+          "web/docs.3md"
+        ],
+        "no_spec_change": false,
+        "no_spec_change_rationale": null,
+        "acceptance_criteria": [
+          "The README leads with ThreeMD 2.1.0, the text file, and binary, and it names Kind 1 as deprecated. It shows Sculpt.3md nested at apps/sculpt with package name Rook, building against this checkout. Install docs say npm @corvidlabs/threemd 2.1.0 and crates.io threemd 2.1.0 are published. Contributor docs still require format changes in Swift, TypeScript, and Rust, and they do not call the app a fourth parser. fledge atlas at the repo root reports 100% implementation coverage. specsync check at the repo root stays 55/55. specsync check in apps/sculpt reports 94/94. Historical release receipts are not rewritten into a claim that Sculpt compact .3mdb is the upstream standard. The root canonical spec for this change is ThreeMD only. The Linux shim stays on the app spec as REQ-RookSculpture-046 and is not a root format spec."
+        ],
+        "dependencies": [],
+        "supersedes": [],
+        "answers": {
+          "architecture_risk": "no",
+          "public_contract": "no"
+        }
+      },
+      "approved_delta_digests": {
+        "ThreeMD": "6004c698242b25cf7a64028c9f198b986de1772b136786f9a63600f253db74a0"
+      }
+    }
+  ],
+  "reopenings": []
+}
