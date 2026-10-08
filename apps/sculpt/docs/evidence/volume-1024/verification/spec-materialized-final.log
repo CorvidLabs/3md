@@ -1,0 +1,40 @@
+▶️ Running task: spec
+
+specs/RookApp/RookApp.spec.md
+  ✓ Frontmatter valid
+  ✓ All source files exist
+  ✓ All required sections present
+  ✓ All dependency specs exist
+
+specs/RookCore/RookCore.spec.md
+  ✓ Frontmatter valid
+  ✓ All source files exist
+  ✓ All required sections present
+  ✓ 6/6 exports documented
+  ✓ All dependency specs exist
+
+specs/RookDevelopment/RookDevelopment.spec.md
+  ✓ Frontmatter valid
+  ✓ All source files exist
+  ✓ All required sections present
+  ✓ 66/66 exports documented
+  ✓ All dependency specs exist
+
+specs/RookRendering/RookRendering.spec.md
+  ✓ Frontmatter valid
+  ✓ All source files exist
+  ✓ All required sections present
+  ✓ 114/114 exports documented
+  ✓ All dependency specs exist
+
+specs/RookSculpture/RookSculpture.spec.md
+  ✓ Frontmatter valid
+  ✓ All source files exist
+  ✓ All required sections present
+  ✓ 186/186 exports documented
+  ✓ All dependency specs exist
+
+5 specs checked: 5 passed, 0 warning(s), 0 failed
+File coverage: 68/68 (100%)
+LOC coverage:  17262/17262 (100%)
+✅ spec (1.0s)

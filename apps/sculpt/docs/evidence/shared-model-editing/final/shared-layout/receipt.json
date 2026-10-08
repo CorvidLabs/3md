@@ -1,0 +1,54 @@
+[
+  {
+    "accessibilityAvailable" : false,
+    "accessibilityIdentifiers" : [
+
+    ],
+    "appliedThroughAccessibility" : false,
+    "fittingHeight" : 0,
+    "fittingWidth" : 0,
+    "height" : 640,
+    "image" : "shared-840x640-light.png",
+    "limitation" : "Offscreen native captures verify rendered layout. If SwiftUI accessibility is unavailable, action activation requires a separate packaged-app native check.",
+    "width" : 840
+  },
+  {
+    "accessibilityAvailable" : false,
+    "accessibilityIdentifiers" : [
+
+    ],
+    "appliedThroughAccessibility" : false,
+    "fittingHeight" : 0,
+    "fittingWidth" : 0,
+    "height" : 640,
+    "image" : "shared-840x640-dark.png",
+    "limitation" : "Offscreen native captures verify rendered layout. If SwiftUI accessibility is unavailable, action activation requires a separate packaged-app native check.",
+    "width" : 840
+  },
+  {
+    "accessibilityAvailable" : false,
+    "accessibilityIdentifiers" : [
+
+    ],
+    "appliedThroughAccessibility" : false,
+    "fittingHeight" : 0,
+    "fittingWidth" : 0,
+    "height" : 780,
+    "image" : "shared-1120x780-light.png",
+    "limitation" : "Offscreen native captures verify rendered layout. If SwiftUI accessibility is unavailable, action activation requires a separate packaged-app native check.",
+    "width" : 1120
+  },
+  {
+    "accessibilityAvailable" : false,
+    "accessibilityIdentifiers" : [
+
+    ],
+    "appliedThroughAccessibility" : false,
+    "fittingHeight" : 0,
+    "fittingWidth" : 0,
+    "height" : 780,
+    "image" : "shared-1120x780-dark.png",
+    "limitation" : "Offscreen native captures verify rendered layout. If SwiftUI accessibility is unavailable, action activation requires a separate packaged-app native check.",
+    "width" : 1120
+  }
+]

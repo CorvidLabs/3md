@@ -1,0 +1,26 @@
+{
+  "firstFocusedOptimizationRun": {
+    "testCount": 22,
+    "suites": 3,
+    "seconds": 3.117,
+    "passed": false,
+    "issues": [
+      {
+        "test": "thumbnailPixelsPreserveRectangularEmptyPaddingAndMaterialTint",
+        "observation": "Green byte 70 versus expected 51 plus or minus 1",
+        "repair": "Use explicit sRGB for both bitmap and color instead of mixed RGB color spaces; original channel assertion remains"
+      },
+      {
+        "test": "cubeAnimationRetainsPerFrameFallbackWhenCompleteSceneExceedsExtractionBudget",
+        "observation": "frameRenderingFailed from an invalid even-height checkerboard test fixture",
+        "repair": "Odd-height fixture still exceeds 500000 exterior faces but proves at most 249288 visible quads for every yaw; product limits/fallback unchanged"
+      }
+    ]
+  },
+  "nativeOpen": {
+    "observedTitle": "Blockhaven valley",
+    "occupiedCells": 827937,
+    "dirty": false,
+    "note": "CUA timed out during file selection, but a fresh native AX read confirmed the actual successful open; no completed save is claimed"
+  }
+}

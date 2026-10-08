@@ -1,0 +1,33 @@
+{
+  "arguments" : [
+    "test",
+    "--no-parallel"
+  ],
+  "assessment" : {
+    "failureLines" : [
+
+    ],
+    "issues" : [
+
+    ],
+    "passed" : true,
+    "reasons" : [
+
+    ],
+    "successfulSummaries" : [
+      {
+        "durationSeconds" : 139.615,
+        "line" : 863,
+        "suites" : 24,
+        "tests" : 316,
+        "text" : "✔ Test run with 316 tests in 24 suites passed after 139.615 seconds."
+      }
+    ],
+    "upstreamExitCode" : 0
+  },
+  "executable" : "\/usr\/bin\/swift",
+  "logPath" : "\/private\/tmp\/sculpt-shared-model-editing-20261005\/.build\/verification\/129B0751-7F3A-441B-93BA-B9C9C7EC9284\/swift-test.log",
+  "receiptPath" : "\/private\/tmp\/sculpt-shared-model-editing-20261005\/.build\/verification\/129B0751-7F3A-441B-93BA-B9C9C7EC9284\/swift-test-result.json",
+  "upstreamExitCode" : 0,
+  "workingDirectory" : "\/private\/tmp\/sculpt-shared-model-editing-20261005"
+}

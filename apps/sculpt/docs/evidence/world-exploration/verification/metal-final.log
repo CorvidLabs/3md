@@ -1,0 +1,35 @@
+[0/1] Planning build
+Building for debugging...
+[0/7] Write sources
+[1/7] Write swift-version--58304C5D6DBC2206.txt
+[3/5] Compiling RookRenderingTests SculptureWorldExplorationRenderingTests.swift
+[4/5] Emitting module RookRenderingTests
+[4/6] Write Objects.LinkFileList
+[5/6] Linking RookPackageTests
+Build complete! (4.62s)
+Test Suite 'Selected tests' started at 2026-10-05 14:29:01.406.
+Test Suite 'RookPackageTests.xctest' started at 2026-10-05 14:29:01.407.
+Test Suite 'RookPackageTests.xctest' passed at 2026-10-05 14:29:01.407.
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.000 (0.000) seconds
+Test Suite 'Selected tests' passed at 2026-10-05 14:29:01.407.
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.000 (0.002) seconds
+◇ Test run started.
+↳ Testing Library Version: 1902
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite SculptureWorldExplorationRenderingTests started.
+◇ Test optionalActualMetalOverviewAndLandmarkExplorationEvidence() started.
+✔ Test optionalActualMetalOverviewAndLandmarkExplorationEvidence() passed after 4.730 seconds.
+◇ Test perspectiveAndOrbitSwitchesRestoreCameraWithoutChangingWorldOrMeshes() started.
+✔ Test perspectiveAndOrbitSwitchesRestoreCameraWithoutChangingWorldOrMeshes() passed after 0.006 seconds.
+◇ Test localTravelLookAndExactIntegerRebaseRetainDetailedAndCoarseBuffers() started.
+✔ Test localTravelLookAndExactIntegerRebaseRetainDetailedAndCoarseBuffers() passed after 0.002 seconds.
+◇ Test nativePerspectiveAndOrbitPickBothColoredCoarseAndDetailedInstances() started.
+✔ Test nativePerspectiveAndOrbitPickBothColoredCoarseAndDetailedInstances() passed after 0.002 seconds.
+◇ Test realNativeKeyEventsMapHorizontalAndVerticalMovementAndReleaseWithoutClockRaces() started.
+✔ Test realNativeKeyEventsMapHorizontalAndVerticalMovementAndReleaseWithoutClockRaces() passed after 0.068 seconds.
+◇ Test nativeHeldKeysStopOnResponderLossWindowKeyLossCloseModeChangeAndDismantling() started.
+✔ Test nativeHeldKeysStopOnResponderLossWindowKeyLossCloseModeChangeAndDismantling() passed after 0.029 seconds.
+◇ Test nativeExploreDragChangesLookAndClickStillSelectsWithoutMutatingSource() started.
+✔ Test nativeExploreDragChangesLookAndClickStillSelectsWithoutMutatingSource() passed after 0.017 seconds.
+✔ Suite SculptureWorldExplorationRenderingTests passed after 4.857 seconds.
+✔ Test run with 7 tests in 1 suite passed after 4.857 seconds.

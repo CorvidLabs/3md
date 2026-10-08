@@ -1,0 +1,26 @@
+Fetching https://github.com/CorvidLabs/3md from cache
+Fetched https://github.com/CorvidLabs/3md from cache (0.11s)
+Creating working copy for https://github.com/CorvidLabs/3md
+Working copy of https://github.com/CorvidLabs/3md resolved at 2.0.0
+Building for production...
+[0/8] Write sources
+[5/8] Write swift-version--58304C5D6DBC2206.txt
+[7/10] Compiling RookCore AppAppearance.swift
+[8/10] Compiling ThreeMD Axis.swift
+[9/11] Compiling RookSculpture Sculpture.swift
+[10/12] Compiling RookRendering MetalSculptureView.swift
+[11/13] Compiling RookApp Brand.swift
+[11/13] Write Objects.LinkFileList
+[12/13] Linking Rook
+Build of product 'Rook' complete! (64.17s)
+/private/tmp/sculpt-package-93b00b3/dist/.rook-package-16C4CDF6-9974-4D84-948B-062386736B1D.app: replacing existing signature
+[Dict]
+	[Key] com.apple.security.app-sandbox
+	[Value]
+		[Bool] true
+	[Key] com.apple.security.files.user-selected.read-write
+	[Value]
+		[Bool] true
+Executable=/private/tmp/sculpt-package-93b00b3/dist/.rook-package-16C4CDF6-9974-4D84-948B-062386736B1D.app/Contents/MacOS/Rook
+packaged /private/tmp/sculpt-package-93b00b3/dist/Rook.app; local ad-hoc signature, not notarized
+exit=0

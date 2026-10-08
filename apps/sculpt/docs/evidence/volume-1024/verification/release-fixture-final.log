@@ -1,0 +1,14 @@
+▶️ Running task: release-fixture
+[0/1] Planning build
+Building for production...
+[0/2] Write swift-version--58304C5D6DBC2206.txt
+[2/4] Compiling RookCore AppAppearance.swift
+[3/4] Compiling ThreeMD Axis.swift
+[4/5] Compiling RookSculpture Sculpture.swift
+[5/6] Compiling RookRendering MetalSculptureView.swift
+[6/7] Compiling RookApp Brand.swift
+[6/8] Write Objects.LinkFileList
+[7/8] Linking Rook
+Build of product 'Rook' complete! (48.35s)
+release fixture strings are absent
+✅ release-fixture (49.7s)

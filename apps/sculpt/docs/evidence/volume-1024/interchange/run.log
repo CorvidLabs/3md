@@ -1,0 +1,14 @@
+Protocol I/O evidence: /var/folders/5k/616qy7sj28l0d53k4c6w_4x00000gn/T/sculpt-volume-interchange-17D6675F-CE33-4EF6-A791-F45F7D5C3B51
+PASS solid-1024 text Swift: all three consumers imported canonical, binary, adopted and edited outputs
+PASS solid-1024 binary-none Swift: all three consumers imported canonical, binary, adopted and edited outputs
+PASS landscape-1024 text Swift: all three consumers imported canonical, binary, adopted and edited outputs
+PASS landscape-1024 binary-none Swift: all three consumers imported canonical, binary, adopted and edited outputs
+PASS solid-1024 text TypeScript-Node: all three consumers imported canonical, binary, adopted and edited outputs
+PASS solid-1024 binary-none TypeScript-Node: all three consumers imported canonical, binary, adopted and edited outputs
+PASS landscape-1024 text TypeScript-Node: all three consumers imported canonical, binary, adopted and edited outputs
+PASS landscape-1024 binary-none TypeScript-Node: all three consumers imported canonical, binary, adopted and edited outputs
+PASS solid-1024 text Rust: all three consumers imported canonical, binary, adopted and edited outputs
+PASS solid-1024 binary-none Rust: all three consumers imported canonical, binary, adopted and edited outputs
+PASS landscape-1024 text Rust: all three consumers imported canonical, binary, adopted and edited outputs
+PASS landscape-1024 binary-none Rust: all three consumers imported canonical, binary, adopted and edited outputs
+PASS two worlds, four original inputs, 12 producer imports, 144 transfer imports across nine pairs

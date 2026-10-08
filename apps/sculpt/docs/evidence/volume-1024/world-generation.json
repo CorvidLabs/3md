@@ -1,0 +1,83 @@
+{
+  "domainCellCount" : 1073741824,
+  "domainDimensions" : [
+    1024,
+    1024,
+    1024
+  ],
+  "individualEditingLimit" : 256,
+  "note" : "Address domain and repeated occupancy are distinct from a dense editable model. Single-run encode/decode measurements are CPU wall times.",
+  "schema" : "sculpt-volume-world-study-1",
+  "worlds" : [
+    {
+      "captureMilliseconds" : 233.737542,
+      "files" : [
+        {
+          "bytes" : 608772,
+          "decodeMilliseconds" : 79.970792,
+          "encodeMilliseconds" : 10.912667,
+          "format" : "ascii-world-1",
+          "name" : "solid-1024.3md",
+          "sha256" : "d4b4eb4a4da94a582f0c39d8ef58e85ac78bd11d12fcd554fd1d16364a1bb11d"
+        },
+        {
+          "bytes" : 671771,
+          "decodeMilliseconds" : 351.07725,
+          "encodeMilliseconds" : 92.707208,
+          "format" : "ThreeMD portable text",
+          "name" : "solid-1024.portable.3md",
+          "sha256" : "286ebcc4f1d17b19039300618a0601ea0d38521af2d8d8b6b03f7edd4e4a6ee7"
+        },
+        {
+          "bytes" : 671811,
+          "decodeMilliseconds" : 356.510291,
+          "encodeMilliseconds" : 97.818875,
+          "format" : "ThreeMD binary uncompressed",
+          "name" : "solid-1024.portable.3mdb",
+          "sha256" : "dd7469dd051b886461c094d4a35eaeb11f40cc17a5ae4de9fd69c9a8baae401a"
+        }
+      ],
+      "id" : "solid-1024",
+      "instanceCount" : 4096,
+      "modelCount" : 2,
+      "preparationMilliseconds" : 3.009042,
+      "repeatedOccupiedCells" : 1073741824,
+      "uniqueVoxelBytes" : 262144
+    },
+    {
+      "captureMilliseconds" : 877.6795,
+      "files" : [
+        {
+          "bytes" : 2249314,
+          "decodeMilliseconds" : 251.640291,
+          "encodeMilliseconds" : 16.325916,
+          "format" : "ascii-world-1",
+          "name" : "landscape-1024.3md",
+          "sha256" : "753a593c8557c313225e078cc29513590958b8d8716c4f5c24150acd21b2552a"
+        },
+        {
+          "bytes" : 2229495,
+          "decodeMilliseconds" : 1190.046625,
+          "encodeMilliseconds" : 297.018084,
+          "format" : "ThreeMD portable text",
+          "name" : "landscape-1024.portable.3md",
+          "sha256" : "d4a581795924ceeb7601307ac760896c804cd893a4ea729395f3d35b770e33bc"
+        },
+        {
+          "bytes" : 2229535,
+          "decodeMilliseconds" : 1199.672458,
+          "encodeMilliseconds" : 308.144416,
+          "format" : "ThreeMD binary uncompressed",
+          "name" : "landscape-1024.portable.3mdb",
+          "sha256" : "6ac5682862ebccb2720bfb8f97d2e76803675395ca84d2593c9e407c45176595"
+        }
+      ],
+      "id" : "landscape-1024",
+      "instanceCount" : 280,
+      "modelCount" : 9,
+      "preparationMilliseconds" : 4.326542,
+      "repeatedOccupiedCells" : 28057022,
+      "uniqueVoxelBytes" : 2097152
+    }
+  ]
+}

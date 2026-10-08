@@ -1,0 +1,99 @@
+warning: /Users/leif/Library/org.swift.swiftpm/configuration is not accessible or not writable, disabling user-level cache features.
+warning: /Users/leif/Library/org.swift.swiftpm/security is not accessible or not writable, disabling user-level cache features.
+warning: /Users/leif/Library/Caches/org.swift.swiftpm is not accessible or not writable, disabling user-level cache features.
+warning: 'sculpt-3md2-adoption-20261005': failed storing manifest for 'sculpt-3md2-adoption-20261005' in cache: attempt to write a readonly database
+warning: '3md': failed storing manifest for '3md' in cache: attempt to write a readonly database
+[0/1] Planning build
+Building for debugging...
+[0/6] Write swift-version--58304C5D6DBC2206.txt
+Build complete! (1.05s)
+Test Suite 'Selected tests' started at 2026-10-05 11:41:06.120.
+Test Suite 'RookPackageTests.xctest' started at 2026-10-05 11:41:06.121.
+Test Suite 'RookPackageTests.xctest' passed at 2026-10-05 11:41:06.122.
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.000 (0.000) seconds
+Test Suite 'Selected tests' passed at 2026-10-05 11:41:06.122.
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.000 (0.001) seconds
+◇ Test run started.
+↳ Testing Library Version: 1902
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite SculptureCompositionTests started.
+◇ Suite SculptureThreeMDTests started.
+◇ Suite SculptureWorldTests started.
+◇ Test compactRoundTripPreservesEveryGlyphRectangularDimensionsAndTitle() started.
+◇ Test documentCodecAutodetectsFormatsAndLeavesReadableEncodingUnchanged() started.
+◇ Test portableSceneRoundTripsInTextAndUncompressedBinary() started.
+◇ Test maximumWorldPlacementsKeepUniqueGraphReferencesAndExactIDs() started.
+◇ Test largeLegacyLibraryRetainsItsOwnCapacityAndPortableFailureIsExplicit() started.
+◇ Test malformedIdentitiesAndDisagreeingReferencesNeverUseLegacyFallback() started.
+◇ Test recursivePlacementLimitIncludesRepeatedNestedOccurrences() started.
+◇ Test libraryRejectsUnknownKeysDuplicateKeysDuplicateIDsAndNestedLibraries() started.
+◇ Test finitePlacementCapacityDoesNotImposeASpatialExtent() started.
+◇ Test wholeSceneRevisionRejectsStaleModelEditWithoutPublishingChanges() started.
+◇ Test invalidBindingsGridsIDsAndRootAreExplicitFailures() started.
+◇ Test validationRejectsUnusedMissingReferencesAndCycles() started.
+◇ Test exactInt64ExtremesAndAdjacentAnchorsSurviveJSONRoundTrip() started.
+◇ Test legacyFilesAndSaveDefaultsRemainDistinct() started.
+◇ Test worldsRejectMissingModelsDuplicateInstancesAndInvalidTitles() started.
+◇ Test modelAndDependencyDepthLimitsHaveAcceptedBoundaryCases() started.
+◇ Test cancellationPropagatesThroughAllPublicPortableOperations() started.
+◇ Test codecRejectsUnknownDuplicateJSONKeysAndInexactCoordinateTypes() started.
+◇ Test customPlaneAndReferenceIDsSurviveRecaptureAndSharedEditing() started.
+◇ Test portableWorldRootNeverOverwritesAUserModelAndRetainsUnusedBindings() started.
+◇ Test dimensionsAndRotatedChildFitNeverCropOrOverflow() started.
+◇ Test tileBlocksPreserveDepthPaddingAndAllFourRectangularRotations() started.
+◇ Test resolvedVolumeBudgetCountsDistinctUnusedModelsBeforeExpansion() started.
+◇ Test distantInstancesRemainSparseAndShareOneLibraryModel() started.
+◇ Test invalidSharedReplacementIsAtomicAndWorldAnchorsStayExact() started.
+◇ Test codecRejectsUnknownDuplicateMetadataAndUnsupportedPlaneOrFences() started.
+◇ Test fenceLookingRowsAndDirectiveLookingCharactersRoundTripExactly() started.
+◇ Test unmarkedGeneralBinaryAdoptsPortableMarkerWithoutLosingImportedIDs() started.
+◇ Test originHeadroomIDsAndRotationsAreValidatedBeforeWorldConstruction() started.
+◇ Test nestedModelsResolveByGlobalIDAndPeriodsReserveEmptyBlocks() started.
+◇ Test unknownAndOverwrittenMetadataPlaneAttributesAndBindingAliasesFail() started.
+◇ Test cancellationRejectsEncodingDecodingAndExpansionWithoutPartialOutput() started.
+◇ Test decoderBoundsBytesPhysicalLinesAndJSONNestingBeforeAllocatingModels() started.
+◇ Test canonicalCodecPreservesTheGraphAndExpandedResult() started.
+◇ Test deterministicPortableInterchangeFixtures() started.
+◇ Test cancellationReturnsNoWorldOrSerializedOutput() started.
+◇ Test decoderBoundsPhysicalLinesBytesJSONDepthAndDirectiveAllocations() started.
+✔ Test compactRoundTripPreservesEveryGlyphRectangularDimensionsAndTitle() passed after 0.013 seconds.
+✔ Test dimensionsAndRotatedChildFitNeverCropOrOverflow() passed after 0.013 seconds.
+✔ Test invalidBindingsGridsIDsAndRootAreExplicitFailures() passed after 0.013 seconds.
+✔ Test validationRejectsUnusedMissingReferencesAndCycles() passed after 0.013 seconds.
+✔ Test modelAndDependencyDepthLimitsHaveAcceptedBoundaryCases() passed after 0.014 seconds.
+✔ Test tileBlocksPreserveDepthPaddingAndAllFourRectangularRotations() passed after 0.014 seconds.
+✔ Test codecRejectsUnknownDuplicateJSONKeysAndInexactCoordinateTypes() passed after 0.014 seconds.
+✔ Test legacyFilesAndSaveDefaultsRemainDistinct() passed after 0.014 seconds.
+✔ Test distantInstancesRemainSparseAndShareOneLibraryModel() passed after 0.014 seconds.
+✔ Test worldsRejectMissingModelsDuplicateInstancesAndInvalidTitles() passed after 0.014 seconds.
+✔ Test originHeadroomIDsAndRotationsAreValidatedBeforeWorldConstruction() passed after 0.014 seconds.
+✔ Test fenceLookingRowsAndDirectiveLookingCharactersRoundTripExactly() passed after 0.014 seconds.
+✔ Test unknownAndOverwrittenMetadataPlaneAttributesAndBindingAliasesFail() passed after 0.014 seconds.
+✔ Test libraryRejectsUnknownKeysDuplicateKeysDuplicateIDsAndNestedLibraries() passed after 0.014 seconds.
+✔ Test exactInt64ExtremesAndAdjacentAnchorsSurviveJSONRoundTrip() passed after 0.014 seconds.
+✔ Test codecRejectsUnknownDuplicateMetadataAndUnsupportedPlaneOrFences() passed after 0.014 seconds.
+✔ Test canonicalCodecPreservesTheGraphAndExpandedResult() passed after 0.014 seconds.
+✔ Test nestedModelsResolveByGlobalIDAndPeriodsReserveEmptyBlocks() passed after 0.014 seconds.
+✔ Test cancellationReturnsNoWorldOrSerializedOutput() passed after 0.014 seconds.
+✔ Test cancellationRejectsEncodingDecodingAndExpansionWithoutPartialOutput() passed after 0.014 seconds.
+✔ Test unmarkedGeneralBinaryAdoptsPortableMarkerWithoutLosingImportedIDs() passed after 0.027 seconds.
+✔ Test documentCodecAutodetectsFormatsAndLeavesReadableEncodingUnchanged() passed after 0.033 seconds.
+✔ Test cancellationPropagatesThroughAllPublicPortableOperations() passed after 0.034 seconds.
+✔ Test malformedIdentitiesAndDisagreeingReferencesNeverUseLegacyFallback() passed after 0.065 seconds.
+✔ Test wholeSceneRevisionRejectsStaleModelEditWithoutPublishingChanges() passed after 0.066 seconds.
+✔ Test invalidSharedReplacementIsAtomicAndWorldAnchorsStayExact() passed after 0.076 seconds.
+✔ Test portableWorldRootNeverOverwritesAUserModelAndRetainsUnusedBindings() passed after 0.088 seconds.
+✔ Test deterministicPortableInterchangeFixtures() passed after 0.128 seconds.
+✔ Test customPlaneAndReferenceIDsSurviveRecaptureAndSharedEditing() passed after 0.150 seconds.
+✔ Test decoderBoundsBytesPhysicalLinesAndJSONNestingBeforeAllocatingModels() passed after 0.165 seconds.
+✔ Test decoderBoundsPhysicalLinesBytesJSONDepthAndDirectiveAllocations() passed after 0.167 seconds.
+✔ Test portableSceneRoundTripsInTextAndUncompressedBinary() passed after 0.213 seconds.
+✔ Test recursivePlacementLimitIncludesRepeatedNestedOccurrences() passed after 0.281 seconds.
+✔ Test resolvedVolumeBudgetCountsDistinctUnusedModelsBeforeExpansion() passed after 4.894 seconds.
+✔ Suite SculptureCompositionTests passed after 4.894 seconds.
+✔ Test finitePlacementCapacityDoesNotImposeASpatialExtent() passed after 5.133 seconds.
+✔ Suite SculptureWorldTests passed after 5.133 seconds.
+✔ Test maximumWorldPlacementsKeepUniqueGraphReferencesAndExactIDs() passed after 36.223 seconds.
+✔ Test largeLegacyLibraryRetainsItsOwnCapacityAndPortableFailureIsExplicit() passed after 40.180 seconds.
+✔ Suite SculptureThreeMDTests passed after 40.180 seconds.
+✔ Test run with 37 tests in 3 suites passed after 40.180 seconds.

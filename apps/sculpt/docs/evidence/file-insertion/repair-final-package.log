@@ -1,0 +1,14 @@
+[0/1] Planning build
+Building for production...
+[0/2] Write swift-version--58304C5D6DBC2206.txt
+Build of product 'Rook' complete! (0.34s)
+/private/tmp/sculpt-1024-case-study-20261005/dist/.rook-package-6667B543-E063-468D-8577-6CE291B4F76D.app: replacing existing signature
+[Dict]
+	[Key] com.apple.security.app-sandbox
+	[Value]
+		[Bool] true
+	[Key] com.apple.security.files.user-selected.read-write
+	[Value]
+		[Bool] true
+Executable=/private/tmp/sculpt-1024-case-study-20261005/dist/.rook-package-6667B543-E063-468D-8577-6CE291B4F76D.app/Contents/MacOS/Rook
+packaged /private/tmp/sculpt-1024-case-study-20261005/dist/Rook.app; local ad-hoc signature, not notarized

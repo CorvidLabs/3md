@@ -15,6 +15,10 @@ ships the binary save: `.binary` writes the frames as fields (payload kind 2).
 Kind 1 is deprecated. `encodeTextContainer` still writes it for a 2.0 reader.
 See the [2.1.0 release notes](docs/RELEASE-2.1.0.md).
 
+## Sculpt.3md
+
+The Mac app is a nested package in [apps/sculpt](apps/sculpt). Its package name stays Rook, and it builds against the ThreeMD library in this checkout. The root package stays the cross-platform format library.
+
 **Markdown with a Z axis.** A `.3md` file is ordinary Markdown extended along
 one free axis: stack your content into **planes** and tell the reader what the
 depth means. Time for a daily planner. Frames for an animation. Layers for

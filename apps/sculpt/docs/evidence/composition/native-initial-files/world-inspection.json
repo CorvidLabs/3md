@@ -1,0 +1,26 @@
+{
+  "coordinateEncoding" : "signed Int64 decimal strings",
+  "instanceCount" : 2,
+  "instances" : [
+    {
+      "id" : "instance-1",
+      "modelID" : "root",
+      "quarterTurns" : 0,
+      "x" : "0",
+      "y" : "0",
+      "z" : "0"
+    },
+    {
+      "id" : "instance-98599efe-5ca9-4296-8a23-8f70221bc0cc",
+      "modelID" : "root",
+      "quarterTurns" : 0,
+      "x" : "1000000000000",
+      "y" : "0",
+      "z" : "-1000000000000"
+    }
+  ],
+  "mode" : "sparse-world",
+  "modelCount" : 4,
+  "title" : "Courtyard of courtyards",
+  "version" : 1
+}

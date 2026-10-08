@@ -1,0 +1,32 @@
+[0/1] Planning build
+Building for production...
+[0/4] Write swift-version--58304C5D6DBC2206.txt
+Build complete! (0.90s)
+Test Suite 'Selected tests' started at 2026-10-05 13:00:03.532.
+Test Suite 'RookPackageTests.xctest' started at 2026-10-05 13:00:03.533.
+Test Suite 'RookPackageTests.xctest' passed at 2026-10-05 13:00:03.533.
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.000 (0.000) seconds
+Test Suite 'Selected tests' passed at 2026-10-05 13:00:03.533.
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.000 (0.001) seconds
+◇ Test run started.
+↳ Testing Library Version: 1902
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite SculptureVolumeStudyRenderingTests started.
+◇ Test smallWorldCountsAndCameraUpdatesRetainSharedMeshes() started.
+✔ Test smallWorldCountsAndCameraUpdatesRetainSharedMeshes() passed after 0.072 seconds.
+◇ Test measure1024WorldMetalRendering() started.
+Volume study rendering staged evidence: /tmp/sculpt-1024-case-study-20261005/docs/evidence/volume-1024/volume-study-rendering-stage-B8B607FD-3A46-496E-ABB6-54067F32ED54
+Volume study dense-equivalent/center-narrow: 208 visible, 20 detailed, 188 proxies, 0 omitted, 3888 culled
+Volume study dense-equivalent/center-wide: 512 visible, 20 detailed, 492 proxies, 3584 omitted, 0 culled
+Volume study dense-equivalent/shifted-narrow: 144 visible, 20 detailed, 124 proxies, 0 omitted, 3952 culled
+Volume study dense-equivalent/ground-narrow: 139 visible, 20 detailed, 119 proxies, 0 omitted, 3957 culled
+Volume study dense-equivalent/wide-detail-budget: 512 visible, 20 detailed, 492 proxies, 3584 omitted, 0 culled
+Volume study landscape/center-narrow: 2 visible, 1 detailed, 1 proxies, 0 omitted, 278 culled
+Volume study landscape/center-wide: 280 visible, 4 detailed, 276 proxies, 0 omitted, 0 culled
+Volume study landscape/shifted-narrow: 1 visible, 1 detailed, 0 proxies, 0 omitted, 279 culled
+Volume study landscape/ground-narrow: 42 visible, 20 detailed, 22 proxies, 0 omitted, 238 culled
+Volume study landscape/wide-detail-budget: 280 visible, 33 detailed, 247 proxies, 0 omitted, 0 culled
+Volume study rendering evidence: /tmp/sculpt-1024-case-study-20261005/docs/evidence/volume-1024/metal
+✔ Test measure1024WorldMetalRendering() passed after 23.189 seconds.
+✔ Suite SculptureVolumeStudyRenderingTests passed after 23.261 seconds.
+✔ Test run with 2 tests in 1 suite passed after 23.262 seconds.

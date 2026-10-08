@@ -1,0 +1,7 @@
+{
+  "bluePixels" : 2300,
+  "ghostEdgesHidden" : true,
+  "height" : 480,
+  "retainedGhostTargets" : 65536,
+  "width" : 640
+}

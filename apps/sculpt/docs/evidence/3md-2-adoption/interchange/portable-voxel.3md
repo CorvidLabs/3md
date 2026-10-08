@@ -1,0 +1,19 @@
+---
+3md: "1.0"
+axis: "space"
+title: "Portable \"leaf\" \\ study"
+height: "1"
+scene-schema: "ascii-sculpture-1"
+sculpt-storage: "portable-scene-1"
+width: "2"
+---
+
+@plane z=0 label="Slice 1" 3md-id="plane-1"
+```ascii
+#@
+```
+
+@plane z=1 label="Slice 2" 3md-id="plane-2"
+```ascii
+.+
+```

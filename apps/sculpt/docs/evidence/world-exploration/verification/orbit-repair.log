@@ -1,0 +1,49 @@
+[0/1] Planning build
+Building for debugging...
+[0/7] Write sources
+[1/7] Write swift-version--58304C5D6DBC2206.txt
+[3/9] Compiling RookRendering SculptureLiveWorldView.swift
+[4/9] Emitting module RookRendering
+[4/11] Write Objects.LinkFileList
+[6/11] Linking RookTool
+[7/11] Applying RookTool
+[8/11] Linking Rook
+[9/11] Applying Rook
+[11/12] Emitting module RookAppTests
+[11/13] Write Objects.LinkFileList
+[12/13] Linking RookPackageTests
+Build complete! (4.43s)
+Test Suite 'Selected tests' started at 2026-10-05 14:20:51.307.
+Test Suite 'RookPackageTests.xctest' started at 2026-10-05 14:20:51.308.
+Test Suite 'RookPackageTests.xctest' passed at 2026-10-05 14:20:51.308.
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.000 (0.000) seconds
+Test Suite 'Selected tests' passed at 2026-10-05 14:20:51.308.
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.000 (0.001) seconds
+◇ Test run started.
+↳ Testing Library Version: 1902
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite SculpturePreparedNativeMeshTests started.
+◇ Test selectedSliceOutlineMovesToTheChosenDepthInTheActualMetalImage() started.
+✔ Test selectedSliceOutlineMovesToTheChosenDepthInTheActualMetalImage() passed after 3.228 seconds.
+◇ Test preparedCanvasRetainsPickingAndSelectedOutlineWhenDenseGridLODChanges() started.
+✔ Test preparedCanvasRetainsPickingAndSelectedOutlineWhenDenseGridLODChanges() passed after 0.320 seconds.
+◇ Test movedAndRotatedWorldInstancesKeepActualModelGeometryAndNearestPicks() started.
+✔ Test movedAndRotatedWorldInstancesKeepActualModelGeometryAndNearestPicks() passed after 0.002 seconds.
+✔ Suite SculpturePreparedNativeMeshTests passed after 3.552 seconds.
+◇ Suite SculptureWorldExplorationRenderingTests started.
+◇ Test optionalActualMetalOverviewAndLandmarkExplorationEvidence() started.
+✔ Test optionalActualMetalOverviewAndLandmarkExplorationEvidence() passed after 0.001 seconds.
+◇ Test perspectiveAndOrbitSwitchesRestoreCameraWithoutChangingWorldOrMeshes() started.
+✔ Test perspectiveAndOrbitSwitchesRestoreCameraWithoutChangingWorldOrMeshes() passed after 0.013 seconds.
+◇ Test localTravelLookAndExactIntegerRebaseRetainDetailedAndCoarseBuffers() started.
+✔ Test localTravelLookAndExactIntegerRebaseRetainDetailedAndCoarseBuffers() passed after 0.002 seconds.
+◇ Test nativePerspectiveAndOrbitPickBothColoredCoarseAndDetailedInstances() started.
+✔ Test nativePerspectiveAndOrbitPickBothColoredCoarseAndDetailedInstances() passed after 0.001 seconds.
+◇ Test realNativeKeyEventsMapHorizontalAndVerticalMovementAndReleaseWithoutClockRaces() started.
+✔ Test realNativeKeyEventsMapHorizontalAndVerticalMovementAndReleaseWithoutClockRaces() passed after 0.086 seconds.
+◇ Test nativeHeldKeysStopOnResponderLossWindowKeyLossCloseModeChangeAndDismantling() started.
+✔ Test nativeHeldKeysStopOnResponderLossWindowKeyLossCloseModeChangeAndDismantling() passed after 0.028 seconds.
+◇ Test nativeExploreDragChangesLookAndClickStillSelectsWithoutMutatingSource() started.
+✔ Test nativeExploreDragChangesLookAndClickStillSelectsWithoutMutatingSource() passed after 0.033 seconds.
+✔ Suite SculptureWorldExplorationRenderingTests passed after 0.166 seconds.
+✔ Test run with 10 tests in 2 suites passed after 3.719 seconds.

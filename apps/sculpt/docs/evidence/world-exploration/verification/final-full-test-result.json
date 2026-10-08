@@ -1,0 +1,33 @@
+{
+  "arguments" : [
+    "test",
+    "--no-parallel"
+  ],
+  "assessment" : {
+    "failureLines" : [
+
+    ],
+    "issues" : [
+
+    ],
+    "passed" : true,
+    "reasons" : [
+
+    ],
+    "successfulSummaries" : [
+      {
+        "durationSeconds" : 252.08,
+        "line" : 1041,
+        "suites" : 35,
+        "tests" : 394,
+        "text" : "✔ Test run with 394 tests in 35 suites passed after 252.080 seconds."
+      }
+    ],
+    "upstreamExitCode" : 0
+  },
+  "executable" : "\/usr\/bin\/swift",
+  "logPath" : "\/private\/tmp\/sculpt-1024-case-study-20261005\/.build\/verification\/5E9DF9C0-2B30-471B-9EC8-58754164F54F\/swift-test.log",
+  "receiptPath" : "\/private\/tmp\/sculpt-1024-case-study-20261005\/.build\/verification\/5E9DF9C0-2B30-471B-9EC8-58754164F54F\/swift-test-result.json",
+  "upstreamExitCode" : 0,
+  "workingDirectory" : "\/private\/tmp\/sculpt-1024-case-study-20261005"
+}

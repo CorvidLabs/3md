@@ -1,0 +1,31 @@
+{
+  "3md" : {
+    "bytes" : 269082
+  },
+  "canonical3mdEqual" : true,
+  "gif" : {
+    "bytes" : 3772111,
+    "frames" : 40,
+    "height" : 648,
+    "width" : 576
+  },
+  "mp4" : {
+    "audioTracks" : 0,
+    "bytes" : 883235,
+    "fps" : 10,
+    "height" : 648,
+    "seconds" : 4,
+    "width" : 576
+  },
+  "obj" : {
+    "bytes" : 1480090,
+    "faces" : 30830,
+    "vertices" : 29858
+  },
+  "png" : {
+    "bytes" : 320936,
+    "frames" : 1,
+    "height" : 648,
+    "width" : 576
+  }
+}

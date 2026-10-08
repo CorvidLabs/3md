@@ -1,0 +1,491 @@
+{
+  "actor" : "Codex root",
+  "files" : [
+    {
+      "bytes" : 1702,
+      "path" : "App\/Info.plist",
+      "sha256" : "c4723ea4e25ddc8466a662d9168c925d23753292c24c1ee99800e284718eee8e"
+    },
+    {
+      "bytes" : 311,
+      "path" : "App\/Rook.entitlements",
+      "sha256" : "f2e96d699140991e813f28f42f418789a730336e0a4c569806e3c0ffafca91fd"
+    },
+    {
+      "bytes" : 374,
+      "path" : "Package.resolved",
+      "sha256" : "8bf79cc0ce667b249a1086f8d96d8c071f0e063dc166be47d6d8474d74171b96"
+    },
+    {
+      "bytes" : 1910,
+      "path" : "Package.swift",
+      "sha256" : "a2368eb9083a3a7b8db68eda5041e1b5ab069132d1652a9518d767f3feab0f02"
+    },
+    {
+      "bytes" : 1154,
+      "path" : "Sources\/RookApp\/Brand.swift",
+      "sha256" : "5fec5c3cbae5181944483fe8e7876495e929b1ff02ffd4fc5601a370592dc6f9"
+    },
+    {
+      "bytes" : 9937,
+      "path" : "Sources\/RookApp\/LayerGrid.swift",
+      "sha256" : "48183dff09735b5b387c28f4dcffb1679306f2939432e2cd3207fdd28713b4e1"
+    },
+    {
+      "bytes" : 176,
+      "path" : "Sources\/RookApp\/MainView.swift",
+      "sha256" : "a12282b2165abbbacf3f8e441891146c21556d402581456c2ed6c1acc506e01c"
+    },
+    {
+      "bytes" : 2671,
+      "path" : "Sources\/RookApp\/RookApp.swift",
+      "sha256" : "e6f3e72db6780477fb1250400e390d0b7519d95660c27309a8d0a8e8e4e2af8c"
+    },
+    {
+      "bytes" : 3495,
+      "path" : "Sources\/RookApp\/SculptureCanvasKeyboard.swift",
+      "sha256" : "9fa41ceaf7ade260a1844120dcbd10005d731e23f90142b3efb5731fb935d14c"
+    },
+    {
+      "bytes" : 2097,
+      "path" : "Sources\/RookApp\/SculptureCanvasPointer.swift",
+      "sha256" : "33626e11c06b4cb64456a15a2a0e4926fe8e1eebcbfa4d53dd89fd6b94fbea8a"
+    },
+    {
+      "bytes" : 6019,
+      "path" : "Sources\/RookApp\/SculptureCommandPalette.swift",
+      "sha256" : "7487663179d120f1d1631ae20f3cc677da2c73031950fdb500a5aeac99257c65"
+    },
+    {
+      "bytes" : 3370,
+      "path" : "Sources\/RookApp\/SculptureCommandSearchField.swift",
+      "sha256" : "565009c4defd555b5d203648192d03f3b58cf4a62de8754439c9a874f67d1220"
+    },
+    {
+      "bytes" : 38501,
+      "path" : "Sources\/RookApp\/SculptureCompositionEditor.swift",
+      "sha256" : "b1473b417577b4c7f1b41dbbfc2c08d694376f04d0f36dd43dac3c6997e95a27"
+    },
+    {
+      "bytes" : 1800,
+      "path" : "Sources\/RookApp\/SculptureDocumentCommands.swift",
+      "sha256" : "520cf60fadec32a95c2d12830c3380ec171a05f3cf08ff10ec183840dba278ec"
+    },
+    {
+      "bytes" : 52329,
+      "path" : "Sources\/RookApp\/SculptureEditor.swift",
+      "sha256" : "44d413d2a72ee6716a4f7da11467c82e8b7dd280a1416b3041fe7f1926199516"
+    },
+    {
+      "bytes" : 5434,
+      "path" : "Sources\/RookApp\/SculptureExamplesBrowser.swift",
+      "sha256" : "1ef80d5f414fb43a5d442142e1dcc75dc5ab64f799ce60bf0b0e66915588adce"
+    },
+    {
+      "bytes" : 11010,
+      "path" : "Sources\/RookApp\/SculptureExportStudio.swift",
+      "sha256" : "7e0a542af8bbfcfb88e99a8312b07e82dea24d22a6932f1aa7c39e2ff85db1d1"
+    },
+    {
+      "bytes" : 1673,
+      "path" : "Sources\/RookApp\/SculptureFile.swift",
+      "sha256" : "b3e5549f9a94969ece6113afc7b26ba0ae1473a255e3164c04de038d011b4e3e"
+    },
+    {
+      "bytes" : 4447,
+      "path" : "Sources\/RookApp\/SculptureSaveJob.swift",
+      "sha256" : "8ad5edba70e8deea5907d021877c5f6990bf793b2d29ee9a99f6e53646f85604"
+    },
+    {
+      "bytes" : 18989,
+      "path" : "Sources\/RookApp\/SculptureViewport.swift",
+      "sha256" : "b44f0153ae60be22c4c3d22cd94263f80afae006e5e1d603b2b7928e44d86b5a"
+    },
+    {
+      "bytes" : 9128,
+      "path" : "Sources\/RookApp\/SculptureWorkspace.swift",
+      "sha256" : "14f09cb9a8547508bcfd2e6265e2788deb8132128c7ab7154e9bbce7181b56d4"
+    },
+    {
+      "bytes" : 28859,
+      "path" : "Sources\/RookApp\/SculptureWorldEditor.swift",
+      "sha256" : "bc53aa4731eddab3a6afd3372ac772071749e1e0faaff58f957b1568965c39cb"
+    },
+    {
+      "bytes" : 795,
+      "path" : "Sources\/RookApp\/SettingsView.swift",
+      "sha256" : "05a08f44ebcc421a71c0e304022432514aca598ed6427c7f5e2b5073a1aa4a31"
+    },
+    {
+      "bytes" : 450,
+      "path" : "Sources\/RookCore\/AppAppearance.swift",
+      "sha256" : "8ffcf78080400a89c49d67520c4763ca3b38f419a206d5b973794104221a09c1"
+    },
+    {
+      "bytes" : 2904,
+      "path" : "Sources\/RookRendering\/MetalSculptureView.swift",
+      "sha256" : "69372bdc595a3d758c3a02660462f7c52ca1bc44a0ce4c0a940ef5b881b7293e"
+    },
+    {
+      "bytes" : 13923,
+      "path" : "Sources\/RookRendering\/SculptureAnimationExporter.swift",
+      "sha256" : "ef0a84059418a2f715b1533ce87ff30a49df7ff4e5643510b9494333e4103a7a"
+    },
+    {
+      "bytes" : 19214,
+      "path" : "Sources\/RookRendering\/SculptureLiveVoxelView.swift",
+      "sha256" : "5969af7ad162d9609bb8c7714558d5dc85703c3f8826243e4b54af57f72db0fa"
+    },
+    {
+      "bytes" : 23077,
+      "path" : "Sources\/RookRendering\/SculptureLiveWorldView.swift",
+      "sha256" : "1b93e74c121f15332f59f2c5421c2a68431565bf7c460362d563485d2a338e8d"
+    },
+    {
+      "bytes" : 2553,
+      "path" : "Sources\/RookRendering\/SculptureRasterizer.swift",
+      "sha256" : "849e685001f4a144f637dc7a30be5c2a1c2bdff5c4cd039d285f34fca9d97848"
+    },
+    {
+      "bytes" : 1856,
+      "path" : "Sources\/RookRendering\/SculptureRenderStyle.swift",
+      "sha256" : "65525be59ccbe47f3d62ca557c2f7def035bdee1b88a64ed3c797d1cf76ab89b"
+    },
+    {
+      "bytes" : 14129,
+      "path" : "Sources\/RookRendering\/SculptureVoxelGeometry.swift",
+      "sha256" : "c6245d62e840873efcf9e836bf05bcad3a53366835ad73c68190c508f3d5204a"
+    },
+    {
+      "bytes" : 3795,
+      "path" : "Sources\/RookRendering\/SculptureVoxelRasterizer.swift",
+      "sha256" : "4f5f25e2e144400b414a37700a028bb145824a75cc69bc2dc6c0851c9abc4a39"
+    },
+    {
+      "bytes" : 3992,
+      "path" : "Sources\/RookRendering\/SculptureVoxelSurface.swift",
+      "sha256" : "220a8c0cbb302dcf6c5309d37533818cb817df1dae57612eb0a76a2385970b4d"
+    },
+    {
+      "bytes" : 8313,
+      "path" : "Sources\/RookSculpture\/Sculpture.swift",
+      "sha256" : "70d15744a90cceb8904e570ed319fac0144022fe6366a2e0910d318cf9a8777a"
+    },
+    {
+      "bytes" : 11562,
+      "path" : "Sources\/RookSculpture\/SculptureBinaryCodec.swift",
+      "sha256" : "b8ef4a72a2a399ae174c8895fbc17b8468d37e974832010ffacd18903bd022fd"
+    },
+    {
+      "bytes" : 4234,
+      "path" : "Sources\/RookSculpture\/SculptureCodec.swift",
+      "sha256" : "6ed748f46c1dcb9944a6704735aecf5c255bd6b93320206c7b86e76441e8c14d"
+    },
+    {
+      "bytes" : 13131,
+      "path" : "Sources\/RookSculpture\/SculptureCommand.swift",
+      "sha256" : "1bb2475246f54f95a686f0f9cba8829f9bbd7a108ac6c3760a4684dd2024a3b8"
+    },
+    {
+      "bytes" : 40345,
+      "path" : "Sources\/RookSculpture\/SculptureComplexExamples.swift",
+      "sha256" : "d2ca483d1c55398e68475b7addf49432ab14afe5738f7450f41290f3d5c62a5e"
+    },
+    {
+      "bytes" : 16909,
+      "path" : "Sources\/RookSculpture\/SculptureComposition.swift",
+      "sha256" : "853c213ec430dffc2dd89c5666f8ee48c04bea4a07ab16ecf223d01a33ee6a76"
+    },
+    {
+      "bytes" : 24464,
+      "path" : "Sources\/RookSculpture\/SculptureCompositionCodec.swift",
+      "sha256" : "0d57a79ea8f8970c1de83dc1adab1404031838ab929d47e3a9f9d562d4f6bef9"
+    },
+    {
+      "bytes" : 1402,
+      "path" : "Sources\/RookSculpture\/SculptureCompositionExamples.swift",
+      "sha256" : "8cced409ac9a5b57c85d7cde4944a435f59ffcde21aee1d5762be472a8392189"
+    },
+    {
+      "bytes" : 13020,
+      "path" : "Sources\/RookSculpture\/SculptureExamples.swift",
+      "sha256" : "7f2adac493fabf573bc7a12e234f17442d5bcbb7b6e081c486222fa9972367ad"
+    },
+    {
+      "bytes" : 6331,
+      "path" : "Sources\/RookSculpture\/SculptureOBJExporter.swift",
+      "sha256" : "3afea2ba9254dd9c0d26bc5fb02b7da476983b5d8740a48379c56b64355a3e6e"
+    },
+    {
+      "bytes" : 4584,
+      "path" : "Sources\/RookSculpture\/SculptureProjection.swift",
+      "sha256" : "e17dac701b2bccfa388c88551d5bd9eca1cc0ff403757640ab3b54a6dee68e17"
+    },
+    {
+      "bytes" : 1250,
+      "path" : "Sources\/RookSculpture\/SculptureStorageFormat.swift",
+      "sha256" : "c60aace57bafca01ef7ccab1fabff9f8ec2ed8b76fa06bf3a6bb73ce6dcaa159"
+    },
+    {
+      "bytes" : 4468,
+      "path" : "Sources\/RookSculpture\/SculptureWorld.swift",
+      "sha256" : "658718c3e0c5d4f40af92189c411627644ef5d5dfde7ee99f7913fef7659d7b0"
+    },
+    {
+      "bytes" : 8326,
+      "path" : "Sources\/RookSculpture\/SculptureWorldCodec.swift",
+      "sha256" : "5d1f3c7e297c8c098e285bf3209252dbb1b1bd5615155bf1009b48e3360302ce"
+    },
+    {
+      "bytes" : 867,
+      "path" : "Sources\/RookSculpture\/SculptureWorldExamples.swift",
+      "sha256" : "75c5e773e922400c2a528961ad4ba4045cf81c96cdd7985a451c7079247ee947"
+    },
+    {
+      "bytes" : 32360,
+      "path" : "Sources\/RookTool\/SculptureCommandTool.swift",
+      "sha256" : "f7ceeaad1024e21e832dd010398b6d6cdd21453821ef7b6ba55d6057a99d0460"
+    },
+    {
+      "bytes" : 11334,
+      "path" : "Sources\/RookTool\/SculptureExampleExport.swift",
+      "sha256" : "bd69295e894d76e95100f0a3fc2e358cd9d480de88b9e407a8012ddb432a42ff"
+    },
+    {
+      "bytes" : 7237,
+      "path" : "Sources\/RookTool\/main.swift",
+      "sha256" : "af5aba074c43855c2c2a614f7ba7dcbf38ab212d610abd441e894ad1aa1eb658"
+    },
+    {
+      "bytes" : 3836,
+      "path" : "Sources\/RookTooling\/AppPackaging.swift",
+      "sha256" : "4429014715f8b3c118a844186c6c7b8130b4b75945320407b7714508d681c365"
+    },
+    {
+      "bytes" : 2072,
+      "path" : "Sources\/RookTooling\/CommandRunner.swift",
+      "sha256" : "c073401851a65739a0699364b73d7d3d523a1a646e6ccf6101ee3e1a1363cd7e"
+    },
+    {
+      "bytes" : 8977,
+      "path" : "Sources\/RookTooling\/RookTooling.swift",
+      "sha256" : "4972641a61c53d2df6b5a06a78cfd4f5643c5caf6d6590f493696c0ea0744f30"
+    },
+    {
+      "bytes" : 5562,
+      "path" : "Sources\/RookTooling\/SourceBoundaries.swift",
+      "sha256" : "70675761185031f54eebc50f70635e8a304e69b9fa584f7f8b46326207b3651a"
+    },
+    {
+      "bytes" : 4552,
+      "path" : "Sources\/RookVerification\/SwiftTestLog.swift",
+      "sha256" : "665bbd1f611ec5c57aa81a551463b2d861cb260574c7cc3270631f6550585a73"
+    },
+    {
+      "bytes" : 4840,
+      "path" : "Sources\/RookVerification\/SwiftTestRunner.swift",
+      "sha256" : "ee863fa503e0c589d32e8fb3e94507eb0978e4c59cbd7e6e1458ed9a2d09e945"
+    },
+    {
+      "bytes" : 6042,
+      "path" : "Sources\/RookVerification\/TestLogAssessment.swift",
+      "sha256" : "67a38f94513a5be12a1432c1bae2e7d27e23686bafb37c19cecfcdbff927a4cc"
+    },
+    {
+      "bytes" : 366,
+      "path" : "Tests\/RookAppTests\/AppearanceTests.swift",
+      "sha256" : "bb460ca170501c02f7e413b1c85c41f0decef55aba4ea735f32c226c36e894e5"
+    },
+    {
+      "bytes" : 3625,
+      "path" : "Tests\/RookAppTests\/LayerGridGeometryTests.swift",
+      "sha256" : "6645f57ab9861bcab490fd53808b6a178c57ae6833e51f4575c31c95f641ef46"
+    },
+    {
+      "bytes" : 5008,
+      "path" : "Tests\/RookAppTests\/SculptureCanvasPointerTests.swift",
+      "sha256" : "44300b673600828c034666ffead35299cbe22c4197f2845213f82d64924d290e"
+    },
+    {
+      "bytes" : 10678,
+      "path" : "Tests\/RookAppTests\/SculptureCommandFocusTests.swift",
+      "sha256" : "25fb256f29a8991b87e65f09b8caad37711390bf5c7f31da242bbffc13001576"
+    },
+    {
+      "bytes" : 5944,
+      "path" : "Tests\/RookAppTests\/SculptureCompositionEditorTests.swift",
+      "sha256" : "65136a6aeb9a6eec56d53ae1a23df07a3997e9e8843f372e524d8e0e73755dfb"
+    },
+    {
+      "bytes" : 15969,
+      "path" : "Tests\/RookAppTests\/SculptureEditorPresentationTests.swift",
+      "sha256" : "61a856eff47de1939a07027d435f95b2c2e33c187ee223b704bfb6a239e5ed43"
+    },
+    {
+      "bytes" : 1457,
+      "path" : "Tests\/RookAppTests\/SculptureExportJobTests.swift",
+      "sha256" : "0101679374acf6525820313028313573b49605c068286d1923b7c3d6986ed675"
+    },
+    {
+      "bytes" : 2036,
+      "path" : "Tests\/RookAppTests\/SculptureGraphSaveJobTests.swift",
+      "sha256" : "b3c9b2b8bbf482a27161aef9d1ad0bd161353678319ecfc7e833655b6673276c"
+    },
+    {
+      "bytes" : 1155,
+      "path" : "Tests\/RookAppTests\/SculptureMeshRevisionTests.swift",
+      "sha256" : "5875b022159239a1107e284d74e031ea7d5d40722da11102d47e116f0ee507ba"
+    },
+    {
+      "bytes" : 6678,
+      "path" : "Tests\/RookAppTests\/SculptureReferenceEditorPresentationTests.swift",
+      "sha256" : "11aa7f20eed088a790317b250f781cf99f2482a904dfd890a44c35b152e60bc4"
+    },
+    {
+      "bytes" : 2918,
+      "path" : "Tests\/RookAppTests\/SculptureSaveJobTests.swift",
+      "sha256" : "49808899eefe4ed5e8e0a1ce701749f6d4ef82ff540bff5473c1b5dd634a37c7"
+    },
+    {
+      "bytes" : 3507,
+      "path" : "Tests\/RookAppTests\/SculptureVoxelWorkspaceTests.swift",
+      "sha256" : "085c78d6a0f10a7a63859feb3783dea5a21ff651bd8641618f29bdd0c9c020ab"
+    },
+    {
+      "bytes" : 7928,
+      "path" : "Tests\/RookAppTests\/SculptureWorkspaceTests.swift",
+      "sha256" : "53134a9e0a04790bf1f0809f0b1863f60f4f76226182f98020bcc44678902bc2"
+    },
+    {
+      "bytes" : 5627,
+      "path" : "Tests\/RookAppTests\/SculptureWorldEditorTests.swift",
+      "sha256" : "3299a0de2821bb499633c5e503291e1edbbae3606d1e25965748010c361df395"
+    },
+    {
+      "bytes" : 471,
+      "path" : "Tests\/RookCoreTests\/AppAppearanceTests.swift",
+      "sha256" : "96b116fa629f3753d8b42934a811c1428f31636e2856db12bd9f583a9126c368"
+    },
+    {
+      "bytes" : 11304,
+      "path" : "Tests\/RookRenderingTests\/AnimationExportTests.swift",
+      "sha256" : "703d05088f785075738fd195c924270259f2a471566e1b5872881117239fc942"
+    },
+    {
+      "bytes" : 3318,
+      "path" : "Tests\/RookRenderingTests\/CubeExportTests.swift",
+      "sha256" : "6bff8220f252746e5591956209d228de11b97b8b46e98d0ea09ae13f93c3e324"
+    },
+    {
+      "bytes" : 10692,
+      "path" : "Tests\/RookRenderingTests\/ExampleArtifactTests.swift",
+      "sha256" : "9fff3a8b3b677a112f03a50e7560541c80b9a104d3de3100b48d6db127d445c5"
+    },
+    {
+      "bytes" : 2829,
+      "path" : "Tests\/RookRenderingTests\/RenderingTests.swift",
+      "sha256" : "1b8c55e9add54a5fac3a8ac21d8179603cb15927404f232df6d680032c4766c2"
+    },
+    {
+      "bytes" : 15250,
+      "path" : "Tests\/RookRenderingTests\/SculptureLiveVoxelTests.swift",
+      "sha256" : "32ae061446e5788530903574dd919d7304e1d2587a0b77010426097594c239ab"
+    },
+    {
+      "bytes" : 23468,
+      "path" : "Tests\/RookRenderingTests\/SculptureLiveWorldTests.swift",
+      "sha256" : "e119433d635e38e0878e0594e51350ae586005dd0e6e27433fa95ab716d056fd"
+    },
+    {
+      "bytes" : 4051,
+      "path" : "Tests\/RookRenderingTests\/SculptureSolarPerformanceTests.swift",
+      "sha256" : "90aa01aa1e4928510dd3a34702721da36360441b7d3bdae2ebc56c380680658e"
+    },
+    {
+      "bytes" : 6728,
+      "path" : "Tests\/RookRenderingTests\/SculptureVoxelSurfaceTests.swift",
+      "sha256" : "aac13532d28070b1e21e403221dcc2f62c42782061ddd9e909cefe86c254d321"
+    },
+    {
+      "bytes" : 10419,
+      "path" : "Tests\/RookRenderingTests\/VoxelRenderingTests.swift",
+      "sha256" : "4a5ac9a9df5b4185d26a49b5aa5833f0461f9cdde5f0361298300a61d482436f"
+    },
+    {
+      "bytes" : 8891,
+      "path" : "Tests\/RookSculptureTests\/OBJExportTests.swift",
+      "sha256" : "41e2f12b1687b7374ccd7be0e3584e4f94197999be54bf6532eb499b95eebdc6"
+    },
+    {
+      "bytes" : 14244,
+      "path" : "Tests\/RookSculptureTests\/SculptureBinaryCodecTests.swift",
+      "sha256" : "52786fa2d781d93994ad2ffb9ca883c82a98b68015e42de16a1f929ada8a4ed7"
+    },
+    {
+      "bytes" : 10816,
+      "path" : "Tests\/RookSculptureTests\/SculptureCommandTests.swift",
+      "sha256" : "02e10f73e64ac659180fc45f5725b8b1432e81b31dd4765490df53d67cfec586"
+    },
+    {
+      "bytes" : 8687,
+      "path" : "Tests\/RookSculptureTests\/SculptureComplexExamplesTests.swift",
+      "sha256" : "c4a3434d8a1d19d8895ce9dd72afa8411618784834d745f3c6eb286c81c654b6"
+    },
+    {
+      "bytes" : 1832,
+      "path" : "Tests\/RookSculptureTests\/SculptureCompositionExampleTests.swift",
+      "sha256" : "ef520f1abb6f4a954d1aafe9b204048c950a188193186b7691cc7f5bcaa51044"
+    },
+    {
+      "bytes" : 18612,
+      "path" : "Tests\/RookSculptureTests\/SculptureCompositionTests.swift",
+      "sha256" : "4e42d7e7f6a25bdf2659dfd283948f135665e22defd27a48bdaa54080628c4fb"
+    },
+    {
+      "bytes" : 3933,
+      "path" : "Tests\/RookSculptureTests\/SculptureExamplesTests.swift",
+      "sha256" : "85cce127679feb87314ec633f329656780e82d6e5f5402506329c8231323258f"
+    },
+    {
+      "bytes" : 6861,
+      "path" : "Tests\/RookSculptureTests\/SculptureSolarSystemTests.swift",
+      "sha256" : "92196a47f8019ac8b401d26ce870a23625129715ab662255e9f012ddfe01100a"
+    },
+    {
+      "bytes" : 14774,
+      "path" : "Tests\/RookSculptureTests\/SculptureTests.swift",
+      "sha256" : "f2c0ad80603214526f465de7c3b163f61b06a6a9c6ef6cc95ccf389938ef420a"
+    },
+    {
+      "bytes" : 12249,
+      "path" : "Tests\/RookSculptureTests\/SculptureWorldTests.swift",
+      "sha256" : "ba5da7db4d78930c8c3de11067c9f3b3f15f579ae8683acf3c400b73e6ae78fc"
+    },
+    {
+      "bytes" : 32414,
+      "path" : "Tests\/RookToolTests\/SculptureCommandToolTests.swift",
+      "sha256" : "db678464dfb484dc5e18c35b3ba87d27e4a416894f7da0328e95f460efdeff7d"
+    },
+    {
+      "bytes" : 2810,
+      "path" : "Tests\/RookToolTests\/SculptureWorldToolTests.swift",
+      "sha256" : "833b235acca092fd2dca1f7bb5ed4f0493cb8cb53120fe59d97fe441520eabda"
+    },
+    {
+      "bytes" : 17992,
+      "path" : "Tests\/RookToolingTests\/NativeToolsTests.swift",
+      "sha256" : "a55a6a19b316463af78fbe2d572c0bbe53847d28071c5ce888df32316258dbc7"
+    },
+    {
+      "bytes" : 3336,
+      "path" : "Tests\/RookVerificationTests\/RunnerTests.swift",
+      "sha256" : "0d21df697b8794e25a51e7ebdbf36281c3fd2d21d79f7200822e01fb47b04dac"
+    },
+    {
+      "bytes" : 5225,
+      "path" : "Tests\/RookVerificationTests\/SwiftTestLogTests.swift",
+      "sha256" : "d81d429bb0f794b33c8858dcc47c8735d452cff72281b1a04bd55c974f5ad904"
+    }
+  ],
+  "scope" : "Frozen sources\/configuration after final 252-test lane; documentation\/evidence edits only afterward"
+}

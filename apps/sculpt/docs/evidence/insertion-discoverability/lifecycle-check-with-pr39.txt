@@ -1,0 +1,15 @@
+Scratch clone of leif/linked-file-insertion at c4bcf2a with PR39's three halted-record moves applied as one scratch commit. SpecSync 6.0.0 at /Users/leif/.cargo/bin/specsync. Nothing from this clone is published.
+
+$ specsync change check insert-selected-3md-models-directly-into-sculpt-compositions-and-worlds-with-preserved-portable-metadata-and-one-undo
+✓ insert-selected-3md-models-directly-into-sculpt-compositions-and-worlds-with-preserved-portable-metadata-and-one-undo verified
+
+$ specsync change check make-3md-file-and-folder-insertion-discoverable-and-reliable-for-people-and-explicit-file-agent-tools
+✓ make-3md-file-and-folder-insertion-discoverable-and-reliable-for-people-and-explicit-file-agent-tools verified
+
+$ specsync change audit
+Auditing active changes (7)…
+error: draft-the-ascii-sculpture-editor-scope-without-definition-approval: at least one acceptance criterion is required
+error: add-free-exploration-of-sparse-worlds-with-wasd-movement-drag-to-look-vertical-travel-and-a-clear-overview: requirement evidence missing for REQ-RookApp-014, REQ-RookRendering-014
+error: insert-selected-3md-models-directly-into-sculpt-compositions-and-worlds-with-preserved-portable-metadata-and-one-undo: verification evidence is stale for the current commit or contract
+error: measure-a-real-1024-cubed-dense-volume-and-reusable-sparse-worlds-without-raising-production-editing-limits: requirement evidence missing for REQ-RookDevelopment-014, REQ-RookSculpture-014
+  Next: fix active workspace / living-spec issues above

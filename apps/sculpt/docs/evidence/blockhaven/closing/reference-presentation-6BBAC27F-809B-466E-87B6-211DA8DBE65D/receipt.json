@@ -1,0 +1,150 @@
+{
+  "captures" : [
+    {
+      "accessibilityAvailable" : false,
+      "controlsOutsideBounds" : [
+
+      ],
+      "file" : "composition-940x720-light.png",
+      "fittingHeight" : 0,
+      "fittingWidth" : 0,
+      "missingControls" : [
+        "composition.close",
+        "composition.open",
+        "composition.open-world",
+        "composition.save",
+        "composition.title"
+      ],
+      "pixelHeight" : 720,
+      "pixelWidth" : 940
+    },
+    {
+      "accessibilityAvailable" : false,
+      "controlsOutsideBounds" : [
+
+      ],
+      "file" : "composition-940x720-dark.png",
+      "fittingHeight" : 0,
+      "fittingWidth" : 0,
+      "missingControls" : [
+        "composition.close",
+        "composition.open",
+        "composition.open-world",
+        "composition.save",
+        "composition.title"
+      ],
+      "pixelHeight" : 720,
+      "pixelWidth" : 940
+    },
+    {
+      "accessibilityAvailable" : false,
+      "controlsOutsideBounds" : [
+
+      ],
+      "file" : "composition-1120x780-light.png",
+      "fittingHeight" : 0,
+      "fittingWidth" : 0,
+      "missingControls" : [
+        "composition.close",
+        "composition.open",
+        "composition.open-world",
+        "composition.save",
+        "composition.title"
+      ],
+      "pixelHeight" : 780,
+      "pixelWidth" : 1120
+    },
+    {
+      "accessibilityAvailable" : false,
+      "controlsOutsideBounds" : [
+
+      ],
+      "file" : "composition-1120x780-dark.png",
+      "fittingHeight" : 0,
+      "fittingWidth" : 0,
+      "missingControls" : [
+        "composition.close",
+        "composition.open",
+        "composition.open-world",
+        "composition.save",
+        "composition.title"
+      ],
+      "pixelHeight" : 780,
+      "pixelWidth" : 1120
+    },
+    {
+      "accessibilityAvailable" : false,
+      "controlsOutsideBounds" : [
+
+      ],
+      "file" : "world-980x720-light.png",
+      "fittingHeight" : 0,
+      "fittingWidth" : 0,
+      "missingControls" : [
+        "world.close",
+        "world.focus.go",
+        "world.place",
+        "world.save",
+        "world.title"
+      ],
+      "pixelHeight" : 720,
+      "pixelWidth" : 980
+    },
+    {
+      "accessibilityAvailable" : false,
+      "controlsOutsideBounds" : [
+
+      ],
+      "file" : "world-980x720-dark.png",
+      "fittingHeight" : 0,
+      "fittingWidth" : 0,
+      "missingControls" : [
+        "world.close",
+        "world.focus.go",
+        "world.place",
+        "world.save",
+        "world.title"
+      ],
+      "pixelHeight" : 720,
+      "pixelWidth" : 980
+    },
+    {
+      "accessibilityAvailable" : false,
+      "controlsOutsideBounds" : [
+
+      ],
+      "file" : "world-1120x780-light.png",
+      "fittingHeight" : 0,
+      "fittingWidth" : 0,
+      "missingControls" : [
+        "world.close",
+        "world.focus.go",
+        "world.place",
+        "world.save",
+        "world.title"
+      ],
+      "pixelHeight" : 780,
+      "pixelWidth" : 1120
+    },
+    {
+      "accessibilityAvailable" : false,
+      "controlsOutsideBounds" : [
+
+      ],
+      "file" : "world-1120x780-dark.png",
+      "fittingHeight" : 0,
+      "fittingWidth" : 0,
+      "missingControls" : [
+        "world.close",
+        "world.focus.go",
+        "world.place",
+        "world.save",
+        "world.title"
+      ],
+      "pixelHeight" : 780,
+      "pixelWidth" : 1120
+    }
+  ],
+  "complete" : true,
+  "limitation" : "Offscreen AppKit captures verify layout\/accessibility; CAMetalLayer pixels are verified separately by actual native GPU snapshots and computer use."
+}

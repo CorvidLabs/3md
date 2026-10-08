@@ -1,0 +1,97 @@
+{
+  "acceptance_entries": [],
+  "change": {
+    "acceptance_criteria": [
+      "A release-only opt-in probe physically initializes, hashes, compresses and fully verifies 1,073,741,824 dense voxel bytes with bounded scratch space and memory guards. Deterministic reusable worlds address exact 1024-cubed space with explicit unique and repeated occupied-cell counts. Native and portable world copies round-trip. Metal camera submission and synchronized offscreen frame measurements record culling, proxies, memory and mesh reuse. Ordinary tests are small. Existing 256-cell editable model, format and rendering limits remain unchanged."
+    ],
+    "affected_paths": [
+      "Sources/RookSculpture",
+      "Sources/RookTool",
+      "Tests",
+      "docs",
+      "Examples",
+      "hi",
+      "specs",
+      "AGENTS.md",
+      "INTENT.md",
+      "README.md"
+    ],
+    "affected_specs": [
+      "RookSculpture",
+      "RookDevelopment"
+    ],
+    "answers": {
+      "architecture_risk": "yes",
+      "public_contract": "yes"
+    },
+    "base_commit": "36801807d06697e9c3038c481be740c6b713d313",
+    "created_at": 1791224377,
+    "dependencies": [],
+    "description": "Measure a real 1024 cubed dense volume and reusable sparse worlds without raising production editing limits",
+    "id": "measure-a-real-1024-cubed-dense-volume-and-reusable-sparse-worlds-without-raising-production-editing-limits",
+    "kind": "feature",
+    "no_spec_change": false,
+    "no_spec_change_rationale": null,
+    "schema_version": 1,
+    "selected_artifacts": [
+      "context",
+      "requirements",
+      "plan",
+      "tasks",
+      "testing",
+      "docs",
+      "design",
+      "research"
+    ],
+    "slug": "measure-a-real-1024-cubed-dense-volume-and-reusable-sparse-worlds-without-raising-production-editing-limits",
+    "state": "approved",
+    "title": "Measure a real 1024 cubed dense volume and reusable sparse worlds without raising production editing limits",
+    "updated_at": 1791224605,
+    "workflow_origin_version": 2,
+    "workflow_version": 2
+  },
+  "corrections": [],
+  "effective_definition": {
+    "answers": {
+      "architecture_risk": "yes",
+      "public_contract": "yes"
+    },
+    "selected_artifacts": [
+      "context",
+      "requirements",
+      "plan",
+      "tasks",
+      "testing",
+      "docs",
+      "design",
+      "research"
+    ],
+    "view_digest": "0873ae69c1c7339fbced6ad2966d92e3bb036f0e07abd4de740e2cac220d34eb"
+  },
+  "questions": [],
+  "summary": {
+    "approval_valid": true,
+    "artifacts_complete": true,
+    "correction_count": 0,
+    "correction_valid": true,
+    "definition_digest": "54173fc6a16d575117674930b12094dd2d1fa190bdd239cd28814776ad940c11",
+    "handoff": {
+      "before_clearing": [
+        "commit the work in progress",
+        "or write its intent and open ends into `.specsync/changes/measure-a-real-1024-cubed-dense-volume-and-reusable-sparse-worlds-without-raising-production-editing-limits/change.md`"
+      ],
+      "readiness": "conditional",
+      "reason": "uncommitted edits sit under this change's paths, and nothing on disk records why they were made",
+      "resume": "specsync change status measure-a-real-1024-cubed-dense-volume-and-reusable-sparse-worlds-without-raising-production-editing-limits"
+    },
+    "id": "measure-a-real-1024-cubed-dense-volume-and-reusable-sparse-worlds-without-raising-production-editing-limits",
+    "next_action": "run `specsync change check measure-a-real-1024-cubed-dense-volume-and-reusable-sparse-worlds-without-raising-production-editing-limits`",
+    "scoped_review_current": false,
+    "state": "approved",
+    "strict_validation_required": false,
+    "title": "Measure a real 1024 cubed dense volume and reusable sparse worlds without raising production editing limits",
+    "verification_commands": [
+      "specsync check --spec RookDevelopment --spec RookSculpture"
+    ]
+  }
+}

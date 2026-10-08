@@ -1,0 +1,20 @@
+[
+  {
+    "faces" : 37776,
+    "projectionMilliseconds" : 3097.448625,
+    "rasterMilliseconds" : 177.074208,
+    "yaw" : 0.65
+  },
+  {
+    "faces" : 37776,
+    "projectionMilliseconds" : 3008.420458,
+    "rasterMilliseconds" : 169.4195,
+    "yaw" : 0.85
+  },
+  {
+    "faces" : 37776,
+    "projectionMilliseconds" : 3018.934792,
+    "rasterMilliseconds" : 163.667875,
+    "yaw" : 1.05
+  }
+]

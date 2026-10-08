@@ -1,0 +1,26 @@
+name: sculpt
+
+# macOS job for the nested Sculpt.3md app. The Linux parser job does not build
+# it. Trust remains the library gate and does not use this lane as a substitute.
+
+permissions:
+  contents: read
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  sculpt:
+    runs-on: macos-15
+    timeout-minutes: 45
+    defaults:
+      run:
+        working-directory: apps/sculpt
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build and test the Mac app
+        run: swift test --no-parallel

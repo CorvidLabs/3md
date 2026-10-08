@@ -1,0 +1,31 @@
+{
+  "depth" : 192,
+  "durationSeconds" : 4,
+  "files" : {
+    "blockhaven-world.3md" : 2657228,
+    "blockhaven.3md" : 2570369,
+    "blockhaven.3mdb" : 58016,
+    "blockhaven.gif" : 2613320,
+    "blockhaven.mp4" : 893902,
+    "blockhaven.obj" : 6960367,
+    "blockhaven.png" : 969204
+  },
+  "frameCount" : 40,
+  "framesPerSecond" : 10,
+  "height" : 64,
+  "instanceCount" : 36,
+  "modelCount" : 37,
+  "occupiedCells" : 827937,
+  "opacity" : 0.8,
+  "pitch" : 0.75,
+  "pngHeight" : 1296,
+  "pngWidth" : 1152,
+  "renderStyle" : "cubes",
+  "schema" : "sculpt-blockhaven-example-1",
+  "title" : "Blockhaven valley",
+  "videoHeight" : 648,
+  "videoWidth" : 576,
+  "width" : 192,
+  "yaw" : -0.6,
+  "zoom" : 0.9
+}

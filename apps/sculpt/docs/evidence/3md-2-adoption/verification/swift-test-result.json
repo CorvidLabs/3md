@@ -1,0 +1,33 @@
+{
+  "arguments" : [
+    "test",
+    "--no-parallel"
+  ],
+  "assessment" : {
+    "failureLines" : [
+
+    ],
+    "issues" : [
+
+    ],
+    "passed" : true,
+    "reasons" : [
+
+    ],
+    "successfulSummaries" : [
+      {
+        "durationSeconds" : 210.25,
+        "line" : 939,
+        "suites" : 28,
+        "tests" : 350,
+        "text" : "✔ Test run with 350 tests in 28 suites passed after 210.250 seconds."
+      }
+    ],
+    "upstreamExitCode" : 0
+  },
+  "executable" : "\/usr\/bin\/swift",
+  "logPath" : "\/private\/tmp\/sculpt-3md2-adoption-20261005\/.build\/verification\/6EB8F044-38E5-4953-98EC-6E8CD4B98DB9\/swift-test.log",
+  "receiptPath" : "\/private\/tmp\/sculpt-3md2-adoption-20261005\/.build\/verification\/6EB8F044-38E5-4953-98EC-6E8CD4B98DB9\/swift-test-result.json",
+  "upstreamExitCode" : 0,
+  "workingDirectory" : "\/private\/tmp\/sculpt-3md2-adoption-20261005"
+}

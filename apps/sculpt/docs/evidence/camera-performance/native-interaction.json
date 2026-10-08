@@ -1,0 +1,34 @@
+{
+  "recordedAt": "2026-10-04 21:09:30 UTC",
+  "actor": "Codex root",
+  "document": "/private/tmp/sculpt-compact-native-solar-20261004-1345.3mdb",
+  "title": "Grand solar system",
+  "dimensions": [
+    256,
+    256,
+    256
+  ],
+  "occupiedCellsBefore": 185400,
+  "occupiedCellsAfter": 185400,
+  "dirtyAfter": false,
+  "productBuild": "optimized release; ad-hoc signed; sandbox and selected-file entitlements unchanged",
+  "nativeChecks": [
+    "Visible Metal solar canvas reopened from compact file",
+    "Orbit drag changes visible pose promptly",
+    "Zoom changes from 1 to 1.15",
+    "Occupied face paint adds cell (174,130,68), then Undo restores original",
+    "Dense 256-cell ghost grid stays faint with visible planets",
+    "Empty selected-slice drag adds 21 cells at z=128; one Undo restores all 21",
+    "Click in Orbit selects slice 154 without changing occupancy or dirty state"
+  ],
+  "leftOpen": {
+    "mode": "Sculpt",
+    "style": "Cubes",
+    "paint": false
+  },
+  "limitations": [
+    "Native observations are not an on-screen frame-rate measurement",
+    "Separate offscreen layout captures do not establish live GPU pixels"
+  ],
+  "independentHumanReview": false
+}

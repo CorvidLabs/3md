@@ -1,0 +1,14 @@
+{
+  "actor": "Codex root",
+  "source": "Recorded tool outputs from this implementation turn; preliminary results, not the final guarded lane",
+  "checks": [
+    {"kind": "debug build", "result": "passed", "seconds": 10.31, "scope": "Initial composition integration"},
+    {"kind": "focused Swift tests", "result": "passed", "tests": 7, "suites": 1, "seconds": 0.301, "scope": "Composition example and CLI before world integration"},
+    {"kind": "world compile", "result": "failed", "reason": "SceneKit eulerAngles component is CGFloat; repaired using simdEulerAngles Float"},
+    {"kind": "native editor compile", "result": "failed", "reason": "Observation accessor read before initialization and a root-added misplaced SwiftUI button modifier; repaired and source freeze established"},
+    {"kind": "focused Swift tests", "result": "failed", "tests": 55, "suites": 5, "seconds": 38.915, "issues": 1, "reason": "CLI required- composition wording expectation; restored compatible phrase"},
+    {"kind": "native layout and CLI regression", "result": "passed", "tests": 2, "suites": 1, "seconds": 10.862, "captures": 8},
+    {"kind": "strict SpecSync", "result": "passed", "specs": 5, "warnings": 0, "files": 54, "lines": 12364, "scope": "Before final model-library UI layout sizing tweak"}
+  ],
+  "limits": "No merge, release, deployment, lifecycle approval/finalization or independent human review is established by these preliminary checks. Native GPU fixture results are preserved separately from offscreen AppKit layout captures."
+}

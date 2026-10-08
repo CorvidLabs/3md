@@ -1,0 +1,111 @@
+[0/1] Planning build
+Building for debugging...
+[0/9] Write sources
+[2/9] Write swift-version--58304C5D6DBC2206.txt
+[4/12] Compiling RookApp SculptureWorldEditor.swift
+[5/12] Compiling RookApp SculptureSaveJob.swift
+[6/12] Compiling RookApp SculptureCompositionEditor.swift
+[7/12] Emitting module RookApp
+[8/12] Compiling RookApp SculptureEditor.swift
+[9/14] Compiling RookApp MainView.swift
+[10/14] Compiling RookApp SculptureWorkspace.swift
+[10/15] Write Objects.LinkFileList
+[11/15] Linking Rook
+[12/15] Applying Rook
+[14/35] Compiling RookAppTests SculptureSharedModelDraftTests.swift
+[15/35] Compiling RookAppTests SculptureWorkspaceTests.swift
+[16/35] Compiling RookAppTests SculptureSharedModelPresentationTests.swift
+[17/35] Compiling RookAppTests SculptureVoxelWorkspaceTests.swift
+[18/35] Compiling RookAppTests SculptureWorldEditorTests.swift
+[19/35] Compiling RookAppTests SculptureReferenceSaveSessionTests.swift
+[20/35] Compiling RookAppTests SculptureSaveJobTests.swift
+[21/35] Compiling RookAppTests SculptureExportJobTests.swift
+[22/35] Compiling RookAppTests SculptureGraphSaveJobTests.swift
+[23/35] Compiling RookAppTests SculptureEditorPresentationTests.swift
+[24/35] Compiling RookAppTests SculptureMeshRevisionTests.swift
+[25/35] Compiling RookAppTests SliceGridRenderingTests.swift
+[26/35] Compiling RookAppTests SculptureReferenceEditorPresentationTests.swift
+[27/35] Compiling RookAppTests SculptureCanvasPointerTests.swift
+[28/35] Compiling RookAppTests LayerGridScrollPresentationTests.swift
+[29/35] Compiling RookAppTests LayerGridGeometryTests.swift
+[30/35] Compiling RookAppTests AppearanceTests.swift
+[31/35] Compiling RookAppTests SculptureCompositionEditorTests.swift
+[32/35] Emitting module RookAppTests
+[33/35] Compiling RookAppTests SculptureCommandFocusTests.swift
+[33/35] Write Objects.LinkFileList
+[34/35] Linking RookPackageTests
+Build complete! (15.20s)
+Test Suite 'Selected tests' started at 2026-10-05 07:57:47.510.
+Test Suite 'RookPackageTests.xctest' started at 2026-10-05 07:57:47.511.
+Test Suite 'RookPackageTests.xctest' passed at 2026-10-05 07:57:47.511.
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.000 (0.000) seconds
+Test Suite 'Selected tests' passed at 2026-10-05 07:57:47.511.
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.000 (0.001) seconds
+◇ Test run started.
+↳ Testing Library Version: 1902
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Test directProcessExecutionDoesNotInterpretArgumentText() started.
+✔ Test directProcessExecutionDoesNotInterpretArgumentText() passed after 0.006 seconds.
+◇ Test incorrectPinnedVersionStopsBeforeRunningTheTool() started.
+✔ Test incorrectPinnedVersionStopsBeforeRunningTheTool() passed after 0.001 seconds.
+◇ Test specArgumentsRemainLiteralArgumentsAndFailuresPropagate() started.
+failed
+✔ Test specArgumentsRemainLiteralArgumentsAndFailuresPropagate() passed after 0.001 seconds.
+◇ Test failedReleaseBuildDoesNotScanAnOldExecutable() started.
+build failed✔ Test failedReleaseBuildDoesNotScanAnOldExecutable() passed after 0.001 seconds.
+◇ Test failedPackagingReleaseBuildDoesNotCopyAnOldExecutableOrReplaceTheBundle() started.
+release build failed✔ Test failedPackagingReleaseBuildDoesNotCopyAnOldExecutableOrReplaceTheBundle() passed after 0.003 seconds.
+◇ Test sourceScanRejectsNetworkProcessAndCoreBridges() started.
+✔ Test sourceScanRejectsNetworkProcessAndCoreBridges() passed after 0.009 seconds.
+◇ Test productDependencyGraphRejectsTransitiveToolingAndUnknownEdges() started.
+✔ Test productDependencyGraphRejectsTransitiveToolingAndUnknownEdges() passed after 0.001 seconds.
+◇ Test releaseMarkerScanIncludesEmbeddedUnprintableBytes() started.
+✔ Test releaseMarkerScanIncludesEmbeddedUnprintableBytes() passed after 0.001 seconds.
+◇ Test repositoryInventoryRejectsPythonAndShellProgramsOutsideDependencies() started.
+✔ Test repositoryInventoryRejectsPythonAndShellProgramsOutsideDependencies() passed after 0.001 seconds.
+◇ Test failedRepositoryInventoryCannotPassSourceBoundaries() started.
+git failed✔ Test failedRepositoryInventoryCannotPassSourceBoundaries() passed after 0.002 seconds.
+◇ Test signingFailurePreservesTheExistingBundleAndRemovesStaging() started.
+signing failed✔ Test signingFailurePreservesTheExistingBundleAndRemovesStaging() passed after 0.005 seconds.
+◇ Test successfulPackagingBuildsAndCopiesReleaseBeforeReplacingTheOwnedBundle() started.
+release builtsignedverifiedentitlementspackaged /var/folders/5k/616qy7sj28l0d53k4c6w_4x00000gn/T/rook-tooling-test-3F340369-795A-41A4-814B-018231EBF1C0/dist/Rook.app; local ad-hoc signature, not notarized
+✔ Test successfulPackagingBuildsAndCopiesReleaseBeforeReplacingTheOwnedBundle() passed after 0.034 seconds.
+◇ Test packagingDoesNotFallBackToDebugWhenReleaseIsMissing() started.
+✔ Test packagingDoesNotFallBackToDebugWhenReleaseIsMissing() passed after 0.002 seconds.
+◇ Test packagingRefusesUnrelatedBundlesAndSymbolicLinkDestinations() started.
+✔ Test packagingRefusesUnrelatedBundlesAndSymbolicLinkDestinations() passed after 0.003 seconds.
+◇ Test runnerAcceptsCompleteSwiftChild() started.
+✔ Test runnerAcceptsCompleteSwiftChild() passed after 0.267 seconds.
+◇ Test runnerRejectsPrematureSwiftChildExitZero() started.
+✔ Test runnerRejectsPrematureSwiftChildExitZero() passed after 0.192 seconds.
+◇ Test runnerRejectsSwiftChildRecordedIssueAtExitZero() started.
+✔ Test runnerRejectsSwiftChildRecordedIssueAtExitZero() passed after 0.188 seconds.
+◇ Test runnerPreservesActualSwiftChildExitSeven() started.
+✔ Test runnerPreservesActualSwiftChildExitSeven() passed after 0.190 seconds.
+◇ Test runnerDoesNotOverwriteRetainedEvidence() started.
+✔ Test runnerDoesNotOverwriteRetainedEvidence() passed after 0.001 seconds.
+◇ Test completeSwiftTestingRunIsAcceptedWithTypedSummary() started.
+✔ Test completeSwiftTestingRunIsAcceptedWithTypedSummary() passed after 0.008 seconds.
+◇ Test recordedIssuesAndMissingSummaryAreBothRejected() started.
+✔ Test recordedIssuesAndMissingSummaryAreBothRejected() passed after 0.007 seconds.
+◇ Test incompleteRunWithoutFailureCannotPass() started.
+✔ Test incompleteRunWithoutFailureCannotPass() passed after 0.008 seconds.
+◇ Test xctestZeroAloneCannotPass() started.
+✔ Test xctestZeroAloneCannotPass() passed after 0.005 seconds.
+◇ Test ansiUnicodeAndCIFormattingAreAccepted() started.
+✔ Test ansiUnicodeAndCIFormattingAreAccepted() passed after 0.004 seconds.
+◇ Test failureWordsInsidePassingTestNamesAreNotIssues() started.
+✔ Test failureWordsInsidePassingTestNamesAreNotIssues() passed after 0.008 seconds.
+◇ Test upstreamFailureCannotBeHiddenBySuccessfulSummary() started.
+✔ Test upstreamFailureCannotBeHiddenBySuccessfulSummary() passed after 0.006 seconds.
+◇ Test earlierIssueCannotBeHiddenBySuccessfulSummary() started.
+✔ Test earlierIssueCannotBeHiddenBySuccessfulSummary() passed after 0.007 seconds.
+◇ Test earlierSummaryCannotHideALaterUnfinishedRun() started.
+✔ Test earlierSummaryCannotHideALaterUnfinishedRun() passed after 0.012 seconds.
+◇ Test zeroSwiftTestingCountIsRejected() started.
+✔ Test zeroSwiftTestingCountIsRejected() passed after 0.003 seconds.
+◇ Test explicitExpectedCountIsEnforcedWithoutAProductCountPin() started.
+✔ Test explicitExpectedCountIsEnforcedWithoutAProductCountPin() passed after 0.010 seconds.
+◇ Test xctestFailureIsRejectedEvenWithSwiftTestingSuccess() started.
+✔ Test xctestFailureIsRejectedEvenWithSwiftTestingSuccess() passed after 0.005 seconds.
+✔ Test run with 31 tests in 0 suites passed after 1.001 seconds.

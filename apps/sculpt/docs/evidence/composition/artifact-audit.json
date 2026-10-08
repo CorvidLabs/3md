@@ -1,0 +1,26 @@
+{
+  "actor" : "Codex root",
+  "gif" : {
+    "durationSeconds" : 4.0000000000000018,
+    "frames" : 40,
+    "height" : 648,
+    "width" : 576
+  },
+  "mp4" : {
+    "audioTracks" : 0,
+    "durationSeconds" : 4,
+    "framesPerSecond" : 10,
+    "height" : 648,
+    "width" : 576
+  },
+  "obj" : {
+    "faces" : 37600,
+    "vertices" : 37600
+  },
+  "png" : {
+    "frames" : 1,
+    "height" : 648,
+    "width" : 576
+  },
+  "scope" : "Generated artifact inspection, not native Save panel verification"
+}

@@ -1,0 +1,67 @@
+[
+  {
+    "compactBytes" : 505,
+    "compactDecodeMedianMilliseconds" : 0.013166,
+    "compactEncodeMedianMilliseconds" : 0.041625,
+    "depth" : 16,
+    "height" : 16,
+    "name" : "Orb",
+    "occupiedCells" : 608,
+    "readableBytes" : 5126,
+    "readableDecodeMedianMilliseconds" : 0.552334,
+    "readableEncodeMedianMilliseconds" : 0.064708,
+    "width" : 16
+  },
+  {
+    "compactBytes" : 60313,
+    "compactDecodeMedianMilliseconds" : 19.342042,
+    "compactEncodeMedianMilliseconds" : 82.826125,
+    "depth" : 256,
+    "height" : 256,
+    "name" : "Grand solar system",
+    "occupiedCells" : 185400,
+    "readableBytes" : 16854166,
+    "readableDecodeMedianMilliseconds" : 444.334459,
+    "readableEncodeMedianMilliseconds" : 10.820916,
+    "width" : 256
+  },
+  {
+    "compactBytes" : 10127,
+    "compactDecodeMedianMilliseconds" : 18.165833,
+    "compactEncodeMedianMilliseconds" : 82.756334,
+    "depth" : 256,
+    "height" : 256,
+    "name" : "Empty 256",
+    "occupiedCells" : 0,
+    "readableBytes" : 16854157,
+    "readableDecodeMedianMilliseconds" : 439.701583,
+    "readableEncodeMedianMilliseconds" : 11.056,
+    "width" : 256
+  },
+  {
+    "compactBytes" : 10127,
+    "compactDecodeMedianMilliseconds" : 28.848209,
+    "compactEncodeMedianMilliseconds" : 82.81575,
+    "depth" : 256,
+    "height" : 256,
+    "name" : "Dense 256",
+    "occupiedCells" : 16777216,
+    "readableBytes" : 16854157,
+    "readableDecodeMedianMilliseconds" : 453.136958,
+    "readableEncodeMedianMilliseconds" : 10.465083,
+    "width" : 256
+  },
+  {
+    "compactBytes" : 8163571,
+    "compactDecodeMedianMilliseconds" : 170.942917,
+    "compactEncodeMedianMilliseconds" : 287.696958,
+    "depth" : 256,
+    "height" : 256,
+    "name" : "Mixed 256",
+    "occupiedCells" : 15098128,
+    "readableBytes" : 16854157,
+    "readableDecodeMedianMilliseconds" : 574.836625,
+    "readableEncodeMedianMilliseconds" : 10.480541,
+    "width" : 256
+  }
+]

@@ -1,0 +1,19 @@
+{
+  "diagnostics" : {
+    "diagnostics" : [
+
+    ],
+    "isTruncated" : false
+  },
+  "kind" : "composition",
+  "modelIDs" : [
+    "leaf",
+    "root",
+    "unused"
+  ],
+  "placementCount" : 0,
+  "portableInput" : true,
+  "revisionUTF8Bytes" : 1459,
+  "title" : "Portable repeated library",
+  "version" : 1
+}

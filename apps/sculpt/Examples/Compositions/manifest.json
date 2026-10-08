@@ -1,0 +1,13 @@
+{
+  "files" : {
+    "3md" : 33369,
+    "3mdb" : 6024,
+    "gif" : 3093243,
+    "mp4" : 879874,
+    "obj" : 1819552,
+    "png" : 235345
+  },
+  "modelCount" : 4,
+  "occupiedCells" : 31264,
+  "schema" : "sculpt-composition-example-1"
+}

@@ -1,0 +1,146 @@
+{
+  "arguments" : [
+    "test",
+    "--no-parallel"
+  ],
+  "assessment" : {
+    "failureLines" : [
+      {
+        "line" : 366,
+        "text" : "✘ Test solarCameraAndLayerChangesRetainActualNativeGeometryBuffers() recorded an issue at SculptureSolarPerformanceTests.swift:74:17: Expectation failed: root.childNodes.contains { $0.geometry === original }"
+      },
+      {
+        "line" : 367,
+        "text" : "✘ Test solarCameraAndLayerChangesRetainActualNativeGeometryBuffers() recorded an issue at SculptureSolarPerformanceTests.swift:74:17: Expectation failed: root.childNodes.contains { $0.geometry === original }"
+      },
+      {
+        "line" : 368,
+        "text" : "✘ Test solarCameraAndLayerChangesRetainActualNativeGeometryBuffers() recorded an issue at SculptureSolarPerformanceTests.swift:74:17: Expectation failed: root.childNodes.contains { $0.geometry === original }"
+      },
+      {
+        "line" : 369,
+        "text" : "✘ Test solarCameraAndLayerChangesRetainActualNativeGeometryBuffers() recorded an issue at SculptureSolarPerformanceTests.swift:74:17: Expectation failed: root.childNodes.contains { $0.geometry === original }"
+      },
+      {
+        "line" : 370,
+        "text" : "✘ Test solarCameraAndLayerChangesRetainActualNativeGeometryBuffers() recorded an issue at SculptureSolarPerformanceTests.swift:74:17: Expectation failed: root.childNodes.contains { $0.geometry === original }"
+      },
+      {
+        "line" : 371,
+        "text" : "✘ Test solarCameraAndLayerChangesRetainActualNativeGeometryBuffers() recorded an issue at SculptureSolarPerformanceTests.swift:74:17: Expectation failed: root.childNodes.contains { $0.geometry === original }"
+      },
+      {
+        "line" : 372,
+        "text" : "✘ Test solarCameraAndLayerChangesRetainActualNativeGeometryBuffers() recorded an issue at SculptureSolarPerformanceTests.swift:74:17: Expectation failed: root.childNodes.contains { $0.geometry === original }"
+      },
+      {
+        "line" : 373,
+        "text" : "✘ Test solarCameraAndLayerChangesRetainActualNativeGeometryBuffers() recorded an issue at SculptureSolarPerformanceTests.swift:74:17: Expectation failed: root.childNodes.contains { $0.geometry === original }"
+      },
+      {
+        "line" : 374,
+        "text" : "✘ Test solarCameraAndLayerChangesRetainActualNativeGeometryBuffers() recorded an issue at SculptureSolarPerformanceTests.swift:74:17: Expectation failed: root.childNodes.contains { $0.geometry === original }"
+      },
+      {
+        "line" : 375,
+        "text" : "✘ Test solarCameraAndLayerChangesRetainActualNativeGeometryBuffers() recorded an issue at SculptureSolarPerformanceTests.swift:74:17: Expectation failed: root.childNodes.contains { $0.geometry === original }"
+      },
+      {
+        "line" : 376,
+        "text" : "✘ Test solarCameraAndLayerChangesRetainActualNativeGeometryBuffers() recorded an issue at SculptureSolarPerformanceTests.swift:74:17: Expectation failed: root.childNodes.contains { $0.geometry === original }"
+      },
+      {
+        "line" : 377,
+        "text" : "✘ Test solarCameraAndLayerChangesRetainActualNativeGeometryBuffers() recorded an issue at SculptureSolarPerformanceTests.swift:74:17: Expectation failed: root.childNodes.contains { $0.geometry === original }"
+      },
+      {
+        "line" : 378,
+        "text" : "✘ Test solarCameraAndLayerChangesRetainActualNativeGeometryBuffers() recorded an issue at SculptureSolarPerformanceTests.swift:74:17: Expectation failed: root.childNodes.contains { $0.geometry === original }"
+      },
+      {
+        "line" : 379,
+        "text" : "✘ Test solarCameraAndLayerChangesRetainActualNativeGeometryBuffers() recorded an issue at SculptureSolarPerformanceTests.swift:74:17: Expectation failed: root.childNodes.contains { $0.geometry === original }"
+      },
+      {
+        "line" : 380,
+        "text" : "✘ Test solarCameraAndLayerChangesRetainActualNativeGeometryBuffers() recorded an issue at SculptureSolarPerformanceTests.swift:74:17: Expectation failed: root.childNodes.contains { $0.geometry === original }"
+      },
+      {
+        "line" : 381,
+        "text" : "✘ Test solarCameraAndLayerChangesRetainActualNativeGeometryBuffers() recorded an issue at SculptureSolarPerformanceTests.swift:74:17: Expectation failed: root.childNodes.contains { $0.geometry === original }"
+      },
+      {
+        "line" : 382,
+        "text" : "✘ Test solarCameraAndLayerChangesRetainActualNativeGeometryBuffers() recorded an issue at SculptureSolarPerformanceTests.swift:74:17: Expectation failed: root.childNodes.contains { $0.geometry === original }"
+      },
+      {
+        "line" : 383,
+        "text" : "✘ Test solarCameraAndLayerChangesRetainActualNativeGeometryBuffers() recorded an issue at SculptureSolarPerformanceTests.swift:74:17: Expectation failed: root.childNodes.contains { $0.geometry === original }"
+      },
+      {
+        "line" : 384,
+        "text" : "✘ Test solarCameraAndLayerChangesRetainActualNativeGeometryBuffers() recorded an issue at SculptureSolarPerformanceTests.swift:74:17: Expectation failed: root.childNodes.contains { $0.geometry === original }"
+      },
+      {
+        "line" : 385,
+        "text" : "✘ Test solarCameraAndLayerChangesRetainActualNativeGeometryBuffers() recorded an issue at SculptureSolarPerformanceTests.swift:74:17: Expectation failed: root.childNodes.contains { $0.geometry === original }"
+      },
+      {
+        "line" : 386,
+        "text" : "✘ Test solarCameraAndLayerChangesRetainActualNativeGeometryBuffers() recorded an issue at SculptureSolarPerformanceTests.swift:74:17: Expectation failed: root.childNodes.contains { $0.geometry === original }"
+      },
+      {
+        "line" : 387,
+        "text" : "✘ Test solarCameraAndLayerChangesRetainActualNativeGeometryBuffers() recorded an issue at SculptureSolarPerformanceTests.swift:74:17: Expectation failed: root.childNodes.contains { $0.geometry === original }"
+      },
+      {
+        "line" : 388,
+        "text" : "✘ Test solarCameraAndLayerChangesRetainActualNativeGeometryBuffers() recorded an issue at SculptureSolarPerformanceTests.swift:74:17: Expectation failed: root.childNodes.contains { $0.geometry === original }"
+      },
+      {
+        "line" : 389,
+        "text" : "✘ Test solarCameraAndLayerChangesRetainActualNativeGeometryBuffers() failed after 0.491 seconds with 23 issues."
+      },
+      {
+        "line" : 390,
+        "text" : "✘ Suite SculptureSolarPerformanceTests failed after 0.936 seconds with 23 issues."
+      },
+      {
+        "line" : 821,
+        "text" : "✘ Test run with 287 tests in 21 suites failed after 140.821 seconds with 23 issues."
+      }
+    ],
+    "issues" : [
+      {
+        "upstreamFailure" : {
+          "exitCode" : 1
+        }
+      },
+      {
+        "recordedFailures" : {
+
+        }
+      },
+      {
+        "missingSummary" : {
+
+        }
+      }
+    ],
+    "passed" : false,
+    "reasons" : [
+      "upstream swift test exited 1",
+      "recorded test issue\/failure lines are present",
+      "final successful Swift Testing summary is absent"
+    ],
+    "successfulSummaries" : [
+
+    ],
+    "upstreamExitCode" : 1
+  },
+  "executable" : "\/usr\/bin\/swift",
+  "logPath" : "\/Users\/leif\/Development\/_CorvidLabs\/rook\/.build\/verification\/D4656D5D-82FA-42E5-AD80-DD151D35E65A\/swift-test.log",
+  "receiptPath" : "\/Users\/leif\/Development\/_CorvidLabs\/rook\/.build\/verification\/D4656D5D-82FA-42E5-AD80-DD151D35E65A\/swift-test-result.json",
+  "upstreamExitCode" : 1,
+  "workingDirectory" : "\/Users\/leif\/Development\/_CorvidLabs\/rook"
+}

@@ -1,0 +1,58 @@
+{
+  "arguments" : [
+    "test",
+    "--no-parallel"
+  ],
+  "assessment" : {
+    "failureLines" : [
+      {
+        "line" : 453,
+        "text" : "✘ Test movedAndRotatedWorldInstancesKeepActualModelGeometryAndNearestPicks() recorded an issue at SculptureVoxelMeshBuffersTests.swift:303:9: Expectation failed: !((edge → <SCNNode: 0x99ab3c640 | geometry=<SCNGeometry: 0x99f9ffc00> | no child>).isHidden → true → true)"
+      },
+      {
+        "line" : 454,
+        "text" : "✘ Test movedAndRotatedWorldInstancesKeepActualModelGeometryAndNearestPicks() failed after 0.004 seconds with 1 issue."
+      },
+      {
+        "line" : 455,
+        "text" : "✘ Suite SculpturePreparedNativeMeshTests failed after 3.454 seconds with 1 issue."
+      },
+      {
+        "line" : 1042,
+        "text" : "✘ Test run with 394 tests in 35 suites failed after 251.712 seconds with 1 issue."
+      }
+    ],
+    "issues" : [
+      {
+        "upstreamFailure" : {
+          "exitCode" : 1
+        }
+      },
+      {
+        "recordedFailures" : {
+
+        }
+      },
+      {
+        "missingSummary" : {
+
+        }
+      }
+    ],
+    "passed" : false,
+    "reasons" : [
+      "upstream swift test exited 1",
+      "recorded test issue\/failure lines are present",
+      "final successful Swift Testing summary is absent"
+    ],
+    "successfulSummaries" : [
+
+    ],
+    "upstreamExitCode" : 1
+  },
+  "executable" : "\/usr\/bin\/swift",
+  "logPath" : "\/private\/tmp\/sculpt-1024-case-study-20261005\/.build\/verification\/3752BB6A-632F-4EA2-965B-1F930CC3A6FC\/swift-test.log",
+  "receiptPath" : "\/private\/tmp\/sculpt-1024-case-study-20261005\/.build\/verification\/3752BB6A-632F-4EA2-965B-1F930CC3A6FC\/swift-test-result.json",
+  "upstreamExitCode" : 1,
+  "workingDirectory" : "\/private\/tmp\/sculpt-1024-case-study-20261005"
+}
