@@ -1,20 +1,22 @@
 # ThreeMD 2.2.0
 
-Status: release commit for tag `v2.2.0`. Not published. npm and crates.io
-still serve 2.1.0.
+Status: tag `v2.2.0`, GitHub release published 2026-10-08. npm serves 2.2.0.
+crates.io still serves `threemd` 2.1.0.
 
-Tag `v2.2.0` names this commit. It does not publish a GitHub
-release. Publishing is what moves the npm and crates.io packages off 2.1.0.
-Swift resolves `from: "2.2.0"` from the `v2.2.0` tag. The preparation squash
-is `4e91f91`. Hosted CI on that pull request was green: Trust
-[37842288806](https://github.com/CorvidLabs/3md/actions/runs/37842288806),
-Linux [37842289004](https://github.com/CorvidLabs/3md/actions/runs/37842289004),
-UI [37842288754](https://github.com/CorvidLabs/3md/actions/runs/37842288754),
-Sculpt [37842288802](https://github.com/CorvidLabs/3md/actions/runs/37842288802),
+Tag `v2.2.0` points at `54a6f30`. The GitHub release is
+[v2.2.0: Godot 4.7 addon](https://github.com/CorvidLabs/3md/releases/tag/v2.2.0).
+npm serves `@corvidlabs/threemd` and `@corvidlabs/three-md-element` at 2.2.0.
+The Homebrew formula `threemd` is 2.2.0 (`e142a8c` in CorvidLabs/homebrew-tap).
+The crate publish failed because `CRATES_IO_TOKEN` is not configured, so
+crates.io stayed at 2.1.0. Swift resolves `from: "2.2.0"` from the tag.
+Hosted CI on `54a6f30` passed before the tag: Trust
+[37857306140](https://github.com/CorvidLabs/3md/actions/runs/37857306140),
+Linux [37857306051](https://github.com/CorvidLabs/3md/actions/runs/37857306051),
+UI [37857306031](https://github.com/CorvidLabs/3md/actions/runs/37857306031),
+Sculpt [37857306180](https://github.com/CorvidLabs/3md/actions/runs/37857306180),
+Pages [37857306029](https://github.com/CorvidLabs/3md/actions/runs/37857306029),
 and CodeQL
-[37842284471](https://github.com/CorvidLabs/3md/actions/runs/37842284471).
-This commit changes the release status wording. Hosted CI still has to pass
-on this commit before the tag is pushed.
+[37857305168](https://github.com/CorvidLabs/3md/actions/runs/37857305168).
 
 The format is unchanged. Text grammar 1.0, binary envelope version 1, payload
 kinds 1 and 2, and composition profile `3md-composition-1` are the same as
@@ -46,14 +48,15 @@ standard. This version does not publish the app.
 
 ## Versions
 
-| Surface | This repository | Published today |
+| Surface | This repository | Published |
 | --- | --- | --- |
-| Swift `ThreeMD` | manifests follow the future tag | GitHub release `v2.1.0` |
-| `@corvidlabs/threemd` | `2.2.0` in `js/package.json` | npm `2.1.0` |
+| Swift `ThreeMD` | tag `v2.2.0` | GitHub release `v2.2.0` |
+| `@corvidlabs/threemd` | `2.2.0` in `js/package.json` | npm `2.2.0` |
 | Rust `threemd` | `2.2.0` in `rust/Cargo.toml` | crates.io `2.1.0` |
-| `@corvidlabs/three-md-element` | `2.2.0` in `element/package.json` | npm `2.1.0` |
+| `@corvidlabs/three-md-element` | `2.2.0` in `element/package.json` | npm `2.2.0` |
 | VS Code `corvidlabs.threemd` | `2.2.0` in `editor/vscode/package.json` | local VSIX only |
 | Godot addon | `2.2.0` in `plugin.cfg` | copy from this repository |
+| Homebrew `threemd` | formula in CorvidLabs/homebrew-tap | `2.2.0` |
 
 ## Limits that stay
 
@@ -82,8 +85,8 @@ These are not in this preparation.
 - Composition edits beyond `replaceEntry`, and the full diagnostic report, in
   GDScript.
 
-## Next step
+## Publish result
 
-Hosted CI has to pass on this commit before the `v2.2.0` tag is pushed.
-Publishing the GitHub release is a separate step. It is what runs the npm,
-crate, and Homebrew workflows.
+The GitHub release, both npm packages, and the Homebrew formula shipped.
+The crate did not. Configure `CRATES_IO_TOKEN` and rerun `cargo-publish.yml`
+from tag `v2.2.0` before telling anyone that crates.io serves 2.2.0.

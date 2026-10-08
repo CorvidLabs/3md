@@ -3,12 +3,12 @@
 ## 2.2.0
 
 On 2026-10-08 Leif asked to prep a release after the Godot addon merged, then
-to merge that preparation and continue. This is the release commit for tag
-`v2.2.0`. The format is unchanged. Swift, TypeScript, and Rust library
-behavior stays the 2.1.0 library. The new surface is the Godot 4.7 addon.
-Package manifests read 2.2.0. The tag is `v2.2.0` on this commit after hosted
-CI is green. Publishing the GitHub release is not part of this step. npm and
-crates.io still serve 2.1.0 until that release is published.
+to merge that preparation, tag it, and publish the GitHub release. Tag
+`v2.2.0` is `54a6f30`. The GitHub release is published. npm serves 2.2.0.
+The Homebrew formula `threemd` is 2.2.0. crates.io still serves `threemd`
+2.1.0 because `CRATES_IO_TOKEN` is not configured. The format is unchanged.
+Swift, TypeScript, and Rust library behavior stays the 2.1.0 library. The
+new surface is the Godot 4.7 addon. Package manifests read 2.2.0.
 
 Follow-ups stay follow-ups: CLI binary input, `convert` and `inspect`,
 interchange protocol 2, the 2.0.0 reader compatibility job, the CI performance
@@ -77,11 +77,11 @@ Markdown with a Z axis. See [README.md](README.md) for the pitch and
 ## Monorepo
 
 Main contains the format library, the Godot 4 addon at `gdscript/`, and
-Sculpt.3md at `apps/sculpt`. npm and crates.io serve the library at 2.1.0
-until a GitHub release publishes a newer tag. The app's compact `.3mdb` is
-not the upstream binary standard. Format changes still land in Swift,
-TypeScript, and Rust. The notes above this section are the history of earlier
-sessions. They are not a claim that the registries are still on 2.0.0.
+Sculpt.3md at `apps/sculpt`. npm serves the library packages at 2.2.0.
+crates.io serves `threemd` 2.1.0. The app's compact `.3mdb` is not the
+upstream binary standard. Format changes still land in Swift, TypeScript,
+and Rust. The notes above this section are the history of earlier sessions.
+They are not a claim that the registries are still on 2.0.0.
 
 ## Project map
 
