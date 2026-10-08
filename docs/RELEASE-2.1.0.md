@@ -1,6 +1,6 @@
 # ThreeMD 2.1.0
 
-Status: release commit for tag `v2.1.0` on 2026-10-07. Not published.
+Status: tag `v2.1.0`, GitHub release published 2026-10-08. npm and crates.io serve 2.1.0.
 
 The library source is `b70373b` (pull request 74). Hosted CI on that commit is
 green: Trust
@@ -21,11 +21,11 @@ The approved SpecSync change is
 `add-a-structured-binary-document-payload-kind-2-to-threemd-2-1-in-swift-typescript-and-rust-with-fast-checksums-cli`.
 It is not accepted or archived.
 
-Publishing still happens only when a GitHub release is published. Until then
-npm serves `@corvidlabs/threemd` and `@corvidlabs/three-md-element` at 2.0.0,
-and crates.io stays at the last published `threemd` release. Swift resolves
-`from: "2.1.0"` from the `v2.1.0` tag. The VS Code extension is a local VSIX
-and is not published to a marketplace.
+The GitHub release `v2.1.0` was published on 2026-10-08. npm serves
+`@corvidlabs/threemd` and `@corvidlabs/three-md-element` at 2.1.0. crates.io
+serves `threemd` at 2.1.0. Swift resolves `from: "2.1.0"` from the `v2.1.0`
+tag. Sculpt.3md was nested on main after that tag. The VS Code extension is a
+local VSIX and is not published to a marketplace.
 
 ## What shipped
 

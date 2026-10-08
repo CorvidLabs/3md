@@ -18,6 +18,16 @@ Examples/
 # Docs and dev scripts.
 docs/
 scripts/
+# Interchange harnesses, same role as scripts/ and Examples/.
+js/scripts/
+rust/examples/
+
+# The nested Sculpt.3md package follows the same scope. Its implementation
+# sources stay in the denominator. Tests, docs, and the package manifest do
+# not. Patterns are root-anchored, so these are spelled out.
+apps/sculpt/Tests/
+apps/sculpt/docs/
+apps/sculpt/Package.swift
 
 # Build manifests / output / vendored.
 Package.swift

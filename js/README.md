@@ -22,9 +22,8 @@ exhaustive proof for arbitrary inputs or every runtime.
 bun add @corvidlabs/threemd
 ```
 
-The package version on this branch is 2.1.0. Public npm still serves 2.0.0
-until the GitHub release publishes it. Older GitHub Packages scope
-configuration must be changed when adopting a public npm release.
+npm serves `@corvidlabs/threemd` 2.1.0. Older GitHub Packages scope
+configuration must be changed when adopting the public npm release.
 
 ## Usage
 

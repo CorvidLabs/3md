@@ -1,6 +1,6 @@
 ---
 module: ThreeMD
-version: 9
+version: 10
 status: active
 files:
   - Sources/ThreeMD/Axis.swift
@@ -701,3 +701,4 @@ returns no document and no encoded bytes.
 | 6 | 2026-10-05 | guarantee-portable-cross-language-document-and-composition-interchange-with-a-nine-pair-public-api-verification-matrix: Guarantee portable cross-language document and composition interchange with a nine-pair public API verification matrix |
 | 8 | 2026-10-05 | add-linked-file-composition-with-a-glyph-ledger-recursive-supplied-file-resolution-and-portable-self-contained-bundling: Add linked file composition with a glyph ledger recursive supplied-file resolution and portable self-contained bundling in all three languages |
 | 9 | 2026-10-06 | harden-linked-composition-parity-across-swift-typescript-and-rust-after-2-0-0: Harden linked composition parity across Swift TypeScript and Rust after 2.0.0 |
+| 10 | 2026-10-08 | update-the-public-docs-for-the-2-1-monorepo-and-make-repository-spec-coverage-100: Update the public docs for the 2.1 monorepo and make repository spec coverage 100%. |
