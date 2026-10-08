@@ -1,0 +1,37 @@
+# Composable models and sparse worlds
+
+Leif requested a character that places an entire 3md model, then an editing extent that grows without a fixed cube boundary while rendering a finite distance. This iteration implements SCULPTURE-30 and SCULPTURE-31 as app-specific, self-contained reference documents. The product remains Swift-only, offline and sandboxed, with one main window, Settings and a menu bar. No lifecycle approval, independent human review, merge, release or deployment is established by these checks.
+
+## Implementation and limits
+
+`ascii-composition-1` stores a shared library of voxel definitions and nested tile maps. Bindings assign printable characters to models and clockwise X/Y quarter turns. Validation checks every definition, including unused references: missing bindings, cycles, clipping and excessive work fail. Expansion is explicit and cancellable; it produces a detached voxel copy. The native tile editor imports only a selected bounded local file and embeds its definitions rather than retaining a path.
+
+`ascii-world-1` stores that shared library plus exact Int64 model placements. No voxel box is allocated between distant instances. The native world view reuses model geometry, subtracts integer focus before local GPU conversion, culls by distance and shows selectable bounds for distant or detail-budget-limited models. Camera motion retains installed geometry. Saves preserve hidden placements and omit camera, focus and rendering distances.
+
+Individual editable/resolved models remain at most 256 cells per axis. Libraries have at most 64 models, 16 reference levels, 64 MiB of unique resolved volumes and 65,536 recursive placements. Worlds have at most 65,536 instances and 20 MiB readable files. Preparation retains at most 1,000,000 exterior model faces; a view retains at most 512 visible instances and 500,000 detailed/proxy faces. Capacity omissions do not delete placements. This is sparse spatial extent with finite capacities, not literal infinite memory, streamed external regions or per-voxel world editing. Whole-world mesh/movie/dense export is outside this prototype.
+
+## Verification
+
+The first seven-step pinned lane passed in 605.607 seconds: 251 complete-suite tests across 15 suites (550.993 seconds), the 31-test harness, hi at 38 active criteria and 53 retired, strict SpecSync at five specs with zero warnings and 54/54 files and 12,364/12,364 lines, source boundaries and release fixtures. Unmodified logs, receipts, 32 editor layout captures, eight reference layout captures and actual Metal world snapshots are retained in `initial/`.
+
+Native inspection then found that neutral white edges washed out dense nested models. The repair shares glyph-derived vertex colors between the detailed fills and edges. A new native garden/courtyard regression checks majority chromatic pixels, limited bright-neutral coverage and shared geometry/color-source identity. The focused regression passed in 7.819 seconds. Root also marked a composition carried into a newly created world as unsaved until writing; actual Close behavior now protects that handoff.
+
+The final frozen-source lane passed all seven steps in **338.945 seconds**. The complete suite passed **252 tests in 15 suites** after 299.214 seconds; the harness passed **31 tests** after 1.162 seconds. hi reported **38 active criteria and 53 retired**. Strict SpecSync reported **five specs, zero warnings, 54/54 files and 12,368/12,368 lines**. Formatting, source boundaries and optimized release fixture checks passed. `final/tests/` and `final/harness/` preserve the original receipts and logs. `final/editor-layout/` retains 32 fresh captures, and `final/reference-layout/` retains eight captures at two sizes in both themes. AppKit bitmap layout captures do not establish CAMetalLayer pixels; separate actual Metal snapshots are retained in `final/native-world-gpu/` and `final/native-nested-gpu/`.
+
+Early compile errors and one compatible CLI wording expectation are recorded in `preliminary-checks.json`; they were repaired before the lanes above. Existing historical baselines and lifecycle records were not rewritten. The initial standalone export audit incorrectly assumed four duplicate vertices per OBJ face; the exporter deduplicates vertices. The corrected audit validates every quad's vertex and normal indices against the actual shared vertex table.
+
+## Actual native interaction
+
+Root packaged and ad-hoc signed the optimized application, retaining only the sandbox and user-selected read/write file entitlements. The earlier solar document reopened with 185,400 occupied cells and no unsaved changes. A native composition tile click changed the map to `AAB / .A. / B.A`; rotation of A became 90 degrees. Canceling its Save panel returned to that graph, and completed Save/reopen preserved the map, all three definitions and rotation. `native-initial-files/` preserves the files actually written by native panels and the CLI inspections.
+
+The nested courtyard carried its four definitions into a world. Native placement at X = 1,000,000,000,000 and Z = −1,000,000,000,000 supported Undo and Redo. Save cancellation returned to both placements, dirty Close prompted before discarding, and completed native Save/reopen retained the exact origins. Returning to the main window left the solar sculpture and saved baseline unchanged. Camera state resets when a reference sheet is reconstructed; it is not document content.
+
+In the final bundle, the nested courtyard appears colored in the actual Metal canvas. Close immediately after **Use in a world** prompts to keep editing or discard; keeping the draft, saving it and closing then succeeds. The wide-world example starts with two detailed models out of four. Increasing render distance from 256 to 576 shows a third placement as a proxy. Clicking that actual proxy selects `garden-distant`; **Jump to it** sets focus to X = 512, Z = 256 and changes the near/distant detail counts. Selecting `garden-trillion` and jumping sets the exact trillion-cell focus and renders one detailed model while retaining three out-of-range records. Reducing rendering distance to 64 and dragging the native canvas retains colored geometry at that focus. No on-screen frame-rate measurement is claimed.
+
+The final native wide-world Save, after focus/distance/camera changes, is **byte-for-byte equal to the canonical 35,560-byte example**. `native-final-files/` retains that file, the composition-handoff world and an observation receipt. The application is left open on the trillion-cell garden with render/detail distance 64.
+
+## Artifacts and publication
+
+`Examples/Compositions/` contains the courtyard's reusable `.3md`, explicitly expanded `.3mdb`, PNG, GIF, MP4 and OBJ, plus a separate sparse world and manifest. The courtyard has four shared definitions, 31,264 occupied expanded cells and 37,600 exterior faces. Its readable composition is 33,369 bytes; expanded compact voxels are 6,024 bytes. `artifact-audit.json` verifies the 576×648 PNG, forty-frame/four-second GIF, silent four-second 10 fps MP4 and valid shared-vertex OBJ. Generated exports were checked separately from native user-selected saves. The original twenty-one-example, 105-artifact gallery remains unchanged.
+
+Publication updates the existing private feature branch and PR30. Local checks and native observations are distinct from GitHub CI. No merge or SpecSync approval/review/finalization is claimed.

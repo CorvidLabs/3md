@@ -1,0 +1,87 @@
+Building for debugging...
+[0/8] Write sources
+[2/8] Write swift-version--58304C5D6DBC2206.txt
+[4/8] Emitting module RookApp
+[5/8] Compiling RookApp SculptureInsertionFiles.swift
+[5/10] Write Objects.LinkFileList
+[6/10] Linking Rook
+[7/10] Applying Rook
+[9/12] Emitting module RookAppTests
+[10/12] Compiling RookAppTests SculptureInsertionDraftTests.swift
+[10/12] Write Objects.LinkFileList
+[11/12] Linking RookPackageTests
+Build complete! (4.96s)
+Test Suite 'Selected tests' started at 2026-10-05 16:58:38.789.
+Test Suite 'RookPackageTests.xctest' started at 2026-10-05 16:58:38.790.
+Test Suite 'RookPackageTests.xctest' passed at 2026-10-05 16:58:38.790.
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.000 (0.000) seconds
+Test Suite 'Selected tests' passed at 2026-10-05 16:58:38.791.
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.000 (0.002) seconds
+◇ Test run started.
+↳ Testing Library Version: 1902
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite SculptureSceneInsertionTests started.
+◇ Suite "Native model insertion" started.
+◇ Test completeUnusedModelCountsRemainBoundedBeforeAnyInsertion() started.
+◇ Test unsupportedChildrenEmptyBatchesAndMismatchedSnapshotsRefuse() started.
+◇ Test parentAndImportedOpaqueDocumentsAndScopedIdentitiesSurviveNamespaceInsertion() started.
+◇ Test recapturePreservesOpaqueMetadataWhileRecognizedGeometryStillChanges() started.
+◇ Test worldRootAndNestedDocumentMetadataSurvivePlacementChangesAndSharedEditing() started.
+◇ Test batchPlacementCrossesRowsAndLayersInSelectionOrder() started.
+◇ Test worldBatchUsesExactFocusAndRootWidthsWithoutFlattening() started.
+◇ Test placingOverAnOccupiedCellRetainsItsExistingReusableModelAndBinding() started.
+◇ Test nestedGraphsNamespaceCollisionsAndRetainSharedChildrenRotationsAndUnusedModels() started.
+◇ Test invalidSelectionInsufficientSpaceAndChildFitCannotPartiallyEdit() started.
+◇ Test metadataPreservationDoesNotPermitArbitraryMarkdownOrMalformedGeometry() started.
+◇ Test exhaustedBindingCharactersRefuseWithoutRemovingExistingBindings() started.
+◇ Test worldBatchRefusesCheckedOverflowAndUnsafeOriginsAtomically() started.
+◇ Test cancellationReturnsNoPartialInsertionForEitherParentKind() started.
+◇ Test repeatedInputKeepsEachImportIndependentButItsInternalSharingIntact() started.
+◇ Test standaloneVoxelMetadataIsCarriedIntoItsImportedDefinition() started.
+◇ Test portableOpaqueAttributesDoNotHideInvalidIdentitiesOrBindingEdges() started.
+◇ Test selectedVoxelGetsABindingAndImmediatePlacementWithoutChangingTheParent() started.
+◇ Test compositionBatchPlacesNestedModelsAndRestoresTheCompleteSnapshotWithOneUndo() started.
+✔ Test cancellationReturnsNoPartialInsertionForEitherParentKind() passed after 0.001 seconds.
+✔ Test exhaustedBindingCharactersRefuseWithoutRemovingExistingBindings() passed after 0.002 seconds.
+✔ Test metadataPreservationDoesNotPermitArbitraryMarkdownOrMalformedGeometry() passed after 0.017 seconds.
+✔ Test invalidSelectionInsufficientSpaceAndChildFitCannotPartiallyEdit() passed after 0.026 seconds.
+✔ Test recapturePreservesOpaqueMetadataWhileRecognizedGeometryStillChanges() passed after 0.029 seconds.
+✔ Test unsupportedChildrenEmptyBatchesAndMismatchedSnapshotsRefuse() passed after 0.031 seconds.
+✔ Test selectedVoxelGetsABindingAndImmediatePlacementWithoutChangingTheParent() passed after 0.048 seconds.
+✔ Test portableOpaqueAttributesDoNotHideInvalidIdentitiesOrBindingEdges() passed after 0.058 seconds.
+✔ Test worldBatchRefusesCheckedOverflowAndUnsafeOriginsAtomically() passed after 0.075 seconds.
+✔ Test standaloneVoxelMetadataIsCarriedIntoItsImportedDefinition() passed after 0.078 seconds.
+✔ Test batchPlacementCrossesRowsAndLayersInSelectionOrder() passed after 0.081 seconds.
+✔ Test placingOverAnOccupiedCellRetainsItsExistingReusableModelAndBinding() passed after 0.081 seconds.
+✔ Test nestedGraphsNamespaceCollisionsAndRetainSharedChildrenRotationsAndUnusedModels() passed after 0.094 seconds.
+✔ Test repeatedInputKeepsEachImportIndependentButItsInternalSharingIntact() passed after 0.121 seconds.
+✔ Test worldBatchUsesExactFocusAndRootWidthsWithoutFlattening() passed after 0.145 seconds.
+✔ Test compositionBatchPlacesNestedModelsAndRestoresTheCompleteSnapshotWithOneUndo() passed after 0.154 seconds.
+◇ Test worldBatchPlacesAtExactFocusAndKeepsLibraryAndSnapshotInOneHistoryEntry() started.
+✔ Test parentAndImportedOpaqueDocumentsAndScopedIdentitiesSurviveNamespaceInsertion() passed after 0.162 seconds.
+✔ Test worldRootAndNestedDocumentMetadataSurvivePlacementChangesAndSharedEditing() passed after 0.164 seconds.
+✔ Test completeUnusedModelCountsRemainBoundedBeforeAnyInsertion() passed after 0.181 seconds.
+✔ Suite SculptureSceneInsertionTests passed after 0.182 seconds.
+✔ Test worldBatchPlacesAtExactFocusAndKeepsLibraryAndSnapshotInOneHistoryEntry() passed after 0.049 seconds.
+◇ Test compositionRefusalsNeverPublishAPartialBatchOrCreateHistory() started.
+✔ Test compositionRefusalsNeverPublishAPartialBatchOrCreateHistory() passed after 0.006 seconds.
+◇ Test failedInsertionRetainsAnExistingRedoAndSavedBaseline() started.
+✔ Test failedInsertionRetainsAnExistingRedoAndSavedBaseline() passed after 0.008 seconds.
+◇ Test exhaustedGlyphLedgerRefusesInsertionWithoutChangingTheMapOrHistory() started.
+✔ Test exhaustedGlyphLedgerRefusesInsertionWithoutChangingTheMapOrHistory() passed after 0.001 seconds.
+◇ Test worldRefusalsKeepExactDocumentHistoryAndPortableSnapshot() started.
+✔ Test worldRefusalsKeepExactDocumentHistoryAndPortableSnapshot() passed after 0.011 seconds.
+◇ Test multiselectUsesDeterministicPathOrderAndRetainsPortableInputs() started.
+✔ Test multiselectUsesDeterministicPathOrderAndRetainsPortableInputs() passed after 0.030 seconds.
+◇ Test recursiveFolderSelectionSkipsHiddenUnsupportedAndSymbolicEntries() started.
+✔ Test recursiveFolderSelectionSkipsHiddenUnsupportedAndSymbolicEntries() passed after 0.006 seconds.
+◇ Test fileSelectionRefusesEmptyUnsupportedSymlinkAndOversizedInputs() started.
+✔ Test fileSelectionRefusesEmptyUnsupportedSymlinkAndOversizedInputs() passed after 0.011 seconds.
+◇ Test cancelledFileReadsAndDraftInsertionNeverPublishOrCreateHistory() started.
+✔ Test cancelledFileReadsAndDraftInsertionNeverPublishOrCreateHistory() passed after 0.011 seconds.
+◇ Test nativeFolderInsertionAutomaticallyPlacesTheBatchAndUnsupportedSelectionIsAtomic() started.
+✔ Test nativeFolderInsertionAutomaticallyPlacesTheBatchAndUnsupportedSelectionIsAtomic() passed after 0.044 seconds.
+◇ Test worldInsertionRejectsAParentChangedDuringFilePreparation() started.
+✔ Test worldInsertionRejectsAParentChangedDuringFilePreparation() passed after 0.028 seconds.
+✔ Suite "Native model insertion" passed after 0.365 seconds.
+✔ Test run with 30 tests in 2 suites passed after 0.365 seconds.

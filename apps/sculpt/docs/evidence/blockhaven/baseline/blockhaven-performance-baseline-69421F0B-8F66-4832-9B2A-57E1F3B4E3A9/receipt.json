@@ -1,0 +1,24 @@
+{
+  "240CameraUpdatesMilliseconds" : 1.087958,
+  "configuration" : "optimized Swift release tests",
+  "exteriorFaces" : 136274,
+  "extractionMilliseconds" : [
+    19.266708999999999,
+    19.9725,
+    18.167041999999999,
+    18.451582999999999,
+    17.990167
+  ],
+  "fourScalarProjectionMilliseconds" : [
+    55.576458000000002,
+    58.217291000000003,
+    61.551124999999999,
+    64.672583000000003
+  ],
+  "mainActorMeshInstallMilliseconds" : 81.221041,
+  "meshInstallations" : 1,
+  "nativeSnapshotMilliseconds" : 124.129417,
+  "note" : "CPU timings and a synchronized snapshot; not an on-screen FPS measurement",
+  "occupiedCells" : 827937,
+  "phase" : "baseline"
+}

@@ -1,0 +1,1192 @@
+▶️ Lane: verify — Format, test harness, tests, intent, specs, source boundaries, and the release fixture scan
+  ▶️ Running task: fmt
+  ✔ Step 1 done (2.524s)
+  ▶️ Running task: test-harness
+Swift test evidence: /private/tmp/sculpt-1024-case-study-20261005/.build/verification/E464F606-F93F-46D6-AA20-E2AD2E883DED
+[0/1] Planning build
+Building for debugging...
+[0/6] Write swift-version--58304C5D6DBC2206.txt
+Build complete! (0.34s)
+Test Suite 'Selected tests' started at 2026-10-05 14:21:14.558.
+Test Suite 'RookPackageTests.xctest' started at 2026-10-05 14:21:14.559.
+Test Suite 'RookPackageTests.xctest' passed at 2026-10-05 14:21:14.559.
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.000 (0.000) seconds
+Test Suite 'Selected tests' passed at 2026-10-05 14:21:14.559.
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.000 (0.001) seconds
+◇ Test run started.
+↳ Testing Library Version: 1902
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Test directProcessExecutionDoesNotInterpretArgumentText() started.
+✔ Test directProcessExecutionDoesNotInterpretArgumentText() passed after 0.006 seconds.
+◇ Test incorrectPinnedVersionStopsBeforeRunningTheTool() started.
+✔ Test incorrectPinnedVersionStopsBeforeRunningTheTool() passed after 0.001 seconds.
+◇ Test specArgumentsRemainLiteralArgumentsAndFailuresPropagate() started.
+failed
+✔ Test specArgumentsRemainLiteralArgumentsAndFailuresPropagate() passed after 0.001 seconds.
+◇ Test failedReleaseBuildDoesNotScanAnOldExecutable() started.
+build failed✔ Test failedReleaseBuildDoesNotScanAnOldExecutable() passed after 0.001 seconds.
+◇ Test failedPackagingReleaseBuildDoesNotCopyAnOldExecutableOrReplaceTheBundle() started.
+release build failed✔ Test failedPackagingReleaseBuildDoesNotCopyAnOldExecutableOrReplaceTheBundle() passed after 0.004 seconds.
+◇ Test sourceScanRejectsNetworkProcessAndCoreBridges() started.
+✔ Test sourceScanRejectsNetworkProcessAndCoreBridges() passed after 0.013 seconds.
+◇ Test productDependencyGraphRejectsTransitiveToolingAndUnknownEdges() started.
+✔ Test productDependencyGraphRejectsTransitiveToolingAndUnknownEdges() passed after 0.001 seconds.
+◇ Test releaseMarkerScanIncludesEmbeddedUnprintableBytes() started.
+✔ Test releaseMarkerScanIncludesEmbeddedUnprintableBytes() passed after 0.001 seconds.
+◇ Test repositoryInventoryRejectsPythonAndShellProgramsOutsideDependencies() started.
+✔ Test repositoryInventoryRejectsPythonAndShellProgramsOutsideDependencies() passed after 0.001 seconds.
+◇ Test failedRepositoryInventoryCannotPassSourceBoundaries() started.
+git failed✔ Test failedRepositoryInventoryCannotPassSourceBoundaries() passed after 0.002 seconds.
+◇ Test signingFailurePreservesTheExistingBundleAndRemovesStaging() started.
+signing failed✔ Test signingFailurePreservesTheExistingBundleAndRemovesStaging() passed after 0.006 seconds.
+◇ Test successfulPackagingBuildsAndCopiesReleaseBeforeReplacingTheOwnedBundle() started.
+release builtsignedverifiedentitlementspackaged /var/folders/5k/616qy7sj28l0d53k4c6w_4x00000gn/T/rook-tooling-test-1380C8CC-2F9D-4DC7-B587-7EE14B38EF67/dist/Rook.app; local ad-hoc signature, not notarized
+✔ Test successfulPackagingBuildsAndCopiesReleaseBeforeReplacingTheOwnedBundle() passed after 0.038 seconds.
+◇ Test packagingDoesNotFallBackToDebugWhenReleaseIsMissing() started.
+✔ Test packagingDoesNotFallBackToDebugWhenReleaseIsMissing() passed after 0.003 seconds.
+◇ Test packagingRefusesUnrelatedBundlesAndSymbolicLinkDestinations() started.
+✔ Test packagingRefusesUnrelatedBundlesAndSymbolicLinkDestinations() passed after 0.005 seconds.
+◇ Test runnerAcceptsCompleteSwiftChild() started.
+✔ Test runnerAcceptsCompleteSwiftChild() passed after 0.204 seconds.
+◇ Test runnerRejectsPrematureSwiftChildExitZero() started.
+✔ Test runnerRejectsPrematureSwiftChildExitZero() passed after 0.205 seconds.
+◇ Test runnerRejectsSwiftChildRecordedIssueAtExitZero() started.
+✔ Test runnerRejectsSwiftChildRecordedIssueAtExitZero() passed after 0.201 seconds.
+◇ Test runnerPreservesActualSwiftChildExitSeven() started.
+✔ Test runnerPreservesActualSwiftChildExitSeven() passed after 0.206 seconds.
+◇ Test runnerDoesNotOverwriteRetainedEvidence() started.
+✔ Test runnerDoesNotOverwriteRetainedEvidence() passed after 0.001 seconds.
+◇ Test completeSwiftTestingRunIsAcceptedWithTypedSummary() started.
+✔ Test completeSwiftTestingRunIsAcceptedWithTypedSummary() passed after 0.009 seconds.
+◇ Test recordedIssuesAndMissingSummaryAreBothRejected() started.
+✔ Test recordedIssuesAndMissingSummaryAreBothRejected() passed after 0.007 seconds.
+◇ Test incompleteRunWithoutFailureCannotPass() started.
+✔ Test incompleteRunWithoutFailureCannotPass() passed after 0.008 seconds.
+◇ Test xctestZeroAloneCannotPass() started.
+✔ Test xctestZeroAloneCannotPass() passed after 0.005 seconds.
+◇ Test ansiUnicodeAndCIFormattingAreAccepted() started.
+✔ Test ansiUnicodeAndCIFormattingAreAccepted() passed after 0.004 seconds.
+◇ Test failureWordsInsidePassingTestNamesAreNotIssues() started.
+✔ Test failureWordsInsidePassingTestNamesAreNotIssues() passed after 0.008 seconds.
+◇ Test upstreamFailureCannotBeHiddenBySuccessfulSummary() started.
+✔ Test upstreamFailureCannotBeHiddenBySuccessfulSummary() passed after 0.007 seconds.
+◇ Test earlierIssueCannotBeHiddenBySuccessfulSummary() started.
+✔ Test earlierIssueCannotBeHiddenBySuccessfulSummary() passed after 0.008 seconds.
+◇ Test earlierSummaryCannotHideALaterUnfinishedRun() started.
+✔ Test earlierSummaryCannotHideALaterUnfinishedRun() passed after 0.012 seconds.
+◇ Test zeroSwiftTestingCountIsRejected() started.
+✔ Test zeroSwiftTestingCountIsRejected() passed after 0.004 seconds.
+◇ Test explicitExpectedCountIsEnforcedWithoutAProductCountPin() started.
+✔ Test explicitExpectedCountIsEnforcedWithoutAProductCountPin() passed after 0.011 seconds.
+◇ Test xctestFailureIsRejectedEvenWithSwiftTestingSuccess() started.
+✔ Test xctestFailureIsRejectedEvenWithSwiftTestingSuccess() passed after 0.005 seconds.
+✔ Test run with 31 tests in 0 suites passed after 0.997 seconds.
+
+Retained test log: /private/tmp/sculpt-1024-case-study-20261005/.build/verification/E464F606-F93F-46D6-AA20-E2AD2E883DED/swift-test.log
+Test receipt: /private/tmp/sculpt-1024-case-study-20261005/.build/verification/E464F606-F93F-46D6-AA20-E2AD2E883DED/swift-test-result.json
+  ✔ Step 2 done (3.034s)
+  ▶️ Running task: test
+Swift test evidence: /private/tmp/sculpt-1024-case-study-20261005/.build/verification/5E9DF9C0-2B30-471B-9EC8-58754164F54F
+[0/1] Planning build
+Building for debugging...
+[0/6] Write swift-version--58304C5D6DBC2206.txt
+Build complete! (0.33s)
+Test Suite 'All tests' started at 2026-10-05 14:21:17.617.
+Test Suite 'All tests' passed at 2026-10-05 14:21:17.618.
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.000 (0.001) seconds
+◇ Test run started.
+↳ Testing Library Version: 1902
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Test systemPreferenceDefersToMacAppearance() started.
+✔ Test systemPreferenceDefersToMacAppearance() passed after 0.001 seconds.
+◇ Test largeSliceGridFitAndZoomKeepSquareCellsWithinTheirCanvas() started.
+✔ Test largeSliceGridFitAndZoomKeepSquareCellsWithinTheirCanvas() passed after 0.001 seconds.
+◇ Test rectangularSliceGridUsesItsActualAspectRatioAtEveryZoom() started.
+✔ Test rectangularSliceGridUsesItsActualAspectRatioAtEveryZoom() passed after 0.001 seconds.
+◇ Test maximumVolumeGridZoomCanReachTheLastCellPrecisely() started.
+✔ Test maximumVolumeGridZoomCanReachTheLastCellPrecisely() passed after 0.001 seconds.
+◇ Test scrollingChangesViewportPositionWithoutChangingLocalCellCoordinates() started.
+✔ Test scrollingChangesViewportPositionWithoutChangingLocalCellCoordinates() passed after 0.001 seconds.
+◇ Test gridHitTestingRejectsOutsideNonFiniteAndUnavailableGeometry() started.
+✔ Test gridHitTestingRejectsOutsideNonFiniteAndUnavailableGeometry() passed after 0.001 seconds.
+◇ Suite LayerGridScrollPresentationTests started.
+◇ Test nativeClipMeasurementIsWindowScopedAndDisconnectsWhenDismantled() started.
+✔ Test nativeClipMeasurementIsWindowScopedAndDisconnectsWhenDismantled() passed after 0.491 seconds.
+◇ Test nativeZoomedSliceKeepsDrawingAfterItsOriginScrollsOutOfView() started.
+✔ Test nativeZoomedSliceKeepsDrawingAfterItsOriginScrollsOutOfView() passed after 0.939 seconds.
+✔ Suite LayerGridScrollPresentationTests passed after 1.431 seconds.
+◇ Suite SculptureCanvasPointerTests started.
+◇ Test nativePointerDispatchesTopLeftCoordinatesAndAllMousePhases() started.
+✔ Test nativePointerDispatchesTopLeftCoordinatesAndAllMousePhases() passed after 0.028 seconds.
+◇ Test pointerEventsStayWithinTheirOwnWindow() started.
+✔ Test pointerEventsStayWithinTheirOwnWindow() passed after 0.032 seconds.
+◇ Test mouseInputDoesNotStealTheExistingKeyboardResponder() started.
+✔ Test mouseInputDoesNotStealTheExistingKeyboardResponder() passed after 0.018 seconds.
+✔ Suite SculptureCanvasPointerTests passed after 0.079 seconds.
+◇ Suite SculptureCommandFocusTests started.
+◇ Test nativeSearchTakesPriorTitleResponderAndReturnRunsFilteredAction() started.
+✔ Test nativeSearchTakesPriorTitleResponderAndReturnRunsFilteredAction() passed after 0.519 seconds.
+◇ Test nativeSearchReturnHandsMountedCanvasRealArrowAndSpaceEvents() started.
+✔ Test nativeSearchReturnHandsMountedCanvasRealArrowAndSpaceEvents() passed after 0.291 seconds.
+◇ Test nativeSearchEscapeUnmountsAndDoesNotRetakeRestoredTitleResponder() started.
+✔ Test nativeSearchEscapeUnmountsAndDoesNotRetakeRestoredTitleResponder() passed after 0.284 seconds.
+✔ Suite SculptureCommandFocusTests passed after 1.096 seconds.
+◇ Test compositionDraftStartsWithSmallReferencedModelsAndDistinctMapCharacters() started.
+✔ Test compositionDraftStartsWithSmallReferencedModelsAndDistinctMapCharacters() passed after 0.041 seconds.
+◇ Test compositionTilePlacementAndErasingDoNotAlterReferencedModels() started.
+✔ Test compositionTilePlacementAndErasingDoNotAlterReferencedModels() passed after 0.001 seconds.
+◇ Test compositionShrinkRefusesOccupiedClippingAndKeepsSurvivingRowsAligned() started.
+✔ Test compositionShrinkRefusesOccupiedClippingAndKeepsSurvivingRowsAligned() passed after 0.001 seconds.
+◇ Test compositionReopeningRetainsNestedGraphAndRotationChangesOnlyItsBinding() started.
+✔ Test compositionReopeningRetainsNestedGraphAndRotationChangesOnlyItsBinding() passed after 0.001 seconds.
+◇ Test compositionImportRemapsEntireGraphAndKeepsRepeatedReferencesSelfContained() started.
+✔ Test compositionImportRemapsEntireGraphAndKeepsRepeatedReferencesSelfContained() passed after 0.021 seconds.
+◇ Test compositionTitleDraftAndBoundsErrorsDoNotDiscardMapOrLibrary() started.
+✔ Test compositionTitleDraftAndBoundsErrorsDoNotDiscardMapOrLibrary() passed after 0.001 seconds.
+◇ Test cancelingCompositionPreparationNeverOpensTheCanceledSnapshot() started.
+✔ Test cancelingCompositionPreparationNeverOpensTheCanceledSnapshot() passed after 0.001 seconds.
+◇ Suite SculptureEditorPresentationTests started.
+◇ Test actualEditorViewsRenderAtMinimumAndDefaultSizes() started.
+Retained editor presentation captures: /private/tmp/sculpt-1024-case-study-20261005/.build/verification/editor-presentation-7CE39191-A830-499D-83F8-F0433888E5EC
+✔ Test actualEditorViewsRenderAtMinimumAndDefaultSizes() passed after 9.647 seconds.
+✔ Suite SculptureEditorPresentationTests passed after 9.647 seconds.
+◇ Test "Export names cannot introduce paths or hidden files" started.
+✔ Test "Export names cannot introduce paths or hidden files" passed after 0.017 seconds.
+◇ Test "Preparing a mesh export keeps the source and cleans up its private staging folder" started.
+✔ Test "Preparing a mesh export keeps the source and cleans up its private staging folder" passed after 0.016 seconds.
+◇ Suite "Reference save snapshots" started.
+◇ Test compositionPreparationRetainsReferencesAndLeavesVoxelBaselineAlone() started.
+✔ Test compositionPreparationRetainsReferencesAndLeavesVoxelBaselineAlone() passed after 0.035 seconds.
+◇ Test cancellationAndReplacementCannotPublishAnOldGraph() started.
+✔ Test cancellationAndReplacementCannotPublishAnOldGraph() passed after 0.019 seconds.
+◇ Test worldPreparationPreservesExactSparseCoordinates() started.
+✔ Test worldPreparationPreservesExactSparseCoordinates() passed after 0.034 seconds.
+✔ Suite "Reference save snapshots" passed after 0.089 seconds.
+◇ Test cameraMotionDoesNotInvalidateVoxelMesh() started.
+✔ Test cameraMotionDoesNotInvalidateVoxelMesh() passed after 0.001 seconds.
+◇ Test editsUndoRedoAndReplacementInvalidateVoxelMesh() started.
+✔ Test editsUndoRedoAndReplacementInvalidateVoxelMesh() passed after 0.001 seconds.
+◇ Test titleEditsAndTheirUndoKeepGeometryButRemainDirty() started.
+✔ Test titleEditsAndTheirUndoKeepGeometryButRemainDirty() passed after 0.001 seconds.
+◇ Suite "Portable native scene interchange" started.
+◇ Test copyPreparationKeepsTheNativeWorkspaceAndReferenceBaseline() started.
+✔ Test copyPreparationKeepsTheNativeWorkspaceAndReferenceBaseline() passed after 0.022 seconds.
+◇ Test voxelCopyLeavesTheSavedBaselineUndoAndNativeSaveMessageAlone() started.
+✔ Test voxelCopyLeavesTheSavedBaselineUndoAndNativeSaveMessageAlone() passed after 0.018 seconds.
+◇ Test regularFileOpenReopensAnAdoptedGenericBinaryAsReadablePortableText() started.
+✔ Test regularFileOpenReopensAnAdoptedGenericBinaryAsReadablePortableText() passed after 0.004 seconds.
+◇ Test cancellationAndSupersessionDoNotPublishStaleCopies() started.
+✔ Test cancellationAndSupersessionDoNotPublishStaleCopies() passed after 0.025 seconds.
+◇ Test contentOpenRoutesAllPortableScenesAndKeepsLegacyDecoding() started.
+✔ Test contentOpenRoutesAllPortableScenesAndKeepsLegacyDecoding() passed after 0.034 seconds.
+◇ Test sharedApplyAndUndoRetainOriginalIdentitiesAndExactRevisions() started.
+✔ Test sharedApplyAndUndoRetainOriginalIdentitiesAndExactRevisions() passed after 0.014 seconds.
+◇ Test worldApplyRetainsExactAnchorsAndSnapshotUndo() started.
+✔ Test worldApplyRetainsExactAnchorsAndSnapshotUndo() passed after 0.021 seconds.
+◇ Test staleNativeParentDoesNotPublishAnyPortableSnapshot() started.
+✔ Test staleNativeParentDoesNotPublishAnyPortableSnapshot() passed after 0.016 seconds.
+◇ Test onlyCapacityFailuresUseTheLegacyNativeEditingFallback() started.
+✔ Test onlyCapacityFailuresUseTheLegacyNativeEditingFallback() passed after 4.323 seconds.
+◇ Test diagnosticPresentationKeepsCodesPathsAndRealSourceLines() started.
+✔ Test diagnosticPresentationKeepsCodesPathsAndRealSourceLines() passed after 0.001 seconds.
+✔ Suite "Portable native scene interchange" passed after 4.482 seconds.
+◇ Suite "Reference editor presentation" started.
+◇ Test nativeReferenceControlsFitBothSizesAndThemes() started.
+Retained reference editor presentation: /private/tmp/sculpt-1024-case-study-20261005/.build/verification/reference-presentation-E12DA7E7-AEB9-41F3-BAB6-A3D2DEC5903D
+✔ Test nativeReferenceControlsFitBothSizesAndThemes() passed after 3.154 seconds.
+✔ Suite "Reference editor presentation" passed after 3.154 seconds.
+◇ Suite "Reference save session lifecycle" started.
+◇ Test compositionSuccessfulSaveRetainsExactDraftSelectionAndGraphHistory() started.
+✔ Test compositionSuccessfulSaveRetainsExactDraftSelectionAndGraphHistory() passed after 0.031 seconds.
+◇ Test worldSuccessfulSaveRetainsLibraryHistoryFocusCameraAndSelectedInstance() started.
+✔ Test worldSuccessfulSaveRetainsLibraryHistoryFocusCameraAndSelectedInstance() passed after 0.026 seconds.
+◇ Test panelCancellationAndWriteFailureKeepSameDraftBaselineAndHistory() started.
+✔ Test panelCancellationAndWriteFailureKeepSameDraftBaselineAndHistory() passed after 0.013 seconds.
+◇ Test saveOnlyMarksCapturedSnapshotAndLeavesLaterEditsDirty() started.
+✔ Test saveOnlyMarksCapturedSnapshotAndLeavesLaterEditsDirty() passed after 0.014 seconds.
+◇ Test preparationFailureRetainsDraftAndCaptureFailureDoesNotDismissIt() started.
+✔ Test preparationFailureRetainsDraftAndCaptureFailureDoesNotDismissIt() passed after 0.326 seconds.
+✔ Suite "Reference save session lifecycle" passed after 0.412 seconds.
+◇ Test asyncSavePreservesSnapshotAndLaterEditsStayDirty(format:) started.
+◇ Test case passing 1 argument format → .readable to asyncSavePreservesSnapshotAndLaterEditsStayDirty(format:) started.
+◇ Test case passing 1 argument format → .compact to asyncSavePreservesSnapshotAndLaterEditsStayDirty(format:) started.
+✔ Test asyncSavePreservesSnapshotAndLaterEditsStayDirty(format:) with 2 test cases passed after 0.022 seconds.
+◇ Test replacedDocumentCannotBeMarkedSavedByAnEarlierSave() started.
+✔ Test replacedDocumentCannotBeMarkedSavedByAnEarlierSave() passed after 0.006 seconds.
+◇ Test cancelledSaveDoesNotPublishAndCanBeRetried() started.
+✔ Test cancelledSaveDoesNotPublishAndCanBeRetried() passed after 0.009 seconds.
+◇ Suite "Shared model draft editing" started.
+◇ Test compositionApplyUpdatesNestedReferencesAsOneParentUndoAndRedo() started.
+✔ Test compositionApplyUpdatesNestedReferencesAsOneParentUndoAndRedo() passed after 0.009 seconds.
+◇ Test compositionCancelAndNoOpKeepReferenceWorkspaceAndHistoryExact() started.
+✔ Test compositionCancelAndNoOpKeepReferenceWorkspaceAndHistoryExact() passed after 0.009 seconds.
+◇ Test compositionSessionRejectsChangedParentAndInvalidLeafWithoutOverwritingNewerState() started.
+✔ Test compositionSessionRejectsChangedParentAndInvalidLeafWithoutOverwritingNewerState() passed after 0.009 seconds.
+◇ Test compositionHistoryIncludesRootMapAndLibraryTogether() started.
+✔ Test compositionHistoryIncludesRootMapAndLibraryTogether() passed after 0.001 seconds.
+◇ Test savedRootEditsRemainCleanAfterSharedApplyUndoAndRetainNewerDirtyEdits() started.
+✔ Test savedRootEditsRemainCleanAfterSharedApplyUndoAndRetainNewerDirtyEdits() passed after 0.008 seconds.
+◇ Test worldSharedApplyAndUniqueBothIncludeLibraryInDirtyAndUndoHistory() started.
+✔ Test worldSharedApplyAndUniqueBothIncludeLibraryInDirtyAndUndoHistory() passed after 0.013 seconds.
+◇ Test worldCancelNoOpAndStaleSessionRetainExactDocumentAndScene() started.
+✔ Test worldCancelNoOpAndStaleSessionRetainExactDocumentAndScene() passed after 0.023 seconds.
+◇ Test cancellationNeverPublishesChildAndNestedMapIsNotMadeUnique() started.
+✔ Test cancellationNeverPublishesChildAndNestedMapIsNotMadeUnique() passed after 0.001 seconds.
+✔ Suite "Shared model draft editing" passed after 0.076 seconds.
+◇ Suite "Shared model native presentation" started.
+◇ Test nativeSessionRendersBothSizesAndThemesWithAccessibilityEvidenceWhenAvailable() started.
+Retained native shared-model presentation: /private/tmp/sculpt-1024-case-study-20261005/.build/verification/shared-model-presentation-8D8BBF58-D42F-4FD5-BB40-5CCA826E3358
+✔ Test nativeSessionRendersBothSizesAndThemesWithAccessibilityEvidenceWhenAvailable() passed after 1.163 seconds.
+◇ Test paletteAcceptsEveryOfferedGlyphAndNativeCancelKeepsParentWhenAccessibilityAvailable() started.
+✔ Test paletteAcceptsEveryOfferedGlyphAndNativeCancelKeepsParentWhenAccessibilityAvailable() passed after 0.320 seconds.
+✔ Suite "Shared model native presentation" passed after 1.483 seconds.
+◇ Test cubeSurfacePaintingAddsTheNeighborAndUndoRestoresTheOriginal() started.
+✔ Test cubeSurfacePaintingAddsTheNeighborAndUndoRestoresTheOriginal() passed after 0.012 seconds.
+◇ Test cubeEraseTargetsTheClickedCubeAndFullBoundaryDoesNotCreateHistory() started.
+✔ Test cubeEraseTargetsTheClickedCubeAndFullBoundaryDoesNotCreateHistory() passed after 0.001 seconds.
+◇ Test emptySliceCanStartACubeAndPresentationDoesNotDirtyTheDocument() started.
+✔ Test emptySliceCanStartACubeAndPresentationDoesNotDirtyTheDocument() passed after 0.001 seconds.
+◇ Test paintStrokeUndoRestoresWholeStrokeAndRedoReappliesIt() started.
+✔ Test paintStrokeUndoRestoresWholeStrokeAndRedoReappliesIt() passed after 0.001 seconds.
+◇ Test strokeBeginningOnUnchangedCellStillHasOneUndoStep() started.
+✔ Test strokeBeginningOnUnchangedCellStillHasOneUndoStep() passed after 0.001 seconds.
+◇ Test savedSnapshotDoesNotMarkLaterEditsSavedAndFailedOpenDoesNotReplaceState() started.
+✔ Test savedSnapshotDoesNotMarkLaterEditsSavedAndFailedOpenDoesNotReplaceState() passed after 0.001 seconds.
+◇ Test layerUndoAndRedoKeepSelectionInBounds() started.
+✔ Test layerUndoAndRedoKeepSelectionInBounds() passed after 0.001 seconds.
+◇ Test fastDiagonalStrokeHasNoGapsAndOneUndoStep() started.
+✔ Test fastDiagonalStrokeHasNoGapsAndOneUndoStep() passed after 0.001 seconds.
+◇ Test largeBrushClipsToVolumeAndUndoRestoresAllChangedCells() started.
+✔ Test largeBrushClipsToVolumeAndUndoRestoresAllChangedCells() passed after 0.001 seconds.
+◇ Test fillStopsAtGlyphBoundaryAndRemainsOneUndoableChange() started.
+✔ Test fillStopsAtGlyphBoundaryAndRemainsOneUndoableChange() passed after 0.001 seconds.
+◇ Test invalidTitleDraftIsPreservedWithoutModalErrorAndProtectsUnsavedWork() started.
+✔ Test invalidTitleDraftIsPreservedWithoutModalErrorAndProtectsUnsavedWork() passed after 0.001 seconds.
+◇ Test clearingSliceKeepsOtherSlicesAndCanBeUndone() started.
+✔ Test clearingSliceKeepsOtherSlicesAndCanBeUndone() passed after 0.002 seconds.
+◇ Test changingCameraAndSelectionDoesNotDirtySavedDocument() started.
+✔ Test changingCameraAndSelectionDoesNotDirtySavedDocument() passed after 0.002 seconds.
+◇ Test structuredEditsShareHumanFillSemanticsAndBatchHasOneUndo() started.
+✔ Test structuredEditsShareHumanFillSemanticsAndBatchHasOneUndo() passed after 0.001 seconds.
+◇ Test invalidCommandBatchKeepsDocumentHistoryAndDraft() started.
+✔ Test invalidCommandBatchKeepsDocumentHistoryAndDraft() passed after 0.001 seconds.
+◇ Test worldExplorationAndOverviewPreserveSavedContentAndUndoAtExactDistantCoordinates() started.
+✔ Test worldExplorationAndOverviewPreserveSavedContentAndUndoAtExactDistantCoordinates() passed after 0.012 seconds.
+◇ Test worldOverviewRefusesUnframeableExtentWithoutOverflowOrChangingDocument() started.
+✔ Test worldOverviewRefusesUnframeableExtentWithoutOverflowOrChangingDocument() passed after 0.001 seconds.
+◇ Test worldDraftStartsSparseAndKeepsDistantAnchorsWithoutExpandingSpace() started.
+✔ Test worldDraftStartsSparseAndKeepsDistantAnchorsWithoutExpandingSpace() passed after 0.001 seconds.
+◇ Test worldFocusDistancesAndCameraAreSessionStateAndReuseTheSceneRevision() started.
+✔ Test worldFocusDistancesAndCameraAreSessionStateAndReuseTheSceneRevision() passed after 0.001 seconds.
+◇ Test worldPlacementUndoAndRedoPreserveExactInt64OriginsAndSharedLibrary() started.
+✔ Test worldPlacementUndoAndRedoPreserveExactInt64OriginsAndSharedLibrary() passed after 0.001 seconds.
+◇ Test worldFocusOverflowAndUnsafePlacementLeaveInstancesUnchanged() started.
+✔ Test worldFocusOverflowAndUnsafePlacementLeaveInstancesUnchanged() passed after 0.001 seconds.
+◇ Test worldSelectedRotationDeletionAndUndoNeverChangeModelDefinitions() started.
+✔ Test worldSelectedRotationDeletionAndUndoNeverChangeModelDefinitions() passed after 0.001 seconds.
+◇ Test worldPaginationBoundsRowsAndSelectionCanRevealADistantInstance() started.
+✔ Test worldPaginationBoundsRowsAndSelectionCanRevealADistantInstance() passed after 0.001 seconds.
+◇ Test unsavedWorldRestorationAndTitleDraftProtectPublicationWithoutLosingPlacements() started.
+✔ Test unsavedWorldRestorationAndTitleDraftProtectPublicationWithoutLosingPlacements() passed after 0.001 seconds.
+◇ Test cancelingWorldModelPreparationDoesNotOpenAnAbandonedCopy() started.
+✔ Test cancelingWorldModelPreparationDoesNotOpenAnAbandonedCopy() passed after 0.001 seconds.
+◇ Test fittedLargeSliceKeepsEveryCellAndRectangularPaddingDoesNotClipRows() started.
+✔ Test fittedLargeSliceKeepsEveryCellAndRectangularPaddingDoesNotClipRows() passed after 0.001 seconds.
+◇ Test zoomedSliceDrawsTheVisibleNeighborhoodAndKeepsTheLastCellReachable() started.
+✔ Test zoomedSliceDrawsTheVisibleNeighborhoodAndKeepsTheLastCellReachable() passed after 0.001 seconds.
+◇ Test fractionalScrollEdgesHaveAnAntialiasingFringeAndInvalidRegionsStayEmpty() started.
+✔ Test fractionalScrollEdgesHaveAnAntialiasingFringeAndInvalidRegionsStayEmpty() passed after 0.001 seconds.
+◇ Test thumbnailCacheKeyIgnoresOtherSliceEditsAndInvalidatesForItsOwnPixelsAndAppearance() started.
+✔ Test thumbnailCacheKeyIgnoresOtherSliceEditsAndInvalidatesForItsOwnPixelsAndAppearance() passed after 0.001 seconds.
+◇ Test thumbnailPixelsPreserveRectangularEmptyPaddingAndMaterialTint() started.
+✔ Test thumbnailPixelsPreserveRectangularEmptyPaddingAndMaterialTint() passed after 0.001 seconds.
+◇ Test canceledThumbnailPreparationDoesNotPublishPixels() started.
+✔ Test canceledThumbnailPreparationDoesNotPublishPixels() passed after 0.001 seconds.
+◇ Test thumbnailRowsMatchTheTopLeftOriginOfTheEditableSlice() started.
+✔ Test thumbnailRowsMatchTheTopLeftOriginOfTheEditableSlice() passed after 0.001 seconds.
+◇ Test perSliceOccupancyRemainsCorrectAcrossPaletteEditsRotationDuplicationAndStorage() started.
+✔ Test perSliceOccupancyRemainsCorrectAcrossPaletteEditsRotationDuplicationAndStorage() passed after 0.001 seconds.
+◇ Test scrolledLastCellStrokeStillHasOneExactUndoAndPreviousSliceBytesStayUnchanged() started.
+✔ Test scrolledLastCellStrokeStillHasOneExactUndoAndPreviousSliceBytesStayUnchanged() passed after 0.023 seconds.
+◇ Test unknownOrMissingStoredAppearanceUsesSystem() started.
+✔ Test unknownOrMissingStoredAppearanceUsesSystem() passed after 0.001 seconds.
+◇ Test knownAppearanceValuesSurviveStorageRoundTrip() started.
+✔ Test knownAppearanceValuesSurviveStorageRoundTrip() passed after 0.001 seconds.
+◇ Suite AnimationExportTests started.
+◇ Test configurationRejectsUnboundedWorkAndOddMovieDimensions() started.
+✔ Test configurationRejectsUnboundedWorkAndOddMovieDimensions() passed after 0.001 seconds.
+◇ Test gifLoopsWithCorrectFrameTimingAndChangingDecodedImages() started.
+✔ Test gifLoopsWithCorrectFrameTimingAndChangingDecodedImages() passed after 0.012 seconds.
+◇ Test mp4DecodesEveryFrameWithCorrectDurationDimensionsAndVisibleGlyphs(_:) started.
+◇ Test case passing 1 argument framesPerSecond → 10 to mp4DecodesEveryFrameWithCorrectDurationDimensionsAndVisibleGlyphs(_:) started.
+◇ Test case passing 1 argument framesPerSecond → 30 to mp4DecodesEveryFrameWithCorrectDurationDimensionsAndVisibleGlyphs(_:) started.
+✔ Test mp4DecodesEveryFrameWithCorrectDurationDimensionsAndVisibleGlyphs(_:) with 2 test cases passed after 0.742 seconds.
+◇ Test cancellationRemovesPartialAnimationAndOwnedStagingFile(_:) started.
+◇ Test case passing 1 argument format → .gif to cancellationRemovesPartialAnimationAndOwnedStagingFile(_:) started.
+◇ Test case passing 1 argument format → .mp4 to cancellationRemovesPartialAnimationAndOwnedStagingFile(_:) started.
+✔ Test cancellationRemovesPartialAnimationAndOwnedStagingFile(_:) with 2 test cases passed after 0.099 seconds.
+◇ Test existingDestinationIsPreservedAndUnsupportedGIFRateCreatesNothing() started.
+✔ Test existingDestinationIsPreservedAndUnsupportedGIFRateCreatesNothing() passed after 0.004 seconds.
+✔ Suite AnimationExportTests passed after 0.860 seconds.
+◇ Suite CubeExportTests started.
+◇ Test cubePNGAndASCIIRepresentTheSameDocumentWithDifferentImages() started.
+✔ Test cubePNGAndASCIIRepresentTheSameDocumentWithDifferentImages() passed after 0.042 seconds.
+◇ Test cubeTurntableEncodesActualGeometryFrames(_:) started.
+◇ Test case passing 1 argument format → .gif to cubeTurntableEncodesActualGeometryFrames(_:) started.
+◇ Test case passing 1 argument format → .mp4 to cubeTurntableEncodesActualGeometryFrames(_:) started.
+✔ Test cubeTurntableEncodesActualGeometryFrames(_:) with 2 test cases passed after 0.212 seconds.
+✔ Suite CubeExportTests passed after 0.254 seconds.
+◇ Suite ExampleArtifactTests started.
+◇ Test galleryManifestMatchesAllPublishedFilesAndDownloadLinks() started.
+✔ Test galleryManifestMatchesAllPublishedFilesAndDownloadLinks() passed after 0.016 seconds.
+◇ Test everyExampleHasFiveCompleteArtifacts(_:) started.
+◇ Test case passing 1 argument id → "character-orb" to everyExampleHasFiveCompleteArtifacts(_:) started.
+◇ Test case passing 1 argument id → "woven-torus" to everyExampleHasFiveCompleteArtifacts(_:) started.
+◇ Test case passing 1 argument id → "moon-gate" to everyExampleHasFiveCompleteArtifacts(_:) started.
+◇ Test case passing 1 argument id → "spiral-tower" to everyExampleHasFiveCompleteArtifacts(_:) started.
+◇ Test case passing 1 argument id → "crystal-garden" to everyExampleHasFiveCompleteArtifacts(_:) started.
+◇ Test case passing 1 argument id → "little-rocket" to everyExampleHasFiveCompleteArtifacts(_:) started.
+◇ Test case passing 1 argument id → "pixel-bonsai" to everyExampleHasFiveCompleteArtifacts(_:) started.
+◇ Test case passing 1 argument id → "orbital-rings" to everyExampleHasFiveCompleteArtifacts(_:) started.
+◇ Test case passing 1 argument id → "hill-observatory" to everyExampleHasFiveCompleteArtifacts(_:) started.
+◇ Test case passing 1 argument id → "terraced-island" to everyExampleHasFiveCompleteArtifacts(_:) started.
+◇ Test case passing 1 argument id → "canal-city" to everyExampleHasFiveCompleteArtifacts(_:) started.
+◇ Test case passing 1 argument id → "alpine-valley" to everyExampleHasFiveCompleteArtifacts(_:) started.
+◇ Test case passing 1 argument id → "wandering-cartographer" to everyExampleHasFiveCompleteArtifacts(_:) started.
+◇ Test case passing 1 argument id → "clockwork-dragon" to everyExampleHasFiveCompleteArtifacts(_:) started.
+◇ Test case passing 1 argument id → "woodland-fox" to everyExampleHasFiveCompleteArtifacts(_:) started.
+◇ Test case passing 1 argument id → "deep-sea-whale" to everyExampleHasFiveCompleteArtifacts(_:) started.
+◇ Test case passing 1 argument id → "citadel-of-arches" to everyExampleHasFiveCompleteArtifacts(_:) started.
+◇ Test case passing 1 argument id → "sky-island-village" to everyExampleHasFiveCompleteArtifacts(_:) started.
+◇ Test case passing 1 argument id → "canyon-waterfall" to everyExampleHasFiveCompleteArtifacts(_:) started.
+◇ Test case passing 1 argument id → "moonlit-harbor" to everyExampleHasFiveCompleteArtifacts(_:) started.
+◇ Test case passing 1 argument id → "grand-solar-system" to everyExampleHasFiveCompleteArtifacts(_:) started.
+✔ Test everyExampleHasFiveCompleteArtifacts(_:) with 21 test cases passed after 3.427 seconds.
+◇ Test everyPNGDecodesAtThePublishedSizeWithVisibleGeometry(_:) started.
+◇ Test case passing 1 argument id → "character-orb" to everyPNGDecodesAtThePublishedSizeWithVisibleGeometry(_:) started.
+◇ Test case passing 1 argument id → "woven-torus" to everyPNGDecodesAtThePublishedSizeWithVisibleGeometry(_:) started.
+◇ Test case passing 1 argument id → "moon-gate" to everyPNGDecodesAtThePublishedSizeWithVisibleGeometry(_:) started.
+◇ Test case passing 1 argument id → "spiral-tower" to everyPNGDecodesAtThePublishedSizeWithVisibleGeometry(_:) started.
+◇ Test case passing 1 argument id → "crystal-garden" to everyPNGDecodesAtThePublishedSizeWithVisibleGeometry(_:) started.
+◇ Test case passing 1 argument id → "little-rocket" to everyPNGDecodesAtThePublishedSizeWithVisibleGeometry(_:) started.
+◇ Test case passing 1 argument id → "pixel-bonsai" to everyPNGDecodesAtThePublishedSizeWithVisibleGeometry(_:) started.
+◇ Test case passing 1 argument id → "orbital-rings" to everyPNGDecodesAtThePublishedSizeWithVisibleGeometry(_:) started.
+◇ Test case passing 1 argument id → "hill-observatory" to everyPNGDecodesAtThePublishedSizeWithVisibleGeometry(_:) started.
+◇ Test case passing 1 argument id → "terraced-island" to everyPNGDecodesAtThePublishedSizeWithVisibleGeometry(_:) started.
+◇ Test case passing 1 argument id → "canal-city" to everyPNGDecodesAtThePublishedSizeWithVisibleGeometry(_:) started.
+◇ Test case passing 1 argument id → "alpine-valley" to everyPNGDecodesAtThePublishedSizeWithVisibleGeometry(_:) started.
+◇ Test case passing 1 argument id → "wandering-cartographer" to everyPNGDecodesAtThePublishedSizeWithVisibleGeometry(_:) started.
+◇ Test case passing 1 argument id → "clockwork-dragon" to everyPNGDecodesAtThePublishedSizeWithVisibleGeometry(_:) started.
+◇ Test case passing 1 argument id → "woodland-fox" to everyPNGDecodesAtThePublishedSizeWithVisibleGeometry(_:) started.
+◇ Test case passing 1 argument id → "deep-sea-whale" to everyPNGDecodesAtThePublishedSizeWithVisibleGeometry(_:) started.
+◇ Test case passing 1 argument id → "citadel-of-arches" to everyPNGDecodesAtThePublishedSizeWithVisibleGeometry(_:) started.
+◇ Test case passing 1 argument id → "sky-island-village" to everyPNGDecodesAtThePublishedSizeWithVisibleGeometry(_:) started.
+◇ Test case passing 1 argument id → "canyon-waterfall" to everyPNGDecodesAtThePublishedSizeWithVisibleGeometry(_:) started.
+◇ Test case passing 1 argument id → "moonlit-harbor" to everyPNGDecodesAtThePublishedSizeWithVisibleGeometry(_:) started.
+◇ Test case passing 1 argument id → "grand-solar-system" to everyPNGDecodesAtThePublishedSizeWithVisibleGeometry(_:) started.
+✔ Test everyPNGDecodesAtThePublishedSizeWithVisibleGeometry(_:) with 21 test cases passed after 1.585 seconds.
+◇ Test everyGIFLoopsForFourSecondsWithFortyTimedFrames(_:) started.
+◇ Test case passing 1 argument id → "character-orb" to everyGIFLoopsForFourSecondsWithFortyTimedFrames(_:) started.
+◇ Test case passing 1 argument id → "woven-torus" to everyGIFLoopsForFourSecondsWithFortyTimedFrames(_:) started.
+◇ Test case passing 1 argument id → "moon-gate" to everyGIFLoopsForFourSecondsWithFortyTimedFrames(_:) started.
+◇ Test case passing 1 argument id → "spiral-tower" to everyGIFLoopsForFourSecondsWithFortyTimedFrames(_:) started.
+◇ Test case passing 1 argument id → "crystal-garden" to everyGIFLoopsForFourSecondsWithFortyTimedFrames(_:) started.
+◇ Test case passing 1 argument id → "little-rocket" to everyGIFLoopsForFourSecondsWithFortyTimedFrames(_:) started.
+◇ Test case passing 1 argument id → "pixel-bonsai" to everyGIFLoopsForFourSecondsWithFortyTimedFrames(_:) started.
+◇ Test case passing 1 argument id → "orbital-rings" to everyGIFLoopsForFourSecondsWithFortyTimedFrames(_:) started.
+◇ Test case passing 1 argument id → "hill-observatory" to everyGIFLoopsForFourSecondsWithFortyTimedFrames(_:) started.
+◇ Test case passing 1 argument id → "terraced-island" to everyGIFLoopsForFourSecondsWithFortyTimedFrames(_:) started.
+◇ Test case passing 1 argument id → "canal-city" to everyGIFLoopsForFourSecondsWithFortyTimedFrames(_:) started.
+◇ Test case passing 1 argument id → "alpine-valley" to everyGIFLoopsForFourSecondsWithFortyTimedFrames(_:) started.
+◇ Test case passing 1 argument id → "wandering-cartographer" to everyGIFLoopsForFourSecondsWithFortyTimedFrames(_:) started.
+◇ Test case passing 1 argument id → "clockwork-dragon" to everyGIFLoopsForFourSecondsWithFortyTimedFrames(_:) started.
+◇ Test case passing 1 argument id → "woodland-fox" to everyGIFLoopsForFourSecondsWithFortyTimedFrames(_:) started.
+◇ Test case passing 1 argument id → "deep-sea-whale" to everyGIFLoopsForFourSecondsWithFortyTimedFrames(_:) started.
+◇ Test case passing 1 argument id → "citadel-of-arches" to everyGIFLoopsForFourSecondsWithFortyTimedFrames(_:) started.
+◇ Test case passing 1 argument id → "sky-island-village" to everyGIFLoopsForFourSecondsWithFortyTimedFrames(_:) started.
+◇ Test case passing 1 argument id → "canyon-waterfall" to everyGIFLoopsForFourSecondsWithFortyTimedFrames(_:) started.
+◇ Test case passing 1 argument id → "moonlit-harbor" to everyGIFLoopsForFourSecondsWithFortyTimedFrames(_:) started.
+◇ Test case passing 1 argument id → "grand-solar-system" to everyGIFLoopsForFourSecondsWithFortyTimedFrames(_:) started.
+✔ Test everyGIFLoopsForFourSecondsWithFortyTimedFrames(_:) with 21 test cases passed after 5.540 seconds.
+◇ Test everyMP4HasOneSilentFourSecondVideoTrackAndDecodableFrames(_:) started.
+◇ Test case passing 1 argument id → "character-orb" to everyMP4HasOneSilentFourSecondVideoTrackAndDecodableFrames(_:) started.
+◇ Test case passing 1 argument id → "woven-torus" to everyMP4HasOneSilentFourSecondVideoTrackAndDecodableFrames(_:) started.
+◇ Test case passing 1 argument id → "moon-gate" to everyMP4HasOneSilentFourSecondVideoTrackAndDecodableFrames(_:) started.
+◇ Test case passing 1 argument id → "spiral-tower" to everyMP4HasOneSilentFourSecondVideoTrackAndDecodableFrames(_:) started.
+◇ Test case passing 1 argument id → "crystal-garden" to everyMP4HasOneSilentFourSecondVideoTrackAndDecodableFrames(_:) started.
+◇ Test case passing 1 argument id → "little-rocket" to everyMP4HasOneSilentFourSecondVideoTrackAndDecodableFrames(_:) started.
+◇ Test case passing 1 argument id → "pixel-bonsai" to everyMP4HasOneSilentFourSecondVideoTrackAndDecodableFrames(_:) started.
+◇ Test case passing 1 argument id → "orbital-rings" to everyMP4HasOneSilentFourSecondVideoTrackAndDecodableFrames(_:) started.
+◇ Test case passing 1 argument id → "hill-observatory" to everyMP4HasOneSilentFourSecondVideoTrackAndDecodableFrames(_:) started.
+◇ Test case passing 1 argument id → "terraced-island" to everyMP4HasOneSilentFourSecondVideoTrackAndDecodableFrames(_:) started.
+◇ Test case passing 1 argument id → "canal-city" to everyMP4HasOneSilentFourSecondVideoTrackAndDecodableFrames(_:) started.
+◇ Test case passing 1 argument id → "alpine-valley" to everyMP4HasOneSilentFourSecondVideoTrackAndDecodableFrames(_:) started.
+◇ Test case passing 1 argument id → "wandering-cartographer" to everyMP4HasOneSilentFourSecondVideoTrackAndDecodableFrames(_:) started.
+◇ Test case passing 1 argument id → "clockwork-dragon" to everyMP4HasOneSilentFourSecondVideoTrackAndDecodableFrames(_:) started.
+◇ Test case passing 1 argument id → "woodland-fox" to everyMP4HasOneSilentFourSecondVideoTrackAndDecodableFrames(_:) started.
+◇ Test case passing 1 argument id → "deep-sea-whale" to everyMP4HasOneSilentFourSecondVideoTrackAndDecodableFrames(_:) started.
+◇ Test case passing 1 argument id → "citadel-of-arches" to everyMP4HasOneSilentFourSecondVideoTrackAndDecodableFrames(_:) started.
+◇ Test case passing 1 argument id → "sky-island-village" to everyMP4HasOneSilentFourSecondVideoTrackAndDecodableFrames(_:) started.
+◇ Test case passing 1 argument id → "canyon-waterfall" to everyMP4HasOneSilentFourSecondVideoTrackAndDecodableFrames(_:) started.
+◇ Test case passing 1 argument id → "moonlit-harbor" to everyMP4HasOneSilentFourSecondVideoTrackAndDecodableFrames(_:) started.
+◇ Test case passing 1 argument id → "grand-solar-system" to everyMP4HasOneSilentFourSecondVideoTrackAndDecodableFrames(_:) started.
+✔ Test everyMP4HasOneSilentFourSecondVideoTrackAndDecodableFrames(_:) with 21 test cases passed after 6.203 seconds.
+◇ Test everyOBJContainsBoundedOutwardFacingVoxelGeometry(_:) started.
+◇ Test case passing 1 argument id → "character-orb" to everyOBJContainsBoundedOutwardFacingVoxelGeometry(_:) started.
+◇ Test case passing 1 argument id → "woven-torus" to everyOBJContainsBoundedOutwardFacingVoxelGeometry(_:) started.
+◇ Test case passing 1 argument id → "moon-gate" to everyOBJContainsBoundedOutwardFacingVoxelGeometry(_:) started.
+◇ Test case passing 1 argument id → "spiral-tower" to everyOBJContainsBoundedOutwardFacingVoxelGeometry(_:) started.
+◇ Test case passing 1 argument id → "crystal-garden" to everyOBJContainsBoundedOutwardFacingVoxelGeometry(_:) started.
+◇ Test case passing 1 argument id → "little-rocket" to everyOBJContainsBoundedOutwardFacingVoxelGeometry(_:) started.
+◇ Test case passing 1 argument id → "pixel-bonsai" to everyOBJContainsBoundedOutwardFacingVoxelGeometry(_:) started.
+◇ Test case passing 1 argument id → "orbital-rings" to everyOBJContainsBoundedOutwardFacingVoxelGeometry(_:) started.
+◇ Test case passing 1 argument id → "hill-observatory" to everyOBJContainsBoundedOutwardFacingVoxelGeometry(_:) started.
+◇ Test case passing 1 argument id → "terraced-island" to everyOBJContainsBoundedOutwardFacingVoxelGeometry(_:) started.
+◇ Test case passing 1 argument id → "canal-city" to everyOBJContainsBoundedOutwardFacingVoxelGeometry(_:) started.
+◇ Test case passing 1 argument id → "alpine-valley" to everyOBJContainsBoundedOutwardFacingVoxelGeometry(_:) started.
+◇ Test case passing 1 argument id → "wandering-cartographer" to everyOBJContainsBoundedOutwardFacingVoxelGeometry(_:) started.
+◇ Test case passing 1 argument id → "clockwork-dragon" to everyOBJContainsBoundedOutwardFacingVoxelGeometry(_:) started.
+◇ Test case passing 1 argument id → "woodland-fox" to everyOBJContainsBoundedOutwardFacingVoxelGeometry(_:) started.
+◇ Test case passing 1 argument id → "deep-sea-whale" to everyOBJContainsBoundedOutwardFacingVoxelGeometry(_:) started.
+◇ Test case passing 1 argument id → "citadel-of-arches" to everyOBJContainsBoundedOutwardFacingVoxelGeometry(_:) started.
+◇ Test case passing 1 argument id → "sky-island-village" to everyOBJContainsBoundedOutwardFacingVoxelGeometry(_:) started.
+◇ Test case passing 1 argument id → "canyon-waterfall" to everyOBJContainsBoundedOutwardFacingVoxelGeometry(_:) started.
+◇ Test case passing 1 argument id → "moonlit-harbor" to everyOBJContainsBoundedOutwardFacingVoxelGeometry(_:) started.
+◇ Test case passing 1 argument id → "grand-solar-system" to everyOBJContainsBoundedOutwardFacingVoxelGeometry(_:) started.
+✔ Test everyOBJContainsBoundedOutwardFacingVoxelGeometry(_:) with 21 test cases passed after 16.577 seconds.
+◇ Test blockhavenManifestMatchesSelfContainedSourcesCompactVolumeAndAllDownloadLinks() started.
+✔ Test blockhavenManifestMatchesSelfContainedSourcesCompactVolumeAndAllDownloadLinks() passed after 5.450 seconds.
+◇ Test blockhavenPNGAndLoopingGIFDecodeWithVisibleChangingLandscapeAndPublishedTiming() started.
+✔ Test blockhavenPNGAndLoopingGIFDecodeWithVisibleChangingLandscapeAndPublishedTiming() passed after 0.564 seconds.
+◇ Test blockhavenVideoHasThePublishedSilentTimingAndDecodableLandscape() started.
+✔ Test blockhavenVideoHasThePublishedSilentTimingAndDecodableLandscape() passed after 0.260 seconds.
+◇ Test blockhavenOBJHasEveryExteriorFaceWithCorrectBoundsMaterialsAndOutwardWinding() started.
+✔ Test blockhavenOBJHasEveryExteriorFaceWithCorrectBoundsMaterialsAndOutwardWinding() passed after 4.599 seconds.
+✔ Suite ExampleArtifactTests passed after 44.228 seconds.
+◇ Suite PreparedVoxelProjectionTests started.
+◇ Test directExtractionPreservesAllNeighborsMaterialsBoundariesAndStableOrder() started.
+✔ Test directExtractionPreservesAllNeighborsMaterialsBoundariesAndStableOrder() passed after 0.001 seconds.
+◇ Test preparedFramesHaveExactDocumentProjectionAndPixelParityAcrossCameraPoses() started.
+✔ Test preparedFramesHaveExactDocumentProjectionAndPixelParityAcrossCameraPoses() passed after 0.132 seconds.
+◇ Test preparedEmptyAndCancelledFramesNeverPublishGhostsOrPartialPicking() started.
+✔ Test preparedEmptyAndCancelledFramesNeverPublishGhostsOrPartialPicking() passed after 0.001 seconds.
+◇ Test cubeAnimationRetainsPerFrameFallbackWhenCompleteSceneExceedsExtractionBudget() started.
+✔ Test cubeAnimationRetainsPerFrameFallbackWhenCompleteSceneExceedsExtractionBudget() passed after 13.503 seconds.
+◇ Test cubeAnimationFallbackStillRefusesAnOverBudgetFrameAndCleansItsStaging() started.
+✔ Test cubeAnimationFallbackStillRefusesAnOverBudgetFrameAndCleansItsStaging() passed after 1.184 seconds.
+✔ Suite PreparedVoxelProjectionTests passed after 14.822 seconds.
+◇ Test imageExportHasExpectedDimensionsAndDecodesAsPNG() started.
+✔ Test imageExportHasExpectedDimensionsAndDecodesAsPNG() passed after 0.008 seconds.
+◇ Test glyphRasterDiffersFromEmptyVolume() started.
+✔ Test glyphRasterDiffersFromEmptyVolume() passed after 0.012 seconds.
+◇ Test metalBackendCompletesAndWritesVisibleGlyphs() started.
+✔ Test metalBackendCompletesAndWritesVisibleGlyphs() passed after 0.059 seconds.
+◇ Suite SculptureBlockPerformanceTests started.
+◇ Test measureLargeLandscapePreparationAndCameraWork() started.
+✔ Test measureLargeLandscapePreparationAndCameraWork() passed after 0.001 seconds.
+✔ Suite SculptureBlockPerformanceTests passed after 0.001 seconds.
+◇ Suite SculptureLiveVoxelTests started.
+◇ Test gpuPickingMatchesTheExistingProjectionAtOffCenterPointsAndSeveralPoses() started.
+✔ Test gpuPickingMatchesTheExistingProjectionAtOffCenterPointsAndSeveralPoses() passed after 0.003 seconds.
+◇ Test gpuPickingChoosesTheNearestCubeOrGhostAndPreservesTheVolumeBoundary() started.
+✔ Test gpuPickingChoosesTheNearestCubeOrGhostAndPreservesTheVolumeBoundary() passed after 0.001 seconds.
+◇ Test metalSnapshotRendersRealColoredGeometryAndRetainsNativeEvidence() started.
+✔ Test metalSnapshotRendersRealColoredGeometryAndRetainsNativeEvidence() passed after 0.097 seconds.
+◇ Test cameraResizeUsesTheSameMeshAndMatchesTheReferencePickingScale() started.
+✔ Test cameraResizeUsesTheSameMeshAndMatchesTheReferencePickingScale() passed after 0.001 seconds.
+◇ Test denseGhostGridKeepsEveryPickTargetAndVisibleCubesWhenGridEdgesAreHidden() started.
+✔ Test denseGhostGridKeepsEveryPickTargetAndVisibleCubesWhenGridEdgesAreHidden() passed after 0.159 seconds.
+✔ Suite SculptureLiveVoxelTests passed after 0.263 seconds.
+◇ Suite SculptureLiveWorldTests started.
+◇ Test largeIntegerAnchorsPreserveAdjacentPositionsPickingAndSharedGeometryAcrossCameraUpdates() started.
+✔ Test largeIntegerAnchorsPreserveAdjacentPositionsPickingAndSharedGeometryAcrossCameraUpdates() passed after 0.004 seconds.
+◇ Test boundingIntersectionRotationAndDetailDistanceControlDetailedAndColoredCoarseNodes() started.
+✔ Test boundingIntersectionRotationAndDetailDistanceControlDetailedAndColoredCoarseNodes() passed after 0.001 seconds.
+◇ Test visibleCapacityAndFullFaceBudgetDegradeToBoundedSharedProxiesDeterministically() started.
+✔ Test visibleCapacityAndFullFaceBudgetDegradeToBoundedSharedProxiesDeterministically() passed after 0.059 seconds.
+◇ Test preparationSkipsUnusedDefinitionsAndRejectsAnOversizedAggregateCache() started.
+✔ Test preparationSkipsUnusedDefinitionsAndRejectsAnOversizedAggregateCache() passed after 1.657 seconds.
+◇ Test actualMetalWorldSnapshotsContainColoredDetailsSelectableCoarseModelsAndRetainedEvidence() started.
+✔ Test actualMetalWorldSnapshotsContainColoredDetailsSelectableCoarseModelsAndRetainedEvidence() passed after 0.328 seconds.
+◇ Test nestedGardenAndCourtyardKeepGlyphColorsAcrossDenseNativeEdges() started.
+✔ Test nestedGardenAndCourtyardKeepGlyphColorsAcrossDenseNativeEdges() passed after 1.465 seconds.
+✔ Suite SculptureLiveWorldTests passed after 3.517 seconds.
+◇ Suite SculptureSolarPerformanceTests started.
+◇ Test actualSolarSystemFitsTheReusableExteriorMeshBudget() started.
+✔ Test actualSolarSystemFitsTheReusableExteriorMeshBudget() passed after 0.455 seconds.
+◇ Test solarCameraAndLayerChangesRetainActualNativeGeometryBuffers() started.
+✔ Test solarCameraAndLayerChangesRetainActualNativeGeometryBuffers() passed after 0.581 seconds.
+✔ Suite SculptureSolarPerformanceTests passed after 1.037 seconds.
+◇ Suite SculptureVolumeStudyRenderingTests started.
+◇ Test smallWorldCountsAndCameraUpdatesRetainSharedMeshes() started.
+✔ Test smallWorldCountsAndCameraUpdatesRetainSharedMeshes() passed after 0.002 seconds.
+◇ Test measure1024WorldMetalRendering() started.
+✔ Test measure1024WorldMetalRendering() passed after 0.001 seconds.
+✔ Suite SculptureVolumeStudyRenderingTests passed after 0.002 seconds.
+◇ Suite SculptureVoxelMeshBuffersTests started.
+◇ Test packedBytesPreserveEveryMaterialFaceWindingAndStablePickingIndex() started.
+✔ Test packedBytesPreserveEveryMaterialFaceWindingAndStablePickingIndex() passed after 0.001 seconds.
+◇ Test ghostBuffersPreserveFilteringOrderDepthCoordinatesAndExactTargetCapacity() started.
+✔ Test ghostBuffersPreserveFilteringOrderDepthCoordinatesAndExactTargetCapacity() passed after 0.137 seconds.
+◇ Test placementChangesReuseImmutablePreparedModelsButDefinitionChangesInvalidateThem() started.
+✔ Test placementChangesReuseImmutablePreparedModelsButDefinitionChangesInvalidateThem() passed after 0.001 seconds.
+◇ Test canceledWorkersNeverPublishPartialMeshGhostsOrReusedWorldScenes() started.
+✔ Test canceledWorkersNeverPublishPartialMeshGhostsOrReusedWorldScenes() passed after 0.001 seconds.
+✔ Suite SculptureVoxelMeshBuffersTests passed after 0.139 seconds.
+◇ Suite SculpturePreparedNativeMeshTests started.
+◇ Test selectedSliceOutlineMovesToTheChosenDepthInTheActualMetalImage() started.
+✔ Test selectedSliceOutlineMovesToTheChosenDepthInTheActualMetalImage() passed after 3.094 seconds.
+◇ Test preparedCanvasRetainsPickingAndSelectedOutlineWhenDenseGridLODChanges() started.
+✔ Test preparedCanvasRetainsPickingAndSelectedOutlineWhenDenseGridLODChanges() passed after 0.312 seconds.
+◇ Test movedAndRotatedWorldInstancesKeepActualModelGeometryAndNearestPicks() started.
+✔ Test movedAndRotatedWorldInstancesKeepActualModelGeometryAndNearestPicks() passed after 0.002 seconds.
+✔ Suite SculpturePreparedNativeMeshTests passed after 3.408 seconds.
+◇ Test singleVoxelSurfaceIncludesEveryFaceAndItsEmptyNeighborInStableOrder() started.
+✔ Test singleVoxelSurfaceIncludesEveryFaceAndItsEmptyNeighborInStableOrder() passed after 0.001 seconds.
+◇ Test neighboringMaterialsOmitSharedInteriorFaces() started.
+✔ Test neighboringMaterialsOmitSharedInteriorFaces() passed after 0.001 seconds.
+◇ Test hollowVolumeRetainsCavityFacesWithoutExposingJoinedFaces() started.
+✔ Test hollowVolumeRetainsCavityFacesWithoutExposingJoinedFaces() passed after 0.001 seconds.
+◇ Test sparseFinalCellOfMaximumVolumeHasSixCorrectlyBoundedFaces() started.
+✔ Test sparseFinalCellOfMaximumVolumeHasSixCorrectlyBoundedFaces() passed after 2.149 seconds.
+◇ Test cachedOccupancySupportsBoundsAndIndependentSurfaceSnapshotsAfterEditing() started.
+✔ Test cachedOccupancySupportsBoundsAndIndependentSurfaceSnapshotsAfterEditing() passed after 0.001 seconds.
+◇ Test disconnectedSurfaceBudgetThrowsInsteadOfReturningPartialGeometry() started.
+✔ Test disconnectedSurfaceBudgetThrowsInsteadOfReturningPartialGeometry() passed after 0.210 seconds.
+◇ Test cancelledSurfaceExtractionReturnsNoPartialScene() started.
+✔ Test cancelledSurfaceExtractionReturnsNoPartialScene() passed after 0.002 seconds.
+◇ Suite "Bounded colored world silhouettes" started.
+◇ Test emptyVolumeHasNoGeometryAndSmallModelsMatchFullDetail() started.
+✔ Test emptyVolumeHasNoGeometryAndSmallModelsMatchFullDetail() passed after 0.001 seconds.
+◇ Test dominantNonemptyMaterialAndPaletteOrderTiesAreDeterministic() started.
+✔ Test dominantNonemptyMaterialAndPaletteOrderTiesAreDeterministic() passed after 0.001 seconds.
+◇ Test thinRoofTrunkAndGroundKeepARecognizableSilhouetteInsteadOfAFullBox() started.
+✔ Test thinRoofTrunkAndGroundKeepARecognizableSilhouetteInsteadOfAFullBox() passed after 0.040 seconds.
+◇ Test oddDimensionsAndPartialBinsPreserveRealExtentsAndCenter() started.
+✔ Test oddDimensionsAndPartialBinsPreserveRealExtentsAndCenter() passed after 0.004 seconds.
+◇ Test maximumStrideCountsDenseBinsWithoutOverflowOrOversizedGrid() started.
+✔ Test maximumStrideCountsDenseBinsWithoutOverflowOrOversizedGrid() passed after 0.046 seconds.
+◇ Test disconnectedCoarseGridStaysBelowTheExplicitFaceAndByteBudgets() started.
+✔ Test disconnectedCoarseGridStaysBelowTheExplicitFaceAndByteBudgets() passed after 0.029 seconds.
+◇ Test cancellationReturnsNoPartialCoarseResult() started.
+✔ Test cancellationReturnsNoPartialCoarseResult() passed after 0.008 seconds.
+✔ Suite "Bounded colored world silhouettes" passed after 0.131 seconds.
+◇ Suite SculptureWorldExplorationRenderingTests started.
+◇ Test optionalActualMetalOverviewAndLandmarkExplorationEvidence() started.
+✔ Test optionalActualMetalOverviewAndLandmarkExplorationEvidence() passed after 0.001 seconds.
+◇ Test perspectiveAndOrbitSwitchesRestoreCameraWithoutChangingWorldOrMeshes() started.
+✔ Test perspectiveAndOrbitSwitchesRestoreCameraWithoutChangingWorldOrMeshes() passed after 0.003 seconds.
+◇ Test localTravelLookAndExactIntegerRebaseRetainDetailedAndCoarseBuffers() started.
+✔ Test localTravelLookAndExactIntegerRebaseRetainDetailedAndCoarseBuffers() passed after 0.002 seconds.
+◇ Test nativePerspectiveAndOrbitPickBothColoredCoarseAndDetailedInstances() started.
+✔ Test nativePerspectiveAndOrbitPickBothColoredCoarseAndDetailedInstances() passed after 0.001 seconds.
+◇ Test realNativeKeyEventsMapHorizontalAndVerticalMovementAndReleaseWithoutClockRaces() started.
+✔ Test realNativeKeyEventsMapHorizontalAndVerticalMovementAndReleaseWithoutClockRaces() passed after 0.033 seconds.
+◇ Test nativeHeldKeysStopOnResponderLossWindowKeyLossCloseModeChangeAndDismantling() started.
+✔ Test nativeHeldKeysStopOnResponderLossWindowKeyLossCloseModeChangeAndDismantling() passed after 0.031 seconds.
+◇ Test nativeExploreDragChangesLookAndClickStillSelectsWithoutMutatingSource() started.
+✔ Test nativeExploreDragChangesLookAndClickStillSelectsWithoutMutatingSource() passed after 0.020 seconds.
+✔ Suite SculptureWorldExplorationRenderingTests passed after 0.093 seconds.
+◇ Suite SculptureWorldNavigationTests started.
+◇ Test smallMovesRetainExactAnchorsBeyondDoubleIntegerPrecision() started.
+✔ Test smallMovesRetainExactAnchorsBeyondDoubleIntegerPrecision() passed after 0.001 seconds.
+◇ Test positiveAndNegativeRebasesPreserveFractionalEyeOffsetsExactly() started.
+✔ Test positiveAndNegativeRebasesPreserveFractionalEyeOffsetsExactly() passed after 0.001 seconds.
+◇ Test diagonalsAndVerticalTravelUseTheSameCellsPerSecondSpeed() started.
+✔ Test diagonalsAndVerticalTravelUseTheSameCellsPerSecondSpeed() passed after 0.001 seconds.
+◇ Test yawRotatesFlatMovementWhilePitchOnlyChangesLook() started.
+✔ Test yawRotatesFlatMovementWhilePitchOnlyChangesLook() passed after 0.001 seconds.
+◇ Test elapsedTimeAndFastSpeedAreIndependentOfEventRepeatFrequency() started.
+✔ Test elapsedTimeAndFastSpeedAreIndependentOfEventRepeatFrequency() passed after 0.001 seconds.
+◇ Test checkedBoundariesRejectOverflowBeforeRebaseAndLeaveMovementAtomic() started.
+✔ Test checkedBoundariesRejectOverflowBeforeRebaseAndLeaveMovementAtomic() passed after 0.001 seconds.
+◇ Test invalidMovementFailsWithoutMutatingAndLookNeverInverts() started.
+✔ Test invalidMovementFailsWithoutMutatingAndLookNeverInverts() passed after 0.001 seconds.
+✔ Suite SculptureWorldNavigationTests passed after 0.001 seconds.
+◇ Suite VoxelRenderingTests started.
+◇ Test excessiveDisconnectedSurfaceReturnsAnExplicitBudgetFailureWithoutPartialPicking() started.
+✔ Test excessiveDisconnectedSurfaceReturnsAnExplicitBudgetFailureWithoutPartialPicking() passed after 1.116 seconds.
+◇ Test frontFacePickingAddsOnlyToAnEmptyInBoundsNeighbor() started.
+✔ Test frontFacePickingAddsOnlyToAnEmptyInBoundsNeighbor() passed after 0.001 seconds.
+◇ Test joinedCubesCullSharedFacesAndPickTheNearestVisibleCube() started.
+✔ Test joinedCubesCullSharedFacesAndPickTheNearestVisibleCube() passed after 0.001 seconds.
+◇ Test cameraRotationChangesThePaintableFaceAndNeighbor() started.
+✔ Test cameraRotationChangesThePaintableFaceAndNeighbor() passed after 0.001 seconds.
+◇ Test selectedEmptySliceProvidesRealPickableCellsWithoutInventingCubes() started.
+✔ Test selectedEmptySliceProvidesRealPickableCellsWithoutInventingCubes() passed after 0.001 seconds.
+◇ Test ghostGridCannotStealAnOccludedCubeHit() started.
+✔ Test ghostGridCannotStealAnOccludedCubeHit() passed after 0.001 seconds.
+◇ Test fullSizeSolidVolumeExposesOnlyItsOuterSurface() started.
+✔ Test fullSizeSolidVolumeExposesOnlyItsOuterSurface() passed after 0.514 seconds.
+◇ Test rasterOutputHasGenuineTranslucentFacesAndOptionalClearBackground() started.
+✔ Test rasterOutputHasGenuineTranslucentFacesAndOptionalClearBackground() passed after 0.001 seconds.
+◇ Test projectionRejectsInvalidHitCoordinatesAndNormalizesNonfiniteCamera() started.
+✔ Test projectionRejectsInvalidHitCoordinatesAndNormalizesNonfiniteCamera() passed after 0.001 seconds.
+◇ Test cancelledRenderDoesNotPublishPartialGeometryOrImage() started.
+✔ Test cancelledRenderDoesNotPublishPartialGeometryOrImage() passed after 0.001 seconds.
+✔ Suite VoxelRenderingTests passed after 1.634 seconds.
+◇ Test singleVoxelOBJHasClosedOutwardSurfaceAndCenteredBounds() started.
+✔ Test singleVoxelOBJHasClosedOutwardSurfaceAndCenteredBounds() passed after 0.001 seconds.
+◇ Test neighboringGlyphsShareVerticesAndOmitTheirInternalFaces() started.
+✔ Test neighboringGlyphsShareVerticesAndOmitTheirInternalFaces() passed after 0.001 seconds.
+◇ Test hollowVoxelMeshPreservesTheInteriorSurface() started.
+✔ Test hollowVoxelMeshPreservesTheInteriorSurface() passed after 0.001 seconds.
+◇ Test emptyOBJContainsNoInventedGeometry() started.
+✔ Test emptyOBJContainsNoInventedGeometry() passed after 0.001 seconds.
+◇ Test orbOBJIsClosedAndCanBeRetainedAsExportEvidence() started.
+✔ Test orbOBJIsClosedAndCanBeRetainedAsExportEvidence() passed after 0.065 seconds.
+◇ Test sixtyFourSolidVolumeExportsItsSurfaceRatherThanEveryCube() started.
+✔ Test sixtyFourSolidVolumeExportsItsSurfaceRatherThanEveryCube() passed after 1.944 seconds.
+◇ Test highCoordinatesExportAClosedSurfaceWithCorrectCenteredBounds() started.
+✔ Test highCoordinatesExportAClosedSurfaceWithCorrectCenteredBounds() passed after 0.036 seconds.
+◇ Test isolatedCubeVolumeFailsBeforeAllocatingAnUnboundedMesh() started.
+✔ Test isolatedCubeVolumeFailsBeforeAllocatingAnUnboundedMesh() passed after 0.173 seconds.
+◇ Test cancelledOBJExportDoesNotReturnAPartialMesh() started.
+✔ Test cancelledOBJExportDoesNotReturnAPartialMesh() passed after 0.001 seconds.
+◇ Test compactRoundTripPreservesEveryGlyphRectangularDimensionsAndTitle() started.
+✔ Test compactRoundTripPreservesEveryGlyphRectangularDimensionsAndTitle() passed after 0.001 seconds.
+◇ Test documentCodecAutodetectsFormatsAndLeavesReadableEncodingUnchanged() started.
+✔ Test documentCodecAutodetectsFormatsAndLeavesReadableEncodingUnchanged() passed after 0.005 seconds.
+◇ Test compactMaximumFilledVolumeRoundTripsWithExactDimensionsAndOccupancy() started.
+✔ Test compactMaximumFilledVolumeRoundTripsWithExactDimensionsAndOccupancy() passed after 9.818 seconds.
+◇ Test sparseCompactStorageIsSubstantiallySmallerThanRawVoxels() started.
+✔ Test sparseCompactStorageIsSubstantiallySmallerThanRawVoxels() passed after 0.072 seconds.
+◇ Test compactRejectsEmptyIncompleteAndCorruptedHeaders() started.
+✔ Test compactRejectsEmptyIncompleteAndCorruptedHeaders() passed after 0.001 seconds.
+◇ Test compactBoundsDimensionsTitleAndDeclaredCountsBeforeDecompression() started.
+✔ Test compactBoundsDimensionsTitleAndDeclaredCountsBeforeDecompression() passed after 0.004 seconds.
+◇ Test compactChecksumProtectsBothMetadataAndVoxelContent() started.
+✔ Test compactChecksumProtectsBothMetadataAndVoxelContent() passed after 0.001 seconds.
+◇ Test compactRejectsTruncationTrailingBytesAndConcatenatedStreamsEvenWithCorrectChecksums() started.
+✔ Test compactRejectsTruncationTrailingBytesAndConcatenatedStreamsEvenWithCorrectChecksums() passed after 0.001 seconds.
+◇ Test compactRejectsConcatenationAfterDrainingFourBufferedOutputChunks() started.
+✔ Test compactRejectsConcatenationAfterDrainingFourBufferedOutputChunks() passed after 0.035 seconds.
+◇ Test compactDecompressionRejectsExpansionBeyondTheDeclaredVolumeAndShortOutput() started.
+✔ Test compactDecompressionRejectsExpansionBeyondTheDeclaredVolumeAndShortOutput() passed after 0.001 seconds.
+◇ Test malformedCompressedStreamsFailWithoutUnboundedOutputOrNoProgressLoops() started.
+✔ Test malformedCompressedStreamsFailWithoutUnboundedOutputOrNoProgressLoops() passed after 0.002 seconds.
+◇ Test compactCodecCancellationDoesNotReturnPartialData(operation:) started.
+◇ Test case passing 1 argument operation → "encode" to compactCodecCancellationDoesNotReturnPartialData(operation:) started.
+◇ Test case passing 1 argument operation → "decode" to compactCodecCancellationDoesNotReturnPartialData(operation:) started.
+✔ Test compactCodecCancellationDoesNotReturnPartialData(operation:) with 2 test cases passed after 0.003 seconds.
+◇ Suite SculptureBlockWorldExamplesTests started.
+◇ Test chunkLibraryIsDeterministicAndExpandsToTheCompleteLandscape() started.
+✔ Test chunkLibraryIsDeterministicAndExpandsToTheCompleteLandscape() passed after 3.588 seconds.
+◇ Test adjacentChunksHaveContinuousGroundAndAConnectedRiverAcrossEveryDepthSeam() started.
+✔ Test adjacentChunksHaveContinuousGroundAndAConnectedRiverAcrossEveryDepthSeam() passed after 0.002 seconds.
+◇ Test landscapeHasDeepHillsWaterBanksCavesAndThreeDistinctTreeSilhouettes() started.
+✔ Test landscapeHasDeepHillsWaterBanksCavesAndThreeDistinctTreeSilhouettes() passed after 0.289 seconds.
+◇ Test villageAndLandmarksHaveUsableInteriorsDoorsWindowsCropsAndRoofs() started.
+✔ Test villageAndLandmarksHaveUsableInteriorsDoorsWindowsCropsAndRoofs() passed after 0.001 seconds.
+◇ Test sparsePlacementsUseExactlyAlignedChunkModelsAndStayWithinGeometryBudgets() started.
+✔ Test sparsePlacementsUseExactlyAlignedChunkModelsAndStayWithinGeometryBudgets() passed after 2.780 seconds.
+◇ Test canceledGenerationThrowsInsteadOfReturningAPartialLibraryOrWorld() started.
+✔ Test canceledGenerationThrowsInsteadOfReturningAPartialLibraryOrWorld() passed after 0.001 seconds.
+✔ Suite SculptureBlockWorldExamplesTests passed after 6.661 seconds.
+◇ Test commandsEncodeAsFlatTaggedObjectsAndRoundTrip() started.
+✔ Test commandsEncodeAsFlatTaggedObjectsAndRoundTrip() passed after 0.001 seconds.
+◇ Test strictCommandDecodingRejectsUnknownIrrelevantMissingAndWrongFields() started.
+✔ Test strictCommandDecodingRejectsUnknownIrrelevantMissingAndWrongFields() passed after 0.001 seconds.
+◇ Test batchVersionAndCommandCountAreRequiredAndBounded() started.
+✔ Test batchVersionAndCommandCountAreRequiredAndBounded() passed after 0.001 seconds.
+◇ Test paintEraseAndEmptyGlyphUseExactValidatedCoordinates() started.
+✔ Test paintEraseAndEmptyGlyphUseExactValidatedCoordinates() passed after 0.001 seconds.
+◇ Test invalidCellsAndGlyphsThrowRatherThanSilentlyIgnoreOrFallback() started.
+✔ Test invalidCellsAndGlyphsThrowRatherThanSilentlyIgnoreOrFallback() passed after 0.001 seconds.
+◇ Test fillVisitsOnlyFourConnectedMatchingCellsOnItsOwnSlice() started.
+✔ Test fillVisitsOnlyFourConnectedMatchingCellsOnItsOwnSlice() passed after 0.001 seconds.
+◇ Test fillCanPaintOrEraseEmptyRegionsWithoutCrossingABarrier() started.
+✔ Test fillCanPaintOrEraseEmptyRegionsWithoutCrossingABarrier() passed after 0.001 seconds.
+◇ Test clearingOneSliceLeavesOtherLayersAndTitleIntact() started.
+✔ Test clearingOneSliceLeavesOtherLayersAndTitleIntact() passed after 0.001 seconds.
+◇ Test rotationIsClockwiseBoundedAndRejectsRectangularSlices() started.
+✔ Test rotationIsClockwiseBoundedAndRejectsRectangularSlices() passed after 0.001 seconds.
+◇ Test renamePreservesGeometryAndRejectsInvalidTitles() started.
+✔ Test renamePreservesGeometryAndRejectsInvalidTitles() passed after 0.001 seconds.
+◇ Test batchesApplyInOrderAndFailAtomicallyWithoutChangingTheirSource() started.
+✔ Test batchesApplyInOrderAndFailAtomicallyWithoutChangingTheirSource() passed after 0.001 seconds.
+◇ Test inspectionIsCodableAndDescribesTheDocumentCoordinateSystem() started.
+✔ Test inspectionIsCodableAndDescribesTheDocumentCoordinateSystem() passed after 0.002 seconds.
+◇ Test complexCatalogAddsCharactersCreaturesArchitectureAndWorlds() started.
+✔ Test complexCatalogAddsCharactersCreaturesArchitectureAndWorlds() passed after 0.001 seconds.
+◇ Test largeExamplesStayEditableAndBoundedForMeshAndMediaExport(id:) started.
+◇ Test case passing 1 argument id → "wandering-cartographer" to largeExamplesStayEditableAndBoundedForMeshAndMediaExport(id:) started.
+◇ Test case passing 1 argument id → "clockwork-dragon" to largeExamplesStayEditableAndBoundedForMeshAndMediaExport(id:) started.
+◇ Test case passing 1 argument id → "woodland-fox" to largeExamplesStayEditableAndBoundedForMeshAndMediaExport(id:) started.
+◇ Test case passing 1 argument id → "deep-sea-whale" to largeExamplesStayEditableAndBoundedForMeshAndMediaExport(id:) started.
+◇ Test case passing 1 argument id → "citadel-of-arches" to largeExamplesStayEditableAndBoundedForMeshAndMediaExport(id:) started.
+◇ Test case passing 1 argument id → "sky-island-village" to largeExamplesStayEditableAndBoundedForMeshAndMediaExport(id:) started.
+◇ Test case passing 1 argument id → "canyon-waterfall" to largeExamplesStayEditableAndBoundedForMeshAndMediaExport(id:) started.
+◇ Test case passing 1 argument id → "moonlit-harbor" to largeExamplesStayEditableAndBoundedForMeshAndMediaExport(id:) started.
+✔ Test largeExamplesStayEditableAndBoundedForMeshAndMediaExport(id:) with 8 test cases passed after 1.106 seconds.
+◇ Test cartographerHasFaceMapStaffAndSeparatedLegs() started.
+✔ Test cartographerHasFaceMapStaffAndSeparatedLegs() passed after 0.001 seconds.
+◇ Test dragonHasMirroredRaisedWingsHornsAndAnOpenJaw() started.
+✔ Test dragonHasMirroredRaisedWingsHornsAndAnOpenJaw() passed after 0.001 seconds.
+◇ Test foxHasTwoEarTipsLongMuzzleAndSeparatedFrontPaws() started.
+✔ Test foxHasTwoEarTipsLongMuzzleAndSeparatedFrontPaws() passed after 0.001 seconds.
+◇ Test whaleHasWideNotchedFlukeFlippersAndBranchingSpout() started.
+✔ Test whaleHasWideNotchedFlukeFlippersAndBranchingSpout() passed after 0.001 seconds.
+◇ Test citadelHasTraversableGateCourtyardAndHollowTowerRooms() started.
+✔ Test citadelHasTraversableGateCourtyardAndHollowTowerRooms() passed after 0.001 seconds.
+◇ Test skyVillageHasSuspendedTerrainBridgesAndWindmillAboveHomes() started.
+✔ Test skyVillageHasSuspendedTerrainBridgesAndWindmillAboveHomes() passed after 0.001 seconds.
+◇ Test canyonHasFlowingWaterOpenArchAndCarvedCave() started.
+✔ Test canyonHasFlowingWaterOpenArchAndCarvedCave() passed after 0.001 seconds.
+◇ Test harborHasSailsLightedLanternOpenHomesAndCrescentMoon() started.
+✔ Test harborHasSailsLightedLanternOpenHomesAndCrescentMoon() passed after 0.001 seconds.
+◇ Suite "Composition example" started.
+◇ Test startersAreBoundedAndIndependent() started.
+✔ Test startersAreBoundedAndIndependent() passed after 0.001 seconds.
+◇ Test repeatedNestedReferencesRoundTripAndExpandExactly() started.
+✔ Test repeatedNestedReferencesRoundTripAndExpandExactly() passed after 0.210 seconds.
+◇ Test sparseWorldExamplePreservesTrillionCellDistancesWithoutDenseAllocation() started.
+✔ Test sparseWorldExamplePreservesTrillionCellDistancesWithoutDenseAllocation() passed after 0.018 seconds.
+✔ Suite "Composition example" passed after 0.229 seconds.
+◇ Suite SculptureCompositionTests started.
+◇ Test tileBlocksPreserveDepthPaddingAndAllFourRectangularRotations() started.
+✔ Test tileBlocksPreserveDepthPaddingAndAllFourRectangularRotations() passed after 0.001 seconds.
+◇ Test nestedModelsResolveByGlobalIDAndPeriodsReserveEmptyBlocks() started.
+✔ Test nestedModelsResolveByGlobalIDAndPeriodsReserveEmptyBlocks() passed after 0.001 seconds.
+◇ Test validationRejectsUnusedMissingReferencesAndCycles() started.
+✔ Test validationRejectsUnusedMissingReferencesAndCycles() passed after 0.001 seconds.
+◇ Test invalidBindingsGridsIDsAndRootAreExplicitFailures() started.
+✔ Test invalidBindingsGridsIDsAndRootAreExplicitFailures() passed after 0.001 seconds.
+◇ Test dimensionsAndRotatedChildFitNeverCropOrOverflow() started.
+✔ Test dimensionsAndRotatedChildFitNeverCropOrOverflow() passed after 0.001 seconds.
+◇ Test modelAndDependencyDepthLimitsHaveAcceptedBoundaryCases() started.
+✔ Test modelAndDependencyDepthLimitsHaveAcceptedBoundaryCases() passed after 0.001 seconds.
+◇ Test recursivePlacementLimitIncludesRepeatedNestedOccurrences() started.
+✔ Test recursivePlacementLimitIncludesRepeatedNestedOccurrences() passed after 0.104 seconds.
+◇ Test resolvedVolumeBudgetCountsDistinctUnusedModelsBeforeExpansion() started.
+✔ Test resolvedVolumeBudgetCountsDistinctUnusedModelsBeforeExpansion() passed after 2.155 seconds.
+◇ Test canonicalCodecPreservesTheGraphAndExpandedResult() started.
+✔ Test canonicalCodecPreservesTheGraphAndExpandedResult() passed after 0.001 seconds.
+◇ Test fenceLookingRowsAndDirectiveLookingCharactersRoundTripExactly() started.
+✔ Test fenceLookingRowsAndDirectiveLookingCharactersRoundTripExactly() passed after 0.001 seconds.
+◇ Test unknownAndOverwrittenMetadataPlaneAttributesAndBindingAliasesFail() started.
+✔ Test unknownAndOverwrittenMetadataPlaneAttributesAndBindingAliasesFail() passed after 0.001 seconds.
+◇ Test libraryRejectsUnknownKeysDuplicateKeysDuplicateIDsAndNestedLibraries() started.
+✔ Test libraryRejectsUnknownKeysDuplicateKeysDuplicateIDsAndNestedLibraries() passed after 0.002 seconds.
+◇ Test decoderBoundsPhysicalLinesBytesJSONDepthAndDirectiveAllocations() started.
+✔ Test decoderBoundsPhysicalLinesBytesJSONDepthAndDirectiveAllocations() passed after 0.075 seconds.
+◇ Test cancellationRejectsEncodingDecodingAndExpansionWithoutPartialOutput() started.
+✔ Test cancellationRejectsEncodingDecodingAndExpansionWithoutPartialOutput() passed after 0.001 seconds.
+✔ Suite SculptureCompositionTests passed after 2.344 seconds.
+◇ Test exampleCatalogOffersDistinctSculpturesAndSpatialMaps() started.
+✔ Test exampleCatalogOffersDistinctSculpturesAndSpatialMaps() passed after 0.039 seconds.
+◇ Test everyExampleOpensThroughTheRealThreeMDCodec(id:) started.
+◇ Test case passing 1 argument id → "character-orb" to everyExampleOpensThroughTheRealThreeMDCodec(id:) started.
+◇ Test case passing 1 argument id → "woven-torus" to everyExampleOpensThroughTheRealThreeMDCodec(id:) started.
+◇ Test case passing 1 argument id → "moon-gate" to everyExampleOpensThroughTheRealThreeMDCodec(id:) started.
+◇ Test case passing 1 argument id → "spiral-tower" to everyExampleOpensThroughTheRealThreeMDCodec(id:) started.
+◇ Test case passing 1 argument id → "crystal-garden" to everyExampleOpensThroughTheRealThreeMDCodec(id:) started.
+◇ Test case passing 1 argument id → "little-rocket" to everyExampleOpensThroughTheRealThreeMDCodec(id:) started.
+◇ Test case passing 1 argument id → "pixel-bonsai" to everyExampleOpensThroughTheRealThreeMDCodec(id:) started.
+◇ Test case passing 1 argument id → "orbital-rings" to everyExampleOpensThroughTheRealThreeMDCodec(id:) started.
+◇ Test case passing 1 argument id → "hill-observatory" to everyExampleOpensThroughTheRealThreeMDCodec(id:) started.
+◇ Test case passing 1 argument id → "terraced-island" to everyExampleOpensThroughTheRealThreeMDCodec(id:) started.
+◇ Test case passing 1 argument id → "canal-city" to everyExampleOpensThroughTheRealThreeMDCodec(id:) started.
+◇ Test case passing 1 argument id → "alpine-valley" to everyExampleOpensThroughTheRealThreeMDCodec(id:) started.
+◇ Test case passing 1 argument id → "wandering-cartographer" to everyExampleOpensThroughTheRealThreeMDCodec(id:) started.
+◇ Test case passing 1 argument id → "clockwork-dragon" to everyExampleOpensThroughTheRealThreeMDCodec(id:) started.
+◇ Test case passing 1 argument id → "woodland-fox" to everyExampleOpensThroughTheRealThreeMDCodec(id:) started.
+◇ Test case passing 1 argument id → "deep-sea-whale" to everyExampleOpensThroughTheRealThreeMDCodec(id:) started.
+◇ Test case passing 1 argument id → "citadel-of-arches" to everyExampleOpensThroughTheRealThreeMDCodec(id:) started.
+◇ Test case passing 1 argument id → "sky-island-village" to everyExampleOpensThroughTheRealThreeMDCodec(id:) started.
+◇ Test case passing 1 argument id → "canyon-waterfall" to everyExampleOpensThroughTheRealThreeMDCodec(id:) started.
+◇ Test case passing 1 argument id → "moonlit-harbor" to everyExampleOpensThroughTheRealThreeMDCodec(id:) started.
+◇ Test case passing 1 argument id → "grand-solar-system" to everyExampleOpensThroughTheRealThreeMDCodec(id:) started.
+✔ Test everyExampleOpensThroughTheRealThreeMDCodec(id:) with 21 test cases passed after 4.074 seconds.
+◇ Test shippedThreeMDExamplesMatchTheEditableCatalog(id:) started.
+◇ Test case passing 1 argument id → "character-orb" to shippedThreeMDExamplesMatchTheEditableCatalog(id:) started.
+◇ Test case passing 1 argument id → "woven-torus" to shippedThreeMDExamplesMatchTheEditableCatalog(id:) started.
+◇ Test case passing 1 argument id → "moon-gate" to shippedThreeMDExamplesMatchTheEditableCatalog(id:) started.
+◇ Test case passing 1 argument id → "spiral-tower" to shippedThreeMDExamplesMatchTheEditableCatalog(id:) started.
+◇ Test case passing 1 argument id → "crystal-garden" to shippedThreeMDExamplesMatchTheEditableCatalog(id:) started.
+◇ Test case passing 1 argument id → "little-rocket" to shippedThreeMDExamplesMatchTheEditableCatalog(id:) started.
+◇ Test case passing 1 argument id → "pixel-bonsai" to shippedThreeMDExamplesMatchTheEditableCatalog(id:) started.
+◇ Test case passing 1 argument id → "orbital-rings" to shippedThreeMDExamplesMatchTheEditableCatalog(id:) started.
+◇ Test case passing 1 argument id → "hill-observatory" to shippedThreeMDExamplesMatchTheEditableCatalog(id:) started.
+◇ Test case passing 1 argument id → "terraced-island" to shippedThreeMDExamplesMatchTheEditableCatalog(id:) started.
+◇ Test case passing 1 argument id → "canal-city" to shippedThreeMDExamplesMatchTheEditableCatalog(id:) started.
+◇ Test case passing 1 argument id → "alpine-valley" to shippedThreeMDExamplesMatchTheEditableCatalog(id:) started.
+◇ Test case passing 1 argument id → "wandering-cartographer" to shippedThreeMDExamplesMatchTheEditableCatalog(id:) started.
+◇ Test case passing 1 argument id → "clockwork-dragon" to shippedThreeMDExamplesMatchTheEditableCatalog(id:) started.
+◇ Test case passing 1 argument id → "woodland-fox" to shippedThreeMDExamplesMatchTheEditableCatalog(id:) started.
+◇ Test case passing 1 argument id → "deep-sea-whale" to shippedThreeMDExamplesMatchTheEditableCatalog(id:) started.
+◇ Test case passing 1 argument id → "citadel-of-arches" to shippedThreeMDExamplesMatchTheEditableCatalog(id:) started.
+◇ Test case passing 1 argument id → "sky-island-village" to shippedThreeMDExamplesMatchTheEditableCatalog(id:) started.
+◇ Test case passing 1 argument id → "canyon-waterfall" to shippedThreeMDExamplesMatchTheEditableCatalog(id:) started.
+◇ Test case passing 1 argument id → "moonlit-harbor" to shippedThreeMDExamplesMatchTheEditableCatalog(id:) started.
+◇ Test case passing 1 argument id → "grand-solar-system" to shippedThreeMDExamplesMatchTheEditableCatalog(id:) started.
+✔ Test shippedThreeMDExamplesMatchTheEditableCatalog(id:) with 21 test cases passed after 3.808 seconds.
+◇ Test exampleShapesKeepTheirCharacteristicOpenSpaces() started.
+✔ Test exampleShapesKeepTheirCharacteristicOpenSpaces() passed after 0.001 seconds.
+◇ Test mapExamplesHaveElevationAndUseCharacterMaterials() started.
+✔ Test mapExamplesHaveElevationAndUseCharacterMaterials() passed after 0.010 seconds.
+◇ Suite "Shared model value editing" started.
+◇ Test replacementPropagatesThroughRepeatedNestedRotatedReferences() started.
+✔ Test replacementPropagatesThroughRepeatedNestedRotatedReferences() passed after 0.001 seconds.
+◇ Test staleLeafAndOversizedReplacementAreRejectedWithoutChangingSource() started.
+✔ Test staleLeafAndOversizedReplacementAreRejectedWithoutChangingSource() passed after 0.001 seconds.
+◇ Test uniquePlacementClonesOneLeafAndPreservesOthersAndTransforms() started.
+✔ Test uniquePlacementClonesOneLeafAndPreservesOthersAndTransforms() passed after 0.001 seconds.
+◇ Test uniqueRejectsNestedMapsDuplicateInvalidIDsAndLibraryCapacity() started.
+✔ Test uniqueRejectsNestedMapsDuplicateInvalidIDsAndLibraryCapacity() passed after 0.001 seconds.
+◇ Test cancelledReplacementDoesNotPublish() started.
+✔ Test cancelledReplacementDoesNotPublish() passed after 0.001 seconds.
+◇ Test uniqueCloneRejectsReadableFileOverflowBeforePublishingLibrary() started.
+✔ Test uniqueCloneRejectsReadableFileOverflowBeforePublishingLibrary() passed after 2.455 seconds.
+✔ Suite "Shared model value editing" passed after 2.459 seconds.
+◇ Test solarSystemExtendsTheGalleryWithoutReplacingExistingExamples() started.
+✔ Test solarSystemExtendsTheGalleryWithoutReplacingExistingExamples() passed after 0.001 seconds.
+◇ Test solarSystemUsesTheFullEditableVolumeAndRoundTripsThroughThreeMD() started.
+✔ Test solarSystemUsesTheFullEditableVolumeAndRoundTripsThroughThreeMD() passed after 5.748 seconds.
+◇ Test solarSystemHasEightSolidSeparatedPlanetsWithDistinctSurfaceFeatures() started.
+✔ Test solarSystemHasEightSolidSeparatedPlanetsWithDistinctSurfaceFeatures() passed after 0.001 seconds.
+◇ Test solarSystemRingsMoonsAndOrbitGuidesRetainRealAirGaps() started.
+✔ Test solarSystemRingsMoonsAndOrbitGuidesRetainRealAirGaps() passed after 0.001 seconds.
+◇ Test solarSystemHasAsteroidBeltCometAndElevatedStars() started.
+✔ Test solarSystemHasAsteroidBeltCometAndElevatedStars() passed after 0.001 seconds.
+◇ Test sculptureRoundTripsThroughRealThreeMDParser() started.
+✔ Test sculptureRoundTripsThroughRealThreeMDParser() passed after 0.003 seconds.
+◇ Test rejectsOversizedAndUnrelatedDocuments() started.
+✔ Test rejectsOversizedAndUnrelatedDocuments() passed after 0.001 seconds.
+◇ Test fileSizeGuardAcceptsItsExactBoundaryBeforeValidatingUTF8() started.
+✔ Test fileSizeGuardAcceptsItsExactBoundaryBeforeValidatingUTF8() passed after 0.001 seconds.
+◇ Test refusesMalformedDimensionsRowsGlyphsAndDepth() started.
+✔ Test refusesMalformedDimensionsRowsGlyphsAndDepth() passed after 0.001 seconds.
+◇ Test protectsGridBoundsAndRejectsInvalidGlyphs() started.
+✔ Test protectsGridBoundsAndRejectsInvalidGlyphs() passed after 0.001 seconds.
+◇ Test duplicatedLayerIsIndependentAndLastLayerIsProtected() started.
+✔ Test duplicatedLayerIsIndependentAndLastLayerIsProtected() passed after 0.001 seconds.
+◇ Test quarterTurnMovesCellAndFourTurnsRestoreLayer() started.
+✔ Test quarterTurnMovesCellAndFourTurnsRestoreLayer() passed after 0.001 seconds.
+◇ Test nearestCellWinsOcclusionAndCanBePicked() started.
+✔ Test nearestCellWinsOcclusionAndCanBePicked() passed after 0.001 seconds.
+◇ Test cameraOrbitChangesProjectionAndNonFiniteValuesRemainSafe() started.
+✔ Test cameraOrbitChangesProjectionAndNonFiniteValuesRemainSafe() passed after 0.001 seconds.
+◇ Test emptyProjectionExportsSpacesWithoutInventingCharacters() started.
+✔ Test emptyProjectionExportsSpacesWithoutInventingCharacters() passed after 0.001 seconds.
+◇ Test titleCannotInjectFrontmatterAndLayerLimitIsEnforced() started.
+✔ Test titleCannotInjectFrontmatterAndLayerLimitIsEnforced() passed after 0.001 seconds.
+◇ Test maximumTwoHundredFiftySixCubeRoundTripsWithinTwentyMiB() started.
+✔ Test maximumTwoHundredFiftySixCubeRoundTripsWithinTwentyMiB() passed after 9.352 seconds.
+◇ Test dimensionsAboveTwoHundredFiftySixAreRejectedOnEveryAxis() started.
+✔ Test dimensionsAboveTwoHundredFiftySixAreRejectedOnEveryAxis() passed after 0.001 seconds.
+◇ Test formerCubeDocumentsRemainCompatible(dimension:) started.
+◇ Test case passing 1 argument dimension → 32 to formerCubeDocumentsRemainCompatible(dimension:) started.
+◇ Test case passing 1 argument dimension → 64 to formerCubeDocumentsRemainCompatible(dimension:) started.
+✔ Test formerCubeDocumentsRemainCompatible(dimension:) with 2 test cases passed after 0.100 seconds.
+◇ Test codecRejectsExcessiveDirectivesBeforeAllocatingThreeMDPlanes() started.
+✔ Test codecRejectsExcessiveDirectivesBeforeAllocatingThreeMDPlanes() passed after 0.001 seconds.
+◇ Test codecRejectsExcessiveBlankLinesBeforeThreeMDAllocatesTheirArray() started.
+✔ Test codecRejectsExcessiveBlankLinesBeforeThreeMDAllocatesTheirArray() passed after 0.034 seconds.
+◇ Test occupiedCountRemainsAccurateAcrossEveryMutationAndValueCopy() started.
+✔ Test occupiedCountRemainsAccurateAcrossEveryMutationAndValueCopy() passed after 0.001 seconds.
+◇ Test projectionCanPickTheNearestCellBeyondTheOldDepthLimit() started.
+✔ Test projectionCanPickTheNearestCellBeyondTheOldDepthLimit() passed after 0.001 seconds.
+◇ Test denseSixtyFourVolumeProjectionStaysBoundedAndPicksActualSourceCells() started.
+✔ Test denseSixtyFourVolumeProjectionStaysBoundedAndPicksActualSourceCells() passed after 0.180 seconds.
+◇ Test maximumCoordinatesStayEditableAndProjectionCachesFollowLayerChanges() started.
+✔ Test maximumCoordinatesStayEditableAndProjectionCachesFollowLayerChanges() passed after 2.161 seconds.
+◇ Test cancelledSculptureDecodeDoesNotReturnAPartialVolume() started.
+✔ Test cancelledSculptureDecodeDoesNotReturnAPartialVolume() passed after 0.001 seconds.
+◇ Test cancelledASCIIProjectionReturnsABoundedEmptyFrameWithoutPartialPicking() started.
+✔ Test cancelledASCIIProjectionReturnsABoundedEmptyFrameWithoutPartialPicking() passed after 0.002 seconds.
+◇ Suite SculptureThreeMDTests started.
+◇ Test unmarkedGeneralBinaryAdoptsPortableMarkerWithoutLosingImportedIDs() started.
+✔ Test unmarkedGeneralBinaryAdoptsPortableMarkerWithoutLosingImportedIDs() passed after 0.002 seconds.
+◇ Test portableWorldRootNeverOverwritesAUserModelAndRetainsUnusedBindings() started.
+✔ Test portableWorldRootNeverOverwritesAUserModelAndRetainsUnusedBindings() passed after 0.014 seconds.
+◇ Test maximumWorldPlacementsKeepUniqueGraphReferencesAndExactIDs() started.
+✔ Test maximumWorldPlacementsKeepUniqueGraphReferencesAndExactIDs() passed after 27.654 seconds.
+◇ Test portableSceneRoundTripsInTextAndUncompressedBinary() started.
+✔ Test portableSceneRoundTripsInTextAndUncompressedBinary() passed after 0.072 seconds.
+◇ Test legacyFilesAndSaveDefaultsRemainDistinct() started.
+✔ Test legacyFilesAndSaveDefaultsRemainDistinct() passed after 0.002 seconds.
+◇ Test customPlaneAndReferenceIDsSurviveRecaptureAndSharedEditing() started.
+✔ Test customPlaneAndReferenceIDsSurviveRecaptureAndSharedEditing() passed after 0.057 seconds.
+◇ Test wholeSceneRevisionRejectsStaleModelEditWithoutPublishingChanges() started.
+✔ Test wholeSceneRevisionRejectsStaleModelEditWithoutPublishingChanges() passed after 0.012 seconds.
+◇ Test invalidSharedReplacementIsAtomicAndWorldAnchorsStayExact() started.
+✔ Test invalidSharedReplacementIsAtomicAndWorldAnchorsStayExact() passed after 0.024 seconds.
+◇ Test malformedIdentitiesAndDisagreeingReferencesNeverUseLegacyFallback() started.
+✔ Test malformedIdentitiesAndDisagreeingReferencesNeverUseLegacyFallback() passed after 0.011 seconds.
+◇ Test largeLegacyLibraryRetainsItsOwnCapacityAndPortableFailureIsExplicit() started.
+✔ Test largeLegacyLibraryRetainsItsOwnCapacityAndPortableFailureIsExplicit() passed after 31.985 seconds.
+◇ Test cancellationPropagatesThroughAllPublicPortableOperations() started.
+✔ Test cancellationPropagatesThroughAllPublicPortableOperations() passed after 0.005 seconds.
+◇ Test deterministicPortableInterchangeFixtures() started.
+✔ Test deterministicPortableInterchangeFixtures() passed after 0.021 seconds.
+✔ Suite SculptureThreeMDTests passed after 59.865 seconds.
+◇ Suite SculptureVolumeStudyExamplesTests started.
+◇ Test denseEquivalentUsesOneSharedSolidModelToFillExactly1024Cubed() started.
+✔ Test denseEquivalentUsesOneSharedSolidModelToFillExactly1024Cubed() passed after 0.113 seconds.
+◇ Test landscapeSeparatesItsSparseOccupancyFromItsAddressDomain() started.
+✔ Test landscapeSeparatesItsSparseOccupancyFromItsAddressDomain() passed after 0.610 seconds.
+◇ Test landscapeContainsNavigableCastlesWaterTerracesAndForestAirGaps() started.
+✔ Test landscapeContainsNavigableCastlesWaterTerracesAndForestAirGaps() passed after 0.001 seconds.
+◇ Test studyFactoriesAreDeterministicAndPreserveFiniteProductionLimits() started.
+✔ Test studyFactoriesAreDeterministicAndPreserveFiniteProductionLimits() passed after 2.127 seconds.
+◇ Test studyFactoriesRespectCancelledTasksBeforeConstructingTheirLibraries() started.
+✔ Test studyFactoriesRespectCancelledTasksBeforeConstructingTheirLibraries() passed after 0.001 seconds.
+✔ Suite SculptureVolumeStudyExamplesTests passed after 2.852 seconds.
+◇ Suite SculptureWorldTests started.
+◇ Test distantInstancesRemainSparseAndShareOneLibraryModel() started.
+✔ Test distantInstancesRemainSparseAndShareOneLibraryModel() passed after 0.002 seconds.
+◇ Test exactInt64ExtremesAndAdjacentAnchorsSurviveJSONRoundTrip() started.
+✔ Test exactInt64ExtremesAndAdjacentAnchorsSurviveJSONRoundTrip() passed after 0.001 seconds.
+◇ Test originHeadroomIDsAndRotationsAreValidatedBeforeWorldConstruction() started.
+✔ Test originHeadroomIDsAndRotationsAreValidatedBeforeWorldConstruction() passed after 0.001 seconds.
+◇ Test worldsRejectMissingModelsDuplicateInstancesAndInvalidTitles() started.
+✔ Test worldsRejectMissingModelsDuplicateInstancesAndInvalidTitles() passed after 0.001 seconds.
+◇ Test finitePlacementCapacityDoesNotImposeASpatialExtent() started.
+✔ Test finitePlacementCapacityDoesNotImposeASpatialExtent() passed after 4.131 seconds.
+◇ Test codecRejectsUnknownDuplicateMetadataAndUnsupportedPlaneOrFences() started.
+✔ Test codecRejectsUnknownDuplicateMetadataAndUnsupportedPlaneOrFences() passed after 0.001 seconds.
+◇ Test codecRejectsUnknownDuplicateJSONKeysAndInexactCoordinateTypes() started.
+✔ Test codecRejectsUnknownDuplicateJSONKeysAndInexactCoordinateTypes() passed after 0.001 seconds.
+◇ Test decoderBoundsBytesPhysicalLinesAndJSONNestingBeforeAllocatingModels() started.
+✔ Test decoderBoundsBytesPhysicalLinesAndJSONNestingBeforeAllocatingModels() passed after 0.076 seconds.
+◇ Test cancellationReturnsNoWorldOrSerializedOutput() started.
+✔ Test cancellationReturnsNoWorldOrSerializedOutput() passed after 0.001 seconds.
+✔ Suite SculptureWorldTests passed after 4.218 seconds.
+◇ Test commandCLIInspectsAndPublishesCanonicalEditsWithMachineReadableResult() started.
+✔ Test commandCLIInspectsAndPublishesCanonicalEditsWithMachineReadableResult() passed after 0.006 seconds.
+◇ Test failedCLIBatchCreatesNoOutputAndKeepsInputAndCommandBytes() started.
+✔ Test failedCLIBatchCreatesNoOutputAndKeepsInputAndCommandBytes() passed after 0.002 seconds.
+◇ Test cliRefusesExistingFilesDirectoriesAndDanglingOutputSymlinks() started.
+✔ Test cliRefusesExistingFilesDirectoriesAndDanglingOutputSymlinks() passed after 0.006 seconds.
+◇ Test cliRefusesNonRegularOversizedAndMalformedInputsBeforePublishing() started.
+✔ Test cliRefusesNonRegularOversizedAndMalformedInputsBeforePublishing() passed after 0.024 seconds.
+◇ Test commandCLIInspectsAndEditsSliceTwoHundredFiftyFiveBeyondTheOldFileBudget() started.
+✔ Test commandCLIInspectsAndEditsSliceTwoHundredFiftyFiveBeyondTheOldFileBudget() passed after 1.483 seconds.
+◇ Test commandJSONKeepsItsIndependentTwoHundredFiftySixKiBBoundary() started.
+✔ Test commandJSONKeepsItsIndependentTwoHundredFiftySixKiBBoundary() passed after 0.015 seconds.
+◇ Test cliWritesChosenTemporaryDirectoryAndDirectoryAliasWithoutReplacingEntries() started.
+✔ Test cliWritesChosenTemporaryDirectoryAndDirectoryAliasWithoutReplacingEntries() passed after 0.009 seconds.
+◇ Test commandCLIInspectsCompactDocumentsAndAutodetectsBytesWithoutExtensionHints() started.
+✔ Test commandCLIInspectsCompactDocumentsAndAutodetectsBytesWithoutExtensionHints() passed after 0.002 seconds.
+◇ Test commandCLIStoresCompactEditsFromExplicitOutputExtensionAndPreservesInput() started.
+✔ Test commandCLIStoresCompactEditsFromExplicitOutputExtensionAndPreservesInput() passed after 0.003 seconds.
+◇ Test commandCLIConvertsBothStorageFormatsWhileApplyingTheSameCommands() started.
+✔ Test commandCLIConvertsBothStorageFormatsWhileApplyingTheSameCommands() passed after 0.005 seconds.
+◇ Test commandCLIRejectsUnsupportedOutputExtensionsWithoutWritingOrChangingInputs() started.
+✔ Test commandCLIRejectsUnsupportedOutputExtensionsWithoutWritingOrChangingInputs() passed after 0.001 seconds.
+◇ Test commandCLIReportsTruncatedCompactInputWithoutPublishingEdits() started.
+✔ Test commandCLIReportsTruncatedCompactInputWithoutPublishingEdits() passed after 0.001 seconds.
+◇ Test compositionCLIEmbedsOneSharedModelAndPlacesRotatedSingleCharacterTilesInThreeAxes() started.
+✔ Test compositionCLIEmbedsOneSharedModelAndPlacesRotatedSingleCharacterTilesInThreeAxes() passed after 0.006 seconds.
+◇ Test compositionCLIExpandsToBothVoxelFormatsAndRefusesImplicitFlattening() started.
+✔ Test compositionCLIExpandsToBothVoxelFormatsAndRefusesImplicitFlattening() passed after 0.011 seconds.
+◇ Test compositionCLIImportsNestedGraphsWithoutPrivateIDCollisionsOrExternalDependencies() started.
+✔ Test compositionCLIImportsNestedGraphsWithoutPrivateIDCollisionsOrExternalDependencies() passed after 0.008 seconds.
+◇ Test compositionCLIRejectsUnknownFieldsInvalidReferencesAndUnusableFilesWithoutPublishing() started.
+✔ Test compositionCLIRejectsUnknownFieldsInvalidReferencesAndUnusableFilesWithoutPublishing() passed after 0.017 seconds.
+◇ Test compositionCLIRequiresExplicitFormatsAndAtomicallyRefusesExistingEntries() started.
+✔ Test compositionCLIRequiresExplicitFormatsAndAtomicallyRefusesExistingEntries() passed after 0.007 seconds.
+◇ Suite "Portable scene development commands" started.
+◇ Test exportAcceptsEveryLegacySceneAndPublishesBothPortableFormatsWithoutChangingInput() started.
+✔ Test exportAcceptsEveryLegacySceneAndPublishesBothPortableFormatsWithoutChangingInput() passed after 0.054 seconds.
+◇ Test inspectReportsStructuredDiagnosticsAndPortableSceneFacts() started.
+✔ Test inspectReportsStructuredDiagnosticsAndPortableSceneFacts() passed after 0.014 seconds.
+◇ Test applyUsesExactExpectedRevisionPreservesReferencesAndIsDeterministic() started.
+✔ Test applyUsesExactExpectedRevisionPreservesReferencesAndIsDeterministic() passed after 0.058 seconds.
+◇ Test staleSceneAndFailedCommandBatchNeverCreateOutput() started.
+✔ Test staleSceneAndFailedCommandBatchNeverCreateOutput() passed after 0.016 seconds.
+◇ Test requestsRejectUnknownDuplicateEquivalentAndOversizedFields() started.
+✔ Test requestsRejectUnknownDuplicateEquivalentAndOversizedFields() passed after 0.025 seconds.
+◇ Test exportsNeverOverwriteExistingFilesOrSymbolicLinksAndRejectUnknownExtensions() started.
+✔ Test exportsNeverOverwriteExistingFilesOrSymbolicLinksAndRejectUnknownExtensions() passed after 0.013 seconds.
+◇ Test cancellationBeforePublicationLeavesNoFile() started.
+✔ Test cancellationBeforePublicationLeavesNoFile() passed after 0.001 seconds.
+✔ Suite "Portable scene development commands" passed after 0.185 seconds.
+◇ Test referenceCLIInspectsSharedIDsAndProvidesACompleteExpectedModelSnapshot() started.
+✔ Test referenceCLIInspectsSharedIDsAndProvidesACompleteExpectedModelSnapshot() passed after 0.003 seconds.
+◇ Test referenceCLIInspectsWorldTransformsWithoutLosingLargeIntegerPrecision() started.
+✔ Test referenceCLIInspectsWorldTransformsWithoutLosingLargeIntegerPrecision() passed after 0.003 seconds.
+◇ Test referenceCLIUpdatesSharedCompositionLeafAndKeepsNestedBindings() started.
+✔ Test referenceCLIUpdatesSharedCompositionLeafAndKeepsNestedBindings() passed after 0.006 seconds.
+◇ Test referenceCLIUpdatesWorldLeafWithoutChangingInstancesOrFlatteningTheLibrary() started.
+✔ Test referenceCLIUpdatesWorldLeafWithoutChangingInstancesOrFlatteningTheLibrary() passed after 0.006 seconds.
+◇ Test referenceCLIMakesOneWorldLeafUniqueThenEditsOnlyItsCopy() started.
+✔ Test referenceCLIMakesOneWorldLeafUniqueThenEditsOnlyItsCopy() passed after 0.011 seconds.
+◇ Test referenceCLIRejectsStaleModelsEvenWhenDimensionsAndOccupiedCountsMatch() started.
+✔ Test referenceCLIRejectsStaleModelsEvenWhenDimensionsAndOccupiedCountsMatch() passed after 0.003 seconds.
+◇ Test referenceCLIRequiresCompleteMatchingSourceBytesForUniqueWorldInstances() started.
+✔ Test referenceCLIRequiresCompleteMatchingSourceBytesForUniqueWorldInstances() passed after 0.004 seconds.
+◇ Test referenceCLIRejectsUnknownInstancesExistingModelIDsAndNestedUniqueness() started.
+✔ Test referenceCLIRejectsUnknownInstancesExistingModelIDsAndNestedUniqueness() passed after 0.008 seconds.
+◇ Test referenceCLIFailedCommandsLeaveTheSourceAndOutputUntouched() started.
+✔ Test referenceCLIFailedCommandsLeaveTheSourceAndOutputUntouched() passed after 0.003 seconds.
+◇ Test referenceCLIRefusesTileEditingFlatteningAndAmbiguousRequestFields() started.
+✔ Test referenceCLIRefusesTileEditingFlatteningAndAmbiguousRequestFields() passed after 0.006 seconds.
+◇ Test referenceCLIRefusesExistingOutputsIncludingSourceDirectoriesAndDanglingLinks() started.
+✔ Test referenceCLIRefusesExistingOutputsIncludingSourceDirectoriesAndDanglingLinks() passed after 0.009 seconds.
+◇ Test referenceCLIBoundsRequestFilesAndRefusesNonRegularInputs() started.
+✔ Test referenceCLIBoundsRequestFilesAndRefusesNonRegularInputs() passed after 0.013 seconds.
+◇ Test referenceCLICancellationDoesNotPublishAFile() started.
+✔ Test referenceCLICancellationDoesNotPublishAFile() passed after 0.001 seconds.
+◇ Suite "Dense volume study reduced fixtures" started.
+◇ Test strictCLIRequiresAbsoluteNewOutputAndExplicitDenseOptIn() started.
+✔ Test strictCLIRequiresAbsoluteNewOutputAndExplicitDenseOptIn() passed after 0.001 seconds.
+◇ Test reducedDenseStudyTouchesHashesStreamsAndComparesEveryByte() started.
+✔ Test reducedDenseStudyTouchesHashesStreamsAndComparesEveryByte() passed after 0.005 seconds.
+◇ Test resourceGuardRefusesBeforeCreatingOutputAndHonorsKernelProcessLimit() started.
+✔ Test resourceGuardRefusesBeforeCreatingOutputAndHonorsKernelProcessLimit() passed after 0.001 seconds.
+◇ Test reduced64CubePatternCrossesEachBlockAxisAndHasAnIndependentDigest() started.
+✔ Test reduced64CubePatternCrossesEachBlockAxisAndHasAnIndependentDigest() passed after 0.059 seconds.
+◇ Test stagingReplacementBeforeEncodingOrPublicationPreservesForeignContent() started.
+✔ Test stagingReplacementBeforeEncodingOrPublicationPreservesForeignContent() passed after 0.007 seconds.
+◇ Test newOutputGuardPreservesExistingDirectoriesAndSymbolicLinks() started.
+✔ Test newOutputGuardPreservesExistingDirectoriesAndSymbolicLinks() passed after 0.001 seconds.
+◇ Test streamingVerificationRejectsCorruptionTruncationConcatenationAndLengthMismatch() started.
+✔ Test streamingVerificationRejectsCorruptionTruncationConcatenationAndLengthMismatch() passed after 0.321 seconds.
+◇ Test cancellationAfterAllocationCleansStagingAndPublishesNothing() started.
+✔ Test cancellationAfterAllocationCleansStagingAndPublishesNothing() passed after 0.016 seconds.
+✔ Suite "Dense volume study reduced fixtures" passed after 0.414 seconds.
+◇ Suite "Volume world study publication" started.
+◇ Test rejectsInvalidAndExistingDestinationsWithoutChangingThem() started.
+✔ Test rejectsInvalidAndExistingDestinationsWithoutChangingThem() passed after 0.001 seconds.
+◇ Test publishesSupportedWorldCopiesWithExactFacts() started.
+✔ Test publishesSupportedWorldCopiesWithExactFacts() passed after 35.751 seconds.
+◇ Test replacementDirectoryIsNeitherPublishedNorRecursivelyRemoved() started.
+✔ Test replacementDirectoryIsNeitherPublishedNorRecursivelyRemoved() passed after 0.003 seconds.
+◇ Test exclusiveDirectoryPublicationPreservesARacingExistingTarget() started.
+✔ Test exclusiveDirectoryPublicationPreservesARacingExistingTarget() passed after 0.002 seconds.
+◇ Test cleanupPreservesAReplacementFileInsideThePinnedStagingDirectory() started.
+✔ Test cleanupPreservesAReplacementFileInsideThePinnedStagingDirectory() passed after 0.002 seconds.
+◇ Test cancellationAfterCreatingStagingLeavesNoOutputOrTemporaryDirectory() started.
+✔ Test cancellationAfterCreatingStagingLeavesNoOutputOrTemporaryDirectory() passed after 0.001 seconds.
+✔ Suite "Volume world study publication" passed after 35.763 seconds.
+◇ Test sparseWorldCLIInspectKeepsExactCoordinatesAndExtractsOnlyAnExplicitModel() started.
+✔ Test sparseWorldCLIInspectKeepsExactCoordinatesAndExtractsOnlyAnExplicitModel() passed after 0.163 seconds.
+◇ Test directProcessExecutionDoesNotInterpretArgumentText() started.
+✔ Test directProcessExecutionDoesNotInterpretArgumentText() passed after 0.005 seconds.
+◇ Test incorrectPinnedVersionStopsBeforeRunningTheTool() started.
+✔ Test incorrectPinnedVersionStopsBeforeRunningTheTool() passed after 0.001 seconds.
+◇ Test specArgumentsRemainLiteralArgumentsAndFailuresPropagate() started.
+failed
+✔ Test specArgumentsRemainLiteralArgumentsAndFailuresPropagate() passed after 0.001 seconds.
+◇ Test failedReleaseBuildDoesNotScanAnOldExecutable() started.
+build failed✔ Test failedReleaseBuildDoesNotScanAnOldExecutable() passed after 0.001 seconds.
+◇ Test failedPackagingReleaseBuildDoesNotCopyAnOldExecutableOrReplaceTheBundle() started.
+release build failed✔ Test failedPackagingReleaseBuildDoesNotCopyAnOldExecutableOrReplaceTheBundle() passed after 0.004 seconds.
+◇ Test sourceScanRejectsNetworkProcessAndCoreBridges() started.
+✔ Test sourceScanRejectsNetworkProcessAndCoreBridges() passed after 0.014 seconds.
+◇ Test productDependencyGraphRejectsTransitiveToolingAndUnknownEdges() started.
+✔ Test productDependencyGraphRejectsTransitiveToolingAndUnknownEdges() passed after 0.001 seconds.
+◇ Test releaseMarkerScanIncludesEmbeddedUnprintableBytes() started.
+✔ Test releaseMarkerScanIncludesEmbeddedUnprintableBytes() passed after 0.001 seconds.
+◇ Test repositoryInventoryRejectsPythonAndShellProgramsOutsideDependencies() started.
+✔ Test repositoryInventoryRejectsPythonAndShellProgramsOutsideDependencies() passed after 0.001 seconds.
+◇ Test failedRepositoryInventoryCannotPassSourceBoundaries() started.
+git failed✔ Test failedRepositoryInventoryCannotPassSourceBoundaries() passed after 0.003 seconds.
+◇ Test signingFailurePreservesTheExistingBundleAndRemovesStaging() started.
+signing failed✔ Test signingFailurePreservesTheExistingBundleAndRemovesStaging() passed after 0.005 seconds.
+◇ Test successfulPackagingBuildsAndCopiesReleaseBeforeReplacingTheOwnedBundle() started.
+release builtsignedverifiedentitlementspackaged /var/folders/5k/616qy7sj28l0d53k4c6w_4x00000gn/T/rook-tooling-test-BEA8E44A-28E8-4F14-9462-982BFF3E3008/dist/Rook.app; local ad-hoc signature, not notarized
+✔ Test successfulPackagingBuildsAndCopiesReleaseBeforeReplacingTheOwnedBundle() passed after 0.028 seconds.
+◇ Test packagingDoesNotFallBackToDebugWhenReleaseIsMissing() started.
+✔ Test packagingDoesNotFallBackToDebugWhenReleaseIsMissing() passed after 0.003 seconds.
+◇ Test packagingRefusesUnrelatedBundlesAndSymbolicLinkDestinations() started.
+✔ Test packagingRefusesUnrelatedBundlesAndSymbolicLinkDestinations() passed after 0.004 seconds.
+◇ Test runnerAcceptsCompleteSwiftChild() started.
+✔ Test runnerAcceptsCompleteSwiftChild() passed after 0.575 seconds.
+◇ Test runnerRejectsPrematureSwiftChildExitZero() started.
+✔ Test runnerRejectsPrematureSwiftChildExitZero() passed after 0.209 seconds.
+◇ Test runnerRejectsSwiftChildRecordedIssueAtExitZero() started.
+✔ Test runnerRejectsSwiftChildRecordedIssueAtExitZero() passed after 0.203 seconds.
+◇ Test runnerPreservesActualSwiftChildExitSeven() started.
+✔ Test runnerPreservesActualSwiftChildExitSeven() passed after 0.219 seconds.
+◇ Test runnerDoesNotOverwriteRetainedEvidence() started.
+✔ Test runnerDoesNotOverwriteRetainedEvidence() passed after 0.001 seconds.
+◇ Test completeSwiftTestingRunIsAcceptedWithTypedSummary() started.
+✔ Test completeSwiftTestingRunIsAcceptedWithTypedSummary() passed after 0.009 seconds.
+◇ Test recordedIssuesAndMissingSummaryAreBothRejected() started.
+✔ Test recordedIssuesAndMissingSummaryAreBothRejected() passed after 0.008 seconds.
+◇ Test incompleteRunWithoutFailureCannotPass() started.
+✔ Test incompleteRunWithoutFailureCannotPass() passed after 0.008 seconds.
+◇ Test xctestZeroAloneCannotPass() started.
+✔ Test xctestZeroAloneCannotPass() passed after 0.005 seconds.
+◇ Test ansiUnicodeAndCIFormattingAreAccepted() started.
+✔ Test ansiUnicodeAndCIFormattingAreAccepted() passed after 0.004 seconds.
+◇ Test failureWordsInsidePassingTestNamesAreNotIssues() started.
+✔ Test failureWordsInsidePassingTestNamesAreNotIssues() passed after 0.009 seconds.
+◇ Test upstreamFailureCannotBeHiddenBySuccessfulSummary() started.
+✔ Test upstreamFailureCannotBeHiddenBySuccessfulSummary() passed after 0.007 seconds.
+◇ Test earlierIssueCannotBeHiddenBySuccessfulSummary() started.
+✔ Test earlierIssueCannotBeHiddenBySuccessfulSummary() passed after 0.008 seconds.
+◇ Test earlierSummaryCannotHideALaterUnfinishedRun() started.
+✔ Test earlierSummaryCannotHideALaterUnfinishedRun() passed after 0.012 seconds.
+◇ Test zeroSwiftTestingCountIsRejected() started.
+✔ Test zeroSwiftTestingCountIsRejected() passed after 0.003 seconds.
+◇ Test explicitExpectedCountIsEnforcedWithoutAProductCountPin() started.
+✔ Test explicitExpectedCountIsEnforcedWithoutAProductCountPin() passed after 0.010 seconds.
+◇ Test xctestFailureIsRejectedEvenWithSwiftTestingSuccess() started.
+✔ Test xctestFailureIsRejectedEvenWithSwiftTestingSuccess() passed after 0.005 seconds.
+✔ Test run with 394 tests in 35 suites passed after 252.080 seconds.
+
+Retained test log: /private/tmp/sculpt-1024-case-study-20261005/.build/verification/5E9DF9C0-2B30-471B-9EC8-58754164F54F/swift-test.log
+Test receipt: /private/tmp/sculpt-1024-case-study-20261005/.build/verification/5E9DF9C0-2B30-471B-9EC8-58754164F54F/swift-test-result.json
+  ✔ Step 3 done (4m 19.031s)
+  ▶️ Running task: intent
+44 criteria · 12 families · 12 files · 53 retired
+  ✔ Step 4 done (962ms)
+  ▶️ Running task: spec
+
+specs/RookApp/RookApp.spec.md
+  ✓ Frontmatter valid
+  ✓ All source files exist
+  ✓ All required sections present
+  ✓ All dependency specs exist
+
+specs/RookCore/RookCore.spec.md
+  ✓ Frontmatter valid
+  ✓ All source files exist
+  ✓ All required sections present
+  ✓ 6/6 exports documented
+  ✓ All dependency specs exist
+
+specs/RookDevelopment/RookDevelopment.spec.md
+  ✓ Frontmatter valid
+  ✓ All source files exist
+  ✓ All required sections present
+  ✓ 66/66 exports documented
+  ✓ All dependency specs exist
+
+specs/RookRendering/RookRendering.spec.md
+  ✓ Frontmatter valid
+  ✓ All source files exist
+  ✓ All required sections present
+  ✓ 139/139 exports documented
+  ✓ All dependency specs exist
+
+specs/RookSculpture/RookSculpture.spec.md
+  ✓ Frontmatter valid
+  ✓ All source files exist
+  ✓ All required sections present
+  ✓ 186/186 exports documented
+  ✓ All dependency specs exist
+
+5 specs checked: 5 passed, 0 warning(s), 0 failed
+File coverage: 70/70 (100%)
+LOC coverage:  17956/17956 (100%)
+  ✔ Step 5 done (892ms)
+  ▶️ Running task: boundaries
+source boundary scan passed; product targets exclude development tooling
+  ✔ Step 6 done (1.619s)
+  ▶️ Running task: release-fixture
+[0/1] Planning build
+Building for production...
+[0/3] Write sources
+[1/3] Write swift-version--58304C5D6DBC2206.txt
+[3/4] Compiling RookRendering MetalSculptureView.swift
+[3/5] Write Objects.LinkFileList
+[4/5] Linking Rook
+Build of product 'Rook' complete! (7.13s)
+release fixture strings are absent
+  ✔ Step 7 done (8.492s)
+✅ Lane verify completed (7 steps in 4m 36.558s)

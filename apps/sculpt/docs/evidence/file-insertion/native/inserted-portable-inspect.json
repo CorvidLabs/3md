@@ -1,0 +1,21 @@
+{
+  "diagnostics" : {
+    "diagnostics" : [
+
+    ],
+    "isTruncated" : false
+  },
+  "kind" : "composition",
+  "modelIDs" : [
+    "insert-model-1",
+    "insert-model-2",
+    "little-rocket",
+    "moon-gate",
+    "root"
+  ],
+  "placementCount" : 0,
+  "portableInput" : true,
+  "revisionUTF8Bytes" : 35586,
+  "title" : "Model garden",
+  "version" : 1
+}

@@ -1,0 +1,15 @@
+{
+  "compact" : {
+    "bytes" : 60313,
+    "matchesCatalog" : true,
+    "path" : "\/private\/tmp\/sculpt-compact-native-solar-20261004-1345.3mdb",
+    "sha256" : "a0e1965d9a51baa8e3ed7d404e73e89fbbadfd725cca5718447dfad841f1482d"
+  },
+  "comparison" : "Exact byte equality with the corresponding catalog artifact",
+  "readable" : {
+    "bytes" : 16854166,
+    "matchesCatalog" : true,
+    "path" : "\/private\/tmp\/sculpt-readable-native-solar-20261004-1345.3md",
+    "sha256" : "28531138a4cb05461d1627963618e36a6ae12e8453224b270cf56834b11fa68a"
+  }
+}

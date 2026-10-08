@@ -1,0 +1,13 @@
+volume-study allocate: starting
+volume-study allocate: 1.0125e-05 seconds
+volume-study fill: starting
+volume-study fill: 0.389057625 seconds
+volume-study hash: starting
+volume-study hash: 0.4868815 seconds
+volume-study encode: starting
+volume-study encode: 6.076145084 seconds
+volume-study decode-verify: starting
+volume-study decode-verify: 0.803959292 seconds
+volume-study release: starting
+volume-study release: 9.17e-07 seconds
+volume-study complete: 1073741824 initialized, hashed and verified bytes; 53965390 LZFSE bytes

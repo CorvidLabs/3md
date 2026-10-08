@@ -1,0 +1,22 @@
+[
+  {
+    "changedPixels" : 15648,
+    "coloredPixels" : 15479,
+    "exteriorFaces" : 4700,
+    "height" : 420,
+    "model" : "nested-garden",
+    "neutralBrightPixels" : 55,
+    "occupiedCount" : 3908,
+    "width" : 640
+  },
+  {
+    "changedPixels" : 15130,
+    "coloredPixels" : 14806,
+    "exteriorFaces" : 37600,
+    "height" : 420,
+    "model" : "nested-courtyard",
+    "neutralBrightPixels" : 101,
+    "occupiedCount" : 31264,
+    "width" : 640
+  }
+]

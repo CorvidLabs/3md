@@ -1,0 +1,38 @@
+Building for production...
+[0/6] Write sources
+[2/6] Write swift-version--58304C5D6DBC2206.txt
+[4/6] Compiling RookTool SculptureCommandTool.swift
+[4/7] Write Objects.LinkFileList
+[5/7] Linking RookTool
+[7/8] Compiling RookToolTests SculptureCommandToolTests.swift
+[7/9] Write Objects.LinkFileList
+[8/9] Linking RookPackageTests
+Build complete! (19.93s)
+Test Suite 'Selected tests' started at 2026-10-05 12:47:43.644.
+Test Suite 'RookPackageTests.xctest' started at 2026-10-05 12:47:43.646.
+Test Suite 'RookPackageTests.xctest' passed at 2026-10-05 12:47:43.646.
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.000 (0.000) seconds
+Test Suite 'Selected tests' passed at 2026-10-05 12:47:43.646.
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.000 (0.002) seconds
+◇ Test run started.
+↳ Testing Library Version: 1902
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite "Dense volume study reduced fixtures" started.
+◇ Test strictCLIRequiresAbsoluteNewOutputAndExplicitDenseOptIn() started.
+✔ Test strictCLIRequiresAbsoluteNewOutputAndExplicitDenseOptIn() passed after 0.001 seconds.
+◇ Test reducedDenseStudyTouchesHashesStreamsAndComparesEveryByte() started.
+✔ Test reducedDenseStudyTouchesHashesStreamsAndComparesEveryByte() passed after 0.009 seconds.
+◇ Test resourceGuardRefusesBeforeCreatingOutputAndHonorsKernelProcessLimit() started.
+✔ Test resourceGuardRefusesBeforeCreatingOutputAndHonorsKernelProcessLimit() passed after 0.001 seconds.
+◇ Test reduced64CubePatternCrossesEachBlockAxisAndHasAnIndependentDigest() started.
+✔ Test reduced64CubePatternCrossesEachBlockAxisAndHasAnIndependentDigest() passed after 0.015 seconds.
+◇ Test stagingReplacementBeforeEncodingOrPublicationPreservesForeignContent() started.
+✔ Test stagingReplacementBeforeEncodingOrPublicationPreservesForeignContent() passed after 0.005 seconds.
+◇ Test newOutputGuardPreservesExistingDirectoriesAndSymbolicLinks() started.
+✔ Test newOutputGuardPreservesExistingDirectoriesAndSymbolicLinks() passed after 0.001 seconds.
+◇ Test streamingVerificationRejectsCorruptionTruncationConcatenationAndLengthMismatch() started.
+✔ Test streamingVerificationRejectsCorruptionTruncationConcatenationAndLengthMismatch() passed after 0.065 seconds.
+◇ Test cancellationAfterAllocationCleansStagingAndPublishesNothing() started.
+✔ Test cancellationAfterAllocationCleansStagingAndPublishesNothing() passed after 0.002 seconds.
+✔ Suite "Dense volume study reduced fixtures" passed after 0.103 seconds.
+✔ Test run with 8 tests in 1 suite passed after 0.103 seconds.

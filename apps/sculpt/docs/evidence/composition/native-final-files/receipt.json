@@ -1,0 +1,20 @@
+{
+  "actor" : "Codex root",
+  "date" : "2026-10-04",
+  "finalOnscreenState" : "Wide world open at garden-trillion, render\/detail distance 64, one detailed model visible",
+  "limits" : "No on-screen FPS benchmark, whole-world export, literal infinity, lifecycle approval, merge or release is claimed.",
+  "nativeObservations" : [
+    "Nested courtyard fills and edges appear colored in the real Metal canvas.",
+    "Use in a world creates an unsaved draft; Close prompts to keep editing or discard before any further placement.",
+    "Keep editing followed by native Save succeeds; subsequent Close returns without a discard prompt.",
+    "Wide world opens with 2 visible of 4 placements at render distance 256: 2 full, 0 proxies, 2 outside range.",
+    "Increasing render distance to 576 reveals 3 of 4: 2 full, 1 proxy, 1 outside range.",
+    "Clicking the actual distant proxy selects garden-distant; Jump to it sets focus X=512 Z=256 and yields 1 full and 2 proxies.",
+    "Selecting garden-trillion and Jump to it sets X=1000000000000 Z=-1000000000000: 1 full model, 3 outside range.",
+    "Reducing render distance to 64 retains that colored model; a native canvas drag changes its orbit without editing placements.",
+    "Saving after focus, distance and camera changes writes bytes identical to the canonical 4-placement example; view state is not stored."
+  ],
+  "scope" : "Final optimized ad-hoc bundle; actual native UI and user-selected Save panels",
+  "wideWorldBytes" : 35560,
+  "wideWorldNativeSaveEqualsCanonicalExample" : true
+}

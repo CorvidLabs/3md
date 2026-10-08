@@ -1,0 +1,33 @@
+---
+3md: "0.1"
+axis: "layer"
+profile: "3md-composition-1"
+---
+
+@plane z=0 label="Composition"
+```json
+{
+  "entries": [
+    {
+      "id": "leaf",
+      "references": [],
+      "source": "---\n3md: \"1.0\"\naxis: \"space\"\ntitle: \"Portable \\\"leaf\\\" \\\\ study\"\nheight: \"1\"\nscene-schema: \"ascii-sculpture-1\"\nwidth: \"2\"\n---\n\n@plane z=0 label=\"Slice 1\" 3md-id=\"plane-1\"\n```ascii\n#@\n```\n\n@plane z=1 label=\"Slice 2\" 3md-id=\"plane-2\"\n```ascii\n.+\n```\n"
+    },
+    {
+      "id": "root",
+      "references": [
+        {"attributes": {"3md-id": "reference-1", "glyph": "65", "quarter-turns": "0"}, "targetID": "leaf"},
+        {"attributes": {"3md-id": "reference-2", "glyph": "66", "quarter-turns": "1"}, "targetID": "leaf"}
+      ],
+      "source": "---\n3md: \"1.0\"\naxis: \"space\"\ntitle: \"Portable repeated library\"\nbind-A: \"leaf:0\"\nbind-B: \"leaf:1\"\nheight: \"1\"\nroot-id: \"root\"\nscene-schema: \"ascii-composition-1\"\ntile-depth: \"2\"\ntile-height: \"2\"\ntile-width: \"2\"\nwidth: \"2\"\n---\n\n@plane z=0 label=\"Tile slice 1\" 3md-id=\"plane-1\"\n```ascii\nAB\n```\n"
+    },
+    {
+      "id": "unused",
+      "references": [],
+      "source": "---\n3md: \"1.0\"\naxis: \"space\"\ntitle: \"Unused\"\nheight: \"1\"\nscene-schema: \"ascii-sculpture-1\"\nwidth: \"1\"\n---\n\n@plane z=0 label=\"Slice 1\" 3md-id=\"plane-1\"\n```ascii\n*\n```\n"
+    }
+  ],
+  "rootID": "root",
+  "schema": "3md-composition-1"
+}
+```

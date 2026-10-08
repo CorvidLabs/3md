@@ -1,0 +1,53 @@
+{
+  "files" : [
+    {
+      "bytes" : 2959,
+      "path" : "Examples\/Blockhaven\/README.md",
+      "sha256" : "9b3232a623ab8f8bf7aa77d934cde6cff493a79b942932fc955112fb89691815"
+    },
+    {
+      "bytes" : 2657228,
+      "path" : "Examples\/Blockhaven\/blockhaven-world.3md",
+      "sha256" : "b4dd9f7a35aea48d18c5c8eb6af59b4b1d1b1b0d9bf61f8c60f86dff6742426c"
+    },
+    {
+      "bytes" : 2570369,
+      "path" : "Examples\/Blockhaven\/blockhaven.3md",
+      "sha256" : "ce11dff1b33942f8091018e28f998a74e331933d28a5661dae17a26ddf9a1451"
+    },
+    {
+      "bytes" : 58016,
+      "path" : "Examples\/Blockhaven\/blockhaven.3mdb",
+      "sha256" : "086cc1619962107861a26e17321ace8c2589dec7ca7e5e724d7da416147530b6"
+    },
+    {
+      "bytes" : 2613320,
+      "path" : "Examples\/Blockhaven\/blockhaven.gif",
+      "sha256" : "143404ce897b1ed3c5b13c5c7ade4badc36bcce42f100d4b1aee02977365cac4"
+    },
+    {
+      "bytes" : 893902,
+      "path" : "Examples\/Blockhaven\/blockhaven.mp4",
+      "sha256" : "fb6f77bfd4e9ab7205cef8feceafc71a44b1b15c1e50c1f7694af8df9fb481ef"
+    },
+    {
+      "bytes" : 6960367,
+      "path" : "Examples\/Blockhaven\/blockhaven.obj",
+      "sha256" : "10fd418100a6cac6f3bb4ee85e94da0450690a53709891ad0556cf0a10ffe256"
+    },
+    {
+      "bytes" : 969204,
+      "path" : "Examples\/Blockhaven\/blockhaven.png",
+      "sha256" : "3fdde0490585be09c335fc8da37ac65b3c288a3d9f9a0dd5f731f54e02491832"
+    },
+    {
+      "bytes" : 704,
+      "path" : "Examples\/Blockhaven\/manifest.json",
+      "sha256" : "5a62d9e1452d6e0c98177f35ba6fcdc51f552d979f2e6c68139c16ee4e63513f"
+    }
+  ],
+  "nativeOpenObservation" : "Actual native AX showed Blockhaven valley, 827937 voxels, no unsaved changes",
+  "note" : "Media\/source correctness comes from retained actual tests; hashes pin generated files",
+  "objExteriorFaces" : 136274,
+  "phase" : "baseline"
+}

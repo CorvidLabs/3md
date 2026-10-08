@@ -1,0 +1,35 @@
+{
+  "arguments" : [
+    "test",
+    "--no-parallel",
+    "--filter",
+    "RookVerificationTests|RookToolingTests"
+  ],
+  "assessment" : {
+    "failureLines" : [
+
+    ],
+    "issues" : [
+
+    ],
+    "passed" : true,
+    "reasons" : [
+
+    ],
+    "successfulSummaries" : [
+      {
+        "durationSeconds" : 1.082,
+        "line" : 74,
+        "suites" : 0,
+        "tests" : 29,
+        "text" : "✔ Test run with 29 tests in 0 suites passed after 1.082 seconds."
+      }
+    ],
+    "upstreamExitCode" : 0
+  },
+  "executable" : "\/usr\/bin\/swift",
+  "logPath" : "\/Users\/leif\/Development\/_CorvidLabs\/rook\/.build\/verification\/5FF0B4A0-EDD9-4FE6-8F78-F4371DA58798\/swift-test.log",
+  "receiptPath" : "\/Users\/leif\/Development\/_CorvidLabs\/rook\/.build\/verification\/5FF0B4A0-EDD9-4FE6-8F78-F4371DA58798\/swift-test-result.json",
+  "upstreamExitCode" : 0,
+  "workingDirectory" : "\/Users\/leif\/Development\/_CorvidLabs\/rook"
+}

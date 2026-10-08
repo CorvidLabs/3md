@@ -1,0 +1,12 @@
+Building for production...
+[0/8] Write sources
+[5/8] Write swift-version--58304C5D6DBC2206.txt
+[7/10] Compiling RookCore AppAppearance.swift
+[8/10] Compiling ThreeMD Axis.swift
+[9/11] Compiling RookSculpture Sculpture.swift
+[10/12] Compiling RookRendering MetalSculptureView.swift
+[11/13] Compiling RookApp Brand.swift
+[11/13] Write Objects.LinkFileList
+[12/13] Linking Rook
+Build of product 'Rook' complete! (54.62s)
+release fixture strings are absent

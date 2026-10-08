@@ -1,0 +1,468 @@
+[0/1] Planning build
+Building for debugging...
+[0/6] Write swift-version--58304C5D6DBC2206.txt
+Build complete! (0.24s)
+Test Suite 'All tests' started at 2026-10-04 11:56:53.672.
+Test Suite 'All tests' passed at 2026-10-04 11:56:53.674.
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.000 (0.001) seconds
+◇ Test run started.
+↳ Testing Library Version: 1902
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Test systemPreferenceDefersToMacAppearance() started.
+✔ Test systemPreferenceDefersToMacAppearance() passed after 0.001 seconds.
+◇ Test largeSliceGridFitAndZoomKeepSquareCellsWithinTheirCanvas() started.
+✔ Test largeSliceGridFitAndZoomKeepSquareCellsWithinTheirCanvas() passed after 0.001 seconds.
+◇ Test rectangularSliceGridUsesItsActualAspectRatioAtEveryZoom() started.
+✔ Test rectangularSliceGridUsesItsActualAspectRatioAtEveryZoom() passed after 0.001 seconds.
+◇ Test scrollingChangesViewportPositionWithoutChangingLocalCellCoordinates() started.
+✔ Test scrollingChangesViewportPositionWithoutChangingLocalCellCoordinates() passed after 0.001 seconds.
+◇ Test gridHitTestingRejectsOutsideNonFiniteAndUnavailableGeometry() started.
+✔ Test gridHitTestingRejectsOutsideNonFiniteAndUnavailableGeometry() passed after 0.001 seconds.
+◇ Suite SculptureCanvasPointerTests started.
+◇ Test nativePointerDispatchesTopLeftCoordinatesAndAllMousePhases() started.
+✔ Test nativePointerDispatchesTopLeftCoordinatesAndAllMousePhases() passed after 0.234 seconds.
+◇ Test pointerEventsStayWithinTheirOwnWindow() started.
+✔ Test pointerEventsStayWithinTheirOwnWindow() passed after 0.042 seconds.
+◇ Test mouseInputDoesNotStealTheExistingKeyboardResponder() started.
+✔ Test mouseInputDoesNotStealTheExistingKeyboardResponder() passed after 0.028 seconds.
+✔ Suite SculptureCanvasPointerTests passed after 0.305 seconds.
+◇ Suite SculptureCommandFocusTests started.
+◇ Test nativeSearchTakesPriorTitleResponderAndReturnRunsFilteredAction() started.
+✔ Test nativeSearchTakesPriorTitleResponderAndReturnRunsFilteredAction() passed after 0.535 seconds.
+◇ Test nativeSearchReturnHandsMountedCanvasRealArrowAndSpaceEvents() started.
+✔ Test nativeSearchReturnHandsMountedCanvasRealArrowAndSpaceEvents() passed after 0.338 seconds.
+◇ Test nativeSearchEscapeUnmountsAndDoesNotRetakeRestoredTitleResponder() started.
+✔ Test nativeSearchEscapeUnmountsAndDoesNotRetakeRestoredTitleResponder() passed after 0.321 seconds.
+✔ Suite SculptureCommandFocusTests passed after 1.195 seconds.
+◇ Suite SculptureEditorPresentationTests started.
+◇ Test actualEditorViewsRenderAtMinimumAndDefaultSizes() started.
+Retained editor presentation captures: /Users/leif/Development/_CorvidLabs/rook/.build/verification/editor-presentation-1404A742-AB76-498F-BED3-9FC280FB7DD9
+✔ Test actualEditorViewsRenderAtMinimumAndDefaultSizes() passed after 10.590 seconds.
+✔ Suite SculptureEditorPresentationTests passed after 10.590 seconds.
+◇ Test "Export names cannot introduce paths or hidden files" started.
+✔ Test "Export names cannot introduce paths or hidden files" passed after 0.027 seconds.
+◇ Test "Preparing a mesh export keeps the source and cleans up its private staging folder" started.
+✔ Test "Preparing a mesh export keeps the source and cleans up its private staging folder" passed after 0.014 seconds.
+◇ Test cubeSurfacePaintingAddsTheNeighborAndUndoRestoresTheOriginal() started.
+✔ Test cubeSurfacePaintingAddsTheNeighborAndUndoRestoresTheOriginal() passed after 0.001 seconds.
+◇ Test cubeEraseTargetsTheClickedCubeAndFullBoundaryDoesNotCreateHistory() started.
+✔ Test cubeEraseTargetsTheClickedCubeAndFullBoundaryDoesNotCreateHistory() passed after 0.001 seconds.
+◇ Test emptySliceCanStartACubeAndPresentationDoesNotDirtyTheDocument() started.
+✔ Test emptySliceCanStartACubeAndPresentationDoesNotDirtyTheDocument() passed after 0.001 seconds.
+◇ Test paintStrokeUndoRestoresWholeStrokeAndRedoReappliesIt() started.
+✔ Test paintStrokeUndoRestoresWholeStrokeAndRedoReappliesIt() passed after 0.001 seconds.
+◇ Test strokeBeginningOnUnchangedCellStillHasOneUndoStep() started.
+✔ Test strokeBeginningOnUnchangedCellStillHasOneUndoStep() passed after 0.001 seconds.
+◇ Test savedSnapshotDoesNotMarkLaterEditsSavedAndFailedOpenDoesNotReplaceState() started.
+✔ Test savedSnapshotDoesNotMarkLaterEditsSavedAndFailedOpenDoesNotReplaceState() passed after 0.001 seconds.
+◇ Test layerUndoAndRedoKeepSelectionInBounds() started.
+✔ Test layerUndoAndRedoKeepSelectionInBounds() passed after 0.001 seconds.
+◇ Test fastDiagonalStrokeHasNoGapsAndOneUndoStep() started.
+✔ Test fastDiagonalStrokeHasNoGapsAndOneUndoStep() passed after 0.001 seconds.
+◇ Test largeBrushClipsToVolumeAndUndoRestoresAllChangedCells() started.
+✔ Test largeBrushClipsToVolumeAndUndoRestoresAllChangedCells() passed after 0.001 seconds.
+◇ Test fillStopsAtGlyphBoundaryAndRemainsOneUndoableChange() started.
+✔ Test fillStopsAtGlyphBoundaryAndRemainsOneUndoableChange() passed after 0.001 seconds.
+◇ Test invalidTitleDraftIsPreservedWithoutModalErrorAndProtectsUnsavedWork() started.
+✔ Test invalidTitleDraftIsPreservedWithoutModalErrorAndProtectsUnsavedWork() passed after 0.001 seconds.
+◇ Test clearingSliceKeepsOtherSlicesAndCanBeUndone() started.
+✔ Test clearingSliceKeepsOtherSlicesAndCanBeUndone() passed after 0.002 seconds.
+◇ Test changingCameraAndSelectionDoesNotDirtySavedDocument() started.
+✔ Test changingCameraAndSelectionDoesNotDirtySavedDocument() passed after 0.002 seconds.
+◇ Test structuredEditsShareHumanFillSemanticsAndBatchHasOneUndo() started.
+✔ Test structuredEditsShareHumanFillSemanticsAndBatchHasOneUndo() passed after 0.001 seconds.
+◇ Test invalidCommandBatchKeepsDocumentHistoryAndDraft() started.
+✔ Test invalidCommandBatchKeepsDocumentHistoryAndDraft() passed after 0.001 seconds.
+◇ Test unknownOrMissingStoredAppearanceUsesSystem() started.
+✔ Test unknownOrMissingStoredAppearanceUsesSystem() passed after 0.001 seconds.
+◇ Test knownAppearanceValuesSurviveStorageRoundTrip() started.
+✔ Test knownAppearanceValuesSurviveStorageRoundTrip() passed after 0.001 seconds.
+◇ Suite AnimationExportTests started.
+◇ Test configurationRejectsUnboundedWorkAndOddMovieDimensions() started.
+✔ Test configurationRejectsUnboundedWorkAndOddMovieDimensions() passed after 0.001 seconds.
+◇ Test gifLoopsWithCorrectFrameTimingAndChangingDecodedImages() started.
+✔ Test gifLoopsWithCorrectFrameTimingAndChangingDecodedImages() passed after 0.013 seconds.
+◇ Test mp4DecodesEveryFrameWithCorrectDurationDimensionsAndVisibleGlyphs(_:) started.
+◇ Test case passing 1 argument framesPerSecond → 10 to mp4DecodesEveryFrameWithCorrectDurationDimensionsAndVisibleGlyphs(_:) started.
+◇ Test case passing 1 argument framesPerSecond → 30 to mp4DecodesEveryFrameWithCorrectDurationDimensionsAndVisibleGlyphs(_:) started.
+✔ Test mp4DecodesEveryFrameWithCorrectDurationDimensionsAndVisibleGlyphs(_:) with 2 test cases passed after 0.740 seconds.
+◇ Test cancellationRemovesPartialAnimationAndOwnedStagingFile(_:) started.
+◇ Test case passing 1 argument format → .gif to cancellationRemovesPartialAnimationAndOwnedStagingFile(_:) started.
+◇ Test case passing 1 argument format → .mp4 to cancellationRemovesPartialAnimationAndOwnedStagingFile(_:) started.
+✔ Test cancellationRemovesPartialAnimationAndOwnedStagingFile(_:) with 2 test cases passed after 0.093 seconds.
+◇ Test existingDestinationIsPreservedAndUnsupportedGIFRateCreatesNothing() started.
+✔ Test existingDestinationIsPreservedAndUnsupportedGIFRateCreatesNothing() passed after 0.004 seconds.
+✔ Suite AnimationExportTests passed after 0.852 seconds.
+◇ Suite CubeExportTests started.
+◇ Test cubePNGAndASCIIRepresentTheSameDocumentWithDifferentImages() started.
+✔ Test cubePNGAndASCIIRepresentTheSameDocumentWithDifferentImages() passed after 0.043 seconds.
+◇ Test cubeTurntableEncodesActualGeometryFrames(_:) started.
+◇ Test case passing 1 argument format → .gif to cubeTurntableEncodesActualGeometryFrames(_:) started.
+◇ Test case passing 1 argument format → .mp4 to cubeTurntableEncodesActualGeometryFrames(_:) started.
+✔ Test cubeTurntableEncodesActualGeometryFrames(_:) with 2 test cases passed after 0.221 seconds.
+✔ Suite CubeExportTests passed after 0.264 seconds.
+◇ Suite ExampleArtifactTests started.
+◇ Test galleryManifestMatchesAllPublishedFilesAndDownloadLinks() started.
+✔ Test galleryManifestMatchesAllPublishedFilesAndDownloadLinks() passed after 0.012 seconds.
+◇ Test everyExampleHasFiveCompleteArtifacts(_:) started.
+◇ Test case passing 1 argument id → "character-orb" to everyExampleHasFiveCompleteArtifacts(_:) started.
+◇ Test case passing 1 argument id → "woven-torus" to everyExampleHasFiveCompleteArtifacts(_:) started.
+◇ Test case passing 1 argument id → "moon-gate" to everyExampleHasFiveCompleteArtifacts(_:) started.
+◇ Test case passing 1 argument id → "spiral-tower" to everyExampleHasFiveCompleteArtifacts(_:) started.
+◇ Test case passing 1 argument id → "crystal-garden" to everyExampleHasFiveCompleteArtifacts(_:) started.
+◇ Test case passing 1 argument id → "little-rocket" to everyExampleHasFiveCompleteArtifacts(_:) started.
+◇ Test case passing 1 argument id → "pixel-bonsai" to everyExampleHasFiveCompleteArtifacts(_:) started.
+◇ Test case passing 1 argument id → "orbital-rings" to everyExampleHasFiveCompleteArtifacts(_:) started.
+◇ Test case passing 1 argument id → "hill-observatory" to everyExampleHasFiveCompleteArtifacts(_:) started.
+◇ Test case passing 1 argument id → "terraced-island" to everyExampleHasFiveCompleteArtifacts(_:) started.
+◇ Test case passing 1 argument id → "canal-city" to everyExampleHasFiveCompleteArtifacts(_:) started.
+◇ Test case passing 1 argument id → "alpine-valley" to everyExampleHasFiveCompleteArtifacts(_:) started.
+◇ Test case passing 1 argument id → "wandering-cartographer" to everyExampleHasFiveCompleteArtifacts(_:) started.
+◇ Test case passing 1 argument id → "clockwork-dragon" to everyExampleHasFiveCompleteArtifacts(_:) started.
+◇ Test case passing 1 argument id → "woodland-fox" to everyExampleHasFiveCompleteArtifacts(_:) started.
+◇ Test case passing 1 argument id → "deep-sea-whale" to everyExampleHasFiveCompleteArtifacts(_:) started.
+◇ Test case passing 1 argument id → "citadel-of-arches" to everyExampleHasFiveCompleteArtifacts(_:) started.
+◇ Test case passing 1 argument id → "sky-island-village" to everyExampleHasFiveCompleteArtifacts(_:) started.
+◇ Test case passing 1 argument id → "canyon-waterfall" to everyExampleHasFiveCompleteArtifacts(_:) started.
+◇ Test case passing 1 argument id → "moonlit-harbor" to everyExampleHasFiveCompleteArtifacts(_:) started.
+✔ Test everyExampleHasFiveCompleteArtifacts(_:) with 20 test cases passed after 0.375 seconds.
+◇ Test everyPNGDecodesAtThePublishedSizeWithVisibleGeometry(_:) started.
+◇ Test case passing 1 argument id → "character-orb" to everyPNGDecodesAtThePublishedSizeWithVisibleGeometry(_:) started.
+◇ Test case passing 1 argument id → "woven-torus" to everyPNGDecodesAtThePublishedSizeWithVisibleGeometry(_:) started.
+◇ Test case passing 1 argument id → "moon-gate" to everyPNGDecodesAtThePublishedSizeWithVisibleGeometry(_:) started.
+◇ Test case passing 1 argument id → "spiral-tower" to everyPNGDecodesAtThePublishedSizeWithVisibleGeometry(_:) started.
+◇ Test case passing 1 argument id → "crystal-garden" to everyPNGDecodesAtThePublishedSizeWithVisibleGeometry(_:) started.
+◇ Test case passing 1 argument id → "little-rocket" to everyPNGDecodesAtThePublishedSizeWithVisibleGeometry(_:) started.
+◇ Test case passing 1 argument id → "pixel-bonsai" to everyPNGDecodesAtThePublishedSizeWithVisibleGeometry(_:) started.
+◇ Test case passing 1 argument id → "orbital-rings" to everyPNGDecodesAtThePublishedSizeWithVisibleGeometry(_:) started.
+◇ Test case passing 1 argument id → "hill-observatory" to everyPNGDecodesAtThePublishedSizeWithVisibleGeometry(_:) started.
+◇ Test case passing 1 argument id → "terraced-island" to everyPNGDecodesAtThePublishedSizeWithVisibleGeometry(_:) started.
+◇ Test case passing 1 argument id → "canal-city" to everyPNGDecodesAtThePublishedSizeWithVisibleGeometry(_:) started.
+◇ Test case passing 1 argument id → "alpine-valley" to everyPNGDecodesAtThePublishedSizeWithVisibleGeometry(_:) started.
+◇ Test case passing 1 argument id → "wandering-cartographer" to everyPNGDecodesAtThePublishedSizeWithVisibleGeometry(_:) started.
+◇ Test case passing 1 argument id → "clockwork-dragon" to everyPNGDecodesAtThePublishedSizeWithVisibleGeometry(_:) started.
+◇ Test case passing 1 argument id → "woodland-fox" to everyPNGDecodesAtThePublishedSizeWithVisibleGeometry(_:) started.
+◇ Test case passing 1 argument id → "deep-sea-whale" to everyPNGDecodesAtThePublishedSizeWithVisibleGeometry(_:) started.
+◇ Test case passing 1 argument id → "citadel-of-arches" to everyPNGDecodesAtThePublishedSizeWithVisibleGeometry(_:) started.
+◇ Test case passing 1 argument id → "sky-island-village" to everyPNGDecodesAtThePublishedSizeWithVisibleGeometry(_:) started.
+◇ Test case passing 1 argument id → "canyon-waterfall" to everyPNGDecodesAtThePublishedSizeWithVisibleGeometry(_:) started.
+◇ Test case passing 1 argument id → "moonlit-harbor" to everyPNGDecodesAtThePublishedSizeWithVisibleGeometry(_:) started.
+✔ Test everyPNGDecodesAtThePublishedSizeWithVisibleGeometry(_:) with 20 test cases passed after 1.450 seconds.
+◇ Test everyGIFLoopsForFourSecondsWithFortyTimedFrames(_:) started.
+◇ Test case passing 1 argument id → "character-orb" to everyGIFLoopsForFourSecondsWithFortyTimedFrames(_:) started.
+◇ Test case passing 1 argument id → "woven-torus" to everyGIFLoopsForFourSecondsWithFortyTimedFrames(_:) started.
+◇ Test case passing 1 argument id → "moon-gate" to everyGIFLoopsForFourSecondsWithFortyTimedFrames(_:) started.
+◇ Test case passing 1 argument id → "spiral-tower" to everyGIFLoopsForFourSecondsWithFortyTimedFrames(_:) started.
+◇ Test case passing 1 argument id → "crystal-garden" to everyGIFLoopsForFourSecondsWithFortyTimedFrames(_:) started.
+◇ Test case passing 1 argument id → "little-rocket" to everyGIFLoopsForFourSecondsWithFortyTimedFrames(_:) started.
+◇ Test case passing 1 argument id → "pixel-bonsai" to everyGIFLoopsForFourSecondsWithFortyTimedFrames(_:) started.
+◇ Test case passing 1 argument id → "orbital-rings" to everyGIFLoopsForFourSecondsWithFortyTimedFrames(_:) started.
+◇ Test case passing 1 argument id → "hill-observatory" to everyGIFLoopsForFourSecondsWithFortyTimedFrames(_:) started.
+◇ Test case passing 1 argument id → "terraced-island" to everyGIFLoopsForFourSecondsWithFortyTimedFrames(_:) started.
+◇ Test case passing 1 argument id → "canal-city" to everyGIFLoopsForFourSecondsWithFortyTimedFrames(_:) started.
+◇ Test case passing 1 argument id → "alpine-valley" to everyGIFLoopsForFourSecondsWithFortyTimedFrames(_:) started.
+◇ Test case passing 1 argument id → "wandering-cartographer" to everyGIFLoopsForFourSecondsWithFortyTimedFrames(_:) started.
+◇ Test case passing 1 argument id → "clockwork-dragon" to everyGIFLoopsForFourSecondsWithFortyTimedFrames(_:) started.
+◇ Test case passing 1 argument id → "woodland-fox" to everyGIFLoopsForFourSecondsWithFortyTimedFrames(_:) started.
+◇ Test case passing 1 argument id → "deep-sea-whale" to everyGIFLoopsForFourSecondsWithFortyTimedFrames(_:) started.
+◇ Test case passing 1 argument id → "citadel-of-arches" to everyGIFLoopsForFourSecondsWithFortyTimedFrames(_:) started.
+◇ Test case passing 1 argument id → "sky-island-village" to everyGIFLoopsForFourSecondsWithFortyTimedFrames(_:) started.
+◇ Test case passing 1 argument id → "canyon-waterfall" to everyGIFLoopsForFourSecondsWithFortyTimedFrames(_:) started.
+◇ Test case passing 1 argument id → "moonlit-harbor" to everyGIFLoopsForFourSecondsWithFortyTimedFrames(_:) started.
+✔ Test everyGIFLoopsForFourSecondsWithFortyTimedFrames(_:) with 20 test cases passed after 5.152 seconds.
+◇ Test everyMP4HasOneSilentFourSecondVideoTrackAndDecodableFrames(_:) started.
+◇ Test case passing 1 argument id → "character-orb" to everyMP4HasOneSilentFourSecondVideoTrackAndDecodableFrames(_:) started.
+◇ Test case passing 1 argument id → "woven-torus" to everyMP4HasOneSilentFourSecondVideoTrackAndDecodableFrames(_:) started.
+◇ Test case passing 1 argument id → "moon-gate" to everyMP4HasOneSilentFourSecondVideoTrackAndDecodableFrames(_:) started.
+◇ Test case passing 1 argument id → "spiral-tower" to everyMP4HasOneSilentFourSecondVideoTrackAndDecodableFrames(_:) started.
+◇ Test case passing 1 argument id → "crystal-garden" to everyMP4HasOneSilentFourSecondVideoTrackAndDecodableFrames(_:) started.
+◇ Test case passing 1 argument id → "little-rocket" to everyMP4HasOneSilentFourSecondVideoTrackAndDecodableFrames(_:) started.
+◇ Test case passing 1 argument id → "pixel-bonsai" to everyMP4HasOneSilentFourSecondVideoTrackAndDecodableFrames(_:) started.
+◇ Test case passing 1 argument id → "orbital-rings" to everyMP4HasOneSilentFourSecondVideoTrackAndDecodableFrames(_:) started.
+◇ Test case passing 1 argument id → "hill-observatory" to everyMP4HasOneSilentFourSecondVideoTrackAndDecodableFrames(_:) started.
+◇ Test case passing 1 argument id → "terraced-island" to everyMP4HasOneSilentFourSecondVideoTrackAndDecodableFrames(_:) started.
+◇ Test case passing 1 argument id → "canal-city" to everyMP4HasOneSilentFourSecondVideoTrackAndDecodableFrames(_:) started.
+◇ Test case passing 1 argument id → "alpine-valley" to everyMP4HasOneSilentFourSecondVideoTrackAndDecodableFrames(_:) started.
+◇ Test case passing 1 argument id → "wandering-cartographer" to everyMP4HasOneSilentFourSecondVideoTrackAndDecodableFrames(_:) started.
+◇ Test case passing 1 argument id → "clockwork-dragon" to everyMP4HasOneSilentFourSecondVideoTrackAndDecodableFrames(_:) started.
+◇ Test case passing 1 argument id → "woodland-fox" to everyMP4HasOneSilentFourSecondVideoTrackAndDecodableFrames(_:) started.
+◇ Test case passing 1 argument id → "deep-sea-whale" to everyMP4HasOneSilentFourSecondVideoTrackAndDecodableFrames(_:) started.
+◇ Test case passing 1 argument id → "citadel-of-arches" to everyMP4HasOneSilentFourSecondVideoTrackAndDecodableFrames(_:) started.
+◇ Test case passing 1 argument id → "sky-island-village" to everyMP4HasOneSilentFourSecondVideoTrackAndDecodableFrames(_:) started.
+◇ Test case passing 1 argument id → "canyon-waterfall" to everyMP4HasOneSilentFourSecondVideoTrackAndDecodableFrames(_:) started.
+◇ Test case passing 1 argument id → "moonlit-harbor" to everyMP4HasOneSilentFourSecondVideoTrackAndDecodableFrames(_:) started.
+✔ Test everyMP4HasOneSilentFourSecondVideoTrackAndDecodableFrames(_:) with 20 test cases passed after 6.057 seconds.
+◇ Test everyOBJContainsBoundedOutwardFacingVoxelGeometry(_:) started.
+◇ Test case passing 1 argument id → "character-orb" to everyOBJContainsBoundedOutwardFacingVoxelGeometry(_:) started.
+◇ Test case passing 1 argument id → "woven-torus" to everyOBJContainsBoundedOutwardFacingVoxelGeometry(_:) started.
+◇ Test case passing 1 argument id → "moon-gate" to everyOBJContainsBoundedOutwardFacingVoxelGeometry(_:) started.
+◇ Test case passing 1 argument id → "spiral-tower" to everyOBJContainsBoundedOutwardFacingVoxelGeometry(_:) started.
+◇ Test case passing 1 argument id → "crystal-garden" to everyOBJContainsBoundedOutwardFacingVoxelGeometry(_:) started.
+◇ Test case passing 1 argument id → "little-rocket" to everyOBJContainsBoundedOutwardFacingVoxelGeometry(_:) started.
+◇ Test case passing 1 argument id → "pixel-bonsai" to everyOBJContainsBoundedOutwardFacingVoxelGeometry(_:) started.
+◇ Test case passing 1 argument id → "orbital-rings" to everyOBJContainsBoundedOutwardFacingVoxelGeometry(_:) started.
+◇ Test case passing 1 argument id → "hill-observatory" to everyOBJContainsBoundedOutwardFacingVoxelGeometry(_:) started.
+◇ Test case passing 1 argument id → "terraced-island" to everyOBJContainsBoundedOutwardFacingVoxelGeometry(_:) started.
+◇ Test case passing 1 argument id → "canal-city" to everyOBJContainsBoundedOutwardFacingVoxelGeometry(_:) started.
+◇ Test case passing 1 argument id → "alpine-valley" to everyOBJContainsBoundedOutwardFacingVoxelGeometry(_:) started.
+◇ Test case passing 1 argument id → "wandering-cartographer" to everyOBJContainsBoundedOutwardFacingVoxelGeometry(_:) started.
+◇ Test case passing 1 argument id → "clockwork-dragon" to everyOBJContainsBoundedOutwardFacingVoxelGeometry(_:) started.
+◇ Test case passing 1 argument id → "woodland-fox" to everyOBJContainsBoundedOutwardFacingVoxelGeometry(_:) started.
+◇ Test case passing 1 argument id → "deep-sea-whale" to everyOBJContainsBoundedOutwardFacingVoxelGeometry(_:) started.
+◇ Test case passing 1 argument id → "citadel-of-arches" to everyOBJContainsBoundedOutwardFacingVoxelGeometry(_:) started.
+◇ Test case passing 1 argument id → "sky-island-village" to everyOBJContainsBoundedOutwardFacingVoxelGeometry(_:) started.
+◇ Test case passing 1 argument id → "canyon-waterfall" to everyOBJContainsBoundedOutwardFacingVoxelGeometry(_:) started.
+◇ Test case passing 1 argument id → "moonlit-harbor" to everyOBJContainsBoundedOutwardFacingVoxelGeometry(_:) started.
+✔ Test everyOBJContainsBoundedOutwardFacingVoxelGeometry(_:) with 20 test cases passed after 5.509 seconds.
+✔ Suite ExampleArtifactTests passed after 18.558 seconds.
+◇ Test imageExportHasExpectedDimensionsAndDecodesAsPNG() started.
+✔ Test imageExportHasExpectedDimensionsAndDecodesAsPNG() passed after 0.008 seconds.
+◇ Test glyphRasterDiffersFromEmptyVolume() started.
+✔ Test glyphRasterDiffersFromEmptyVolume() passed after 0.011 seconds.
+◇ Test metalBackendCompletesAndWritesVisibleGlyphs() started.
+✔ Test metalBackendCompletesAndWritesVisibleGlyphs() passed after 0.049 seconds.
+◇ Suite VoxelRenderingTests started.
+◇ Test frontFacePickingAddsOnlyToAnEmptyInBoundsNeighbor() started.
+✔ Test frontFacePickingAddsOnlyToAnEmptyInBoundsNeighbor() passed after 0.001 seconds.
+◇ Test joinedCubesCullSharedFacesAndPickTheNearestVisibleCube() started.
+✔ Test joinedCubesCullSharedFacesAndPickTheNearestVisibleCube() passed after 0.001 seconds.
+◇ Test cameraRotationChangesThePaintableFaceAndNeighbor() started.
+✔ Test cameraRotationChangesThePaintableFaceAndNeighbor() passed after 0.001 seconds.
+◇ Test selectedEmptySliceProvidesRealPickableCellsWithoutInventingCubes() started.
+✔ Test selectedEmptySliceProvidesRealPickableCellsWithoutInventingCubes() passed after 0.001 seconds.
+◇ Test ghostGridCannotStealAnOccludedCubeHit() started.
+✔ Test ghostGridCannotStealAnOccludedCubeHit() passed after 0.001 seconds.
+◇ Test fullSizeSolidVolumeExposesOnlyItsOuterSurface() started.
+✔ Test fullSizeSolidVolumeExposesOnlyItsOuterSurface() passed after 0.457 seconds.
+◇ Test rasterOutputHasGenuineTranslucentFacesAndOptionalClearBackground() started.
+✔ Test rasterOutputHasGenuineTranslucentFacesAndOptionalClearBackground() passed after 0.001 seconds.
+◇ Test projectionRejectsInvalidHitCoordinatesAndNormalizesNonfiniteCamera() started.
+✔ Test projectionRejectsInvalidHitCoordinatesAndNormalizesNonfiniteCamera() passed after 0.001 seconds.
+◇ Test cancelledRenderDoesNotPublishPartialGeometryOrImage() started.
+✔ Test cancelledRenderDoesNotPublishPartialGeometryOrImage() passed after 0.001 seconds.
+✔ Suite VoxelRenderingTests passed after 0.460 seconds.
+◇ Test singleVoxelOBJHasClosedOutwardSurfaceAndCenteredBounds() started.
+✔ Test singleVoxelOBJHasClosedOutwardSurfaceAndCenteredBounds() passed after 0.001 seconds.
+◇ Test neighboringGlyphsShareVerticesAndOmitTheirInternalFaces() started.
+✔ Test neighboringGlyphsShareVerticesAndOmitTheirInternalFaces() passed after 0.001 seconds.
+◇ Test hollowVoxelMeshPreservesTheInteriorSurface() started.
+✔ Test hollowVoxelMeshPreservesTheInteriorSurface() passed after 0.002 seconds.
+◇ Test emptyOBJContainsNoInventedGeometry() started.
+✔ Test emptyOBJContainsNoInventedGeometry() passed after 0.001 seconds.
+◇ Test orbOBJIsClosedAndCanBeRetainedAsExportEvidence() started.
+✔ Test orbOBJIsClosedAndCanBeRetainedAsExportEvidence() passed after 0.069 seconds.
+◇ Test maximumSolidVolumeExportsItsSurfaceRatherThanEveryCube() started.
+✔ Test maximumSolidVolumeExportsItsSurfaceRatherThanEveryCube() passed after 1.827 seconds.
+◇ Test isolatedCubeVolumeFailsBeforeAllocatingAnUnboundedMesh() started.
+✔ Test isolatedCubeVolumeFailsBeforeAllocatingAnUnboundedMesh() passed after 0.151 seconds.
+◇ Test cancelledOBJExportDoesNotReturnAPartialMesh() started.
+✔ Test cancelledOBJExportDoesNotReturnAPartialMesh() passed after 0.001 seconds.
+◇ Test commandsEncodeAsFlatTaggedObjectsAndRoundTrip() started.
+✔ Test commandsEncodeAsFlatTaggedObjectsAndRoundTrip() passed after 0.001 seconds.
+◇ Test strictCommandDecodingRejectsUnknownIrrelevantMissingAndWrongFields() started.
+✔ Test strictCommandDecodingRejectsUnknownIrrelevantMissingAndWrongFields() passed after 0.001 seconds.
+◇ Test batchVersionAndCommandCountAreRequiredAndBounded() started.
+✔ Test batchVersionAndCommandCountAreRequiredAndBounded() passed after 0.001 seconds.
+◇ Test paintEraseAndEmptyGlyphUseExactValidatedCoordinates() started.
+✔ Test paintEraseAndEmptyGlyphUseExactValidatedCoordinates() passed after 0.001 seconds.
+◇ Test invalidCellsAndGlyphsThrowRatherThanSilentlyIgnoreOrFallback() started.
+✔ Test invalidCellsAndGlyphsThrowRatherThanSilentlyIgnoreOrFallback() passed after 0.001 seconds.
+◇ Test fillVisitsOnlyFourConnectedMatchingCellsOnItsOwnSlice() started.
+✔ Test fillVisitsOnlyFourConnectedMatchingCellsOnItsOwnSlice() passed after 0.001 seconds.
+◇ Test fillCanPaintOrEraseEmptyRegionsWithoutCrossingABarrier() started.
+✔ Test fillCanPaintOrEraseEmptyRegionsWithoutCrossingABarrier() passed after 0.001 seconds.
+◇ Test clearingOneSliceLeavesOtherLayersAndTitleIntact() started.
+✔ Test clearingOneSliceLeavesOtherLayersAndTitleIntact() passed after 0.001 seconds.
+◇ Test rotationIsClockwiseBoundedAndRejectsRectangularSlices() started.
+✔ Test rotationIsClockwiseBoundedAndRejectsRectangularSlices() passed after 0.001 seconds.
+◇ Test renamePreservesGeometryAndRejectsInvalidTitles() started.
+✔ Test renamePreservesGeometryAndRejectsInvalidTitles() passed after 0.001 seconds.
+◇ Test batchesApplyInOrderAndFailAtomicallyWithoutChangingTheirSource() started.
+✔ Test batchesApplyInOrderAndFailAtomicallyWithoutChangingTheirSource() passed after 0.001 seconds.
+◇ Test inspectionIsCodableAndDescribesTheDocumentCoordinateSystem() started.
+✔ Test inspectionIsCodableAndDescribesTheDocumentCoordinateSystem() passed after 0.002 seconds.
+◇ Test complexCatalogAddsCharactersCreaturesArchitectureAndWorlds() started.
+✔ Test complexCatalogAddsCharactersCreaturesArchitectureAndWorlds() passed after 0.001 seconds.
+◇ Test largeExamplesStayEditableAndBoundedForMeshAndMediaExport(id:) started.
+◇ Test case passing 1 argument id → "wandering-cartographer" to largeExamplesStayEditableAndBoundedForMeshAndMediaExport(id:) started.
+◇ Test case passing 1 argument id → "clockwork-dragon" to largeExamplesStayEditableAndBoundedForMeshAndMediaExport(id:) started.
+◇ Test case passing 1 argument id → "woodland-fox" to largeExamplesStayEditableAndBoundedForMeshAndMediaExport(id:) started.
+◇ Test case passing 1 argument id → "deep-sea-whale" to largeExamplesStayEditableAndBoundedForMeshAndMediaExport(id:) started.
+◇ Test case passing 1 argument id → "citadel-of-arches" to largeExamplesStayEditableAndBoundedForMeshAndMediaExport(id:) started.
+◇ Test case passing 1 argument id → "sky-island-village" to largeExamplesStayEditableAndBoundedForMeshAndMediaExport(id:) started.
+◇ Test case passing 1 argument id → "canyon-waterfall" to largeExamplesStayEditableAndBoundedForMeshAndMediaExport(id:) started.
+◇ Test case passing 1 argument id → "moonlit-harbor" to largeExamplesStayEditableAndBoundedForMeshAndMediaExport(id:) started.
+✔ Test largeExamplesStayEditableAndBoundedForMeshAndMediaExport(id:) with 8 test cases passed after 0.958 seconds.
+◇ Test cartographerHasFaceMapStaffAndSeparatedLegs() started.
+✔ Test cartographerHasFaceMapStaffAndSeparatedLegs() passed after 0.001 seconds.
+◇ Test dragonHasMirroredRaisedWingsHornsAndAnOpenJaw() started.
+✔ Test dragonHasMirroredRaisedWingsHornsAndAnOpenJaw() passed after 0.001 seconds.
+◇ Test foxHasTwoEarTipsLongMuzzleAndSeparatedFrontPaws() started.
+✔ Test foxHasTwoEarTipsLongMuzzleAndSeparatedFrontPaws() passed after 0.001 seconds.
+◇ Test whaleHasWideNotchedFlukeFlippersAndBranchingSpout() started.
+✔ Test whaleHasWideNotchedFlukeFlippersAndBranchingSpout() passed after 0.001 seconds.
+◇ Test citadelHasTraversableGateCourtyardAndHollowTowerRooms() started.
+✔ Test citadelHasTraversableGateCourtyardAndHollowTowerRooms() passed after 0.001 seconds.
+◇ Test skyVillageHasSuspendedTerrainBridgesAndWindmillAboveHomes() started.
+✔ Test skyVillageHasSuspendedTerrainBridgesAndWindmillAboveHomes() passed after 0.001 seconds.
+◇ Test canyonHasFlowingWaterOpenArchAndCarvedCave() started.
+✔ Test canyonHasFlowingWaterOpenArchAndCarvedCave() passed after 0.001 seconds.
+◇ Test harborHasSailsLightedLanternOpenHomesAndCrescentMoon() started.
+✔ Test harborHasSailsLightedLanternOpenHomesAndCrescentMoon() passed after 0.001 seconds.
+◇ Test exampleCatalogOffersDistinctSculpturesAndSpatialMaps() started.
+✔ Test exampleCatalogOffersDistinctSculpturesAndSpatialMaps() passed after 0.014 seconds.
+◇ Test everyExampleOpensThroughTheRealThreeMDCodec(id:) started.
+◇ Test case passing 1 argument id → "character-orb" to everyExampleOpensThroughTheRealThreeMDCodec(id:) started.
+◇ Test case passing 1 argument id → "woven-torus" to everyExampleOpensThroughTheRealThreeMDCodec(id:) started.
+◇ Test case passing 1 argument id → "moon-gate" to everyExampleOpensThroughTheRealThreeMDCodec(id:) started.
+◇ Test case passing 1 argument id → "spiral-tower" to everyExampleOpensThroughTheRealThreeMDCodec(id:) started.
+◇ Test case passing 1 argument id → "crystal-garden" to everyExampleOpensThroughTheRealThreeMDCodec(id:) started.
+◇ Test case passing 1 argument id → "little-rocket" to everyExampleOpensThroughTheRealThreeMDCodec(id:) started.
+◇ Test case passing 1 argument id → "pixel-bonsai" to everyExampleOpensThroughTheRealThreeMDCodec(id:) started.
+◇ Test case passing 1 argument id → "orbital-rings" to everyExampleOpensThroughTheRealThreeMDCodec(id:) started.
+◇ Test case passing 1 argument id → "hill-observatory" to everyExampleOpensThroughTheRealThreeMDCodec(id:) started.
+◇ Test case passing 1 argument id → "terraced-island" to everyExampleOpensThroughTheRealThreeMDCodec(id:) started.
+◇ Test case passing 1 argument id → "canal-city" to everyExampleOpensThroughTheRealThreeMDCodec(id:) started.
+◇ Test case passing 1 argument id → "alpine-valley" to everyExampleOpensThroughTheRealThreeMDCodec(id:) started.
+◇ Test case passing 1 argument id → "wandering-cartographer" to everyExampleOpensThroughTheRealThreeMDCodec(id:) started.
+◇ Test case passing 1 argument id → "clockwork-dragon" to everyExampleOpensThroughTheRealThreeMDCodec(id:) started.
+◇ Test case passing 1 argument id → "woodland-fox" to everyExampleOpensThroughTheRealThreeMDCodec(id:) started.
+◇ Test case passing 1 argument id → "deep-sea-whale" to everyExampleOpensThroughTheRealThreeMDCodec(id:) started.
+◇ Test case passing 1 argument id → "citadel-of-arches" to everyExampleOpensThroughTheRealThreeMDCodec(id:) started.
+◇ Test case passing 1 argument id → "sky-island-village" to everyExampleOpensThroughTheRealThreeMDCodec(id:) started.
+◇ Test case passing 1 argument id → "canyon-waterfall" to everyExampleOpensThroughTheRealThreeMDCodec(id:) started.
+◇ Test case passing 1 argument id → "moonlit-harbor" to everyExampleOpensThroughTheRealThreeMDCodec(id:) started.
+✔ Test everyExampleOpensThroughTheRealThreeMDCodec(id:) with 20 test cases passed after 0.474 seconds.
+◇ Test shippedThreeMDExamplesMatchTheEditableCatalog(id:) started.
+◇ Test case passing 1 argument id → "character-orb" to shippedThreeMDExamplesMatchTheEditableCatalog(id:) started.
+◇ Test case passing 1 argument id → "woven-torus" to shippedThreeMDExamplesMatchTheEditableCatalog(id:) started.
+◇ Test case passing 1 argument id → "moon-gate" to shippedThreeMDExamplesMatchTheEditableCatalog(id:) started.
+◇ Test case passing 1 argument id → "spiral-tower" to shippedThreeMDExamplesMatchTheEditableCatalog(id:) started.
+◇ Test case passing 1 argument id → "crystal-garden" to shippedThreeMDExamplesMatchTheEditableCatalog(id:) started.
+◇ Test case passing 1 argument id → "little-rocket" to shippedThreeMDExamplesMatchTheEditableCatalog(id:) started.
+◇ Test case passing 1 argument id → "pixel-bonsai" to shippedThreeMDExamplesMatchTheEditableCatalog(id:) started.
+◇ Test case passing 1 argument id → "orbital-rings" to shippedThreeMDExamplesMatchTheEditableCatalog(id:) started.
+◇ Test case passing 1 argument id → "hill-observatory" to shippedThreeMDExamplesMatchTheEditableCatalog(id:) started.
+◇ Test case passing 1 argument id → "terraced-island" to shippedThreeMDExamplesMatchTheEditableCatalog(id:) started.
+◇ Test case passing 1 argument id → "canal-city" to shippedThreeMDExamplesMatchTheEditableCatalog(id:) started.
+◇ Test case passing 1 argument id → "alpine-valley" to shippedThreeMDExamplesMatchTheEditableCatalog(id:) started.
+◇ Test case passing 1 argument id → "wandering-cartographer" to shippedThreeMDExamplesMatchTheEditableCatalog(id:) started.
+◇ Test case passing 1 argument id → "clockwork-dragon" to shippedThreeMDExamplesMatchTheEditableCatalog(id:) started.
+◇ Test case passing 1 argument id → "woodland-fox" to shippedThreeMDExamplesMatchTheEditableCatalog(id:) started.
+◇ Test case passing 1 argument id → "deep-sea-whale" to shippedThreeMDExamplesMatchTheEditableCatalog(id:) started.
+◇ Test case passing 1 argument id → "citadel-of-arches" to shippedThreeMDExamplesMatchTheEditableCatalog(id:) started.
+◇ Test case passing 1 argument id → "sky-island-village" to shippedThreeMDExamplesMatchTheEditableCatalog(id:) started.
+◇ Test case passing 1 argument id → "canyon-waterfall" to shippedThreeMDExamplesMatchTheEditableCatalog(id:) started.
+◇ Test case passing 1 argument id → "moonlit-harbor" to shippedThreeMDExamplesMatchTheEditableCatalog(id:) started.
+✔ Test shippedThreeMDExamplesMatchTheEditableCatalog(id:) with 20 test cases passed after 0.390 seconds.
+◇ Test exampleShapesKeepTheirCharacteristicOpenSpaces() started.
+✔ Test exampleShapesKeepTheirCharacteristicOpenSpaces() passed after 0.001 seconds.
+◇ Test mapExamplesHaveElevationAndUseCharacterMaterials() started.
+✔ Test mapExamplesHaveElevationAndUseCharacterMaterials() passed after 0.010 seconds.
+◇ Test sculptureRoundTripsThroughRealThreeMDParser() started.
+✔ Test sculptureRoundTripsThroughRealThreeMDParser() passed after 0.002 seconds.
+◇ Test rejectsOversizedAndUnrelatedDocuments() started.
+✔ Test rejectsOversizedAndUnrelatedDocuments() passed after 0.001 seconds.
+◇ Test refusesMalformedDimensionsRowsGlyphsAndDepth() started.
+✔ Test refusesMalformedDimensionsRowsGlyphsAndDepth() passed after 0.001 seconds.
+◇ Test protectsGridBoundsAndRejectsInvalidGlyphs() started.
+✔ Test protectsGridBoundsAndRejectsInvalidGlyphs() passed after 0.001 seconds.
+◇ Test duplicatedLayerIsIndependentAndLastLayerIsProtected() started.
+✔ Test duplicatedLayerIsIndependentAndLastLayerIsProtected() passed after 0.001 seconds.
+◇ Test quarterTurnMovesCellAndFourTurnsRestoreLayer() started.
+✔ Test quarterTurnMovesCellAndFourTurnsRestoreLayer() passed after 0.001 seconds.
+◇ Test nearestCellWinsOcclusionAndCanBePicked() started.
+✔ Test nearestCellWinsOcclusionAndCanBePicked() passed after 0.001 seconds.
+◇ Test cameraOrbitChangesProjectionAndNonFiniteValuesRemainSafe() started.
+✔ Test cameraOrbitChangesProjectionAndNonFiniteValuesRemainSafe() passed after 0.001 seconds.
+◇ Test emptyProjectionExportsSpacesWithoutInventingCharacters() started.
+✔ Test emptyProjectionExportsSpacesWithoutInventingCharacters() passed after 0.001 seconds.
+◇ Test titleCannotInjectFrontmatterAndLayerLimitIsEnforced() started.
+✔ Test titleCannotInjectFrontmatterAndLayerLimitIsEnforced() passed after 0.001 seconds.
+◇ Test maximumSixtyFourCubeRoundTripsWithoutExceedingTheFileBudget() started.
+✔ Test maximumSixtyFourCubeRoundTripsWithoutExceedingTheFileBudget() passed after 0.119 seconds.
+◇ Test dimensionsAboveSixtyFourAreRejectedOnEveryAxis() started.
+✔ Test dimensionsAboveSixtyFourAreRejectedOnEveryAxis() passed after 0.001 seconds.
+◇ Test formerThirtyTwoCubeDocumentsRemainCompatible() started.
+✔ Test formerThirtyTwoCubeDocumentsRemainCompatible() passed after 0.009 seconds.
+◇ Test codecRejectsExcessiveDirectivesBeforeAllocatingThreeMDPlanes() started.
+✔ Test codecRejectsExcessiveDirectivesBeforeAllocatingThreeMDPlanes() passed after 0.001 seconds.
+◇ Test occupiedCountRemainsAccurateAcrossEveryMutationAndValueCopy() started.
+✔ Test occupiedCountRemainsAccurateAcrossEveryMutationAndValueCopy() passed after 0.001 seconds.
+◇ Test projectionCanPickTheNearestCellBeyondTheOldDepthLimit() started.
+✔ Test projectionCanPickTheNearestCellBeyondTheOldDepthLimit() passed after 0.001 seconds.
+◇ Test denseMaximumVolumeProjectionStaysBoundedAndPicksActualSourceCells() started.
+✔ Test denseMaximumVolumeProjectionStaysBoundedAndPicksActualSourceCells() passed after 0.160 seconds.
+◇ Test commandCLIInspectsAndPublishesCanonicalEditsWithMachineReadableResult() started.
+✔ Test commandCLIInspectsAndPublishesCanonicalEditsWithMachineReadableResult() passed after 0.005 seconds.
+◇ Test failedCLIBatchCreatesNoOutputAndKeepsInputAndCommandBytes() started.
+✔ Test failedCLIBatchCreatesNoOutputAndKeepsInputAndCommandBytes() passed after 0.002 seconds.
+◇ Test cliRefusesExistingFilesDirectoriesAndDanglingOutputSymlinks() started.
+✔ Test cliRefusesExistingFilesDirectoriesAndDanglingOutputSymlinks() passed after 0.005 seconds.
+◇ Test cliRefusesNonRegularOversizedAndMalformedInputsBeforePublishing() started.
+✔ Test cliRefusesNonRegularOversizedAndMalformedInputsBeforePublishing() passed after 0.005 seconds.
+◇ Test commandCLIHandlesLargeVolumesWhileKeepingCommandInputBounded() started.
+✔ Test commandCLIHandlesLargeVolumesWhileKeepingCommandInputBounded() passed after 0.316 seconds.
+◇ Test cliWritesChosenTemporaryDirectoryAndDirectoryAliasWithoutReplacingEntries() started.
+✔ Test cliWritesChosenTemporaryDirectoryAndDirectoryAliasWithoutReplacingEntries() passed after 0.006 seconds.
+◇ Test directProcessExecutionDoesNotInterpretArgumentText() started.
+✔ Test directProcessExecutionDoesNotInterpretArgumentText() passed after 0.064 seconds.
+◇ Test incorrectPinnedVersionStopsBeforeRunningTheTool() started.
+✔ Test incorrectPinnedVersionStopsBeforeRunningTheTool() passed after 0.001 seconds.
+◇ Test specArgumentsRemainLiteralArgumentsAndFailuresPropagate() started.
+failed
+✔ Test specArgumentsRemainLiteralArgumentsAndFailuresPropagate() passed after 0.001 seconds.
+◇ Test failedReleaseBuildDoesNotScanAnOldExecutable() started.
+build failed✔ Test failedReleaseBuildDoesNotScanAnOldExecutable() passed after 0.001 seconds.
+◇ Test sourceScanRejectsNetworkProcessAndCoreBridges() started.
+✔ Test sourceScanRejectsNetworkProcessAndCoreBridges() passed after 0.015 seconds.
+◇ Test productDependencyGraphRejectsTransitiveToolingAndUnknownEdges() started.
+✔ Test productDependencyGraphRejectsTransitiveToolingAndUnknownEdges() passed after 0.001 seconds.
+◇ Test releaseMarkerScanIncludesEmbeddedUnprintableBytes() started.
+✔ Test releaseMarkerScanIncludesEmbeddedUnprintableBytes() passed after 0.001 seconds.
+◇ Test repositoryInventoryRejectsPythonAndShellProgramsOutsideDependencies() started.
+✔ Test repositoryInventoryRejectsPythonAndShellProgramsOutsideDependencies() passed after 0.001 seconds.
+◇ Test failedRepositoryInventoryCannotPassSourceBoundaries() started.
+git failed✔ Test failedRepositoryInventoryCannotPassSourceBoundaries() passed after 0.002 seconds.
+◇ Test signingFailurePreservesTheExistingBundleAndRemovesStaging() started.
+signing failed✔ Test signingFailurePreservesTheExistingBundleAndRemovesStaging() passed after 0.006 seconds.
+◇ Test successfulPackagingCopiesAllRequiredInputsBeforeReplacingTheOwnedBundle() started.
+signedverifiedentitlementspackaged /var/folders/5k/616qy7sj28l0d53k4c6w_4x00000gn/T/rook-tooling-test-E84E3BAC-142C-4E23-8300-21E818C86A98/dist/Rook.app; local ad-hoc signature, not notarized
+✔ Test successfulPackagingCopiesAllRequiredInputsBeforeReplacingTheOwnedBundle() passed after 0.030 seconds.
+◇ Test packagingRefusesUnrelatedBundlesAndSymbolicLinkDestinations() started.
+✔ Test packagingRefusesUnrelatedBundlesAndSymbolicLinkDestinations() passed after 0.004 seconds.
+◇ Test runnerAcceptsCompleteSwiftChild() started.
+✔ Test runnerAcceptsCompleteSwiftChild() passed after 0.207 seconds.
+◇ Test runnerRejectsPrematureSwiftChildExitZero() started.
+✔ Test runnerRejectsPrematureSwiftChildExitZero() passed after 0.261 seconds.
+◇ Test runnerRejectsSwiftChildRecordedIssueAtExitZero() started.
+✔ Test runnerRejectsSwiftChildRecordedIssueAtExitZero() passed after 0.206 seconds.
+◇ Test runnerPreservesActualSwiftChildExitSeven() started.
+✔ Test runnerPreservesActualSwiftChildExitSeven() passed after 0.207 seconds.
+◇ Test runnerDoesNotOverwriteRetainedEvidence() started.
+✔ Test runnerDoesNotOverwriteRetainedEvidence() passed after 0.001 seconds.
+◇ Test completeSwiftTestingRunIsAcceptedWithTypedSummary() started.
+✔ Test completeSwiftTestingRunIsAcceptedWithTypedSummary() passed after 0.009 seconds.
+◇ Test recordedIssuesAndMissingSummaryAreBothRejected() started.
+✔ Test recordedIssuesAndMissingSummaryAreBothRejected() passed after 0.007 seconds.
+◇ Test incompleteRunWithoutFailureCannotPass() started.
+✔ Test incompleteRunWithoutFailureCannotPass() passed after 0.008 seconds.
+◇ Test xctestZeroAloneCannotPass() started.
+✔ Test xctestZeroAloneCannotPass() passed after 0.005 seconds.
+◇ Test ansiUnicodeAndCIFormattingAreAccepted() started.
+✔ Test ansiUnicodeAndCIFormattingAreAccepted() passed after 0.003 seconds.
+◇ Test failureWordsInsidePassingTestNamesAreNotIssues() started.
+✔ Test failureWordsInsidePassingTestNamesAreNotIssues() passed after 0.008 seconds.
+◇ Test upstreamFailureCannotBeHiddenBySuccessfulSummary() started.
+✔ Test upstreamFailureCannotBeHiddenBySuccessfulSummary() passed after 0.007 seconds.
+◇ Test earlierIssueCannotBeHiddenBySuccessfulSummary() started.
+✔ Test earlierIssueCannotBeHiddenBySuccessfulSummary() passed after 0.007 seconds.
+◇ Test earlierSummaryCannotHideALaterUnfinishedRun() started.
+✔ Test earlierSummaryCannotHideALaterUnfinishedRun() passed after 0.012 seconds.
+◇ Test zeroSwiftTestingCountIsRejected() started.
+✔ Test zeroSwiftTestingCountIsRejected() passed after 0.003 seconds.
+◇ Test explicitExpectedCountIsEnforcedWithoutAProductCountPin() started.
+✔ Test explicitExpectedCountIsEnforcedWithoutAProductCountPin() passed after 0.010 seconds.
+◇ Test xctestFailureIsRejectedEvenWithSwiftTestingSuccess() started.
+✔ Test xctestFailureIsRejectedEvenWithSwiftTestingSuccess() passed after 0.004 seconds.
+✔ Test run with 143 tests in 7 suites passed after 38.018 seconds.

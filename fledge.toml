@@ -45,3 +45,12 @@ steps = ["lint", "build", "test", "js", "rust", "interchange", "element-bundle",
 [lanes.ui]
 description = "Browser UI suite for the published web surfaces."
 steps = ["ui"]
+
+[tasks.sculpt]
+cmd = "/usr/bin/swift run --quiet RookTool format && /usr/bin/swift run --quiet RookTool test && /usr/bin/swift run --quiet RookTool intent && /usr/bin/swift run --quiet RookTool spec && /usr/bin/swift run --quiet RookTool boundaries"
+dir = "apps/sculpt"
+description = "Local macOS Sculpt.3md checks. CI unit tests run on Linux in .github/workflows/sculpt.yml."
+
+[lanes.sculpt]
+description = "macOS lane for the nested Sculpt.3md app. lanes.verify stays the cross-platform parser gate."
+steps = ["sculpt"]

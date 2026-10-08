@@ -1,0 +1,34 @@
+{
+  "240CameraUpdatesMilliseconds" : 1.1395420000000001,
+  "configuration" : "optimized Swift release tests",
+  "exteriorFaces" : 136274,
+  "extractionMilliseconds" : [
+    11.301333,
+    11.819792,
+    11.061500000000001,
+    10.456250000000001,
+    10.8895
+  ],
+  "fourCachedProjectionMilliseconds" : [
+    36.314791,
+    37.235042,
+    39.413249999999998,
+    39.501750000000001
+  ],
+  "fourScalarProjectionMilliseconds" : [
+    54.651166000000003,
+    56.060834,
+    58.016209000000003,
+    57.902292000000003
+  ],
+  "mainActorMeshInstallMilliseconds" : 4.7037500000000003,
+  "meshInstallations" : 1,
+  "nativeSnapshotMilliseconds" : 77.296417000000005,
+  "note" : "CPU timings and a synchronized snapshot; not an on-screen FPS measurement",
+  "occupiedCells" : 827937,
+  "packedMeshBytes" : 27254800,
+  "phase" : "selection-repair",
+  "workerMeshPackingMilliseconds" : 7.7014579999999997,
+  "worldInitialPreparationMilliseconds" : 24.614667000000001,
+  "worldMovedCachedPreparationMilliseconds" : 0.106625
+}

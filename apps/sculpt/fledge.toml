@@ -1,0 +1,17 @@
+# Development tasks. People who use the app do not install Fledge.
+
+[tasks]
+build = "/usr/bin/swift run --quiet RookTool build"
+test = "/usr/bin/swift run --quiet RookTool test"
+test-harness = "/usr/bin/swift run --quiet RookTool test-harness"
+fmt = "/usr/bin/swift run --quiet RookTool format"
+intent = "/usr/bin/swift run --quiet RookTool intent"
+spec = "/usr/bin/swift run --quiet RookTool spec"
+boundaries = "/usr/bin/swift run --quiet RookTool boundaries"
+release-fixture = "/usr/bin/swift run --quiet RookTool release-fixture"
+package = "/usr/bin/swift run --quiet RookTool package"
+run = "/usr/bin/swift run --quiet RookTool run"
+
+[lanes.verify]
+description = "Format, test harness, tests, intent, specs, source boundaries, and the release fixture scan"
+steps = ["fmt", "test-harness", "test", "intent", "spec", "boundaries", "release-fixture"]

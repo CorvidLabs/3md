@@ -1,0 +1,28 @@
+[
+  {
+    "bluePixels" : 898,
+    "changedPixels" : 922,
+    "culled" : 1,
+    "detailed" : 1,
+    "height" : 360,
+    "pose" : "front",
+    "proxies" : 1,
+    "renderer" : "SceneKit Metal",
+    "total" : 3,
+    "visible" : 2,
+    "width" : 480
+  },
+  {
+    "bluePixels" : 1227,
+    "changedPixels" : 1398,
+    "culled" : 1,
+    "detailed" : 1,
+    "height" : 360,
+    "pose" : "orbit",
+    "proxies" : 1,
+    "renderer" : "SceneKit Metal",
+    "total" : 3,
+    "visible" : 2,
+    "width" : 480
+  }
+]

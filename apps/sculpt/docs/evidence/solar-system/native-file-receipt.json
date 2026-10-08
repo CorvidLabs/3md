@@ -1,0 +1,38 @@
+{
+  "cornerNativeSave" : {
+    "bytes" : 16854154,
+    "coordinate" : [
+      255,
+      255,
+      255
+    ],
+    "dimensions" : [
+      256,
+      256,
+      256
+    ],
+    "glyph" : "#",
+    "lastGridRowBytes" : 256,
+    "occupiedCells" : 1,
+    "path" : "/private/tmp/sculpt-native-corner-256-20261004.3md"
+  },
+  "evidenceKind" : "Codex execution observations and file inspection; not human review",
+  "nativeObserved" : [
+    "solar-gallery-load",
+    "256-cubed-command",
+    "cube-paint-and-undo",
+    "16x-slice-paint-and-undo",
+    "last-slice-and-far-corner-paint",
+    "native-3md-save-and-reopen"
+  ],
+  "nativeSolarGIFMP4OBJSavesPerformed" : false,
+  "solarNativeSave" : {
+    "bytes" : 16854166,
+    "canonicalExampleEqual" : true,
+    "path" : "/private/tmp/sculpt-solar-native-256-20261004.3md"
+  },
+  "solarPublishedMesh" : {
+    "faces" : 75552,
+    "vertices" : 76297
+  }
+}

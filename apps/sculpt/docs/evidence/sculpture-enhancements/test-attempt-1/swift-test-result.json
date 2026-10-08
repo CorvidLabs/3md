@@ -1,0 +1,58 @@
+{
+  "arguments" : [
+    "test",
+    "--no-parallel"
+  ],
+  "assessment" : {
+    "failureLines" : [
+      {
+        "line" : 77,
+        "text" : "✘ Test cancellationRemovesPartialAnimationAndOwnedStagingFile(_:) recorded an issue with 1 argument format → .gif at AnimationExportTests.swift:148:9: Expectation failed: try FileManager.default.contentsOfDirectory(atPath: folder.url.path).isEmpty"
+      },
+      {
+        "line" : 79,
+        "text" : "✘ Test cancellationRemovesPartialAnimationAndOwnedStagingFile(_:) with 2 test cases failed after 0.099 seconds with 1 issue."
+      },
+      {
+        "line" : 82,
+        "text" : "✘ Suite AnimationExportTests failed after 0.868 seconds with 1 issue."
+      },
+      {
+        "line" : 289,
+        "text" : "✘ Test run with 79 tests in 2 suites failed after 8.744 seconds with 1 issue."
+      }
+    ],
+    "issues" : [
+      {
+        "upstreamFailure" : {
+          "exitCode" : 1
+        }
+      },
+      {
+        "recordedFailures" : {
+
+        }
+      },
+      {
+        "missingSummary" : {
+
+        }
+      }
+    ],
+    "passed" : false,
+    "reasons" : [
+      "upstream swift test exited 1",
+      "recorded test issue\/failure lines are present",
+      "final successful Swift Testing summary is absent"
+    ],
+    "successfulSummaries" : [
+
+    ],
+    "upstreamExitCode" : 1
+  },
+  "executable" : "\/usr\/bin\/swift",
+  "logPath" : "\/Users\/leif\/Development\/_CorvidLabs\/rook\/docs\/evidence\/sculpture-enhancements\/test-attempt-1\/swift-test.log",
+  "receiptPath" : "\/Users\/leif\/Development\/_CorvidLabs\/rook\/docs\/evidence\/sculpture-enhancements\/test-attempt-1\/swift-test-result.json",
+  "upstreamExitCode" : 1,
+  "workingDirectory" : "\/Users\/leif\/Development\/_CorvidLabs\/rook"
+}

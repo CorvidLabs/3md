@@ -1,0 +1,19 @@
+{
+  "backend" : "SceneKit Metal",
+  "cameraUpdateMaximumMilliseconds" : 2.235666,
+  "cameraUpdateMedianMilliseconds" : 0.104333,
+  "cameraUpdates" : 120,
+  "dimensions" : [
+    256,
+    256,
+    256
+  ],
+  "exteriorFaces" : 75552,
+  "extractionMilliseconds" : 29.319542,
+  "installationMilliseconds" : 355.04225,
+  "meshInstallationCount" : 1,
+  "note" : "Optimized release objects, 1100x700, 4x MSAA, 8 warmup frames then 120 measured camera updates and synchronous offscreen GPU snapshots. Excludes decode\/file IO. Not an on-screen FPS measurement.",
+  "occupiedCells" : 185400,
+  "offscreenGPUFrameMaximumMilliseconds" : 32.301667,
+  "offscreenGPUFrameMedianMilliseconds" : 8.865708
+}

@@ -1,0 +1,164 @@
+{
+  "instances" : [
+    {
+      "id" : "garden-origin",
+      "modelID" : "garden",
+      "quarterTurns" : 0,
+      "x" : "0",
+      "y" : "0",
+      "z" : "0"
+    },
+    {
+      "id" : "garden-neighbor",
+      "modelID" : "garden",
+      "quarterTurns" : 0,
+      "x" : "96",
+      "y" : "0",
+      "z" : "0"
+    },
+    {
+      "id" : "garden-distant",
+      "modelID" : "garden",
+      "quarterTurns" : 0,
+      "x" : "512",
+      "y" : "0",
+      "z" : "256"
+    },
+    {
+      "id" : "garden-trillion",
+      "modelID" : "garden",
+      "quarterTurns" : 0,
+      "x" : "1000000000000",
+      "y" : "0",
+      "z" : "-1000000000000"
+    },
+    {
+      "id" : "instance-d9a27ccc-e04d-4d63-8686-6468f6861b46",
+      "modelID" : "model-555dd2b2-2488-4db8-8b3e-c32525199861",
+      "quarterTurns" : 0,
+      "x" : "0",
+      "y" : "0",
+      "z" : "0"
+    }
+  ],
+  "mode" : "sparse-world",
+  "models" : [
+    {
+      "depth" : 48,
+      "height" : 24,
+      "id" : "garden",
+      "kind" : "tiles",
+      "width" : 48
+    },
+    {
+      "depth" : 24,
+      "height" : 24,
+      "id" : "gate",
+      "inspection" : {
+        "axes" : {
+          "x" : "column, left to right",
+          "y" : "row, top to bottom",
+          "z" : "slice index, increasing spatial depth"
+        },
+        "coordinateBase" : 0,
+        "depth" : 24,
+        "emptyGlyph" : ".",
+        "height" : 24,
+        "occupiedCount" : 976,
+        "palette" : [
+          "#",
+          "@",
+          "*",
+          "+",
+          "o",
+          "x",
+          ":",
+          "=",
+          "-"
+        ],
+        "title" : "Moon gate",
+        "version" : 1,
+        "width" : 24
+      },
+      "kind" : "voxel",
+      "width" : 24
+    },
+    {
+      "depth" : 24,
+      "height" : 24,
+      "id" : "model-555dd2b2-2488-4db8-8b3e-c32525199861",
+      "inspection" : {
+        "axes" : {
+          "x" : "column, left to right",
+          "y" : "row, top to bottom",
+          "z" : "slice index, increasing spatial depth"
+        },
+        "coordinateBase" : 0,
+        "depth" : 24,
+        "emptyGlyph" : ".",
+        "height" : 24,
+        "occupiedCount" : 978,
+        "palette" : [
+          "#",
+          "@",
+          "*",
+          "+",
+          "o",
+          "x",
+          ":",
+          "=",
+          "-"
+        ],
+        "title" : "Pixel bonsai",
+        "version" : 1,
+        "width" : 24
+      },
+      "kind" : "voxel",
+      "width" : 24
+    },
+    {
+      "depth" : 144,
+      "height" : 24,
+      "id" : "root",
+      "kind" : "tiles",
+      "width" : 144
+    },
+    {
+      "depth" : 24,
+      "height" : 24,
+      "id" : "tree",
+      "inspection" : {
+        "axes" : {
+          "x" : "column, left to right",
+          "y" : "row, top to bottom",
+          "z" : "slice index, increasing spatial depth"
+        },
+        "coordinateBase" : 0,
+        "depth" : 24,
+        "emptyGlyph" : ".",
+        "height" : 24,
+        "occupiedCount" : 978,
+        "palette" : [
+          "#",
+          "@",
+          "*",
+          "+",
+          "o",
+          "x",
+          ":",
+          "=",
+          "-"
+        ],
+        "title" : "Pixel bonsai",
+        "version" : 1,
+        "width" : 24
+      },
+      "kind" : "voxel",
+      "width" : 24
+    }
+  ],
+  "operation" : "reference.inspect",
+  "rootID" : "root",
+  "title" : "Gardens without a boundary",
+  "version" : 1
+}

@@ -1,0 +1,119 @@
+{
+  "device" : "Apple M1 Ultra",
+  "frames" : [
+    {
+      "boundsFallback" : 0,
+      "changedPixels" : 480000,
+      "coarse" : 279,
+      "coloredPixels" : 26080,
+      "culled" : 0,
+      "detailDistance" : 128,
+      "detailed" : 1,
+      "filename" : "overview.png",
+      "focus" : {
+        "x" : 511,
+        "y" : 511,
+        "z" : 511
+      },
+      "height" : 600,
+      "meshInstallations" : 8,
+      "mode" : "orbit",
+      "name" : "overview",
+      "omitted" : 0,
+      "renderDistance" : 960,
+      "renderedExteriorFaces" : 343384,
+      "total" : 280,
+      "visible" : 280,
+      "width" : 800
+    },
+    {
+      "boundsFallback" : 0,
+      "changedPixels" : 480000,
+      "coarse" : 80,
+      "coloredPixels" : 310869,
+      "culled" : 178,
+      "detailDistance" : 192,
+      "detailed" : 22,
+      "explorer" : {
+        "anchor" : {
+          "x" : 192,
+          "y" : 960,
+          "z" : 352
+        },
+        "offset" : [
+          32,
+          20,
+          0
+        ],
+        "pitch" : -0.08,
+        "yaw" : 0
+      },
+      "filename" : "valley-castle.png",
+      "focus" : {
+        "x" : 192,
+        "y" : 960,
+        "z" : 352
+      },
+      "height" : 600,
+      "meshInstallations" : 8,
+      "mode" : "explore",
+      "name" : "valley-castle",
+      "omitted" : 0,
+      "renderDistance" : 384,
+      "renderedExteriorFaces" : 494988,
+      "total" : 280,
+      "visible" : 102,
+      "width" : 800
+    },
+    {
+      "boundsFallback" : 0,
+      "changedPixels" : 480000,
+      "coarse" : 3,
+      "coloredPixels" : 168297,
+      "culled" : 276,
+      "detailDistance" : 192,
+      "detailed" : 1,
+      "explorer" : {
+        "anchor" : {
+          "x" : 192,
+          "y" : 0,
+          "z" : 288
+        },
+        "offset" : [
+          32,
+          20,
+          0
+        ],
+        "pitch" : -0.08,
+        "yaw" : 0
+      },
+      "filename" : "sky-citadel.png",
+      "focus" : {
+        "x" : 192,
+        "y" : 0,
+        "z" : 288
+      },
+      "height" : 600,
+      "meshInstallations" : 8,
+      "mode" : "explore",
+      "name" : "sky-citadel",
+      "omitted" : 0,
+      "renderDistance" : 384,
+      "renderedExteriorFaces" : 23842,
+      "total" : 280,
+      "visible" : 4,
+      "width" : 800
+    }
+  ],
+  "notes" : [
+    "Actual synchronized offscreen SCNView snapshots. No on-screen FPS or dense billion-voxel rendering claim.",
+    "Overview and exploration retain the same immutable sparse world, source bytes and prepared model cache.",
+    "Coarse models preserve colored silhouettes; bounds fallback covers budget limits, unavailable coarse meshes and empty geometry.",
+    "Exterior faces count each installed detailed/coarse surface plus six per bounds fallback; shared chunk boundaries are not merged."
+  ],
+  "platform" : "Version 26.5.2 (Build 25F84)",
+  "renderer" : "SceneKit Metal",
+  "schema" : "sculpt-world-exploration-metal-1",
+  "suppliedSourceRevision" : "afa827b772984ef64d537c7645c9d5aac9d282d5",
+  "title" : "Skyreach 1024-cubed landscape"
+}

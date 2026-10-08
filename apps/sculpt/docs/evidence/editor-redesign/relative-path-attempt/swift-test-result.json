@@ -1,0 +1,54 @@
+{
+  "arguments" : [
+    "test",
+    "--no-parallel"
+  ],
+  "assessment" : {
+    "failureLines" : [
+      {
+        "line" : 239,
+        "text" : "✘ Test commandCLIInspectsAndPublishesCanonicalEditsWithMachineReadableResult() recorded an issue at SculptureCommandToolTests.swift:32:2: Caught error: Cannot read \/var\/folders\/5k\/616qy7sj28l0d53k4c6w_4x00000gn\/T\/source with spaces.3md: No such file or directory"
+      },
+      {
+        "line" : 240,
+        "text" : "✘ Test commandCLIInspectsAndPublishesCanonicalEditsWithMachineReadableResult() failed after 0.001 seconds with 1 issue."
+      },
+      {
+        "line" : 309,
+        "text" : "✘ Test run with 100 tests in 3 suites failed after 10.290 seconds with 1 issue."
+      }
+    ],
+    "issues" : [
+      {
+        "upstreamFailure" : {
+          "exitCode" : 1
+        }
+      },
+      {
+        "recordedFailures" : {
+
+        }
+      },
+      {
+        "missingSummary" : {
+
+        }
+      }
+    ],
+    "passed" : false,
+    "reasons" : [
+      "upstream swift test exited 1",
+      "recorded test issue\/failure lines are present",
+      "final successful Swift Testing summary is absent"
+    ],
+    "successfulSummaries" : [
+
+    ],
+    "upstreamExitCode" : 1
+  },
+  "executable" : "\/usr\/bin\/swift",
+  "logPath" : "\/Users\/leif\/Development\/_CorvidLabs\/rook\/.build\/verification\/A765DDFE-1DC6-4211-9DF2-886E6CD41EDA\/swift-test.log",
+  "receiptPath" : "\/Users\/leif\/Development\/_CorvidLabs\/rook\/.build\/verification\/A765DDFE-1DC6-4211-9DF2-886E6CD41EDA\/swift-test-result.json",
+  "upstreamExitCode" : 1,
+  "workingDirectory" : "\/Users\/leif\/Development\/_CorvidLabs\/rook"
+}

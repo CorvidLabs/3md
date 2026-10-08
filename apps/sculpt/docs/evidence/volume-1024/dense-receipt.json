@@ -1,0 +1,168 @@
+{
+  "artifact" : "dense-1024.voxels.lzfse",
+  "decodedBytes" : 1073741824,
+  "decodedSHA256" : "a769f4f6b088a7d13bd9228fba8d9c7dbbf7e1c42e2b19a808a1a3871b98a82a",
+  "decoderMaximumReadBytes" : 1048576,
+  "decoderReadBufferBytes" : 1048576,
+  "decoderReadCalls" : 55,
+  "edge" : 1024,
+  "encodedBytes" : 53965390,
+  "encodedSHA256" : "e37ef0a7618d02f1fdf952cf30397957b8c3752bf53b09d4fb47eac88e86f183",
+  "environment" : {
+    "architecture" : "arm64",
+    "compilerVersionSource" : "Repository pin; verify the build invocation.",
+    "cpu" : "Apple M1 Ultra",
+    "expectedCompiler" : "Swift 6.3.3",
+    "hardwareModel" : "Mac13,2",
+    "logicalProcessors" : 20,
+    "optimization" : "release (-O)",
+    "os" : "Version 26.5.2 (Build 25F84)",
+    "physicalMemoryBytes" : 68719476736
+  },
+  "experimentalFormat" : "Raw byte volume compressed with Apple LZFSE; not a Sculpt or ThreeMD container.",
+  "initializedBytes" : 1073741824,
+  "limitations" : [
+    "Free memory is an instantaneous system snapshot, not an allocation guarantee; unavailable process limits are null.",
+    "Every byte is stored nonzero, hashed and compared after decode. macOS can compress or swap dirty pages; this does not pin one GiB in RAM.",
+    "Kernel resident and physical footprint peaks cover the process lifetime, not only this study; phase snapshots can miss transient peaks.",
+    "Release calls free to relinquish buffer ownership. Allocator caching and kernel accounting can retain resident or footprint bytes afterward; this does not establish an immediate one-GiB OS memory reduction.",
+    "Encode includes streaming SHA256, file writes and synchronization. Decode includes reads, SHA256 and comparison, not decompression alone.",
+    "This probe does not raise production editing limits, create an editable 1024-cubed scene, or establish on-screen FPS."
+  ],
+  "memoryBeforeGuard" : {
+    "physicalFootprintBytes" : 2195888,
+    "physicalFootprintPeakBytes" : 2195888,
+    "processLimitRemainingBytes" : null,
+    "residentBytes" : 9682944,
+    "residentPeakBytes" : 9682944,
+    "systemFreeBytes" : 8186642432
+  },
+  "memoryMethod" : "TASK_VM_INFO process counters and HOST_VM_INFO64 free_count*pageSize; speculative pages are already included.",
+  "minimumFreeReserveBytes" : 536870912,
+  "pattern" : "nonzero-blocks-1: index=x+edge*(y+edge*z); byte=1+((x/32)*17+(y/32)*31+(z/32)*47)%254",
+  "phases" : [
+    {
+      "elapsedSeconds" : 1.0125e-05,
+      "memoryAfter" : {
+        "physicalFootprintBytes" : 2277808,
+        "physicalFootprintPeakBytes" : 2277808,
+        "processLimitRemainingBytes" : null,
+        "residentBytes" : 10010624,
+        "residentPeakBytes" : 10010624,
+        "systemFreeBytes" : 8181547008
+      },
+      "memoryBefore" : {
+        "physicalFootprintBytes" : 2245040,
+        "physicalFootprintPeakBytes" : 2245040,
+        "processLimitRemainingBytes" : null,
+        "residentBytes" : 9977856,
+        "residentPeakBytes" : 9977856,
+        "systemFreeBytes" : 8181547008
+      },
+      "name" : "allocate"
+    },
+    {
+      "elapsedSeconds" : 0.389057625,
+      "memoryAfter" : {
+        "physicalFootprintBytes" : 1076544688,
+        "physicalFootprintPeakBytes" : 1076544688,
+        "processLimitRemainingBytes" : null,
+        "residentBytes" : 1083752448,
+        "residentPeakBytes" : 1083752448,
+        "systemFreeBytes" : 7109836800
+      },
+      "memoryBefore" : {
+        "physicalFootprintBytes" : 2277808,
+        "physicalFootprintPeakBytes" : 2277808,
+        "processLimitRemainingBytes" : null,
+        "residentBytes" : 10010624,
+        "residentPeakBytes" : 10010624,
+        "systemFreeBytes" : 8181547008
+      },
+      "name" : "fill"
+    },
+    {
+      "elapsedSeconds" : 0.4868815,
+      "memoryAfter" : {
+        "physicalFootprintBytes" : 1076675784,
+        "physicalFootprintPeakBytes" : 1076675784,
+        "processLimitRemainingBytes" : null,
+        "residentBytes" : 1084030976,
+        "residentPeakBytes" : 1084030976,
+        "systemFreeBytes" : 7109836800
+      },
+      "memoryBefore" : {
+        "physicalFootprintBytes" : 1076544688,
+        "physicalFootprintPeakBytes" : 1076544688,
+        "processLimitRemainingBytes" : null,
+        "residentBytes" : 1083752448,
+        "residentPeakBytes" : 1083752448,
+        "systemFreeBytes" : 7109836800
+      },
+      "name" : "hash"
+    },
+    {
+      "elapsedSeconds" : 6.076145084,
+      "memoryAfter" : {
+        "physicalFootprintBytes" : 1079231736,
+        "physicalFootprintPeakBytes" : 1079231736,
+        "processLimitRemainingBytes" : null,
+        "residentBytes" : 1086668800,
+        "residentPeakBytes" : 1086668800,
+        "systemFreeBytes" : 7082377216
+      },
+      "memoryBefore" : {
+        "physicalFootprintBytes" : 1076675784,
+        "physicalFootprintPeakBytes" : 1076675784,
+        "processLimitRemainingBytes" : null,
+        "residentBytes" : 1084030976,
+        "residentPeakBytes" : 1084030976,
+        "systemFreeBytes" : 7109836800
+      },
+      "name" : "encode"
+    },
+    {
+      "elapsedSeconds" : 0.803959292,
+      "memoryAfter" : {
+        "physicalFootprintBytes" : 1083000080,
+        "physicalFootprintPeakBytes" : 1083000080,
+        "processLimitRemainingBytes" : null,
+        "residentBytes" : 1090420736,
+        "residentPeakBytes" : 1090420736,
+        "systemFreeBytes" : 7025360896
+      },
+      "memoryBefore" : {
+        "physicalFootprintBytes" : 1079231736,
+        "physicalFootprintPeakBytes" : 1079231736,
+        "processLimitRemainingBytes" : null,
+        "residentBytes" : 1086668800,
+        "residentPeakBytes" : 1086668800,
+        "systemFreeBytes" : 7082377216
+      },
+      "name" : "decode-verify"
+    },
+    {
+      "elapsedSeconds" : 9.17e-07,
+      "memoryAfter" : {
+        "physicalFootprintBytes" : 1083016464,
+        "physicalFootprintPeakBytes" : 1083016464,
+        "processLimitRemainingBytes" : null,
+        "residentBytes" : 1090437120,
+        "residentPeakBytes" : 1090437120,
+        "systemFreeBytes" : 7025360896
+      },
+      "memoryBefore" : {
+        "physicalFootprintBytes" : 1083016464,
+        "physicalFootprintPeakBytes" : 1083016464,
+        "processLimitRemainingBytes" : null,
+        "residentBytes" : 1090437120,
+        "residentPeakBytes" : 1090437120,
+        "systemFreeBytes" : 7025360896
+      },
+      "name" : "release"
+    }
+  ],
+  "rawBytes" : 1073741824,
+  "rawSHA256" : "a769f4f6b088a7d13bd9228fba8d9c7dbbf7e1c42e2b19a808a1a3871b98a82a",
+  "schema" : "sculpt-dense-volume-study-1"
+}

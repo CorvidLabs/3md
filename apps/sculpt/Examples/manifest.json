@@ -1,0 +1,284 @@
+{
+  "columns" : 64,
+  "durationSeconds" : 4,
+  "examples" : [
+    {
+      "files" : {
+        "3md" : 5126,
+        "gif" : 1542042,
+        "mp4" : 587185,
+        "obj" : 57818,
+        "png" : 124700
+      },
+      "id" : "character-orb",
+      "occupiedCells" : 608,
+      "renderStyle" : "ascii",
+      "title" : "Character orb"
+    },
+    {
+      "files" : {
+        "3md" : 15516,
+        "gif" : 1448566,
+        "mp4" : 576284,
+        "obj" : 64851,
+        "png" : 133998
+      },
+      "id" : "woven-torus",
+      "occupiedCells" : 816,
+      "renderStyle" : "ascii",
+      "title" : "Woven torus"
+    },
+    {
+      "files" : {
+        "3md" : 15514,
+        "gif" : 862313,
+        "mp4" : 323607,
+        "obj" : 45465,
+        "png" : 87076
+      },
+      "id" : "moon-gate",
+      "occupiedCells" : 976,
+      "renderStyle" : "ascii",
+      "title" : "Moon gate"
+    },
+    {
+      "files" : {
+        "3md" : 15517,
+        "gif" : 764022,
+        "mp4" : 355593,
+        "obj" : 58603,
+        "png" : 74156
+      },
+      "id" : "spiral-tower",
+      "occupiedCells" : 709,
+      "renderStyle" : "ascii",
+      "title" : "Spiral tower"
+    },
+    {
+      "files" : {
+        "3md" : 15519,
+        "gif" : 1144977,
+        "mp4" : 601558,
+        "obj" : 74746,
+        "png" : 94005
+      },
+      "id" : "crystal-garden",
+      "occupiedCells" : 1141,
+      "renderStyle" : "ascii",
+      "title" : "Crystal garden"
+    },
+    {
+      "files" : {
+        "3md" : 15518,
+        "gif" : 645680,
+        "mp4" : 276807,
+        "obj" : 34874,
+        "png" : 66678
+      },
+      "id" : "little-rocket",
+      "occupiedCells" : 504,
+      "renderStyle" : "ascii",
+      "title" : "Little rocket"
+    },
+    {
+      "files" : {
+        "3md" : 15517,
+        "gif" : 688801,
+        "mp4" : 365323,
+        "obj" : 48659,
+        "png" : 67552
+      },
+      "id" : "pixel-bonsai",
+      "occupiedCells" : 978,
+      "renderStyle" : "ascii",
+      "title" : "Pixel bonsai"
+    },
+    {
+      "files" : {
+        "3md" : 15518,
+        "gif" : 821415,
+        "mp4" : 427412,
+        "obj" : 46431,
+        "png" : 80230
+      },
+      "id" : "orbital-rings",
+      "occupiedCells" : 392,
+      "renderStyle" : "ascii",
+      "title" : "Orbital rings"
+    },
+    {
+      "files" : {
+        "3md" : 15521,
+        "gif" : 877412,
+        "mp4" : 418455,
+        "obj" : 65444,
+        "png" : 81086
+      },
+      "id" : "hill-observatory",
+      "occupiedCells" : 1264,
+      "renderStyle" : "ascii",
+      "title" : "Hill observatory"
+    },
+    {
+      "files" : {
+        "3md" : 15520,
+        "gif" : 737899,
+        "mp4" : 475917,
+        "obj" : 51619,
+        "png" : 60381
+      },
+      "id" : "terraced-island",
+      "occupiedCells" : 1376,
+      "renderStyle" : "ascii",
+      "title" : "Terraced island"
+    },
+    {
+      "files" : {
+        "3md" : 15515,
+        "gif" : 1527550,
+        "mp4" : 729258,
+        "obj" : 87067,
+        "png" : 116932
+      },
+      "id" : "canal-city",
+      "occupiedCells" : 960,
+      "renderStyle" : "ascii",
+      "title" : "Canal city"
+    },
+    {
+      "files" : {
+        "3md" : 15518,
+        "gif" : 1065432,
+        "mp4" : 664307,
+        "obj" : 77696,
+        "png" : 81250
+      },
+      "id" : "alpine-valley",
+      "occupiedCells" : 1745,
+      "renderStyle" : "ascii",
+      "title" : "Alpine valley"
+    },
+    {
+      "files" : {
+        "3md" : 269087,
+        "gif" : 1813406,
+        "mp4" : 570739,
+        "obj" : 378438,
+        "png" : 173748
+      },
+      "id" : "wandering-cartographer",
+      "occupiedCells" : 8474,
+      "renderStyle" : "cubes",
+      "title" : "Wandering cartographer"
+    },
+    {
+      "files" : {
+        "3md" : 269081,
+        "gif" : 2068397,
+        "mp4" : 773846,
+        "obj" : 460659,
+        "png" : 189084
+      },
+      "id" : "clockwork-dragon",
+      "occupiedCells" : 11964,
+      "renderStyle" : "cubes",
+      "title" : "Clockwork dragon"
+    },
+    {
+      "files" : {
+        "3md" : 269077,
+        "gif" : 2034686,
+        "mp4" : 692962,
+        "obj" : 454652,
+        "png" : 186163
+      },
+      "id" : "woodland-fox",
+      "occupiedCells" : 16624,
+      "renderStyle" : "cubes",
+      "title" : "Woodland fox"
+    },
+    {
+      "files" : {
+        "3md" : 269079,
+        "gif" : 1721791,
+        "mp4" : 768071,
+        "obj" : 329162,
+        "png" : 153000
+      },
+      "id" : "deep-sea-whale",
+      "occupiedCells" : 13834,
+      "renderStyle" : "cubes",
+      "title" : "Deep sea whale"
+    },
+    {
+      "files" : {
+        "3md" : 269082,
+        "gif" : 4084055,
+        "mp4" : 896396,
+        "obj" : 1480090,
+        "png" : 347306
+      },
+      "id" : "citadel-of-arches",
+      "occupiedCells" : 17110,
+      "renderStyle" : "cubes",
+      "title" : "Citadel of arches"
+    },
+    {
+      "files" : {
+        "3md" : 269083,
+        "gif" : 2502018,
+        "mp4" : 773215,
+        "obj" : 852045,
+        "png" : 198686
+      },
+      "id" : "sky-island-village",
+      "occupiedCells" : 9529,
+      "renderStyle" : "cubes",
+      "title" : "Sky island village"
+    },
+    {
+      "files" : {
+        "3md" : 269081,
+        "gif" : 4873986,
+        "mp4" : 780204,
+        "obj" : 1402766,
+        "png" : 400181
+      },
+      "id" : "canyon-waterfall",
+      "occupiedCells" : 17698,
+      "renderStyle" : "cubes",
+      "title" : "Canyon waterfall"
+    },
+    {
+      "files" : {
+        "3md" : 269079,
+        "gif" : 3295028,
+        "mp4" : 817100,
+        "obj" : 799825,
+        "png" : 284291
+      },
+      "id" : "moonlit-harbor",
+      "occupiedCells" : 9703,
+      "renderStyle" : "cubes",
+      "title" : "Moonlit harbor"
+    },
+    {
+      "files" : {
+        "3md" : 16854166,
+        "gif" : 1451472,
+        "mp4" : 676095,
+        "obj" : 3776521,
+        "png" : 120668
+      },
+      "id" : "grand-solar-system",
+      "occupiedCells" : 185400,
+      "renderStyle" : "cubes",
+      "title" : "Grand solar system"
+    }
+  ],
+  "framesPerSecond" : 10,
+  "pixelHeight" : 648,
+  "pixelWidth" : 576,
+  "rows" : 36,
+  "schema" : "sculpt-examples-1"
+}

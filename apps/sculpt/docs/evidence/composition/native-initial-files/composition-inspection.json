@@ -1,0 +1,63 @@
+{
+  "expanded" : {
+    "axes" : {
+      "x" : "column, left to right",
+      "y" : "row, top to bottom",
+      "z" : "slice index, increasing spatial depth"
+    },
+    "coordinateBase" : 0,
+    "depth" : 24,
+    "emptyGlyph" : ".",
+    "height" : 72,
+    "occupiedCount" : 4912,
+    "palette" : [
+      "#",
+      "@",
+      "*",
+      "+",
+      "o",
+      "x",
+      ":",
+      "=",
+      "-"
+    ],
+    "title" : "Model garden",
+    "version" : 1,
+    "width" : 72
+  },
+  "mode" : "composition",
+  "modelCount" : 3,
+  "root" : {
+    "bindings" : [
+      {
+        "glyph" : "A",
+        "modelID" : "moon-gate",
+        "quarterTurns" : 1
+      },
+      {
+        "glyph" : "B",
+        "modelID" : "little-rocket",
+        "quarterTurns" : 0
+      }
+    ],
+    "coordinateBase" : 0,
+    "depth" : 1,
+    "height" : 3,
+    "layers" : [
+      [
+        "AAB",
+        ".A.",
+        "B.A"
+      ]
+    ],
+    "tileSize" : {
+      "depth" : 24,
+      "height" : 24,
+      "width" : 24
+    },
+    "width" : 3
+  },
+  "rootID" : "root",
+  "title" : "Model garden",
+  "version" : 1
+}

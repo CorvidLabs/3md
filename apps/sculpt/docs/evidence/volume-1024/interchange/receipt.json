@@ -1,0 +1,228 @@
+{
+  "cases" : 2,
+  "childDeadlineSeconds" : 120,
+  "compression" : "none; Apple LZFSE excluded",
+  "elapsedSeconds" : 712.218126209,
+  "engineArtifacts" : [
+    {
+      "bytes" : 1945296,
+      "path" : "/private/tmp/sculpt-cross-language-20261005/.build/debug/threemd-interchange",
+      "sha256" : "ce409974e5cb7667e347f9d59f7eeb497b4db4c0a6d19e65d0d08bc3225d136a"
+    },
+    {
+      "bytes" : 84211,
+      "path" : "/private/tmp/sculpt-cross-language-20261005/js/dist/index.js",
+      "sha256" : "55f7942ac0e20740e2dad042dad99824ec75afcfeac6958bde7b1db7dbdb14f1"
+    },
+    {
+      "bytes" : 2823472,
+      "path" : "/private/tmp/sculpt-cross-language-20261005/rust/target/debug/examples/interchange",
+      "sha256" : "e58d03abdaa9f9ffaa190de28aa80f5e03d114dfdd914f5f0f8888c47ecf23ef"
+    },
+    {
+      "bytes" : 7434,
+      "path" : "/private/tmp/sculpt-cross-language-20261005/Sources/ThreeMDInterop/Protocol.swift",
+      "sha256" : "dee56abb50c4979d4c02b9cc6002b216324f8135472192be1648025b44073d2e"
+    },
+    {
+      "bytes" : 9868,
+      "path" : "/private/tmp/sculpt-cross-language-20261005/Sources/ThreeMDInterop/SwiftAdapter.swift",
+      "sha256" : "58b76c2a50adbb07f2c15fa21d82fac2f85125198687adb3f52eb66225bb998c"
+    },
+    {
+      "bytes" : 29407,
+      "path" : "/private/tmp/sculpt-cross-language-20261005/Sources/ThreeMDInterop/main.swift",
+      "sha256" : "0c7246e953b5de12dc3ae66bc1fe69c69c06d10eb9ac75b8b525d8c5f5f6fe86"
+    },
+    {
+      "bytes" : 6644,
+      "path" : "/private/tmp/sculpt-cross-language-20261005/js/scripts/interchange.mjs",
+      "sha256" : "897fe27483ae006926c522e4e160cfbaf7172400c198de6edcd7c094269849be"
+    },
+    {
+      "bytes" : 15391,
+      "path" : "/private/tmp/sculpt-cross-language-20261005/rust/examples/interchange.rs",
+      "sha256" : "eb10126ad7bb8763fdceecf2c171524cbe75eefee791ff1baa597a279e6b2da9"
+    }
+  ],
+  "engineCheckoutRevision" : "1eb8ed2a3dd1b5db3c4b9cb64e38c451f7b8c44b",
+  "engineRelationship" : "Read-only git diff between these revisions was empty for public Swift/TypeScript/Rust sources and the three adapters before this run.",
+  "fixtureFiles" : [
+    {
+      "bytes" : 671771,
+      "path" : "/private/tmp/sculpt-1024-case-study-20261005/docs/evidence/volume-1024/worlds/solid-1024.portable.3md",
+      "sha256" : "286ebcc4f1d17b19039300618a0601ea0d38521af2d8d8b6b03f7edd4e4a6ee7"
+    },
+    {
+      "bytes" : 671811,
+      "path" : "/private/tmp/sculpt-1024-case-study-20261005/docs/evidence/volume-1024/worlds/solid-1024.portable.3mdb",
+      "sha256" : "dd7469dd051b886461c094d4a35eaeb11f40cc17a5ae4de9fd69c9a8baae401a"
+    },
+    {
+      "bytes" : 2229495,
+      "path" : "/private/tmp/sculpt-1024-case-study-20261005/docs/evidence/volume-1024/worlds/landscape-1024.portable.3md",
+      "sha256" : "d4a581795924ceeb7601307ac760896c804cd893a4ea729395f3d35b770e33bc"
+    },
+    {
+      "bytes" : 2229535,
+      "path" : "/private/tmp/sculpt-1024-case-study-20261005/docs/evidence/volume-1024/worlds/landscape-1024.portable.3mdb",
+      "sha256" : "6ac5682862ebccb2720bfb8f97d2e76803675395ca84d2593c9e407c45176595"
+    }
+  ],
+  "maximumLineBytes" : 33554432,
+  "maximumStderrBytes" : 2097152,
+  "maximumTranscriptBytes" : 134217728,
+  "nodeVersion" : "v26.10.0",
+  "notes" : [
+    "Both original portable text and original uncompressed binary seed each world through every producer.",
+    "Each producer's canonical text and binary must exactly equal the generated original files, including opaque Sculpt metadata and JSON strings.",
+    "All nine pairs import canonical, binary, identity-adopted and deterministically edited outputs; exact semantic values, revisions and stale-patch rejection are checked.",
+    "Exact Unicode comparison and duplicate/equivalent protocol JSON key rejection use the unchanged pinned Protocol.swift.",
+    "ThreeMD runtimes preserve Sculpt world JSON as opaque content; this check does not implement or interpret the Sculpt schema in Node or Rust.",
+    "The adapter's deterministic root-plane edit is a ThreeMD transaction test; its edited body is not asserted to remain a valid Sculpt world.",
+    "This focused development evidence does not rerun or modify the existing 429-case catalog, raise production limits, or establish new product capabilities."
+  ],
+  "pairCounts" : {
+    "Rust -> Rust" : 16,
+    "Rust -> Swift" : 16,
+    "Rust -> TypeScript-Node" : 16,
+    "Swift -> Rust" : 16,
+    "Swift -> Swift" : 16,
+    "Swift -> TypeScript-Node" : 16,
+    "TypeScript-Node -> Rust" : 16,
+    "TypeScript-Node -> Swift" : 16,
+    "TypeScript-Node -> TypeScript-Node" : 16
+  },
+  "passed" : true,
+  "portableCoreRevision" : "9dfbdb649891a95f27e7590e9e6ddc72b9e58d08",
+  "producerConsumerPairs" : 9,
+  "producerImports" : 12,
+  "producerResults" : [
+    {
+      "adoptedSHA256" : "286ebcc4f1d17b19039300618a0601ea0d38521af2d8d8b6b03f7edd4e4a6ee7",
+      "binarySHA256" : "dd7469dd051b886461c094d4a35eaeb11f40cc17a5ae4de9fd69c9a8baae401a",
+      "canonicalSHA256" : "286ebcc4f1d17b19039300618a0601ea0d38521af2d8d8b6b03f7edd4e4a6ee7",
+      "editedSHA256" : "8779119bca5eeabd1628cc6c709752c10d6c6dc4a8a778229be3e6dedc368bdc",
+      "inputFormat" : "text",
+      "language" : "Swift",
+      "revisionSHA256" : "286ebcc4f1d17b19039300618a0601ea0d38521af2d8d8b6b03f7edd4e4a6ee7",
+      "world" : "solid-1024"
+    },
+    {
+      "adoptedSHA256" : "286ebcc4f1d17b19039300618a0601ea0d38521af2d8d8b6b03f7edd4e4a6ee7",
+      "binarySHA256" : "dd7469dd051b886461c094d4a35eaeb11f40cc17a5ae4de9fd69c9a8baae401a",
+      "canonicalSHA256" : "286ebcc4f1d17b19039300618a0601ea0d38521af2d8d8b6b03f7edd4e4a6ee7",
+      "editedSHA256" : "8779119bca5eeabd1628cc6c709752c10d6c6dc4a8a778229be3e6dedc368bdc",
+      "inputFormat" : "binary-none",
+      "language" : "Swift",
+      "revisionSHA256" : "286ebcc4f1d17b19039300618a0601ea0d38521af2d8d8b6b03f7edd4e4a6ee7",
+      "world" : "solid-1024"
+    },
+    {
+      "adoptedSHA256" : "d4a581795924ceeb7601307ac760896c804cd893a4ea729395f3d35b770e33bc",
+      "binarySHA256" : "6ac5682862ebccb2720bfb8f97d2e76803675395ca84d2593c9e407c45176595",
+      "canonicalSHA256" : "d4a581795924ceeb7601307ac760896c804cd893a4ea729395f3d35b770e33bc",
+      "editedSHA256" : "ff9d3f0e482c4159d03f6cb71f43e949d0045fba8bf3ab1f47e85813c6457f54",
+      "inputFormat" : "text",
+      "language" : "Swift",
+      "revisionSHA256" : "d4a581795924ceeb7601307ac760896c804cd893a4ea729395f3d35b770e33bc",
+      "world" : "landscape-1024"
+    },
+    {
+      "adoptedSHA256" : "d4a581795924ceeb7601307ac760896c804cd893a4ea729395f3d35b770e33bc",
+      "binarySHA256" : "6ac5682862ebccb2720bfb8f97d2e76803675395ca84d2593c9e407c45176595",
+      "canonicalSHA256" : "d4a581795924ceeb7601307ac760896c804cd893a4ea729395f3d35b770e33bc",
+      "editedSHA256" : "ff9d3f0e482c4159d03f6cb71f43e949d0045fba8bf3ab1f47e85813c6457f54",
+      "inputFormat" : "binary-none",
+      "language" : "Swift",
+      "revisionSHA256" : "d4a581795924ceeb7601307ac760896c804cd893a4ea729395f3d35b770e33bc",
+      "world" : "landscape-1024"
+    },
+    {
+      "adoptedSHA256" : "286ebcc4f1d17b19039300618a0601ea0d38521af2d8d8b6b03f7edd4e4a6ee7",
+      "binarySHA256" : "dd7469dd051b886461c094d4a35eaeb11f40cc17a5ae4de9fd69c9a8baae401a",
+      "canonicalSHA256" : "286ebcc4f1d17b19039300618a0601ea0d38521af2d8d8b6b03f7edd4e4a6ee7",
+      "editedSHA256" : "8779119bca5eeabd1628cc6c709752c10d6c6dc4a8a778229be3e6dedc368bdc",
+      "inputFormat" : "text",
+      "language" : "TypeScript-Node",
+      "revisionSHA256" : "286ebcc4f1d17b19039300618a0601ea0d38521af2d8d8b6b03f7edd4e4a6ee7",
+      "world" : "solid-1024"
+    },
+    {
+      "adoptedSHA256" : "286ebcc4f1d17b19039300618a0601ea0d38521af2d8d8b6b03f7edd4e4a6ee7",
+      "binarySHA256" : "dd7469dd051b886461c094d4a35eaeb11f40cc17a5ae4de9fd69c9a8baae401a",
+      "canonicalSHA256" : "286ebcc4f1d17b19039300618a0601ea0d38521af2d8d8b6b03f7edd4e4a6ee7",
+      "editedSHA256" : "8779119bca5eeabd1628cc6c709752c10d6c6dc4a8a778229be3e6dedc368bdc",
+      "inputFormat" : "binary-none",
+      "language" : "TypeScript-Node",
+      "revisionSHA256" : "286ebcc4f1d17b19039300618a0601ea0d38521af2d8d8b6b03f7edd4e4a6ee7",
+      "world" : "solid-1024"
+    },
+    {
+      "adoptedSHA256" : "d4a581795924ceeb7601307ac760896c804cd893a4ea729395f3d35b770e33bc",
+      "binarySHA256" : "6ac5682862ebccb2720bfb8f97d2e76803675395ca84d2593c9e407c45176595",
+      "canonicalSHA256" : "d4a581795924ceeb7601307ac760896c804cd893a4ea729395f3d35b770e33bc",
+      "editedSHA256" : "ff9d3f0e482c4159d03f6cb71f43e949d0045fba8bf3ab1f47e85813c6457f54",
+      "inputFormat" : "text",
+      "language" : "TypeScript-Node",
+      "revisionSHA256" : "d4a581795924ceeb7601307ac760896c804cd893a4ea729395f3d35b770e33bc",
+      "world" : "landscape-1024"
+    },
+    {
+      "adoptedSHA256" : "d4a581795924ceeb7601307ac760896c804cd893a4ea729395f3d35b770e33bc",
+      "binarySHA256" : "6ac5682862ebccb2720bfb8f97d2e76803675395ca84d2593c9e407c45176595",
+      "canonicalSHA256" : "d4a581795924ceeb7601307ac760896c804cd893a4ea729395f3d35b770e33bc",
+      "editedSHA256" : "ff9d3f0e482c4159d03f6cb71f43e949d0045fba8bf3ab1f47e85813c6457f54",
+      "inputFormat" : "binary-none",
+      "language" : "TypeScript-Node",
+      "revisionSHA256" : "d4a581795924ceeb7601307ac760896c804cd893a4ea729395f3d35b770e33bc",
+      "world" : "landscape-1024"
+    },
+    {
+      "adoptedSHA256" : "286ebcc4f1d17b19039300618a0601ea0d38521af2d8d8b6b03f7edd4e4a6ee7",
+      "binarySHA256" : "dd7469dd051b886461c094d4a35eaeb11f40cc17a5ae4de9fd69c9a8baae401a",
+      "canonicalSHA256" : "286ebcc4f1d17b19039300618a0601ea0d38521af2d8d8b6b03f7edd4e4a6ee7",
+      "editedSHA256" : "8779119bca5eeabd1628cc6c709752c10d6c6dc4a8a778229be3e6dedc368bdc",
+      "inputFormat" : "text",
+      "language" : "Rust",
+      "revisionSHA256" : "286ebcc4f1d17b19039300618a0601ea0d38521af2d8d8b6b03f7edd4e4a6ee7",
+      "world" : "solid-1024"
+    },
+    {
+      "adoptedSHA256" : "286ebcc4f1d17b19039300618a0601ea0d38521af2d8d8b6b03f7edd4e4a6ee7",
+      "binarySHA256" : "dd7469dd051b886461c094d4a35eaeb11f40cc17a5ae4de9fd69c9a8baae401a",
+      "canonicalSHA256" : "286ebcc4f1d17b19039300618a0601ea0d38521af2d8d8b6b03f7edd4e4a6ee7",
+      "editedSHA256" : "8779119bca5eeabd1628cc6c709752c10d6c6dc4a8a778229be3e6dedc368bdc",
+      "inputFormat" : "binary-none",
+      "language" : "Rust",
+      "revisionSHA256" : "286ebcc4f1d17b19039300618a0601ea0d38521af2d8d8b6b03f7edd4e4a6ee7",
+      "world" : "solid-1024"
+    },
+    {
+      "adoptedSHA256" : "d4a581795924ceeb7601307ac760896c804cd893a4ea729395f3d35b770e33bc",
+      "binarySHA256" : "6ac5682862ebccb2720bfb8f97d2e76803675395ca84d2593c9e407c45176595",
+      "canonicalSHA256" : "d4a581795924ceeb7601307ac760896c804cd893a4ea729395f3d35b770e33bc",
+      "editedSHA256" : "ff9d3f0e482c4159d03f6cb71f43e949d0045fba8bf3ab1f47e85813c6457f54",
+      "inputFormat" : "text",
+      "language" : "Rust",
+      "revisionSHA256" : "d4a581795924ceeb7601307ac760896c804cd893a4ea729395f3d35b770e33bc",
+      "world" : "landscape-1024"
+    },
+    {
+      "adoptedSHA256" : "d4a581795924ceeb7601307ac760896c804cd893a4ea729395f3d35b770e33bc",
+      "binarySHA256" : "6ac5682862ebccb2720bfb8f97d2e76803675395ca84d2593c9e407c45176595",
+      "canonicalSHA256" : "d4a581795924ceeb7601307ac760896c804cd893a4ea729395f3d35b770e33bc",
+      "editedSHA256" : "ff9d3f0e482c4159d03f6cb71f43e949d0045fba8bf3ab1f47e85813c6457f54",
+      "inputFormat" : "binary-none",
+      "language" : "Rust",
+      "revisionSHA256" : "d4a581795924ceeb7601307ac760896c804cd893a4ea729395f3d35b770e33bc",
+      "world" : "landscape-1024"
+    }
+  ],
+  "protocol" : "3md-interchange-1",
+  "protocolIOEvidence" : "/var/folders/5k/616qy7sj28l0d53k4c6w_4x00000gn/T/sculpt-volume-interchange-17D6675F-CE33-4EF6-A791-F45F7D5C3B51",
+  "schema" : "sculpt-volume-world-interchange-1",
+  "seedInputs" : 4,
+  "suppliedSculptSourceRevision" : "6644ed2a9f8bfe5c5475ee3e86b00dc8e786d550",
+  "transferImports" : 144
+}

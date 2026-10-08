@@ -1,0 +1,77 @@
+[0/1] Planning build
+Building for debugging...
+[0/6] Write swift-version--58304C5D6DBC2206.txt
+Build complete! (0.20s)
+Test Suite 'All tests' started at 2026-10-04 07:39:15.416.
+Test Suite 'All tests' passed at 2026-10-04 07:39:15.417.
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.000 (0.001) seconds
+◇ Test run started.
+↳ Testing Library Version: 1902
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Test systemPreferenceDefersToMacAppearance() started.
+✔ Test systemPreferenceDefersToMacAppearance() passed after 0.001 seconds.
+◇ Test unknownOrMissingStoredAppearanceUsesSystem() started.
+✔ Test unknownOrMissingStoredAppearanceUsesSystem() passed after 0.001 seconds.
+◇ Test knownAppearanceValuesSurviveStorageRoundTrip() started.
+✔ Test knownAppearanceValuesSurviveStorageRoundTrip() passed after 0.001 seconds.
+◇ Test directProcessExecutionDoesNotInterpretArgumentText() started.
+✔ Test directProcessExecutionDoesNotInterpretArgumentText() passed after 0.007 seconds.
+◇ Test incorrectPinnedVersionStopsBeforeRunningTheTool() started.
+✔ Test incorrectPinnedVersionStopsBeforeRunningTheTool() passed after 0.001 seconds.
+◇ Test specArgumentsRemainLiteralArgumentsAndFailuresPropagate() started.
+failed
+✔ Test specArgumentsRemainLiteralArgumentsAndFailuresPropagate() passed after 0.001 seconds.
+◇ Test failedReleaseBuildDoesNotScanAnOldExecutable() started.
+build failed✔ Test failedReleaseBuildDoesNotScanAnOldExecutable() passed after 0.001 seconds.
+◇ Test sourceScanRejectsNetworkProcessAndCoreBridges() started.
+✔ Test sourceScanRejectsNetworkProcessAndCoreBridges() passed after 0.011 seconds.
+◇ Test productDependencyGraphRejectsTransitiveToolingAndUnknownEdges() started.
+✔ Test productDependencyGraphRejectsTransitiveToolingAndUnknownEdges() passed after 0.001 seconds.
+◇ Test releaseMarkerScanIncludesEmbeddedUnprintableBytes() started.
+✔ Test releaseMarkerScanIncludesEmbeddedUnprintableBytes() passed after 0.001 seconds.
+◇ Test repositoryInventoryRejectsPythonAndShellProgramsOutsideDependencies() started.
+✔ Test repositoryInventoryRejectsPythonAndShellProgramsOutsideDependencies() passed after 0.001 seconds.
+◇ Test failedRepositoryInventoryCannotPassSourceBoundaries() started.
+git failed✔ Test failedRepositoryInventoryCannotPassSourceBoundaries() passed after 0.002 seconds.
+◇ Test signingFailurePreservesTheExistingBundleAndRemovesStaging() started.
+signing failed✔ Test signingFailurePreservesTheExistingBundleAndRemovesStaging() passed after 0.004 seconds.
+◇ Test successfulPackagingCopiesAllRequiredInputsBeforeReplacingTheOwnedBundle() started.
+signedverifiedentitlementspackaged /var/folders/5k/616qy7sj28l0d53k4c6w_4x00000gn/T/rook-tooling-test-BCACA3C8-C043-42EF-B74C-63BAAB4CB943/dist/Rook.app; local ad-hoc signature, not notarized
+✔ Test successfulPackagingCopiesAllRequiredInputsBeforeReplacingTheOwnedBundle() passed after 0.037 seconds.
+◇ Test packagingRefusesUnrelatedBundlesAndSymbolicLinkDestinations() started.
+✔ Test packagingRefusesUnrelatedBundlesAndSymbolicLinkDestinations() passed after 0.003 seconds.
+◇ Test runnerAcceptsCompleteSwiftChild() started.
+✔ Test runnerAcceptsCompleteSwiftChild() passed after 0.217 seconds.
+◇ Test runnerRejectsPrematureSwiftChildExitZero() started.
+✔ Test runnerRejectsPrematureSwiftChildExitZero() passed after 0.213 seconds.
+◇ Test runnerRejectsSwiftChildRecordedIssueAtExitZero() started.
+✔ Test runnerRejectsSwiftChildRecordedIssueAtExitZero() passed after 0.220 seconds.
+◇ Test runnerPreservesActualSwiftChildExitSeven() started.
+✔ Test runnerPreservesActualSwiftChildExitSeven() passed after 0.218 seconds.
+◇ Test runnerDoesNotOverwriteRetainedEvidence() started.
+✔ Test runnerDoesNotOverwriteRetainedEvidence() passed after 0.001 seconds.
+◇ Test completeSwiftTestingRunIsAcceptedWithTypedSummary() started.
+✔ Test completeSwiftTestingRunIsAcceptedWithTypedSummary() passed after 0.008 seconds.
+◇ Test recordedIssuesAndMissingSummaryAreBothRejected() started.
+✔ Test recordedIssuesAndMissingSummaryAreBothRejected() passed after 0.007 seconds.
+◇ Test incompleteRunWithoutFailureCannotPass() started.
+✔ Test incompleteRunWithoutFailureCannotPass() passed after 0.008 seconds.
+◇ Test xctestZeroAloneCannotPass() started.
+✔ Test xctestZeroAloneCannotPass() passed after 0.005 seconds.
+◇ Test ansiUnicodeAndCIFormattingAreAccepted() started.
+✔ Test ansiUnicodeAndCIFormattingAreAccepted() passed after 0.004 seconds.
+◇ Test failureWordsInsidePassingTestNamesAreNotIssues() started.
+✔ Test failureWordsInsidePassingTestNamesAreNotIssues() passed after 0.009 seconds.
+◇ Test upstreamFailureCannotBeHiddenBySuccessfulSummary() started.
+✔ Test upstreamFailureCannotBeHiddenBySuccessfulSummary() passed after 0.006 seconds.
+◇ Test earlierIssueCannotBeHiddenBySuccessfulSummary() started.
+✔ Test earlierIssueCannotBeHiddenBySuccessfulSummary() passed after 0.008 seconds.
+◇ Test earlierSummaryCannotHideALaterUnfinishedRun() started.
+✔ Test earlierSummaryCannotHideALaterUnfinishedRun() passed after 0.012 seconds.
+◇ Test zeroSwiftTestingCountIsRejected() started.
+✔ Test zeroSwiftTestingCountIsRejected() passed after 0.003 seconds.
+◇ Test explicitExpectedCountIsEnforcedWithoutAProductCountPin() started.
+✔ Test explicitExpectedCountIsEnforcedWithoutAProductCountPin() passed after 0.011 seconds.
+◇ Test xctestFailureIsRejectedEvenWithSwiftTestingSuccess() started.
+✔ Test xctestFailureIsRejectedEvenWithSwiftTestingSuccess() passed after 0.005 seconds.
+✔ Test run with 32 tests in 0 suites passed after 1.034 seconds.

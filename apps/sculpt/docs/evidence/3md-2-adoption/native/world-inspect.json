@@ -1,0 +1,19 @@
+{
+  "diagnostics" : {
+    "diagnostics" : [
+
+    ],
+    "isTruncated" : false
+  },
+  "kind" : "world",
+  "modelIDs" : [
+    "leaf",
+    "root",
+    "unused"
+  ],
+  "placementCount" : 3,
+  "portableInput" : true,
+  "revisionUTF8Bytes" : 2392,
+  "title" : "Portable exact world",
+  "version" : 1
+}

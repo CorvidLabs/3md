@@ -1,0 +1,35 @@
+{
+  "arguments" : [
+    "test",
+    "--no-parallel",
+    "--filter",
+    "RookVerificationTests|RookToolingTests"
+  ],
+  "assessment" : {
+    "failureLines" : [
+
+    ],
+    "issues" : [
+
+    ],
+    "passed" : true,
+    "reasons" : [
+
+    ],
+    "successfulSummaries" : [
+      {
+        "durationSeconds" : 1.077,
+        "line" : 169,
+        "suites" : 0,
+        "tests" : 31,
+        "text" : "✔ Test run with 31 tests in 0 suites passed after 1.077 seconds."
+      }
+    ],
+    "upstreamExitCode" : 0
+  },
+  "executable" : "\/usr\/bin\/swift",
+  "logPath" : "\/private\/tmp\/sculpt-shared-model-editing-20261005\/.build\/verification\/DB659C02-C1CA-4E65-9D13-BE9B2D436001\/swift-test.log",
+  "receiptPath" : "\/private\/tmp\/sculpt-shared-model-editing-20261005\/.build\/verification\/DB659C02-C1CA-4E65-9D13-BE9B2D436001\/swift-test-result.json",
+  "upstreamExitCode" : 0,
+  "workingDirectory" : "\/private\/tmp\/sculpt-shared-model-editing-20261005"
+}

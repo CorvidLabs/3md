@@ -1,0 +1,14 @@
+Another instance of SwiftPM (PID: 46726) is already running using '/private/tmp/sculpt-3md2-adoption-20261005/.build', waiting until that process has finished execution...[0/1] Planning build
+Building for production...
+[0/2] Write swift-version--58304C5D6DBC2206.txt
+Build of product 'Rook' complete! (0.78s)
+/private/tmp/sculpt-3md2-adoption-20261005/dist/.rook-package-4C6E8196-048F-4DDC-9ABD-7D9AE058CD63.app: replacing existing signature
+[Dict]
+	[Key] com.apple.security.app-sandbox
+	[Value]
+		[Bool] true
+	[Key] com.apple.security.files.user-selected.read-write
+	[Value]
+		[Bool] true
+Executable=/private/tmp/sculpt-3md2-adoption-20261005/dist/.rook-package-4C6E8196-048F-4DDC-9ABD-7D9AE058CD63.app/Contents/MacOS/Rook
+packaged /private/tmp/sculpt-3md2-adoption-20261005/dist/Rook.app; local ad-hoc signature, not notarized

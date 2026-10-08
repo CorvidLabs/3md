@@ -1,0 +1,197 @@
+[0/1] Planning build
+Building for debugging...
+[0/14] Write sources
+[5/14] Write swift-version--58304C5D6DBC2206.txt
+[7/17] Compiling RookSculpture SculptureThreeMDCodec.swift
+/private/tmp/sculpt-1024-case-study-20261005/Sources/RookSculpture/SculptureThreeMDCodec.swift:344:13: warning: initialization of immutable value 'modelRootID' was never used; consider replacing with assignment to '_' or removing it [#no-usage]
+342 |         let root = graph.rootEntry.document
+343 |         let isWorld = root.metadata["scene-schema"] == worldSchema
+344 |         let modelRootID = isWorld ? root.metadata["library-root"] : graph.rootID
+    |             `- warning: initialization of immutable value 'modelRootID' was never used; consider replacing with assignment to '_' or removing it [#no-usage]
+345 |         let entries = graph.entries.filter { !isWorld || $0.id != graph.rootID }
+346 |         guard entries.count <= SculptureComposition.maximumModels else { throw SculptureCompositionError.tooManyModels }
+[8/17] Emitting module RookSculpture
+[9/17] Compiling RookSculpture SculptureSceneInsertion.swift
+[10/18] Compiling RookSculpture SculptureThreeMDEditing.swift
+[11/46] Compiling RookRendering SculptureVoxelSurface.swift
+[12/46] Compiling RookRendering SculptureWorldNavigation.swift
+[13/46] Compiling RookRendering SculptureWorldCoarseMesh.swift
+[14/46] Compiling RookRendering SculptureVoxelRasterizer.swift
+[15/46] Compiling RookRendering SculptureVoxelMeshBuffers.swift
+[16/46] Compiling RookRendering SculptureRasterizer.swift
+[17/46] Compiling RookRendering SculptureRenderStyle.swift
+[18/46] Compiling RookRendering SculptureVoxelGeometry.swift
+[19/46] Compiling RookRendering SculptureLiveVoxelView.swift
+[20/46] Compiling RookRendering SculptureAnimationExporter.swift
+[21/46] Emitting module RookRendering
+[22/46] Compiling RookRendering SculptureLiveWorldView.swift
+[23/86] Compiling RookSculptureTests SculptureWorldTests.swift
+[24/86] Compiling RookSculptureTests SculptureTests.swift
+[25/86] Compiling RookSculptureTests SculptureVolumeStudyExamplesTests.swift
+[26/86] Compiling RookApp SculptureInsertionFiles.swift
+[27/86] Compiling RookApp SliceGridRendering.swift
+[28/86] Compiling RookTool SculptureVolumeStudyWorldExport.swift
+[29/86] Compiling RookTool SculptureReferenceModelTool.swift
+[30/86] Compiling RookTool SculpturePortableTool.swift
+[31/86] Compiling RookSculptureTests SculptureThreeMDTests.swift
+[32/86] Compiling RookSculptureTests SculptureSolarSystemTests.swift
+[33/86] Compiling RookSculptureTests SculptureModelEditingTests.swift
+[34/86] Compiling RookSculptureTests SculptureExamplesTests.swift
+[35/86] Compiling RookSculptureTests SculptureCompositionTests.swift
+[36/86] Compiling RookSculptureTests SculptureCompositionExampleTests.swift
+[37/86] Compiling RookSculptureTests SculptureComplexExamplesTests.swift
+[38/86] Compiling RookSculptureTests SculptureCommandTests.swift
+[39/86] Compiling RookSculptureTests SculptureBlockWorldExamplesTests.swift
+[40/86] Compiling RookSculptureTests OBJExportTests.swift
+[41/86] Compiling RookSculptureTests SculptureBinaryCodecTests.swift
+[42/86] Emitting module RookSculptureTests
+[43/86] Compiling RookSculptureTests SculptureSceneInsertionTests.swift
+[44/86] Compiling RookTool SculptureExampleExport.swift
+[45/86] Compiling RookApp SculptureExportStudio.swift
+[46/86] Compiling RookApp SculptureExamplesBrowser.swift
+[47/86] Emitting module RookTool
+[48/86] Compiling RookTool SculptureCommandTool.swift
+[48/86] Write Objects.LinkFileList
+[50/86] Compiling RookRenderingTests SculptureWorldNavigationTests.swift
+[51/86] Compiling RookApp SculptureWorkspace.swift
+[52/86] Compiling RookApp SculptureFile.swift
+[53/86] Compiling RookApp SculptureSaveJob.swift
+[54/86] Compiling RookApp SculpturePortableInterchange.swift
+[55/86] Compiling RookRenderingTests SculptureVoxelSurfaceTests.swift
+[56/86] Compiling RookApp MainView.swift
+[57/86] Compiling RookApp LayerGrid.swift
+[58/86] Compiling RookApp SculptureSharedModelEditor.swift
+[59/86] Compiling RookApp SculptureViewport.swift
+[60/86] Emitting module RookRenderingTests
+[61/86] Compiling RookRenderingTests VoxelRenderingTests.swift
+[61/86] Linking RookTool
+[62/86] Applying RookTool
+[64/86] Emitting module RookApp
+[65/92] Compiling RookRenderingTests SculptureSolarPerformanceTests.swift
+[66/92] Compiling RookRenderingTests SculptureVolumeStudyRenderingTests.swift
+[67/92] Compiling RookRenderingTests SculptureVoxelMeshBuffersTests.swift
+[68/92] Compiling RookRenderingTests SculptureLiveVoxelTests.swift
+[69/92] Compiling RookRenderingTests RenderingTests.swift
+[70/92] Compiling RookRenderingTests SculptureLiveWorldTests.swift
+[71/92] Compiling RookRenderingTests SculptureWorldExplorationRenderingTests.swift
+[72/92] Compiling RookRenderingTests SculptureWorldCoarseMeshTests.swift
+[73/92] Compiling RookRenderingTests SculptureBlockPerformanceTests.swift
+[74/92] Compiling RookRenderingTests CubeExportTests.swift
+[75/92] Compiling RookRenderingTests ExampleArtifactTests.swift
+[76/92] Compiling RookRenderingTests AnimationExportTests.swift
+[77/92] Compiling RookRenderingTests PreparedVoxelProjectionTests.swift
+[78/92] Compiling RookApp SculptureWorldEditor.swift
+[79/92] Compiling RookToolTests SculptureReferenceModelToolTests.swift
+[80/92] Compiling RookToolTests SculptureVolumeStudyWorldExportTests.swift
+[81/92] Compiling RookToolTests SculptureWorldToolTests.swift
+[82/92] Compiling RookToolTests SculpturePortableToolTests.swift
+[83/92] Emitting module RookToolTests
+[84/92] Compiling RookToolTests SculptureCommandToolTests.swift
+[85/92] Compiling RookApp SculptureCompositionEditor.swift
+[86/92] Compiling RookApp RookApp.swift
+[87/92] Compiling RookApp SculptureEditor.swift
+[87/92] Write Objects.LinkFileList
+[88/92] Linking Rook
+[89/92] Applying Rook
+[91/113] Compiling RookAppTests SculptureReferenceSaveSessionTests.swift
+[92/113] Compiling RookAppTests SculptureWorldEditorTests.swift
+[93/113] Compiling RookAppTests SculptureSharedModelDraftTests.swift
+[94/113] Compiling RookAppTests SculptureExportJobTests.swift
+[95/113] Compiling RookAppTests SculptureSharedModelPresentationTests.swift
+[96/113] Compiling RookAppTests SculptureMeshRevisionTests.swift
+[97/113] Compiling RookAppTests SculptureVoxelWorkspaceTests.swift
+[98/113] Compiling RookAppTests SculpturePortableInterchangeTests.swift
+[99/113] Compiling RookAppTests SculptureGraphSaveJobTests.swift
+[100/113] Compiling RookAppTests SculptureReferenceEditorPresentationTests.swift
+[101/113] Compiling RookAppTests SculptureWorkspaceTests.swift
+[102/114] Compiling RookAppTests SculptureSaveJobTests.swift
+[103/114] Compiling RookAppTests LayerGridScrollPresentationTests.swift
+[104/114] Compiling RookAppTests SculptureCompositionEditorTests.swift
+[105/114] Compiling RookAppTests SculptureEditorPresentationTests.swift
+[106/114] Compiling RookAppTests SculptureCanvasPointerTests.swift
+[107/114] Compiling RookAppTests SculptureInsertionDraftTests.swift
+[108/114] Compiling RookAppTests SculptureCommandFocusTests.swift
+[109/114] Emitting module RookAppTests
+[110/114] Compiling RookAppTests AppearanceTests.swift
+[111/114] Compiling RookAppTests LayerGridGeometryTests.swift
+[112/114] Compiling RookAppTests SliceGridRenderingTests.swift
+[112/114] Write Objects.LinkFileList
+[113/114] Linking RookPackageTests
+Build complete! (15.69s)
+Test Suite 'Selected tests' started at 2026-10-05 16:56:54.948.
+Test Suite 'RookPackageTests.xctest' started at 2026-10-05 16:56:54.949.
+Test Suite 'RookPackageTests.xctest' passed at 2026-10-05 16:56:54.949.
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.000 (0.000) seconds
+Test Suite 'Selected tests' passed at 2026-10-05 16:56:54.949.
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.000 (0.002) seconds
+◇ Test run started.
+↳ Testing Library Version: 1902
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite SculptureSceneInsertionTests started.
+◇ Suite "Native model insertion" started.
+◇ Test parentAndImportedOpaqueDocumentsAndScopedIdentitiesSurviveNamespaceInsertion() started.
+◇ Test recapturePreservesOpaqueMetadataWhileRecognizedGeometryStillChanges() started.
+◇ Test worldBatchRefusesCheckedOverflowAndUnsafeOriginsAtomically() started.
+◇ Test cancellationReturnsNoPartialInsertionForEitherParentKind() started.
+◇ Test completeUnusedModelCountsRemainBoundedBeforeAnyInsertion() started.
+◇ Test selectedVoxelGetsABindingAndImmediatePlacementWithoutChangingTheParent() started.
+◇ Test standaloneVoxelMetadataIsCarriedIntoItsImportedDefinition() started.
+◇ Test metadataPreservationDoesNotPermitArbitraryMarkdownOrMalformedGeometry() started.
+◇ Test worldBatchUsesExactFocusAndRootWidthsWithoutFlattening() started.
+◇ Test invalidSelectionInsufficientSpaceAndChildFitCannotPartiallyEdit() started.
+◇ Test repeatedInputKeepsEachImportIndependentButItsInternalSharingIntact() started.
+◇ Test placingOverAnOccupiedCellRetainsItsExistingReusableModelAndBinding() started.
+◇ Test portableOpaqueAttributesDoNotHideInvalidIdentitiesOrBindingEdges() started.
+◇ Test batchPlacementCrossesRowsAndLayersInSelectionOrder() started.
+◇ Test worldRootAndNestedDocumentMetadataSurvivePlacementChangesAndSharedEditing() started.
+◇ Test unsupportedChildrenEmptyBatchesAndMismatchedSnapshotsRefuse() started.
+◇ Test exhaustedBindingCharactersRefuseWithoutRemovingExistingBindings() started.
+◇ Test nestedGraphsNamespaceCollisionsAndRetainSharedChildrenRotationsAndUnusedModels() started.
+◇ Test compositionBatchPlacesNestedModelsAndRestoresTheCompleteSnapshotWithOneUndo() started.
+✔ Test cancellationReturnsNoPartialInsertionForEitherParentKind() passed after 0.002 seconds.
+✔ Test exhaustedBindingCharactersRefuseWithoutRemovingExistingBindings() passed after 0.002 seconds.
+✔ Test metadataPreservationDoesNotPermitArbitraryMarkdownOrMalformedGeometry() passed after 0.010 seconds.
+✔ Test recapturePreservesOpaqueMetadataWhileRecognizedGeometryStillChanges() passed after 0.028 seconds.
+✔ Test invalidSelectionInsufficientSpaceAndChildFitCannotPartiallyEdit() passed after 0.033 seconds.
+✔ Test unsupportedChildrenEmptyBatchesAndMismatchedSnapshotsRefuse() passed after 0.033 seconds.
+✔ Test selectedVoxelGetsABindingAndImmediatePlacementWithoutChangingTheParent() passed after 0.049 seconds.
+✔ Test portableOpaqueAttributesDoNotHideInvalidIdentitiesOrBindingEdges() passed after 0.066 seconds.
+✔ Test worldBatchRefusesCheckedOverflowAndUnsafeOriginsAtomically() passed after 0.070 seconds.
+✔ Test placingOverAnOccupiedCellRetainsItsExistingReusableModelAndBinding() passed after 0.079 seconds.
+✔ Test batchPlacementCrossesRowsAndLayersInSelectionOrder() passed after 0.085 seconds.
+✔ Test standaloneVoxelMetadataIsCarriedIntoItsImportedDefinition() passed after 0.090 seconds.
+✔ Test nestedGraphsNamespaceCollisionsAndRetainSharedChildrenRotationsAndUnusedModels() passed after 0.094 seconds.
+✔ Test repeatedInputKeepsEachImportIndependentButItsInternalSharingIntact() passed after 0.118 seconds.
+✔ Test worldBatchUsesExactFocusAndRootWidthsWithoutFlattening() passed after 0.140 seconds.
+✔ Test compositionBatchPlacesNestedModelsAndRestoresTheCompleteSnapshotWithOneUndo() passed after 0.153 seconds.
+◇ Test worldBatchPlacesAtExactFocusAndKeepsLibraryAndSnapshotInOneHistoryEntry() started.
+✔ Test parentAndImportedOpaqueDocumentsAndScopedIdentitiesSurviveNamespaceInsertion() passed after 0.164 seconds.
+✔ Test worldRootAndNestedDocumentMetadataSurvivePlacementChangesAndSharedEditing() passed after 0.168 seconds.
+✔ Test completeUnusedModelCountsRemainBoundedBeforeAnyInsertion() passed after 0.181 seconds.
+✔ Suite SculptureSceneInsertionTests passed after 0.182 seconds.
+✔ Test worldBatchPlacesAtExactFocusAndKeepsLibraryAndSnapshotInOneHistoryEntry() passed after 0.055 seconds.
+◇ Test compositionRefusalsNeverPublishAPartialBatchOrCreateHistory() started.
+✔ Test compositionRefusalsNeverPublishAPartialBatchOrCreateHistory() passed after 0.006 seconds.
+◇ Test failedInsertionRetainsAnExistingRedoAndSavedBaseline() started.
+✔ Test failedInsertionRetainsAnExistingRedoAndSavedBaseline() passed after 0.008 seconds.
+◇ Test exhaustedGlyphLedgerRefusesInsertionWithoutChangingTheMapOrHistory() started.
+✔ Test exhaustedGlyphLedgerRefusesInsertionWithoutChangingTheMapOrHistory() passed after 0.001 seconds.
+◇ Test worldRefusalsKeepExactDocumentHistoryAndPortableSnapshot() started.
+✔ Test worldRefusalsKeepExactDocumentHistoryAndPortableSnapshot() passed after 0.012 seconds.
+◇ Test multiselectUsesDeterministicPathOrderAndRetainsPortableInputs() started.
+✔ Test multiselectUsesDeterministicPathOrderAndRetainsPortableInputs() passed after 0.028 seconds.
+◇ Test recursiveFolderSelectionSkipsHiddenUnsupportedAndSymbolicEntries() started.
+✘ Test recursiveFolderSelectionSkipsHiddenUnsupportedAndSymbolicEntries() recorded an issue at SculptureInsertionDraftTests.swift:238:9: Expectation failed: (inputs.map(\.scene) → [RookSculpture.SculptureScene.voxels(RookSculpture.Sculpture(width: 1, height: 1, title: "First", layers: [[35]], occupiedCells: 1, occupiedCellsByLayer: [1], occupiedCellsByRow: [[1]]))]) == ([.voxels(first), .voxels(second)] → [RookSculpture.SculptureScene.voxels(RookSculpture.Sculpture(width: 1, height: 1, title: "First", layers: [[35]], occupiedCells: 1, occupiedCellsByLayer: [1], occupiedCellsByRow: [[1]])), RookSculpture.SculptureScene.voxels(RookSculpture.Sculpture(width: 1, height: 1, title: "Second", layers: [[64]], occupiedCells: 1, occupiedCellsByLayer: [1], occupiedCellsByRow: [[1]]))])
+± removed [RookSculpture.SculptureScene.voxels(RookSculpture.Sculpture(width: 1, height: 1, title: "Second", layers: [[64]], occupiedCells: 1, occupiedCellsByLayer: [1], occupiedCellsByRow: [[1]]))]
+✘ Test recursiveFolderSelectionSkipsHiddenUnsupportedAndSymbolicEntries() recorded an issue at SculptureInsertionDraftTests.swift:239:9: Expectation failed: try inputs == SculptureInsertionFiles.read([b, a])
+✘ Test recursiveFolderSelectionSkipsHiddenUnsupportedAndSymbolicEntries() failed after 0.007 seconds with 2 issues.
+◇ Test fileSelectionRefusesEmptyUnsupportedSymlinkAndOversizedInputs() started.
+✔ Test fileSelectionRefusesEmptyUnsupportedSymlinkAndOversizedInputs() passed after 0.011 seconds.
+◇ Test cancelledFileReadsAndDraftInsertionNeverPublishOrCreateHistory() started.
+✔ Test cancelledFileReadsAndDraftInsertionNeverPublishOrCreateHistory() passed after 0.011 seconds.
+◇ Test nativeFolderInsertionAutomaticallyPlacesTheBatchAndUnsupportedSelectionIsAtomic() started.
+✔ Test nativeFolderInsertionAutomaticallyPlacesTheBatchAndUnsupportedSelectionIsAtomic() passed after 0.047 seconds.
+◇ Test worldInsertionRejectsAParentChangedDuringFilePreparation() started.
+✔ Test worldInsertionRejectsAParentChangedDuringFilePreparation() passed after 0.028 seconds.
+✘ Suite "Native model insertion" failed after 0.373 seconds with 2 issues.
+✘ Test run with 30 tests in 2 suites failed after 0.374 seconds with 2 issues.

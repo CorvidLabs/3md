@@ -1,0 +1,41 @@
+---
+3md: "0.1"
+axis: "layer"
+profile: "3md-composition-1"
+---
+
+@plane z=0 label="Composition"
+```json
+{
+  "entries": [
+    {
+      "id": "leaf",
+      "references": [],
+      "source": "---\n3md: \"1.0\"\naxis: \"space\"\ntitle: \"Portable \\\"leaf\\\" \\\\ study\"\nheight: \"1\"\nscene-schema: \"ascii-sculpture-1\"\nwidth: \"2\"\n---\n\n@plane z=0 label=\"Slice 1\" 3md-id=\"plane-1\"\n```ascii\n#@\n```\n\n@plane z=1 label=\"Slice 2\" 3md-id=\"plane-2\"\n```ascii\n.+\n```\n"
+    },
+    {
+      "id": "root",
+      "references": [
+        {"attributes": {"3md-id": "reference-1", "glyph": "65", "quarter-turns": "0"}, "targetID": "leaf"},
+        {"attributes": {"3md-id": "reference-2", "glyph": "66", "quarter-turns": "1"}, "targetID": "leaf"}
+      ],
+      "source": "---\n3md: \"1.0\"\naxis: \"space\"\ntitle: \"Portable repeated library\"\nbind-A: \"leaf:0\"\nbind-B: \"leaf:1\"\nheight: \"1\"\nroot-id: \"root\"\nscene-schema: \"ascii-composition-1\"\ntile-depth: \"2\"\ntile-height: \"2\"\ntile-width: \"2\"\nwidth: \"2\"\n---\n\n@plane z=0 label=\"Tile slice 1\" 3md-id=\"plane-1\"\n```ascii\nAB\n```\n"
+    },
+    {
+      "id": "sculpt-world",
+      "references": [
+        {"attributes": {"3md-id": "reference-1", "role": "world-model"}, "targetID": "leaf"},
+        {"attributes": {"3md-id": "reference-2", "role": "world-model"}, "targetID": "root"}
+      ],
+      "source": "---\n3md: \"1.0\"\naxis: \"space\"\ntitle: \"Portable exact world\"\nlibrary-root: \"root\"\nlibrary-title: \"Portable repeated library\"\nscene-schema: \"ascii-world-2\"\n---\n\n@plane z=0 label=\"World\" 3md-id=\"plane-1\"\n```json\n{\"instances\":[{\"id\":\"minimum\",\"modelID\":\"leaf\",\"quarterTurns\":0,\"x\":-9223372036854775808,\"y\":9007199254740993,\"z\":-9007199254740993},{\"id\":\"adjacent\",\"modelID\":\"leaf\",\"quarterTurns\":1,\"x\":-9223372036854775807,\"y\":9007199254740994,\"z\":-9007199254740992},{\"id\":\"maximum\",\"modelID\":\"leaf\",\"quarterTurns\":3,\"x\":9223372036854775551,\"y\":0,\"z\":0}],\"version\":1}\n```\n"
+    },
+    {
+      "id": "unused",
+      "references": [],
+      "source": "---\n3md: \"1.0\"\naxis: \"space\"\ntitle: \"Unused\"\nheight: \"1\"\nscene-schema: \"ascii-sculpture-1\"\nwidth: \"1\"\n---\n\n@plane z=0 label=\"Slice 1\" 3md-id=\"plane-1\"\n```ascii\n*\n```\n"
+    }
+  ],
+  "rootID": "sculpt-world",
+  "schema": "3md-composition-1"
+}
+```

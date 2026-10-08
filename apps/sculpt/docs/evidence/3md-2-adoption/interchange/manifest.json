@@ -1,0 +1,32 @@
+{
+  "cases" : [
+    {
+      "binaryBytes" : 323,
+      "binaryFile" : "portable-voxel.3mdb",
+      "id" : "portable-voxel",
+      "kind" : "document",
+      "sceneTitle" : "Portable \"leaf\" \\ study",
+      "textBytes" : 283,
+      "textFile" : "portable-voxel.3md"
+    },
+    {
+      "binaryBytes" : 1499,
+      "binaryFile" : "portable-composition.3mdb",
+      "id" : "portable-composition",
+      "kind" : "composition",
+      "sceneTitle" : "Portable repeated library",
+      "textBytes" : 1459,
+      "textFile" : "portable-composition.3md"
+    },
+    {
+      "binaryBytes" : 2432,
+      "binaryFile" : "portable-world.3mdb",
+      "id" : "portable-world",
+      "kind" : "composition",
+      "sceneTitle" : "Portable exact world",
+      "textBytes" : 2392,
+      "textFile" : "portable-world.3md"
+    }
+  ],
+  "schema" : "sculpt-three-md-portable-fixtures-1"
+}

@@ -1,0 +1,98 @@
+warning: /Users/leif/Library/org.swift.swiftpm/configuration is not accessible or not writable, disabling user-level cache features.
+warning: /Users/leif/Library/org.swift.swiftpm/security is not accessible or not writable, disabling user-level cache features.
+warning: /Users/leif/Library/Caches/org.swift.swiftpm is not accessible or not writable, disabling user-level cache features.
+warning: 'sculpt-3md2-adoption-20261005': failed storing manifest for 'sculpt-3md2-adoption-20261005' in cache: attempt to write a readonly database
+Building for debugging...
+[0/7] Write sources
+[1/7] Write swift-version--58304C5D6DBC2206.txt
+[3/6] Emitting module RookAppTests
+[4/6] Compiling RookAppTests SculpturePortableInterchangeTests.swift
+[4/6] Write Objects.LinkFileList
+[5/6] Linking RookPackageTests
+Build complete! (2.75s)
+Test Suite 'Selected tests' started at 2026-10-05 11:44:32.257.
+Test Suite 'RookPackageTests.xctest' started at 2026-10-05 11:44:32.258.
+Test Suite 'RookPackageTests.xctest' passed at 2026-10-05 11:44:32.259.
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.000 (0.000) seconds
+Test Suite 'Selected tests' passed at 2026-10-05 11:44:32.259.
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.000 (0.001) seconds
+◇ Test run started.
+↳ Testing Library Version: 1902
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite "Reference save snapshots" started.
+◇ Test compositionPreparationRetainsReferencesAndLeavesVoxelBaselineAlone() started.
+✔ Test compositionPreparationRetainsReferencesAndLeavesVoxelBaselineAlone() passed after 0.057 seconds.
+◇ Test cancellationAndReplacementCannotPublishAnOldGraph() started.
+✔ Test cancellationAndReplacementCannotPublishAnOldGraph() passed after 0.022 seconds.
+◇ Test worldPreparationPreservesExactSparseCoordinates() started.
+✔ Test worldPreparationPreservesExactSparseCoordinates() passed after 0.034 seconds.
+✔ Suite "Reference save snapshots" passed after 0.115 seconds.
+◇ Suite "Portable native scene interchange" started.
+◇ Test copyPreparationKeepsTheNativeWorkspaceAndReferenceBaseline() started.
+✔ Test copyPreparationKeepsTheNativeWorkspaceAndReferenceBaseline() passed after 0.024 seconds.
+◇ Test voxelCopyLeavesTheSavedBaselineUndoAndNativeSaveMessageAlone() started.
+✔ Test voxelCopyLeavesTheSavedBaselineUndoAndNativeSaveMessageAlone() passed after 0.016 seconds.
+◇ Test regularFileOpenReopensAnAdoptedGenericBinaryAsReadablePortableText() started.
+✔ Test regularFileOpenReopensAnAdoptedGenericBinaryAsReadablePortableText() passed after 0.008 seconds.
+◇ Test cancellationAndSupersessionDoNotPublishStaleCopies() started.
+✔ Test cancellationAndSupersessionDoNotPublishStaleCopies() passed after 0.025 seconds.
+◇ Test contentOpenRoutesAllPortableScenesAndKeepsLegacyDecoding() started.
+✔ Test contentOpenRoutesAllPortableScenesAndKeepsLegacyDecoding() passed after 0.033 seconds.
+◇ Test sharedApplyAndUndoRetainOriginalIdentitiesAndExactRevisions() started.
+✔ Test sharedApplyAndUndoRetainOriginalIdentitiesAndExactRevisions() passed after 0.014 seconds.
+◇ Test worldApplyRetainsExactAnchorsAndSnapshotUndo() started.
+✔ Test worldApplyRetainsExactAnchorsAndSnapshotUndo() passed after 0.021 seconds.
+◇ Test staleNativeParentDoesNotPublishAnyPortableSnapshot() started.
+✔ Test staleNativeParentDoesNotPublishAnyPortableSnapshot() passed after 0.016 seconds.
+◇ Test onlyCapacityFailuresUseTheLegacyNativeEditingFallback() started.
+✔ Test onlyCapacityFailuresUseTheLegacyNativeEditingFallback() passed after 4.651 seconds.
+◇ Test diagnosticPresentationKeepsCodesPathsAndRealSourceLines() started.
+✔ Test diagnosticPresentationKeepsCodesPathsAndRealSourceLines() passed after 0.001 seconds.
+✔ Suite "Portable native scene interchange" passed after 4.813 seconds.
+◇ Suite "Reference save session lifecycle" started.
+◇ Test compositionSuccessfulSaveRetainsExactDraftSelectionAndGraphHistory() started.
+✔ Test compositionSuccessfulSaveRetainsExactDraftSelectionAndGraphHistory() passed after 0.024 seconds.
+◇ Test worldSuccessfulSaveRetainsLibraryHistoryFocusCameraAndSelectedInstance() started.
+✔ Test worldSuccessfulSaveRetainsLibraryHistoryFocusCameraAndSelectedInstance() passed after 0.030 seconds.
+◇ Test panelCancellationAndWriteFailureKeepSameDraftBaselineAndHistory() started.
+✔ Test panelCancellationAndWriteFailureKeepSameDraftBaselineAndHistory() passed after 0.018 seconds.
+◇ Test saveOnlyMarksCapturedSnapshotAndLeavesLaterEditsDirty() started.
+✔ Test saveOnlyMarksCapturedSnapshotAndLeavesLaterEditsDirty() passed after 0.019 seconds.
+◇ Test preparationFailureRetainsDraftAndCaptureFailureDoesNotDismissIt() started.
+✔ Test preparationFailureRetainsDraftAndCaptureFailureDoesNotDismissIt() passed after 0.321 seconds.
+✔ Suite "Reference save session lifecycle" passed after 0.414 seconds.
+◇ Suite "Shared model draft editing" started.
+◇ Test compositionApplyUpdatesNestedReferencesAsOneParentUndoAndRedo() started.
+✔ Test compositionApplyUpdatesNestedReferencesAsOneParentUndoAndRedo() passed after 0.010 seconds.
+◇ Test compositionCancelAndNoOpKeepReferenceWorkspaceAndHistoryExact() started.
+✔ Test compositionCancelAndNoOpKeepReferenceWorkspaceAndHistoryExact() passed after 0.009 seconds.
+◇ Test compositionSessionRejectsChangedParentAndInvalidLeafWithoutOverwritingNewerState() started.
+✔ Test compositionSessionRejectsChangedParentAndInvalidLeafWithoutOverwritingNewerState() passed after 0.011 seconds.
+◇ Test compositionHistoryIncludesRootMapAndLibraryTogether() started.
+✔ Test compositionHistoryIncludesRootMapAndLibraryTogether() passed after 0.001 seconds.
+◇ Test savedRootEditsRemainCleanAfterSharedApplyUndoAndRetainNewerDirtyEdits() started.
+✔ Test savedRootEditsRemainCleanAfterSharedApplyUndoAndRetainNewerDirtyEdits() passed after 0.008 seconds.
+◇ Test worldSharedApplyAndUniqueBothIncludeLibraryInDirtyAndUndoHistory() started.
+✔ Test worldSharedApplyAndUniqueBothIncludeLibraryInDirtyAndUndoHistory() passed after 0.013 seconds.
+◇ Test worldCancelNoOpAndStaleSessionRetainExactDocumentAndScene() started.
+✔ Test worldCancelNoOpAndStaleSessionRetainExactDocumentAndScene() passed after 0.023 seconds.
+◇ Test cancellationNeverPublishesChildAndNestedMapIsNotMadeUnique() started.
+✔ Test cancellationNeverPublishesChildAndNestedMapIsNotMadeUnique() passed after 0.001 seconds.
+✔ Suite "Shared model draft editing" passed after 0.080 seconds.
+◇ Suite "Portable scene development commands" started.
+◇ Test exportAcceptsEveryLegacySceneAndPublishesBothPortableFormatsWithoutChangingInput() started.
+✔ Test exportAcceptsEveryLegacySceneAndPublishesBothPortableFormatsWithoutChangingInput() passed after 0.060 seconds.
+◇ Test inspectReportsStructuredDiagnosticsAndPortableSceneFacts() started.
+✔ Test inspectReportsStructuredDiagnosticsAndPortableSceneFacts() passed after 0.016 seconds.
+◇ Test applyUsesExactExpectedRevisionPreservesReferencesAndIsDeterministic() started.
+✔ Test applyUsesExactExpectedRevisionPreservesReferencesAndIsDeterministic() passed after 0.060 seconds.
+◇ Test staleSceneAndFailedCommandBatchNeverCreateOutput() started.
+✔ Test staleSceneAndFailedCommandBatchNeverCreateOutput() passed after 0.017 seconds.
+◇ Test requestsRejectUnknownDuplicateEquivalentAndOversizedFields() started.
+✔ Test requestsRejectUnknownDuplicateEquivalentAndOversizedFields() passed after 0.024 seconds.
+◇ Test exportsNeverOverwriteExistingFilesOrSymbolicLinksAndRejectUnknownExtensions() started.
+✔ Test exportsNeverOverwriteExistingFilesOrSymbolicLinksAndRejectUnknownExtensions() passed after 0.015 seconds.
+◇ Test cancellationBeforePublicationLeavesNoFile() started.
+✔ Test cancellationBeforePublicationLeavesNoFile() passed after 0.003 seconds.
+✔ Suite "Portable scene development commands" passed after 0.198 seconds.
+✔ Test run with 33 tests in 5 suites passed after 5.622 seconds.

@@ -1,0 +1,17 @@
+{
+  "diagnostics" : {
+    "diagnostics" : [
+
+    ],
+    "isTruncated" : false
+  },
+  "kind" : "voxels",
+  "modelIDs" : [
+
+  ],
+  "placementCount" : 0,
+  "portableInput" : true,
+  "revisionUTF8Bytes" : 283,
+  "title" : "Portable \"leaf\" \\ study",
+  "version" : 1
+}

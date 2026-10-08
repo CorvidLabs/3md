@@ -1,0 +1,17 @@
+Receipt captured 2026-10-06T19:02:42Z from the packaged bundle at /private/tmp/sculpt-package-93b00b3 (worktree at 93b00b3).
+
+$ codesign --verify --strict --verbose=2 dist/Rook.app
+dist/Rook.app: valid on disk
+dist/Rook.app: satisfies its Designated Requirement
+
+$ codesign -d --entitlements - dist/Rook.app
+[Dict]
+	[Key] com.apple.security.app-sandbox
+	[Value]
+		[Bool] true
+	[Key] com.apple.security.files.user-selected.read-write
+	[Value]
+		[Bool] true
+
+$ shasum -a 256 dist/Rook.app/Contents/MacOS/Rook
+789e8feb9d4a695792cc03b354db28da5b105e662cc026f762628625f2060944  dist/Rook.app/Contents/MacOS/Rook

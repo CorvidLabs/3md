@@ -1,0 +1,35 @@
+[
+  {
+    "changedPixels" : 11979,
+    "distinctColors" : 323,
+    "exteriorFaces" : 60,
+    "height" : 320,
+    "pitch" : 0,
+    "pose" : "front",
+    "renderer" : "SceneKit Metal",
+    "width" : 400,
+    "yaw" : 0
+  },
+  {
+    "changedPixels" : 15252,
+    "distinctColors" : 844,
+    "exteriorFaces" : 60,
+    "height" : 320,
+    "pitch" : 0.7,
+    "pose" : "orbit",
+    "renderer" : "SceneKit Metal",
+    "width" : 400,
+    "yaw" : -0.6
+  },
+  {
+    "changedPixels" : 14574,
+    "distinctColors" : 662,
+    "exteriorFaces" : 60,
+    "height" : 320,
+    "pitch" : 0.35,
+    "pose" : "reverse",
+    "renderer" : "SceneKit Metal",
+    "width" : 400,
+    "yaw" : 1.8
+  }
+]

@@ -1,0 +1,16 @@
+{
+  "actor": "Codex root using native CUA",
+  "application": "dist/Rook.app locally ad-hoc signed sandboxed build",
+  "document": "Examples/Blockhaven/blockhaven.3mdb",
+  "observations": [
+    "Reopened map shows Blockhaven valley, 827937 occupied cells and no unsaved changes.",
+    "At16x grid zoom, five pages of vertical scrolling retain visible cells and glyphs. Pointer paint selects cell1,42. Undo restores clean count. Right and Space paint cell2,42, followed by Undo.",
+    "Sidebar slices92 and95 select their matching layers without recentering visible clicked rows.",
+    "After final outline repair packaging, sidebar97 to100 moves the visible amber outline to the new layer.",
+    "Clicking castle flag selects cell55,15 in slice27 and moves amber outline to its castle section.",
+    "Cube Draw adds cell54,14,27 and reports827938; Undo restores827937 and no unsaved changes.",
+    "Pointer drag orbits the actual live Metal map and preserves selected outline.",
+    "No source example or user document was overwritten."
+  ],
+  "limits": "Live observations are separate from retained offscreen layout/native renderer snapshots. No native map export completion or onscreen FPS measurement is claimed."
+}

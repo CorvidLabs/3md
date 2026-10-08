@@ -1,0 +1,2141 @@
+{
+  "captures" : [
+    {
+      "accessibility" : [
+        {
+          "frame" : {
+            "height" : 650,
+            "width" : 940,
+            "x" : 0,
+            "y" : 0
+          },
+          "identifier" : "",
+          "label" : "",
+          "role" : "AXGroup"
+        }
+      ],
+      "accessibilityAvailable" : false,
+      "accessibilityGeometryAvailable" : false,
+      "cameraPitch" : 0.35,
+      "cameraYaw" : -0.6,
+      "cameraZoom" : 1,
+      "controlsOutsideBounds" : [
+
+      ],
+      "documentDepth" : 16,
+      "documentHeight" : 16,
+      "documentID" : "character-orb",
+      "documentTitle" : "Character orb",
+      "documentWidth" : 16,
+      "file" : "editor-sculpt-940x650-light.png",
+      "fittingHeight" : 0,
+      "fittingWidth" : 0,
+      "fixture" : "default-sculpt",
+      "logicalHeight" : 650,
+      "logicalWidth" : 940,
+      "metalAvailable" : true,
+      "missingControlIdentifiers" : [
+
+      ],
+      "mode" : "Sculpt",
+      "paintsIn3D" : false,
+      "pixelHeight" : 650,
+      "pixelWidth" : 940,
+      "pngBytes" : 50337,
+      "requiredControlIdentifiers" : [
+        "editor.camera.fit",
+        "editor.canvas",
+        "editor.commands.open",
+        "editor.document.save",
+        "editor.document.title",
+        "editor.edit-slice",
+        "editor.examples",
+        "editor.export",
+        "editor.mode.sculpt",
+        "editor.mode.slice",
+        "editor.render-style",
+        "editor.voxel.paint-mode"
+      ],
+      "sampledDistinctColors" : 59,
+      "sampledVisiblePixels" : 4420,
+      "style" : "Cubes",
+      "theme" : "light",
+      "unexpectedControlIdentifiers" : [
+
+      ]
+    },
+    {
+      "accessibility" : [
+        {
+          "frame" : {
+            "height" : 650,
+            "width" : 940,
+            "x" : 0,
+            "y" : 0
+          },
+          "identifier" : "",
+          "label" : "",
+          "role" : "AXGroup"
+        }
+      ],
+      "accessibilityAvailable" : false,
+      "accessibilityGeometryAvailable" : false,
+      "cameraPitch" : 0.35,
+      "cameraYaw" : -0.6,
+      "cameraZoom" : 1,
+      "controlsOutsideBounds" : [
+
+      ],
+      "documentDepth" : 16,
+      "documentHeight" : 16,
+      "documentID" : "character-orb",
+      "documentTitle" : "Character orb",
+      "documentWidth" : 16,
+      "file" : "editor-sculpt-940x650-dark.png",
+      "fittingHeight" : 0,
+      "fittingWidth" : 0,
+      "fixture" : "default-sculpt",
+      "logicalHeight" : 650,
+      "logicalWidth" : 940,
+      "metalAvailable" : true,
+      "missingControlIdentifiers" : [
+
+      ],
+      "mode" : "Sculpt",
+      "paintsIn3D" : false,
+      "pixelHeight" : 650,
+      "pixelWidth" : 940,
+      "pngBytes" : 51243,
+      "requiredControlIdentifiers" : [
+        "editor.camera.fit",
+        "editor.canvas",
+        "editor.commands.open",
+        "editor.document.save",
+        "editor.document.title",
+        "editor.edit-slice",
+        "editor.examples",
+        "editor.export",
+        "editor.mode.sculpt",
+        "editor.mode.slice",
+        "editor.render-style",
+        "editor.voxel.paint-mode"
+      ],
+      "sampledDistinctColors" : 60,
+      "sampledVisiblePixels" : 4420,
+      "style" : "Cubes",
+      "theme" : "dark",
+      "unexpectedControlIdentifiers" : [
+
+      ]
+    },
+    {
+      "accessibility" : [
+        {
+          "frame" : {
+            "height" : 760,
+            "width" : 1120,
+            "x" : 0,
+            "y" : 0
+          },
+          "identifier" : "",
+          "label" : "",
+          "role" : "AXGroup"
+        }
+      ],
+      "accessibilityAvailable" : false,
+      "accessibilityGeometryAvailable" : false,
+      "cameraPitch" : 0.35,
+      "cameraYaw" : -0.6,
+      "cameraZoom" : 1,
+      "controlsOutsideBounds" : [
+
+      ],
+      "documentDepth" : 16,
+      "documentHeight" : 16,
+      "documentID" : "character-orb",
+      "documentTitle" : "Character orb",
+      "documentWidth" : 16,
+      "file" : "editor-sculpt-1120x760-light.png",
+      "fittingHeight" : 0,
+      "fittingWidth" : 0,
+      "fixture" : "default-sculpt",
+      "logicalHeight" : 760,
+      "logicalWidth" : 1120,
+      "metalAvailable" : true,
+      "missingControlIdentifiers" : [
+
+      ],
+      "mode" : "Sculpt",
+      "paintsIn3D" : false,
+      "pixelHeight" : 760,
+      "pixelWidth" : 1120,
+      "pngBytes" : 56125,
+      "requiredControlIdentifiers" : [
+        "editor.camera.fit",
+        "editor.canvas",
+        "editor.commands.open",
+        "editor.document.save",
+        "editor.document.title",
+        "editor.edit-slice",
+        "editor.examples",
+        "editor.export",
+        "editor.mode.sculpt",
+        "editor.mode.slice",
+        "editor.render-style",
+        "editor.voxel.paint-mode"
+      ],
+      "sampledDistinctColors" : 46,
+      "sampledVisiblePixels" : 4620,
+      "style" : "Cubes",
+      "theme" : "light",
+      "unexpectedControlIdentifiers" : [
+
+      ]
+    },
+    {
+      "accessibility" : [
+        {
+          "frame" : {
+            "height" : 760,
+            "width" : 1120,
+            "x" : 0,
+            "y" : 0
+          },
+          "identifier" : "",
+          "label" : "",
+          "role" : "AXGroup"
+        }
+      ],
+      "accessibilityAvailable" : false,
+      "accessibilityGeometryAvailable" : false,
+      "cameraPitch" : 0.35,
+      "cameraYaw" : -0.6,
+      "cameraZoom" : 1,
+      "controlsOutsideBounds" : [
+
+      ],
+      "documentDepth" : 16,
+      "documentHeight" : 16,
+      "documentID" : "character-orb",
+      "documentTitle" : "Character orb",
+      "documentWidth" : 16,
+      "file" : "editor-sculpt-1120x760-dark.png",
+      "fittingHeight" : 0,
+      "fittingWidth" : 0,
+      "fixture" : "default-sculpt",
+      "logicalHeight" : 760,
+      "logicalWidth" : 1120,
+      "metalAvailable" : true,
+      "missingControlIdentifiers" : [
+
+      ],
+      "mode" : "Sculpt",
+      "paintsIn3D" : false,
+      "pixelHeight" : 760,
+      "pixelWidth" : 1120,
+      "pngBytes" : 56958,
+      "requiredControlIdentifiers" : [
+        "editor.camera.fit",
+        "editor.canvas",
+        "editor.commands.open",
+        "editor.document.save",
+        "editor.document.title",
+        "editor.edit-slice",
+        "editor.examples",
+        "editor.export",
+        "editor.mode.sculpt",
+        "editor.mode.slice",
+        "editor.render-style",
+        "editor.voxel.paint-mode"
+      ],
+      "sampledDistinctColors" : 48,
+      "sampledVisiblePixels" : 4620,
+      "style" : "Cubes",
+      "theme" : "dark",
+      "unexpectedControlIdentifiers" : [
+
+      ]
+    },
+    {
+      "accessibility" : [
+        {
+          "frame" : {
+            "height" : 650,
+            "width" : 940,
+            "x" : 0,
+            "y" : 0
+          },
+          "identifier" : "",
+          "label" : "",
+          "role" : "AXGroup"
+        }
+      ],
+      "accessibilityAvailable" : false,
+      "accessibilityGeometryAvailable" : false,
+      "cameraPitch" : 0.35,
+      "cameraYaw" : -0.6,
+      "cameraZoom" : 1,
+      "controlsOutsideBounds" : [
+
+      ],
+      "documentDepth" : 16,
+      "documentHeight" : 16,
+      "documentID" : "character-orb",
+      "documentTitle" : "Character orb",
+      "documentWidth" : 16,
+      "file" : "editor-slice-940x650-light.png",
+      "fittingHeight" : 0,
+      "fittingWidth" : 0,
+      "fixture" : "default-slice",
+      "logicalHeight" : 650,
+      "logicalWidth" : 940,
+      "metalAvailable" : true,
+      "missingControlIdentifiers" : [
+
+      ],
+      "mode" : "Slice",
+      "paintsIn3D" : false,
+      "pixelHeight" : 650,
+      "pixelWidth" : 940,
+      "pngBytes" : 87210,
+      "requiredControlIdentifiers" : [
+        "editor.brush.35",
+        "editor.commands.open",
+        "editor.document.save",
+        "editor.document.title",
+        "editor.examples",
+        "editor.export",
+        "editor.mode.sculpt",
+        "editor.mode.slice",
+        "editor.render-style",
+        "editor.slice.actions",
+        "editor.slice.grid",
+        "editor.slice.zoom.16x",
+        "editor.slice.zoom.2x",
+        "editor.slice.zoom.4x",
+        "editor.slice.zoom.8x",
+        "editor.slice.zoom.fit",
+        "editor.tool"
+      ],
+      "sampledDistinctColors" : 117,
+      "sampledVisiblePixels" : 4420,
+      "style" : "Cubes",
+      "theme" : "light",
+      "unexpectedControlIdentifiers" : [
+
+      ]
+    },
+    {
+      "accessibility" : [
+        {
+          "frame" : {
+            "height" : 650,
+            "width" : 940,
+            "x" : 0,
+            "y" : 0
+          },
+          "identifier" : "",
+          "label" : "",
+          "role" : "AXGroup"
+        }
+      ],
+      "accessibilityAvailable" : false,
+      "accessibilityGeometryAvailable" : false,
+      "cameraPitch" : 0.35,
+      "cameraYaw" : -0.6,
+      "cameraZoom" : 1,
+      "controlsOutsideBounds" : [
+
+      ],
+      "documentDepth" : 16,
+      "documentHeight" : 16,
+      "documentID" : "character-orb",
+      "documentTitle" : "Character orb",
+      "documentWidth" : 16,
+      "file" : "editor-slice-940x650-dark.png",
+      "fittingHeight" : 0,
+      "fittingWidth" : 0,
+      "fixture" : "default-slice",
+      "logicalHeight" : 650,
+      "logicalWidth" : 940,
+      "metalAvailable" : true,
+      "missingControlIdentifiers" : [
+
+      ],
+      "mode" : "Slice",
+      "paintsIn3D" : false,
+      "pixelHeight" : 650,
+      "pixelWidth" : 940,
+      "pngBytes" : 91404,
+      "requiredControlIdentifiers" : [
+        "editor.brush.35",
+        "editor.commands.open",
+        "editor.document.save",
+        "editor.document.title",
+        "editor.examples",
+        "editor.export",
+        "editor.mode.sculpt",
+        "editor.mode.slice",
+        "editor.render-style",
+        "editor.slice.actions",
+        "editor.slice.grid",
+        "editor.slice.zoom.16x",
+        "editor.slice.zoom.2x",
+        "editor.slice.zoom.4x",
+        "editor.slice.zoom.8x",
+        "editor.slice.zoom.fit",
+        "editor.tool"
+      ],
+      "sampledDistinctColors" : 120,
+      "sampledVisiblePixels" : 4420,
+      "style" : "Cubes",
+      "theme" : "dark",
+      "unexpectedControlIdentifiers" : [
+
+      ]
+    },
+    {
+      "accessibility" : [
+        {
+          "frame" : {
+            "height" : 760,
+            "width" : 1120,
+            "x" : 0,
+            "y" : 0
+          },
+          "identifier" : "",
+          "label" : "",
+          "role" : "AXGroup"
+        }
+      ],
+      "accessibilityAvailable" : false,
+      "accessibilityGeometryAvailable" : false,
+      "cameraPitch" : 0.35,
+      "cameraYaw" : -0.6,
+      "cameraZoom" : 1,
+      "controlsOutsideBounds" : [
+
+      ],
+      "documentDepth" : 16,
+      "documentHeight" : 16,
+      "documentID" : "character-orb",
+      "documentTitle" : "Character orb",
+      "documentWidth" : 16,
+      "file" : "editor-slice-1120x760-light.png",
+      "fittingHeight" : 0,
+      "fittingWidth" : 0,
+      "fixture" : "default-slice",
+      "logicalHeight" : 760,
+      "logicalWidth" : 1120,
+      "metalAvailable" : true,
+      "missingControlIdentifiers" : [
+
+      ],
+      "mode" : "Slice",
+      "paintsIn3D" : false,
+      "pixelHeight" : 760,
+      "pixelWidth" : 1120,
+      "pngBytes" : 96336,
+      "requiredControlIdentifiers" : [
+        "editor.brush.35",
+        "editor.commands.open",
+        "editor.document.save",
+        "editor.document.title",
+        "editor.examples",
+        "editor.export",
+        "editor.mode.sculpt",
+        "editor.mode.slice",
+        "editor.render-style",
+        "editor.slice.actions",
+        "editor.slice.grid",
+        "editor.slice.zoom.16x",
+        "editor.slice.zoom.2x",
+        "editor.slice.zoom.4x",
+        "editor.slice.zoom.8x",
+        "editor.slice.zoom.fit",
+        "editor.tool"
+      ],
+      "sampledDistinctColors" : 97,
+      "sampledVisiblePixels" : 4620,
+      "style" : "Cubes",
+      "theme" : "light",
+      "unexpectedControlIdentifiers" : [
+
+      ]
+    },
+    {
+      "accessibility" : [
+        {
+          "frame" : {
+            "height" : 760,
+            "width" : 1120,
+            "x" : 0,
+            "y" : 0
+          },
+          "identifier" : "",
+          "label" : "",
+          "role" : "AXGroup"
+        }
+      ],
+      "accessibilityAvailable" : false,
+      "accessibilityGeometryAvailable" : false,
+      "cameraPitch" : 0.35,
+      "cameraYaw" : -0.6,
+      "cameraZoom" : 1,
+      "controlsOutsideBounds" : [
+
+      ],
+      "documentDepth" : 16,
+      "documentHeight" : 16,
+      "documentID" : "character-orb",
+      "documentTitle" : "Character orb",
+      "documentWidth" : 16,
+      "file" : "editor-slice-1120x760-dark.png",
+      "fittingHeight" : 0,
+      "fittingWidth" : 0,
+      "fixture" : "default-slice",
+      "logicalHeight" : 760,
+      "logicalWidth" : 1120,
+      "metalAvailable" : true,
+      "missingControlIdentifiers" : [
+
+      ],
+      "mode" : "Slice",
+      "paintsIn3D" : false,
+      "pixelHeight" : 760,
+      "pixelWidth" : 1120,
+      "pngBytes" : 100713,
+      "requiredControlIdentifiers" : [
+        "editor.brush.35",
+        "editor.commands.open",
+        "editor.document.save",
+        "editor.document.title",
+        "editor.examples",
+        "editor.export",
+        "editor.mode.sculpt",
+        "editor.mode.slice",
+        "editor.render-style",
+        "editor.slice.actions",
+        "editor.slice.grid",
+        "editor.slice.zoom.16x",
+        "editor.slice.zoom.2x",
+        "editor.slice.zoom.4x",
+        "editor.slice.zoom.8x",
+        "editor.slice.zoom.fit",
+        "editor.tool"
+      ],
+      "sampledDistinctColors" : 103,
+      "sampledVisiblePixels" : 4620,
+      "style" : "Cubes",
+      "theme" : "dark",
+      "unexpectedControlIdentifiers" : [
+
+      ]
+    },
+    {
+      "accessibility" : [
+        {
+          "frame" : {
+            "height" : 650,
+            "width" : 940,
+            "x" : 0,
+            "y" : 0
+          },
+          "identifier" : "",
+          "label" : "",
+          "role" : "AXGroup"
+        }
+      ],
+      "accessibilityAvailable" : false,
+      "accessibilityGeometryAvailable" : false,
+      "cameraPitch" : 0.35,
+      "cameraYaw" : -0.6,
+      "cameraZoom" : 1,
+      "controlsOutsideBounds" : [
+
+      ],
+      "documentDepth" : 16,
+      "documentHeight" : 16,
+      "documentID" : "character-orb",
+      "documentTitle" : "Character orb",
+      "documentWidth" : 16,
+      "file" : "editor-cube-paint-940x650-light.png",
+      "fittingHeight" : 0,
+      "fittingWidth" : 0,
+      "fixture" : "cube-paint",
+      "logicalHeight" : 650,
+      "logicalWidth" : 940,
+      "metalAvailable" : true,
+      "missingControlIdentifiers" : [
+
+      ],
+      "mode" : "Sculpt",
+      "paintsIn3D" : true,
+      "pixelHeight" : 650,
+      "pixelWidth" : 940,
+      "pngBytes" : 55915,
+      "requiredControlIdentifiers" : [
+        "editor.camera.fit",
+        "editor.canvas",
+        "editor.commands.open",
+        "editor.document.save",
+        "editor.document.title",
+        "editor.edit-slice",
+        "editor.examples",
+        "editor.export",
+        "editor.mode.sculpt",
+        "editor.mode.slice",
+        "editor.render-style",
+        "editor.voxel.material",
+        "editor.voxel.paint-mode",
+        "editor.voxel.tool"
+      ],
+      "sampledDistinctColors" : 80,
+      "sampledVisiblePixels" : 4420,
+      "style" : "Cubes",
+      "theme" : "light",
+      "unexpectedControlIdentifiers" : [
+
+      ]
+    },
+    {
+      "accessibility" : [
+        {
+          "frame" : {
+            "height" : 650,
+            "width" : 940,
+            "x" : 0,
+            "y" : 0
+          },
+          "identifier" : "",
+          "label" : "",
+          "role" : "AXGroup"
+        }
+      ],
+      "accessibilityAvailable" : false,
+      "accessibilityGeometryAvailable" : false,
+      "cameraPitch" : 0.35,
+      "cameraYaw" : -0.6,
+      "cameraZoom" : 1,
+      "controlsOutsideBounds" : [
+
+      ],
+      "documentDepth" : 16,
+      "documentHeight" : 16,
+      "documentID" : "character-orb",
+      "documentTitle" : "Character orb",
+      "documentWidth" : 16,
+      "file" : "editor-cube-paint-940x650-dark.png",
+      "fittingHeight" : 0,
+      "fittingWidth" : 0,
+      "fixture" : "cube-paint",
+      "logicalHeight" : 650,
+      "logicalWidth" : 940,
+      "metalAvailable" : true,
+      "missingControlIdentifiers" : [
+
+      ],
+      "mode" : "Sculpt",
+      "paintsIn3D" : true,
+      "pixelHeight" : 650,
+      "pixelWidth" : 940,
+      "pngBytes" : 56985,
+      "requiredControlIdentifiers" : [
+        "editor.camera.fit",
+        "editor.canvas",
+        "editor.commands.open",
+        "editor.document.save",
+        "editor.document.title",
+        "editor.edit-slice",
+        "editor.examples",
+        "editor.export",
+        "editor.mode.sculpt",
+        "editor.mode.slice",
+        "editor.render-style",
+        "editor.voxel.material",
+        "editor.voxel.paint-mode",
+        "editor.voxel.tool"
+      ],
+      "sampledDistinctColors" : 77,
+      "sampledVisiblePixels" : 4420,
+      "style" : "Cubes",
+      "theme" : "dark",
+      "unexpectedControlIdentifiers" : [
+
+      ]
+    },
+    {
+      "accessibility" : [
+        {
+          "frame" : {
+            "height" : 760,
+            "width" : 1120,
+            "x" : 0,
+            "y" : 0
+          },
+          "identifier" : "",
+          "label" : "",
+          "role" : "AXGroup"
+        }
+      ],
+      "accessibilityAvailable" : false,
+      "accessibilityGeometryAvailable" : false,
+      "cameraPitch" : 0.35,
+      "cameraYaw" : -0.6,
+      "cameraZoom" : 1,
+      "controlsOutsideBounds" : [
+
+      ],
+      "documentDepth" : 16,
+      "documentHeight" : 16,
+      "documentID" : "character-orb",
+      "documentTitle" : "Character orb",
+      "documentWidth" : 16,
+      "file" : "editor-cube-paint-1120x760-light.png",
+      "fittingHeight" : 0,
+      "fittingWidth" : 0,
+      "fixture" : "cube-paint",
+      "logicalHeight" : 760,
+      "logicalWidth" : 1120,
+      "metalAvailable" : true,
+      "missingControlIdentifiers" : [
+
+      ],
+      "mode" : "Sculpt",
+      "paintsIn3D" : true,
+      "pixelHeight" : 760,
+      "pixelWidth" : 1120,
+      "pngBytes" : 62241,
+      "requiredControlIdentifiers" : [
+        "editor.camera.fit",
+        "editor.canvas",
+        "editor.commands.open",
+        "editor.document.save",
+        "editor.document.title",
+        "editor.edit-slice",
+        "editor.examples",
+        "editor.export",
+        "editor.mode.sculpt",
+        "editor.mode.slice",
+        "editor.render-style",
+        "editor.voxel.material",
+        "editor.voxel.paint-mode",
+        "editor.voxel.tool"
+      ],
+      "sampledDistinctColors" : 59,
+      "sampledVisiblePixels" : 4620,
+      "style" : "Cubes",
+      "theme" : "light",
+      "unexpectedControlIdentifiers" : [
+
+      ]
+    },
+    {
+      "accessibility" : [
+        {
+          "frame" : {
+            "height" : 760,
+            "width" : 1120,
+            "x" : 0,
+            "y" : 0
+          },
+          "identifier" : "",
+          "label" : "",
+          "role" : "AXGroup"
+        }
+      ],
+      "accessibilityAvailable" : false,
+      "accessibilityGeometryAvailable" : false,
+      "cameraPitch" : 0.35,
+      "cameraYaw" : -0.6,
+      "cameraZoom" : 1,
+      "controlsOutsideBounds" : [
+
+      ],
+      "documentDepth" : 16,
+      "documentHeight" : 16,
+      "documentID" : "character-orb",
+      "documentTitle" : "Character orb",
+      "documentWidth" : 16,
+      "file" : "editor-cube-paint-1120x760-dark.png",
+      "fittingHeight" : 0,
+      "fittingWidth" : 0,
+      "fixture" : "cube-paint",
+      "logicalHeight" : 760,
+      "logicalWidth" : 1120,
+      "metalAvailable" : true,
+      "missingControlIdentifiers" : [
+
+      ],
+      "mode" : "Sculpt",
+      "paintsIn3D" : true,
+      "pixelHeight" : 760,
+      "pixelWidth" : 1120,
+      "pngBytes" : 63203,
+      "requiredControlIdentifiers" : [
+        "editor.camera.fit",
+        "editor.canvas",
+        "editor.commands.open",
+        "editor.document.save",
+        "editor.document.title",
+        "editor.edit-slice",
+        "editor.examples",
+        "editor.export",
+        "editor.mode.sculpt",
+        "editor.mode.slice",
+        "editor.render-style",
+        "editor.voxel.material",
+        "editor.voxel.paint-mode",
+        "editor.voxel.tool"
+      ],
+      "sampledDistinctColors" : 61,
+      "sampledVisiblePixels" : 4620,
+      "style" : "Cubes",
+      "theme" : "dark",
+      "unexpectedControlIdentifiers" : [
+
+      ]
+    },
+    {
+      "accessibility" : [
+        {
+          "frame" : {
+            "height" : 650,
+            "width" : 940,
+            "x" : 0,
+            "y" : 0
+          },
+          "identifier" : "",
+          "label" : "",
+          "role" : "AXGroup"
+        }
+      ],
+      "accessibilityAvailable" : false,
+      "accessibilityGeometryAvailable" : false,
+      "cameraPitch" : 0.35,
+      "cameraYaw" : -0.6,
+      "cameraZoom" : 1.2763636363636364,
+      "controlsOutsideBounds" : [
+
+      ],
+      "documentDepth" : 16,
+      "documentHeight" : 16,
+      "documentID" : "character-orb",
+      "documentTitle" : "Character orb",
+      "documentWidth" : 16,
+      "file" : "editor-ascii-940x650-light.png",
+      "fittingHeight" : 0,
+      "fittingWidth" : 0,
+      "fixture" : "ascii",
+      "logicalHeight" : 650,
+      "logicalWidth" : 940,
+      "metalAvailable" : true,
+      "missingControlIdentifiers" : [
+
+      ],
+      "mode" : "Sculpt",
+      "paintsIn3D" : false,
+      "pixelHeight" : 650,
+      "pixelWidth" : 940,
+      "pngBytes" : 49787,
+      "requiredControlIdentifiers" : [
+        "editor.camera.fit",
+        "editor.canvas",
+        "editor.commands.open",
+        "editor.document.save",
+        "editor.document.title",
+        "editor.edit-slice",
+        "editor.examples",
+        "editor.export",
+        "editor.mode.sculpt",
+        "editor.mode.slice",
+        "editor.render-style"
+      ],
+      "sampledDistinctColors" : 59,
+      "sampledVisiblePixels" : 4420,
+      "style" : "ASCII",
+      "theme" : "light",
+      "unexpectedControlIdentifiers" : [
+
+      ]
+    },
+    {
+      "accessibility" : [
+        {
+          "frame" : {
+            "height" : 650,
+            "width" : 940,
+            "x" : 0,
+            "y" : 0
+          },
+          "identifier" : "",
+          "label" : "",
+          "role" : "AXGroup"
+        }
+      ],
+      "accessibilityAvailable" : false,
+      "accessibilityGeometryAvailable" : false,
+      "cameraPitch" : 0.35,
+      "cameraYaw" : -0.6,
+      "cameraZoom" : 1.2763636363636364,
+      "controlsOutsideBounds" : [
+
+      ],
+      "documentDepth" : 16,
+      "documentHeight" : 16,
+      "documentID" : "character-orb",
+      "documentTitle" : "Character orb",
+      "documentWidth" : 16,
+      "file" : "editor-ascii-940x650-dark.png",
+      "fittingHeight" : 0,
+      "fittingWidth" : 0,
+      "fixture" : "ascii",
+      "logicalHeight" : 650,
+      "logicalWidth" : 940,
+      "metalAvailable" : true,
+      "missingControlIdentifiers" : [
+
+      ],
+      "mode" : "Sculpt",
+      "paintsIn3D" : false,
+      "pixelHeight" : 650,
+      "pixelWidth" : 940,
+      "pngBytes" : 50692,
+      "requiredControlIdentifiers" : [
+        "editor.camera.fit",
+        "editor.canvas",
+        "editor.commands.open",
+        "editor.document.save",
+        "editor.document.title",
+        "editor.edit-slice",
+        "editor.examples",
+        "editor.export",
+        "editor.mode.sculpt",
+        "editor.mode.slice",
+        "editor.render-style"
+      ],
+      "sampledDistinctColors" : 59,
+      "sampledVisiblePixels" : 4420,
+      "style" : "ASCII",
+      "theme" : "dark",
+      "unexpectedControlIdentifiers" : [
+
+      ]
+    },
+    {
+      "accessibility" : [
+        {
+          "frame" : {
+            "height" : 760,
+            "width" : 1120,
+            "x" : 0,
+            "y" : 0
+          },
+          "identifier" : "",
+          "label" : "",
+          "role" : "AXGroup"
+        }
+      ],
+      "accessibilityAvailable" : false,
+      "accessibilityGeometryAvailable" : false,
+      "cameraPitch" : 0.35,
+      "cameraYaw" : -0.6,
+      "cameraZoom" : 1.2763636363636364,
+      "controlsOutsideBounds" : [
+
+      ],
+      "documentDepth" : 16,
+      "documentHeight" : 16,
+      "documentID" : "character-orb",
+      "documentTitle" : "Character orb",
+      "documentWidth" : 16,
+      "file" : "editor-ascii-1120x760-light.png",
+      "fittingHeight" : 0,
+      "fittingWidth" : 0,
+      "fixture" : "ascii",
+      "logicalHeight" : 760,
+      "logicalWidth" : 1120,
+      "metalAvailable" : true,
+      "missingControlIdentifiers" : [
+
+      ],
+      "mode" : "Sculpt",
+      "paintsIn3D" : false,
+      "pixelHeight" : 760,
+      "pixelWidth" : 1120,
+      "pngBytes" : 55602,
+      "requiredControlIdentifiers" : [
+        "editor.camera.fit",
+        "editor.canvas",
+        "editor.commands.open",
+        "editor.document.save",
+        "editor.document.title",
+        "editor.edit-slice",
+        "editor.examples",
+        "editor.export",
+        "editor.mode.sculpt",
+        "editor.mode.slice",
+        "editor.render-style"
+      ],
+      "sampledDistinctColors" : 48,
+      "sampledVisiblePixels" : 4620,
+      "style" : "ASCII",
+      "theme" : "light",
+      "unexpectedControlIdentifiers" : [
+
+      ]
+    },
+    {
+      "accessibility" : [
+        {
+          "frame" : {
+            "height" : 760,
+            "width" : 1120,
+            "x" : 0,
+            "y" : 0
+          },
+          "identifier" : "",
+          "label" : "",
+          "role" : "AXGroup"
+        }
+      ],
+      "accessibilityAvailable" : false,
+      "accessibilityGeometryAvailable" : false,
+      "cameraPitch" : 0.35,
+      "cameraYaw" : -0.6,
+      "cameraZoom" : 1.2763636363636364,
+      "controlsOutsideBounds" : [
+
+      ],
+      "documentDepth" : 16,
+      "documentHeight" : 16,
+      "documentID" : "character-orb",
+      "documentTitle" : "Character orb",
+      "documentWidth" : 16,
+      "file" : "editor-ascii-1120x760-dark.png",
+      "fittingHeight" : 0,
+      "fittingWidth" : 0,
+      "fixture" : "ascii",
+      "logicalHeight" : 760,
+      "logicalWidth" : 1120,
+      "metalAvailable" : true,
+      "missingControlIdentifiers" : [
+
+      ],
+      "mode" : "Sculpt",
+      "paintsIn3D" : false,
+      "pixelHeight" : 760,
+      "pixelWidth" : 1120,
+      "pngBytes" : 56335,
+      "requiredControlIdentifiers" : [
+        "editor.camera.fit",
+        "editor.canvas",
+        "editor.commands.open",
+        "editor.document.save",
+        "editor.document.title",
+        "editor.edit-slice",
+        "editor.examples",
+        "editor.export",
+        "editor.mode.sculpt",
+        "editor.mode.slice",
+        "editor.render-style"
+      ],
+      "sampledDistinctColors" : 48,
+      "sampledVisiblePixels" : 4620,
+      "style" : "ASCII",
+      "theme" : "dark",
+      "unexpectedControlIdentifiers" : [
+
+      ]
+    },
+    {
+      "accessibility" : [
+        {
+          "frame" : {
+            "height" : 650,
+            "width" : 940,
+            "x" : 0,
+            "y" : 0
+          },
+          "identifier" : "",
+          "label" : "",
+          "role" : "AXGroup"
+        }
+      ],
+      "accessibilityAvailable" : false,
+      "accessibilityGeometryAvailable" : false,
+      "cameraPitch" : 0.35,
+      "cameraYaw" : -0.6,
+      "cameraZoom" : 1,
+      "controlsOutsideBounds" : [
+
+      ],
+      "documentDepth" : 64,
+      "documentHeight" : 64,
+      "documentID" : "citadel-of-arches",
+      "documentTitle" : "Citadel of arches",
+      "documentWidth" : 64,
+      "file" : "editor-citadel-slice-940x650-light.png",
+      "fittingHeight" : 0,
+      "fittingWidth" : 0,
+      "fixture" : "citadel-slice",
+      "logicalHeight" : 650,
+      "logicalWidth" : 940,
+      "metalAvailable" : true,
+      "missingControlIdentifiers" : [
+
+      ],
+      "mode" : "Slice",
+      "paintsIn3D" : false,
+      "pixelHeight" : 650,
+      "pixelWidth" : 940,
+      "pngBytes" : 110472,
+      "requiredControlIdentifiers" : [
+        "editor.brush.35",
+        "editor.commands.open",
+        "editor.document.save",
+        "editor.document.title",
+        "editor.examples",
+        "editor.export",
+        "editor.mode.sculpt",
+        "editor.mode.slice",
+        "editor.render-style",
+        "editor.slice.actions",
+        "editor.slice.grid",
+        "editor.slice.zoom.16x",
+        "editor.slice.zoom.2x",
+        "editor.slice.zoom.4x",
+        "editor.slice.zoom.8x",
+        "editor.slice.zoom.fit",
+        "editor.tool"
+      ],
+      "sampledDistinctColors" : 123,
+      "sampledVisiblePixels" : 4420,
+      "style" : "Cubes",
+      "theme" : "light",
+      "unexpectedControlIdentifiers" : [
+
+      ]
+    },
+    {
+      "accessibility" : [
+        {
+          "frame" : {
+            "height" : 650,
+            "width" : 940,
+            "x" : 0,
+            "y" : 0
+          },
+          "identifier" : "",
+          "label" : "",
+          "role" : "AXGroup"
+        }
+      ],
+      "accessibilityAvailable" : false,
+      "accessibilityGeometryAvailable" : false,
+      "cameraPitch" : 0.35,
+      "cameraYaw" : -0.6,
+      "cameraZoom" : 1,
+      "controlsOutsideBounds" : [
+
+      ],
+      "documentDepth" : 64,
+      "documentHeight" : 64,
+      "documentID" : "citadel-of-arches",
+      "documentTitle" : "Citadel of arches",
+      "documentWidth" : 64,
+      "file" : "editor-citadel-slice-940x650-dark.png",
+      "fittingHeight" : 0,
+      "fittingWidth" : 0,
+      "fixture" : "citadel-slice",
+      "logicalHeight" : 650,
+      "logicalWidth" : 940,
+      "metalAvailable" : true,
+      "missingControlIdentifiers" : [
+
+      ],
+      "mode" : "Slice",
+      "paintsIn3D" : false,
+      "pixelHeight" : 650,
+      "pixelWidth" : 940,
+      "pngBytes" : 120461,
+      "requiredControlIdentifiers" : [
+        "editor.brush.35",
+        "editor.commands.open",
+        "editor.document.save",
+        "editor.document.title",
+        "editor.examples",
+        "editor.export",
+        "editor.mode.sculpt",
+        "editor.mode.slice",
+        "editor.render-style",
+        "editor.slice.actions",
+        "editor.slice.grid",
+        "editor.slice.zoom.16x",
+        "editor.slice.zoom.2x",
+        "editor.slice.zoom.4x",
+        "editor.slice.zoom.8x",
+        "editor.slice.zoom.fit",
+        "editor.tool"
+      ],
+      "sampledDistinctColors" : 135,
+      "sampledVisiblePixels" : 4420,
+      "style" : "Cubes",
+      "theme" : "dark",
+      "unexpectedControlIdentifiers" : [
+
+      ]
+    },
+    {
+      "accessibility" : [
+        {
+          "frame" : {
+            "height" : 760,
+            "width" : 1120,
+            "x" : 0,
+            "y" : 0
+          },
+          "identifier" : "",
+          "label" : "",
+          "role" : "AXGroup"
+        }
+      ],
+      "accessibilityAvailable" : false,
+      "accessibilityGeometryAvailable" : false,
+      "cameraPitch" : 0.35,
+      "cameraYaw" : -0.6,
+      "cameraZoom" : 1,
+      "controlsOutsideBounds" : [
+
+      ],
+      "documentDepth" : 64,
+      "documentHeight" : 64,
+      "documentID" : "citadel-of-arches",
+      "documentTitle" : "Citadel of arches",
+      "documentWidth" : 64,
+      "file" : "editor-citadel-slice-1120x760-light.png",
+      "fittingHeight" : 0,
+      "fittingWidth" : 0,
+      "fixture" : "citadel-slice",
+      "logicalHeight" : 760,
+      "logicalWidth" : 1120,
+      "metalAvailable" : true,
+      "missingControlIdentifiers" : [
+
+      ],
+      "mode" : "Slice",
+      "paintsIn3D" : false,
+      "pixelHeight" : 760,
+      "pixelWidth" : 1120,
+      "pngBytes" : 118590,
+      "requiredControlIdentifiers" : [
+        "editor.brush.35",
+        "editor.commands.open",
+        "editor.document.save",
+        "editor.document.title",
+        "editor.examples",
+        "editor.export",
+        "editor.mode.sculpt",
+        "editor.mode.slice",
+        "editor.render-style",
+        "editor.slice.actions",
+        "editor.slice.grid",
+        "editor.slice.zoom.16x",
+        "editor.slice.zoom.2x",
+        "editor.slice.zoom.4x",
+        "editor.slice.zoom.8x",
+        "editor.slice.zoom.fit",
+        "editor.tool"
+      ],
+      "sampledDistinctColors" : 100,
+      "sampledVisiblePixels" : 4620,
+      "style" : "Cubes",
+      "theme" : "light",
+      "unexpectedControlIdentifiers" : [
+
+      ]
+    },
+    {
+      "accessibility" : [
+        {
+          "frame" : {
+            "height" : 760,
+            "width" : 1120,
+            "x" : 0,
+            "y" : 0
+          },
+          "identifier" : "",
+          "label" : "",
+          "role" : "AXGroup"
+        }
+      ],
+      "accessibilityAvailable" : false,
+      "accessibilityGeometryAvailable" : false,
+      "cameraPitch" : 0.35,
+      "cameraYaw" : -0.6,
+      "cameraZoom" : 1,
+      "controlsOutsideBounds" : [
+
+      ],
+      "documentDepth" : 64,
+      "documentHeight" : 64,
+      "documentID" : "citadel-of-arches",
+      "documentTitle" : "Citadel of arches",
+      "documentWidth" : 64,
+      "file" : "editor-citadel-slice-1120x760-dark.png",
+      "fittingHeight" : 0,
+      "fittingWidth" : 0,
+      "fixture" : "citadel-slice",
+      "logicalHeight" : 760,
+      "logicalWidth" : 1120,
+      "metalAvailable" : true,
+      "missingControlIdentifiers" : [
+
+      ],
+      "mode" : "Slice",
+      "paintsIn3D" : false,
+      "pixelHeight" : 760,
+      "pixelWidth" : 1120,
+      "pngBytes" : 132632,
+      "requiredControlIdentifiers" : [
+        "editor.brush.35",
+        "editor.commands.open",
+        "editor.document.save",
+        "editor.document.title",
+        "editor.examples",
+        "editor.export",
+        "editor.mode.sculpt",
+        "editor.mode.slice",
+        "editor.render-style",
+        "editor.slice.actions",
+        "editor.slice.grid",
+        "editor.slice.zoom.16x",
+        "editor.slice.zoom.2x",
+        "editor.slice.zoom.4x",
+        "editor.slice.zoom.8x",
+        "editor.slice.zoom.fit",
+        "editor.tool"
+      ],
+      "sampledDistinctColors" : 108,
+      "sampledVisiblePixels" : 4620,
+      "style" : "Cubes",
+      "theme" : "dark",
+      "unexpectedControlIdentifiers" : [
+
+      ]
+    },
+    {
+      "accessibility" : [
+        {
+          "frame" : {
+            "height" : 650,
+            "width" : 940,
+            "x" : 0,
+            "y" : 0
+          },
+          "identifier" : "",
+          "label" : "",
+          "role" : "AXGroup"
+        }
+      ],
+      "accessibilityAvailable" : false,
+      "accessibilityGeometryAvailable" : false,
+      "cameraPitch" : 0.35,
+      "cameraYaw" : -0.6,
+      "cameraZoom" : 1,
+      "controlsOutsideBounds" : [
+
+      ],
+      "documentDepth" : 64,
+      "documentHeight" : 64,
+      "documentID" : "sky-island-village",
+      "documentTitle" : "Sky island village",
+      "documentWidth" : 64,
+      "file" : "editor-world-slice-940x650-light.png",
+      "fittingHeight" : 0,
+      "fittingWidth" : 0,
+      "fixture" : "world-slice",
+      "logicalHeight" : 650,
+      "logicalWidth" : 940,
+      "metalAvailable" : true,
+      "missingControlIdentifiers" : [
+
+      ],
+      "mode" : "Slice",
+      "paintsIn3D" : false,
+      "pixelHeight" : 650,
+      "pixelWidth" : 940,
+      "pngBytes" : 113082,
+      "requiredControlIdentifiers" : [
+        "editor.brush.35",
+        "editor.commands.open",
+        "editor.document.save",
+        "editor.document.title",
+        "editor.examples",
+        "editor.export",
+        "editor.mode.sculpt",
+        "editor.mode.slice",
+        "editor.render-style",
+        "editor.slice.actions",
+        "editor.slice.grid",
+        "editor.slice.zoom.16x",
+        "editor.slice.zoom.2x",
+        "editor.slice.zoom.4x",
+        "editor.slice.zoom.8x",
+        "editor.slice.zoom.fit",
+        "editor.tool"
+      ],
+      "sampledDistinctColors" : 131,
+      "sampledVisiblePixels" : 4420,
+      "style" : "Cubes",
+      "theme" : "light",
+      "unexpectedControlIdentifiers" : [
+
+      ]
+    },
+    {
+      "accessibility" : [
+        {
+          "frame" : {
+            "height" : 650,
+            "width" : 940,
+            "x" : 0,
+            "y" : 0
+          },
+          "identifier" : "",
+          "label" : "",
+          "role" : "AXGroup"
+        }
+      ],
+      "accessibilityAvailable" : false,
+      "accessibilityGeometryAvailable" : false,
+      "cameraPitch" : 0.35,
+      "cameraYaw" : -0.6,
+      "cameraZoom" : 1,
+      "controlsOutsideBounds" : [
+
+      ],
+      "documentDepth" : 64,
+      "documentHeight" : 64,
+      "documentID" : "sky-island-village",
+      "documentTitle" : "Sky island village",
+      "documentWidth" : 64,
+      "file" : "editor-world-slice-940x650-dark.png",
+      "fittingHeight" : 0,
+      "fittingWidth" : 0,
+      "fixture" : "world-slice",
+      "logicalHeight" : 650,
+      "logicalWidth" : 940,
+      "metalAvailable" : true,
+      "missingControlIdentifiers" : [
+
+      ],
+      "mode" : "Slice",
+      "paintsIn3D" : false,
+      "pixelHeight" : 650,
+      "pixelWidth" : 940,
+      "pngBytes" : 124249,
+      "requiredControlIdentifiers" : [
+        "editor.brush.35",
+        "editor.commands.open",
+        "editor.document.save",
+        "editor.document.title",
+        "editor.examples",
+        "editor.export",
+        "editor.mode.sculpt",
+        "editor.mode.slice",
+        "editor.render-style",
+        "editor.slice.actions",
+        "editor.slice.grid",
+        "editor.slice.zoom.16x",
+        "editor.slice.zoom.2x",
+        "editor.slice.zoom.4x",
+        "editor.slice.zoom.8x",
+        "editor.slice.zoom.fit",
+        "editor.tool"
+      ],
+      "sampledDistinctColors" : 141,
+      "sampledVisiblePixels" : 4420,
+      "style" : "Cubes",
+      "theme" : "dark",
+      "unexpectedControlIdentifiers" : [
+
+      ]
+    },
+    {
+      "accessibility" : [
+        {
+          "frame" : {
+            "height" : 760,
+            "width" : 1120,
+            "x" : 0,
+            "y" : 0
+          },
+          "identifier" : "",
+          "label" : "",
+          "role" : "AXGroup"
+        }
+      ],
+      "accessibilityAvailable" : false,
+      "accessibilityGeometryAvailable" : false,
+      "cameraPitch" : 0.35,
+      "cameraYaw" : -0.6,
+      "cameraZoom" : 1,
+      "controlsOutsideBounds" : [
+
+      ],
+      "documentDepth" : 64,
+      "documentHeight" : 64,
+      "documentID" : "sky-island-village",
+      "documentTitle" : "Sky island village",
+      "documentWidth" : 64,
+      "file" : "editor-world-slice-1120x760-light.png",
+      "fittingHeight" : 0,
+      "fittingWidth" : 0,
+      "fixture" : "world-slice",
+      "logicalHeight" : 760,
+      "logicalWidth" : 1120,
+      "metalAvailable" : true,
+      "missingControlIdentifiers" : [
+
+      ],
+      "mode" : "Slice",
+      "paintsIn3D" : false,
+      "pixelHeight" : 760,
+      "pixelWidth" : 1120,
+      "pngBytes" : 121262,
+      "requiredControlIdentifiers" : [
+        "editor.brush.35",
+        "editor.commands.open",
+        "editor.document.save",
+        "editor.document.title",
+        "editor.examples",
+        "editor.export",
+        "editor.mode.sculpt",
+        "editor.mode.slice",
+        "editor.render-style",
+        "editor.slice.actions",
+        "editor.slice.grid",
+        "editor.slice.zoom.16x",
+        "editor.slice.zoom.2x",
+        "editor.slice.zoom.4x",
+        "editor.slice.zoom.8x",
+        "editor.slice.zoom.fit",
+        "editor.tool"
+      ],
+      "sampledDistinctColors" : 105,
+      "sampledVisiblePixels" : 4620,
+      "style" : "Cubes",
+      "theme" : "light",
+      "unexpectedControlIdentifiers" : [
+
+      ]
+    },
+    {
+      "accessibility" : [
+        {
+          "frame" : {
+            "height" : 760,
+            "width" : 1120,
+            "x" : 0,
+            "y" : 0
+          },
+          "identifier" : "",
+          "label" : "",
+          "role" : "AXGroup"
+        }
+      ],
+      "accessibilityAvailable" : false,
+      "accessibilityGeometryAvailable" : false,
+      "cameraPitch" : 0.35,
+      "cameraYaw" : -0.6,
+      "cameraZoom" : 1,
+      "controlsOutsideBounds" : [
+
+      ],
+      "documentDepth" : 64,
+      "documentHeight" : 64,
+      "documentID" : "sky-island-village",
+      "documentTitle" : "Sky island village",
+      "documentWidth" : 64,
+      "file" : "editor-world-slice-1120x760-dark.png",
+      "fittingHeight" : 0,
+      "fittingWidth" : 0,
+      "fixture" : "world-slice",
+      "logicalHeight" : 760,
+      "logicalWidth" : 1120,
+      "metalAvailable" : true,
+      "missingControlIdentifiers" : [
+
+      ],
+      "mode" : "Slice",
+      "paintsIn3D" : false,
+      "pixelHeight" : 760,
+      "pixelWidth" : 1120,
+      "pngBytes" : 135911,
+      "requiredControlIdentifiers" : [
+        "editor.brush.35",
+        "editor.commands.open",
+        "editor.document.save",
+        "editor.document.title",
+        "editor.examples",
+        "editor.export",
+        "editor.mode.sculpt",
+        "editor.mode.slice",
+        "editor.render-style",
+        "editor.slice.actions",
+        "editor.slice.grid",
+        "editor.slice.zoom.16x",
+        "editor.slice.zoom.2x",
+        "editor.slice.zoom.4x",
+        "editor.slice.zoom.8x",
+        "editor.slice.zoom.fit",
+        "editor.tool"
+      ],
+      "sampledDistinctColors" : 114,
+      "sampledVisiblePixels" : 4620,
+      "style" : "Cubes",
+      "theme" : "dark",
+      "unexpectedControlIdentifiers" : [
+
+      ]
+    },
+    {
+      "accessibility" : [
+        {
+          "frame" : {
+            "height" : 650,
+            "width" : 940,
+            "x" : 0,
+            "y" : 0
+          },
+          "identifier" : "",
+          "label" : "",
+          "role" : "AXGroup"
+        }
+      ],
+      "accessibilityAvailable" : false,
+      "accessibilityGeometryAvailable" : false,
+      "cameraPitch" : 0.7,
+      "cameraYaw" : -0.6,
+      "cameraZoom" : 1,
+      "controlsOutsideBounds" : [
+
+      ],
+      "documentDepth" : 256,
+      "documentHeight" : 256,
+      "documentID" : "grand-solar-system",
+      "documentTitle" : "Grand solar system",
+      "documentWidth" : 256,
+      "file" : "editor-solar-sculpt-940x650-light.png",
+      "fittingHeight" : 0,
+      "fittingWidth" : 0,
+      "fixture" : "solar-sculpt",
+      "logicalHeight" : 650,
+      "logicalWidth" : 940,
+      "metalAvailable" : true,
+      "missingControlIdentifiers" : [
+
+      ],
+      "mode" : "Sculpt",
+      "paintsIn3D" : false,
+      "pixelHeight" : 650,
+      "pixelWidth" : 940,
+      "pngBytes" : 54724,
+      "requiredControlIdentifiers" : [
+        "editor.camera.fit",
+        "editor.canvas",
+        "editor.commands.open",
+        "editor.document.save",
+        "editor.document.title",
+        "editor.edit-slice",
+        "editor.examples",
+        "editor.export",
+        "editor.mode.sculpt",
+        "editor.mode.slice",
+        "editor.render-style",
+        "editor.voxel.paint-mode"
+      ],
+      "sampledDistinctColors" : 76,
+      "sampledVisiblePixels" : 4420,
+      "style" : "Cubes",
+      "theme" : "light",
+      "unexpectedControlIdentifiers" : [
+
+      ]
+    },
+    {
+      "accessibility" : [
+        {
+          "frame" : {
+            "height" : 650,
+            "width" : 940,
+            "x" : 0,
+            "y" : 0
+          },
+          "identifier" : "",
+          "label" : "",
+          "role" : "AXGroup"
+        }
+      ],
+      "accessibilityAvailable" : false,
+      "accessibilityGeometryAvailable" : false,
+      "cameraPitch" : 0.7,
+      "cameraYaw" : -0.6,
+      "cameraZoom" : 1,
+      "controlsOutsideBounds" : [
+
+      ],
+      "documentDepth" : 256,
+      "documentHeight" : 256,
+      "documentID" : "grand-solar-system",
+      "documentTitle" : "Grand solar system",
+      "documentWidth" : 256,
+      "file" : "editor-solar-sculpt-940x650-dark.png",
+      "fittingHeight" : 0,
+      "fittingWidth" : 0,
+      "fixture" : "solar-sculpt",
+      "logicalHeight" : 650,
+      "logicalWidth" : 940,
+      "metalAvailable" : true,
+      "missingControlIdentifiers" : [
+
+      ],
+      "mode" : "Sculpt",
+      "paintsIn3D" : false,
+      "pixelHeight" : 650,
+      "pixelWidth" : 940,
+      "pngBytes" : 55765,
+      "requiredControlIdentifiers" : [
+        "editor.camera.fit",
+        "editor.canvas",
+        "editor.commands.open",
+        "editor.document.save",
+        "editor.document.title",
+        "editor.edit-slice",
+        "editor.examples",
+        "editor.export",
+        "editor.mode.sculpt",
+        "editor.mode.slice",
+        "editor.render-style",
+        "editor.voxel.paint-mode"
+      ],
+      "sampledDistinctColors" : 81,
+      "sampledVisiblePixels" : 4420,
+      "style" : "Cubes",
+      "theme" : "dark",
+      "unexpectedControlIdentifiers" : [
+
+      ]
+    },
+    {
+      "accessibility" : [
+        {
+          "frame" : {
+            "height" : 760,
+            "width" : 1120,
+            "x" : 0,
+            "y" : 0
+          },
+          "identifier" : "",
+          "label" : "",
+          "role" : "AXGroup"
+        }
+      ],
+      "accessibilityAvailable" : false,
+      "accessibilityGeometryAvailable" : false,
+      "cameraPitch" : 0.7,
+      "cameraYaw" : -0.6,
+      "cameraZoom" : 1,
+      "controlsOutsideBounds" : [
+
+      ],
+      "documentDepth" : 256,
+      "documentHeight" : 256,
+      "documentID" : "grand-solar-system",
+      "documentTitle" : "Grand solar system",
+      "documentWidth" : 256,
+      "file" : "editor-solar-sculpt-1120x760-light.png",
+      "fittingHeight" : 0,
+      "fittingWidth" : 0,
+      "fixture" : "solar-sculpt",
+      "logicalHeight" : 760,
+      "logicalWidth" : 1120,
+      "metalAvailable" : true,
+      "missingControlIdentifiers" : [
+
+      ],
+      "mode" : "Sculpt",
+      "paintsIn3D" : false,
+      "pixelHeight" : 760,
+      "pixelWidth" : 1120,
+      "pngBytes" : 61707,
+      "requiredControlIdentifiers" : [
+        "editor.camera.fit",
+        "editor.canvas",
+        "editor.commands.open",
+        "editor.document.save",
+        "editor.document.title",
+        "editor.edit-slice",
+        "editor.examples",
+        "editor.export",
+        "editor.mode.sculpt",
+        "editor.mode.slice",
+        "editor.render-style",
+        "editor.voxel.paint-mode"
+      ],
+      "sampledDistinctColors" : 52,
+      "sampledVisiblePixels" : 4620,
+      "style" : "Cubes",
+      "theme" : "light",
+      "unexpectedControlIdentifiers" : [
+
+      ]
+    },
+    {
+      "accessibility" : [
+        {
+          "frame" : {
+            "height" : 760,
+            "width" : 1120,
+            "x" : 0,
+            "y" : 0
+          },
+          "identifier" : "",
+          "label" : "",
+          "role" : "AXGroup"
+        }
+      ],
+      "accessibilityAvailable" : false,
+      "accessibilityGeometryAvailable" : false,
+      "cameraPitch" : 0.7,
+      "cameraYaw" : -0.6,
+      "cameraZoom" : 1,
+      "controlsOutsideBounds" : [
+
+      ],
+      "documentDepth" : 256,
+      "documentHeight" : 256,
+      "documentID" : "grand-solar-system",
+      "documentTitle" : "Grand solar system",
+      "documentWidth" : 256,
+      "file" : "editor-solar-sculpt-1120x760-dark.png",
+      "fittingHeight" : 0,
+      "fittingWidth" : 0,
+      "fixture" : "solar-sculpt",
+      "logicalHeight" : 760,
+      "logicalWidth" : 1120,
+      "metalAvailable" : true,
+      "missingControlIdentifiers" : [
+
+      ],
+      "mode" : "Sculpt",
+      "paintsIn3D" : false,
+      "pixelHeight" : 760,
+      "pixelWidth" : 1120,
+      "pngBytes" : 62940,
+      "requiredControlIdentifiers" : [
+        "editor.camera.fit",
+        "editor.canvas",
+        "editor.commands.open",
+        "editor.document.save",
+        "editor.document.title",
+        "editor.edit-slice",
+        "editor.examples",
+        "editor.export",
+        "editor.mode.sculpt",
+        "editor.mode.slice",
+        "editor.render-style",
+        "editor.voxel.paint-mode"
+      ],
+      "sampledDistinctColors" : 54,
+      "sampledVisiblePixels" : 4620,
+      "style" : "Cubes",
+      "theme" : "dark",
+      "unexpectedControlIdentifiers" : [
+
+      ]
+    },
+    {
+      "accessibility" : [
+        {
+          "frame" : {
+            "height" : 650,
+            "width" : 940,
+            "x" : 0,
+            "y" : 0
+          },
+          "identifier" : "",
+          "label" : "",
+          "role" : "AXGroup"
+        }
+      ],
+      "accessibilityAvailable" : false,
+      "accessibilityGeometryAvailable" : false,
+      "cameraPitch" : 0.7,
+      "cameraYaw" : -0.6,
+      "cameraZoom" : 1,
+      "controlsOutsideBounds" : [
+
+      ],
+      "documentDepth" : 256,
+      "documentHeight" : 256,
+      "documentID" : "grand-solar-system",
+      "documentTitle" : "Grand solar system",
+      "documentWidth" : 256,
+      "file" : "editor-solar-slice-940x650-light.png",
+      "fittingHeight" : 0,
+      "fittingWidth" : 0,
+      "fixture" : "solar-slice",
+      "logicalHeight" : 650,
+      "logicalWidth" : 940,
+      "metalAvailable" : true,
+      "missingControlIdentifiers" : [
+
+      ],
+      "mode" : "Slice",
+      "paintsIn3D" : false,
+      "pixelHeight" : 650,
+      "pixelWidth" : 940,
+      "pngBytes" : 80772,
+      "requiredControlIdentifiers" : [
+        "editor.brush.35",
+        "editor.commands.open",
+        "editor.document.save",
+        "editor.document.title",
+        "editor.examples",
+        "editor.export",
+        "editor.mode.sculpt",
+        "editor.mode.slice",
+        "editor.render-style",
+        "editor.slice.actions",
+        "editor.slice.grid",
+        "editor.slice.zoom.16x",
+        "editor.slice.zoom.2x",
+        "editor.slice.zoom.4x",
+        "editor.slice.zoom.8x",
+        "editor.slice.zoom.fit",
+        "editor.tool"
+      ],
+      "sampledDistinctColors" : 112,
+      "sampledVisiblePixels" : 4420,
+      "style" : "Cubes",
+      "theme" : "light",
+      "unexpectedControlIdentifiers" : [
+
+      ]
+    },
+    {
+      "accessibility" : [
+        {
+          "frame" : {
+            "height" : 650,
+            "width" : 940,
+            "x" : 0,
+            "y" : 0
+          },
+          "identifier" : "",
+          "label" : "",
+          "role" : "AXGroup"
+        }
+      ],
+      "accessibilityAvailable" : false,
+      "accessibilityGeometryAvailable" : false,
+      "cameraPitch" : 0.7,
+      "cameraYaw" : -0.6,
+      "cameraZoom" : 1,
+      "controlsOutsideBounds" : [
+
+      ],
+      "documentDepth" : 256,
+      "documentHeight" : 256,
+      "documentID" : "grand-solar-system",
+      "documentTitle" : "Grand solar system",
+      "documentWidth" : 256,
+      "file" : "editor-solar-slice-940x650-dark.png",
+      "fittingHeight" : 0,
+      "fittingWidth" : 0,
+      "fixture" : "solar-slice",
+      "logicalHeight" : 650,
+      "logicalWidth" : 940,
+      "metalAvailable" : true,
+      "missingControlIdentifiers" : [
+
+      ],
+      "mode" : "Slice",
+      "paintsIn3D" : false,
+      "pixelHeight" : 650,
+      "pixelWidth" : 940,
+      "pngBytes" : 83083,
+      "requiredControlIdentifiers" : [
+        "editor.brush.35",
+        "editor.commands.open",
+        "editor.document.save",
+        "editor.document.title",
+        "editor.examples",
+        "editor.export",
+        "editor.mode.sculpt",
+        "editor.mode.slice",
+        "editor.render-style",
+        "editor.slice.actions",
+        "editor.slice.grid",
+        "editor.slice.zoom.16x",
+        "editor.slice.zoom.2x",
+        "editor.slice.zoom.4x",
+        "editor.slice.zoom.8x",
+        "editor.slice.zoom.fit",
+        "editor.tool"
+      ],
+      "sampledDistinctColors" : 117,
+      "sampledVisiblePixels" : 4420,
+      "style" : "Cubes",
+      "theme" : "dark",
+      "unexpectedControlIdentifiers" : [
+
+      ]
+    },
+    {
+      "accessibility" : [
+        {
+          "frame" : {
+            "height" : 760,
+            "width" : 1120,
+            "x" : 0,
+            "y" : 0
+          },
+          "identifier" : "",
+          "label" : "",
+          "role" : "AXGroup"
+        }
+      ],
+      "accessibilityAvailable" : false,
+      "accessibilityGeometryAvailable" : false,
+      "cameraPitch" : 0.7,
+      "cameraYaw" : -0.6,
+      "cameraZoom" : 1,
+      "controlsOutsideBounds" : [
+
+      ],
+      "documentDepth" : 256,
+      "documentHeight" : 256,
+      "documentID" : "grand-solar-system",
+      "documentTitle" : "Grand solar system",
+      "documentWidth" : 256,
+      "file" : "editor-solar-slice-1120x760-light.png",
+      "fittingHeight" : 0,
+      "fittingWidth" : 0,
+      "fixture" : "solar-slice",
+      "logicalHeight" : 760,
+      "logicalWidth" : 1120,
+      "metalAvailable" : true,
+      "missingControlIdentifiers" : [
+
+      ],
+      "mode" : "Slice",
+      "paintsIn3D" : false,
+      "pixelHeight" : 760,
+      "pixelWidth" : 1120,
+      "pngBytes" : 136644,
+      "requiredControlIdentifiers" : [
+        "editor.brush.35",
+        "editor.commands.open",
+        "editor.document.save",
+        "editor.document.title",
+        "editor.examples",
+        "editor.export",
+        "editor.mode.sculpt",
+        "editor.mode.slice",
+        "editor.render-style",
+        "editor.slice.actions",
+        "editor.slice.grid",
+        "editor.slice.zoom.16x",
+        "editor.slice.zoom.2x",
+        "editor.slice.zoom.4x",
+        "editor.slice.zoom.8x",
+        "editor.slice.zoom.fit",
+        "editor.tool"
+      ],
+      "sampledDistinctColors" : 101,
+      "sampledVisiblePixels" : 4620,
+      "style" : "Cubes",
+      "theme" : "light",
+      "unexpectedControlIdentifiers" : [
+
+      ]
+    },
+    {
+      "accessibility" : [
+        {
+          "frame" : {
+            "height" : 760,
+            "width" : 1120,
+            "x" : 0,
+            "y" : 0
+          },
+          "identifier" : "",
+          "label" : "",
+          "role" : "AXGroup"
+        }
+      ],
+      "accessibilityAvailable" : false,
+      "accessibilityGeometryAvailable" : false,
+      "cameraPitch" : 0.7,
+      "cameraYaw" : -0.6,
+      "cameraZoom" : 1,
+      "controlsOutsideBounds" : [
+
+      ],
+      "documentDepth" : 256,
+      "documentHeight" : 256,
+      "documentID" : "grand-solar-system",
+      "documentTitle" : "Grand solar system",
+      "documentWidth" : 256,
+      "file" : "editor-solar-slice-1120x760-dark.png",
+      "fittingHeight" : 0,
+      "fittingWidth" : 0,
+      "fixture" : "solar-slice",
+      "logicalHeight" : 760,
+      "logicalWidth" : 1120,
+      "metalAvailable" : true,
+      "missingControlIdentifiers" : [
+
+      ],
+      "mode" : "Slice",
+      "paintsIn3D" : false,
+      "pixelHeight" : 760,
+      "pixelWidth" : 1120,
+      "pngBytes" : 131608,
+      "requiredControlIdentifiers" : [
+        "editor.brush.35",
+        "editor.commands.open",
+        "editor.document.save",
+        "editor.document.title",
+        "editor.examples",
+        "editor.export",
+        "editor.mode.sculpt",
+        "editor.mode.slice",
+        "editor.render-style",
+        "editor.slice.actions",
+        "editor.slice.grid",
+        "editor.slice.zoom.16x",
+        "editor.slice.zoom.2x",
+        "editor.slice.zoom.4x",
+        "editor.slice.zoom.8x",
+        "editor.slice.zoom.fit",
+        "editor.tool"
+      ],
+      "sampledDistinctColors" : 115,
+      "sampledVisiblePixels" : 4620,
+      "style" : "Cubes",
+      "theme" : "dark",
+      "unexpectedControlIdentifiers" : [
+
+      ]
+    }
+  ],
+  "complete" : true,
+  "createdAt" : "2026-10-04T20:54:42Z",
+  "limitation" : "AppKit bitmap caching may omit CAMetalLayer drawable contents. These captures record native presentation and accessibility; they do not replace separate Metal rendering verification. No desktop automation or baseline comparison is performed.",
+  "method" : "NSHostingView.cacheDisplay in an unshown offscreen AppKit window",
+  "schema" : "rook-editor-presentation-1"
+}
