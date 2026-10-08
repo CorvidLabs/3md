@@ -31,12 +31,13 @@ one free axis: stack your content into **planes** and tell the reader what the
 depth means. Time for a daily planner. Frames for an animation. Layers for
 annotations. Space for a scene.
 
-ThreeMD 2.1.0 is the current library. The text file is the `.3md` you edit.
-Binary stores those same frames as fields (`.binary`, payload kind 2). Kind 1
-is deprecated. A file is parsed and saved at whatever size the process can
-hold. Linked file composition from 2.0.0 remains. See
+ThreeMD 2.2.0 is the library in this repository. It is not tagged yet. The
+text file is the `.3md` you edit. Binary stores those same frames as fields
+(`.binary`, payload kind 2). Kind 1 is deprecated. A file is parsed and saved
+at whatever size the process can hold. Linked file composition from 2.0.0
+remains. npm and crates.io still serve 2.1.0. See
 [Text file and binary](#text-file-and-binary), the
-[2.1.0 release notes](docs/RELEASE-2.1.0.md), and
+[2.2.0 release notes](docs/RELEASE-2.2.0.md), and
 [linked file composition](docs/FILE-COMPOSITION.md).
 
 ## Sculpt.3md
@@ -87,10 +88,10 @@ title: My Week
 ```
 
 This repository holds the format specification ([SPEC.md](SPEC.md)), example
-documents ([Examples/](Examples)), three parsers kept in lockstep (`ThreeMD`, a
-cross-platform Swift parser; a TypeScript port in [`js/`](js); and a Rust crate
-in [`rust/`](rust)), and a shared cross-implementation conformance suite
-([conformance/](conformance)) that all three pass.
+documents ([Examples/](Examples)), and four libraries checked against one
+conformance suite ([conformance/](conformance)): `ThreeMD`, a cross-platform
+Swift parser; a TypeScript port in [`js/`](js); a Rust crate in [`rust/`](rust);
+and a Godot 4 addon in [`gdscript/`](gdscript).
 
 ThreeMD 2.0.0 adds general `.3mdb` storage, self-contained document
 composition, linked file composition, stable optional identities, atomic
@@ -107,6 +108,21 @@ canonical text, uncompressed binary, composition references, linked-file bundles
 and imported edits. The [interchange catalog](conformance/interchange/README.md) states the cases,
 exact-byte checks and platform exceptions. This does not claim portable LZFSE
 or a shared JSON snapshot/patch transport.
+
+The Godot addon reads and writes the same text, payload kind 1, and payload kind 2
+documents. It also builds composition profiles, resolves linked files from bytes
+the caller supplies, and applies revision-checked document edits. LZFSE is
+refused. Parser, storage, composition, and editing scripts do not open files.
+`ThreeMDFiles` reads project paths a game has already chosen. Copy
+[`gdscript/addons/threemd`](gdscript/addons/threemd) into a project's `addons`
+folder and enable the plugin. On Godot 4.7 the plugin imports `.3md` and
+`.3mdb` as `ThreeMDDocumentAsset` resources and does not change the open scene.
+Planes stay data. [`gdscript/examples`](gdscript/examples) walks layers, a linked
+grove, both payload kinds, composition, edits, and a node map. Run
+`fledge run gdscript` for the headless suite. That suite is local. The verify
+lane above stays on the nine Swift, TypeScript, and Rust pairs until hosted CI
+installs Godot. With Godot 4 on `PATH`, `fledge run gdscript-interchange` adds
+the GDScript adapter and checks all sixteen writer/reader pairs.
 
 ## Why
 
@@ -315,11 +331,13 @@ Then depend on the `ThreeMD` library product:
 .product(name: "ThreeMD", package: "3md")
 ```
 
-`from: "2.1.0"` resolves from the `v2.1.0` tag. Read the
+`from: "2.1.0"` resolves from the published `v2.1.0` tag. This repository's
+manifests read 2.2.0 and that tag is not pushed yet. Read the
 [2.1 migration notes](docs/MIGRATION-2.1.md) before upgrading: a 2.0 reader
 rejects kind 2, and Rust's canonical number spelling changes for 92 powers of
 two. The [2.0 migration guide](docs/RELEASE-2.0.0.md#migrating-an-existing-host)
-still covers the earlier lossy-serialization change.
+still covers the earlier lossy-serialization change. The
+[2.2.0 release notes](docs/RELEASE-2.2.0.md) cover the Godot addon.
 
 ### JavaScript / TypeScript
 
@@ -335,7 +353,9 @@ public npm registry. Install with:
 bun add @corvidlabs/threemd
 ```
 
-npm serves `@corvidlabs/threemd` 2.1.0. If an older installation maps
+npm serves `@corvidlabs/threemd` 2.1.0. This repository's `package.json` reads
+2.2.0, and that package is published only when the GitHub release is published.
+If an older installation maps
 `@corvidlabs` to GitHub Packages, point that scope at the public npm registry.
 The web component keeps text rendering; the library exports the storage,
 composition, linked-file and editing APIs.
@@ -365,7 +385,9 @@ targets crates.io. Install an available published version with:
 cargo add threemd
 ```
 
-crates.io serves `threemd` 2.1.0. The crate still pins
+crates.io serves `threemd` 2.1.0. This repository's crate manifest reads
+2.2.0, and that crate is published only when the GitHub release is published.
+The crate still pins
 `unicode-normalization =0.1.25`. Its serde/serde_json dependencies are
 development-only.
 
@@ -373,6 +395,28 @@ development-only.
 let document = threemd::parse(source)?;
 println!("{}", document.axis); // "time"
 ```
+
+### Godot
+
+Copy [`gdscript/addons/threemd`](gdscript/addons/threemd) into the game's
+`addons` folder and enable ThreeMD in Project Settings. The plugin imports
+`.3md` and `.3mdb` files and does not change the open scene. The samples in
+[`gdscript/examples`](gdscript/examples) cover layers, linked files, both
+payload kinds, composition, and edits. The larger document set remains in
+[`Examples/`](Examples).
+
+```gdscript
+var document = ThreeMDParser.parse(source)
+var bytes = ThreeMDStorage.encode_binary(document)
+var loaded = ThreeMDFiles.load_document("res://levels/grove.3md")
+var asset: ThreeMDDocumentAsset = load("res://levels/grove.3md")
+```
+
+`ThreeMDParser`, `ThreeMDStorage`, `ThreeMDComposition`, `ThreeMDFileComposition`,
+and `ThreeMDEditing` are pure. `ThreeMDFiles` is the only library script that
+reads paths. The importer runs in the editor. A failure is a `ThreeMDError`
+with a `code` string, the same codes the other libraries use. These scripts
+run on Godot 4.7.2, the current stable release.
 
 ## Library usage
 
@@ -592,9 +636,10 @@ in Swift, TypeScript and Rust. The package version is separate from the format
 version. Specification 1.2 adds payload kind 2 inside that same container, and
 storage has no fixed size stop. ThreeMD 2.1.0 is tag `v2.1.0`, published on
 2026-10-08. npm and crates.io serve 2.1.0. Sculpt.3md was nested on main after
-that tag. Older `3md: 0.1` documents remain valid: the parser is version-lenient
+that tag. ThreeMD 2.2.0, in this repository and not tagged yet, adds the Godot
+4.7 addon. Older `3md: 0.1` documents remain valid: the parser is version-lenient
 and never rejects a document by its version string. See the
-[2.1.0 release notes](docs/RELEASE-2.1.0.md).
+[2.2.0 release notes](docs/RELEASE-2.2.0.md).
 
 ## License
 
@@ -604,7 +649,7 @@ MIT (c) CorvidLabs. See [LICENSE](LICENSE).
 # 3md Format Specification
 
 Version: 1.2 (additive storage, composition and linked file authoring specification)
-Status: the 1.0 text grammar is frozen; sections 11 and 12 are implemented by ThreeMD 2.1.0 in Swift, TypeScript and Rust; section 11.3 (structured document payload, kind 2) is new in 1.2
+Status: the 1.0 text grammar is frozen; sections 11 and 12 are implemented by ThreeMD 2.1.0 in Swift, TypeScript and Rust; section 11.3 (structured document payload, kind 2) is new in 1.2. ThreeMD 2.2.0 adds a Godot 4 addon for the same text, kind 1, kind 2, composition, linked files, and revision-checked document edits. That addon does not change this specification.
 File extensions: `.3md` text; `.3mdb` general binary storage
 Media type (proposed): `text/3md`
 
@@ -1910,8 +1955,28 @@ container/profile versions do not change. Placement remains a host concern.
 
 ## [Unreleased]
 
-- Public docs lead with ThreeMD 2.1.0 and the nested Sculpt.3md app. npm and crates.io serve the library at 2.1.0. The app's compact `.3mdb` is not the upstream binary standard.
-- Repository spec coverage counts the format libraries and the Sculpt implementation sources. Tests, docs, examples, and package manifests stay out of that count.
+## [v2.2.0] - 2026-10-08
+
+ThreeMD 2.2.0 adds the Godot 4.7 addon. The format is unchanged. Swift, TypeScript, and Rust library behavior stays the 2.1.0 library. See [docs/RELEASE-2.2.0.md](docs/RELEASE-2.2.0.md).
+
+This preparation updates the notes and the package manifests. It does not create the `v2.2.0` tag and it does not publish a GitHub release. npm and crates.io still serve 2.1.0.
+
+### Added
+
+- A Godot 4.7 addon in `gdscript/` parses, saves, composes, and edits documents. Godot 4.7.2 is the stable release the scripts were run with. The editor imports `.3md` and `.3mdb` as `ThreeMDDocumentAsset` resources. Examples cover layers, a linked grove, both payload kinds, composition, revision-checked edits, and mapping planes onto nodes the game owns.
+- Local interchange can include GDScript when `THREEMD_GODOT` is set, for sixteen writer/reader pairs. The hosted verify lane stays on the nine Swift, TypeScript, and Rust pairs.
+
+### Changed
+
+- Package manifests for the TypeScript library, the web element, the VS Code extension, the Rust crate, and the Godot addon read 2.2.0. The published npm and crates.io packages stay 2.1.0 until a GitHub release.
+- Public docs name the Godot addon and keep Sculpt.3md as the nested Mac app. The app's compact `.3mdb` is not the upstream binary standard.
+
+### Limits
+
+- GDScript refuses LZFSE. Composition editing implements `replaceEntry` only. The full diagnostic report is not ported.
+- Hosted CI does not install Godot.
+- CLI `convert` and `inspect` stay text-only. Interchange stays `3md-interchange-1`. The 2.0.0 reader compatibility job and the CI performance gate are not in this preparation.
+- `docs/evidence/release-2.1.0/` and `docs/evidence/release-2.2.0/` are not in this preparation.
 
 ## [v2.1.0] - 2026-10-07
 
@@ -2048,13 +2113,21 @@ Verification: the pinned Trust 1.2.2 gate passed on macOS at commit `d6eb66f`, t
 Where the format and its tooling are headed. Confidence is a rough 0 to 100 read
 on how sure we are a step is the right next move and will land cleanly.
 
-## Next (after 2.1.0)
+## Next (after the 2.2.0 preparation)
 
-ThreeMD 2.1.0 is published. Kind 1 stays readable. Follow-ups: CLI binary
-commands, interchange protocol 2, the 2.0 reader compatibility job, and the CI
-performance gate. Sculpt.3md is nested at `apps/sculpt` and is not one of those
-format follow-ups.
+ThreeMD 2.2.0 is prepared and not tagged. npm and crates.io still serve 2.1.0.
+Kind 1 stays readable. Follow-ups: CLI binary commands, interchange protocol 2,
+the 2.0 reader compatibility job, the CI performance gate, and hosted Godot CI.
+Sculpt.3md is nested at `apps/sculpt` and is not one of those format follow-ups.
 State confidence: 70.
+
+## Shipped in the repository (2.2.0 Godot addon)
+
+The Godot 4.7 addon parses, saves, composes, and edits documents. Godot 4.7.2
+is the stable release the scripts were run with. The format is unchanged.
+Swift, TypeScript, and Rust behavior stays the published 2.1.0 library. The
+tag and the GitHub release are not part of this preparation.
+State confidence: 75.
 
 ## Shipped (2.1.0 library, then the nested app)
 
@@ -2116,10 +2189,12 @@ Two independent numbers, kept distinct on purpose:
   timing hints, `@asset`, `@include`) remain unimplemented, so the format is 1.0.
 - Each implementation is its own package with its own semver. The published
   Swift tag, `@corvidlabs/threemd`, the `threemd` crate, and
-  `@corvidlabs/three-md-element` are at **2.1.0**. The VS Code extension is a
-  local VSIX and is not in a marketplace. Sculpt.3md is an app in this
-  repository, not a fourth format package. A bug fix bumps a package's patch;
-  new tooling bumps its minor; neither changes the format version.
+  `@corvidlabs/three-md-element` are at **2.1.0**. Manifests in this
+  repository read **2.2.0** and are not tagged yet. The VS Code extension is a
+  local VSIX and is not in a marketplace. The Godot addon is copied from
+  `gdscript/addons/threemd`. Sculpt.3md is an app in this repository, not a
+  format package. A bug fix bumps a package's patch; new tooling bumps its
+  minor; neither changes the format version.
 
 ## Tooling shipped on the 1.0 line
 
@@ -2170,9 +2245,10 @@ the items below remain open:
 @plane z=4 label="CONTRIBUTING" file="CONTRIBUTING.md"
 # Contributing to 3md
 
-Thanks for your interest. 3md is a plain-text format with three parsers kept
-in lockstep by a shared conformance suite. Sculpt.3md, the Mac app in
-`apps/sculpt`, is not a fourth parser. The most important rule:
+Thanks for your interest. 3md is a plain-text format with four libraries kept
+in lockstep by a shared conformance suite: Swift, TypeScript, Rust, and
+GDScript. Sculpt.3md, the Mac app in `apps/sculpt`, is not a fifth parser.
+The most important rule:
 **a format change must land in every implementation and be pinned by a
 conformance vector.**
 
@@ -2181,6 +2257,7 @@ conformance vector.**
 - `Sources/ThreeMD/` - the canonical Swift parser, serializer, and HTML renderer.
 - `js/` - the TypeScript package (`@corvidlabs/threemd`).
 - `rust/` - the Rust crate (`threemd`).
+- `gdscript/` - the Godot 4.7 addon (`addons/threemd`) and its headless checks.
 - `apps/sculpt/` - Sculpt.3md, the nested Mac app. Package name Rook. It builds against this checkout. Linux unit tests run in `.github/workflows/sculpt.yml`. They do not build the Mac app, and they are not the format Trust gate.
 - `conformance/` - shared JSON vectors. Both `Tests/ThreeMDTests/ConformanceTests`
   and `js/test/conformance.test.ts` and `rust/tests/conformance.rs` run them.
@@ -2206,7 +2283,15 @@ bundle drift, and editor checks. Per language:
 swift test                                   # Swift
 cd js && bun install && bun test             # TypeScript
 cd rust && cargo test                        # Rust
+fledge run gdscript                          # Godot 4 addon
 ```
+
+`fledge run gdscript` needs Godot 4.7 on `PATH` (`GODOT` overrides the binary).
+The suite includes `gdscript/examples`. Godot 4.7.2 is the stable release these
+scripts were run with.
+It is not part of the `verify` lane, because hosted CI does not install Godot yet.
+`fledge run gdscript-interchange` runs the same gate as `fledge run interchange`
+and adds the Godot adapter, for sixteen writer/reader pairs.
 
 The interactive demos in `web/` have their own cross-browser tests (Playwright
 on Chromium and WebKit, the engine behind Safari). Run them if you touch the
@@ -2223,9 +2308,9 @@ npx playwright test
 
 1. Update `SPEC.md` first: it is the contract.
 2. Add or update a vector in `conformance/` that pins the new behavior.
-3. Implement it in all three parsers (Swift, TypeScript, Rust) so every
-   conformance suite passes. The nested app consumes the Swift library. It does
-   not replace that step.
+3. Implement it in Swift, TypeScript, Rust, and GDScript so every conformance
+   suite passes. The nested app consumes the Swift library. It does not
+   replace that step.
 4. Add language-level unit tests where useful.
 
 A change that only lands in one implementation will fail the others' conformance
@@ -2282,6 +2367,22 @@ to acknowledge a report within a few business days.
 
 @plane z=6 label="AGENTS" file="AGENTS.md"
 # 3md
+
+## 2.2.0 preparation
+
+On 2026-10-08 Leif asked to prep a release after the Godot addon merged. This
+preparation is 2.2.0. The format is unchanged. Swift, TypeScript, and Rust
+library behavior stays the 2.1.0 library. The new surface is the Godot 4.7
+addon. Package manifests read 2.2.0. This preparation does not create the tag
+and does not publish the GitHub release. npm and crates.io still serve 2.1.0
+until that release is published.
+
+Follow-ups stay follow-ups: CLI binary input, `convert` and `inspect`,
+interchange protocol 2, the 2.0.0 reader compatibility job, the CI performance
+gate, `docs/evidence/release-2.1.0/`, hosted Godot CI, composition edits beyond
+`replaceEntry`, and the full diagnostic report. Do not publish or weaken a
+trust gate from this note. The Godot SpecSync definition stays an unapproved
+draft.
 
 ## 2.1.0
 
@@ -2342,18 +2443,19 @@ Markdown with a Z axis. See [README.md](README.md) for the pitch and
 
 ## Monorepo
 
-Main contains the format library and Sculpt.3md at `apps/sculpt` (merged
-2026-10-08, after tag `v2.1.0`). npm and crates.io serve the library at 2.1.0.
-The app's compact `.3mdb` is not the upstream binary standard. Format changes
-still land in Swift, TypeScript, and Rust. The notes above this section are
-the history of earlier sessions. They are not a claim that the registries are
-still on 2.0.0.
+Main contains the format library, the Godot 4 addon at `gdscript/`, and
+Sculpt.3md at `apps/sculpt`. npm and crates.io serve the library at 2.1.0
+until a GitHub release publishes a newer tag. The app's compact `.3mdb` is
+not the upstream binary standard. Format changes still land in Swift,
+TypeScript, and Rust. The notes above this section are the history of earlier
+sessions. They are not a claim that the registries are still on 2.0.0.
 
 ## Project map
 
 - `Sources/ThreeMD/` - the parser and serializer library.
 - `Tests/ThreeMDTests/` - XCTest suite.
 - `Examples/` - sample `.3md` documents.
+- `gdscript/` - the Godot 4.7 addon. It is not in the hosted verify lane.
 - `specs/ThreeMD/` - the spec-sync contract for the library.
 - `apps/sculpt/` - Sculpt.3md. Package name Rook. Its hi and specs stay there.
 - `SPEC.md` - the authoritative format specification.

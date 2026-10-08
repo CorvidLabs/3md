@@ -3,13 +3,21 @@
 Where the format and its tooling are headed. Confidence is a rough 0 to 100 read
 on how sure we are a step is the right next move and will land cleanly.
 
-## Next (after 2.1.0)
+## Next (after the 2.2.0 preparation)
 
-ThreeMD 2.1.0 is published. Kind 1 stays readable. Follow-ups: CLI binary
-commands, interchange protocol 2, the 2.0 reader compatibility job, and the CI
-performance gate. Sculpt.3md is nested at `apps/sculpt` and is not one of those
-format follow-ups.
+ThreeMD 2.2.0 is prepared and not tagged. npm and crates.io still serve 2.1.0.
+Kind 1 stays readable. Follow-ups: CLI binary commands, interchange protocol 2,
+the 2.0 reader compatibility job, the CI performance gate, and hosted Godot CI.
+Sculpt.3md is nested at `apps/sculpt` and is not one of those format follow-ups.
 State confidence: 70.
+
+## Shipped in the repository (2.2.0 Godot addon)
+
+The Godot 4.7 addon parses, saves, composes, and edits documents. Godot 4.7.2
+is the stable release the scripts were run with. The format is unchanged.
+Swift, TypeScript, and Rust behavior stays the published 2.1.0 library. The
+tag and the GitHub release are not part of this preparation.
+State confidence: 75.
 
 ## Shipped (2.1.0 library, then the nested app)
 
@@ -71,10 +79,12 @@ Two independent numbers, kept distinct on purpose:
   timing hints, `@asset`, `@include`) remain unimplemented, so the format is 1.0.
 - Each implementation is its own package with its own semver. The published
   Swift tag, `@corvidlabs/threemd`, the `threemd` crate, and
-  `@corvidlabs/three-md-element` are at **2.1.0**. The VS Code extension is a
-  local VSIX and is not in a marketplace. Sculpt.3md is an app in this
-  repository, not a fourth format package. A bug fix bumps a package's patch;
-  new tooling bumps its minor; neither changes the format version.
+  `@corvidlabs/three-md-element` are at **2.1.0**. Manifests in this
+  repository read **2.2.0** and are not tagged yet. The VS Code extension is a
+  local VSIX and is not in a marketplace. The Godot addon is copied from
+  `gdscript/addons/threemd`. Sculpt.3md is an app in this repository, not a
+  format package. A bug fix bumps a package's patch; new tooling bumps its
+  minor; neither changes the format version.
 
 ## Tooling shipped on the 1.0 line
 

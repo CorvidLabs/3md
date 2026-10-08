@@ -1,6 +1,6 @@
 [package]
 name = "threemd"
-version = "2.1.0"
+version = "2.2.0"
 edition = "2021"
 description = "3md parsing, portable binary storage, composition and transactional editing: Markdown with a Z axis."
 license = "MIT"

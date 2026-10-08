@@ -2,8 +2,28 @@
 
 ## [Unreleased]
 
-- Public docs lead with ThreeMD 2.1.0 and the nested Sculpt.3md app. npm and crates.io serve the library at 2.1.0. The app's compact `.3mdb` is not the upstream binary standard.
-- Repository spec coverage counts the format libraries and the Sculpt implementation sources. Tests, docs, examples, and package manifests stay out of that count.
+## [v2.2.0] - 2026-10-08
+
+ThreeMD 2.2.0 adds the Godot 4.7 addon. The format is unchanged. Swift, TypeScript, and Rust library behavior stays the 2.1.0 library. See [docs/RELEASE-2.2.0.md](docs/RELEASE-2.2.0.md).
+
+This preparation updates the notes and the package manifests. It does not create the `v2.2.0` tag and it does not publish a GitHub release. npm and crates.io still serve 2.1.0.
+
+### Added
+
+- A Godot 4.7 addon in `gdscript/` parses, saves, composes, and edits documents. Godot 4.7.2 is the stable release the scripts were run with. The editor imports `.3md` and `.3mdb` as `ThreeMDDocumentAsset` resources. Examples cover layers, a linked grove, both payload kinds, composition, revision-checked edits, and mapping planes onto nodes the game owns.
+- Local interchange can include GDScript when `THREEMD_GODOT` is set, for sixteen writer/reader pairs. The hosted verify lane stays on the nine Swift, TypeScript, and Rust pairs.
+
+### Changed
+
+- Package manifests for the TypeScript library, the web element, the VS Code extension, the Rust crate, and the Godot addon read 2.2.0. The published npm and crates.io packages stay 2.1.0 until a GitHub release.
+- Public docs name the Godot addon and keep Sculpt.3md as the nested Mac app. The app's compact `.3mdb` is not the upstream binary standard.
+
+### Limits
+
+- GDScript refuses LZFSE. Composition editing implements `replaceEntry` only. The full diagnostic report is not ported.
+- Hosted CI does not install Godot.
+- CLI `convert` and `inspect` stay text-only. Interchange stays `3md-interchange-1`. The 2.0.0 reader compatibility job and the CI performance gate are not in this preparation.
+- `docs/evidence/release-2.1.0/` and `docs/evidence/release-2.2.0/` are not in this preparation.
 
 ## [v2.1.0] - 2026-10-07
 
