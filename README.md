@@ -117,6 +117,33 @@ The moving picture steps through the four frames. Left is the text file. Right i
 
 The second picture is two more files from [Examples/](Examples/). The poem drops one word at a time, then builds a shorter sentence back. Text file 940 bytes, binary 751. The week planner is three days: text file 436 bytes, binary 392. The words on the right are the body stored from the left.
 
+### One note at four sizes
+
+[Harbor](docs/readme/harbor.3md) is a day at the water: seven hours, and the text file is exactly 1,024 bytes. Binary of that same day is 922 bytes. The picture plays those seven hours, then the same kind of note at 10 MB, 100 MB, and 1 GB.
+
+10 MB means 10 × 1,024 × 1,024 bytes. 100 MB and 1 GB are the next two steps, so 1 GB is 1,073,741,824 bytes, which is 1,048,576 times the harbor day. The three large files are not in the repository. Each of their frames starts with `# Harbor` and `The light stays on the water.`, and that sentence repeats until the text file is the exact size.
+
+<p align="center">
+  <img src="docs/readme/sizes.gif" alt="Harbor, seven hours in a 1,024-byte text file beside the binary save, then the same note at 10 MB, 100 MB, and 1 GB." width="760">
+</p>
+
+<p align="center">
+  <img src="docs/readme/size-ladder.png" alt="Four cards for one note: 1,024 bytes, 10 MB, 100 MB, and 1 GB. Each card shows the text file and the binary save, and the read and write times for that file only." width="880">
+</p>
+
+| Text file | What it is | Text bytes | Binary bytes | Text read | Binary read | Text write | Binary write |
+| --- | --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| 1,024 bytes | Harbor, seven hours | 1,024 | 922 | 0.029 ms | 0.005 ms | 0.007 ms | 0.003 ms |
+| 10 MB | 10 frames of the sentence | 10,485,760 | 10,485,627 | 4.863 ms | 2.834 ms | 1.613 ms | 2.985 ms |
+| 100 MB | 100 frames of the sentence | 104,857,600 | 104,856,063 | 49.716 ms | 29.156 ms | 15.851 ms | 29.252 ms |
+| 1 GB | 1,024 frames of the sentence | 1,073,741,824 | 1,073,725,480 | 464.691 ms | 297.503 ms | 389.117 ms | 306.565 ms |
+
+One Rust 1.95.0 release process on an Apple M1 Ultra (macOS 26.5.2, 64 GB). Each time is the median of five calls after one warmup. This is not the speed gate. At 1,024 bytes the times are a few hundredths of a millisecond. At 1 GB, reading the text took 464.691 ms and reading the binary took 297.503 ms. Writing the text took 389.117 ms and writing the binary took 306.565 ms.
+
+In this run, reading the binary was quicker at every size. Writing the binary was quicker for the 1,024-byte day and for the 1 GB file. At 10 MB and 100 MB, writing the text was quicker. Binary is 102 bytes smaller at 1,024 bytes, 133 bytes smaller at 10 MB, 1,537 bytes smaller at 100 MB, and 16,344 bytes smaller at 1 GB. A large frame is almost all that repeated sentence, so the two files end up nearly the same size. Both are parsed and saved.
+
+The bars inside one card compare only with each other. A long blue bar means that card's slower time, not a bigger file. The 1 GB harbor file is 1,024 long frames. It is not the cube of short lines further down, and a long line is quicker to read than a million short ones.
+
 ```mermaid
 flowchart LR
   source[".3md text file"] --> parsed[Parse]
@@ -203,7 +230,7 @@ One Rust 1.98.0 release process on an Apple M1 Ultra (macOS 26.5.2, 64 GB). Each
 
 ### How big a file can be
 
-There is no fixed size stop. A 1 GB document, a 5 GB document, or any larger document is parsed and saved when the process can hold it. Binary is not a compressor. A document made of 1 GB of letters stays about 1 GB as binary. The header is 40 bytes either way.
+There is no fixed size stop. A 1 GB document, a 5 GB document, or any larger document is parsed and saved when the process can hold it. [One note at four sizes](#one-note-at-four-sizes) is a harbor day at 1,024 bytes, then the same sentence at 10 MB, 100 MB, and 1 GB. Binary is not a compressor. A document made of 1 GB of letters stays about 1 GB as binary. The header is 40 bytes either way.
 
 The default limit is the largest integer the language uses for a size:
 
