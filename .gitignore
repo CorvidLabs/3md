@@ -47,3 +47,6 @@ element/dist/
 # Godot import cache for the GDScript addon. The addon source is tracked.
 gdscript/.godot/
 gdscript/**/*.uid
+gdscript/**/*.import
+# Kind-2 grove file written by gdscript/examples/write_grove_kind2.gd.
+gdscript/examples/grove/scene.3mdb

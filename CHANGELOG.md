@@ -2,6 +2,24 @@
 
 ## [Unreleased]
 
+## [v2.2.1] - 2026-10-08
+
+ThreeMD 2.2.1 lets a Godot 4.7 game `load()` an imported `.3md` or `.3mdb` and read its title and plane labels. The format is unchanged. See [docs/RELEASE-2.2.1.md](docs/RELEASE-2.2.1.md).
+
+The tag is `v2.2.1` on this release commit after hosted CI is green. npm serves 2.2.0 until the GitHub release publish workflow runs. The Homebrew formula `threemd` is 2.2.0 until the formula workflow runs. crates.io still serves `threemd` 2.1.0 because `CRATES_IO_TOKEN` is not configured. This release does not add that token.
+
+### Fixed
+
+- Godot 4.7.2 `load()` of an imported `.3md` or `.3mdb` failed outside the editor. The imported binary resource names the script class `ThreeMDDocumentAsset`, and the binary loader will not claim that type. The error is `No loader found for resource` with expected type `ThreeMDDocumentAsset`. The addon now includes `ThreeMDDocumentFormatLoader`, a `ResourceFormatLoader` registered from the global script class cache. Copying `gdscript/addons/threemd` is enough. The importer's resource type stays `ThreeMDDocumentAsset`.
+
+### Added
+
+- `gdscript/examples/load_imported.gd` calls `load()` on `res://examples/grove/scene.3md` and on a kind-2 `scene.3mdb` this addon writes. `gdscript/tools/check.sh` imports with the plugin enabled, writes that kind-2 file, imports again, then runs the script. The unfixed failure is kept at `docs/evidence/release-2.2.1/godot-load-repro.log`.
+
+### Changed
+
+- Package manifests for the TypeScript library, the web element, the VS Code extension, the Rust crate, and the Godot addon read 2.2.1. npm, Homebrew, and crates.io stay at the versions named above until their release workflows run.
+
 ## [v2.2.0] - 2026-10-08
 
 ThreeMD 2.2.0 adds the Godot 4.7 addon. The format is unchanged. Swift, TypeScript, and Rust library behavior stays the 2.1.0 library. See [docs/RELEASE-2.2.0.md](docs/RELEASE-2.2.0.md).
