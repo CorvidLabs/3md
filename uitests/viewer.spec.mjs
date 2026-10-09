@@ -272,6 +272,21 @@ test.describe("viewer & editor (viewer.html)", () => {
     expect(canopy).toBe("Reusable canopy");
   });
 
+  test("markdown headings become planes and a plane search opens one", async ({ page }) => {
+    await page.goto("/viewer.html");
+    await viewerReady(page);
+    await page.fill("#editor", "# Project\n\nThe opening.\n\n## Install\n\nRun bun.\n");
+    await page.click("#sectionsBtn");
+    await page.waitForTimeout(400);
+    const labels = await page.evaluate(() => document.getElementById("lab").document.planes.map((plane) => plane.label));
+    expect(labels).toEqual(["Project", "Install"]);
+    await page.fill("#findExample", "Install");
+    await page.locator("#findList button", { hasText: "plane · z=1" }).click();
+    await page.waitForTimeout(200);
+    const index = await page.evaluate(() => document.getElementById("lab").currentIndex);
+    expect(index).toBe(1);
+  });
+
   test("narrow layout offers a Source|Live switch that swaps the visible pane", async ({ page }) => {
     await page.setViewportSize({ width: 800, height: 760 });
     await page.goto("/viewer.html");

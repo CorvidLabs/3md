@@ -236,7 +236,7 @@
 
     <div class="head">
       <h1>3md viewer<span class="z">.</span></h1>
-      <p class="lead">Write or paste a <code>.3md</code>, open an uncompressed <code>.3mdb</code>, or open a folder of linked files. The live view stays the text element. <a href="docs.html">docs</a> &middot; <a href="gallery.html">gallery</a></p>
+      <p class="lead">Write or paste a <code>.3md</code>, open an uncompressed <code>.3mdb</code>, or open a folder. Search planes and files, turn Markdown headings into planes, or pack files into one document. The live view stays the text element. <a href="docs.html">docs</a> &middot; <a href="gallery.html">gallery</a></p>
     </div>
 
     <div class="toolbar">
@@ -244,7 +244,7 @@
       <select id="example" class="btn" aria-label="load a gallery example"></select>
       <div class="findwrap">
         <label for="findExample" class="sr-only">find</label>
-        <input id="findExample" class="btn" type="search" placeholder="find a repo example" aria-label="find a repository example" role="combobox" aria-autocomplete="list" aria-controls="findList" aria-expanded="false" autocomplete="off" />
+        <input id="findExample" class="btn" type="search" placeholder="find a plane, file, or example" aria-label="find a plane, file, or example" role="combobox" aria-autocomplete="list" aria-controls="findList" aria-expanded="false" autocomplete="off" />
         <div id="findList" class="findlist" hidden role="listbox" aria-label="matching examples"></div>
       </div>
       <label for="modeSel">mode</label>
@@ -269,6 +269,9 @@
       <input id="fileInput" type="file" accept=".3md,.3mdb,.md,.txt,text/plain,application/octet-stream" hidden />
       <button id="folderBtn" class="btn" type="button">open folder</button>
       <input id="folderInput" type="file" webkitdirectory multiple hidden />
+      <button id="sectionsBtn" class="btn" type="button" title="Turn Markdown headings into planes">sections</button>
+      <button id="packBtn" class="btn" type="button" hidden title="Put the opened files into one document">one document</button>
+      <button id="kind2Btn" class="btn" type="button" title="Download this document as uncompressed kind 2">kind 2</button>
       <label id="pieceLabel" for="piece" hidden>inside</label>
       <select id="piece" class="btn" hidden aria-label="document inside this open"></select>
       <button id="copyBtn" class="btn" type="button">copy source</button>
@@ -307,8 +310,8 @@
   <script defer src="assets/theme.js"></script>
   <script type="module" src="assets/three-md.js?v=1.7.17"></script>
   <script type="module">
-    import { openBytes, openText, openFileSet } from "./assets/open-document.js?v=1";
-    window.threeMdOpen = { openBytes, openText, openFileSet };
+    import { openBytes, openText, openFileSet, sectionsToDocument, packDocuments, kind2Bytes, searchRank } from "./assets/open-document.js?v=2";
+    window.threeMdOpen = { openBytes, openText, openFileSet, sectionsToDocument, packDocuments, kind2Bytes };
     const STARTER = `---
 3md: 1.0
 axis: time
@@ -498,6 +501,7 @@ See [[z=1|Tuesday]] for what's next.
       }
       delete validBadge.dataset.empty;
       if (lab.error) {
+        currentPlanes = [];
         errLine = blameLine();
         status.className = "status err";
         status.textContent = "Invalid 3md: " + lab.error;
@@ -525,6 +529,15 @@ See [[z=1|Tuesday]] for what's next.
         const doc = lab.document;
         status.className = "status ok";
         status.textContent = doc ? `valid · axis "${doc.axis}" · ${doc.planes.length} plane${doc.planes.length === 1 ? "" : "s"}` : "";
+        currentPlanes = doc ? doc.planes.map((plane, index) => {
+          const snippet = String(plane.body || "").split("\n").find((line) => line.trim()) || "";
+          return {
+            kind: "plane",
+            label: plane.label || ("z=" + plane.z),
+            meta: "plane · z=" + plane.z + (snippet ? " · " + snippet.slice(0, 72) : ""),
+            index,
+          };
+        }) : [];
         validBadge.className = "badge ok";
         validText.textContent = doc ? `${doc.planes.length} plane${doc.planes.length === 1 ? "" : "s"}` : "valid";
         validBadge.title = "";
@@ -784,6 +797,8 @@ See [[z=1|Tuesday]] for what's next.
     const findInput = document.getElementById("findExample");
     const findList = document.getElementById("findList");
     let catalog = [];
+    let currentPlanes = [];
+    let gathered = [];
     const field = (src, key) => {
       const match = String(src).match(new RegExp("^" + key + ":\\s*\"?([^\"\\n]+)\"?\\s*$", "m"));
       return match ? match[1].trim() : "";
@@ -794,7 +809,13 @@ See [[z=1|Tuesday]] for what's next.
       findInput.value = "";
       findInput.setAttribute("aria-expanded", "false");
       try {
-        if (item.files) {
+        if (item.kind === "plane") {
+          focusPlane(item.index);
+          return;
+        }
+        if (item.kind === "file") {
+          showOpened(openText(item.text));
+        } else if (item.files) {
           const encoder = new TextEncoder();
           showOpened(openFileSet(item.files.map((file) => ({
             path: file.path,
@@ -809,22 +830,32 @@ See [[z=1|Tuesday]] for what's next.
         status.textContent = error && error.message ? error.message : "Could not open that example.";
       }
     }
-    function matchRank(item, needle) {
-      const label = item.label.toLowerCase();
-      const meta = item.meta.toLowerCase();
-      if (label === needle || meta.endsWith(needle)) return 0;
-      if (meta.includes(" · " + needle)) return 1;
-      if (label.startsWith(needle)) return 2;
-      return 3;
+    function focusPlane(index) {
+      const lines = ed.value.split("\n");
+      let seen = 0;
+      let at = 0;
+      for (let i = 0; i < lines.length; i++) {
+        if (!lines[i].startsWith("@plane")) continue;
+        if (seen === index) { at = i; break; }
+        seen += 1;
+      }
+      const offset = lines.slice(0, at).join("\n").length;
+      ed.focus();
+      ed.setSelectionRange(offset, offset);
+      if (lab.goTo) lab.goTo(index);
+      status.className = "status ok";
+      status.textContent = "Showing plane " + (index + 1) + ".";
     }
     function showMatches(query) {
-      const needle = query.trim().toLowerCase();
+      const needle = query.trim();
       findList.replaceChildren();
       if (!needle) { findList.hidden = true; findInput.setAttribute("aria-expanded", "false"); return; }
-      const matches = catalog
-        .filter((item) => (item.label + " " + item.meta).toLowerCase().includes(needle))
-        .sort((left, right) => matchRank(left, needle) - matchRank(right, needle))
-        .slice(0, 12);
+      const matches = catalog.concat(currentPlanes, gathered)
+        .map((item) => ({ item, rank: searchRank(needle, item.label, item.meta) }))
+        .filter((row) => row.rank !== null)
+        .sort((left, right) => right.rank - left.rank || left.item.label.localeCompare(right.item.label))
+        .slice(0, 12)
+        .map((row) => row.item);
       if (!matches.length) { findList.hidden = true; findInput.setAttribute("aria-expanded", "false"); return; }
       matches.forEach((item, index) => {
         const button = document.createElement("button");
@@ -903,6 +934,31 @@ See [[z=1|Tuesday]] for what's next.
       if (!event.target.closest(".findwrap")) { findList.hidden = true; findInput.setAttribute("aria-expanded", "false"); }
     });
 
+    function rememberGathered(files) {
+      const decoder = new TextDecoder();
+      gathered = [];
+      for (const file of files) {
+        const lower = file.path.toLowerCase();
+        if (lower.endsWith(".3mdb")) continue;
+        if (!(lower.endsWith(".3md") || lower.endsWith(".md") || lower.endsWith(".txt"))) continue;
+        const text = decoder.decode(file.data);
+        gathered.push({ kind: "file", label: file.path.split("/").pop(), meta: "file · " + file.path, path: file.path, text });
+      }
+      const packBtn = document.getElementById("packBtn");
+      packBtn.hidden = gathered.length < 2;
+    }
+    function openLocal(files) {
+      rememberGathered(files);
+      const docs = files.filter((file) => /\.3md/i.test(file.path));
+      const prose = files.filter((file) => /\.(md|txt)$/i.test(file.path) && !/\.3md$/i.test(file.path));
+      if (docs.length) return showOpened(openFileSet(docs));
+      const decoder = new TextDecoder();
+      if (prose.length === 1) return showOpened(openText(sectionsToDocument(decoder.decode(prose[0].data), prose[0].path)));
+      if (prose.length > 1) {
+        return showOpened(openText(packDocuments(prose.map((file) => ({ path: file.path, text: decoder.decode(file.data) })))));
+      }
+      return showOpened(openFileSet(files));
+    }
     async function filesFromList(list) {
       const files = [];
       for (const file of list) {
@@ -940,7 +996,7 @@ See [[z=1|Tuesday]] for what's next.
       const list = fileInput.files ? [...fileInput.files] : [];
       fileInput.value = "";
       if (!list.length) return;
-      try { showOpened(openFileSet(await filesFromList(list))); }
+      try { openLocal(await filesFromList(list)); }
       catch (error) { failOpen(error); }
     });
     const folderInput = document.getElementById("folderInput");
@@ -949,7 +1005,7 @@ See [[z=1|Tuesday]] for what's next.
       const list = folderInput.files ? [...folderInput.files] : [];
       folderInput.value = "";
       if (!list.length) return;
-      try { showOpened(openFileSet(await filesFromList(list))); }
+      try { openLocal(await filesFromList(list)); }
       catch (error) { failOpen(error); }
     });
     document.body.addEventListener("dragover", (event) => event.preventDefault());
@@ -965,7 +1021,7 @@ See [[z=1|Tuesday]] for what's next.
         files.push(...await filesFromList(event.dataTransfer.files));
       }
       if (!files.length) return;
-      try { showOpened(openFileSet(files)); }
+      try { openLocal(files); }
       catch (error) { failOpen(error); }
     });
 
@@ -976,6 +1032,37 @@ See [[z=1|Tuesday]] for what's next.
     });
 
     // Download the current source
+    document.getElementById("sectionsBtn").addEventListener("click", () => {
+      if (ed.value.includes("\n@plane ") || ed.value.startsWith("@plane ")) {
+        status.className = "status ok";
+        status.textContent = "This document already has planes. Find one from the search box.";
+        return;
+      }
+      try {
+        showOpened(openText(sectionsToDocument(ed.value)));
+        history.replaceState(null, "", "#" + enc(ed.value));
+      } catch (error) { failOpen(error); }
+    });
+    document.getElementById("packBtn").addEventListener("click", () => {
+      try {
+        showOpened(openText(packDocuments(gathered.map((file) => ({ path: file.path, text: file.text })))));
+        history.replaceState(null, "", "#" + enc(ed.value));
+      } catch (error) { failOpen(error); }
+    });
+    document.getElementById("kind2Btn").addEventListener("click", () => {
+      try {
+        const bytes = kind2Bytes(ed.value);
+        const blob = new Blob([bytes], { type: "application/octet-stream" });
+        const a = document.createElement("a");
+        a.href = URL.createObjectURL(blob);
+        const title = (ed.value.match(/^title:\s*"?([^"\n]+)"?\s*$/m) || [])[1];
+        a.download = (title ? title.trim().replace(/[^a-z0-9]+/gi, "-").toLowerCase() : "document") + ".3mdb";
+        a.click();
+        URL.revokeObjectURL(a.href);
+        status.className = "status ok";
+        status.textContent = "Downloaded uncompressed kind 2 " + a.download;
+      } catch (error) { failOpen(error); }
+    });
     document.getElementById("dlBtn").addEventListener("click", () => {
       const blob = new Blob([ed.value], { type: "text/plain" });
       const a = document.createElement("a");
