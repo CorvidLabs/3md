@@ -611,8 +611,17 @@ curated animated set; a few source examples:
 - Plus `recipe`, `changelog`, `resume`, and `kanban`.
 
 Want to see it work? [docs/PROOF.md](docs/PROOF.md) records how 3md was verified
-for machines (a blind AI authored valid 3md from the spec; all three parsers
-agreed) and for people (plain, readable, diffable text).
+for machines (a blind AI authored valid 3md from the spec; the hosted text
+contract was checked in Swift, TypeScript, and Rust) and for people (plain,
+readable, diffable text).
+
+## Case studies
+
+- [Planes as layers](docs/case-studies/planes-as-layers.md) - a Godot 4.7 example maps planes onto nodes the game owns, and the addon does not spawn gameplay.
+- [Shared grove](docs/case-studies/shared-grove.md) - one embedded document is referenced by name, and the library does not read the filesystem.
+- [Kind 2 canopy](docs/case-studies/kind-2-canopy.md) - the same document appears as text and as a kind-2 `.3mdb`, and the hosted gallery viewer does not decode `.3mdb` or expand composition references.
+
+The index is [docs/case-studies/README.md](docs/case-studies/README.md).
 
 ## Development
 
@@ -629,6 +638,8 @@ Swift format check, build, and tests plus the Rust crate, TypeScript parser
 parity, generated web-component bundle drift, and VS Code grammar tests. See
 [AGENTS.md](AGENTS.md) for the standing rules every contributor and agent follows.
 Browser UI tests are exposed separately with `fledge lanes run ui`.
+GDScript is a fourth library checked locally with `fledge run gdscript` when
+Godot 4.7.2 is installed, and hosted CI does not install Godot.
 
 Each implementation has its own tests, and all three implementations run the shared 43-vector
 conformance suite in [conformance/](conformance), which is the
