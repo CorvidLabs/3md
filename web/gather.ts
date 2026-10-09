@@ -17,6 +17,52 @@ export interface GatheredSection {
   readonly body: string;
 }
 
+export interface LineHit {
+  readonly kind: "line";
+  readonly path: string;
+  readonly label: string;
+  readonly meta: string;
+  readonly text: string;
+  readonly planeIndex: number;
+}
+
+/** One searchable row for every non-empty line. A 3md line remembers its plane. */
+export function indexLines(path: string, text: string): LineHit[] {
+  const planes = planesOf(text);
+  if (!planes) {
+    return text.split(/\r\n|\n|\r/).flatMap((line, index) => {
+      const trimmed = line.trim();
+      if (!trimmed) return [];
+      return [{
+        kind: "line" as const,
+        path,
+        label: trimmed.slice(0, 80),
+        meta: `${path} · line ${index + 1}`,
+        text,
+        planeIndex: 0,
+      }];
+    });
+  }
+  const hits: LineHit[] = [];
+  planes.forEach((plane, planeIndex) => {
+    const name = plane.label || `z=${plane.z}`;
+    const lines = [name, ...plane.body.split(/\r\n|\n|\r/)];
+    for (const line of lines) {
+      const trimmed = line.trim();
+      if (!trimmed) continue;
+      hits.push({
+        kind: "line",
+        path,
+        label: trimmed.slice(0, 80),
+        meta: `${path} · ${name}`,
+        text,
+        planeIndex,
+      });
+    }
+  });
+  return hits;
+}
+
 /** Higher is a better match. A name that ends with the query ranks above a fuzzy hit. */
 export function searchRank(query: string, label: string, meta: string): number | null {
   const score = searchScore(query, `${label} ${meta}`);

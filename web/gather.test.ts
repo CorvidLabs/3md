@@ -1,6 +1,6 @@
 import { describe, expect, test } from "bun:test";
 import { parse, DocumentStorageCodec } from "../js/src/index.ts";
-import { kind2Bytes, packDocuments, searchRank, searchScore, sectionsToDocument } from "./gather.ts";
+import { indexLines, kind2Bytes, packDocuments, searchRank, searchScore, sectionsToDocument } from "./gather.ts";
 
 const readme = `# Project
 
@@ -56,6 +56,17 @@ describe("kind 2", () => {
     expect(decoded.title).toBe("grove");
     expect(decoded.planes[0]?.label).toBe("Grove");
     expect(decoded.planes[0]?.body).toContain("Trees.");
+  });
+});
+
+describe("lines", () => {
+  test("a line in the second plane remembers that plane", () => {
+    const text = "---\n3md: \"1.0\"\naxis: \"time\"\ntitle: \"Week\"\n---\n\n@plane z=0 label=\"Monday\"\nStart.\n\n@plane z=1 label=\"Tuesday\"\nShip the viewer.\n";
+    const hits = indexLines("notes/week.3md", text);
+    const hit = hits.find((item) => item.label === "Ship the viewer.");
+    expect(hit?.planeIndex).toBe(1);
+    expect(hit?.meta).toBe("notes/week.3md · Tuesday");
+    expect(hit?.text).toBe(text);
   });
 });
 
