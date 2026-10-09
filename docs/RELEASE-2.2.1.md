@@ -1,17 +1,27 @@
 # ThreeMD 2.2.1
 
-Status: the tag is `v2.2.1` on this release commit after hosted CI is green.
-Publishing the GitHub release starts the existing workflows. npm serves 2.2.0
-until `publish.yml` rewrites both packages from the tag. The Homebrew formula
-`threemd` is 2.2.0 until `post-release-formula.yml` runs. crates.io still
-serves `threemd` 2.1.0.
+Status: tag `v2.2.1`, GitHub release published 2026-10-08. npm serves 2.2.1.
+crates.io still serves `threemd` 2.1.0. The Homebrew formula `threemd` is
+2.2.1.
 
-The 2.2.0 crate publish
-([37859195832](https://github.com/CorvidLabs/3md/actions/runs/37859195832))
-failed because `CRATES_IO_TOKEN` is not configured. This release does not add
-that token. Do not say crates.io serves 2.2.1 unless `cargo-publish.yml` from
-tag `v2.2.1` succeeds. The GitHub release body records that run as it finishes.
-Swift resolves `from: "2.2.1"` from tag `v2.2.1`.
+Tag `v2.2.1` points at `5411a9a`. The GitHub release is
+[v2.2.1: Godot 4.7 load of imported documents](https://github.com/CorvidLabs/3md/releases/tag/v2.2.1).
+npm serves `@corvidlabs/threemd` and `@corvidlabs/three-md-element` at 2.2.1.
+The Homebrew formula `threemd` is 2.2.1 (`32826e2` in CorvidLabs/homebrew-tap).
+`cargo-publish.yml`
+([37868329083](https://github.com/CorvidLabs/3md/actions/runs/37868329083))
+failed because `CRATES_IO_TOKEN` is not configured, the same failure as the
+2.2.0 run
+([37859195832](https://github.com/CorvidLabs/3md/actions/runs/37859195832)).
+crates.io stayed at 2.1.0. Swift resolves `from: "2.2.1"` from the tag.
+Hosted CI on `5411a9a` passed before the tag: Trust
+[37867269321](https://github.com/CorvidLabs/3md/actions/runs/37867269321),
+Linux [37867269293](https://github.com/CorvidLabs/3md/actions/runs/37867269293),
+UI [37867269406](https://github.com/CorvidLabs/3md/actions/runs/37867269406),
+Sculpt [37867269259](https://github.com/CorvidLabs/3md/actions/runs/37867269259),
+Pages [37867269452](https://github.com/CorvidLabs/3md/actions/runs/37867269452),
+and CodeQL
+[37867268891](https://github.com/CorvidLabs/3md/actions/runs/37867268891).
 
 The format is unchanged. Text grammar 1.0, binary envelope version 1, payload
 kinds 1 and 2, and composition profile `3md-composition-1` are the same as
@@ -108,27 +118,30 @@ composition, linked files, edit, layers, and showcase.
 Hosted CI does not install Godot. This suite is not in the verify lane. This
 release does not add a weaker gate and does not add GDScript to `lanes.verify`.
 
-The repository gate is pinned Fledge 1.7.2, `fledge trust verify`. Hosted CI
-on this release commit must be green before the tag: Trust, Linux, UI,
-Sculpt, Pages, and CodeQL. Godot stays a local check.
+The repository gate is pinned Fledge 1.7.2, `fledge trust verify`. It passed
+on `1e2fe5c`, whose tree the squash `5411a9a` matches, with progressive
+provenance and an Augur review at risk 44. Hosted CI on `5411a9a` passed
+before the tag. Godot stays a local check. Hosted CI does not install Godot.
 
 ## Versions
 
-| Surface | This repository | Published before this GitHub release |
+| Surface | This repository | Published |
 | --- | --- | --- |
-| Swift `ThreeMD` | tag `v2.2.1` after hosted CI | GitHub release `v2.2.0` |
-| `@corvidlabs/threemd` | `2.2.1` in `js/package.json` | npm `2.2.0` |
+| Swift `ThreeMD` | tag `v2.2.1` at `5411a9a` | GitHub release `v2.2.1` |
+| `@corvidlabs/threemd` | `2.2.1` in `js/package.json` | npm `2.2.1` |
 | Rust `threemd` | `2.2.1` in `rust/Cargo.toml` | crates.io `2.1.0` |
-| `@corvidlabs/three-md-element` | `2.2.1` in `element/package.json` | npm `2.2.0` |
+| `@corvidlabs/three-md-element` | `2.2.1` in `element/package.json` | npm `2.2.1` |
 | VS Code `corvidlabs.threemd` | `2.2.1` in `editor/vscode/package.json` | local VSIX only |
 | Godot addon | `2.2.1` in `plugin.cfg` | copy from this repository |
-| Homebrew `threemd` | formula in CorvidLabs/homebrew-tap | `2.2.0` (`e142a8c`) |
+| Homebrew `threemd` | formula in CorvidLabs/homebrew-tap | `2.2.1` (`32826e2`) |
 
-`publish.yml` publishes both npm packages and rewrites their version from the
-tag. It does not use `NPM_TOKEN`. `cargo-publish.yml` publishes `rust/threemd`
-only when `CRATES_IO_TOKEN` is set. `post-release-formula.yml` updates the
-Homebrew formula after the source tarball exists. Those workflows are not
-dispatched as a pre-check.
+`publish.yml`
+([37868329077](https://github.com/CorvidLabs/3md/actions/runs/37868329077))
+published both npm packages and rewrote their version from the tag. It does
+not use `NPM_TOKEN`. `cargo-publish.yml` did not publish. `post-release-formula.yml`
+([37868329057](https://github.com/CorvidLabs/3md/actions/runs/37868329057))
+updated the Homebrew formula after the source tarball existed. Those workflows
+were not dispatched as a pre-check.
 
 ## Limits that stay
 
