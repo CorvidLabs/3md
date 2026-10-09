@@ -7,7 +7,7 @@ families: [COVERAGE]
 
 ## Intent
 
-<!-- What is this for, and what should it feel like? Write it as a person. -->
+I want the public coverage count to include the format libraries and the Sculpt.3md sources, and I want the app's own contract to stay in the app.
 
 ## Criteria
 
