@@ -26,7 +26,7 @@ I want the editor extension to highlight a text .3md file from a VSIX I build lo
 - **CLI-7**  I can rely on .3mdb staying off the CLI. When I need kind 2 I use the libraries, and the CLI stays on the text file.
 - **VIEWER-1**  I can open the hosted editor and viewer, edit a text document, and share a link that carries the document.
 - **VIEWER-2**  The viewer is the three-md element. The npm package @corvidlabs/three-md-element is 2.2.1.
-- **VIEWER-3**  I can browse the text examples in the hosted gallery. The gallery does not decode .3mdb and does not expand composition references.
+- **VIEWER-3**  I can browse the text examples in the hosted gallery. Those cards stay text. In the viewer I can find every text example in the repository, open an uncompressed .3mdb, open a composition profile, or open a folder of linked files. The page shows the decoded text in the element. Apple LZFSE stays unavailable.
 - **VIEWER-4**  I can rely on the element and the VS Code surface staying on text.
 - **VIEWER-5**  I can scrub, drag, and step through the planes of a text document in the element. Parsing stays with @corvidlabs/threemd.
 - **EDITOR-1**  I can get syntax highlighting for a text .3md file in the editor extension, including frontmatter, @plane directives, cross-plane links, and Markdown plane bodies.

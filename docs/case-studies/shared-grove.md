@@ -52,7 +52,7 @@ GDScript can build and decode a composition from values in memory. Composition e
 
 The library does no filesystem or network I/O. It does not open `canopy.3md` while decoding the grove. The canopy source is already inside the entry. It does not flatten the three `A` characters into copies of the canopy planes. It does not assign a scene position to the binding `A`.
 
-The hosted gallery viewer does not expand composition references. It does not decode `shared-grove.3mdb`, `shared-grove.structured.3mdb`, or `shared-grove.lzfse.3mdb`. The examples note says the viewer still covers the original text contract, and that no new binary or composition UI is implied.
+Gallery cards do not expand composition references. The viewer page opens this profile and shows the root document, and the inside control switches to the other entry. It decodes the uncompressed binaries and refuses the LZFSE fixture. The element bundle stays text-only.
 
 TypeScript and Rust report `compressionUnavailable(lzfse)` for the LZFSE fixture. GDScript returns `compressionUnavailable` when the compression byte is 1. Swift on Apple is the backend that reads and writes that fixture. Kind 1 is deprecated for new files. Readers still open the uncompressed kind 1 file.
 

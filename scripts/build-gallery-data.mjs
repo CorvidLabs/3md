@@ -3,7 +3,8 @@
 // own `category:` frontmatter when present (authoritative); otherwise it is
 // inferred from the slug, title, and axis. Run from the repo root:
 //   bun scripts/build-gallery-data.mjs
-import { existsSync, readFileSync, writeFileSync, readdirSync } from "node:fs";
+import { existsSync, readFileSync, writeFileSync, readdirSync, statSync } from "node:fs";
+import { join } from "node:path";
 import { parse } from "../js/src/index.ts";
 
 // Canonical category set surfaced in the gallery UI.
@@ -99,3 +100,30 @@ console.log("by category:", JSON.stringify(counts, null, 0));
 const all = files.map((f) => ({ slug: f.replace(/\.3md$/, ""), src: readFileSync(`${dir}/${f}`, "utf8") }));
 writeFileSync("web/all-examples.json", JSON.stringify(all));
 console.log(`all-examples.json: ${all.length} total entries`);
+
+// Text documents that live in a subdirectory (linked village, extension
+// fixtures). The viewer search loads these beside the top-level corpus.
+function walkFiles(dir, suffix) {
+  const found = [];
+  for (const name of readdirSync(dir)) {
+    const path = join(dir, name);
+    if (statSync(path).isDirectory()) found.push(...walkFiles(path, suffix));
+    else if (name.endsWith(suffix)) found.push(path);
+  }
+  return found;
+}
+const nested = walkFiles("Examples", ".3md")
+  .filter((path) => path.split("/").length > 2)
+  .sort()
+  .map((path) => ({ path: path.slice("Examples/".length), src: readFileSync(path, "utf8") }));
+writeFileSync("web/nested-examples.json", JSON.stringify(nested));
+console.log(`nested-examples.json: ${nested.length} entries`);
+
+// Uncompressed binaries the viewer can decode. LZFSE fixtures stay out of this
+// list; dropping one still gets compressionUnavailable from the opener.
+const binaries = walkFiles("Examples", ".3mdb")
+  .filter((path) => !path.includes(".lzfse."))
+  .sort()
+  .map((path) => ({ path: path.slice("Examples/".length), base64: readFileSync(path).toString("base64") }));
+writeFileSync("web/binary-samples.json", JSON.stringify(binaries));
+console.log(`binary-samples.json: ${binaries.length} uncompressed binaries`);

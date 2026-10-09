@@ -19,4 +19,4 @@ I want the same document saved as the text file or as binary payload kind 2, wit
 - **STORAGE-6**  I want Apple LZFSE to stay optional and only in Swift on Apple. TypeScript, Rust, and GDScript tell me it is unavailable.
 - **STORAGE-7**  I want a bad checksum or a reserved payload kind to be refused.
 - **STORAGE-8**  I want Sculpt.3md's compact .3mdb to stay the app's save. It is not this binary format.
-- **STORAGE-9**  I want the hosted gallery viewer to stay on the text file.
+- **STORAGE-9**  I want gallery cards to stay on the text file. I can open an uncompressed binary in the viewer and see that text. Apple LZFSE stays unavailable.

@@ -24,4 +24,4 @@ Sculpt.3md at [`apps/sculpt`](../../apps/sculpt) is an application. These studie
 - [Conway frames](conway-frames.md) reads [`Examples/game-of-life.3md`](../../Examples/game-of-life.3md). Twenty-four planes store the generations. The libraries do not run the rule.
 - [Sunken Vault links](sunken-vault-links.md) reads [`Examples/dungeon.3md`](../../Examples/dungeon.3md). Exits are `[[z=N]]` links. The libraries do not play the rooms.
 
-The [extension fixture table](../../Examples/README.md#storage-and-composition-fixtures) lists the readable files, the kind 1 binaries, and the Apple LZFSE binaries. The hosted gallery viewer does not decode binary `.3mdb` files or expand composition references.
+The [extension fixture table](../../Examples/README.md#storage-and-composition-fixtures) lists the readable files, the kind 1 binaries, and the Apple LZFSE binaries. Gallery cards stay on the text catalog. The viewer page opens an uncompressed `.3mdb`, a composition profile, and a linked folder, then shows the text in the element. Apple LZFSE stays unavailable.
