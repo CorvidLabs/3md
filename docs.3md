@@ -598,8 +598,10 @@ See [SPEC.md](SPEC.md) for the full grammar and conformance rules.
 The [Examples/](Examples) directory holds the source example documents across
 13 axis types - from medical charts, weather, and file transfers to games,
 maps, and animations. The
-[gallery viewer](https://corvidlabs.github.io/3md/gallery.html) highlights the
-curated animated set; a few source examples:
+[gallery](https://corvidlabs.github.io/3md/gallery.html) highlights the curated
+animated set. The [viewer](https://corvidlabs.github.io/3md/viewer.html) finds
+every text example in the tree, and it opens an uncompressed binary or a linked
+folder. A few source examples:
 
 - [`daily-planner.3md`](Examples/daily-planner.3md) - `axis: time`, one plane per day.
 - [`animation.3md`](Examples/animation.3md) - `axis: frame`, one plane per frame.
@@ -619,7 +621,7 @@ readable, diffable text).
 
 - [Planes as layers](docs/case-studies/planes-as-layers.md) - a Godot 4.7 example maps planes onto nodes the game owns, and the addon does not spawn gameplay.
 - [Shared grove](docs/case-studies/shared-grove.md) - one embedded document is referenced by name, and the library does not read the filesystem.
-- [Kind 2 canopy](docs/case-studies/kind-2-canopy.md) - the same document appears as text and as a kind-2 `.3mdb`, and the hosted gallery viewer does not decode `.3mdb` or expand composition references.
+- [Kind 2 canopy](docs/case-studies/kind-2-canopy.md) - the same document appears as text and as a kind-2 `.3mdb`. Gallery cards stay on text. The viewer page opens the uncompressed binary.
 
 The index is [docs/case-studies/README.md](docs/case-studies/README.md).
 

@@ -42,7 +42,7 @@ Swift on Apple reads and writes LZFSE. `canopy.lzfse.3mdb` is that fixture: kind
 
 ## What they do not do
 
-The hosted gallery viewer does not decode `canopy.structured.3mdb`, `canopy.3mdb`, or `canopy.lzfse.3mdb`. The examples note says the viewer does not yet decode binary files. The viewer still covers the original text contract. That note also says no new binary UI or command is implied. CLI `convert` and `inspect` stay text-only.
+Gallery cards stay on text. The viewer page decodes uncompressed `canopy.3mdb` and `canopy.structured.3mdb` and shows the text in the element. It does not decode `canopy.lzfse.3mdb`. Apple LZFSE stays unavailable. The element bundle stays text-only. CLI `convert` and `inspect` stay text-only.
 
 TypeScript and Rust report `compressionUnavailable(lzfse)` for LZFSE, on decode and on encode. GDScript returns `compressionUnavailable` when the compression byte is 1. Those three libraries refuse `canopy.lzfse.3mdb`.
 

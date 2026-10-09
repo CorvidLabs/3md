@@ -1,9 +1,12 @@
 # 3md examples
 
-Text examples span many meanings of the Z axis. Browse the existing text
-catalog in the [gallery viewer](https://corvidlabs.github.io/3md/gallery.html).
-The extension fixtures below use the new Swift storage/composition APIs; the
-hosted viewer does not yet decode binary files or expand composition references.
+Text examples span many meanings of the Z axis. Browse the curated text
+catalog in the [gallery](https://corvidlabs.github.io/3md/gallery.html). The
+[viewer](https://corvidlabs.github.io/3md/viewer.html) finds every text example
+in this tree, including linked village and the fixtures below. It also opens an
+uncompressed `.3mdb`, a composition profile, or a folder of linked files, and
+shows the text in the element. Apple LZFSE stays unavailable. The gallery cards
+stay on text.
 
 ## Storage and composition fixtures
 
@@ -26,9 +29,9 @@ self-contained, so the library requires no source-file or URL resolution.
 The [manifest](Extensions/manifest.json) records container version 1, profile
 3md-composition-1, exact byte counts and SHA256 for each file. Hashes document
 fixture integrity and do not authenticate an author. LZFSE is optional and can
-make very small inputs larger; uncompressed binary is portable. Existing CLI,
-TypeScript/Rust parsers and hosted viewer continue to support the original text
-contract; no new binary/composition UI or command behavior is implied.
+make very small inputs larger; uncompressed binary is portable. The CLI stays
+on the text file. The `<three-md>` element stays a text renderer. The viewer
+page is what opens these uncompressed binaries and composition profiles.
 
 ## axis: time (34)
 

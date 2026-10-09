@@ -211,6 +211,67 @@ test.describe("viewer & editor (viewer.html)", () => {
     expect(r.badgeValid).toBe("true");
   });
 
+  test("repository search opens the 24-generation Conway document", async ({ page }) => {
+    await page.goto("/viewer.html");
+    await viewerReady(page);
+    await page.waitForFunction(() => window.threeMdCatalogCount > 200);
+    await page.fill("#findExample", "game-of-life.3md");
+    await page.locator("#findList button", { hasText: "· game-of-life.3md" }).click();
+    await page.waitForTimeout(400);
+    const info = await page.evaluate(() => ({
+      planes: document.getElementById("lab").document.planes.length,
+      title: document.getElementById("lab").document.title,
+    }));
+    expect(info.planes).toBe(24);
+    expect(info.title).toContain("Conway");
+  });
+
+  test("kind 2 canopy opens as text in the element", async ({ page }) => {
+    await page.goto("/viewer.html");
+    await viewerReady(page);
+    await page.waitForFunction(() => window.threeMdCatalogCount > 200);
+    await page.fill("#findExample", "canopy.structured.3mdb");
+    await page.locator("#findList button", { hasText: "canopy.structured.3mdb" }).click();
+    await page.waitForTimeout(400);
+    const info = await page.evaluate(() => ({
+      title: document.getElementById("lab").document.title,
+      status: document.getElementById("status").textContent,
+      planes: document.getElementById("lab").document.planes.length,
+    }));
+    expect(info.title).toBe("Reusable canopy");
+    expect(info.planes).toBe(2);
+    expect(info.status).toContain("kind 2");
+  });
+
+  test("linked village search resolves the folder", async ({ page }) => {
+    await page.goto("/viewer.html");
+    await viewerReady(page);
+    await page.waitForFunction(() => window.threeMdCatalogCount > 200);
+    await page.fill("#findExample", "folder · LinkedVillage");
+    await page.locator("#findList button", { hasText: "folder · LinkedVillage" }).click();
+    await page.waitForTimeout(400);
+    const title = await page.evaluate(() => document.getElementById("lab").document.title);
+    expect(title).toBe("Linked village");
+    const labels = await page.locator("#piece option").allTextContents();
+    expect(labels.some((label) => label.endsWith("models/house.3md"))).toBe(true);
+    expect(labels.some((label) => label.endsWith("models/tree.3md"))).toBe(true);
+  });
+
+  test("a composition profile shows the root and can switch entries", async ({ page }) => {
+    await page.goto("/viewer.html");
+    await viewerReady(page);
+    await page.waitForFunction(() => window.threeMdCatalogCount > 200);
+    await page.fill("#findExample", "Extensions/shared-grove.3md");
+    await page.locator("#findList button", { hasText: "layer · Extensions/shared-grove.3md" }).click();
+    await page.waitForTimeout(400);
+    const root = await page.evaluate(() => document.getElementById("lab").document.title);
+    expect(root).toBe("Shared grove");
+    await page.selectOption("#piece", "canopy");
+    await page.waitForTimeout(200);
+    const canopy = await page.evaluate(() => document.getElementById("lab").document.title);
+    expect(canopy).toBe("Reusable canopy");
+  });
+
   test("narrow layout offers a Source|Live switch that swaps the visible pane", async ({ page }) => {
     await page.setViewportSize({ width: 800, height: 760 });
     await page.goto("/viewer.html");

@@ -102,6 +102,15 @@
   #cursor,#counts{font-family:var(--code-font);font-size:11px}
   select.btn{padding-right:8px;max-width:240px}
   #example{max-width:min(260px,52vw)}
+  .findwrap{position:relative}
+  #findExample{width:min(220px,46vw)}
+  .findlist{position:absolute;z-index:20;top:calc(100% + 4px);left:0;width:min(380px,82vw);max-height:280px;overflow:auto;
+    background:var(--surface);border:1px solid var(--hairline);border-radius:4px;box-shadow:0 8px 24px var(--ink-12)}
+  .findlist button{display:flex;justify-content:space-between;gap:12px;width:100%;text-align:left;font:inherit;font-size:12px;
+    padding:8px 10px;border:0;border-bottom:1px solid var(--hairline);background:transparent;color:var(--ink);cursor:pointer}
+  .findlist button:last-child{border-bottom:0}
+  .findlist button:hover,.findlist button:focus-visible,.findlist button[aria-selected="true"]{background:color-mix(in srgb,var(--sheen) 12%,var(--surface));outline:none}
+  .findlist .meta{color:var(--text-faint);font-family:var(--code-font);font-size:11px;white-space:nowrap}
   /* Phone: buttons fill rows evenly and the primary share action becomes a full
      width bar at the end, so the hierarchy survives instead of leaving the CTA
      marooned on a half-empty row. */
@@ -227,12 +236,17 @@
 
     <div class="head">
       <h1>3md viewer<span class="z">.</span></h1>
-      <p class="lead">Write or paste any <code>.3md</code> on the left, see it live on the right. Syntax-highlighted, shareable, free and official. <a href="docs.html">docs</a> &middot; <a href="gallery.html">gallery</a></p>
+      <p class="lead">Write or paste a <code>.3md</code>, open an uncompressed <code>.3mdb</code>, or open a folder of linked files. The live view stays the text element. <a href="docs.html">docs</a> &middot; <a href="gallery.html">gallery</a></p>
     </div>
 
     <div class="toolbar">
-      <label for="example">load</label>
-      <select id="example" class="btn" aria-label="load an example"></select>
+      <label for="example">gallery</label>
+      <select id="example" class="btn" aria-label="load a gallery example"></select>
+      <div class="findwrap">
+        <label for="findExample" class="sr-only">find</label>
+        <input id="findExample" class="btn" type="search" placeholder="find a repo example" aria-label="find a repository example" role="combobox" aria-autocomplete="list" aria-controls="findList" aria-expanded="false" autocomplete="off" />
+        <div id="findList" class="findlist" hidden role="listbox" aria-label="matching examples"></div>
+      </div>
       <label for="modeSel">mode</label>
       <select id="modeSel" class="btn" aria-label="override render mode">
         <option value="">auto (from axis)</option>
@@ -252,7 +266,11 @@
       <button id="fmBtn" class="btn icon ins" type="button" title="Insert frontmatter">+ frontmatter</button>
       <span class="sep"></span>
       <button id="openBtn" class="btn" type="button">open file</button>
-      <input id="fileInput" type="file" accept=".3md,.md,.txt,text/plain" hidden />
+      <input id="fileInput" type="file" accept=".3md,.3mdb,.md,.txt,text/plain,application/octet-stream" hidden />
+      <button id="folderBtn" class="btn" type="button">open folder</button>
+      <input id="folderInput" type="file" webkitdirectory multiple hidden />
+      <label id="pieceLabel" for="piece" hidden>inside</label>
+      <select id="piece" class="btn" hidden aria-label="document inside this open"></select>
       <button id="copyBtn" class="btn" type="button">copy source</button>
       <button id="dlBtn" class="btn" type="button">download</button>
       <button id="shareBtn" class="btn primary" type="button">copy share link</button>
@@ -265,7 +283,7 @@
     <div class="grid" id="grid" data-show="source">
       <div class="pane editorPane">
         <div class="bar">
-          <span>source.3md</span>
+          <span id="sourceName">source.3md</span>
           <span class="right"><span id="cursor">Ln 1, Col 1</span> &middot; <span id="counts"></span></span>
         </div>
         <div class="editor" id="editorWrap">
@@ -289,6 +307,8 @@
   <script defer src="assets/theme.js"></script>
   <script type="module" src="assets/three-md.js?v=1.7.17"></script>
   <script type="module">
+    import { openBytes, openText, openFileSet } from "./assets/open-document.js?v=1";
+    window.threeMdOpen = { openBytes, openText, openFileSet };
     const STARTER = `---
 3md: 1.0
 axis: time
@@ -451,6 +471,9 @@ See [[z=1|Tuesday]] for what's next.
       if (!ok && modeSel.value === "blend") { modeSel.value = ""; lab.removeAttribute("mode"); }
     }
 
+    let openNote = "";
+    let openedPieces = [];
+
     function render() {
       const src = ed.value;
       counts.textContent = src.split("\n").length + " lines, " + src.length + " chars";
@@ -535,6 +558,7 @@ See [[z=1|Tuesday]] for what's next.
         if (dangling.length) warns.push(`${dangling.length} dangling link${dangling.length === 1 ? "" : "s"} (z=${dangling.join(", z=")})`);
         if (warns.length) { validBadge.dataset.warnings = String(warns.length); status.textContent += " · " + warns.join(" · "); }
         else { delete validBadge.dataset.warnings; }
+        if (openNote) status.textContent += " · " + openNote;
         buildOutline(doc);
       }
       paintNow(); // apply/clear the error-line highlight synchronously
@@ -584,7 +608,7 @@ See [[z=1|Tuesday]] for what's next.
     }
 
     let timer = null;
-    ed.addEventListener("input", () => { paint(); clearTimeout(timer); timer = setTimeout(render, 160); });
+    ed.addEventListener("input", () => { openNote = ""; paint(); clearTimeout(timer); timer = setTimeout(render, 160); });
     ed.addEventListener("scroll", syncScroll);
     ed.addEventListener("keyup", updateCursor);
     ed.addEventListener("click", updateCursor);
@@ -718,20 +742,231 @@ See [[z=1|Tuesday]] for what's next.
     exampleSel.addEventListener("change", () => {
       const slug = exampleSel.value;
       if (!slug || !EXAMPLES[slug]) return;
-      ed.value = EXAMPLES[slug];
-      render(); updateCursor();
+      showOpened(openText(EXAMPLES[slug]));
       history.replaceState(null, "", "#" + enc(ed.value));
     });
 
-    // Open a local file
+    const pieceSel = document.getElementById("piece");
+    const pieceLabel = document.getElementById("pieceLabel");
+    const sourceName = document.getElementById("sourceName");
+    function showOpened(opened) {
+      openedPieces = opened.pieces || [];
+      openNote = opened.note || "";
+      pieceSel.replaceChildren();
+      if (openedPieces.length > 1) {
+        for (const item of openedPieces) {
+          const option = new Option(item.label, item.id);
+          if (item.id === opened.activeId) option.selected = true;
+          pieceSel.appendChild(option);
+        }
+        pieceSel.hidden = false;
+        pieceLabel.hidden = false;
+      } else {
+        pieceSel.hidden = true;
+        pieceLabel.hidden = true;
+      }
+      const active = openedPieces.find((item) => item.id === opened.activeId);
+      sourceName.textContent = active ? active.label : "source.3md";
+      ed.value = opened.text;
+      render();
+      updateCursor();
+    }
+    pieceSel.addEventListener("change", () => {
+      const item = openedPieces.find((piece) => piece.id === pieceSel.value);
+      if (!item) return;
+      openNote = "Showing " + item.label + ".";
+      sourceName.textContent = item.label;
+      ed.value = item.text;
+      render();
+      updateCursor();
+    });
+
+    const findInput = document.getElementById("findExample");
+    const findList = document.getElementById("findList");
+    let catalog = [];
+    const field = (src, key) => {
+      const match = String(src).match(new RegExp("^" + key + ":\\s*\"?([^\"\\n]+)\"?\\s*$", "m"));
+      return match ? match[1].trim() : "";
+    };
+    const escapeHtml = (value) => String(value).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    function chooseCatalog(item) {
+      findList.hidden = true;
+      findInput.value = "";
+      findInput.setAttribute("aria-expanded", "false");
+      try {
+        if (item.files) {
+          const encoder = new TextEncoder();
+          showOpened(openFileSet(item.files.map((file) => ({
+            path: file.path,
+            data: encoder.encode(file.src),
+          }))));
+        } else {
+          showOpened(item.bytes ? openBytes(item.bytes) : openText(item.src));
+        }
+        history.replaceState(null, "", "#" + enc(ed.value));
+      } catch (error) {
+        status.className = "status err";
+        status.textContent = error && error.message ? error.message : "Could not open that example.";
+      }
+    }
+    function matchRank(item, needle) {
+      const label = item.label.toLowerCase();
+      const meta = item.meta.toLowerCase();
+      if (label === needle || meta.endsWith(needle)) return 0;
+      if (meta.includes(" · " + needle)) return 1;
+      if (label.startsWith(needle)) return 2;
+      return 3;
+    }
+    function showMatches(query) {
+      const needle = query.trim().toLowerCase();
+      findList.replaceChildren();
+      if (!needle) { findList.hidden = true; findInput.setAttribute("aria-expanded", "false"); return; }
+      const matches = catalog
+        .filter((item) => (item.label + " " + item.meta).toLowerCase().includes(needle))
+        .sort((left, right) => matchRank(left, needle) - matchRank(right, needle))
+        .slice(0, 12);
+      if (!matches.length) { findList.hidden = true; findInput.setAttribute("aria-expanded", "false"); return; }
+      matches.forEach((item, index) => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.setAttribute("role", "option");
+        button.setAttribute("aria-selected", index === 0 ? "true" : "false");
+        button.innerHTML = escapeHtml(item.label) + ' <span class="meta">' + escapeHtml(item.meta) + "</span>";
+        button.addEventListener("click", () => chooseCatalog(item));
+        findList.appendChild(button);
+      });
+      findList.hidden = false;
+      findInput.setAttribute("aria-expanded", "true");
+    }
+    Promise.all([
+      fetch("all-examples.json").then((r) => r.json()),
+      fetch("nested-examples.json").then((r) => r.json()),
+      fetch("binary-samples.json").then((r) => r.json()),
+    ]).then(([all, nested, binaries]) => {
+      catalog = [];
+      for (const item of all) {
+        catalog.push({ label: field(item.src, "title") || item.slug, meta: (field(item.src, "axis") || "text") + " · " + item.slug + ".3md", src: item.src, bytes: null, files: null });
+      }
+      for (const item of nested) {
+        catalog.push({ label: field(item.src, "title") || item.path, meta: (field(item.src, "axis") || "text") + " · " + item.path, src: item.src, bytes: null, files: null });
+      }
+      const folders = new Map();
+      for (const item of nested) {
+        const slash = item.path.indexOf("/");
+        if (slash < 0) continue;
+        const folder = item.path.slice(0, slash);
+        const group = folders.get(folder) || [];
+        group.push(item);
+        folders.set(folder, group);
+      }
+      for (const [folder, files] of folders) {
+        const scene = files.find((file) => file.path.endsWith("/scene.3md"));
+        if (!scene) continue;
+        catalog.push({
+          label: field(scene.src, "title") || folder,
+          meta: "folder · " + folder,
+          src: null,
+          bytes: null,
+          files,
+        });
+      }
+      for (const item of binaries) {
+        const binary = Uint8Array.from(atob(item.base64), (c) => c.charCodeAt(0));
+        catalog.push({ label: item.path, meta: "binary · " + item.path, src: null, bytes: binary, files: null });
+      }
+      window.threeMdCatalogCount = catalog.length;
+      if (findInput.value) showMatches(findInput.value);
+    }).catch(() => { catalog = []; window.threeMdCatalogCount = 0; });
+    findInput.addEventListener("input", () => showMatches(findInput.value));
+    findInput.addEventListener("keydown", (event) => {
+      const buttons = [...findList.querySelectorAll("button")];
+      if (event.key === "Escape") { findList.hidden = true; findInput.setAttribute("aria-expanded", "false"); return; }
+      if ((event.key === "ArrowDown" || event.key === "ArrowUp") && buttons.length && !findList.hidden) {
+        event.preventDefault();
+        const current = buttons.findIndex((button) => button.getAttribute("aria-selected") === "true");
+        const next = event.key === "ArrowDown"
+          ? Math.min(buttons.length - 1, current + 1)
+          : Math.max(0, current - 1);
+        buttons.forEach((button, index) => button.setAttribute("aria-selected", index === next ? "true" : "false"));
+        buttons[next].scrollIntoView({ block: "nearest" });
+        return;
+      }
+      if (event.key === "Enter") {
+        if (findList.hidden) return;
+        const chosen = buttons.find((button) => button.getAttribute("aria-selected") === "true") || buttons[0];
+        if (!chosen) return;
+        event.preventDefault();
+        chosen.click();
+      }
+    });
+    document.addEventListener("click", (event) => {
+      if (!event.target.closest(".findwrap")) { findList.hidden = true; findInput.setAttribute("aria-expanded", "false"); }
+    });
+
+    async function filesFromList(list) {
+      const files = [];
+      for (const file of list) {
+        files.push({ path: file.webkitRelativePath || file.name, data: new Uint8Array(await file.arrayBuffer()) });
+      }
+      return files;
+    }
+    async function readEntry(entry, prefix) {
+      if (entry.isFile) {
+        const file = await new Promise((resolve, reject) => entry.file(resolve, reject));
+        return [{ path: prefix + file.name, data: new Uint8Array(await file.arrayBuffer()) }];
+      }
+      if (!entry.isDirectory) return [];
+      const reader = entry.createReader();
+      const children = [];
+      for (;;) {
+        const batch = await new Promise((resolve, reject) => reader.readEntries(resolve, reject));
+        if (!batch.length) break;
+        children.push(...batch);
+      }
+      const nested = [];
+      for (const child of children) nested.push(...await readEntry(child, prefix + entry.name + "/"));
+      return nested;
+    }
+    function failOpen(error) {
+      status.className = "status err";
+      status.textContent = error && error.message ? error.message : "Could not open that document.";
+    }
+
+    // Open a local file or a folder. Binary and linked files are decoded here,
+    // then the element receives text.
     const fileInput = document.getElementById("fileInput");
     document.getElementById("openBtn").addEventListener("click", () => fileInput.click());
-    fileInput.addEventListener("change", () => {
-      const f = fileInput.files && fileInput.files[0];
-      if (!f) return;
-      const r = new FileReader();
-      r.onload = () => { ed.value = String(r.result); render(); updateCursor(); };
-      r.readAsText(f);
+    fileInput.addEventListener("change", async () => {
+      const list = fileInput.files ? [...fileInput.files] : [];
+      fileInput.value = "";
+      if (!list.length) return;
+      try { showOpened(openFileSet(await filesFromList(list))); }
+      catch (error) { failOpen(error); }
+    });
+    const folderInput = document.getElementById("folderInput");
+    document.getElementById("folderBtn").addEventListener("click", () => folderInput.click());
+    folderInput.addEventListener("change", async () => {
+      const list = folderInput.files ? [...folderInput.files] : [];
+      folderInput.value = "";
+      if (!list.length) return;
+      try { showOpened(openFileSet(await filesFromList(list))); }
+      catch (error) { failOpen(error); }
+    });
+    document.body.addEventListener("dragover", (event) => event.preventDefault());
+    document.body.addEventListener("drop", async (event) => {
+      event.preventDefault();
+      const items = [...(event.dataTransfer && event.dataTransfer.items ? event.dataTransfer.items : [])];
+      const files = [];
+      for (const item of items) {
+        const entry = item.webkitGetAsEntry && item.webkitGetAsEntry();
+        if (entry) files.push(...await readEntry(entry, ""));
+      }
+      if (!files.length && event.dataTransfer && event.dataTransfer.files) {
+        files.push(...await filesFromList(event.dataTransfer.files));
+      }
+      if (!files.length) return;
+      try { showOpened(openFileSet(files)); }
+      catch (error) { failOpen(error); }
     });
 
     // Copy the raw source (agent-friendly: grab the exact document)

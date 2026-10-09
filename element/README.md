@@ -29,7 +29,10 @@ bun add @corvidlabs/three-md-element
 npm serves `@corvidlabs/three-md-element` 2.2.1. An older `@corvidlabs` scope
 mapped to GitHub Packages must be changed when
 adopting the public npm release. The element remains a text renderer, with no
-binary-file, composition, linked-file or editing UI. See the
+binary-file, composition, linked-file or editing UI. The viewer page at
+`web/viewer.html` opens an uncompressed `.3mdb`, a composition profile, or a
+folder of linked files, then passes text to this element. Apple LZFSE stays
+unavailable. See the
 [2.2.1 release notes](../docs/RELEASE-2.2.1.md).
 
 The published package is a single self-contained module (the parser is bundled

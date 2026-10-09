@@ -21,4 +21,4 @@ I want one self-contained file to hold named documents I can point at many times
 - **REUSE-8**  An invalid path, a cycle, a missing file, or a limit overflow is refused, and the document I already have stays as it was.
 - **REUSE-9**  I can store the 3md-composition-1 profile as readable text or as payload kind 2.
 - **REUSE-10**  I can bundle a resolved ledger into that self-contained profile, and the bundle does not need the source folder afterward.
-- **REUSE-11**  The hosted gallery viewer shows the text and does not expand composition references.
+- **REUSE-11**  Gallery cards show the text and do not expand composition references. In the viewer I can open a composition profile and switch to another entry.
