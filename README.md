@@ -516,7 +516,8 @@ Actual canonical fixtures are in [Examples/Extensions](Examples/README.md#storag
 The fixture directory also includes LZFSE variants and a byte/hash manifest.
 The public Swift APIs generated all six documents and decoded them back to
 equal values. This demonstrates storage and references, without promising
-automatic character-to-model expansion or hosted viewer support.
+automatic character-to-model expansion. Gallery cards stay on text. The viewer
+page opens these uncompressed binaries and the composition profile.
 
 ### Linked files
 
@@ -600,8 +601,12 @@ readable, diffable text).
 ## Case studies
 
 - [Planes as layers](docs/case-studies/planes-as-layers.md) - a Godot 4.7 example maps planes onto nodes the game owns, and the addon does not spawn gameplay.
+- [Load an imported grove](docs/case-studies/load-imported-grove.md) - a game calls `load()` on an imported `.3md` and reads the title and plane labels.
+- [Linked village](docs/case-studies/linked-village.md) - a glyph ledger names other files, and the library does not open them.
 - [Shared grove](docs/case-studies/shared-grove.md) - one embedded document is referenced by name, and the library does not read the filesystem.
 - [Kind 2 canopy](docs/case-studies/kind-2-canopy.md) - the same document appears as text and as a kind-2 `.3mdb`. Gallery cards stay on text. The viewer page opens the uncompressed binary.
+- [Conway frames](docs/case-studies/conway-frames.md) - twenty-four stored generations, and the libraries do not run the rule.
+- [Sunken Vault links](docs/case-studies/sunken-vault-links.md) - room exits are cross-plane links, and the libraries do not play the dungeon.
 
 The index is [docs/case-studies/README.md](docs/case-studies/README.md).
 

@@ -22,7 +22,7 @@ The file declares axis `layer`. The libraries store each plane's `z`, label, and
 - [`gdscript/examples/play_layers.gd`](../../gdscript/examples/play_layers.gd), a headless check. It parses the file and expects the title Grove, three planes, and the labels Ground, Canopy, and HUD.
 - [`gdscript/examples/layer_map.gd`](../../gdscript/examples/layer_map.gd), the example that builds child nodes.
 - [`gdscript/examples/README.md`](../../gdscript/examples/README.md), the Godot-facing notes. The shared text corpus stays in [`Examples/`](../../Examples).
-- [`gdscript/addons/threemd`](../../gdscript/addons/threemd). Copy only this folder. [`plugin.cfg`](../../gdscript/addons/threemd/plugin.cfg) is version 2.2.0.
+- [`gdscript/addons/threemd`](../../gdscript/addons/threemd). Copy only this folder. [`plugin.cfg`](../../gdscript/addons/threemd/plugin.cfg) is version 2.2.1.
 
 The samples were run on Godot 4.7.2. The addon targets that release. It does not target Godot 3 or Godot 4.8.
 
