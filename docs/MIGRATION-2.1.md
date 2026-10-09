@@ -2,7 +2,7 @@
 
 Status: ThreeMD 2.1.0, published. Payload kind 2 and the removal of the fixed
 size stop shipped in that release. These notes describe the 2.1 library
-change. npm now serves 2.2.0. crates.io still serves `threemd` 2.1.0.
+change. npm now serves 2.2.1. crates.io still serves `threemd` 2.1.0.
 
 The package number is not the document version. Keep `3md: 1.0` (or an older
 accepted string) in frontmatter. The parser stays version-lenient. Text grammar

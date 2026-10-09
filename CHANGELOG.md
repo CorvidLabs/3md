@@ -6,7 +6,7 @@
 
 ThreeMD 2.2.1 lets a Godot 4.7 game `load()` an imported `.3md` or `.3mdb` and read its title and plane labels. The format is unchanged. See [docs/RELEASE-2.2.1.md](docs/RELEASE-2.2.1.md).
 
-The tag is `v2.2.1` on this release commit after hosted CI is green. npm serves 2.2.0 until the GitHub release publish workflow runs. The Homebrew formula `threemd` is 2.2.0 until the formula workflow runs. crates.io still serves `threemd` 2.1.0 because `CRATES_IO_TOKEN` is not configured. This release does not add that token.
+Tag `v2.2.1` is `5411a9a`. The GitHub release was published on 2026-10-08. npm serves `@corvidlabs/threemd` and `@corvidlabs/three-md-element` at 2.2.1. The Homebrew formula `threemd` is 2.2.1. crates.io still serves `threemd` 2.1.0 because `CRATES_IO_TOKEN` is not configured.
 
 ### Fixed
 
@@ -18,7 +18,7 @@ The tag is `v2.2.1` on this release commit after hosted CI is green. npm serves 
 
 ### Changed
 
-- Package manifests for the TypeScript library, the web element, the VS Code extension, the Rust crate, and the Godot addon read 2.2.1. npm, Homebrew, and crates.io stay at the versions named above until their release workflows run.
+- Package manifests for the TypeScript library, the web element, the VS Code extension, the Rust crate, and the Godot addon read 2.2.1. npm and the Homebrew formula shipped 2.2.1. crates.io stayed at 2.1.0.
 
 ## [v2.2.0] - 2026-10-08
 

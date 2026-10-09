@@ -473,11 +473,11 @@ Acceptance Criteria:
 
 ### REQ-ThreeMD-044
 
-The public docs SHALL describe ThreeMD 2.2.1 as the current library, with the text file and binary named as the two saves, and SHALL name Kind 1 as deprecated. They SHALL say the tag is `v2.2.1` on this release commit after hosted CI is green. They SHALL say npm serves `@corvidlabs/threemd` and `@corvidlabs/three-md-element` at 2.2.0 until the GitHub release publish workflow runs. They SHALL say crates.io still serves `threemd` 2.1.0. They SHALL say the Homebrew formula `threemd` is 2.2.0 until the formula workflow runs.
+The public docs SHALL describe ThreeMD 2.2.1 as the current library, with the text file and binary named as the two saves, and SHALL name Kind 1 as deprecated. They SHALL say tag `v2.2.1` is `5411a9a` and the GitHub release is published. They SHALL say npm serves `@corvidlabs/threemd` and `@corvidlabs/three-md-element` at 2.2.1. They SHALL say crates.io still serves `threemd` 2.1.0. They SHALL say the Homebrew formula `threemd` is 2.2.1.
 
 Acceptance Criteria:
-- The README leads with ThreeMD 2.2.1, the text file, binary, and Kind 1 as deprecated, and says tag `v2.2.1` follows hosted CI on this release commit.
-- Install docs say npm `@corvidlabs/threemd` 2.2.0 is still the published package until the GitHub release publish workflow runs, crates.io `threemd` 2.1.0 is the published crate, the Homebrew formula is 2.2.0 until the formula workflow runs, and Swift `from: "2.2.1"` resolves from tag `v2.2.1` after that CI.
+- The README leads with ThreeMD 2.2.1, the text file, binary, and Kind 1 as deprecated, and says tag `v2.2.1` and the GitHub release are published.
+- Install docs say npm `@corvidlabs/threemd` 2.2.1 is published, crates.io `threemd` 2.1.0 is the published crate, the Homebrew formula is 2.2.1, and Swift `from: "2.2.1"` resolves from tag `v2.2.1`.
 
 ### REQ-ThreeMD-045
 
