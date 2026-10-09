@@ -1,6 +1,6 @@
 # Linked village
 
-Open scene.3md with a host that implements docs/FILE-COMPOSITION.md. Characters 1 and 4 share the same house. Tower links to Tree relative to its own models folder. No module registration is required.
+Open scene.3md with a host that implements docs/FILE-COMPOSITION.md. Characters 1 and 4 share the same house. Tower links to Tree relative to its own models folder. The three model files are in [models](models/README.md). No module registration is required.
 
 These are generic ThreeMD Markdown documents with ASCII illustrations. Placement/rendering belongs to the host; this example is not a Sculpt spatial-schema file.
 
