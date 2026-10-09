@@ -35,7 +35,7 @@ This study is not [`layers.3md`](../../gdscript/examples/layers.3md) and not [`s
 
 ## What the libraries do
 
-After the editor import, a Godot 4.7 game calls `load("res://examples/grove/scene.3md")`. The value is a `ThreeMDDocumentAsset`. The game then calls `parsed()`. The title is Grove. The labels are Ground, Canopy, and HUD.
+After the editor import, a Godot 4.7 game calls `load("res://examples/grove/scene.3md")`. The value is a `ThreeMDDocumentAsset`. The game reads `document_title` and `plane_labels`. The title is Grove. The labels are Ground, Canopy, and HUD.
 
 `load_imported.gd` is the headless check. It does not call `parsed()`. It calls `load()` from `_initialize`, not `_init`. On a `--script` SceneTree, `_init` runs before Godot registers `class_name` resource loaders. `_initialize` runs after that registration. The script expects `document_title` Grove and `plane_labels` Ground, Canopy, and HUD. It does not build the asset with `from_text`.
 

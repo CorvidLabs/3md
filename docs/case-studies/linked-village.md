@@ -6,7 +6,7 @@ Version and library limits that apply to every study are in the [index](README.m
 
 ## What the document is
 
-The file is text grammar `1.1`, axis `space`, title Linked village. Metadata `3md-files` is a strict JSON object. Each key is one printable ASCII glyph, U+0021 through U+007E. Each value is a relative filename.
+The file declares `3md` `1.1`, axis `space`, title Linked village. The text grammar stays 1.0. The version string does not change the grammar. Metadata `3md-files` is a strict JSON object. Each key is one printable ASCII glyph, U+0021 through U+007E. Each value is a relative filename.
 
 | Glyph | Filename |
 | --- | --- |
@@ -24,11 +24,11 @@ One plane: `z=0`, label Village. The picture is:
 .1.....4...
 ```
 
-[`house.3md`](../../Examples/LinkedVillage/models/house.3md) is grammar `1.1`, axis `space`, title House. It has no `3md-files` ledger. One plane, `z=0`, label Front, id `house-front`. The body is an ASCII house.
+[`house.3md`](../../Examples/LinkedVillage/models/house.3md) declares `3md` `1.1`, axis `space`, title House. It has no `3md-files` ledger. One plane, `z=0`, label Front, id `house-front`. The body is an ASCII house.
 
-[`tree.3md`](../../Examples/LinkedVillage/models/tree.3md) is grammar `1.1`, axis `space`, title Tree. It has no `3md-files` ledger. One plane, `z=0`, label Tree, id `tree-front`. The body is an ASCII tree.
+[`tree.3md`](../../Examples/LinkedVillage/models/tree.3md) declares `3md` `1.1`, axis `space`, title Tree. It has no `3md-files` ledger. One plane, `z=0`, label Tree, id `tree-front`. The body is an ASCII tree.
 
-[`tower.3md`](../../Examples/LinkedVillage/models/tower.3md) is grammar `1.1`, axis `space`, title Tower. Its ledger is `{"T":"tree.3md"}`. The path in that file is `tree.3md`, relative to `models`, the folder that contains the tower. One plane, `z=0`, label Tower, id `tower-front`. The picture includes the glyph `T`.
+[`tower.3md`](../../Examples/LinkedVillage/models/tower.3md) declares `3md` `1.1`, axis `space`, title Tower. Its ledger is `{"T":"tree.3md"}`. The path in that file is `tree.3md`, relative to `models`, the folder that contains the tower. One plane, `z=0`, label Tower, id `tower-front`. The picture includes the glyph `T`.
 
 [Shared grove](shared-grove.md) embeds canopy text inside [`shared-grove.3md`](../../Examples/Extensions/shared-grove.3md). Linked village names other files. Both are composition. The mechanisms differ. Shared grove keeps the child source in the entry. This scene keeps filenames in a `3md-files` ledger.
 
