@@ -10,7 +10,8 @@ stay on text.
 
 ## Storage and composition fixtures
 
-These six actual fixtures were generated with the public Swift APIs and decoded
+The files live in [Extensions](Extensions/README.md). These six actual fixtures
+were generated with the public Swift APIs and decoded
 back to equal documents and composition values. They exercise the general
 binary envelope and a self-contained reusable library, without application
 placement or rendering semantics.
