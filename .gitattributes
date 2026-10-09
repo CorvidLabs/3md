@@ -1,7 +1,9 @@
-# 3md files are Markdown with a Z axis. Without this, GitHub's language detector
-# (Linguist) sees the leading-dot ASCII grids and `@plane`/`---` lines as Roff
-# (troff macros start with a dot), which wrongly dominates the language bar.
-*.3md linguist-language=Markdown
+# 3md files are Markdown with a Z axis, but GitHub's Markdown preview joins a
+# single newline into a space. That turns a blob into one paragraph, so the
+# planes in gdscript/examples/grove/scene.3md read as one line. Show the source
+# instead. Forcing Text also stops Linguist from calling leading-dot ASCII
+# grids Roff (troff macros start with a dot).
+*.3md linguist-language=Text
 
 # The example corpus is sample content, not source - keep it out of language stats.
 Examples/** linguist-documentation
