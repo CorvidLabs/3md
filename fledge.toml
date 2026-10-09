@@ -36,7 +36,7 @@ description = "TypeScript port: typecheck, build distributable JavaScript/declar
 
 [tasks.gdscript]
 cmd = "bash gdscript/tools/check.sh"
-description = "Godot 4.7 addon: headless text, binary, composition, linked-file, edit, and example checks. Not in the verify lane."
+description = "Godot 4.7 addon: import a .3md and a kind-2 .3mdb, load() both, then the headless text, binary, composition, linked-file, edit, and example checks. Not in the verify lane."
 
 [tasks.gdscript-interchange]
 cmd = "THREEMD_GODOT=\"${GODOT:-godot}\" swift run threemd-interchange"

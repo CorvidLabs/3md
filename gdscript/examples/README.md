@@ -27,7 +27,7 @@ Each plane becomes a child `Node` named from its label. `threemd_z` and
 `threemd_body` are stored as metadata. Gameplay nodes stay under the game's
 control.
 
-After import, a script can preload the resource:
+After import, a game loads the project path. [`load_imported.gd`](load_imported.gd) does that for [`grove/scene.3md`](grove/scene.3md) and for the kind-2 `grove/scene.3mdb` this addon writes beside it:
 
 ```gdscript
 var asset: ThreeMDDocumentAsset = load("res://examples/grove/scene.3md")

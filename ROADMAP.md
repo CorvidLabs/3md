@@ -3,14 +3,24 @@
 Where the format and its tooling are headed. Confidence is a rough 0 to 100 read
 on how sure we are a step is the right next move and will land cleanly.
 
-## Next (after the 2.2.0 release)
+## Next (after the 2.2.1 release)
 
-ThreeMD 2.2.0 is published. Tag `v2.2.0` and the GitHub release landed on
-2026-10-08. npm serves 2.2.0. crates.io still serves `threemd` 2.1.0.
+ThreeMD 2.2.1 is the current library. The tag is `v2.2.1` on this release
+commit after hosted CI is green. npm serves 2.2.0 until the GitHub release
+publish workflow runs. crates.io still serves `threemd` 2.1.0. The Homebrew
+formula `threemd` is 2.2.0 until the formula workflow runs.
 Kind 1 stays readable. Follow-ups: CLI binary commands, interchange protocol 2,
 the 2.0 reader compatibility job, the CI performance gate, and hosted Godot CI.
 Sculpt.3md is nested at `apps/sculpt` and is not one of those format follow-ups.
 State confidence: 70.
+
+## Shipped in the repository (2.2.1 Godot load)
+
+A Godot 4.7 game can `load()` an imported `.3md` or `.3mdb` and read its title
+and plane labels. Godot 4.7.2 is the stable release the scripts were run with.
+The format is unchanged. The addon registers the resource loader. Copying
+`gdscript/addons/threemd` is enough.
+State confidence: 75.
 
 ## Shipped in the repository (2.2.0 Godot addon)
 
@@ -78,11 +88,13 @@ Two independent numbers, kept distinct on purpose:
   `3md-composition-1`, the `3md-files` metadata ledger) without new grammar.
   The grammar proposals in [docs/PROPOSALS.md](docs/PROPOSALS.md) (per-plane
   timing hints, `@asset`, `@include`) remain unimplemented, so the format is 1.0.
-- Each implementation is its own package with its own semver. The published
-  Swift tag is `v2.2.0`. npm serves `@corvidlabs/threemd` and
-  `@corvidlabs/three-md-element` at **2.2.0**. crates.io still serves
-  `threemd` at **2.1.0**. Manifests in this repository read **2.2.0**. The
-  VS Code extension is a
+- Each implementation is its own package with its own semver. Tag `v2.2.0`
+  is published. The tag `v2.2.1` is this release commit after hosted CI is
+  green. npm serves `@corvidlabs/threemd` and `@corvidlabs/three-md-element`
+  at **2.2.0** until the GitHub release publish workflow runs. crates.io still
+  serves `threemd` at **2.1.0**. Manifests in this repository read **2.2.1**.
+  The Homebrew formula `threemd` is **2.2.0** until the formula workflow runs.
+  The VS Code extension is a
   local VSIX and is not in a marketplace. The Godot addon is copied from
   `gdscript/addons/threemd`. Sculpt.3md is an app in this repository, not a
   format package. A bug fix bumps a package's patch; new tooling bumps its

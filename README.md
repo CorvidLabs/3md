@@ -11,14 +11,15 @@ one free axis: stack your content into **planes** and tell the reader what the
 depth means. Time for a daily planner. Frames for an animation. Layers for
 annotations. Space for a scene.
 
-ThreeMD 2.2.0 is the current library. Tag `v2.2.0` and the GitHub release
-were published on 2026-10-08. The text file is the `.3md` you edit. Binary
+ThreeMD 2.2.1 is the current library. The tag is `v2.2.1` on this release
+commit after hosted CI is green. The text file is the `.3md` you edit. Binary
 stores those same frames as fields (`.binary`, payload kind 2). Kind 1 is
 deprecated. A file is parsed and saved at whatever size the process can hold.
-Linked file composition from 2.0.0 remains. npm serves 2.2.0. crates.io still
-serves `threemd` 2.1.0. See
+Linked file composition from 2.0.0 remains. npm serves 2.2.0 until the GitHub
+release publish workflow runs. crates.io still serves `threemd` 2.1.0. The
+Homebrew formula `threemd` is 2.2.0 until the formula workflow runs. See
 [Text file and binary](#text-file-and-binary), the
-[2.2.0 release notes](docs/RELEASE-2.2.0.md), and
+[2.2.1 release notes](docs/RELEASE-2.2.1.md), and
 [linked file composition](docs/FILE-COMPOSITION.md).
 
 ## Sculpt.3md
@@ -303,7 +304,7 @@ A one-plane body of 64 letters `a` is the tiny file that grows: text 106 bytes, 
 Add the package to your `Package.swift`:
 
 ```swift
-.package(url: "https://github.com/CorvidLabs/3md", from: "2.2.0")
+.package(url: "https://github.com/CorvidLabs/3md", from: "2.2.1")
 ```
 
 Then depend on the `ThreeMD` library product:
@@ -312,12 +313,15 @@ Then depend on the `ThreeMD` library product:
 .product(name: "ThreeMD", package: "3md")
 ```
 
-`from: "2.2.0"` resolves from the published `v2.2.0` tag. npm serves 2.2.0.
-crates.io still serves `threemd` 2.1.0. Read the
+`from: "2.2.1"` resolves from tag `v2.2.1` after hosted CI is green on this
+release commit. npm serves 2.2.0 until that release's publish workflow runs.
+crates.io still serves `threemd` 2.1.0. The Homebrew formula `threemd` is
+2.2.0 until the formula workflow runs. Read the
 [2.1 migration notes](docs/MIGRATION-2.1.md) before upgrading: a 2.0 reader
 rejects kind 2, and Rust's canonical number spelling changes for 92 powers of
 two. The [2.0 migration guide](docs/RELEASE-2.0.0.md#migrating-an-existing-host)
 still covers the earlier lossy-serialization change. The
+[2.2.1 release notes](docs/RELEASE-2.2.1.md) cover the Godot load fix. The
 [2.2.0 release notes](docs/RELEASE-2.2.0.md) cover the Godot addon.
 
 ### JavaScript / TypeScript
@@ -335,7 +339,8 @@ bun add @corvidlabs/threemd
 ```
 
 npm serves `@corvidlabs/threemd` 2.2.0 and `@corvidlabs/three-md-element`
-2.2.0. If an older installation maps
+2.2.0 until the GitHub release publish workflow rewrites them from the tag.
+The manifests in this repository read 2.2.1. If an older installation maps
 `@corvidlabs` to GitHub Packages, point that scope at the public npm registry.
 The web component keeps text rendering; the library exports the storage,
 composition, linked-file and editing APIs.
@@ -366,8 +371,8 @@ cargo add threemd
 ```
 
 crates.io serves `threemd` 2.1.0. The 2.2.0 crate publish did not run:
-`CRATES_IO_TOKEN` is not configured. The crate manifest in this repository
-reads 2.2.0. The crate still pins
+`CRATES_IO_TOKEN` is not configured. This release does not add that token.
+The crate manifest in this repository reads 2.2.1. The crate still pins
 `unicode-normalization =0.1.25`. Its serde/serde_json dependencies are
 development-only.
 
@@ -380,7 +385,12 @@ println!("{}", document.axis); // "time"
 
 Copy [`gdscript/addons/threemd`](gdscript/addons/threemd) into the game's
 `addons` folder and enable ThreeMD in Project Settings. The plugin imports
-`.3md` and `.3mdb` files and does not change the open scene. The samples in
+`.3md` and `.3mdb` files and does not change the open scene. A running game
+calls `load()` on that imported project path. The addon registers the loader
+for `ThreeMDDocumentAsset`, so the game does not add a second script.
+[`gdscript/examples/load_imported.gd`](gdscript/examples/load_imported.gd)
+does that for `res://examples/grove/scene.3md` and for the kind-2
+`scene.3mdb` this addon writes beside it. The samples in
 [`gdscript/examples`](gdscript/examples) cover layers, linked files, both
 payload kinds, composition, and edits. The larger document set remains in
 [`Examples/`](Examples).
@@ -388,8 +398,8 @@ payload kinds, composition, and edits. The larger document set remains in
 ```gdscript
 var document = ThreeMDParser.parse(source)
 var bytes = ThreeMDStorage.encode_binary(document)
-var loaded = ThreeMDFiles.load_document("res://levels/grove.3md")
-var asset: ThreeMDDocumentAsset = load("res://levels/grove.3md")
+var loaded = ThreeMDFiles.load_document("res://examples/grove/scene.3md")
+var asset: ThreeMDDocumentAsset = load("res://examples/grove/scene.3md")
 ```
 
 `ThreeMDParser`, `ThreeMDStorage`, `ThreeMDComposition`, `ThreeMDFileComposition`,
@@ -616,11 +626,14 @@ in Swift, TypeScript and Rust. The package version is separate from the format
 version. Specification 1.2 adds payload kind 2 inside that same container, and
 storage has no fixed size stop. ThreeMD 2.1.0 is tag `v2.1.0`, published on
 2026-10-08. Sculpt.3md was nested on main after that tag. ThreeMD 2.2.0 is tag
-`v2.2.0` at `54a6f30`, GitHub release published the same day, and adds the
-Godot 4.7 addon. npm serves 2.2.0. crates.io still serves `threemd` 2.1.0.
-Older `3md: 0.1` documents remain valid: the parser is version-lenient
+`v2.2.0` at `54a6f30` and adds the Godot 4.7 addon. ThreeMD 2.2.1 is this
+release. The tag is `v2.2.1` on this commit after hosted CI is green. A Godot
+4.7 game can `load()` an imported `.3md` or `.3mdb`. npm serves 2.2.0 until
+the GitHub release publish workflow runs. crates.io still serves `threemd`
+2.1.0. The Homebrew formula `threemd` is 2.2.0 until the formula workflow
+runs. Older `3md: 0.1` documents remain valid: the parser is version-lenient
 and never rejects a document by its version string. See the
-[2.2.0 release notes](docs/RELEASE-2.2.0.md).
+[2.2.1 release notes](docs/RELEASE-2.2.1.md).
 
 ## License
 

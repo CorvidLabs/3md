@@ -1,5 +1,19 @@
 # 3md
 
+## 2.2.1
+
+On 2026-10-08 Leif asked to release 2.2.1. The only product change is that a
+Godot 4.7 game can `load()` an imported `.3md` or `.3mdb` and read its title
+and plane labels. The format is unchanged. Package manifests read 2.2.1. The
+tag is `v2.2.1` on this release commit after hosted CI is green. Publishing
+the GitHub release starts the existing npm, crate, and Homebrew workflows.
+npm serves 2.2.0 until that publish workflow runs. The Homebrew formula
+`threemd` is 2.2.0 until the formula workflow runs. crates.io still serves
+`threemd` 2.1.0 because `CRATES_IO_TOKEN` is not configured. This release does
+not add that token. Godot stays a local check. Hosted CI does not install
+Godot. The Godot SpecSync definition stays an unapproved draft. Do not publish
+or weaken a trust gate from this note.
+
 ## 2.2.0
 
 On 2026-10-08 Leif asked to prep a release after the Godot addon merged, then
@@ -77,8 +91,9 @@ Markdown with a Z axis. See [README.md](README.md) for the pitch and
 ## Monorepo
 
 Main contains the format library, the Godot 4 addon at `gdscript/`, and
-Sculpt.3md at `apps/sculpt`. npm serves the library packages at 2.2.0.
-crates.io serves `threemd` 2.1.0. The app's compact `.3mdb` is not the
+Sculpt.3md at `apps/sculpt`. npm serves the library packages at 2.2.0 until
+the GitHub release publish workflow runs. Manifests in this repository read
+2.2.1. crates.io serves `threemd` 2.1.0. The app's compact `.3mdb` is not the
 upstream binary standard. Format changes still land in Swift, TypeScript,
 and Rust. The notes above this section are the history of earlier sessions.
 They are not a claim that the registries are still on 2.0.0.
