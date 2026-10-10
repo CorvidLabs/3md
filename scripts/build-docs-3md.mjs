@@ -1,4 +1,4 @@
-// Combine every Markdown doc in the repo into one navigable 3md file (docs.3md,
+// Combine selected project docs in the repo into one navigable 3md file (docs.3md,
 // mirrored to web/docs.3md for the hosted viewer). Each doc becomes a plane on
 // the "doc" axis. Run from the repo root: `node scripts/build-docs-3md.mjs`.
 //
@@ -9,6 +9,7 @@ import { readFileSync, writeFileSync } from "node:fs";
 
 const docs = [
   ["README.md", "README"],
+  ["docs/VIEWER.md", "VIEWER"],
   ["SPEC.md", "SPEC"],
   ["CHANGELOG.md", "CHANGELOG"],
   ["ROADMAP.md", "ROADMAP"],
@@ -30,7 +31,7 @@ generated: regenerate with scripts/build-docs-3md.mjs - edit the source docs, no
 ---
 GENERATED FILE - do not read this raw, and do not edit it.
 
-This bundles every prose doc in the repo into one 3md file, one doc per plane,
+This bundles selected project docs from the repo into one 3md file, one doc per plane,
 so they can be scrubbed in the 3md viewer (GitHub cannot preview .3md natively):
 
     https://corvidlabs.github.io/3md/viewer.html?src=docs.3md

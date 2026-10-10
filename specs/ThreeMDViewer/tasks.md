@@ -50,3 +50,6 @@ spec: ThreeMDViewer.spec.md
 - [x] Add the approved browser Slice workspace and shared native/browser edit fixtures.
 - [x] Verify current macOS browser, Linux CI, native and pinned Trust checks.
 - [x] Complete current Slice and precise-axis lifecycle closure with actual agent:codex scoped review.
+
+- [x] Document current viewer workflows, direct examples, binary distinctions and loading limits in README and a viewer guide.
+- [x] Add the guide to hosted documentation navigation and the selected-docs bundle.

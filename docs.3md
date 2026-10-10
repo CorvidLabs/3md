@@ -8,7 +8,7 @@ generated: regenerate with scripts/build-docs-3md.mjs - edit the source docs, no
 ---
 GENERATED FILE - do not read this raw, and do not edit it.
 
-This bundles every prose doc in the repo into one 3md file, one doc per plane,
+This bundles selected project docs from the repo into one 3md file, one doc per plane,
 so they can be scrubbed in the 3md viewer (GitHub cannot preview .3md natively):
 
     https://corvidlabs.github.io/3md/viewer.html?src=docs.3md
@@ -42,6 +42,29 @@ crates.io still serves `threemd` 2.1.0. The Homebrew formula `threemd` is
 [2.2.1 release notes](docs/RELEASE-2.2.1.md), and
 [linked file composition](docs/FILE-COMPOSITION.md).
 
+## Browser viewer
+
+[Open the viewer & editor](https://corvidlabs.github.io/3md/viewer.html) to read planes in **Preview**, rotate a
+sculpture in **Cubes**, edit a compatible grid in **Slice**, or change its source
+in **Edit**. Open a local file/folder, or paste a public GitHub repo, folder or
+file into the GitHub field.
+
+| Try it | Open in the viewer |
+| --- | --- |
+| `.3md` sculpture | [Reusable canopy](https://corvidlabs.github.io/3md/viewer.html?src=https%3A%2F%2Fgithub.com%2FCorvidLabs%2F3md%2Fblob%2Fmain%2FExamples%2FExtensions%2Fcanopy.3md) |
+| Reading planes | [Layered notes — choose Preview](https://corvidlabs.github.io/3md/viewer.html?src=https%3A%2F%2Fgithub.com%2FCorvidLabs%2F3md%2Fblob%2Fmain%2FExamples%2Flayered-notes.3md) |
+| Uncompressed `.3mdb`, kind 2 | [The same canopy as binary](https://corvidlabs.github.io/3md/viewer.html?src=https%3A%2F%2Fgithub.com%2FCorvidLabs%2F3md%2Fblob%2Fmain%2FExamples%2FExtensions%2Fcanopy.structured.3mdb) |
+| Self-contained binary composition | [Shared grove — choose an Inside entry](https://corvidlabs.github.io/3md/viewer.html?src=https%3A%2F%2Fgithub.com%2FCorvidLabs%2F3md%2Fblob%2Fmain%2FExamples%2FExtensions%2Fshared-grove.structured.3mdb) |
+| Public folder or repo | [Examples folder](https://corvidlabs.github.io/3md/viewer.html?src=https%3A%2F%2Fgithub.com%2FCorvidLabs%2F3md%2Ftree%2Fmain%2FExamples) · [Repository](https://corvidlabs.github.io/3md/viewer.html?src=https%3A%2F%2Fgithub.com%2FCorvidLabs%2F3md) |
+
+The [viewer guide](docs/VIEWER.md) covers older kind-1 binary, linked local
+folders, precise camera movement, Slice tools, downloads and current limits.
+LZFSE and Sculpt's default compact `.3mdb` need a readable or upstream
+uncompressed export. Cubes/Slice support bounded character grids; prose remains
+readable in Preview. GitHub linked folders and non-GitHub direct binary URLs
+have the [documented loading gaps](docs/VIEWER.md#supported-files-and-limits).
+Edits download as copies; the browser does not write back to a folder or GitHub.
+
 ## Sculpt.3md
 
 Sculpt.3md is the Mac app in this repository, at [apps/sculpt](apps/sculpt).
@@ -62,7 +85,7 @@ or flip through the
 **[animated deck](https://corvidlabs.github.io/3md/viewer.html?src=examples-gallery.3md)**
 where the strongest examples appear as motion cards.
 
-This repo eats its own dog food: every doc here is also combined into one
+This repo eats its own dog food: selected project docs are also combined into one
 [`docs.3md`](docs.3md) (each Markdown file is a plane). GitHub can't preview
 `.3md` natively, so **[open all the docs in the 3md viewer](https://corvidlabs.github.io/3md/viewer.html?src=docs.3md)**
 and scrub through them.
@@ -673,7 +696,120 @@ and never rejects a document by its version string. See the
 
 MIT (c) CorvidLabs. See [LICENSE](LICENSE).
 
-@plane z=1 label="SPEC" file="SPEC.md"
+@plane z=1 label="VIEWER" file="docs/VIEWER.md"
+# Browser viewer
+
+[Open the viewer](https://corvidlabs.github.io/3md/viewer.html) to read and edit a document, inspect its cubes or
+paint a supported slice grid. The viewer starts in **Cubes**. Choose **Preview**
+to read notes, prose or frame documents one plane at a time; it does not autoplay.
+
+## Try an example
+
+These links open existing public GitHub files directly in the viewer.
+
+| Example | Open in the viewer | What to try |
+| --- | --- | --- |
+| [Reusable canopy](../Examples/Extensions/canopy.3md) | [Text sculpture](https://corvidlabs.github.io/3md/viewer.html?src=https%3A%2F%2Fgithub.com%2FCorvidLabs%2F3md%2Fblob%2Fmain%2FExamples%2FExtensions%2Fcanopy.3md) | Orbit in Cubes, choose Slice and draw a cell. |
+| [Layered notes](../Examples/layered-notes.3md) | [Reading example](https://corvidlabs.github.io/3md/viewer.html?src=https%3A%2F%2Fgithub.com%2FCorvidLabs%2F3md%2Fblob%2Fmain%2FExamples%2Flayered-notes.3md) | Choose Preview and select a plane. |
+| [Canopy binary, kind 2](../Examples/Extensions/canopy.structured.3mdb) | [Portable binary](https://corvidlabs.github.io/3md/viewer.html?src=https%3A%2F%2Fgithub.com%2FCorvidLabs%2F3md%2Fblob%2Fmain%2FExamples%2FExtensions%2Fcanopy.structured.3mdb) | The same canopy opens from the structured binary file. |
+| [Canopy binary, kind 1](../Examples/Extensions/canopy.3mdb) | [Older portable binary](https://corvidlabs.github.io/3md/viewer.html?src=https%3A%2F%2Fgithub.com%2FCorvidLabs%2F3md%2Fblob%2Fmain%2FExamples%2FExtensions%2Fcanopy.3mdb) | Existing uncompressed kind-1 files remain readable. |
+| [Shared grove](../Examples/Extensions/shared-grove.structured.3mdb) | [Self-contained composition](https://corvidlabs.github.io/3md/viewer.html?src=https%3A%2F%2Fgithub.com%2FCorvidLabs%2F3md%2Fblob%2Fmain%2FExamples%2FExtensions%2Fshared-grove.structured.3mdb) | Use Inside to choose the embedded canopy or grove document. |
+
+[Open the Examples folder](https://corvidlabs.github.io/3md/viewer.html?src=https%3A%2F%2Fgithub.com%2FCorvidLabs%2F3md%2Ftree%2Fmain%2FExamples) to browse the public files, or
+[open the repository](https://corvidlabs.github.io/3md/viewer.html?src=https%3A%2F%2Fgithub.com%2FCorvidLabs%2F3md). **Load an example** shows the curated
+examples. Search also finds the wider example catalog, binary samples and the
+built-in **folder · LinkedVillage** example.
+
+## Open your own files
+
+- **Open file** reads a `.3md` text document or an uncompressed standard `.3mdb`.
+  You can also drop a file onto the viewer. Markdown and text imports can become
+  planes using **Document → Headings to planes**.
+- **Open folder** reads files from the folder you choose, including nested
+  folders. Keep linked children alongside their scene, with the paths named in
+  its `3md-files` ledger. The folder loader prefers `scene.3md` and resolves
+  reachable linked documents from the supplied files.
+- The GitHub field accepts a **public** repo, folder, file or raw GitHub URL.
+  Paste an address and choose **open**. Select another document in Files;
+  filter that list or search its lines to find a plane.
+
+For example, paste one of these into the GitHub field:
+
+```text
+CorvidLabs/3md
+https://github.com/CorvidLabs/3md/tree/main/Examples
+https://github.com/CorvidLabs/3md/blob/main/Examples/Extensions/canopy.3md
+https://github.com/CorvidLabs/3md/blob/main/Examples/Extensions/canopy.structured.3mdb
+```
+
+For a linked project, download the repo and choose **Open folder** on
+[Examples/LinkedVillage](https://github.com/CorvidLabs/3md/tree/main/Examples/LinkedVillage), keeping
+`scene.3md` and `models/` together. The built-in folder search result opens those
+same linked entries without downloading the repo. A GitHub folder currently
+lists its files individually; it does not resolve the scene's linked entries
+through the same folder path.
+
+## Read, rotate and edit
+
+**Edit** changes the source. **Preview** reads the selected plane. **Cubes**
+shows a compatible character grid in 3D. **Slice** edits compatible rectangular
+grids and includes a live 3D reference. All views use the current document.
+
+In Cubes, drag to orbit through a full turn. Choose **Pan**, or Shift-drag or
+right-drag, to move the sculpture on screen. Scroll to zoom; two fingers pan and
+pinch on touch screens. **Fit** restores the starting camera. Use **Free** or
+**X**, **Y**, **Z** to choose the rotation constraint; **Precise movement** offers
+numeric rotation and pan steps. Arrow keys orbit a focused canvas, Shift-arrows
+pan, plus/minus zoom and Home fits. Click a cube to select its slice.
+
+In Slice, choose a thumbnail, then **Draw**, **Erase** or **Fill**, a character
+and a brush size. Drag to paint; one stroke is one undo step. Arrows select a
+cell and Space applies the tool. **Selected cell** lets you enter exact X/Y
+coordinates. Use grid zoom or **Show previous slice** as needed. **Expand**
+returns to Cubes with the same camera and selected slice.
+
+## Keep your changes
+
+The **Document** menu downloads the current document as readable `.3md` or
+uncompressed kind-2 `.3mdb`. Ctrl/Cmd-S downloads readable text. **Copy share
+link** puts the current document in the link so another reader can open it.
+
+Edits and undo history survive file and linked-entry switches within the current
+open collection. Download exports a copy; it does not overwrite the original
+file, save back to a folder, commit to GitHub or clear the Edited marker.
+Refreshing or opening another collection clears the in-memory drafts, so
+download the documents you want to keep first. Composition exports contain the
+selected document; edits do not rebuild the original composition profile.
+
+## Supported files and limits
+
+| Input or view | Browser support |
+| --- | --- |
+| `.3md` | UTF-8 ThreeMD text, including prose and grid documents. |
+| Standard `.3mdb` | Uncompressed payload kind 2 and older payload kind 1; self-contained compositions can expose their embedded entries. |
+| Apple LZFSE `.3mdb` | Unsupported. Use readable text or uncompressed binary. |
+| Sculpt compact `.3mdb` | A separate app format. Save readable `.3md` or export an upstream uncompressed binary copy from Sculpt first. |
+| Local linked folders | Resolve reachable `3md-files` references from the selected folder's files. |
+| Public GitHub | Repo/folder/file/raw locators; up to 400 files, skipping tree entries larger than 1,500,000 bytes. Private repos and authentication are unsupported. GitHub can rate limit requests. |
+| Cubes | Character grids up to 64 × 64 per plane, at most 12 distinct non-space characters and up to 4000 occupied cells. Space, dot and tab are empty. Requires WebGL2. |
+| Slice | Complete fenced grids of matching dimensions, up to 64 × 64, 256 planes, 4000 occupied cells and 1.5 MiB source, using Sculpt's palette `#@*+ox:=-` with dot/space empty. |
+
+Prose, ragged grids, other glyphs or larger documents can stay in Edit/Preview
+when Slice is unavailable. The 2D Slice editor works without a WebGL reference.
+These browser limits do not change the ThreeMD library's storage capabilities.
+
+Two loading gaps remain: GitHub linked folders list individual documents rather
+than resolving their scene entries, and a non-GitHub direct binary `?src=` URL
+is read as text. For the latter, download the `.3mdb` and use **Open file**;
+the GitHub-backed binary links above use the supported binary path.
+
+For storage details, see [the binary format](../SPEC.md),
+[linked file composition](FILE-COMPOSITION.md), and
+[Sculpt.3md](../apps/sculpt/README.md). Sculpt's default compact save has a
+different format from the standard ThreeMD binary, despite sharing `.3mdb` as
+its filename extension.
+
+@plane z=2 label="SPEC" file="SPEC.md"
 # 3md Format Specification
 
 Version: 1.2 (additive storage, composition and linked file authoring specification)
@@ -1978,7 +2114,7 @@ container/profile versions do not change. Placement remains a host concern.
 - Payload kind 3 (structured composition), a key-table layout and an indexed
   archive for partial loading (11.5).
 
-@plane z=2 label="CHANGELOG" file="CHANGELOG.md"
+@plane z=3 label="CHANGELOG" file="CHANGELOG.md"
 # Changelog
 
 ## [Unreleased]
@@ -2153,7 +2289,7 @@ Verification: the pinned Trust 1.2.2 gate passed on macOS at commit `d6eb66f`, t
 - Add interactive web demo and fill in spec companions and docs (9e1ce42)
 - Add 3md: Markdown with a Z axis, plus the CorvidLabs trust toolchain (46e4b57)
 
-@plane z=3 label="ROADMAP" file="ROADMAP.md"
+@plane z=4 label="ROADMAP" file="ROADMAP.md"
 # 3md roadmap
 
 Where the format and its tooling are headed. Confidence is a rough 0 to 100 read
@@ -2300,7 +2436,7 @@ the items below remain open:
 - Enforcing attest on the marketing site: its squash-merge, content-only flow
   does not fit signature enforcement. It stays advisory there. Confidence ~30.
 
-@plane z=4 label="CONTRIBUTING" file="CONTRIBUTING.md"
+@plane z=5 label="CONTRIBUTING" file="CONTRIBUTING.md"
 # Contributing to 3md
 
 Thanks for your interest. 3md is a plain-text format with four libraries kept
@@ -2388,7 +2524,7 @@ runs. That is the point.
 This repo is governed by the CorvidLabs trust toolchain (fledge, spec-sync,
 augur, attest). See AGENTS.md for the standing rules; CI enforces the same gate.
 
-@plane z=5 label="SECURITY" file="SECURITY.md"
+@plane z=6 label="SECURITY" file="SECURITY.md"
 # Security Policy
 
 ## Supported versions
@@ -2423,7 +2559,7 @@ to acknowledge a report within a few business days.
 - Rendering differences between implementations for content outside the shared
   conformance suite.
 
-@plane z=6 label="AGENTS" file="AGENTS.md"
+@plane z=7 label="AGENTS" file="AGENTS.md"
 # 3md
 
 ## 2.2.1
@@ -2639,7 +2775,7 @@ This repository uses one trust gate. Every session must use it and must not bypa
 
 <!-- CorvidLabs trust toolchain: END -->
 
-@plane z=7 label="PROOF" file="docs/PROOF.md"
+@plane z=8 label="PROOF" file="docs/PROOF.md"
 # Does 3md actually work? Proof notes
 
 This document is the evidence, not a promise. It records how 3md was verified to
@@ -2754,7 +2890,7 @@ silently breaking.
 - The format is plain text that a person can read, write, and review unaided.
 - The demos are guarded by cross-browser CI so the proof stays true.
 
-@plane z=8 label="PROPOSALS" file="docs/PROPOSALS.md"
+@plane z=9 label="PROPOSALS" file="docs/PROPOSALS.md"
 # 3md Post-1.0 Design Proposals
 
 Status: non-normative proposal (nothing here is implemented)
@@ -3317,7 +3453,7 @@ separate opt-in steps so the pure `parse` contract and its conformance vectors
 never move, and make every feature degrade to today's behavior when a tool does
 not understand it.
 
-@plane z=9 label="LICENSE" file="LICENSE"
+@plane z=10 label="LICENSE" file="LICENSE"
 MIT License
 
 Copyright (c) 2026 CorvidLabs
