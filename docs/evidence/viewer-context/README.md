@@ -17,3 +17,7 @@ Leif reported repeated WebGL loss and ResizeObserver undelivered notifications. 
 - `uitests/viewer.spec.mjs` SHA-256: `b6ba0d3bbd343c78e5c846be183ca145433347105df844670ae473095da83762`
 
 These are actual Codex test/visual observations, not human diff review or live deployment evidence.
+
+## Repository gate and provenance
+
+Pinned Fledge 1.7.2 / Trust 1.2.2 passed all eight verification steps, four strict specs with zero warnings and 55/55 source coverage. Augur returned proceed, risk 34. Actual unsigned agent:codex provenance was recorded for implementation d2e875e after the lane passed. The unchanged requireSignature and reviewer allow-list reject that record; progressive Trust reports this degradation. No trusted signature or human review is claimed. PR95 contains the repair. Acceptance/archive remains pending explicit closing review.

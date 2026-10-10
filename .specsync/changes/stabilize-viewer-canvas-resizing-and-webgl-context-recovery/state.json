@@ -7,10 +7,11 @@
   "title": "Stabilize viewer canvas resizing and WebGL context recovery",
   "description": "Stabilize viewer canvas resizing and WebGL context recovery",
   "kind": "feature",
-  "state": "implementing",
+  "state": "verifying",
+  "canonical_applied": true,
   "base_commit": "fc4944c134a8f351f3073bf4febcdebb87df2f81",
   "created_at": 1791664278,
-  "updated_at": 1791664421,
+  "updated_at": 1791664993,
   "affected_specs": [
     "ThreeMDViewer"
   ],
