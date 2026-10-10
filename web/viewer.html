@@ -58,8 +58,8 @@
   *{box-sizing:border-box}
   /* This page consumes the CorvidLabs design tokens (assets/tokens.css) directly:
      syntax colors use --code-*, state colors use --danger/--success, UI chrome is
-     the display face and only the source editor + code tokens are monospace. No
-     colors are re-derived here, so everything themes for free in light and dark. */
+     the display face and only the source editor + code tokens are monospace.
+     Workspace chrome follows light/dark tokens; the GPU stage and camera strip stay dark. */
   :root{
     --gutter:52px;
     --code-font:var(--font-mono,ui-monospace,"Spline Sans Mono",monospace);
@@ -72,25 +72,25 @@
     background-image:linear-gradient(var(--ink-06) 1px,transparent 1px),linear-gradient(90deg,var(--ink-06) 1px,transparent 1px);
     background-size:40px 40px;min-height:100vh}
   a{color:var(--sheen);text-decoration:none} a:hover{text-decoration:underline}
-  .wrap{max-width:1320px;margin:0 auto;padding:18px 18px 64px}
-  .topbar{display:flex;align-items:center;justify-content:space-between;padding:6px 0 18px}
+  .wrap{max-width:1600px;margin:0 auto;padding:12px 18px;height:100vh;height:100dvh;min-height:540px;box-sizing:border-box;display:flex;flex-direction:column}
+  .topbar{display:flex;align-items:center;gap:20px;padding:0 0 12px;flex-shrink:0}
+  .headerlinks{display:flex;align-items:center;gap:16px;margin-left:auto;font-size:12px}
   .brand{display:flex;align-items:center;gap:10px;font-size:13px;letter-spacing:.04em;color:var(--ink)}
   .brand svg{width:24px;height:24px;color:var(--ink)}
   .brand b{font-weight:700}
-  .head{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin-bottom:6px}
-  h1{font-family:var(--font-display);font-weight:900;font-size:clamp(28px,5vw,44px);letter-spacing:-.03em;margin:0;color:var(--ink);position:relative}
+  .head{display:flex;align-items:baseline;gap:14px;min-width:0}
+  h1{font-family:var(--font-display);font-weight:900;font-size:26px;letter-spacing:-.03em;margin:0;color:var(--ink);position:relative}
   h1 .z{color:var(--sheen)}
   /* The one sanctioned gradient: a short feather-sheen accent under the wordmark. */
   h1::after{content:"";position:absolute;left:2px;bottom:-7px;width:52px;height:3px;border-radius:2px;background:var(--iridescence)}
-  .lead{color:var(--text-faint);font-size:13.5px;margin:0 0 14px}
-  .toolbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:14px}
-  .toolbar .sep{width:1px;height:22px;background:var(--hairline);margin:0 2px}
+  .lead{color:var(--text-faint);font-size:12px;margin:0}
+  .toolbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:10px;flex-shrink:0}
   .btn{font:inherit;font-size:12px;letter-spacing:.03em;color:var(--ink);background:var(--surface);border:1px solid var(--hairline);
     padding:8px 12px;border-radius:4px;cursor:pointer;transition:.15s;white-space:nowrap}
+  .btn:disabled{opacity:.5;cursor:wait}
   .btn:hover{border-color:var(--sheen);color:var(--sheen)}
   .btn:focus-visible{outline:2px solid var(--sheen);outline-offset:2px;box-shadow:0 0 0 2px var(--paper),0 0 0 4px var(--sheen)}
-  /* The primary share action is the ONLY filled-green element, lifted so it reads
-     as the single most important control. */
+  /* Sharing stays visible; less frequent document actions live in a disclosure. */
   .btn.primary{background:var(--sheen);color:var(--paper);border-color:var(--sheen);font-weight:600;
     box-shadow:0 1px 2px var(--ink-12),0 3px 10px color-mix(in srgb,var(--sheen) 24%,transparent)}
   .btn.primary:hover{background:var(--sheen-hover);border-color:var(--sheen-hover);color:var(--paper)}
@@ -102,8 +102,8 @@
   #cursor,#counts{font-family:var(--code-font);font-size:11px}
   select.btn{padding-right:8px;max-width:240px}
   #example{max-width:min(260px,52vw)}
-  .findwrap{position:relative}
-  #findExample{width:min(220px,46vw)}
+  .findwrap{position:relative;flex:1;min-width:160px}
+  #findExample{width:100%}
   .findlist{position:absolute;z-index:20;top:calc(100% + 4px);left:0;width:min(380px,82vw);max-height:280px;overflow:auto;
     background:var(--surface);border:1px solid var(--hairline);border-radius:4px;box-shadow:0 8px 24px var(--ink-12)}
   .findlist button{display:flex;justify-content:space-between;gap:12px;width:100%;text-align:left;font:inherit;font-size:12px;
@@ -111,49 +111,96 @@
   .findlist button:last-child{border-bottom:0}
   .findlist button:hover,.findlist button:focus-visible,.findlist button[aria-selected="true"]{background:color-mix(in srgb,var(--sheen) 12%,var(--surface));outline:none}
   .findlist .meta{color:var(--text-faint);font-family:var(--code-font);font-size:11px;white-space:nowrap}
-  /* Phone: buttons fill rows evenly and the primary share action becomes a full
-     width bar at the end, so the hierarchy survives instead of leaving the CTA
-     marooned on a half-empty row. */
-  @media(max-width:560px){
-    select.btn{max-width:46vw}
-    .toolbar{gap:7px}
-    .toolbar .btn:not(.primary):not(select){flex:1 1 auto;justify-content:center;text-align:center}
-    .toolbar .sep{display:none}
-    .toolbar .primary{order:99;width:100%;margin-left:0;padding:11px 12px}
-  }
-  .toolbar label{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--text-faint)}
-  .pointform{display:flex;gap:8px;margin:0 0 14px}
+  .document-menu{position:relative}
+  .document-menu summary{list-style:none;display:flex;align-items:center;gap:10px}
+  .document-menu summary::-webkit-details-marker{display:none}
+  .document-menu summary::after{content:"⌄";color:var(--text-faint)}
+  .document-menu[open] summary{border-color:var(--sheen)}
+  .document-actions{position:absolute;right:0;top:calc(100% + 6px);z-index:30;width:236px;padding:6px;
+    background:var(--surface);border:1px solid var(--hairline);border-radius:6px;box-shadow:0 12px 32px var(--ink-12)}
+  .document-actions .btn{display:block;width:100%;text-align:left;border:0;background:transparent;padding:11px 12px;letter-spacing:0}
+  .document-actions .btn[hidden]{display:none}
+  .document-actions .btn:hover{background:var(--ink-06);color:var(--ink)}
+  .document-actions hr{border:0;border-top:1px solid var(--hairline);margin:5px}
+  .edittools{display:none;gap:8px;padding:8px 12px;border-bottom:1px solid var(--hairline);flex-shrink:0}
+  .stage[data-show="edit"] .edittools{display:flex}
+  .edittools .btn{font-size:11px;padding:6px 9px}
+  .document-title{flex:1;font-size:12px;color:var(--ink);text-transform:none;letter-spacing:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+  .piecewrap{display:flex;align-items:center;gap:8px;padding:7px 12px;border-bottom:1px solid var(--hairline);font-size:12px}
+  .piecewrap[hidden]{display:none}
+  .piecewrap select{max-width:none;min-width:0;flex:1}
+  .pointform{display:flex;gap:8px;margin:0 0 10px}
   .pointform input{flex:1;min-width:0;font:inherit;font-size:14px;padding:8px 12px;border:1px solid var(--hairline);border-radius:4px;background:var(--surface);color:var(--ink)}
   .pointform input:focus-visible{outline:2px solid var(--sheen);outline-offset:2px}
-  .grid{display:grid;grid-template-columns:minmax(180px,240px) minmax(0,1fr) minmax(0,1fr);gap:16px;align-items:stretch}
-  .filelist{overflow:auto;flex:1;min-height:240px}
+  .grid{display:grid;grid-template-columns:minmax(180px,240px) minmax(0,1fr);gap:12px;align-items:stretch;flex:1;min-height:260px}
+  .filelist{overflow:auto;flex:1;min-height:0}
   .filelist button,.filelist .empty{display:block;width:100%;text-align:left;font:inherit;font-size:12px;font-family:var(--code-font);padding:7px 12px;border:0;border-bottom:1px solid var(--hairline);background:transparent;color:var(--ink)}
   .filelist button{cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   .filelist button:hover,.filelist button:focus-visible,.filelist button[aria-current="true"]{background:color-mix(in srgb,var(--sheen) 12%,var(--surface));outline:none}
-  .filelist .empty{color:var(--text-faint)}
-  .grid>*{min-width:0}
-  /* The primary share action is anchored to the right edge of the toolbar so the
-     primary/secondary hierarchy survives wrapping. */
-  .toolbar .primary{margin-left:auto}
-  /* Segmented Source|Live switch: only shown when the layout is too narrow for a
-     useful side-by-side, so the live preview is one tap away (not below the fold). */
-  .paneswitch{display:none;gap:0;margin-bottom:12px;border:1px solid var(--hairline);border-radius:7px;overflow:hidden;width:max-content}
-  .pstab{font:inherit;font-size:12px;font-weight:600;letter-spacing:.03em;color:var(--text-muted);background:var(--surface);border:0;padding:8px 20px;cursor:pointer;transition:.15s}
+  .filelist .empty{color:var(--text-faint);font-family:var(--ui-font);line-height:1.6;padding:16px 12px}
+  .filelist .empty strong{display:block;font-size:13px;font-weight:500;color:var(--ink);margin-bottom:6px}
+  .grid>*{min-width:0;min-height:0}
+  /* Edit and Preview share one panel. Files stays beside it. On a narrow
+     window, Files and the document take turns. */
+  .fileswitch{display:none;gap:0;margin-bottom:10px;border:1px solid var(--hairline);border-radius:7px;overflow:hidden;width:max-content}
+  .editpreview{display:inline-flex;border:1px solid var(--hairline);border-radius:7px;overflow:hidden}
+  .pstab{font:inherit;font-size:12px;font-weight:600;letter-spacing:.03em;text-transform:none;color:var(--text-muted);background:var(--surface);border:0;padding:8px 16px;cursor:pointer;transition:.15s}
   .pstab+.pstab{border-left:1px solid var(--hairline)}
   .pstab[aria-selected="true"]{background:var(--sheen);color:var(--paper)}
   .pstab:focus-visible{outline:2px solid var(--sheen);outline-offset:-2px}
+  .stage[data-show="edit"] .viewer,
+  .stage[data-show="edit"] .outline,
+  .stage[data-show="edit"] .cubes{display:none}
+  .stage[data-show="preview"] .editor,
+  .stage[data-show="preview"] .cubes{display:none}
+  .stage[data-show="cubes"] .editor,
+  .stage[data-show="cubes"] .viewer{display:none}
+  .stage .bar{flex-wrap:wrap}
+  .stage{min-height:0}
+  .stage .viewer,
+  .stage .cubes{flex:1;min-height:0}
+  .stage .viewer{overflow:hidden;--three-md-height:100%}
+  .stage .viewer three-md{display:block;height:100%}
+  #lab::part(play){display:none}
   @media(max-width:900px){
     .grid{grid-template-columns:1fr}
-    .paneswitch{display:inline-flex}
-    .grid .viewerPane,.grid .filesPane{display:none}
-    .grid[data-show="live"] .editorPane,.grid[data-show="files"] .editorPane{display:none}
-    .grid[data-show="live"] .viewerPane{display:flex}
+    .fileswitch{display:inline-flex}
+    .grid .filesPane{display:none}
+    .grid[data-show="files"] .stage{display:none}
     .grid[data-show="files"] .filesPane{display:flex}
   }
   .pane{border:1px solid var(--hairline);border-radius:8px;background:var(--surface);overflow:hidden;display:flex;flex-direction:column}
   .pane .bar{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:9px 13px;border-bottom:1px solid var(--hairline);
     font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--text-faint)}
   .pane .bar .right{display:flex;align-items:center;gap:10px;text-transform:none;letter-spacing:.02em}
+  .stage[data-show="edit"] .bar .previewmeta,
+  .stage[data-show="preview"] .bar .editmeta,
+  .stage[data-show="cubes"] .bar .editmeta{display:none}
+  .hl .line.caretline{background:color-mix(in srgb,var(--sheen) 10%,transparent)}
+  .idebar{display:flex;gap:14px;align-items:center;padding:4px 12px;border-top:1px solid var(--hairline);background:var(--surface);color:var(--text-muted);font-family:var(--code-font);font-size:11px}
+  .idebar span:last-child{margin-left:auto}
+  .wrap:not([data-view="edit"]) #ideCursor{display:none}
+  .cubes{position:relative;display:flex;flex-direction:column;background:#10161a;overflow:hidden}
+  .cubes canvas{width:100%;height:0;flex:1;min-height:0;display:block;touch-action:none;cursor:grab}
+  .cubes canvas:active{cursor:grabbing}
+  .cubes canvas:focus-visible{outline:2px solid var(--sheen);outline-offset:-3px}
+  .cubesempty{position:absolute;inset:0;display:grid;place-items:center;align-content:center;gap:12px;padding:24px;text-align:center;color:#d7e4ea}
+  .cubesempty[hidden]{display:none}
+  .cubesempty p{margin:0;max-width:36ch;line-height:1.45}
+  .cube-tools{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:8px 12px;flex-shrink:0}
+  .cube-tools[hidden]{display:none}
+  .cubehint{color:rgba(215,228,234,.72);font-size:11px;line-height:1.5}
+  .cubehint .touch-hint{display:none}
+  .camera-controls{display:flex;flex-shrink:0;align-items:center;gap:2px;padding:3px;
+    background:#1b2329;border:1px solid #35434b;border-radius:6px;color:#d7e4ea}
+  .camera-controls[hidden]{display:none}
+  .camera-controls .btn{border:0;background:transparent;color:inherit;min-width:34px;min-height:32px;padding:6px 10px;letter-spacing:0}
+  .camera-controls .btn:hover{background:#2b3a42;color:#fff}
+  .camera-controls .btn:disabled{opacity:.4;cursor:default}
+  .camera-controls output{min-width:44px;text-align:center;font:11px var(--code-font);color:#aebdc5}
+  .cubesempty .empty-actions{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+  .cubesempty .btn{background:#1b2329;border-color:#35434b;color:#d7e4ea}
+  .cubesempty .btn:hover{border-color:#45d0bc;color:#45d0bc}
   .badge{display:inline-flex;align-items:center;gap:6px;font-size:11px;padding:3px 8px;border-radius:999px;border:1px solid var(--hairline);color:var(--text-muted)}
   .badge.ok{color:var(--success);border-color:color-mix(in srgb,var(--success) 45%,transparent)}
   .badge.err{color:var(--danger);border-color:color-mix(in srgb,var(--danger) 45%,transparent);cursor:pointer}
@@ -161,7 +208,7 @@
   .badge .dot{width:6px;height:6px;border-radius:50%;background:currentColor}
 
   /* ---- code editor (gutter + highlight backdrop + transparent textarea) ---- */
-  .editor{position:relative;flex:1;min-height:560px;overflow:hidden}
+  .editor{position:relative;flex:1;min-height:0;overflow:hidden}
   .backdrop{position:absolute;inset:0;overflow:hidden;margin:0;pointer-events:none;background:
     linear-gradient(90deg,var(--ink-06) 0,var(--ink-06) var(--gutter),transparent var(--gutter))}
   .hl{margin:0;counter-reset:ln;color:var(--ink)}
@@ -199,8 +246,8 @@
   three-md{--three-md-accent:var(--sheen);--three-md-bg:var(--surface-strong);--three-md-surface:var(--surface);--three-md-error:var(--danger);
     --three-md-text:var(--ink);--three-md-muted:var(--text-muted);--three-md-faint:var(--text-faint);
     --three-md-hairline:var(--hairline);--three-md-height:480px;--three-md-display:var(--font-display)}
-  .outline{display:flex;gap:6px;flex-wrap:wrap;padding:10px 13px;border-top:1px solid var(--hairline);
-    max-height:120px;overflow:auto}
+  .outline{position:relative;z-index:2;display:flex;gap:6px;flex-wrap:nowrap;padding:10px 13px;flex-shrink:0;border-top:1px solid var(--hairline);
+    overflow:auto;scrollbar-width:thin}
   .outline:empty{display:none}
   .ochip{font:inherit;font-size:11px;color:var(--text-muted);background:var(--surface-strong,var(--surface));
     border:1px solid var(--hairline);border-radius:999px;padding:4px 10px;cursor:pointer;transition:.12s;white-space:nowrap}
@@ -212,10 +259,43 @@
   .status{font-size:12px;color:var(--text-faint);margin-top:10px;min-height:16px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
   .status.err{color:var(--danger)}
   .status.ok{color:var(--sheen-strong,var(--sheen))}
-  .hint{font-size:11.5px;color:var(--text-faint);margin-top:6px}
+  .hint{font-size:11.5px;color:var(--text-faint);margin:6px 0 0}
+  .wrap:not([data-view="edit"]) .hint{display:none}
   .hint kbd{font-family:var(--code-font);font-size:10.5px;background:var(--surface);border:1px solid var(--hairline);
     border-bottom-width:2px;border-radius:3px;padding:1px 5px;color:var(--text-muted)}
-  .foot{margin-top:22px;font-size:12px;color:var(--text-faint)}
+  .foot{margin:8px 0 0;font-size:11px;color:var(--text-faint)}
+  @media(max-width:1100px){.lead{display:none}}
+  @media(max-width:700px){
+    .wrap{padding:10px;min-height:620px}
+    .topbar{gap:12px}
+    .brand span{display:none}
+    h1{font-size:23px}
+    .headerlinks{gap:10px}
+    .headerlinks a:last-of-type{display:none}
+    .toolbar{display:grid;grid-template-columns:1fr 1fr auto;gap:7px}
+    #example{width:100%;max-width:none;grid-column:1 / 2}
+    .findwrap{grid-column:2 / 4;min-width:0}
+    .toolbar>.btn{padding:9px 8px}
+    .document-menu{grid-column:3;grid-row:2}
+    .toolbar .primary{grid-column:1 / 4;padding:9px}
+    .document-menu summary{justify-content:center;padding:9px}
+    .fileswitch{margin-bottom:8px}
+    .pane .bar{padding:8px;gap:7px}
+    .document-title{order:3;flex-basis:100%;font-size:11px}
+    .pstab{padding:9px 13px}
+    .editmeta #sourceName,.editmeta #counts{display:none}
+    .cube-tools{padding:7px 9px;gap:8px}
+    .camera-controls .btn{min-width:40px;min-height:40px;padding:6px 8px}
+    .camera-controls output{min-width:40px}
+    .cubehint{font-size:10px}
+    .cubehint .mouse-hint{display:none}
+    .cubehint .touch-hint{display:inline}
+    .idebar{gap:8px;font-size:10px;padding:5px 8px}
+    .hint{line-height:1.7;font-size:10px}
+    .foot{font-size:10px}
+  }
+  @media(max-width:380px){.headerlinks a{display:none}.pstab{padding:9px 10px}}
+
 
   .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
   .corvid-theme-toggle{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;padding:0;background:none;border:1px solid var(--ink-12,var(--hairline));color:var(--ink-70,var(--text-muted));cursor:pointer;transition:border-color .2s,color .2s;border-radius:3px}
@@ -231,60 +311,48 @@
 </style>
 </head>
 <body>
-  <div class="wrap">
+  <div class="wrap" data-view="cubes">
     <div class="topbar">
-      <a class="brand" href="index.html">
+      <a class="brand" href="index.html" aria-label="CorvidLabs">
         <svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="24" cy="32" r="18" fill="currentColor"/><path d="M33 21.5 L58.5 29.5 L33 39.5 Z" fill="currentColor"/><circle cx="27.5" cy="26" r="3" fill="var(--paper)"/></svg>
         <span>Corvid<b>Labs</b></span>
       </a>
-      <button type="button" class="corvid-theme-toggle" data-corvid-theme-toggle aria-pressed="false" aria-label="Switch theme" title="Switch theme">
-        <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.6v2.4M12 19v2.4M4.2 4.2l1.7 1.7M18.1 18.1l1.7 1.7M2.6 12h2.4M19 12h2.4M4.2 19.8l1.7-1.7M18.1 5.9l1.7-1.7"/></svg>
-        <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A8.6 8.6 0 1 1 11.2 3a6.7 6.7 0 0 0 9.8 9.8z"/></svg>
-      </button>
-    </div>
-
-    <div class="head">
-      <h1>3md viewer<span class="z">.</span></h1>
-      <p class="lead">Point at a public GitHub repo, folder, or file, or open one on this computer. Files stay on the left, the source in the middle, and the live plane view on the right. Search reads every line. <a href="docs.html">docs</a> &middot; <a href="gallery.html">gallery</a></p>
+      <div class="head">
+        <h1>3md viewer<span class="z">.</span></h1>
+        <p class="lead">Explore and edit layered documents.</p>
+      </div>
+      <nav class="headerlinks" aria-label="3md resources">
+        <a href="docs.html">Docs</a><a href="gallery.html">Gallery</a>
+        <button type="button" class="corvid-theme-toggle" data-corvid-theme-toggle aria-pressed="false" aria-label="Switch theme" title="Switch theme">
+          <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.6v2.4M12 19v2.4M4.2 4.2l1.7 1.7M18.1 18.1l1.7 1.7M2.6 12h2.4M19 12h2.4M4.2 19.8l1.7-1.7M18.1 5.9l1.7-1.7"/></svg>
+          <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A8.6 8.6 0 1 1 11.2 3a6.7 6.7 0 0 0 9.8 9.8z"/></svg>
+        </button>
+      </nav>
     </div>
 
     <div class="toolbar">
-      <label for="example">gallery</label>
+      <label for="example" class="sr-only">Gallery</label>
       <select id="example" class="btn" aria-label="load a gallery example"></select>
       <div class="findwrap">
         <label for="findExample" class="sr-only">find</label>
         <input id="findExample" class="btn" type="search" placeholder="search every line" aria-label="search every line" role="combobox" aria-autocomplete="list" aria-controls="findList" aria-expanded="false" autocomplete="off" />
         <div id="findList" class="findlist" hidden role="listbox" aria-label="matching examples"></div>
       </div>
-      <label for="modeSel">mode</label>
-      <select id="modeSel" class="btn" aria-label="override render mode">
-        <option value="">auto (from axis)</option>
-        <option value="stack">deck</option>
-        <option value="layers">layers</option>
-        <option value="elevator">elevator (floors)</option>
-        <option value="play">animation</option>
-        <option value="single">reader</option>
-        <option value="present">slides</option>
-        <option value="blend" id="blendOpt">3D object</option>
-        <option value="map">map</option>
-      </select>
-      <button id="playBtn" class="btn" type="button">play</button>
-      <span class="sep"></span>
-      <button id="planeBtn" class="btn icon ins" type="button" title="Insert a plane (Ctrl/Cmd+Enter inserts too)">+ plane</button>
-      <button id="linkBtn" class="btn icon ins" type="button" title="Insert a cross-plane link">+ link</button>
-      <button id="fmBtn" class="btn icon ins" type="button" title="Insert frontmatter">+ frontmatter</button>
-      <span class="sep"></span>
       <button id="openBtn" class="btn" type="button">open file</button>
       <input id="fileInput" type="file" accept=".3md,.3mdb,.md,.txt,text/plain,application/octet-stream" hidden />
       <button id="folderBtn" class="btn" type="button">open folder</button>
       <input id="folderInput" type="file" webkitdirectory multiple hidden />
-      <button id="sectionsBtn" class="btn" type="button" title="Turn Markdown headings into planes">sections</button>
-      <button id="packBtn" class="btn" type="button" hidden title="Put the opened files into one document">one document</button>
-      <button id="kind2Btn" class="btn" type="button" title="Download this document as uncompressed kind 2">kind 2</button>
-      <label id="pieceLabel" for="piece" hidden>inside</label>
-      <select id="piece" class="btn" hidden aria-label="document inside this open"></select>
-      <button id="copyBtn" class="btn" type="button">copy source</button>
-      <button id="dlBtn" class="btn" type="button">download</button>
+      <details class="document-menu" id="documentMenu">
+        <summary class="btn">Document</summary>
+        <div class="document-actions">
+          <button id="dlBtn" class="btn" type="button">Download .3md</button>
+          <button id="kind2Btn" class="btn" type="button" title="Download this document as uncompressed kind 2">Download .3mdb (kind 2)</button>
+          <button id="copyBtn" class="btn" type="button">Copy source</button>
+          <hr />
+          <button id="sectionsBtn" class="btn" type="button" title="Turn Markdown headings into planes">Headings to planes</button>
+          <button id="packBtn" class="btn" type="button" hidden title="Put the opened files into one document">Pack files into one document</button>
+        </div>
+      </details>
       <button id="shareBtn" class="btn primary" type="button">copy share link</button>
     </div>
 
@@ -293,37 +361,74 @@
       <input id="pointInput" type="text" placeholder="github.com/owner/repo, a folder, or a file" aria-label="open a public GitHub repo, folder, or file" autocomplete="off" spellcheck="false" />
       <button class="btn" type="submit">open</button>
     </form>
-    <div class="paneswitch" role="tablist" aria-label="Show files, source, or live preview">
+    <div class="fileswitch" role="tablist" aria-label="Files or the document">
       <button class="pstab" type="button" role="tab" data-pane="files" aria-selected="false">Files</button>
-      <button class="pstab" type="button" role="tab" data-pane="source" aria-selected="true">Source</button>
-      <button class="pstab" type="button" role="tab" data-pane="live" aria-selected="false">Live</button>
+      <button class="pstab" type="button" role="tab" data-pane="document" aria-selected="true">Document</button>
     </div>
-    <div class="grid" id="grid" data-show="source">
+    <div class="grid" id="grid" data-show="document">
       <div class="pane filesPane">
         <div class="bar"><span id="filesTitle">files</span></div>
         <div id="fileList" class="filelist" role="listbox" aria-label="opened files"></div>
       </div>
-      <div class="pane editorPane">
+      <div class="pane stage" id="stage" data-show="cubes">
         <div class="bar">
-          <span id="sourceName">source.3md</span>
-          <span class="right"><span id="cursor">Ln 1, Col 1</span> &middot; <span id="counts"></span></span>
+          <div class="editpreview" role="tablist" aria-label="Document view">
+            <button class="pstab" id="editTab" type="button" role="tab" data-pane="edit" aria-selected="false" aria-controls="editorWrap">Edit</button>
+            <button class="pstab" id="previewTab" type="button" role="tab" data-pane="preview" aria-selected="false" aria-controls="previewPane">Preview</button>
+            <button class="pstab" id="cubesTab" type="button" role="tab" data-pane="cubes" aria-selected="true" aria-controls="cubesPane">Cubes</button>
+          </div>
+          <span class="document-title" id="documentTitle">Small sculpture</span>
+          <span class="right editmeta"><span id="sourceName">source.3md</span><span id="cursor">Ln 1, Col 1</span><span id="counts"></span></span>
+          <span class="right previewmeta"><span id="validBadge" class="badge"><span class="dot"></span><span id="validText">&mdash;</span></span></span>
         </div>
-        <div class="editor" id="editorWrap">
+        <div class="piecewrap" id="pieceWrap" hidden>
+          <label id="pieceLabel" for="piece" hidden>Inside</label>
+          <select id="piece" class="btn" hidden aria-label="document inside this open"></select>
+        </div>
+        <div class="edittools" aria-label="Insert into source">
+      <button id="planeBtn" class="btn icon ins" type="button" title="Insert a plane (Ctrl/Cmd+Enter inserts too)">+ plane</button>
+      <button id="linkBtn" class="btn icon ins" type="button" title="Insert a cross-plane link">+ link</button>
+      <button id="fmBtn" class="btn icon ins" type="button" title="Insert frontmatter">+ frontmatter</button>
+        </div>
+        <div class="editor" id="editorWrap" role="tabpanel" aria-labelledby="editTab">
           <div class="backdrop" aria-hidden="true"><pre class="hl" id="hl"></pre></div>
           <textarea class="ta" id="editor" spellcheck="false" autocomplete="off" autocapitalize="off" autocorrect="off" wrap="soft" aria-label="3md source editor"></textarea>
         </div>
-      </div>
-      <div class="pane viewerPane">
-        <div class="bar"><span>live viewer</span><span class="right"><span id="validBadge" class="badge"><span class="dot"></span><span id="validText">&mdash;</span></span></span></div>
-        <div class="viewer"><three-md id="lab" role="group" aria-label="Live 3md preview" aria-describedby="planeLive"></three-md></div>
+        <div class="viewer" id="previewPane" role="tabpanel" aria-labelledby="previewTab"><three-md id="lab" mode="single" role="group" aria-label="Live 3md preview" aria-describedby="planeLive"></three-md></div>
         <div id="planeLive" class="sr-only" aria-live="polite"></div>
+        <div class="cubes" id="cubesPane" role="tabpanel" aria-labelledby="cubesTab">
+          <canvas id="cubeCanvas" width="800" height="560" tabindex="0" aria-label="Sculpt-style cubes" aria-describedby="cameraHelp"></canvas>
+          <div class="cubesempty" id="cubesEmpty">
+            <p id="cubeEmptyText">This document has no cube grid. Read it in Preview, or open a sculpture to explore in 3D.</p>
+            <div class="empty-actions">
+              <button id="cubePreview" class="btn" type="button">Read in Preview</button>
+              <button id="cubeSample" class="btn" type="button">Open a small sculpture</button>
+            </div>
+          </div>
+          <div class="cube-tools" id="cubeTools">
+            <div class="cubehint"><span class="mouse-hint">Drag to orbit · scroll to zoom · click a cube to select a slice</span><span class="touch-hint">Drag to orbit · tap a cube to select a slice</span></div>
+            <p class="sr-only" id="cameraHelp">Use arrow keys to orbit, plus or minus to zoom, and Home to fit. Select a slice from the plane outline below.</p>
+            <div class="camera-controls" id="cameraControls" role="group" aria-label="Cube camera">
+              <button class="btn" id="cubeFit" type="button" title="Reset the camera and fit the sculpture (Home)">Fit</button>
+              <button class="btn" id="cubeZoomOut" type="button" aria-label="Zoom out" title="Zoom out (−)">−</button>
+              <output id="cubeZoom" aria-label="Zoom level">100%</output>
+              <button class="btn" id="cubeZoomIn" type="button" aria-label="Zoom in" title="Zoom in (+)">+</button>
+            </div>
+          </div>
+        </div>
         <div class="outline" id="outline" role="group" aria-label="plane outline"></div>
+        <div class="idebar" id="idebar">
+          <span id="ideCursor">Ln 1, Col 1</span>
+          <span>3md</span>
+          <span id="ideDoc">no document</span>
+          <span id="ideCubes">0 cubes</span>
+        </div>
       </div>
     </div>
     <div class="status" id="status" role="status" aria-live="polite"></div>
-    <p class="hint"><kbd>Tab</kbd> indent &middot; <kbd>Esc</kbd> then <kbd>Tab</kbd> to leave &middot; <kbd>Enter</kbd> continues lists &middot; <kbd>Ctrl/&#8984;+S</kbd> download &middot; <kbd>Ctrl/&#8984;+Enter</kbd> new plane &middot; <kbd>Ctrl/&#8984;+/</kbd> play</p>
+    <p class="hint"><kbd>Tab</kbd> indent &middot; <kbd>Esc</kbd> then <kbd>Tab</kbd> to leave &middot; <kbd>Enter</kbd> continues lists &middot; <kbd>Ctrl/&#8984;+S</kbd> download &middot; <kbd>Ctrl/&#8984;+Enter</kbd> new plane</p>
 
-    <p class="foot">Powered by the open-source <a href="https://github.com/CorvidLabs/3md">3md</a> format and the <code>&lt;three-md&gt;</code> web component. MIT. &middot; <a href="https://github.com/CorvidLabs/3md/blob/main/SPEC.md">format spec</a></p>
+    <p class="foot">Open-source <a href="https://github.com/CorvidLabs/3md">3md</a> &middot; MIT &middot; <a href="https://github.com/CorvidLabs/3md/blob/main/SPEC.md">format spec</a></p>
   </div>
 
   <script defer src="assets/theme.js"></script>
@@ -333,20 +438,45 @@
     window.threeMdOpen = { openBytes, openText, openFileSet, sectionsToDocument, packDocuments, kind2Bytes, loadGitHubPoint, parseGitHubLocator };
     const STARTER = `---
 3md: 1.0
-axis: time
-title: My first 3md
+axis: layer
+title: Small sculpture
 ---
-Write your own .3md here, or pick an example above. It renders live on the right.
 
-@plane z=0 label="Monday"
-# Monday
-- [ ] Try the 3md viewer
-- [x] Learn the format in one screen
-See [[z=1|Tuesday]] for what's next.
+@plane z=0 label="floor"
+\`\`\`
+########
+########
+########
+########
+########
+########
+########
+########
+\`\`\`
 
-@plane z=1 label="Tuesday"
-# Tuesday
-- [ ] Share a link to this document
+@plane z=1 label="walls"
+\`\`\`
+########
+#......#
+#..oo..#
+#..oo..#
+#......#
+#..**..#
+#......#
+########
+\`\`\`
+
+@plane z=2 label="roof"
+\`\`\`
+........
+.######.
+..####..
+...##...
+...##...
+..####..
+.######.
+........
+\`\`\`
 `;
 
     const ed = document.getElementById("editor");
@@ -355,9 +485,7 @@ See [[z=1|Tuesday]] for what's next.
     const status = document.getElementById("status");
     const counts = document.getElementById("counts");
     const cursor = document.getElementById("cursor");
-    const modeSel = document.getElementById("modeSel");
     const exampleSel = document.getElementById("example");
-    const playBtn = document.getElementById("playBtn");
     const outline = document.getElementById("outline");
     const validBadge = document.getElementById("validBadge");
     const validText = document.getElementById("validText");
@@ -444,6 +572,9 @@ See [[z=1|Tuesday]] for what's next.
     function paintNow() {
       paintQueued = false;
       hl.innerHTML = highlight(ed.value);
+      const caret = ed.value.slice(0, ed.selectionStart).split("\n").length - 1;
+      const caretNode = hl.children[caret];
+      if (caretNode) caretNode.classList.add("caretline");
       if (errLine >= 0) { const node = hl.children[errLine]; if (node) node.classList.add("errline"); }
       syncScroll();
     }
@@ -476,22 +607,38 @@ See [[z=1|Tuesday]] for what's next.
     }
     const planeLive = document.getElementById("planeLive");
     function markOutline(i) {
-      [...outline.children].forEach((c, j) => c.setAttribute("aria-current", j === i ? "true" : "false"));
+      [...outline.children].forEach((c, j) => {
+        c.setAttribute("aria-current", j === i ? "true" : "false");
+        c.tabIndex = j === i ? 0 : -1;
+      });
+      const selected = outline.children[i];
+      if (selected) {
+        const chip = selected.getBoundingClientRect(), row = outline.getBoundingClientRect();
+        if (chip.left < row.left) outline.scrollLeft -= row.left - chip.left + 13;
+        else if (chip.right > row.right) outline.scrollLeft += chip.right - row.right + 13;
+      }
+      if (document.getElementById("stage")?.dataset.show === "cubes") drawCubes();
       const doc = lab.document;
       if (doc && doc.planes[i]) {
         planeLive.textContent = `Plane ${i + 1} of ${doc.planes.length}: ${doc.planes[i].label || ("z " + doc.planes[i].z)}`;
       }
     }
 
-    const blendOpt = document.getElementById("blendOpt");
-    function updateBlendOption() {
-      // 3D/blend is only meaningful with voxelizable ASCII art; disable it otherwise
-      // so a text doc cannot be switched into a garbled voxel cloud.
-      const ok = !lab.error && lab.voxelizable;
-      blendOpt.disabled = !ok;
-      blendOpt.textContent = ok ? "3D object" : "3D object (needs ASCII art)";
-      if (!ok && modeSel.value === "blend") { modeSel.value = ""; lab.removeAttribute("mode"); }
-    }
+    outline.addEventListener("keydown", (event) => {
+      const buttons = [...outline.children];
+      const current = buttons.indexOf(document.activeElement);
+      if (current < 0) return;
+      let next = current;
+      if (event.key === "ArrowRight") next = Math.min(current + 1, buttons.length - 1);
+      else if (event.key === "ArrowLeft") next = Math.max(current - 1, 0);
+      else if (event.key === "Home") next = 0;
+      else if (event.key === "End") next = buttons.length - 1;
+      else return;
+      event.preventDefault();
+      lab.goTo(next);
+      markOutline(next);
+      buttons[next].focus({ preventScroll: true });
+    });
 
     let openNote = "";
     let openedPieces = [];
@@ -500,7 +647,10 @@ See [[z=1|Tuesday]] for what's next.
       const src = ed.value;
       counts.textContent = src.split("\n").length + " lines, " + src.length + " chars";
       lab.setSource(src);
-      updateBlendOption();
+      document.getElementById("documentTitle").textContent = lab.document?.title || "Untitled document";
+      // The page holds the preview on one plane. Axis names no longer start playback.
+      if (lab.getAttribute("mode") !== "single") lab.setAttribute("mode", "single");
+      if (lab.playing && typeof lab.pause === "function") lab.pause();
       // An empty document is NOT an error: show a neutral prompt, no red, no errline.
       if (!src.trim()) {
         errLine = -1;
@@ -515,7 +665,9 @@ See [[z=1|Tuesday]] for what's next.
         validBadge.removeAttribute("role"); validBadge.removeAttribute("tabindex"); validBadge.removeAttribute("aria-label");
         document.body.dataset.threeMdValid = "false";
         outline.innerHTML = "";
+        setIdeStatus(null, 0);
         paintNow();
+        drawCubes();
         return;
       }
       delete validBadge.dataset.empty;
@@ -543,6 +695,7 @@ See [[z=1|Tuesday]] for what's next.
           validBadge.setAttribute("aria-label", "Jump to error on line " + (errLine + 1));
         } else { validBadge.removeAttribute("role"); validBadge.removeAttribute("tabindex"); validBadge.removeAttribute("aria-label"); }
         outline.innerHTML = "";
+        setIdeStatus(null, 0);
       } else {
         errLine = -1;
         const doc = lab.document;
@@ -592,8 +745,10 @@ See [[z=1|Tuesday]] for what's next.
         else { delete validBadge.dataset.warnings; }
         if (openNote) status.textContent += " · " + openNote;
         buildOutline(doc);
+        setIdeStatus(doc, currentCubeVolume(doc).cells.length);
       }
       paintNow(); // apply/clear the error-line highlight synchronously
+      if (document.getElementById("stage")?.dataset.show === "cubes") drawCubes();
     }
 
     // Canonical axes (for the "did you mean" hint) and the full set the renderer
@@ -636,7 +791,11 @@ See [[z=1|Tuesday]] for what's next.
     function updateCursor() {
       const upto = ed.value.slice(0, ed.selectionStart);
       const line = upto.split("\n");
-      cursor.textContent = "Ln " + line.length + ", Col " + (line[line.length - 1].length + 1);
+      const label = "Ln " + line.length + ", Col " + (line[line.length - 1].length + 1);
+      cursor.textContent = label;
+      const ideCursor = document.getElementById("ideCursor");
+      if (ideCursor) ideCursor.textContent = label;
+      paint();
     }
 
     let timer = null;
@@ -676,7 +835,6 @@ See [[z=1|Tuesday]] for what's next.
       if (e.key !== "Tab" && e.key !== "Shift") tabEscapes = false; // one-shot arm
       if (mod && (e.key === "s" || e.key === "S")) { e.preventDefault(); document.getElementById("dlBtn").click(); return; }
       if (mod && e.key === "Enter") { e.preventDefault(); insertPlane(); return; }
-      if (mod && e.key === "/") { e.preventDefault(); playBtn.click(); return; }
       if (mod && !e.shiftKey && (e.key === "y" || e.key === "Y")) { e.preventDefault(); ed.focus(); document.execCommand("redo"); return; }
       if (e.key === "Tab") {
         if (tabEscapes) { tabEscapes = false; return; } // armed: let Tab move focus out
@@ -736,17 +894,8 @@ See [[z=1|Tuesday]] for what's next.
       insertAtCursor("---\n3md: 1.0\naxis: time\ntitle: Untitled\n---\n\n", 0);
     });
 
-    modeSel.addEventListener("change", () => {
-      if (modeSel.value) lab.setAttribute("mode", modeSel.value); else lab.removeAttribute("mode");
-      render();
-    });
-
-    playBtn.addEventListener("click", () => {
-      if (lab.playing) { lab.pause(); playBtn.textContent = "play"; }
-      else { lab.play(); playBtn.textContent = "pause"; }
-    });
     lab.addEventListener("planechange", (ev) => {
-      playBtn.textContent = lab.playing ? "pause" : "play";
+      if (lab.playing && typeof lab.pause === "function") lab.pause();
       if (ev && ev.detail && typeof ev.detail.index === "number") markOutline(ev.detail.index);
     });
 
@@ -793,9 +942,11 @@ See [[z=1|Tuesday]] for what's next.
         }
         pieceSel.hidden = false;
         pieceLabel.hidden = false;
+        document.getElementById("pieceWrap").hidden = false;
       } else {
         pieceSel.hidden = true;
         pieceLabel.hidden = true;
+        document.getElementById("pieceWrap").hidden = true;
       }
       const active = openedPieces.find((item) => item.id === opened.activeId);
       sourceName.textContent = active ? active.label : "source.3md";
@@ -981,7 +1132,7 @@ See [[z=1|Tuesday]] for what's next.
       if (!openedFiles.length) {
         const empty = document.createElement("div");
         empty.className = "empty";
-        empty.textContent = "Open a GitHub repo, a folder, or a file.";
+        empty.innerHTML = "<strong>No files opened</strong>Open a file or folder above, or paste a public GitHub path. You can also drop files here.";
         fileList.appendChild(empty);
         return;
       }
@@ -1024,24 +1175,39 @@ See [[z=1|Tuesday]] for what's next.
       return new TextDecoder().decode(file.data);
     }
     async function openPoint(input) {
-      status.className = "status ok";
-      status.textContent = "Opening " + input.trim() + "...";
-      const loaded = await loadGitHubPoint(input);
-      const entries = [];
-      for (const file of loaded.files) {
-        const text = textFromFile(file);
-        if (text != null) entries.push({ path: file.path, text });
+      const form = document.getElementById("pointForm");
+      if (form.getAttribute("aria-busy") === "true") return;
+      const button = form.querySelector("button[type=submit]");
+      const locator = document.getElementById("pointInput");
+      form.setAttribute("aria-busy", "true");
+      button.disabled = true;
+      button.textContent = "Opening…";
+      locator.readOnly = true;
+      try {
+        status.className = "status ok";
+        status.textContent = "Opening " + input.trim() + "...";
+        const loaded = await loadGitHubPoint(input);
+        const entries = [];
+        for (const file of loaded.files) {
+          const text = textFromFile(file);
+          if (text != null) entries.push({ path: file.path, text });
+        }
+        if (!entries.length) throw new Error("That GitHub path has no .3md, .3mdb, or Markdown files.");
+        const note = loaded.truncated ? " The list stopped at the first 400 files." : "";
+        setOpenedFiles(entries, loaded.label + "@" + loaded.ref);
+        const first = entries.find((entry) => entry.path.toLowerCase().endsWith(".3md")) || entries[0];
+        const hits = lineIndex.filter((hit) => hit.path === first.path);
+        showOpened(openText(hits[0] ? hits[0].text : first.text));
+        sourceName.textContent = first.path.split("/").pop() || first.path;
+        markFile(first.path);
+        status.className = "status ok";
+        status.textContent = "Opened " + loaded.label + " at " + loaded.ref + ". " + entries.length + " files." + note;
+      } finally {
+        form.setAttribute("aria-busy", "false");
+        button.disabled = false;
+        button.textContent = "open";
+        locator.readOnly = false;
       }
-      if (!entries.length) throw new Error("That GitHub path has no .3md, .3mdb, or Markdown files.");
-      const note = loaded.truncated ? " The list stopped at the first 400 files." : "";
-      setOpenedFiles(entries, loaded.label + "@" + loaded.ref);
-      const first = entries.find((entry) => entry.path.toLowerCase().endsWith(".3md")) || entries[0];
-      const hits = lineIndex.filter((hit) => hit.path === first.path);
-      showOpened(openText(hits[0] ? hits[0].text : first.text));
-      sourceName.textContent = first.path.split("/").pop() || first.path;
-      markFile(first.path);
-      status.className = "status ok";
-      status.textContent = "Opened " + loaded.label + " at " + loaded.ref + ". " + entries.length + " files." + note;
     }
     function rememberGathered(files) {
       const decoder = new TextDecoder();
@@ -1197,6 +1363,24 @@ See [[z=1|Tuesday]] for what's next.
       catch { status.className = "status ok"; status.textContent = "Share link is in the address bar."; }
     });
 
+    const documentMenu = document.getElementById("documentMenu");
+    documentMenu.addEventListener("click", (event) => {
+      if (documentMenu.open && event.target.closest("button")) {
+        documentMenu.open = false;
+        documentMenu.querySelector("summary").focus();
+      }
+    });
+    document.addEventListener("click", (event) => {
+      if (!documentMenu.contains(event.target)) documentMenu.open = false;
+    });
+    documentMenu.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") {
+        event.preventDefault();
+        documentMenu.open = false;
+        documentMenu.querySelector("summary").focus();
+      }
+    });
+
     document.getElementById("pointForm").addEventListener("submit", async (event) => {
       event.preventDefault();
       const input = document.getElementById("pointInput").value;
@@ -1236,6 +1420,7 @@ See [[z=1|Tuesday]] for what's next.
         ed.value = STARTER;
       }
       render(); updateCursor();
+      requestAnimationFrame(() => requestAnimationFrame(drawCubes));
       if (loadError) {
         status.className = "status err"; status.textContent = loadError;
         document.body.dataset.loadError = "true";
@@ -1244,15 +1429,580 @@ See [[z=1|Tuesday]] for what's next.
         delete document.body.dataset.loadError;
       }
     }
-    // Source|Live segmented switch (visible only on narrow layouts).
-    const grid = document.getElementById("grid");
-    document.querySelectorAll(".pstab").forEach((tab) => {
-      tab.addEventListener("click", () => {
-        const pane = tab.dataset.pane;
-        grid.dataset.show = pane;
-        document.querySelectorAll(".pstab").forEach((t) => t.setAttribute("aria-selected", String(t === tab)));
-        if (pane === "live") lab.render && lab.render(); // re-measure now that it's visible
+    // Edit, the plane preview, and Cubes share one panel. Files stays beside it,
+    // and on a narrow window Files and the document take turns.
+    function setIdeStatus(doc, cubeCount) {
+      const ideDoc = document.getElementById("ideDoc");
+      const ideCubes = document.getElementById("ideCubes");
+      if (!ideDoc || !ideCubes) return;
+      if (!doc) {
+        ideDoc.textContent = "no document";
+        ideCubes.textContent = "0 cubes";
+        return;
+      }
+      const planes = doc.planes ? doc.planes.length : 0;
+      ideDoc.textContent = (doc.axis || "axis") + " · " + planes + (planes === 1 ? " plane" : " planes");
+      ideCubes.textContent = cubeCount + (cubeCount === 1 ? " cube" : " cubes");
+    }
+    function gridOf(body) {
+      const lines = String(body || "").split("\n");
+      let rows = [];
+      const fence = lines.findIndex((line) => line.startsWith("```"));
+      if (fence >= 0) {
+        for (let i = fence + 1; i < lines.length && !lines[i].startsWith("```"); i++) rows.push(lines[i]);
+      } else {
+        rows = lines.filter((line) => line.length > 0);
+        if (rows.length < 2) return null;
+      }
+      if (!rows.length) return null;
+      const chars = new Set();
+      for (const row of rows) for (const ch of row) if (ch !== " " && ch !== "\t") chars.add(ch);
+      if (!chars.size || chars.size > 12) return null;
+      const width = Math.max(...rows.map((row) => row.length));
+      if (width > 64 || rows.length > 64) return null;
+      const cells = [];
+      for (let r = 0; r < rows.length; r++) {
+        for (let c = 0; c < width; c++) {
+          const ch = rows[r][c] || " ";
+          if (ch !== " " && ch !== "." && ch !== "\t") cells.push({ c, r, ch });
+        }
+      }
+      return cells.length ? { w: width, h: rows.length, cells } : null;
+    }
+    function cubeCells(doc) {
+      const cells = [];
+      if (!doc || !doc.planes) return { cells, w: 0, h: 0 };
+      let w = 0;
+      let h = 0;
+      for (let z = 0; z < doc.planes.length; z++) {
+        const grid = gridOf(doc.planes[z].body);
+        if (!grid) continue;
+        w = Math.max(w, grid.w);
+        h = Math.max(h, grid.h);
+        for (const cell of grid.cells) {
+          if (cells.length >= 4000) break;
+          cells.push({ x: cell.c, y: cell.r, z, ch: cell.ch });
+        }
+      }
+      return { cells, w, h };
+    }
+    const GLYPH_COLOR = {
+      "@": [0.65, 0.57, 0.94], "*": [0.98, 0.76, 0.42], "+": [0.46, 0.71, 0.95],
+      "o": [0.57, 0.83, 0.49], "O": [0.57, 0.83, 0.49], "x": [0.94, 0.54, 0.58],
+      "X": [0.94, 0.54, 0.58], ":": [0.52, 0.67, 0.48], "=": [0.87, 0.76, 0.55],
+      "-": [0.49, 0.83, 0.89],
+    };
+    const cubeView = { yaw: 0.6, pitch: 0.35, zoom: 1 };
+    const cubeScene = { doc: undefined, volume: null };
+    function currentCubeVolume(doc) {
+      if (cubeScene.doc !== doc) {
+        cubeScene.doc = doc;
+        cubeScene.volume = cubeCells(doc);
+      }
+      return cubeScene.volume;
+    }
+    const cubeGpu = {
+      gl: null,
+      program: null,
+      vao: null,
+      instances: null,
+      mvpLoc: null,
+      selectedLoc: null,
+      volume: null,
+      count: 0,
+      failed: false,
+    };
+    const cubePick = { eye: null, width: 0, height: 0, points: [] };
+    function mul4(a, b) {
+      const out = new Float32Array(16);
+      for (let col = 0; col < 4; col++) {
+        for (let row = 0; row < 4; row++) {
+          out[col * 4 + row] =
+            a[row] * b[col * 4] +
+            a[4 + row] * b[col * 4 + 1] +
+            a[8 + row] * b[col * 4 + 2] +
+            a[12 + row] * b[col * 4 + 3];
+        }
+      }
+      return out;
+    }
+    function lookAt(eye, target, up) {
+      let zx = eye[0] - target[0], zy = eye[1] - target[1], zz = eye[2] - target[2];
+      let len = Math.hypot(zx, zy, zz) || 1;
+      zx /= len; zy /= len; zz /= len;
+      let xx = up[1] * zz - up[2] * zy;
+      let xy = up[2] * zx - up[0] * zz;
+      let xz = up[0] * zy - up[1] * zx;
+      len = Math.hypot(xx, xy, xz) || 1;
+      xx /= len; xy /= len; xz /= len;
+      const yx = zy * xz - zz * xy;
+      const yy = zz * xx - zx * xz;
+      const yz = zx * xy - zy * xx;
+      return new Float32Array([
+        xx, yx, zx, 0,
+        xy, yy, zy, 0,
+        xz, yz, zz, 0,
+        -(xx * eye[0] + xy * eye[1] + xz * eye[2]),
+        -(yx * eye[0] + yy * eye[1] + yz * eye[2]),
+        -(zx * eye[0] + zy * eye[1] + zz * eye[2]),
+        1,
+      ]);
+    }
+    function perspective(fovy, aspect, near, far) {
+      const f = 1 / Math.tan(fovy / 2);
+      const nf = 1 / (near - far);
+      return new Float32Array([
+        f / aspect, 0, 0, 0,
+        0, f, 0, 0,
+        0, 0, (far + near) * nf, -1,
+        0, 0, (2 * far * near) * nf, 0,
+      ]);
+    }
+    function cubeMesh() {
+      // Corners run counterclockwise when seen from outside, so every face of the cube is solid.
+      const faces = [
+        [[1, 0, 0], [0.5, -0.5, -0.5], [0.5, 0.5, -0.5], [0.5, 0.5, 0.5], [0.5, -0.5, 0.5]],
+        [[-1, 0, 0], [-0.5, -0.5, 0.5], [-0.5, 0.5, 0.5], [-0.5, 0.5, -0.5], [-0.5, -0.5, -0.5]],
+        [[0, 1, 0], [-0.5, 0.5, 0.5], [0.5, 0.5, 0.5], [0.5, 0.5, -0.5], [-0.5, 0.5, -0.5]],
+        [[0, -1, 0], [-0.5, -0.5, -0.5], [0.5, -0.5, -0.5], [0.5, -0.5, 0.5], [-0.5, -0.5, 0.5]],
+        [[0, 0, 1], [-0.5, -0.5, 0.5], [0.5, -0.5, 0.5], [0.5, 0.5, 0.5], [-0.5, 0.5, 0.5]],
+        [[0, 0, -1], [0.5, -0.5, -0.5], [-0.5, -0.5, -0.5], [-0.5, 0.5, -0.5], [0.5, 0.5, -0.5]],
+      ];
+      const data = new Float32Array(36 * 6);
+      let cursor = 0;
+      for (const face of faces) {
+        const n = face[0];
+        const corners = [face[1], face[2], face[3], face[1], face[3], face[4]];
+        for (const corner of corners) {
+          data[cursor++] = corner[0];
+          data[cursor++] = corner[1];
+          data[cursor++] = corner[2];
+          data[cursor++] = n[0];
+          data[cursor++] = n[1];
+          data[cursor++] = n[2];
+        }
+      }
+      return data;
+    }
+    function cubeBufferSize(width, height) {
+      const ratio = Math.min(window.devicePixelRatio || 1, 2);
+      const maxEdge = 2048;
+      let bufferWidth = Math.max(2, Math.floor(width * ratio));
+      let bufferHeight = Math.max(2, Math.floor(height * ratio));
+      const limit = Math.min(1, maxEdge / bufferWidth, maxEdge / bufferHeight);
+      return [Math.max(2, Math.floor(bufferWidth * limit)), Math.max(2, Math.floor(bufferHeight * limit))];
+    }
+    function bindCubeContext(canvas) {
+      if (cubeGpu.bound) return;
+      cubeGpu.bound = true;
+      canvas.addEventListener("webglcontextlost", (event) => {
+        event.preventDefault();
+        cubeGpu.gl = null;
+        cubeGpu.program = null;
+        cubeGpu.vao = null;
+        cubeGpu.instances = null;
+        cubeGpu.volume = null;
+        cubeGpu.failed = false;
+        canvas.__cubeGl = null;
+        canvas.dataset.renderer = "lost";
+        showCubeUnavailable();
       });
+      canvas.addEventListener("webglcontextrestored", () => {
+        requestAnimationFrame(drawCubes);
+      });
+      canvas.addEventListener("threemd-cubes", () => drawCubes());
+    }
+    function initCubeGl(canvas) {
+      if (cubeGpu.failed) return false;
+      // One context, created after the bitmap size is final. Resizing the bitmap
+      // or asking for the discrete GPU makes Safari drop the context.
+      const gl = canvas.getContext("webgl2", {
+        alpha: false,
+        antialias: true,
+        depth: true,
+        stencil: false,
+        premultipliedAlpha: false,
+      });
+      if (!gl || gl.isContextLost()) return false;
+      const vert = `#version 300 es
+        layout(location=0) in vec3 aPos;
+        layout(location=1) in vec3 aNrm;
+        layout(location=2) in vec3 iOff;
+        layout(location=3) in vec3 iCol;
+        layout(location=4) in float iLayer;
+        layout(location=5) in float iFaces;
+        uniform mat4 uMvp;
+        uniform float uSelected;
+        out vec3 vColor;
+        out vec3 vEdgeColor;
+        out vec2 vFace;
+        flat out float vSelected;
+        flat out float vVisible;
+        void main() {
+          vSelected = float(abs(iLayer - uSelected) < 0.5);
+          int face = aNrm.x > 0.0 ? 0 : aNrm.x < 0.0 ? 1 : aNrm.y > 0.0 ? 2
+            : aNrm.y < 0.0 ? 3 : aNrm.z > 0.0 ? 4 : 5;
+          vVisible = float((int(iFaces) & (1 << face)) != 0);
+          vEdgeColor = iCol;
+          // Face coordinates outline the four real edges, never the triangle diagonal.
+          vFace = aNrm.x != 0.0 ? aPos.yz : aNrm.y != 0.0 ? aPos.xz : aPos.xy;
+          float key = max(dot(aNrm, normalize(vec3(0.34, 0.88, 0.38))), 0.0);
+          float fill = max(dot(aNrm, normalize(vec3(-0.45, 0.22, -0.4))), 0.0);
+          float shade = 0.82 + 0.34 * key + 0.12 * fill;
+          vColor = iCol * shade;
+          float scale = 0.98;
+          gl_Position = uMvp * vec4(aPos * scale + iOff, 1.0);
+        }`;
+      const frag = `#version 300 es
+        precision highp float;
+        in vec3 vColor;
+        in vec3 vEdgeColor;
+        in vec2 vFace;
+        flat in float vSelected;
+        flat in float vVisible;
+        out vec4 frag;
+        void main() {
+          // As in Sculpt, shared interior faces do not accumulate into an opaque fill.
+          // An isolated cell retains all six faces of the same full cube mesh.
+          if (vVisible < 0.5) discard;
+          float edgeDistance = 0.5 - max(abs(vFace.x), abs(vFace.y));
+          float pixel = max(fwidth(edgeDistance), 0.0001);
+          float edge = 1.0 - smoothstep(0.5 * pixel, 1.5 * pixel, edgeDistance);
+          vec3 edgeColor = mix(vEdgeColor, vec3(1.0, 0.79, 0.44), vSelected);
+          float edgeAlpha = mix(0.4, 0.8, vSelected);
+          // Web blending needs more presence than Sculpt's 0.35; selection changes only the edge.
+          float alpha = mix(0.5, edgeAlpha, edge);
+          vec3 color = mix(vColor * 0.5, edgeColor * edgeAlpha, edge) / alpha;
+          frag = vec4(color, alpha);
+        }`;
+      function shader(type, source) {
+        const compiled = gl.createShader(type);
+        gl.shaderSource(compiled, source);
+        gl.compileShader(compiled);
+        if (!gl.getShaderParameter(compiled, gl.COMPILE_STATUS)) {
+          cubeGpu.failed = true;
+          cubeGpu.error = gl.getShaderInfoLog(compiled) || "shader";
+          return null;
+        }
+        return compiled;
+      }
+      const vs = shader(gl.VERTEX_SHADER, vert);
+      const fs = shader(gl.FRAGMENT_SHADER, frag);
+      if (!vs || !fs) return false;
+      const program = gl.createProgram();
+      gl.attachShader(program, vs);
+      gl.attachShader(program, fs);
+      gl.linkProgram(program);
+      if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+        cubeGpu.failed = true;
+        cubeGpu.error = gl.getProgramInfoLog(program) || "link";
+        return false;
+      }
+      const vao = gl.createVertexArray();
+      gl.bindVertexArray(vao);
+      const mesh = gl.createBuffer();
+      gl.bindBuffer(gl.ARRAY_BUFFER, mesh);
+      gl.bufferData(gl.ARRAY_BUFFER, cubeMesh(), gl.STATIC_DRAW);
+      gl.enableVertexAttribArray(0);
+      gl.vertexAttribPointer(0, 3, gl.FLOAT, false, 24, 0);
+      gl.enableVertexAttribArray(1);
+      gl.vertexAttribPointer(1, 3, gl.FLOAT, false, 24, 12);
+      const instances = gl.createBuffer();
+      gl.bindBuffer(gl.ARRAY_BUFFER, instances);
+      gl.bufferData(gl.ARRAY_BUFFER, 4000 * 8 * 4, gl.DYNAMIC_DRAW);
+      gl.enableVertexAttribArray(2);
+      gl.vertexAttribPointer(2, 3, gl.FLOAT, false, 32, 0);
+      gl.vertexAttribDivisor(2, 1);
+      gl.enableVertexAttribArray(3);
+      gl.vertexAttribPointer(3, 3, gl.FLOAT, false, 32, 12);
+      gl.vertexAttribDivisor(3, 1);
+      gl.enableVertexAttribArray(4);
+      gl.vertexAttribPointer(4, 1, gl.FLOAT, false, 32, 24);
+      gl.vertexAttribDivisor(4, 1);
+      gl.enableVertexAttribArray(5);
+      gl.vertexAttribPointer(5, 1, gl.FLOAT, false, 32, 28);
+      gl.vertexAttribDivisor(5, 1);
+      gl.bindVertexArray(null);
+      gl.enable(gl.DEPTH_TEST);
+      gl.enable(gl.BLEND);
+      gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+      gl.depthMask(false);
+      gl.enable(gl.CULL_FACE);
+      gl.cullFace(gl.BACK);
+      cubeGpu.gl = gl;
+      cubeGpu.program = program;
+      cubeGpu.vao = vao;
+      cubeGpu.instances = instances;
+      cubeGpu.mvpLoc = gl.getUniformLocation(program, "uMvp");
+      cubeGpu.selectedLoc = gl.getUniformLocation(program, "uSelected");
+      canvas.__cubeGl = gl;
+      return true;
+    }
+    function syncCubeInstances(volume, planeCount) {
+      if (volume === cubeGpu.volume) return;
+      cubeGpu.volume = volume;
+      const cells = volume.cells;
+      const ox = (volume.w - 1) / 2;
+      const oy = (volume.h - 1) / 2;
+      const oz = (Math.max(planeCount, 1) - 1) / 2;
+      const data = new Float32Array(cells.length * 8);
+      const points = [];
+      const occupied = new Set(cells.map((cell) => `${cell.x},${cell.y},${cell.z}`));
+      const neighbors = [[1, 0, 0], [-1, 0, 0], [0, -1, 0], [0, 1, 0], [0, 0, 1], [0, 0, -1]];
+      for (let i = 0; i < cells.length; i++) {
+        const cell = cells[i];
+        const color = GLYPH_COLOR[cell.ch] || [0.38, 0.96, 0.83];
+        const x = cell.x - ox;
+        const y = oy - cell.y;
+        const z = cell.z - oz;
+        const at = i * 8;
+        data[at] = x;
+        data[at + 1] = y;
+        data[at + 2] = z;
+        data[at + 3] = color[0];
+        data[at + 4] = color[1];
+        data[at + 5] = color[2];
+        data[at + 6] = cell.z;
+        let faces = 0;
+        neighbors.forEach(([dx, dy, dz], face) => {
+          if (!occupied.has(`${cell.x + dx},${cell.y + dy},${cell.z + dz}`)) faces |= 1 << face;
+        });
+        data[at + 7] = faces;
+        points.push({ x, y, z, plane: cell.z });
+      }
+      const gl = cubeGpu.gl;
+      gl.bindBuffer(gl.ARRAY_BUFFER, cubeGpu.instances);
+      gl.bufferSubData(gl.ARRAY_BUFFER, 0, data);
+      cubeGpu.count = cells.length;
+      cubePick.points = points;
+    }
+    function cubeCamera(width, height, volume, planeCount) {
+      // Sculpt's camera: three extents away, 0.68 of the smaller pane dimension per extent.
+      const extent = Math.max(volume.w, volume.h, planeCount, 1);
+      const dist = extent * 3;
+      const scale = Math.min(width, height) * 0.68 / extent * cubeView.zoom;
+      let tanHalf = height / (2 * scale * dist);
+      const cp = Math.cos(cubeView.pitch), sp = Math.sin(cubeView.pitch);
+      const cy = Math.cos(cubeView.yaw), sy = Math.sin(cubeView.yaw);
+      // Keep the native scale when it fits; leave a margin around small, close cubes.
+      const aspect = width / Math.max(height, 1);
+      let fitHalf = 0;
+      for (const x of [-Math.max(volume.w, 1) / 2, Math.max(volume.w, 1) / 2]) {
+        for (const y of [-Math.max(volume.h, 1) / 2, Math.max(volume.h, 1) / 2]) {
+          for (const z of [-planeCount / 2, planeCount / 2]) {
+            const right = cy * x - sy * z;
+            const up = -sy * sp * x + cp * y - cy * sp * z;
+            const depth = dist - (sy * cp * x + sp * y + cy * cp * z);
+            fitHalf = Math.max(fitHalf, Math.abs(up) / depth, Math.abs(right) / depth / aspect);
+          }
+        }
+      }
+      tanHalf = Math.max(tanHalf, fitHalf * 1.12 / cubeView.zoom);
+      const eye = [sy * cp * dist, sp * dist, cy * cp * dist];
+      const view = lookAt(eye, [0, 0, 0], [0, 1, 0]);
+      const proj = perspective(2 * Math.atan(tanHalf), width / Math.max(height, 1), extent * 0.01, dist + extent * 2);
+      cubePick.eye = eye;
+      cubePick.tanHalf = tanHalf;
+      return mul4(proj, view);
+    }
+    function showCubeUnavailable() {
+      document.getElementById("cubesEmpty").hidden = false;
+      document.getElementById("cubeEmptyText").textContent = "The cube stage needs WebGL2. Read this document in Preview, or try reopening it in a browser with GPU support.";
+      document.getElementById("cubeSample").hidden = true;
+      document.getElementById("cubeTools").hidden = true;
+    }
+    function drawCubes() {
+      const canvas = document.getElementById("cubeCanvas");
+      const empty = document.getElementById("cubesEmpty");
+      if (!canvas) return;
+      const doc = lab.document;
+      const volume = currentCubeVolume(doc);
+      canvas.dataset.cubes = String(volume.cells.length);
+      if (empty) empty.hidden = volume.cells.length > 0;
+      document.getElementById("cubeEmptyText").textContent = "This document has no cube grid. Read it in Preview, or open a sculpture to explore in 3D.";
+      document.getElementById("cubeSample").hidden = false;
+      document.getElementById("cubeTools").hidden = volume.cells.length === 0;
+      document.getElementById("cameraControls").hidden = volume.cells.length === 0;
+      document.getElementById("cubePreview").hidden = !doc;
+      document.getElementById("cubeZoom").textContent = Math.round(cubeView.zoom * 100) + "%";
+      document.getElementById("cubeZoomOut").disabled = cubeView.zoom <= 0.45;
+      document.getElementById("cubeZoomIn").disabled = cubeView.zoom >= 3.2;
+      const width = canvas.clientWidth;
+      const height = canvas.clientHeight;
+      if (width < 2 || height < 2) return;
+      bindCubeContext(canvas);
+      const [bufferWidth, bufferHeight] = cubeBufferSize(width, height);
+      // Set the bitmap before the first getContext. Changing it later drops the
+      // Safari context, so a later layout change only updates the viewport.
+      if (!cubeGpu.gl) {
+        canvas.width = bufferWidth;
+        canvas.height = bufferHeight;
+      }
+      if (cubeGpu.gl && cubeGpu.gl.isContextLost()) {
+        cubeGpu.gl = null;
+        canvas.dataset.renderer = "lost";
+        showCubeUnavailable();
+        return;
+      }
+      if (!cubeGpu.gl && !initCubeGl(canvas)) {
+        if (canvas.dataset.renderer !== "lost") canvas.dataset.renderer = "none";
+        if (cubeGpu.error) canvas.dataset.glError = cubeGpu.error.slice(0, 240);
+        showCubeUnavailable();
+        return;
+      }
+      canvas.dataset.renderer = "webgl2";
+      const selected = doc ? (lab.currentIndex || 0) : -1;
+      if (volume.cells.length) syncCubeInstances(volume, doc && doc.planes ? doc.planes.length : 1);
+      else { cubeGpu.count = 0; cubeGpu.volume = null; cubePick.points = []; }
+      const mvp = cubeCamera(width, height, volume, Math.max(doc?.planes?.length || 1, 1));
+      const gl = cubeGpu.gl;
+      gl.viewport(0, 0, canvas.width, canvas.height);
+      gl.clearColor(0.065, 0.085, 0.10, 1);
+      gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+      gl.useProgram(cubeGpu.program);
+      gl.bindVertexArray(cubeGpu.vao);
+      gl.uniformMatrix4fv(cubeGpu.mvpLoc, false, mvp);
+      gl.uniform1f(cubeGpu.selectedLoc, selected);
+      if (cubeGpu.count > 0) gl.drawArraysInstanced(gl.TRIANGLES, 0, 36, cubeGpu.count);
+      gl.bindVertexArray(null);
+      cubePick.width = width;
+      cubePick.height = height;
+    }
+    const grid = document.getElementById("grid");
+    const stage = document.getElementById("stage");
+    function selectTab(root, tab, apply) {
+      apply(tab.dataset.pane);
+      root.querySelectorAll(".pstab").forEach((item) => {
+        item.setAttribute("aria-selected", String(item === tab));
+        item.tabIndex = item === tab ? 0 : -1;
+      });
+    }
+    function wireTabs(root, apply) {
+      root.querySelectorAll(".pstab").forEach((tab) => {
+        tab.tabIndex = tab.getAttribute("aria-selected") === "true" ? 0 : -1;
+      });
+      root.addEventListener("keydown", (event) => {
+        if (!["ArrowRight", "ArrowLeft", "Home", "End"].includes(event.key)) return;
+        const tabs = [...root.querySelectorAll(".pstab")];
+        const current = tabs.indexOf(document.activeElement);
+        if (current < 0) return;
+        event.preventDefault();
+        const step = event.key === "ArrowRight" ? 1 : tabs.length - 1;
+        const next = event.key === "Home" ? tabs[0]
+          : event.key === "End" ? tabs[tabs.length - 1] : tabs[(current + step) % tabs.length];
+        next.focus();
+        selectTab(root, next, apply);
+      });
+      root.querySelectorAll(".pstab").forEach((tab) => {
+        tab.addEventListener("click", () => selectTab(root, tab, apply));
+      });
+    }
+    wireTabs(document.querySelector(".editpreview"), (pane) => {
+      stage.dataset.show = pane;
+      document.querySelector(".wrap").dataset.view = pane;
+      if (pane === "preview" && lab.render) lab.render();
+      if (pane === "cubes") requestAnimationFrame(drawCubes);
+    });
+    wireTabs(document.querySelector(".fileswitch"), (pane) => {
+      grid.dataset.show = pane;
+      if (pane === "document" && stage.dataset.show === "preview" && lab.render) lab.render();
+      if (pane === "document" && stage.dataset.show === "cubes") requestAnimationFrame(drawCubes);
+    });
+    const cubeCanvas = document.getElementById("cubeCanvas");
+    function zoomCubes(factor) {
+      cubeView.zoom = Math.max(0.45, Math.min(3.2, cubeView.zoom * factor));
+      drawCubes();
+    }
+    function fitCubes() {
+      cubeView.yaw = 0.6;
+      cubeView.pitch = 0.35;
+      cubeView.zoom = 1;
+      drawCubes();
+    }
+    document.getElementById("cubeFit").addEventListener("click", fitCubes);
+    document.getElementById("cubeZoomOut").addEventListener("click", () => zoomCubes(1 / 1.15));
+    document.getElementById("cubeZoomIn").addEventListener("click", () => zoomCubes(1.15));
+    cubeCanvas.addEventListener("keydown", (event) => {
+      if (event.altKey || event.ctrlKey || event.metaKey) return;
+      if (event.key === "Home") fitCubes();
+      else if (["+", "="].includes(event.key)) zoomCubes(1.15);
+      else if (["-", "_"].includes(event.key)) zoomCubes(1 / 1.15);
+      else if (event.key === "ArrowLeft") { cubeView.yaw -= 0.12; drawCubes(); }
+      else if (event.key === "ArrowRight") { cubeView.yaw += 0.12; drawCubes(); }
+      else if (event.key === "ArrowUp") { cubeView.pitch = Math.min(1.2, cubeView.pitch + 0.12); drawCubes(); }
+      else if (event.key === "ArrowDown") { cubeView.pitch = Math.max(-1.2, cubeView.pitch - 0.12); drawCubes(); }
+      else return;
+      event.preventDefault();
+    });
+    document.getElementById("cubePreview").addEventListener("click", () => {
+      document.getElementById("previewTab").click();
+      lab.setAttribute("tabindex", "0");
+      lab.focus();
+    });
+    let cubeDrag = null;
+    cubeCanvas.addEventListener("pointerdown", (event) => {
+      if ((event.pointerType === "touch" && !event.isPrimary) || event.button !== 0) return;
+      cubeCanvas.focus({ preventScroll: true });
+      cubeDrag = { pointerId: event.pointerId, x: event.clientX, y: event.clientY, yaw: cubeView.yaw, pitch: cubeView.pitch, moved: false };
+      try { cubeCanvas.setPointerCapture(event.pointerId); } catch (_) { /* synthetic tests have no live pointer */ }
+    });
+    cubeCanvas.addEventListener("pointermove", (event) => {
+      if (!cubeDrag || cubeDrag.pointerId !== event.pointerId) return;
+      const dx = event.clientX - cubeDrag.x;
+      const dy = event.clientY - cubeDrag.y;
+      if (Math.abs(dx) + Math.abs(dy) > 3) cubeDrag.moved = true;
+      cubeView.yaw = cubeDrag.yaw + dx * 0.01;
+      cubeView.pitch = Math.max(-1.2, Math.min(1.2, cubeDrag.pitch + dy * 0.01));
+      drawCubes();
+    });
+    cubeCanvas.addEventListener("pointerup", (event) => {
+      if (!cubeDrag || cubeDrag.pointerId !== event.pointerId) return;
+      if (!cubeDrag.moved && cubePick.eye) {
+        const rect = cubeCanvas.getBoundingClientRect();
+        const sx = ((event.clientX - rect.left) / cubePick.width * 2 - 1)
+          * cubePick.tanHalf * cubePick.width / cubePick.height;
+        const sy = (1 - (event.clientY - rect.top) / cubePick.height * 2) * cubePick.tanHalf;
+        const cy = Math.cos(cubeView.yaw), syaw = Math.sin(cubeView.yaw);
+        const cp = Math.cos(cubeView.pitch), sp = Math.sin(cubeView.pitch);
+        const ray = [cy * sx - syaw * sp * sy - syaw * cp, cp * sy - sp, -syaw * sx - cy * sp * sy - cy * cp];
+        let best = null;
+        for (const point of cubePick.points) {
+          let near = 0, far = Infinity;
+          const center = [point.x, point.y, point.z];
+          for (let axis = 0; axis < 3; axis++) {
+            const offset = center[axis] - cubePick.eye[axis];
+            if (Math.abs(ray[axis]) < 0.000001) {
+              if (Math.abs(offset) > 0.49) { far = -1; break; }
+            } else {
+              const a = (offset - 0.49) / ray[axis], b = (offset + 0.49) / ray[axis];
+              near = Math.max(near, Math.min(a, b));
+              far = Math.min(far, Math.max(a, b));
+            }
+          }
+          if (far >= near && (!best || near < best.distance)) best = { distance: near, plane: point.plane };
+        }
+        if (best) { lab.goTo(best.plane); markOutline(best.plane); }
+      }
+      cubeDrag = null;
+    });
+    cubeCanvas.addEventListener("pointercancel", (event) => {
+      if (cubeDrag?.pointerId === event.pointerId) cubeDrag = null;
+    });
+    cubeCanvas.addEventListener("wheel", (event) => {
+      event.preventDefault();
+      zoomCubes(event.deltaY > 0 ? 0.92 : 1.08);
+    }, { passive: false });
+    if (window.ResizeObserver) {
+      new ResizeObserver(() => {
+        if (stage.dataset.show === "cubes") drawCubes();
+      }).observe(cubeCanvas);
+    }
+    document.getElementById("cubeSample").addEventListener("click", () => {
+      showOpened(openText(STARTER));
+      fitCubes();
+      if (typeof lab.goTo === "function") lab.goTo(1);
+      document.getElementById("cubesTab").click();
+      requestAnimationFrame(drawCubes);
     });
 
     // Programmatic API for headless agents: set/validate without synthesizing DOM

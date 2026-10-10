@@ -7,7 +7,143 @@ async function viewerReady(page) {
   await page.waitForFunction(() => document.getElementById("lab")?.shadowRoot?.querySelectorAll(".plane").length > 0);
 }
 
+async function showEditor(page) {
+  if (await page.locator("#editor").isVisible()) return;
+  await page.click("#editTab");
+}
+
 test.describe("viewer & editor (viewer.html)", () => {
+  test("opening the page shows lit cubes in the window", async ({ page }) => {
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await page.goto("/viewer.html");
+    await viewerReady(page);
+    await page.waitForFunction(() => {
+      const canvas = document.getElementById("cubeCanvas");
+      return canvas.dataset.renderer === "webgl2" && Number(canvas.dataset.cubes) > 8;
+    });
+    const seen = await page.evaluate(() => {
+      const canvas = document.getElementById("cubeCanvas");
+      canvas.dispatchEvent(new Event("threemd-cubes"));
+      const rect = canvas.getBoundingClientRect();
+      const gl = canvas.__cubeGl;
+      const lost = !gl || gl.isContextLost();
+      let lit = 0;
+      if (!lost) {
+        const ratio = canvas.width / Math.max(rect.width, 1);
+        const row = Math.max(0, Math.min(canvas.height - 1, Math.floor((rect.height / 2) * ratio)));
+        const pixels = new Uint8Array(canvas.width * 4);
+        gl.readPixels(0, row, canvas.width, 1, gl.RGBA, gl.UNSIGNED_BYTE, pixels);
+        for (let i = 0; i < pixels.length; i += 4) {
+          if (pixels[i] + pixels[i + 1] + pixels[i + 2] > 140) lit++;
+        }
+      }
+      return {
+        show: document.getElementById("stage").dataset.show,
+        top: rect.top,
+        bottom: rect.bottom,
+        height: rect.height,
+        lit,
+        lost,
+        cubes: Number(canvas.dataset.cubes),
+        viewH: window.innerHeight,
+      };
+    });
+    expect(seen.show).toBe("cubes");
+    expect(seen.lost).toBe(false);
+    expect(seen.height).toBeGreaterThan(80);
+    expect(seen.top).toBeGreaterThanOrEqual(0);
+    expect(seen.bottom).toBeLessThanOrEqual(seen.viewH + 1);
+    expect(seen.cubes).toBeGreaterThan(8);
+    expect(seen.lit).toBeGreaterThan(30);
+  });
+
+  test("one cell has filled faces from every side, with gold edges and glyph fill", async ({ page }) => {
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await page.goto("/viewer.html");
+    await viewerReady(page);
+    await page.evaluate(() => window.threeMd.set("---\n3md: 1.0\naxis: space\n---\n@plane z=0\n```\n#\n```\n@plane z=1\n```\n.\n```\n"));
+    const views = await page.evaluate(() => {
+      const canvas = document.getElementById("cubeCanvas"), gl = canvas.__cubeGl;
+      function pixels() {
+        canvas.dispatchEvent(new Event("threemd-cubes"));
+        const bytes = new Uint8Array(canvas.width * canvas.height * 4);
+        gl.readPixels(0, 0, canvas.width, canvas.height, gl.RGBA, gl.UNSIGNED_BYTE, bytes);
+        let gold = 0, teal = 0, holes = 0;
+        let left = canvas.width, right = 0, top = canvas.height, bottom = 0;
+        for (let y = 0; y < canvas.height; y++) {
+          let first = -1, last = -1;
+          for (let x = 0; x < canvas.width; x++) {
+            const at = (y * canvas.width + x) * 4;
+            const r = bytes[at], g = bytes[at + 1], b = bytes[at + 2];
+            if (r > g * 1.12 && g > b * 1.2 && r > 70) gold++;
+            if (g > r * 1.5 && b > r * 1.4 && g > 55) teal++;
+            if (r + g + b > 100) {
+              if (first < 0) first = x;
+              last = x;
+              left = Math.min(left, x); right = Math.max(right, x);
+              top = Math.min(top, y); bottom = Math.max(bottom, y);
+            }
+          }
+          // An open face leaves background inside the silhouette, even with bright edges.
+          for (let x = first + 2; first >= 0 && x < last - 2; x++) {
+            const at = (y * canvas.width + x) * 4;
+            if (bytes[at] + bytes[at + 1] + bytes[at + 2] < 85) holes++;
+          }
+        }
+        return { gold, teal, holes, left, right, top, bottom, width: canvas.width, height: canvas.height, bytes };
+      }
+      const selected = pixels();
+      document.getElementById("lab").goTo(1);
+      const unselected = pixels();
+      let changedFill = 0;
+      for (let at = 0; at < selected.bytes.length; at += 4) {
+        // Compare the teal face interiors, excluding antialiased edges.
+        if (selected.bytes[at + 1] > selected.bytes[at] * 1.5 && selected.bytes[at + 2] > selected.bytes[at] * 1.4) {
+          if (Math.abs(selected.bytes[at] - unselected.bytes[at]) > 2 ||
+              Math.abs(selected.bytes[at + 1] - unselected.bytes[at + 1]) > 2) changedFill++;
+        }
+      }
+      document.getElementById("lab").goTo(0);
+      const sides = [];
+      let yaw = 0.6, pitch = 0.35;
+      for (const [nextYaw, nextPitch] of [[0.6, 0.35], [2.2, 0.35], [3.8, 0.35], [5.3, 0.35], [0.6, 1.2], [0.6, -1.2]]) {
+        canvas.dispatchEvent(new PointerEvent("pointerdown", { clientX: 0, clientY: 0, pointerId: 1 }));
+        canvas.dispatchEvent(new PointerEvent("pointermove", { clientX: (nextYaw - yaw) / 0.01, clientY: (nextPitch - pitch) / 0.01, pointerId: 1 }));
+        canvas.dispatchEvent(new PointerEvent("pointercancel", { pointerId: 1 }));
+        const { bytes, ...seen } = pixels();
+        sides.push(seen);
+        yaw = nextYaw; pitch = nextPitch;
+      }
+      return { selected: { gold: selected.gold, teal: selected.teal }, unselected: { gold: unselected.gold }, changedFill, sides, lost: gl.isContextLost() };
+    });
+    expect(views.lost).toBe(false);
+    expect(views.selected.gold).toBeGreaterThan(50);
+    expect(views.selected.teal).toBeGreaterThan(1000);
+    expect(views.unselected.gold).toBe(0);
+    expect(views.changedFill).toBeLessThan(views.selected.teal * 0.03); // Allow only antialiased edge pixels.
+    for (const side of views.sides) {
+      expect(side.teal).toBeGreaterThan(1000);
+      expect(side.holes).toBeLessThan(10);
+      expect(side.left).toBeGreaterThan(0);
+      expect(side.right).toBeLessThan(side.width - 1);
+      expect(side.top).toBeGreaterThan(0);
+      expect(side.bottom).toBeLessThan(side.height - 1);
+    }
+  });
+
+  test("clicking a visible cube picks its Z slice and blank stage does not", async ({ page }) => {
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await page.goto("/viewer.html");
+    await viewerReady(page);
+    await page.evaluate(() => window.threeMd.set("---\n3md: 1.0\naxis: space\n---\n@plane z=0\n```\n...\n...\n...\n```\n@plane z=1\n```\n...\n.#.\n...\n```\n@plane z=2\n```\n...\n...\n...\n```\n"));
+    const box = await page.locator("#cubeCanvas").boundingBox();
+    await page.mouse.click(box.x + box.width / 2, box.y + box.height / 2);
+    expect(await page.evaluate(() => document.getElementById("lab").currentIndex)).toBe(1);
+    await page.click("#outline .ochip:first-child");
+    await page.mouse.click(box.x + 5, box.y + 5);
+    expect(await page.evaluate(() => document.getElementById("lab").currentIndex)).toBe(0);
+  });
+
   test("renders the starter document with no console errors", async ({ page }) => {
     const errors = [];
     page.on("console", (m) => { if (m.type() === "error") errors.push(m.text()); });
@@ -22,6 +158,7 @@ test.describe("viewer & editor (viewer.html)", () => {
   test("editing the source re-renders live", async ({ page }) => {
     await page.goto("/viewer.html");
     await viewerReady(page);
+    await showEditor(page);
     const doc = `---\n3md: 1.0\naxis: layer\ntitle: Edited\n---\n@plane z=0 label="a"\n# A\n@plane z=1 label="b"\n# B\n@plane z=2 label="c"\n# C\n`;
     await page.fill("#editor", doc);
     await page.waitForTimeout(350);
@@ -37,6 +174,7 @@ test.describe("viewer & editor (viewer.html)", () => {
     page.on("pageerror", (e) => errors.push(String(e)));
     await page.goto("/viewer.html");
     await viewerReady(page);
+    await showEditor(page);
     await page.fill("#editor", "this is not a valid 3md document");
     await page.waitForTimeout(350);
     const status = await page.textContent("#status");
@@ -62,6 +200,10 @@ test.describe("viewer & editor (viewer.html)", () => {
   test("editor highlights syntax and numbers every line", async ({ page }) => {
     await page.goto("/viewer.html");
     await viewerReady(page);
+    await showEditor(page);
+    await page.evaluate(() => {
+      window.threeMd.set("---\n3md: 1.0\naxis: time\ntitle: Monday\n---\n@plane z=0\nSee [[z=1|Tuesday]]\n");
+    });
     const r = await page.evaluate(() => {
       const hl = document.getElementById("hl");
       const ed = document.getElementById("editor");
@@ -86,6 +228,7 @@ test.describe("viewer & editor (viewer.html)", () => {
   test("Tab indents and Enter continues a list", async ({ page }) => {
     await page.goto("/viewer.html");
     await viewerReady(page);
+    await showEditor(page);
     await page.evaluate(() => {
       const ed = document.getElementById("editor");
       ed.value = "@plane z=0\n- first";
@@ -101,6 +244,7 @@ test.describe("viewer & editor (viewer.html)", () => {
   test("clicking a plane outline chip focuses that plane", async ({ page }) => {
     await page.goto("/viewer.html");
     await viewerReady(page);
+    await page.click("#previewTab");
     await page.waitForFunction(() => document.querySelectorAll("#outline .ochip").length >= 2);
     await page.click("#outline .ochip:nth-child(2)");
     await page.waitForTimeout(200);
@@ -111,6 +255,7 @@ test.describe("viewer & editor (viewer.html)", () => {
   test("the highlight backdrop scrolls with the textarea (tall document)", async ({ page }) => {
     await page.goto("/viewer.html");
     await page.waitForFunction(() => document.getElementById("lab")?.shadowRoot?.querySelectorAll(".plane").length > 0);
+    await showEditor(page);
     const r = await page.evaluate(async () => {
       const ed = document.getElementById("editor"), hl = document.getElementById("hl");
       ed.focus(); ed.select();
@@ -127,6 +272,7 @@ test.describe("viewer & editor (viewer.html)", () => {
   test("smart-key edits are undoable and never corrupt the buffer", async ({ page }) => {
     await page.goto("/viewer.html");
     await page.waitForFunction(() => document.getElementById("lab")?.shadowRoot?.querySelectorAll(".plane").length > 0);
+    await showEditor(page);
     const starter = await page.evaluate(() => document.getElementById("editor").value);
     await page.click("#editor");
     await page.evaluate(() => { const ed = document.getElementById("editor"); ed.setSelectionRange(ed.value.length, ed.value.length); });
@@ -157,6 +303,7 @@ test.describe("viewer & editor (viewer.html)", () => {
     expect(Number(ok.planes)).toBeGreaterThan(0);
     expect(ok.bodyValid).toBe("true");
     expect(ok.live).toBe("polite");
+    await showEditor(page);
     await page.fill("#editor", "axis: time\nbroken");
     await page.waitForTimeout(250);
     const bad = await page.evaluate(() => ({
@@ -172,6 +319,7 @@ test.describe("viewer & editor (viewer.html)", () => {
   test("Tab does not trap keyboard focus (Esc then Tab leaves the editor)", async ({ page }) => {
     await page.goto("/viewer.html");
     await page.waitForFunction(() => document.getElementById("lab")?.shadowRoot?.querySelectorAll(".plane").length > 0);
+    await showEditor(page);
     await page.click("#editor");
     // Plain Tab indents and keeps focus in the editor.
     await page.keyboard.press("Tab");
@@ -275,7 +423,9 @@ test.describe("viewer & editor (viewer.html)", () => {
   test("markdown headings become planes and a plane search opens one", async ({ page }) => {
     await page.goto("/viewer.html");
     await viewerReady(page);
+    await showEditor(page);
     await page.fill("#editor", "# Project\n\nThe opening.\n\n## Install\n\nRun bun.\n");
+    await page.click("#documentMenu summary");
     await page.click("#sectionsBtn");
     await page.waitForTimeout(400);
     const labels = await page.evaluate(() => document.getElementById("lab").document.planes.map((plane) => plane.label));
@@ -287,42 +437,179 @@ test.describe("viewer & editor (viewer.html)", () => {
     expect(index).toBe(1);
   });
 
-  test("desktop layout shows files, source, and the live view", async ({ page }) => {
+  test("desktop layout keeps files beside a panel that switches Edit and Preview", async ({ page }) => {
     await page.setViewportSize({ width: 1280, height: 800 });
     await page.goto("/viewer.html");
     await viewerReady(page);
     const vis = await page.evaluate(() => ({
       files: getComputedStyle(document.querySelector(".filesPane")).display,
-      editor: getComputedStyle(document.querySelector(".editorPane")).display,
-      viewer: getComputedStyle(document.querySelector(".viewerPane")).display,
+      editor: getComputedStyle(document.querySelector(".editor")).display,
+      viewer: getComputedStyle(document.querySelector(".viewer")).display,
+      editmeta: getComputedStyle(document.querySelector(".editmeta")).display,
+      previewmeta: getComputedStyle(document.querySelector(".previewmeta")).display,
+      fileswitch: getComputedStyle(document.querySelector(".fileswitch")).display,
+      cubes: getComputedStyle(document.querySelector(".cubes")).display,
+      show: document.getElementById("stage").dataset.show,
       point: document.getElementById("pointInput").getAttribute("aria-label"),
     }));
     expect(vis.files).not.toBe("none");
-    expect(vis.editor).not.toBe("none");
-    expect(vis.viewer).not.toBe("none");
+    expect(vis.editor).toBe("none");
+    expect(vis.viewer).toBe("none");
+    expect(vis.cubes).not.toBe("none");
+    expect(vis.fileswitch).toBe("none");
+    expect(vis.show).toBe("cubes");
     expect(vis.point).toContain("GitHub");
+    await page.click("#editTab");
+    const editing = await page.evaluate(() => ({
+      editor: getComputedStyle(document.querySelector(".editor")).display,
+      cubes: getComputedStyle(document.querySelector(".cubes")).display,
+    }));
+    expect(editing.editor).not.toBe("none");
+    expect(editing.cubes).toBe("none");
+    await page.click("#previewTab");
+    await page.waitForTimeout(150);
+    const preview = await page.evaluate(() => ({
+      files: getComputedStyle(document.querySelector(".filesPane")).display,
+      editor: getComputedStyle(document.querySelector(".editor")).display,
+      viewer: getComputedStyle(document.querySelector(".viewer")).display,
+      editmeta: getComputedStyle(document.querySelector(".editmeta")).display,
+      previewmeta: getComputedStyle(document.querySelector(".previewmeta")).display,
+      planes: document.getElementById("lab").shadowRoot.querySelectorAll(".plane").length,
+      show: document.getElementById("stage").dataset.show,
+    }));
+    expect(preview.files).not.toBe("none");
+    expect(preview.editor).toBe("none");
+    expect(preview.viewer).not.toBe("none");
+    expect(preview.editmeta).toBe("none");
+    expect(preview.previewmeta).not.toBe("none");
+    expect(preview.planes).toBeGreaterThan(0);
+    expect(preview.show).toBe("preview");
+    await page.click("#editTab");
+    const back = await page.evaluate(() => ({
+      editor: getComputedStyle(document.querySelector(".editor")).display,
+      viewer: getComputedStyle(document.querySelector(".viewer")).display,
+    }));
+    expect(back.editor).not.toBe("none");
+    expect(back.viewer).toBe("none");
   });
 
-  test("narrow layout offers a Source|Live switch that swaps the visible pane", async ({ page }) => {
+  test("cubes tab draws a fenced grid as translucent cubes", async ({ page }) => {
+    await page.setViewportSize({ width: 1280, height: 800 });
+    await page.goto("/viewer.html");
+    await viewerReady(page);
+    await showEditor(page);
+    const sculpture = [
+      "---", "3md: 1.0", "axis: layer", "title: Small sculpture", "---", "",
+      "@plane z=0 label=\"floor\"", "```", "####", "####", "####", "####", "```", "",
+      "@plane z=1 label=\"top\"", "```", "....", ".##.", ".##.", "....", "```", "",
+    ].join("\n");
+    await page.fill("#editor", sculpture);
+    await page.waitForTimeout(300);
+    await page.click("#cubesTab");
+    await page.waitForTimeout(200);
+    const view = await page.evaluate(() => ({
+      show: document.getElementById("stage").dataset.show,
+      editor: getComputedStyle(document.querySelector(".editor")).display,
+      viewer: getComputedStyle(document.querySelector(".viewer")).display,
+      cubes: getComputedStyle(document.querySelector(".cubes")).display,
+      count: Number(document.getElementById("cubeCanvas").dataset.cubes),
+      renderer: document.getElementById("cubeCanvas").dataset.renderer,
+      bar: document.getElementById("ideDoc").textContent,
+    }));
+    expect(view.show).toBe("cubes");
+    expect(view.editor).toBe("none");
+    expect(view.viewer).toBe("none");
+    expect(view.cubes).not.toBe("none");
+    expect(view.count).toBeGreaterThan(8);
+    expect(view.renderer).toBe("webgl2");
+    expect(view.bar).toContain("layer");
+  });
+
+  test("orbiting about 1400 gpu cubes stays interactive", async ({ page }) => {
+    await page.setViewportSize({ width: 1280, height: 800 });
+    await page.goto("/viewer.html");
+    await viewerReady(page);
+    const row = "####################";
+    const grid = Array.from({ length: 20 }, () => row).join("\n");
+    const planes = [0, 1, 2, 3].map((z) => `@plane z=${z}\n\`\`\`\n${grid}\n\`\`\``).join("\n\n");
+    const doc = `---\n3md: 1.0\naxis: layer\n---\n\n${planes}\n`;
+    await page.evaluate((source) => window.threeMd.set(source), doc);
+    await page.click("#cubesTab");
+    await page.waitForFunction(() => document.getElementById("cubeCanvas").dataset.renderer === "webgl2");
+    const timed = await page.evaluate(() => {
+      const canvas = document.getElementById("cubeCanvas");
+      const gl = canvas.__cubeGl;
+      let uploads = 0, draws = 0;
+      const upload = gl.bufferSubData.bind(gl), draw = gl.drawArraysInstanced.bind(gl);
+      gl.bufferSubData = (...args) => { uploads++; return upload(...args); };
+      gl.drawArraysInstanced = (...args) => { draws++; return draw(...args); };
+      const start = performance.now();
+      for (let i = 0; i < 20; i++) {
+        canvas.dispatchEvent(new PointerEvent("pointerdown", { clientX: 400, clientY: 300, pointerId: 1, bubbles: true }));
+        canvas.dispatchEvent(new PointerEvent("pointermove", { clientX: 400 + i * 6, clientY: 300 + i, pointerId: 1, bubbles: true }));
+        canvas.dispatchEvent(new PointerEvent("pointerup", { clientX: 460, clientY: 320, pointerId: 1, bubbles: true }));
+      }
+      canvas.dispatchEvent(new WheelEvent("wheel", { deltaY: -20, cancelable: true }));
+      document.getElementById("lab").goTo(2);
+      const ms = performance.now() - start;
+      gl.bufferSubData = upload;
+      gl.drawArraysInstanced = draw;
+      return {
+        uploads, draws,
+        lost: gl.isContextLost(),
+        ms,
+        count: Number(canvas.dataset.cubes),
+        renderer: canvas.dataset.renderer,
+      };
+    });
+    expect(timed.renderer).toBe("webgl2");
+    expect(timed.count).toBeGreaterThan(1400);
+    expect(timed.ms).toBeLessThan(800);
+    expect(timed.uploads).toBe(0);
+    expect(timed.draws).toBe(22); // One draw per pointer update, zoom, or selection.
+    expect(timed.lost).toBe(false);
+  });
+
+  test("narrow layout switches Files and the document, and Edit and Preview still switch", async ({ page }) => {
     await page.setViewportSize({ width: 800, height: 760 });
     await page.goto("/viewer.html");
     await page.waitForFunction(() => document.getElementById("lab")?.shadowRoot !== undefined);
-    const sw = await page.evaluate(() => getComputedStyle(document.querySelector(".paneswitch")).display);
-    expect(sw).not.toBe("none"); // switch is visible on narrow
-    // Default shows the editor; tapping Live shows the viewer and hides the editor.
-    await page.click('.pstab[data-pane="live"]');
-    await page.waitForTimeout(150);
-    const vis = await page.evaluate(() => ({
-      viewer: getComputedStyle(document.querySelector(".viewerPane")).display,
-      editor: getComputedStyle(document.querySelector(".editorPane")).display,
+    const start = await page.evaluate(() => ({
+      fileswitch: getComputedStyle(document.querySelector(".fileswitch")).display,
+      files: getComputedStyle(document.querySelector(".filesPane")).display,
+      stage: getComputedStyle(document.querySelector(".stage")).display,
+      editor: getComputedStyle(document.querySelector(".editor")).display,
+      viewer: getComputedStyle(document.querySelector(".viewer")).display,
     }));
-    expect(vis.viewer).not.toBe("none");
-    expect(vis.editor).toBe("none");
+    expect(start.fileswitch).not.toBe("none");
+    expect(start.files).toBe("none");
+    expect(start.stage).not.toBe("none");
+    expect(start.editor).toBe("none");
+    expect(start.viewer).toBe("none");
+    await page.click("#editTab");
+    const editing = await page.evaluate(() => getComputedStyle(document.querySelector(".editor")).display);
+    expect(editing).not.toBe("none");
+    await page.click("#previewTab");
+    await page.waitForTimeout(150);
+    const preview = await page.evaluate(() => ({
+      viewer: getComputedStyle(document.querySelector(".viewer")).display,
+      editor: getComputedStyle(document.querySelector(".editor")).display,
+    }));
+    expect(preview.viewer).not.toBe("none");
+    expect(preview.editor).toBe("none");
+    await page.click('.fileswitch .pstab[data-pane="files"]');
+    const files = await page.evaluate(() => ({
+      stage: getComputedStyle(document.querySelector(".stage")).display,
+      files: getComputedStyle(document.querySelector(".filesPane")).display,
+    }));
+    expect(files.stage).toBe("none");
+    expect(files.files).not.toBe("none");
   });
 
   test("an empty document reads as a neutral prompt, not a red error", async ({ page }) => {
     await page.goto("/viewer.html");
     await page.waitForFunction(() => document.getElementById("lab")?.shadowRoot?.querySelectorAll(".plane").length > 0);
+    await showEditor(page);
     await page.fill("#editor", "");
     await page.waitForTimeout(250);
     const r = await page.evaluate(() => ({
@@ -360,26 +647,28 @@ test.describe("viewer & editor (viewer.html)", () => {
     // A known axis is clean.
     const ok = await page.evaluate(() => window.threeMd.set('---\n3md: 1.0\naxis: time\n---\n@plane z=0\nA\n'));
     expect(ok.axisKnown).toBe(true);
-    expect(ok.mode).toBe("stack");
+    expect(ok.mode).toBe("single");
   });
 
-  test("the blend (3D) mode option is disabled for non-voxel docs, enabled for ASCII art", async ({ page }) => {
+  test("the page has no render-mode switch and does not autoplay", async ({ page }) => {
     await page.goto("/viewer.html");
     await page.waitForFunction(() => document.getElementById("lab")?.shadowRoot !== undefined);
-    // Pure-text doc: blend disabled.
-    const txt = await page.evaluate(() => {
-      window.threeMd.set('---\n3md: 1.0\naxis: time\n---\n@plane z=0\n# Hi\njust prose\n');
-      return { disabled: document.getElementById("blendOpt").disabled, voxelizable: document.getElementById("lab").voxelizable };
+    const frame = await page.evaluate(() => {
+      window.threeMd.set('---\n3md: 1.0\naxis: frame\n---\n@plane z=0\nA\n@plane z=1\nB\n');
+      const lab = document.getElementById("lab");
+      return {
+        modeSwitch: document.getElementById("modeSel"),
+        play: document.getElementById("playBtn"),
+        playing: lab.playing,
+        mode: lab.mode,
+        autoplay: lab.hasAttribute("autoplay"),
+      };
     });
-    expect(txt.voxelizable).toBe(false);
-    expect(txt.disabled).toBe(true);
-    // ASCII-art doc (a small grid): blend enabled.
-    const art = await page.evaluate(() => {
-      window.threeMd.set('---\n3md: 1.0\naxis: depth\n---\n@plane z=0\n```\n##  ##\n######\n##  ##\n```\n@plane z=1\n```\n.####.\n######\n.####.\n```\n');
-      return { disabled: document.getElementById("blendOpt").disabled, voxelizable: document.getElementById("lab").voxelizable };
-    });
-    expect(art.voxelizable).toBe(true);
-    expect(art.disabled).toBe(false);
+    expect(frame.modeSwitch).toBeNull();
+    expect(frame.play).toBeNull();
+    expect(frame.playing).toBe(false);
+    expect(frame.mode).toBe("single");
+    expect(frame.autoplay).toBe(false);
   });
 
   test("the agent schema lists error codes and the axis-to-mode map", async ({ page }) => {
@@ -395,6 +684,7 @@ test.describe("viewer & editor (viewer.html)", () => {
   test("dangling cross-plane links are flagged as a non-fatal warning", async ({ page }) => {
     await page.goto("/viewer.html");
     await page.waitForFunction(() => document.getElementById("lab")?.shadowRoot?.querySelectorAll(".plane").length > 0);
+    await showEditor(page);
     await page.fill("#editor", '---\n3md: 1.0\naxis: depth\n---\n@plane z=0\nSee [[z=9|nope]]\n@plane z=1\nB\n');
     await page.waitForTimeout(250);
     const ds = await page.evaluate(() => ({ ...document.getElementById("validBadge").dataset }));
@@ -422,6 +712,7 @@ test.describe("viewer & editor (viewer.html)", () => {
     await page.goto("/viewer.html");
     await page.waitForFunction(() => document.getElementById("lab")?.shadowRoot?.querySelectorAll(".plane").length > 0);
     // start valid (badge has data-planes), then break it
+    await showEditor(page);
     await page.fill("#editor", "axis: time\nbroken no version");
     await page.waitForTimeout(250);
     const ds = await page.evaluate(() => ({ ...document.getElementById("validBadge").dataset }));
@@ -433,6 +724,7 @@ test.describe("viewer & editor (viewer.html)", () => {
   test("an invalid document flags the offending line and the badge", async ({ page }) => {
     await page.goto("/viewer.html");
     await viewerReady(page);
+    await showEditor(page);
     await page.fill("#editor", "axis: time\n@plane z=0\nno frontmatter version");
     await page.waitForTimeout(300);
     const r = await page.evaluate(() => ({
@@ -452,4 +744,169 @@ test.describe("viewer & editor (viewer.html)", () => {
     const title = await page.evaluate(() => document.getElementById("lab").document.title);
     expect(title).toBe("Shared");
   });
+
+  test("camera buttons and keyboard orbit, zoom, and fit without changing the document", async ({ page }) => {
+    await page.goto("/viewer.html");
+    await viewerReady(page);
+    await page.waitForFunction(() => document.getElementById("cubeCanvas").dataset.renderer === "webgl2");
+    const source = await page.evaluate(() => window.threeMd.source);
+    const matrix = () => page.evaluate(() => {
+      const gl = document.getElementById("cubeCanvas").__cubeGl;
+      const program = gl.getParameter(gl.CURRENT_PROGRAM);
+      const mvp = gl.getUniform(program, gl.getUniformLocation(program, "uMvp"));
+      // Camera direction is independent of layout shifts while the web font loads.
+      return [mvp[3], mvp[7], mvp[11]];
+    });
+    const initial = await matrix();
+    await page.locator("#cubeCanvas").press("ArrowRight");
+    expect(await matrix()).not.toEqual(initial);
+    await page.getByRole("button", { name: "Zoom in", exact: true }).click();
+    await expect(page.locator("#cubeZoom")).toHaveText("115%");
+    await page.locator("#cubeCanvas").press("-");
+    await expect(page.locator("#cubeZoom")).toHaveText("100%");
+    await page.locator("#cubeCanvas").press("Home");
+    expect(await matrix()).toEqual(initial);
+    for (let i = 0; i < 12; i++) await page.locator("#cubeCanvas").press("+");
+    await expect(page.locator("#cubeZoom")).toHaveText("320%");
+    await expect(page.locator("#cubeZoomIn")).toBeDisabled();
+    await page.getByRole("button", { name: "Fit", exact: true }).click();
+    expect(await matrix()).toEqual(initial);
+    expect(await page.evaluate(() => window.threeMd.source)).toBe(source);
+  });
+
+  test("phone layout leaves room for cubes and keeps controls outside the drawing", async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto("/viewer.html");
+    await viewerReady(page);
+    for (const size of [{ width: 390, height: 844 }, { width: 320, height: 740 }]) {
+      await page.setViewportSize(size);
+      const geometry = await page.evaluate(() => {
+        const canvas = document.getElementById("cubeCanvas").getBoundingClientRect();
+        const tools = document.getElementById("cubeTools").getBoundingClientRect();
+        return { height: canvas.height, bottom: canvas.bottom, toolsTop: tools.top, toolsBottom: tools.bottom,
+          width: document.body.scrollWidth, viewWidth: innerWidth, viewHeight: innerHeight };
+      });
+      expect(geometry.height).toBeGreaterThan(180);
+      expect(geometry.toolsTop).toBeGreaterThanOrEqual(geometry.bottom - 1);
+      expect(geometry.toolsBottom).toBeLessThan(geometry.viewHeight);
+      expect(geometry.width).toBeLessThanOrEqual(geometry.viewWidth);
+      await page.click("#documentMenu summary");
+      await expect(page.locator("#kind2Btn")).toBeVisible();
+      await page.locator("#documentMenu summary").press("Escape");
+    }
+  });
+
+  test("Document disclosure dismisses with Escape and both downloads preserve the document", async ({ page }) => {
+    await page.goto("/viewer.html");
+    await viewerReady(page);
+    const original = await page.evaluate(() => window.threeMd.source);
+    const originalDoc = await page.evaluate(() => window.threeMd.document);
+    await page.locator("#documentMenu summary").press("Enter");
+    await expect(page.locator("#dlBtn")).toBeVisible();
+    await page.locator("#dlBtn").press("Escape");
+    await expect(page.locator("#dlBtn")).toBeHidden();
+    await expect(page.locator("#documentMenu summary")).toBeFocused();
+    const { readFile } = await import("node:fs/promises");
+    for (const [button, filename] of [["#dlBtn", "small-sculpture.3md"], ["#kind2Btn", "small-sculpture.3mdb"]]) {
+      await page.click("#documentMenu summary");
+      const downloadEvent = page.waitForEvent("download");
+      await page.click(button);
+      const download = await downloadEvent;
+      expect(download.suggestedFilename()).toBe(filename);
+      const bytes = await readFile(await download.path());
+      const source = button === "#dlBtn" ? bytes.toString("utf8") : await page.evaluate(
+        (data) => window.threeMdOpen.openBytes(new Uint8Array(data)).text, Array.from(bytes));
+      if (button === "#dlBtn") expect(source).toBe(original);
+      else {
+        // Binary decoding returns canonical text; compare parsed fields and plane bodies.
+        const decoded = await page.evaluate((text) => { window.threeMd.set(text); return window.threeMd.document; }, source);
+        expect(decoded).toEqual(originalDoc);
+        await page.evaluate((text) => window.threeMd.set(text), original);
+      }
+      await expect(page.locator("#documentMenu")).not.toHaveAttribute("open", "");
+    }
+    await showEditor(page);
+    await page.locator("#editor").focus();
+    const saved = page.waitForEvent("download");
+    await page.keyboard.press(process.platform === "darwin" ? "Meta+s" : "Control+s");
+    await saved;
+    await expect(page.locator("#editor")).toBeFocused();
+  });
+
+  test("a prose document offers Preview without replacing its source", async ({ page }) => {
+    await page.goto("/viewer.html");
+    await viewerReady(page);
+    const source = "---\n3md: 1.0\naxis: time\ntitle: Reading notes\n---\n@plane z=0\n# A useful note\nLong-form text is readable here.\n";
+    await page.evaluate((value) => window.threeMd.set(value), source);
+    await expect(page.locator("#cubesEmpty")).toBeVisible();
+    await expect(page.locator("#cubeTools")).toBeHidden();
+    await page.click("#cubePreview");
+    await expect(page.locator("#stage")).toHaveAttribute("data-show", "preview");
+    expect(await page.evaluate(() => window.threeMd.source)).toBe(source);
+    await page.locator("#previewTab").press("End");
+    await expect(page.locator("#cubesTab")).toBeFocused();
+    await page.click("#cubeSample");
+    await expect(page.locator("#documentTitle")).toHaveText("Small sculpture");
+    await expect(page.locator("#cubesEmpty")).toBeHidden();
+    await expect(page.locator("#cubeZoom")).toHaveText("100%");
+  });
+
+  test("slice navigation keeps the selected plane in a single scrolling row", async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto("/viewer.html");
+    await viewerReady(page);
+    const planes = Array.from({ length: 30 }, (_, i) => `@plane z=${i} label="Slice ${i}"\n\`\`\`\n#\n\`\`\``).join("\n");
+    await page.evaluate((source) => window.threeMd.set(source), `---\n3md: 1.0\naxis: layer\n---\n${planes}`);
+    await page.locator("#outline .ochip").first().press("End");
+    expect(await page.evaluate(() => document.getElementById("lab").currentIndex)).toBe(29);
+    const outline = await page.evaluate(() => {
+      const row = document.getElementById("outline"), selected = row.querySelector('[aria-current="true"]');
+      const bounds = row.getBoundingClientRect(), chip = selected.getBoundingClientRect();
+      return { left: chip.left, right: chip.right, rowLeft: bounds.left, rowRight: bounds.right,
+        tabStops: [...row.children].filter((button) => button.tabIndex === 0).length, height: bounds.height };
+    });
+    expect(outline.left).toBeGreaterThanOrEqual(outline.rowLeft);
+    expect(outline.right).toBeLessThanOrEqual(outline.rowRight);
+    expect(outline.tabStops).toBe(1);
+    expect(outline.height).toBeLessThan(60);
+    await page.locator("#outline .ochip").last().press("Home");
+    expect(await page.evaluate(() => document.getElementById("lab").currentIndex)).toBe(0);
+  });
+
+  test("a GitHub load shows busy state and recovers after a rate limit", async ({ page }) => {
+    let release;
+    const response = new Promise((resolve) => { release = resolve; });
+    await page.route("https://api.github.com/**", async (route) => {
+      await response;
+      await route.fulfill({ status: 429, contentType: "application/json", body: '{"message":"rate limit"}' });
+    });
+    await page.goto("/viewer.html");
+    await viewerReady(page);
+    await page.fill("#pointInput", "CorvidLabs/3md");
+    await page.click("#pointForm button");
+    await expect(page.locator("#pointForm")).toHaveAttribute("aria-busy", "true");
+    await expect(page.locator("#pointForm button")).toBeDisabled();
+    release();
+    await expect(page.locator("#status")).toContainText(/rate.limit/i);
+    await expect(page.locator("#pointForm")).toHaveAttribute("aria-busy", "false");
+    await expect(page.locator("#pointForm button")).toBeEnabled();
+    await expect(page.locator("#pointInput")).toBeEditable();
+  });
+
+  test("GPU unavailability explains how to keep reading in Preview", async ({ page }) => {
+    await page.addInitScript(() => {
+      const context = HTMLCanvasElement.prototype.getContext;
+      HTMLCanvasElement.prototype.getContext = function (type, ...args) {
+        return type === "webgl2" ? null : context.call(this, type, ...args);
+      };
+    });
+    await page.goto("/viewer.html");
+    await viewerReady(page);
+    await expect(page.locator("#cubeEmptyText")).toContainText("WebGL2");
+    await expect(page.locator("#cubeSample")).toBeHidden();
+    await page.click("#cubePreview");
+    await expect(page.locator("#stage")).toHaveAttribute("data-show", "preview");
+    expect(await page.evaluate(() => document.getElementById("lab").document.title)).toBe("Small sculpture");
+  });
+
 });

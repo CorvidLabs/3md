@@ -1,6 +1,6 @@
 ---
 module: ThreeMDViewer
-version: 2
+version: 8
 status: active
 files:
   - web/viewer.html
@@ -23,9 +23,9 @@ depends_on:
 
 ## Purpose
 
-ThreeMDViewer is the hosted and local viewer page. It presents files, source, and the live plane view. It opens a public GitHub repo, folder, or file, or a file or folder from this computer. Search reads every opened line and opens that plane. Markdown headings become planes. Opened files pack into one text document, and that document downloads as uncompressed kind 2.
+ThreeMDViewer is the hosted and local viewer page. Files stay on the left. Edit, the plane preview, and Cubes share the panel beside them. One is visible at a time, and Cubes is the default, inside the window. The opening document is a small sculpture. Below 900px, Files and the document take turns. The page does not offer a render-mode switch and does not autoplay. Preview stays on one plane. Cubes draws a fenced character grid with Sculpt-style lit, translucent glyph fill and visible edges. Gold edges mark the selected Z slice without repainting its fill. The page opens a public GitHub repo, folder, or file, or a file or folder from this computer. Search reads every opened line and opens that plane. Markdown headings become planes. Opened files pack into one text document, and that document downloads as uncompressed kind 2.
 
-The `<three-md>` element stays a text renderer. Decode, composition, linked folders, GitHub fetch, search, sections, pack, and kind 2 download belong to this page. The ThreeMD library stays free of filesystem and network I/O. Human intent for this page is VIEWER-6 in `hi/tools.md`.
+The `<three-md>` element stays a text renderer. Decode, composition, linked folders, GitHub fetch, search, sections, pack, and kind 2 download belong to this page. The compact workspace gives the stage room on desktop and phone screens. The document title stays visible, insert tools appear in Edit, and the Document disclosure holds export and conversion actions. Fit, zoom buttons, keyboard camera control, and a scrolling slice row make the cube stage usable without a mouse. A document without a grid offers Preview. The ThreeMD library stays free of filesystem and network I/O. Human intent for this page is VIEWER-6 in `hi/tools.md`.
 
 ## Public API
 
@@ -33,7 +33,7 @@ The `<three-md>` element stays a text renderer. Decode, composition, linked fold
 
 | Name | Description |
 |------|-------------|
-| `viewer.html` | Files, source, and the live `<three-md>` view. The point field takes a public GitHub locator. Open file, open folder, and drop read local bytes. |
+| `viewer.html` | Files on the left. Edit, Preview, and Cubes share one panel and switch. Preview is the `<three-md>` element held on one plane. Cubes is a page WebGL2 stage. The point field takes a public GitHub locator. Open file, open folder, and drop read local bytes. |
 | `open-document.js` | The browser bundle built from `web/open-document.ts`. The page imports it. The element bundle stays `web/assets/three-md.js`. |
 
 ### Exported functions
@@ -68,14 +68,23 @@ The `<three-md>` element stays a text renderer. Decode, composition, linked fold
 
 ## Invariants
 
-1. The page shows files, source, and the live plane view. Below 900px those are Files, Source, and Live tabs.
+1. Files stay on the left. Edit, the plane preview, and Cubes share one panel, one is visible at a time, and Cubes is the default. The opening document is a small sculpture, and its cubes are inside the window. Below 900px, Files and the document take turns. The page does not switch render modes and does not autoplay. Choosing Preview renders the live plane view and holds it on one plane. Choosing Cubes draws a fenced character grid as lit cubes on a dark GPU stage. Web fill uses 0.5 opacity for visible faces under browser blending, compared with Sculpt’s native 0.35; glyph edges use 0.4, and selected edges use gold rgb(1, 0.79, 0.44) at 0.8. The background is rgb(0.065, 0.085, 0.10). All six cube faces are wound outward, back faces are culled, and faces shared with occupied neighbors are suppressed as in Sculpt. The cell scale is 0.98. X is the column, Y is the row with row 0 toward the top, and Z is the plane index. Orbit, zoom, and selection update camera or selection uniforms with one instanced draw, without scanning the document or uploading geometry. Click picking intersects full cube bounds and chooses the nearest hit. The camera follows Sculpt’s distance and scale with a fit margin that keeps complete cubes inside the pane. The status bar shows the caret, the axis, and the cube count. The element stays a text renderer.
 2. A public GitHub locator is accepted only when the host is `github.com`, `www.github.com`, or `raw.githubusercontent.com`, or when the input is an `owner/repo` name. A host string elsewhere in the URL is not a match.
 3. A public load skips `node_modules`, keeps at most 400 files, and skips a file larger than 1.5 MB. The line index keeps at most 12,000 rows.
 4. Search opens the plane for the chosen line.
 5. Markdown headings become planes. Opened files pack into one text document. Kind 2 download writes uncompressed kind 2.
 6. Apple LZFSE is refused. The element stays a text renderer. The library stays free of filesystem and network I/O.
+7. The workspace SHALL keep infrequent export and conversion actions in the Document disclosure, show insert tools only in Edit, and show the document title in every view. Tabs and the single-row plane outline SHALL provide one tab stop per group, with arrow, Home, and End navigation. Fit SHALL restore yaw 0.6, pitch 0.35, and zoom 1 without changing source or the selected slice. Camera buttons and the focused canvas SHALL support bounded zoom, and arrow keys SHALL orbit the focused canvas. Camera controls SHALL sit below the drawing without covering cubes. A document without a cube grid and an unavailable WebGL2 context SHALL offer Preview while preserving the source. The Document disclosure closes after an action, outside click, or Escape; Escape returns focus to its summary. The source download shortcut keeps focus in Edit. GitHub open exposes a busy state, prevents duplicate submits, and recovers its controls even on failure. Zoom is bounded from 0.45 to 3.2. Camera controls use the canvas dimensions for framing and occupy a separate strip below it.
+
+The cube input keeps at most 12 distinct non-space characters, at most 64 columns and 64 rows per plane, and at most 4000 occupied cells. Space, dot, and tab are empty. Cube painting and erasing into source, 256 cubed volumes, sparse worlds, OBJ export, and changes to Sculpt are outside this pass. The page does not rebuild the element or open-document bundles.
 
 ## Behavioral Examples
+
+### Scenario: Switch Edit and Preview
+
+- **Given** the page at a desktop width
+- **When** the reader chooses Preview, then Edit
+- **Then** Preview shows the live plane view and hides the editor, then Edit shows the editor and hides the preview, and files stay visible
 
 ### Scenario: Open a public repo
 
@@ -125,3 +134,11 @@ The `<three-md>` element stays a text renderer. Decode, composition, linked fold
 |------|--------|--------|
 | 2026-10-09 | ThreeMDViewer change | Add the page contract for files, source, live view, public GitHub open, line search, sections, pack, and kind 2 download. |
 | 2026-10-10 | SpecSync | cover-the-github-style-viewer-page-in-the-spec-the-page-is-files-source-and-the-live-plane-view-it-opens-a-public: Cover the GitHub-style viewer page in the spec. The page is files, source, and the live plane view. It opens a public GitHub repo, folder, or file, or a local file or folder. Search reads every line and opens that plane. Markdown headings become planes. Opened files pack into one text document and download as uncompressed kind 2. The three-md element stays a text renderer. |
+| 2026-10-10 | ThreeMDViewer change | Edit and Preview share one panel and switch. Files stay on the left. Below 900px, Files and the document take turns. |
+| 2026-10-10 | ThreeMDViewer change | Add a Sculpt-style cube stage beside Edit and Preview, and a status bar for the caret, axis, and cube count. |
+| 2026-10-10 | ThreeMDViewer change | Remove the render-mode switch and autoplay. Draw the cube stage with WebGL2 so about 1400 cubes stay interactive. |
+| 2026-10-10 | ThreeMDViewer change | Open on the cube stage. The starter document is a small sculpture, and those cubes sit inside the window. |
+| 2026-10-10 | ThreeMDViewer change | Keep one WebGL2 context. The bitmap size is set before the context is created so Safari does not drop it. |
+| 2026-10-10 | ThreeMDViewer change | Draw every cube face. Each cell is a solid cube. |
+| 2026-10-09 | agent:codex | Match Sculpt fill, glyph edges, gold selected-slice edges, background, document axes, and camera framing; retain one instanced draw and geometry reuse. |
+| 2026-10-09 | agent:codex | Compact the workspace, group document actions, add Fit and accessible camera/slice controls, and clarify empty and loading states under Leif’s request to continue improving UI and UX. The layout definition remains an unapproved draft. |
