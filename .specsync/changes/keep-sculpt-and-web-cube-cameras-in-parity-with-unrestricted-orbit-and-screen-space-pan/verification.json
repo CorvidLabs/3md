@@ -1,13 +1,13 @@
 {
-  "timestamp": 1791648091,
-  "commit": "fbfb7a5a97f155744383b3282ec00f363c4ee874",
+  "timestamp": 1791649340,
+  "commit": "78adcebf93640b18771d17b9726afeb6e15c845a",
   "contract_digest": "c2c55f58dfdb8194f5d97358776f7e3321fbbb3fc6a127b3a990cc625f0cfcab",
   "execution_digest": "2bb9d898086382e584700b0f1790c04fa97f14a030ffa1d3bc9df50113287a57",
-  "workspace_digest": "1fe89875c5f9e17b3f56b2e358519c256a4f2c83f55f5d95221dabd8b5a8ce0c",
+  "workspace_digest": "94bd7478dfb8735a51286b1c04445028dc910df8754b57775bc06773797a4420",
   "passed": true,
   "commands": [
     {
-      "command": "specsync check --spec ThreeMDViewer --strict",
+      "command": "specsync check --spec ThreeMDViewer",
       "success": true,
       "exit_code": 0
     }
