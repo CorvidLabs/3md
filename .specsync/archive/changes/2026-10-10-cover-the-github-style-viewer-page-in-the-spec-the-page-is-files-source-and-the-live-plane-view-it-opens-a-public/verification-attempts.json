@@ -1,0 +1,226 @@
+{
+  "schema_version": 1,
+  "attempts": [
+    {
+      "timestamp": 1791593205,
+      "commit": "84307639c2f24f6a23418a2b712f52a1d5b37551",
+      "contract_digest": "ab31ab533facfd4edea86e81c683133d78da5984b03657295bb6bd49a0e3fd3b",
+      "execution_digest": "055f972288605b1771472a249629798ed21554b19e33adb84ecd01ce1c2290e8",
+      "workspace_digest": "69090f4de523d8ea774b38210a41c8a0bfef30d1c9e6b9a3f2a16396b89ea411",
+      "passed": true,
+      "commands": [
+        {
+          "command": "specsync check --spec ThreeMDViewer",
+          "success": true,
+          "exit_code": 0
+        }
+      ],
+      "requirement_ids": [
+        "REQ-ThreeMDViewer-001",
+        "REQ-ThreeMDViewer-002"
+      ]
+    },
+    {
+      "timestamp": 1791593250,
+      "commit": "84307639c2f24f6a23418a2b712f52a1d5b37551",
+      "contract_digest": "ab31ab533facfd4edea86e81c683133d78da5984b03657295bb6bd49a0e3fd3b",
+      "execution_digest": "055f972288605b1771472a249629798ed21554b19e33adb84ecd01ce1c2290e8",
+      "workspace_digest": "69090f4de523d8ea774b38210a41c8a0bfef30d1c9e6b9a3f2a16396b89ea411",
+      "passed": true,
+      "commands": [
+        {
+          "command": "specsync check --spec ThreeMDViewer",
+          "success": true,
+          "exit_code": 0
+        }
+      ],
+      "requirement_ids": [
+        "REQ-ThreeMDViewer-001",
+        "REQ-ThreeMDViewer-002"
+      ]
+    },
+    {
+      "timestamp": 1791593363,
+      "commit": "76e2b3f68ada87374d811db2be0af5087f96f318",
+      "contract_digest": "ab31ab533facfd4edea86e81c683133d78da5984b03657295bb6bd49a0e3fd3b",
+      "execution_digest": "055f972288605b1771472a249629798ed21554b19e33adb84ecd01ce1c2290e8",
+      "workspace_digest": "69090f4de523d8ea774b38210a41c8a0bfef30d1c9e6b9a3f2a16396b89ea411",
+      "passed": true,
+      "commands": [
+        {
+          "command": "specsync check --spec ThreeMDViewer",
+          "success": true,
+          "exit_code": 0
+        }
+      ],
+      "requirement_ids": [
+        "REQ-ThreeMDViewer-001",
+        "REQ-ThreeMDViewer-002"
+      ]
+    },
+    {
+      "timestamp": 1791593381,
+      "commit": "51bdf343f458bdbd10e530be200921f193506841",
+      "contract_digest": "ab31ab533facfd4edea86e81c683133d78da5984b03657295bb6bd49a0e3fd3b",
+      "execution_digest": "055f972288605b1771472a249629798ed21554b19e33adb84ecd01ce1c2290e8",
+      "workspace_digest": "69090f4de523d8ea774b38210a41c8a0bfef30d1c9e6b9a3f2a16396b89ea411",
+      "passed": true,
+      "commands": [
+        {
+          "command": "specsync check --spec ThreeMDViewer",
+          "success": true,
+          "exit_code": 0
+        }
+      ],
+      "requirement_ids": [
+        "REQ-ThreeMDViewer-001",
+        "REQ-ThreeMDViewer-002"
+      ]
+    },
+    {
+      "timestamp": 1791593381,
+      "commit": "418acbc17c43b7fac48a16b22e1a195e077b6a81",
+      "contract_digest": "ab31ab533facfd4edea86e81c683133d78da5984b03657295bb6bd49a0e3fd3b",
+      "execution_digest": "055f972288605b1771472a249629798ed21554b19e33adb84ecd01ce1c2290e8",
+      "workspace_digest": "69090f4de523d8ea774b38210a41c8a0bfef30d1c9e6b9a3f2a16396b89ea411",
+      "acceptance_input_digest": "e5d5d76ab40f63ae4bca76b35c0c626f0e7d78e13962608bebcbc3ea3fd397fc",
+      "acceptance_manifest": {
+        "schema_version": 1,
+        "entries": [
+          {
+            "path": "hi/tools.md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "a8376d68260dd7ba2e158a60235d45a20ca873d40d10c9f395165520173a3d68",
+            "entry_digest": "3b46fcb659389edbe69be1b558fd02b39d1778d4a4d0d966582469921a7fcfb2",
+            "owners": [
+              "@exact:delivery"
+            ]
+          },
+          {
+            "path": "specs/ThreeMDViewer/ThreeMDViewer.spec.md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "92d77202d93fc06d7cd980d5043942195d6346575673c31a809219118b8c8a90",
+            "entry_digest": "81e01ceaf30b9a560002c703d85a96369aa7d90873fcf02ecf5465e04056e7f5",
+            "owners": [
+              "ThreeMDViewer"
+            ]
+          },
+          {
+            "path": "specs/ThreeMDViewer/context.md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "c9b8fe3c0e8e5e376e7015b13de593c2dd82ef3b637c9eeb504cfb9f08fd6d5a",
+            "entry_digest": "84cbe353b32609accc6a08f0947ad7f7dbb587604423cd5201ed5965ea992d93",
+            "owners": [
+              "ThreeMDViewer"
+            ]
+          },
+          {
+            "path": "specs/ThreeMDViewer/requirements.md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "d4ea7b71af81d7c8957d50ec72bb7b0ccdf4edad0302b779fb38610f7940f70d",
+            "entry_digest": "11abfb8fb5ae4a878d2b07f95e66c705a4637c556a51abc3c0c2b8525726ec71",
+            "owners": [
+              "ThreeMDViewer"
+            ]
+          },
+          {
+            "path": "specs/ThreeMDViewer/tasks.md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "3a1a08168c213069f3a59155441c4f74639b2b10308cb3d008053c21910aa80b",
+            "entry_digest": "1a0f92e41ab6904074793351a69c8e18893f81480f4cd4c5ad95691cc97c3066",
+            "owners": [
+              "ThreeMDViewer"
+            ]
+          },
+          {
+            "path": "specs/ThreeMDViewer/testing.md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "99a310362f78f329ba64d0ab05e773202bfbe1236b9d2237e6333fc903aa94e3",
+            "entry_digest": "abe665519f4ce70f9bf5c7da2aea95b6da8bd1bc75854910025e1d3d5dc7a95e",
+            "owners": [
+              "ThreeMDViewer"
+            ]
+          },
+          {
+            "path": "uitests/viewer.spec.mjs",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "0ac4ca97b9fdee939ed736e1760c799877137f7261aeb585e1d6be0c5eba77fd",
+            "entry_digest": "77d81d8fe8516156bc360fd0b816d3014063b91c52b76baf5b168783e2efbdc1",
+            "owners": [
+              "ThreeMDViewer"
+            ]
+          },
+          {
+            "path": "web/assets/open-document.js",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "0a1777b97ee5b8fa568a8043b03911f7a3ae2269ec917aabacecabf020b8b7cd",
+            "entry_digest": "a8a85e3318303f781148b6909a5ec6207880a0aa0898cf97dd73745a451dd3c0",
+            "owners": [
+              "ThreeMDViewer"
+            ]
+          },
+          {
+            "path": "web/gather.ts",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "4bee8b89c903e423a71a7a07350f96f5e8491af1255e1387a7ef0dba8296914f",
+            "entry_digest": "966d2235d9f5ee9c94920076b6d94663209060e124af36764e8bbff0d3566b79",
+            "owners": [
+              "ThreeMDViewer"
+            ]
+          },
+          {
+            "path": "web/github-source.ts",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "e15fb8d61ec6ca661d54a7f57a5bf4c16b966fc4732144a67e00569f37ce43d8",
+            "entry_digest": "87610f036f20796ac82618d3f3b9757d38b51ca50e8f873b49f30d16d466d97a",
+            "owners": [
+              "ThreeMDViewer"
+            ]
+          },
+          {
+            "path": "web/open-document.ts",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "e3af326ed9913f257091ffac00b4a0a6f223256a34f73550ba55c9618b5f5e48",
+            "entry_digest": "192a136c7f24f5f0f3ec6750dba28500c586f7d4c03fac5d90941ac5423c4557",
+            "owners": [
+              "ThreeMDViewer"
+            ]
+          },
+          {
+            "path": "web/viewer.html",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "98beb54dd8f68e41ebb4d9e541c273b796f6021afcd7143144e7bcb81d76e223",
+            "entry_digest": "0e2a11b81bc744af4cfa0bb02e2740dc51a172f81d69c9b04af7b178b6da9e0f",
+            "owners": [
+              "ThreeMDViewer"
+            ]
+          }
+        ]
+      },
+      "passed": true,
+      "commands": [
+        {
+          "command": "specsync check --spec ThreeMDViewer",
+          "success": true,
+          "exit_code": 0
+        }
+      ],
+      "requirement_ids": [
+        "REQ-ThreeMDViewer-001",
+        "REQ-ThreeMDViewer-002"
+      ]
+    }
+  ]
+}

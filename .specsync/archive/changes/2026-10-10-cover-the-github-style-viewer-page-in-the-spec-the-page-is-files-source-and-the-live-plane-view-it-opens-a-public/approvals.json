@@ -1,0 +1,52 @@
+{
+  "approvals": [
+    {
+      "gate": "definition",
+      "actor": "user:0xLeif",
+      "timestamp": 1791593036,
+      "digest": "ab31ab533facfd4edea86e81c683133d78da5984b03657295bb6bd49a0e3fd3b",
+      "note": "Leif approved the ThreeMDViewer definition in chat on 2026-10-09.",
+      "approved_scope": {
+        "schema_version": 1,
+        "change_id": "cover-the-github-style-viewer-page-in-the-spec-the-page-is-files-source-and-the-live-plane-view-it-opens-a-public",
+        "title": "Cover the GitHub-style viewer page in the spec. The page is files, source, and the live plane view. It opens a public GitHub repo, folder, or file, or a local file or folder. Search reads every line and opens that plane. Markdown headings become planes. Opened files pack into one text document and download as uncompressed kind 2. The three-md element stays a text renderer.",
+        "description": "Cover the GitHub-style viewer page in the spec. The page is files, source, and the live plane view. It opens a public GitHub repo, folder, or file, or a local file or folder. Search reads every line and opens that plane. Markdown headings become planes. Opened files pack into one text document and download as uncompressed kind 2. The three-md element stays a text renderer.",
+        "kind": "feature",
+        "affected_specs": [
+          "ThreeMDViewer"
+        ],
+        "affected_paths": [
+          "hi/tools.md",
+          "uitests/viewer.spec.mjs",
+          "web/assets/open-document.js",
+          "web/gather.ts",
+          "web/github-source.ts",
+          "web/open-document.ts",
+          "web/viewer.html"
+        ],
+        "no_spec_change": false,
+        "no_spec_change_rationale": null,
+        "acceptance_criteria": [
+          "The spec states files, source, and live view; a public GitHub repo, folder, or file; a local file or folder; every-line search that opens that plane; section planes; pack; kind 2 download; and the element stays a text renderer. Evidence is the existing bun tests and the Playwright viewer spec."
+        ],
+        "dependencies": [],
+        "supersedes": [],
+        "answers": {
+          "architecture_risk": "yes",
+          "public_contract": "yes"
+        }
+      },
+      "approved_delta_digests": {
+        "ThreeMDViewer": "54ec3df41768008553f06ed72d095860f86d4b78c34e4a3bbec0c3519fe5e1dc"
+      }
+    },
+    {
+      "gate": "finalization",
+      "actor": "specsync:finalization",
+      "timestamp": 1791593998,
+      "digest": "22f4565d7cebd91076fcbf515b84c438131ac309368cd1fb193bf39ad0cdc17a",
+      "note": "Same-PR finalization closing digest"
+    }
+  ],
+  "reopenings": []
+}
