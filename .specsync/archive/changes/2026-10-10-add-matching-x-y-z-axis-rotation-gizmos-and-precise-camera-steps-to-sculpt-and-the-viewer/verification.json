@@ -1,0 +1,1214 @@
+{
+  "timestamp": 1791655884,
+  "commit": "60055f7806a4d46964b766672784be45713e3c3a",
+  "contract_digest": "4b6d4eb372c26f296d08a35c4242b772ba7f537d690b3ac81723034860824618",
+  "execution_digest": "da242228adc07b4a8a41fc7d90d24f0e9d3d8dd459769a1a72c8cd55aa49ff8f",
+  "workspace_digest": "fde013fc78a6110e0c0b88de16f5f6e7522e6561a06c0a5c5fd273d884ed5278",
+  "acceptance_input_digest": "75c60a31bc1b305db3d7f15f76d65654d7a80eea3669ed8ed768701654a163a0",
+  "acceptance_manifest": {
+    "schema_version": 1,
+    "entries": [
+      {
+        "path": "apps/sculpt/Sources/RookApp/SculptureViewport.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "8d5ab6c914e03d60dadc58a3e8b6d4f595a261b1e032c46cc0cdbd0597757e45",
+        "entry_digest": "24442eef4a7215ed811720b44e4f3014ac30df390846447f342ebe7b9d94ff1d",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "apps/sculpt/Sources/RookRendering/SculptureLiveVoxelView.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "610272100afb40b290302e64c8cf72544b67f3c2cee3543b292f796531c9750e",
+        "entry_digest": "210439bcd02c86c1940dbec87538b50db5a465257538913389cb8d82d767fe6c",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "apps/sculpt/Sources/RookRendering/SculptureVoxelGeometry.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "24c096ecd359193366e02097643561e28fb3ff422e1fafda1661dbf0f706eb86",
+        "entry_digest": "b2ff90dc0d60eeb4fdc2983e7c2a13382859ab24164d5d355787aaf98bbe6807",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "apps/sculpt/Sources/RookSculpture/SculptureProjection.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "d98745e56609642d7c65369aa67f251d82c3c6089199cd6a2bcc9b1fc928c8d4",
+        "entry_digest": "22f5d1bb30035cd28eea2c7ed2df463a4ecd679601edeacc7f3e591b9485e267",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "apps/sculpt/Tests",
+        "kind": "non_file",
+        "mode": 0,
+        "payload_digest": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "entry_digest": "094f12e742e15c4721c78566d011dd8f2dacfdf163828f9b9e12e6dbbfab2764",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "apps/sculpt/Tests/RookAppTests/AppearanceTests.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "bb460ca170501c02f7e413b1c85c41f0decef55aba4ea735f32c226c36e894e5",
+        "entry_digest": "ff7f1cf01c86f9e9c1964067854027d5bd8ef674a0894206b189c97a0520df23",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "apps/sculpt/Tests/RookAppTests/LayerGridGeometryTests.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "6645f57ab9861bcab490fd53808b6a178c57ae6833e51f4575c31c95f641ef46",
+        "entry_digest": "abc7fbc1e12be39495e89853bcdaab5cec35152d1d0e48d8c1828c3755e6ded1",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "apps/sculpt/Tests/RookAppTests/LayerGridScrollPresentationTests.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "1533740a7d0e2347a50bc5ac3ac8ba08037dbc8ac7e3b3c50c022b53f49a765c",
+        "entry_digest": "a5134e75f1746ab129d9f84012691cc39727df27949a5bce4c6e65ba6d75fa16",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "apps/sculpt/Tests/RookAppTests/SculptureCanvasPointerTests.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "2eeb532f40db634a0674a94857aed000224be0526de24fc72a000a2570991883",
+        "entry_digest": "7e2b1210b7a3eb39e7ebcd1a03d4307a65b2fff0f6181e1ba4be83eb0bc2d5cb",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "apps/sculpt/Tests/RookAppTests/SculptureCommandFocusTests.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "25fb256f29a8991b87e65f09b8caad37711390bf5c7f31da242bbffc13001576",
+        "entry_digest": "29bbd13e54d55add0704a17c81ad8da3609d7edac595fd6d499105e2e038d9ed",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "apps/sculpt/Tests/RookAppTests/SculptureCompositionEditorTests.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "19bb8062f643d384cdee5e768ed856c9d6b7331980d5987164adbb2973027e3f",
+        "entry_digest": "d733318c97c4ee44e5ae4376cecff5a69567703d854230b84167bbad055aaad2",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "apps/sculpt/Tests/RookAppTests/SculptureEditorPresentationTests.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "ded50853676c0ad3bd625c55d4aaca9769c8e803a04f38ada6c59ae2f49fb095",
+        "entry_digest": "c75be12388c9fd7c9406e1c524e6d6a339092527fd75575a70927918d22f385d",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "apps/sculpt/Tests/RookAppTests/SculptureExportJobTests.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "0101679374acf6525820313028313573b49605c068286d1923b7c3d6986ed675",
+        "entry_digest": "54c858f1e9b793276d3fa7f1b6f2d4249830ab1229f46f3fed4f48e406706616",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "apps/sculpt/Tests/RookAppTests/SculptureGalleryBrowserTests.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "59dcb942153a452120eeabe743a971fa707032ed422b24db19876238f3747b6b",
+        "entry_digest": "2280e89bb09b6dc17012fea72e1a3bda59c7e1d0504039430317ece2ee21a115",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "apps/sculpt/Tests/RookAppTests/SculptureGraphSaveJobTests.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "b3c9b2b8bbf482a27161aef9d1ad0bd161353678319ecfc7e833655b6673276c",
+        "entry_digest": "62c72b46d143f2d230e7e291b4c5c4f5517666e1459fe3181f507c65624db824",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "apps/sculpt/Tests/RookAppTests/SculptureInsertionDiscoveryTests.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "18c78362b45c16063ca9cf888e6376ec1bc56872a2e95261257f7fbe7b363f9b",
+        "entry_digest": "9057cc0eecaffe749a2c592b04ee299624a3a791c8f6e89e9952ca49b3a5187f",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "apps/sculpt/Tests/RookAppTests/SculptureInsertionDraftTests.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "5efc2d96cdbd08514532647eaa7ca762152f211e99665955f0d081f1478a0d72",
+        "entry_digest": "c93a1807c59024d7836c48968f603168ae5abf5c18754ce75638beb38999d446",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "apps/sculpt/Tests/RookAppTests/SculptureInsertionRepairTests.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "6b0fa86e435c43766b7ede2207afc87f460236138c8deaf5b267ac016214a2b1",
+        "entry_digest": "854eb3a494a8844e8db408b7ea4f42304e8863fea8122776957f6d90da0585c4",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "apps/sculpt/Tests/RookAppTests/SculptureLinkedConfinementTests.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "5b1ec9e5b39bdd52833a9003a62cf63f5c1e88896fce4962120345af7f868849",
+        "entry_digest": "26d045fd6441c6c932b8497303ba52a107129baedddf46c32d26db5eb2cc8800",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "apps/sculpt/Tests/RookAppTests/SculptureLinkedInsertionTests.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "e8947fbf69251f81c231f8c2936cfdf8558d8240399ab16369c7bee07b78b2de",
+        "entry_digest": "80649740dee2b7daf7858ad82f009827d83084e20672f2e08768b08df523e563",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "apps/sculpt/Tests/RookAppTests/SculptureLinkedPresentationTests.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "d703a36c7eaac77ef95251a924e5f2275a9d1fc2874d053816590d700bb79bb4",
+        "entry_digest": "bc53d1a4d3030610a40da15cef40c1e4fb4ec8492dc278ac44c285e940ef9797",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "apps/sculpt/Tests/RookAppTests/SculptureLinkedSessionTests.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "afb46a2e240b948ea168b80d3b918090908db29b0e42d14fa17e689862dfb9b0",
+        "entry_digest": "9de38710e6bcac83215b68343eaa1fdec0e42ca5310fd9899ce9d3edee188e16",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "apps/sculpt/Tests/RookAppTests/SculptureLinkedTestProject.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "c8e07629a75cb25558958ac0ab6de0a383f3962f4f9ef9d53623de8a790251c5",
+        "entry_digest": "39ca31385c1dc4f6ce086f4edefa4a2fdaf229d7212db2819ec4c0dd886a5db5",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "apps/sculpt/Tests/RookAppTests/SculptureMeshRevisionTests.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "49950faf4516bdbb9f46d1d6382b12e50f2e1e50cb19b24786b9f24b17ef237d",
+        "entry_digest": "7ba09620fe295e049072120b8295ff92f7b1637701d435a4a3318a8a9ee6aaee",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "apps/sculpt/Tests/RookAppTests/SculpturePortableInterchangeTests.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "e33d0ecc55db21dea1e7a22c4c53d08d964bf65cfac4482113228328ba5202e2",
+        "entry_digest": "bfb5e8f52204376972583ec77fed86a25f79cc65a3d865b68c372b8c6036463c",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "apps/sculpt/Tests/RookAppTests/SculptureReferenceEditorPresentationTests.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "6f8f32bafce36b5b50625c5959a3f52b64b1ff87d10200423e4a813e3c15facf",
+        "entry_digest": "c63963edb0b237f7d076eb1da498122467f07c129f8a294dbb953cec825681d1",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "apps/sculpt/Tests/RookAppTests/SculptureReferenceSaveSessionTests.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "4f19a8645355e5537b3de91c5d7ce9334cdc20da7cbc334da464b69098c492e5",
+        "entry_digest": "5fc3bec2792e589ede91c109f0c279256616ca736c99afdcd3d333d20fd53bf7",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "apps/sculpt/Tests/RookAppTests/SculptureSaveJobTests.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "49808899eefe4ed5e8e0a1ce701749f6d4ef82ff540bff5473c1b5dd634a37c7",
+        "entry_digest": "3f5101a4313935905c0ce901ce18506f3ebadfa5412b4c770a7c2207dc68c4ab",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "apps/sculpt/Tests/RookAppTests/SculptureSharedModelDraftTests.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "03fc1f9626cd365c84421b581d27b42f842908a09d4cc014939f5dda34cc352f",
+        "entry_digest": "c4a4e09309acd95d18e227ae25e495f2e44c4ed5f40801e34b347d893297be3f",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "apps/sculpt/Tests/RookAppTests/SculptureSharedModelPresentationTests.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "0e4a7bc7a44619ecd9a001c21e2a29adfdf3b9da9d5a1bfdc7ac0c06a889f336",
+        "entry_digest": "9b37c492d9734c1aecfde57c7f41568d518020cad3e65e42d3e7d2aa6c9266aa",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "apps/sculpt/Tests/RookAppTests/SculptureVoxelWorkspaceTests.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "085c78d6a0f10a7a63859feb3783dea5a21ff651bd8641618f29bdd0c9c020ab",
+        "entry_digest": "cb4638941514ef448fce96171889541f28e5cb2fb1d455b0ea8e8b22ac633a30",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "apps/sculpt/Tests/RookAppTests/SculptureWorkspaceTests.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "f420db050af7dea627b63e3b33e113377e3919b69d24b7d4e5a97a6bcd06c681",
+        "entry_digest": "997ec23ca0eacd6cd532071f3da63de1da66eb5a0f11ba6902520e84b68c637b",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "apps/sculpt/Tests/RookAppTests/SculptureWorldEditorTests.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "51707a0e3b30bdb26826e1f0119b1725d39d735df5e7a3de255fe56e294b7922",
+        "entry_digest": "5b5b3030f6d5fd568e07c8153d7c155e2ec1a224a582b35f54013f6f567f64e4",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "apps/sculpt/Tests/RookAppTests/SliceGridRenderingTests.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "f0d9c2da996754a881e260ac2a7b5b5b81406f5cf97ec857bf92e62edaea9cf0",
+        "entry_digest": "82df33fc6af7c834ad6b35e2edd38724ca63c5201ee0bc7200ddec753e63757c",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "apps/sculpt/Tests/RookCoreTests/AppAppearanceTests.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "96b116fa629f3753d8b42934a811c1428f31636e2856db12bd9f583a9126c368",
+        "entry_digest": "556583436e1058dc662eef44661aae7333461f13160a1f06a9e1ca9f5fbc006e",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "apps/sculpt/Tests/RookRenderingTests/AnimationExportTests.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "703d05088f785075738fd195c924270259f2a471566e1b5872881117239fc942",
+        "entry_digest": "29b0fb1b5fc6a8d6e710a872bf02d19848f68b1d0fdca7a7e06a4e4f2f5042d8",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "apps/sculpt/Tests/RookRenderingTests/CameraParityTests.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "97c1b35abd129f1f8fc3a2e3fec0ede9b4416b5a0bdd0c53eb55877dca353c6d",
+        "entry_digest": "7d2c516df02831b4c7701e5d5d3fd31791d99cb6d7b456bd177db175f8fd9c2b",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "apps/sculpt/Tests/RookRenderingTests/CubeExportTests.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "6bff8220f252746e5591956209d228de11b97b8b46e98d0ea09ae13f93c3e324",
+        "entry_digest": "d76039bb23eb138a74b6e89671c99768c725e12b1760b8582aa64942ddb9665a",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "apps/sculpt/Tests/RookRenderingTests/ExampleArtifactTests.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "affec5f8e6b1f6cb461373dc77d8b1029cafecf2afdb13c1936f15744d055e4b",
+        "entry_digest": "800fb1804c6303bef36f066056b3cff1fc272c25d83cd619dd9319e463a0b683",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "apps/sculpt/Tests/RookRenderingTests/PreparedVoxelProjectionTests.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "0e828abc9fdfd275524439149a7767457afec885207c9483d64e876e9a4feaf8",
+        "entry_digest": "af9ffdfd90d0fdaaa3393c432448e3f955318e2754321f66e3c640362f93a9f0",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "apps/sculpt/Tests/RookRenderingTests/RenderingTests.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "1b8c55e9add54a5fac3a8ac21d8179603cb15927404f232df6d680032c4766c2",
+        "entry_digest": "a47c2aecc5415e209d1e3720b8c5dcaf6791c455392ab433f8ade9e5dc344446",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "apps/sculpt/Tests/RookRenderingTests/SculptureBlockPerformanceTests.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "80952a163fead38bdc3c122987ec343279450baba2045bafa0dee29c04880f80",
+        "entry_digest": "d2d47846653eda352f0657b6b77efe4e81399f8dca22ed76eab66820de26f08a",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "apps/sculpt/Tests/RookRenderingTests/SculptureLiveVoxelTests.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "301eee13272a74edc54634032d98573c3de42f08ccf201e0896ca8b9b2a81508",
+        "entry_digest": "26dac0d2c1249e4886f72342f35eb5511f4859400f5c984067e4a1189109db03",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "apps/sculpt/Tests/RookRenderingTests/SculptureLiveWorldTests.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "c9323f4b9e474df331ec909a8ba1090e06cf914270025b1e3bf2e01c8e3b0f83",
+        "entry_digest": "6eb27aa90a9062780d33fac6711f7ac16a4dbb6ace06a1f6d86bc378a5f4e457",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "apps/sculpt/Tests/RookRenderingTests/SculptureSolarPerformanceTests.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "3c1ce44b4fc58cfff129459392f6ebb110a2323a96578ef79036b8d4950c3645",
+        "entry_digest": "46fdaacde44d35048586a3ba1acd65919c8a7a4fb5e72555d3813025fe31b272",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "apps/sculpt/Tests/RookRenderingTests/SculptureVolumeStudyRenderingTests.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "2d0c4125cfac669af2c11ddcd8fdd0cf723a2421b69f50d5ed12619a9821a2c9",
+        "entry_digest": "ba80497b582a3908e9024b78127f6865ee750cbe1ee25561be1614f43173fa57",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "apps/sculpt/Tests/RookRenderingTests/SculptureVoxelMeshBuffersTests.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "a449d8911a0232f7a715f55fcb5ba82cff55c7be66ef02f6dced56bb7437dfc3",
+        "entry_digest": "885e360f6eaa18e98b43c748e609041f84f03ebcb3a64fa94923b13effaaf8af",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "apps/sculpt/Tests/RookRenderingTests/SculptureVoxelSurfaceTests.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "aac13532d28070b1e21e403221dcc2f62c42782061ddd9e909cefe86c254d321",
+        "entry_digest": "d1ec3dde38b4b6aa75ba70301955515676a5d715c4bffcc89bfc06624dde8b1f",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "apps/sculpt/Tests/RookRenderingTests/SculptureWorldCoarseMeshTests.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "b902837a81e045b0eec168bedb1ac31a53aec17482717ad74059d38ddb75c647",
+        "entry_digest": "64109be91cf7d5498bbfb5c01e9656784d1aad6459cc69d482df9b78b6b3a923",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "apps/sculpt/Tests/RookRenderingTests/SculptureWorldExplorationRenderingTests.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "041f2376b73e99842c64c067c47616ac9f01012b32d1a00109deb58eb520dfe6",
+        "entry_digest": "fe16e247d815121af27028365a94c54aec3f0211dc991d06129e70f0239dea41",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "apps/sculpt/Tests/RookRenderingTests/SculptureWorldNavigationTests.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "f0ce519cf2563b7d14df724921e84090ec746ca4fbc3e907242c467ef95a911f",
+        "entry_digest": "7ea1cb8275ea18f230130886f854953ff3adaf3dda094a01132083f76c33f4e0",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "apps/sculpt/Tests/RookRenderingTests/VoxelRenderingTests.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "4a5ac9a9df5b4185d26a49b5aa5833f0461f9cdde5f0361298300a61d482436f",
+        "entry_digest": "b36ce9ef6c19677100d1a413fa26ce6741327f0bd425ddb1051656f6e7990ffb",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "apps/sculpt/Tests/RookSculptureTests/OBJExportTests.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "60732ad89b9f8d2550c20181cfbe94eeaf681c0601ab875fada89a0f77db0e71",
+        "entry_digest": "faec44c55bb5684ae1264f305072c6d0b02af31e19723249e3b335171e5e5069",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "apps/sculpt/Tests/RookSculptureTests/SculptureBinaryCodecTests.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "70f74e67f0b717f3b95356432f7ff711d4a534e2bd50edeeea97a4d1210aac03",
+        "entry_digest": "c2b4b21c418ab6ebcd567ef6e7eb9a6325c8cc8d78c7c5856e4f67ffca9c86ce",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "apps/sculpt/Tests/RookSculptureTests/SculptureBlockWorldExamplesTests.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "039d7c47a0cbe841055b268fe9289666d71087a1fe3562820239b3638454f936",
+        "entry_digest": "e44b57919db2694e078de25a2f0c0441dceb248897d095e1201e979404454e8c",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "apps/sculpt/Tests/RookSculptureTests/SculptureCommandTests.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "02e10f73e64ac659180fc45f5725b8b1432e81b31dd4765490df53d67cfec586",
+        "entry_digest": "06201a7a1e9c66820e60093a62d12337396f83d13ce3130636f6fd76e22ac34c",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "apps/sculpt/Tests/RookSculptureTests/SculptureComplexExamplesTests.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "c4a3434d8a1d19d8895ce9dd72afa8411618784834d745f3c6eb286c81c654b6",
+        "entry_digest": "e0648397808adfe1708087ca7982d1e46e1276bde43132860f3b0bc90bd7f425",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "apps/sculpt/Tests/RookSculptureTests/SculptureCompositionExampleTests.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "ef520f1abb6f4a954d1aafe9b204048c950a188193186b7691cc7f5bcaa51044",
+        "entry_digest": "ea402f3bd20ed0fbc695eb258ecbac1c82fc14617c09ced252208e45b7d32611",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "apps/sculpt/Tests/RookSculptureTests/SculptureCompositionTests.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "6e8688d42e9ce3e615266bbb70aa4a711b8ec0be9260d2f97a9a3a64cb2763fa",
+        "entry_digest": "36805828906c5d3f39c3c719e21cfff1fa0d45c6057dc9bbceefaae7de3a5312",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "apps/sculpt/Tests/RookSculptureTests/SculptureExamplesTests.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "a4d8dcff1c2a6152c99c1ed525df5cff9b6b32d6a010f7eca6ea71fe1a47e149",
+        "entry_digest": "d26f325afaab4a53e5d7756e3cbbac67e68ec10c57da46da92d203af965a1c94",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "apps/sculpt/Tests/RookSculptureTests/SculptureGalleryCatalogTests.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "5e1251834b5ed01919fca0cac7c94e6b6123e977852139e15310d297362ddd0a",
+        "entry_digest": "651bf5db79ef27172893e498e55f076f41f96e310f2cda6dc01ef7624e7db90b",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "apps/sculpt/Tests/RookSculptureTests/SculptureInsertionPlanTests.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "46877cd8e7728cf48edfb215119272203beb8952197665f486b519d813221cd2",
+        "entry_digest": "30b6c21094328b585abe448848e2b27a54f46ba0b7920b2d094870430b4cff14",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "apps/sculpt/Tests/RookSculptureTests/SculptureLinkedBundleTests.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "3bcedcc807cdff72bba12f67d1328ef51c56c808f815b30db2e454ae88d7e981",
+        "entry_digest": "b608a8af9a7a8673ce114f160955a1ac43b30d9c108427bc8fe093ab99738397",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "apps/sculpt/Tests/RookSculptureTests/SculptureLinkedCodecTests.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "708db8b0466433baebdd602b998c1fd92f6bc19e2c01f06ae887bf5499025374",
+        "entry_digest": "14087dd5c9b94d167d3d7b627cbc91eb5cec0e62236304f9445797d3d0eadb98",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "apps/sculpt/Tests/RookSculptureTests/SculptureLinkedResolverTests.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "1bf28714d53e7bdd2ac1618523db00ea52c25fb6ebdcbe671f195ed7e66ed8b3",
+        "entry_digest": "be31783934613156e9ba6f5ffd07d43a4b674e3f5103b22972d474d85ba28579",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "apps/sculpt/Tests/RookSculptureTests/SculptureLinkedTestProject.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "7c58688450b2a2ec05e8a02760ac3900bda0529afd74801ee4947c83c271dd06",
+        "entry_digest": "35270a4af37492c0f17970b7e22d60c758369a0afec6e5da4c3bf4804fbba200",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "apps/sculpt/Tests/RookSculptureTests/SculptureMathExamplesTests.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "f5484b9a660e60b56ee8f5b120a89772d8e0d00a47847282de20c2400903cbff",
+        "entry_digest": "1f3d00d56343e9032c909098ff307eb2af3b2daefbfb0fa0f2572652d89e2c1f",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "apps/sculpt/Tests/RookSculptureTests/SculptureModelEditingTests.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "e7b42d35b25e6e300c2902865a5ac14243424b399b32b5f6758cba1cbea73d02",
+        "entry_digest": "1152d93baba36cc36bf9cf58cea1edb415b68eac388d9045b34779392311ec9b",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "apps/sculpt/Tests/RookSculptureTests/SculptureSceneInsertionTests.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "8fd2a64110e1b16d3a0d4aa659654a8917d1c2e30d8979fdc6d8e7f4a01d536a",
+        "entry_digest": "cfbebbcc9c640c3fe802fe7f35c9d83f2fd28f5290ffdcc005c1af03192cc42b",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "apps/sculpt/Tests/RookSculptureTests/SculptureSolarSystemTests.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "92196a47f8019ac8b401d26ce870a23625129715ab662255e9f012ddfe01100a",
+        "entry_digest": "f4750ff963ee8985923b6cbfbcc080cc86c8563f3d212ffa776b69d66a1ecc5e",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "apps/sculpt/Tests/RookSculptureTests/SculptureTests.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "f2c0ad80603214526f465de7c3b163f61b06a6a9c6ef6cc95ccf389938ef420a",
+        "entry_digest": "90f35c1f483a6bf2c617076a7357e5423ef44faf8bd00fe7166b3da1e0f1bdb2",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "apps/sculpt/Tests/RookSculptureTests/SculptureThreeMDTests.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "cbbd5b3524e3352d7af5ac9329bea74733625fd6bdf59a94c2f2d50a699fd7db",
+        "entry_digest": "56ea7a30fbec0e5388795f57f521d6dc488e39b4eab3d743886a7911d7c7d0b9",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "apps/sculpt/Tests/RookSculptureTests/SculptureVolumeStudyExamplesTests.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "26c2c59c4356ed520057f2400140121015b6dc764536047db4a3e48fd7de213b",
+        "entry_digest": "5e640a40b56fcfc3e636f88b12e747ea717a8721581452f2788d12f65db50df2",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "apps/sculpt/Tests/RookSculptureTests/SculptureWorldTests.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "ba5da7db4d78930c8c3de11067c9f3b3f15f579ae8683acf3c400b73e6ae78fc",
+        "entry_digest": "47ec1e0a3d8cee47068cae4f424d533cedb8d26c830138fe84d7132dfd2b94b3",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "apps/sculpt/Tests/RookToolTests/SculptureCommandToolTests.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "db678464dfb484dc5e18c35b3ba87d27e4a416894f7da0328e95f460efdeff7d",
+        "entry_digest": "70a2958f4e3aea91ca3372d237a29cc73f466ed6f03c809c7f4062643c51c6d7",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "apps/sculpt/Tests/RookToolTests/SculptureInsertToolTests.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "7858f7a64fc90e7209239a3a484ccd72e9c37559bc706e7d3c423aeb48cf05e3",
+        "entry_digest": "7380b1022f8246a0e0a5cdaa542e1009619081783feeb7c6160b02c0df63bd62",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "apps/sculpt/Tests/RookToolTests/SculptureLinkedInputTests.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "7f12f1bda9a5cef9400e254f6cb83c42e8c33de082ad9ef9e3e4dbd895bc6e78",
+        "entry_digest": "b07535e693f420d76018263ad8264478d9433f433f36ec00c73832e9fd14f097",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "apps/sculpt/Tests/RookToolTests/SculptureMathExampleExportTests.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "62eb5b7b9297c274e6d8cb34f26b13a35a06efea25c713bf9e7b35b889fc99af",
+        "entry_digest": "44e9cef15854aedfb6451c5fefdc876b7ecfb39993297cafd835a4fbb361d345",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "apps/sculpt/Tests/RookToolTests/SculpturePortableToolTests.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "93fe986fecb606b1efc64ccdfc1e5c6a6c9c42805cd8c85a3b81656265e6b37f",
+        "entry_digest": "9038516bee6cc12abf8effccaab28b84b1be76cb7d62d606796cc0bea7a96466",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "apps/sculpt/Tests/RookToolTests/SculptureReferenceModelToolTests.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "f9f9d80ed84ac2593de24f81d757d6520c06a805e0c8e59c82ef2629fa02b424",
+        "entry_digest": "dfbe8fe8b77a41a921880178e874657bbca35a5ae953fb251c18dc50a2fe32ac",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "apps/sculpt/Tests/RookToolTests/SculptureVolumeStudyTests.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "8a8396041daabd97bdd52c695b165d3bd365106b79d891f90982440f302c466b",
+        "entry_digest": "e912b7d78aaee2840f25472293b007f6c207e1c7c06d3ee6e8cf2237d5a69c30",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "apps/sculpt/Tests/RookToolTests/SculptureVolumeStudyWorldExportTests.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "421c70bb22e030ba15953f1f0c43a7511c80b8e35db9dab1e2c8d891881454a8",
+        "entry_digest": "937f9e8403bcf017ca424ac3848e39d61231e74cd3273ca33c1a07590b12dd7a",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "apps/sculpt/Tests/RookToolTests/SculptureWorldToolTests.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "833b235acca092fd2dca1f7bb5ed4f0493cb8cb53120fe59d97fe441520eabda",
+        "entry_digest": "e6af00f53db1883e3972a2cbbb81a807c583e169dd985c91ec792bf0dd8495db",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "apps/sculpt/Tests/RookToolingTests/NativeToolsTests.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "9058e47f3ed1b6bd6742067d0418aead0d180b10ce2acaef5d76d76a1de7f617",
+        "entry_digest": "9ab8dc927319357c20902e50fe1faa16fa6c0d74486069e6b7deef7a72a8e906",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "apps/sculpt/Tests/RookVerificationTests/RunnerTests.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "a13fa9e4c75fbb6024eb8a962248b05602d752c44e52eb38f6a3085e9a8a1d34",
+        "entry_digest": "0bf2794629b02e647ce705a09a0752b877d6c8ec18c27e899c1c5c1c2c58a500",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "apps/sculpt/Tests/RookVerificationTests/SwiftTestLogTests.swift",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "d81d429bb0f794b33c8858dcc47c8735d452cff72281b1a04bd55c974f5ad904",
+        "entry_digest": "dc62c3d4c6032f34439560e68ce01085f2e198319832859089b2f2b55999f8dd",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "apps/sculpt/hi",
+        "kind": "non_file",
+        "mode": 0,
+        "payload_digest": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "entry_digest": "5b1180aa1683357d4fbdc6f70c7a6f099ba574be8eeacb6122c34f3fbd6e5a3d",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "apps/sculpt/hi/AGENTS.md",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "a7c2b4f3e362bf812e2d342e821615c65cf67ba782d03a07a6627bc04b5c9252",
+        "entry_digest": "1722750a8a857e473be446b70ff76dac1d842fdf4ff493b14d06a4a22a9bb40a",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "apps/sculpt/hi/CLAUDE.md",
+        "kind": "symlink",
+        "mode": 40960,
+        "payload_digest": "a54ff182c7e8acf56acfd6e4b9c3ff41e2c41a31c9b211b2deb9df75d9a478f9",
+        "entry_digest": "2e936d4157c977b650afd28e14fc3706e93690ec69f2a1cd258a8a0033db5ac0",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "apps/sculpt/hi/composition.md",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "4192061cfc0862a5287229adac316bdfdca78c326a1ecc0a9884843e683afd43",
+        "entry_digest": "ccce7bef24717df3e210139e37c06279fa50bdf023409d9f696be23f60c03d0b",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "apps/sculpt/hi/cubes.md",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "87717022e44982d6ca2c7b737c614a5e836a63f87fda234949e6b2ff21849e0c",
+        "entry_digest": "923d5bb8afcf10e3fed111038afa5196f69068226804bf328152429336aa17b8",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "apps/sculpt/hi/export.md",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "88a062b3c77f0612fd9a8b4c531b31d7df0fa3023aa9eb78739668bf0fc9a63d",
+        "entry_digest": "fafdb5908519d66ff163f83e8e83ba4e53ee12c2a44219ab2a0ad96222a2168a",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "apps/sculpt/hi/gallery.md",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "3091b9b84faf7b8d76e0c98ab633d043d2614dce43b02bacfc47a2d87ee7d3a3",
+        "entry_digest": "dcc0b0a9ca005f63b81ada36d8a594c9b6baffde5ed4ec08fc083de3abe50e58",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "apps/sculpt/hi/local.md",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "5289ba2802b24f18a6afe990ddb4276faf2297c6cae75a964c9905c189f99033",
+        "entry_digest": "36bf50f6d883038c37dbec78d697784287e22046eff83e585ba5dc6c5b5f816c",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "apps/sculpt/hi/render.md",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "b0923791421fc00c64725b77e0dce6dd223cf950e1fe40bbab7fe71160b63338",
+        "entry_digest": "9a3d081a42bc70cd32d2ad397e38bc6e4bd350df2b3124d076eb36228294e7d0",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "apps/sculpt/hi/sculpture.md",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "7116a830b65f7af632d2b2d2aa77e567631c2a33a7fcb5d3b9cd3a3d57082271",
+        "entry_digest": "caea0e7869eae9c61e45f6cdca43df6afbc1b81cc333ca602744fc342db91f2d",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "apps/sculpt/hi/shell.md",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "d8fb4017d5a6dad0adc64617d8d7289001dc0cdac3e33e1ceb9f1f644fda49f5",
+        "entry_digest": "fbbea37430b6614be789611f97c9f2e5337cdc8df825e4945cd078e988359987",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "apps/sculpt/hi/slice.md",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "295ed1d6feff3b478fb6a7f751feb35cee475ab60d94e214bc04d3f639c2e546",
+        "entry_digest": "357fdb9cb2e2b1e44d3cd2372ba1cad4cc6b1ede97d0003be1221473c5e98bfb",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "apps/sculpt/hi/world.md",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "663559da5bb02db3413f545de91e81ffd7ab5c3890158aeaec964d819c1ded5a",
+        "entry_digest": "6b2354660f0978b98ab1c58356d2fc585763ac09e078b5f988e14f6493255e74",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "apps/sculpt/specs",
+        "kind": "non_file",
+        "mode": 0,
+        "payload_digest": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "entry_digest": "f4fb94115c0cd72e416a30a3a454bbbda63ac0989744dd1fa148551cef9875ef",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "apps/sculpt/specs/RookApp/RookApp.spec.md",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "328f0e0ec49767f115960ba7a09b1395626ef6dd78cdb76f79ffc61d3b381859",
+        "entry_digest": "9b423979478d8e5435ad55cefb13fd9f1cb745b718a28367a176d282ab385f26",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "apps/sculpt/specs/RookApp/requirements.md",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "a998087ec9c46dec9d5e3f6e3f4c2680966f67d766be19fe3a7a1c9ae9fec9d3",
+        "entry_digest": "29b6f5ed8b2d484afc100b05e971236b61d7e4ee48637788c1799a205da5236e",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "apps/sculpt/specs/RookCore/RookCore.spec.md",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "edd8f788a56817afc8eb2d477a0a75f3bc37135d205b1f6e9665d03ff0b74344",
+        "entry_digest": "729f1a3b27ad303e7b38f7aa49372a4ef57113a9014060cbff46c2cc2fd6a810",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "apps/sculpt/specs/RookCore/requirements.md",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "80305947b009aeab89c4fae62bc8ef48cb0c6c95cfbd351cea9e2fc0f47a0b21",
+        "entry_digest": "c5d7038b613041d8fabe4e2dc47fc2fc08efe5774e9551e50648763eca8d2cf8",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "apps/sculpt/specs/RookDevelopment/RookDevelopment.spec.md",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "b2c021c8fa8d74dc2197bd5ef8754e4f3eadb091c743831ad643b7867588c9d0",
+        "entry_digest": "319c60159eecb9efbd78bb2a137c83b5e0d6357cdb6e72aa96ff86e80a7d3adb",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "apps/sculpt/specs/RookDevelopment/requirements.md",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "0efd07ebb2fa2d12769429f782dd1d2d70362adbeca2a82234251c6aa55abe90",
+        "entry_digest": "a11e80095e0bb66c0baba88236129a1ebef28c54ea2f454e2362c70467a6f960",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "apps/sculpt/specs/RookRendering/RookRendering.spec.md",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "3eaeae84bde150f19ca189a04310b28dda74cfb90d55430c8835f07b1ee1008d",
+        "entry_digest": "65bb892edfa4ca765ffc6556cc977b0af8cd62ccfed702f5c71266ac30debb37",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "apps/sculpt/specs/RookRendering/requirements.md",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "9360c435f8fb30b54a7fa3e411a6d8f5347e089ea9038a80734fc821b49dcdcf",
+        "entry_digest": "17c88752e827fc1622f4a732707fcb86865a43baf1ef6630541f2b0c584f6521",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "apps/sculpt/specs/RookSculpture/RookSculpture.spec.md",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "a89be62701494e3b6c7ffbde27888091fe3c0d7d81fb91813fe697686d0381ae",
+        "entry_digest": "33ea611aec1446b7377f396832436a2f23db9075d8466462a978d6b04554d412",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "apps/sculpt/specs/RookSculpture/requirements.md",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "fddb51105fb11306fc54c53f1c74771fde301812c8a3da5a253108ec89b5000d",
+        "entry_digest": "3d9dd7140bc5cfe762961be8d7cd0c7fa5369d44dd46ea208384221979a0fa5f",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "hi/tools.md",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "cd530f076ed449b2dcd994f9178fcb104f4460e44a12042200b42bf6ca6d6306",
+        "entry_digest": "a13f216eb32a3671d7563024082ab76eb471bdd7a2ddb3c3398b672b05354a70",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "specs/ThreeMDViewer",
+        "kind": "non_file",
+        "mode": 0,
+        "payload_digest": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "entry_digest": "b53a01354acef7fb830687d9789c70f85c60f43e94da4a2dd0816c771a3bf773",
+        "owners": [
+          "ThreeMDViewer"
+        ]
+      },
+      {
+        "path": "specs/ThreeMDViewer/ThreeMDViewer.spec.md",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "3b3b09952c692c501a98d6520fb8a82f5126ab9b05d64f6634b50cbae3620ae6",
+        "entry_digest": "64224b139df2b01fdd0db61c4817d9a836030dbf2667bda60529f6a61be627b4",
+        "owners": [
+          "ThreeMDViewer"
+        ]
+      },
+      {
+        "path": "specs/ThreeMDViewer/context.md",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "a0011f2d32b7dce6370e015fefcf09acbcf52578e82a97e56def17e0e0fbed52",
+        "entry_digest": "e020a4426da69e6b24dd3025c95afd9a88cf073bca235f86ad9104e1de81c7f7",
+        "owners": [
+          "ThreeMDViewer"
+        ]
+      },
+      {
+        "path": "specs/ThreeMDViewer/requirements.md",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "96612855952a65a5e6b623e2b5d21e9dd8f4ea88c92c0e8ef392e3b826b81f94",
+        "entry_digest": "5caf30173677b31dcf1119406f03f7dd5a1721487ef58ceacb8d22ed07244d4d",
+        "owners": [
+          "ThreeMDViewer"
+        ]
+      },
+      {
+        "path": "specs/ThreeMDViewer/tasks.md",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "4b0a856509eb4b4c0c875e4b74844c45ce162acf255ce69bf88f86d82feae603",
+        "entry_digest": "3767a753d3d8c88a88e61820f68b82317f5cd533b57cec5ddc798c7d33ef2656",
+        "owners": [
+          "ThreeMDViewer"
+        ]
+      },
+      {
+        "path": "specs/ThreeMDViewer/testing.md",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "e224b1bc77ea1679aa4cbd34f182846717be905bec43bff555d19f0ba5f75b15",
+        "entry_digest": "fee23d7cfc7097bb6cda3f52a2a0efd8ae2030ec4c32059529bccb53252bc7e1",
+        "owners": [
+          "ThreeMDViewer"
+        ]
+      },
+      {
+        "path": "uitests/viewer.spec.mjs",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "52dd2553472620fd956815792cb22c70980c8d70ea4563eac487ec5eb4f28093",
+        "entry_digest": "05c24eeea687cd37e72eaa5382b93877334fb1cb53ab1b80babe625a09d0393b",
+        "owners": [
+          "ThreeMDViewer"
+        ]
+      },
+      {
+        "path": "web/viewer.html",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "457af08a02075688bdec1285f820bd6e6ff48e54c392a6239d3a0519a21197b2",
+        "entry_digest": "91188b507e047ae68fe1e96a1980f5b33206532a2cabafec98e7d7883e0b70e4",
+        "owners": [
+          "ThreeMDViewer"
+        ]
+      }
+    ]
+  },
+  "passed": true,
+  "commands": [
+    {
+      "command": "specsync check --spec ThreeMDViewer --strict",
+      "success": true,
+      "exit_code": 0
+    }
+  ],
+  "requirement_ids": [
+    "REQ-ThreeMDViewer-007"
+  ]
+}

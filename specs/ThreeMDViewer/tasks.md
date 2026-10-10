@@ -49,4 +49,4 @@ spec: ThreeMDViewer.spec.md
 - [x] Implement the approved matching axis gizmo and numeric precision controls.
 - [x] Add the approved browser Slice workspace and shared native/browser edit fixtures.
 - [x] Verify current macOS browser, Linux CI, native and pinned Trust checks.
-- [ ] Complete current Slice and precise-axis lifecycle closure.
+- [x] Complete current Slice and precise-axis lifecycle closure with actual agent:codex scoped review.
