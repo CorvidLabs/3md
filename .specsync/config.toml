@@ -13,3 +13,6 @@ track_history = false
 
 [modules."ThreeMD"]
 owns = ["Sources/ThreeMDInterop/", "Tests/ThreeMDTests/", "Examples/", "js/", "rust/", "conformance/", "scripts/", "Package.swift", "fledge.toml", "web/assets/three-md.js", "SPEC.md", "README.md", "AGENTS.md", ".specsync/", "specs/ThreeMD/", ".github/workflows/trust.yml", ".trust.toml", "docs/EDITING-RELEASE.md", "docs/FILE-COMPOSITION.md", "docs/evidence/file-composition/"]
+
+[modules."ThreeMDViewer"]
+owns = ["web/viewer.html", "web/gather.ts", "web/github-source.ts", "web/open-document.ts", "web/assets/open-document.js", "web/gather.test.ts", "web/github-source.test.ts", "web/open-document.test.ts", "uitests/viewer.spec.mjs", "specs/ThreeMDViewer/"]
