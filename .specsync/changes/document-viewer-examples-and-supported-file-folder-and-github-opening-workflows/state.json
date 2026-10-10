@@ -7,10 +7,11 @@
   "title": "Document viewer examples and supported file folder and GitHub opening workflows",
   "description": "Document viewer examples and supported file folder and GitHub opening workflows",
   "kind": "documentation",
-  "state": "implementing",
+  "state": "verifying",
+  "canonical_applied": true,
   "base_commit": "e1beb0954c62328c56d451d7c12087cf732fb337",
   "created_at": 1791659613,
-  "updated_at": 1791659724,
+  "updated_at": 1791660484,
   "affected_specs": [
     "ThreeMDViewer",
     "ThreeMD"
