@@ -66,6 +66,7 @@ Acceptance Criteria:
 - X is the column, Y is the text row with row 0 toward the top, and Z is the plane index. Space, dot, and tab are empty. Keep the 64 by 64 per-plane and 4000-cell caps.
 - Evidence is VIEWER-6 and the cube tests in `uitests/viewer.spec.mjs`.
 - The same 3D context and geometry remain installed when moving between Cubes and the Slice reference or changing display size. The drawable follows the visible pane size and device pixel ratio, bounded to 2x and a proportional 2048-pixel edge cap; unchanged sizes avoid bitmap reallocations. Small-to-large, phone/desktop and Retina transitions remain sharp without changing source, camera, slice or nearest picking.
+- Resize notifications SHALL schedule coalesced drawing outside observer delivery. Slice SHALL allocate only a visible-area bitmap at high zoom while preserving scroll coordinates and precise edits. A lost WebGL context SHALL remain suspended without bitmap allocation or context retries until restoration, then rebuild resources while preserving source, selected slice and camera.
 
 ### REQ-ThreeMDViewer-006
 

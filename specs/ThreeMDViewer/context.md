@@ -66,3 +66,9 @@ The previous frozen bitmap could initialize at 368x322 in a small view and stret
 ## Viewer documentation
 
 README and `docs/VIEWER.md` provide GitHub-backed text, binary, composition and repo/folder examples. `web/docs.html` links them beside the grammar quick start, and the selected-docs bundle includes VIEWER. The guide distinguishes upstream uncompressed binary from LZFSE and Sculpt compact saves, covers bounded Slice/Cubes and download-only drafts, and explicitly documents GitHub linked-folder and non-GitHub direct-binary URL gaps. This documents current behavior without repairing loaders or changing format/camera/editing contracts.
+
+## Canvas lifecycle repair
+
+Resize observers queue a single animation-frame redraw. The Slice surface provides virtual scroll extents while its bitmap covers only visible cells, at capped display density. Context loss suspends GPU allocation/drawing until restoration; drafts, camera and slice remain application state.
+
+The expanded viewer regression set covers all catalog documents and supported local binary/composition/folder inputs, with explicit phone/desktop size boundaries. Preview supports prose documents; only matching rectangular sculpture grids qualify for Slice. Test expansion does not change the shared runtime or the site's d2e875e pin.

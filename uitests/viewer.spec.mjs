@@ -1502,3 +1502,178 @@ for (const density of [1, 2]) {
     } finally { await context.close(); }
   });
 }
+
+test("Slice high zoom bounds its bitmap and paints the scrolled cell exactly", async ({ page }) => {
+  const errors = []; page.on("pageerror", error => errors.push(error.message));
+  const rows = Array.from({ length: 64 }, () => ".".repeat(64)), source = sliceSource([rows]);
+  await openSlice(page, source); await page.locator('#sliceZoom [data-zoom="16"]').click();
+  const unit = Number(await page.locator("#sliceGrid").getAttribute("data-cell-size"));
+  await page.locator("#sliceScroll").evaluate((scroll, unit) => { scroll.scrollLeft = unit * 20; scroll.scrollTop = unit * 30; }, unit);
+  await expect.poll(() => page.locator("#sliceGrid").getAttribute("data-offset-x")).toBe(String(unit * 20));
+  await expect.poll(() => page.locator("#sliceGrid").getAttribute("data-offset-y")).toBe(String(unit * 30));
+  const size = await page.locator("#sliceGrid").evaluate(canvas => ({
+    bitmap: [canvas.width, canvas.height], visible: [canvas.clientWidth, canvas.clientHeight],
+    scroll: [document.getElementById("sliceScroll").clientWidth, document.getElementById("sliceScroll").clientHeight],
+    surface: [document.getElementById("sliceSurface").clientWidth, document.getElementById("sliceSurface").clientHeight],
+  }));
+  expect(Math.max(...size.bitmap)).toBeLessThanOrEqual(2048);
+  expect(size.visible[0]).toBeLessThanOrEqual(size.scroll[0]); expect(size.visible[1]).toBeLessThanOrEqual(size.scroll[1]);
+  expect(size.surface[0]).toBeGreaterThan(size.bitmap[0]);
+  const box = await page.locator("#sliceGrid").boundingBox(); await page.mouse.click(box.x + unit / 2, box.y + unit / 2);
+  const expected = [...rows]; expected[30] = ".".repeat(20) + "#" + ".".repeat(43);
+  expect(await page.evaluate(() => window.threeMd.source)).toBe(sliceSource([expected]));
+  await page.locator("#sliceUndo").click(); expect(await page.evaluate(() => window.threeMd.source)).toBe(source);
+  await page.locator('#sliceZoom [data-zoom="1"]').click();
+  await expect.poll(() => page.locator("#sliceGrid").getAttribute("data-offset-x")).toBe("0"); expect(errors).toEqual([]);
+});
+
+test("lost WebGL waits for restoration without resize allocations or retries", async ({ page }) => {
+  await page.addInitScript(() => {
+    window.__contextCalls = 0; const get = HTMLCanvasElement.prototype.getContext;
+    HTMLCanvasElement.prototype.getContext = function(type, ...args) {
+      if (this.id === "cubeCanvas" && type === "webgl2") window.__contextCalls++;
+      return get.call(this, type, ...args);
+    };
+  });
+  await page.goto("/viewer.html"); await viewerReady(page);
+  await expect(page.locator("#cubeCanvas")).toHaveAttribute("data-renderer", "webgl2");
+  await page.locator("#cubeCanvas").press("ArrowRight"); await page.locator("#outline button").nth(1).click();
+  const pose = await page.locator("#cubeCanvas").evaluate(c => [c.dataset.yaw,c.dataset.pitch,c.dataset.rotation,c.dataset.panX,c.dataset.panY]);
+  const source = await page.evaluate(() => window.threeMd.source);
+  expect(await page.evaluate(() => {
+    window.__lose = document.getElementById("cubeCanvas").__cubeGl.getExtension("WEBGL_lose_context");
+    window.__lose?.loseContext(); return Boolean(window.__lose);
+  })).toBe(true);
+  await expect(page.locator("#cubeCanvas")).toHaveAttribute("data-renderer", "lost");
+  const bitmap = await page.locator("#cubeCanvas").evaluate(c => [c.width,c.height]);
+  await page.locator("#sliceTab").click(); await page.setViewportSize({width:950,height:720});
+  await page.evaluate(() => { const c=document.getElementById("cubeCanvas"); for(let i=0;i<50;i++) c.dispatchEvent(new Event("threemd-cubes")); });
+  expect(await page.evaluate(() => window.__contextCalls)).toBe(1);
+  expect(await page.locator("#cubeCanvas").evaluate(c => [c.width,c.height])).toEqual(bitmap);
+  await expect(page.locator("#sliceReferenceNote")).toContainText("recovery");
+  await page.evaluate(() => window.__lose.restoreContext());
+  await expect(page.locator("#cubeCanvas")).toHaveAttribute("data-renderer", "webgl2");
+  expect(await page.evaluate(() => window.__contextCalls)).toBe(2);
+  expect(await page.locator("#cubeCanvas").evaluate(c => [c.dataset.yaw,c.dataset.pitch,c.dataset.rotation,c.dataset.panX,c.dataset.panY])).toEqual(pose);
+  expect(await page.evaluate(() => window.threeMd.source)).toBe(source);
+  await expect(page.locator("#sliceHeading")).toHaveText("Slice 2 of 3");
+  await page.locator("#sliceExpand").click(); await expect(page.locator("#cubeCanvas")).toHaveAttribute("data-renderer", "webgl2");
+});
+
+test("viewer opens the entire text catalog in Cubes, Slice and Preview without source loss", async ({ page }) => {
+  test.setTimeout(180_000);
+  const errors = []; page.on("pageerror", e => errors.push(String(e)));
+  page.on("console", m => { if (m.type() === "error") errors.push(m.text()); });
+  const examples = JSON.parse(await readFile(new URL("../web/all-examples.json", import.meta.url), "utf8"));
+  expect(examples.length).toBeGreaterThan(290);
+  await page.goto("/viewer.html"); await viewerReady(page);
+  const result = await page.evaluate(async examples => {
+    const failures = [], counts = { documents: 0, grids: 0, fallbacks: 0 }, axes = new Set();
+    const frame = () => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+    for (const ex of examples) {
+      const state = window.threeMd.set(ex.src);
+      if (!state.valid || !state.planes) { failures.push(`${ex.slug}: ${state.message || "no planes"}`); continue; }
+      axes.add(state.axis); counts.documents++;
+      for (const view of ["cubes", "slice", "preview"]) {
+        document.getElementById(view + "Tab").click(); await frame();
+        if (window.threeMd.source !== ex.src) failures.push(`${ex.slug}/${view}: source changed`);
+        if (document.getElementById("stage").dataset.show !== view) failures.push(`${ex.slug}/${view}: wrong view`);
+        if (view === "cubes") {
+          const canvas = document.getElementById("cubeCanvas"), gl = canvas.__cubeGl;
+          if (!gl || gl.isContextLost() || gl.getError() !== gl.NO_ERROR) failures.push(`${ex.slug}: GPU error`);
+          if (Number(canvas.dataset.cubes) > 4000) failures.push(`${ex.slug}: cube limit exceeded`);
+        } else if (view === "slice") {
+          if (document.getElementById("sliceWorkspace").hidden) {
+            counts.fallbacks++;
+            if (!document.getElementById("sliceUnavailable").textContent.trim()) failures.push(`${ex.slug}: unexplained Slice refusal`);
+          } else {
+            counts.grids++;
+            const canvas = document.getElementById("sliceGrid");
+            if (Math.max(canvas.width,canvas.height) > 2048) failures.push(`${ex.slug}: oversized Slice bitmap`);
+          }
+        } else if (!document.getElementById("lab").shadowRoot.querySelector(".plane")) failures.push(`${ex.slug}: missing Preview`);
+      }
+    }
+    return { failures, counts, axes: axes.size };
+  }, examples);
+  expect(result.failures).toEqual([]); expect(result.counts.documents).toBe(examples.length);
+  expect(result.axes).toBeGreaterThan(40); expect(result.counts.grids).toBeGreaterThan(0); expect(result.counts.fallbacks).toBeGreaterThan(0);
+  expect(errors).toEqual([]);
+  console.log("Full viewer catalog coverage:", JSON.stringify(result));
+});
+
+test("local kind 1 and kind 2 binaries retain composition entries through every view", async ({ page }) => {
+  const samples = JSON.parse(await readFile(new URL("../web/binary-samples.json", import.meta.url), "utf8"));
+  const errors = []; page.on("pageerror", e => errors.push(String(e)));
+  await page.goto("/viewer.html"); await viewerReady(page);
+  for (const sample of samples) {
+    await page.locator("#fileInput").setInputFiles({ name: sample.path.split("/").at(-1), mimeType: "application/octet-stream", buffer: Buffer.from(sample.base64,"base64") });
+    await expect(page.locator("#documentTitle")).toHaveText(sample.path.includes("shared-grove") ? "Shared grove" : "Reusable canopy");
+    const pieces = await page.locator("#piece option").evaluateAll(options => options.map(o => o.value));
+    expect(pieces.sort()).toEqual(sample.path.includes("shared-grove") ? ["canopy","grove"] : []);
+    for (const piece of pieces.length ? pieces : [null]) {
+      if (piece !== null) await page.locator("#piece").selectOption(piece);
+      const source = await page.evaluate(() => window.threeMd.source);
+      for (const view of ["cubes","slice","preview"]) {
+        await page.locator(`#${view}Tab`).click();
+        expect(await page.evaluate(() => window.threeMd.source)).toBe(source);
+        expect(await page.evaluate(() => window.threeMd.validate().valid)).toBe(true);
+      }
+    }
+  }
+  expect(errors).toEqual([]);
+});
+
+test("viewer size boundaries preserve readable source and explain unsupported Slice grids", async ({ page }) => {
+  const errors = []; page.on("pageerror", e => errors.push(String(e)));
+  await page.goto("/viewer.html"); await viewerReady(page);
+  const cases = [
+    { name:"single cell", grids:[["#"]], editable:true, cubes:1 },
+    { name:"empty grid", grids:[["...","..."]], editable:true, cubes:0 },
+    { name:"tall skinny", grids:[Array.from({length:64},()=>"#")], editable:true, cubes:64 },
+    { name:"wide skinny", grids:[["#".repeat(64)]], editable:true, cubes:64 },
+    { name:"4000 cells", grids:[Array.from({length:64},(_,y)=>y<62 ? "#".repeat(64) : y===62 ? "#".repeat(32)+".".repeat(32) : ".".repeat(64))], editable:true, cubes:4000 },
+    { name:"4096 cells", grids:[Array.from({length:64},()=>"#".repeat(64))], editable:false, cubes:4000 },
+    { name:"65 columns", grids:[["#".repeat(65)]], editable:false, cubes:0 },
+    { name:"65 rows", grids:[Array.from({length:65},()=>"#")], editable:false, cubes:0 },
+    { name:"256 planes", grids:Array.from({length:256},()=>["#"]), editable:true, cubes:256 },
+    { name:"257 planes", grids:Array.from({length:257},()=>["#"]), editable:false, cubes:257 },
+    { name:"large prose", grids:[["#"]], suffix:"\n"+"p".repeat(1.5*1024*1024), editable:false, cubes:1 },
+  ];
+  for (const viewport of [{width:1440,height:900},{width:390,height:844}]) {
+    await page.setViewportSize(viewport);
+    for (const item of cases) {
+    const source = sliceSource(item.grids)+(item.suffix||"");
+    await page.evaluate(source=>window.threeMd.set(source),source);
+    await page.locator("#cubesTab").click();
+    await expect(page.locator("#cubeCanvas")).toHaveAttribute("data-cubes",String(item.cubes));
+    await page.locator("#sliceTab").click();
+    if (item.editable) { await expect(page.locator("#sliceWorkspace"),item.name).toBeVisible(); }
+    else { await expect(page.locator("#sliceUnavailable"),item.name).toBeVisible(); await expect(page.locator("#sliceUnavailable")).not.toHaveText(""); }
+    await page.locator("#previewTab").click(); expect(await page.evaluate(()=>window.threeMd.validate().valid)).toBe(true);
+    expect(await page.evaluate(()=>window.threeMd.source),item.name).toBe(source);
+  }
+    }
+  expect(errors).toEqual([]);
+});
+
+
+test("a local linked folder resolves entries and preserves each edited draft", async ({ page }) => {
+  const examples = JSON.parse(await readFile(new URL("../web/nested-examples.json", import.meta.url), "utf8"));
+  const files = Object.fromEntries(examples.filter(ex => ex.path.startsWith("LinkedVillage/")).map(ex => [ex.path,ex.src]));
+  await page.goto("/viewer.html"); await viewerReady(page); await openCollection(page,files);
+  await openedFile(page,"scene.3md").click();
+  await expect(page.locator("#documentTitle")).toHaveText("Linked village");
+  const entries = await page.locator("#piece option").evaluateAll(options=>options.map(o=>o.value));
+  expect(entries).toHaveLength(4);
+  for (const id of entries) {
+    await page.locator("#piece").selectOption(id);
+    const original = await page.evaluate(()=>window.threeMd.source);
+    await page.locator("#editTab").click(); await page.locator("#editor").fill(original+"\nFolder draft marker");
+    await expect(page.locator("#draftState")).toBeVisible();
+    await page.locator("#previewTab").click(); expect(await page.evaluate(()=>window.threeMd.validate().valid)).toBe(true);
+    await page.locator("#piece").selectOption(entries.find(value=>value!==id));
+    await page.locator("#piece").selectOption(id);
+    expect(await page.evaluate(()=>window.threeMd.source)).toBe(original+"\nFolder draft marker");
+  }
+});

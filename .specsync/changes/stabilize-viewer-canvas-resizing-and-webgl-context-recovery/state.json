@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "workflow_version": 2,
+  "workflow_origin_version": 2,
+  "id": "stabilize-viewer-canvas-resizing-and-webgl-context-recovery",
+  "slug": "stabilize-viewer-canvas-resizing-and-webgl-context-recovery",
+  "title": "Stabilize viewer canvas resizing and WebGL context recovery",
+  "description": "Stabilize viewer canvas resizing and WebGL context recovery",
+  "kind": "feature",
+  "state": "verifying",
+  "canonical_applied": true,
+  "base_commit": "fc4944c134a8f351f3073bf4febcdebb87df2f81",
+  "created_at": 1791664278,
+  "updated_at": 1791665863,
+  "affected_specs": [
+    "ThreeMDViewer"
+  ],
+  "affected_paths": [
+    "web/viewer.html",
+    "uitests/viewer.spec.mjs",
+    "specs/ThreeMDViewer",
+    "docs/evidence/viewer-context"
+  ],
+  "no_spec_change": false,
+  "no_spec_change_rationale": null,
+  "acceptance_criteria": [
+    "Resize notifications defer and coalesce redraws without ResizeObserver errors; Slice Fit and 16x scrolling/editing keep a bounded visible bitmap; real WebGL loss pauses GPU work until restoration, then restores geometry and the preserved camera/source/slice; site imports the exact tested revision."
+  ],
+  "selected_artifacts": [
+    "context",
+    "requirements",
+    "plan",
+    "tasks",
+    "testing",
+    "docs"
+  ],
+  "dependencies": [],
+  "answers": {
+    "architecture_risk": "no",
+    "kind": "bug-fix",
+    "no_spec_change": "no",
+    "public_contract": "no"
+  }
+}
