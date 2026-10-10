@@ -1421,3 +1421,84 @@ test("Slice navigation finishes a touch stroke and ignores its late pointer move
   await openedFile(page,"one.3md").click();expect(await page.evaluate(()=>window.threeMd.source)).toBe(source.replace('...\n...','#..\n...'));
   await page.locator("#sliceUndo").click();expect(await page.evaluate(()=>window.threeMd.source)).toBe(source);
 });
+
+
+for (const density of [1, 2]) {
+  test(`shared cube drawable stays sharp through view/viewport changes at ${density}x density`, async ({ browser }) => {
+    const context = await browser.newContext({ viewport: { width: 390, height: 844 }, deviceScaleFactor: density });
+    try {
+      const page = await context.newPage();
+      await page.addInitScript(() => {
+        window.__cubeResolution = { contexts: 0, losses: 0, uploads: 0, allocations: 0 };
+        const original = HTMLCanvasElement.prototype.getContext;
+        HTMLCanvasElement.prototype.getContext = function(type, ...args) {
+          if (this.id === "cubeCanvas" && type === "webgl2") window.__cubeResolution.contexts++;
+          return original.call(this, type, ...args);
+        };
+        document.addEventListener("webglcontextlost", () => window.__cubeResolution.losses++, true);
+        const media = window.matchMedia.bind(window);
+        window.matchMedia = query => {
+          const result = media(query);
+          if (query.startsWith("(resolution:")) window.__cubeResolution.display = result;
+          return result;
+        };
+      });
+      await page.goto("/viewer.html"); await viewerReady(page);
+      await page.waitForFunction(() => document.getElementById("cubeCanvas").dataset.renderer === "webgl2");
+      await page.locator("#outline button").nth(1).click();
+      await page.locator('#axisButtons [data-axis="2"]').click();
+      await page.locator("#cubeCanvas").press("ArrowRight");
+      const source = await page.evaluate(() => window.threeMd.source);
+      const pose = await page.evaluate(() => {
+        const canvas = document.getElementById("cubeCanvas"), gl = canvas.__cubeGl;
+        window.__cubeResolution.gl = gl;
+        window.__cubeResolution.program = gl.getParameter(gl.CURRENT_PROGRAM);
+        const upload = gl.bufferSubData.bind(gl), allocate = gl.bufferData.bind(gl);
+        gl.bufferSubData = (...args) => { window.__cubeResolution.uploads++; return upload(...args); };
+        gl.bufferData = (...args) => { window.__cubeResolution.allocations++; return allocate(...args); };
+        return [canvas.dataset.rotation, canvas.dataset.yaw, canvas.dataset.pitch, canvas.dataset.panX, canvas.dataset.panY];
+      });
+      const sharp = async () => {
+        await expect.poll(() => page.evaluate(() => {
+          const canvas = document.getElementById("cubeCanvas"), gl = canvas.__cubeGl;
+          let w = Math.max(2, Math.floor(canvas.clientWidth * Math.min(devicePixelRatio, 2)));
+          let h = Math.max(2, Math.floor(canvas.clientHeight * Math.min(devicePixelRatio, 2)));
+          const limit = Math.min(1, 2048 / w, 2048 / h);
+          w = Math.max(2, Math.floor(w * limit)); h = Math.max(2, Math.floor(h * limit));
+          return canvas.width === w && canvas.height === h && gl?.drawingBufferWidth === w && gl?.drawingBufferHeight === h;
+        })).toBe(true);
+        const state = await page.evaluate(() => {
+          const canvas = document.getElementById("cubeCanvas"), gl = canvas.__cubeGl, receipt = window.__cubeResolution;
+          return { sameContext: gl === receipt.gl, sameProgram: gl?.getParameter(gl.CURRENT_PROGRAM) === receipt.program,
+            contexts: receipt.contexts, losses: receipt.losses, uploads: receipt.uploads, allocations: receipt.allocations,
+            pose: [canvas.dataset.rotation, canvas.dataset.yaw, canvas.dataset.pitch, canvas.dataset.panX, canvas.dataset.panY] };
+        });
+        expect(state).toEqual({ sameContext: true, sameProgram: true, contexts: 1, losses: 0, uploads: 0, allocations: 0, pose });
+        expect(await page.evaluate(() => window.threeMd.source)).toBe(source);
+        await expect(page.locator("#planeLive")).toHaveText("Plane 2 of 3: walls");
+      };
+      await sharp();
+      for (const viewport of [{ width: 1440, height: 1000 }, { width: 3200, height: 2000 }, { width: 390, height: 844 }]) {
+        await page.locator("#sliceTab").click(); await sharp();
+        await page.setViewportSize(viewport); await sharp();
+        await page.locator("#sliceExpand").click(); await sharp();
+      }
+      for (let i = 0; i < 3; i++) {
+        await page.locator("#sliceTab").click(); await sharp();
+        await page.locator("#cubesTab").click(); await sharp();
+      }
+      // A display-density change can leave the CSS size unchanged.
+      await page.evaluate(value => {
+        Object.defineProperty(window, "devicePixelRatio", { configurable: true, value });
+        window.__cubeResolution.display.dispatchEvent(new Event("change"));
+      }, density === 1 ? 2 : 1);
+      await sharp();
+      expect(await page.evaluate(() => window.__cubeResolution.display.media)).toBe(`(resolution: ${density === 1 ? 2 : 1}dppx)`);
+      await page.evaluate(value => {
+        Object.defineProperty(window, "devicePixelRatio", { configurable: true, value });
+        window.dispatchEvent(new Event("resize"));
+      }, density);
+      await sharp();
+    } finally { await context.close(); }
+  });
+}

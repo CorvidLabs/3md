@@ -1901,8 +1901,8 @@ title: Small sculpture
     }
     function initCubeGl(canvas) {
       if (cubeGpu.failed) return false;
-      // One context, created after the bitmap size is final. Resizing the bitmap
-      // or asking for the discrete GPU makes Safari drop the context.
+      // Keep one context and its installed resources. Drawable resizing is handled
+      // separately; avoid forcing a discrete GPU on Safari.
       const gl = canvas.getContext("webgl2", {
         alpha: false,
         antialias: true,
@@ -2155,12 +2155,11 @@ title: Small sculpture
       if (width < 2 || height < 2) return;
       bindCubeContext(canvas);
       const [bufferWidth, bufferHeight] = cubeBufferSize(width, height);
-      // Set the bitmap before the first getContext. Changing it later drops the
-      // Safari context, so a later layout change only updates the viewport.
-      if (!cubeGpu.gl) {
-        canvas.width = bufferWidth;
-        canvas.height = bufferHeight;
-      }
+      // A small Slice reference must not leave a low-resolution bitmap stretched
+      // across Cubes. Resize only changed drawable dimensions; keep the context,
+      // program and geometry installed, then redraw with the current camera.
+      if (canvas.width !== bufferWidth) canvas.width = bufferWidth;
+      if (canvas.height !== bufferHeight) canvas.height = bufferHeight;
       if (cubeGpu.gl && cubeGpu.gl.isContextLost()) {
         cubeGpu.gl = null;
         canvas.dataset.renderer = "lost";
@@ -2754,6 +2753,15 @@ title: Small sculpture
         if (["cubes", "slice"].includes(stage.dataset.show)) drawCubes();
       }).observe(cubeCanvas);
     }
+    const redrawForDisplay = () => {
+      if (["cubes", "slice"].includes(stage.dataset.show)) requestAnimationFrame(drawCubes);
+    };
+    window.addEventListener("resize", redrawForDisplay);
+    function watchPixelDensity() {
+      const display = matchMedia(`(resolution: ${window.devicePixelRatio || 1}dppx)`);
+      display.addEventListener("change", () => { watchPixelDensity(); redrawForDisplay(); }, { once: true });
+    }
+    watchPixelDensity();
     document.getElementById("cubeSample").addEventListener("click", () => {
       showOpened(openText(STARTER));
       documentURL();

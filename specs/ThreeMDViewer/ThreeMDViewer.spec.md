@@ -1,6 +1,6 @@
 ---
 module: ThreeMDViewer
-version: 16
+version: 17
 status: active
 files:
   - web/viewer.html
@@ -156,14 +156,13 @@ Acceptance Criteria:
 | 2026-10-10 | ThreeMDViewer change | Draw every cube face. Each cell is a solid cube. |
 | 2026-10-09 | agent:codex | Match Sculpt fill, glyph edges, gold selected-slice edges, background, document axes, and camera framing; retain one instanced draw and geometry reuse. |
 | 2026-10-09 | agent:codex | Compact the workspace, group document actions, add Fit and accessible camera/slice controls, and clarify empty and loading states under Leif’s request to continue improving UI and UX. The layout definition remains an unapproved draft. |
-
 | 2026-10-10 | agent:codex | Preserve file and composition drafts across navigation, expose edited state, and improve file filtering, keyboard navigation, mobile reveal, and current-document URLs in a follow-up PR after PR 92 merged. The definition remains an unapproved draft. |
-
 | 2026-10-10 | agent:codex | Preserve the slice across editor refresh, sort file paths for consistent keyboard navigation, and compact small-phone spacing. Leif approved the final scope; verification, acceptance, and archiving are pending. |
 | 2026-10-10 | SpecSync | put-edit-and-preview-in-the-same-viewer-panel-and-toggle-them-like-github-files-stay-on-the-left-edit-shows-first-below: Put Edit and Preview in the same viewer panel and toggle them like GitHub. Files stay on the left. Edit shows first. Below 900px, Files and the document take turns, and the document panel still switches Edit and Preview. |
 | 2026-10-10 | SpecSync | keep-sculpt-and-web-cube-cameras-in-parity-with-unrestricted-orbit-and-screen-space-pan: Keep Sculpt and web cube cameras in parity with unrestricted orbit and screen-space pan |
 | 2026-10-10 | SpecSync | bring-sculpt-slice-editing-to-the-browser-with-a-visual-grid-drawing-tools-undo-and-live-3d-reference: Bring Sculpt slice editing to the browser with a visual grid, drawing tools, undo and live 3D reference |
 | 2026-10-10 | SpecSync | add-matching-x-y-z-axis-rotation-gizmos-and-precise-camera-steps-to-sculpt-and-the-viewer: Add matching X Y Z axis rotation gizmos and precise camera steps to Sculpt and the viewer |
+| 2026-10-10 | agent:codex | Repair the frozen small drawable being stretched across Cubes after Slice or phone layout; update only changed bitmap dimensions and retain the context, geometry and camera. |
 
 ## Slice and precise camera parity
 

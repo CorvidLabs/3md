@@ -38,7 +38,7 @@ spec: ThreeMDViewer.spec.md
 - Sculpt was run locally and its Character orb compared in both live stages. Native and web screenshots are in `docs/evidence/viewer-sculpt-parity/`. This is agent visual verification, not Leif’s review or definition approval.
 
 - Leif directly requested continued UI and UX work on 2026-10-09. This covers the compact workspace and controls in the existing page scope; it does not record definition approval, human diff review, or a merge.
-- The canvas occupies the space above the camera strip. Framing and picking use its actual client dimensions; changing view or viewport still does not resize an established WebGL bitmap.
+- The canvas occupies the space above the camera strip. Framing and picking use its actual client dimensions; changing view or viewport updates the drawable to the displayed pane and capped device pixel ratio while retaining the established WebGL context and geometry.
 - Export and conversion actions use a native disclosure with natural button focus, Escape dismissal, and outside-click closure. The source download shortcut preserves editor focus.
 
 - PR 92 has merged. Leif requested a new fix PR for file navigation. Draft state belongs to the page and survives file and composition-entry switches within the current collection. It is not browser storage or a write to the source files. That follow-up was kept in draft until Leif's explicit 2026-10-10 scope approval.
@@ -58,3 +58,7 @@ Slice uses the native character palette `#@*+ox:=-`, Draw/Erase square brushes 1
 History is shared with source typing and attached to each draft state, including linked entries. It retains at most 100 snapshots per draft and 8 MiB across the current collection; no-op strokes add no entry. Pointer up, cancellation, lost capture and navigation finish the accepted transaction. Thumbnails, one-based coordinates, keyboard arrows/Space, explicit cell Apply, previous-slice ghosts and Fit/2x/4x/8x/16x grid zoom use the same state. The live reference reparents the existing WebGL canvas rather than allocating another context; 2D editing remains available without WebGL. Phone layouts scroll inside Slice with full-size touch targets.
 
 The volume camera shows colored X/Y/Z rings and Free/X/Y/Z constraints. A normalized quaternion composes document-axis rotation with continuous free orbit. Numerical rotation defaults to 15 degrees and pan to 0.25 cells, accepting only finite positive steps. Fit restores the default orientation and zero pan. Shared independent matrix-reference cases cover three-axis projection and picking; shared edit cases run through actual Sculpt workspaces and browser pointer gestures.
+
+## Shared 3D drawable resolution repair
+
+The previous frozen bitmap could initialize at 368x322 in a small view and stretch to 1099x911 after expansion. Drawable dimensions now follow the visible pane at up to 2x pixel density with the existing proportional 2048-edge cap. Only changed dimensions are assigned; context, GPU resources, pose and source remain installed. Chromium/WebKit density 1/2 regressions exercise phone, reference, full stage and capped large sizes.
