@@ -82,3 +82,7 @@ Pinned Trust passed at implementation `95c1213` with Augur review risk 36 and co
 ## Documentation examples
 
 Verify README and guide links resolve to existing source examples, direct viewer links use supported GitHub locators for binary, and hosted docs expose the Viewer anchor with the existing styles. Parse both generated docs mirrors, require an identical VIEWER plane, and check that they remain equal. Check live example destinations and inspect the local hosted-docs section. The two current loader gaps are documented rather than claimed repaired.
+
+## Canvas lifecycle repair
+
+High-zoom scrolled-cell painting/undo and genuine WEBGL_lose_context loss/restore regressions live in uitests/viewer.spec.mjs. Assert bounded visible bitmaps, no observer errors, no repeated context acquisition or bitmap resizing while lost, then restored drawing and unchanged pose/source/slice. Retain resolution and native-camera projection regressions.

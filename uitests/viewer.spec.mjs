@@ -1502,3 +1502,60 @@ for (const density of [1, 2]) {
     } finally { await context.close(); }
   });
 }
+
+test("Slice high zoom bounds its bitmap and paints the scrolled cell exactly", async ({ page }) => {
+  const errors = []; page.on("pageerror", error => errors.push(error.message));
+  const rows = Array.from({ length: 64 }, () => ".".repeat(64)), source = sliceSource([rows]);
+  await openSlice(page, source); await page.locator('#sliceZoom [data-zoom="16"]').click();
+  const unit = Number(await page.locator("#sliceGrid").getAttribute("data-cell-size"));
+  await page.locator("#sliceScroll").evaluate((scroll, unit) => { scroll.scrollLeft = unit * 20; scroll.scrollTop = unit * 30; }, unit);
+  await expect.poll(() => page.locator("#sliceGrid").getAttribute("data-offset-x")).toBe(String(unit * 20));
+  await expect.poll(() => page.locator("#sliceGrid").getAttribute("data-offset-y")).toBe(String(unit * 30));
+  const size = await page.locator("#sliceGrid").evaluate(canvas => ({
+    bitmap: [canvas.width, canvas.height], visible: [canvas.clientWidth, canvas.clientHeight],
+    scroll: [document.getElementById("sliceScroll").clientWidth, document.getElementById("sliceScroll").clientHeight],
+    surface: [document.getElementById("sliceSurface").clientWidth, document.getElementById("sliceSurface").clientHeight],
+  }));
+  expect(Math.max(...size.bitmap)).toBeLessThanOrEqual(2048);
+  expect(size.visible[0]).toBeLessThanOrEqual(size.scroll[0]); expect(size.visible[1]).toBeLessThanOrEqual(size.scroll[1]);
+  expect(size.surface[0]).toBeGreaterThan(size.bitmap[0]);
+  const box = await page.locator("#sliceGrid").boundingBox(); await page.mouse.click(box.x + unit / 2, box.y + unit / 2);
+  const expected = [...rows]; expected[30] = ".".repeat(20) + "#" + ".".repeat(43);
+  expect(await page.evaluate(() => window.threeMd.source)).toBe(sliceSource([expected]));
+  await page.locator("#sliceUndo").click(); expect(await page.evaluate(() => window.threeMd.source)).toBe(source);
+  await page.locator('#sliceZoom [data-zoom="1"]').click();
+  await expect.poll(() => page.locator("#sliceGrid").getAttribute("data-offset-x")).toBe("0"); expect(errors).toEqual([]);
+});
+
+test("lost WebGL waits for restoration without resize allocations or retries", async ({ page }) => {
+  await page.addInitScript(() => {
+    window.__contextCalls = 0; const get = HTMLCanvasElement.prototype.getContext;
+    HTMLCanvasElement.prototype.getContext = function(type, ...args) {
+      if (this.id === "cubeCanvas" && type === "webgl2") window.__contextCalls++;
+      return get.call(this, type, ...args);
+    };
+  });
+  await page.goto("/viewer.html"); await viewerReady(page);
+  await expect(page.locator("#cubeCanvas")).toHaveAttribute("data-renderer", "webgl2");
+  await page.locator("#cubeCanvas").press("ArrowRight"); await page.locator("#outline button").nth(1).click();
+  const pose = await page.locator("#cubeCanvas").evaluate(c => [c.dataset.yaw,c.dataset.pitch,c.dataset.rotation,c.dataset.panX,c.dataset.panY]);
+  const source = await page.evaluate(() => window.threeMd.source);
+  expect(await page.evaluate(() => {
+    window.__lose = document.getElementById("cubeCanvas").__cubeGl.getExtension("WEBGL_lose_context");
+    window.__lose?.loseContext(); return Boolean(window.__lose);
+  })).toBe(true);
+  await expect(page.locator("#cubeCanvas")).toHaveAttribute("data-renderer", "lost");
+  const bitmap = await page.locator("#cubeCanvas").evaluate(c => [c.width,c.height]);
+  await page.locator("#sliceTab").click(); await page.setViewportSize({width:950,height:720});
+  await page.evaluate(() => { const c=document.getElementById("cubeCanvas"); for(let i=0;i<50;i++) c.dispatchEvent(new Event("threemd-cubes")); });
+  expect(await page.evaluate(() => window.__contextCalls)).toBe(1);
+  expect(await page.locator("#cubeCanvas").evaluate(c => [c.width,c.height])).toEqual(bitmap);
+  await expect(page.locator("#sliceReferenceNote")).toContainText("recovery");
+  await page.evaluate(() => window.__lose.restoreContext());
+  await expect(page.locator("#cubeCanvas")).toHaveAttribute("data-renderer", "webgl2");
+  expect(await page.evaluate(() => window.__contextCalls)).toBe(2);
+  expect(await page.locator("#cubeCanvas").evaluate(c => [c.dataset.yaw,c.dataset.pitch,c.dataset.rotation,c.dataset.panX,c.dataset.panY])).toEqual(pose);
+  expect(await page.evaluate(() => window.threeMd.source)).toBe(source);
+  await expect(page.locator("#sliceHeading")).toHaveText("Slice 2 of 3");
+  await page.locator("#sliceExpand").click(); await expect(page.locator("#cubeCanvas")).toHaveAttribute("data-renderer", "webgl2");
+});

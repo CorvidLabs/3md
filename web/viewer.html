@@ -351,10 +351,11 @@
   .slice-zoom{display:flex;gap:4px;align-items:center;flex-wrap:wrap;font-size:11px;color:var(--text-faint)}
   .slice-zoom button{padding:5px 9px;min-height:34px}
   .slice-scroll{overflow:auto;flex:1;min-height:150px;background:#161d20;border:1px solid var(--hairline);border-radius:6px}
-  #sliceGrid{display:block;touch-action:none;outline-offset:-3px;margin:auto}
+  #sliceSurface{position:relative;margin:auto}
+  #sliceGrid{position:absolute;display:block;touch-action:none;outline-offset:-3px}
   .slice-tools{display:flex;flex-direction:column;gap:12px;overflow:auto;min-height:0;font-size:12px}
   .slice-reference{height:170px;position:relative;flex-shrink:0;background:#11161a;border-radius:8px;overflow:hidden}
-  .slice-reference #cubeCanvas{display:block;width:100%;height:100%;min-height:0}
+  .slice-reference #cubeCanvas{position:absolute;inset:0;display:block;width:100%;height:100%;min-height:0}
   .slice-reference-note{font-size:11px;line-height:1.4;color:var(--text-faint);margin:0}
   .slice-buttons{display:flex;gap:4px;flex-wrap:wrap}
   .slice-buttons button{min-height:40px;padding:7px 10px}
@@ -513,7 +514,7 @@
             <div class="slice-main">
               <div class="slice-heading"><strong id="sliceHeading">Slice 1</strong><span id="sliceCoordinates">X 1 · Y 1</span></div>
               <div class="slice-zoom" id="sliceZoom"><span>Grid zoom</span><button class="btn" data-zoom="1" aria-pressed="true">Fit</button><button class="btn" data-zoom="2" aria-pressed="false">2x</button><button class="btn" data-zoom="4" aria-pressed="false">4x</button><button class="btn" data-zoom="8" aria-pressed="false">8x</button><button class="btn" data-zoom="16" aria-pressed="false">16x</button></div>
-              <div id="sliceScroll" class="slice-scroll"><canvas id="sliceGrid" tabindex="0" role="grid" aria-label="Slice character grid" aria-describedby="sliceKeyboard sliceCoordinates"></canvas></div>
+              <div id="sliceScroll" class="slice-scroll"><div id="sliceSurface"><canvas id="sliceGrid" tabindex="0" role="grid" aria-label="Slice character grid" aria-describedby="sliceKeyboard sliceCoordinates"></canvas></div></div>
               <label class="slice-previous"><input type="checkbox" id="slicePrevious">Show previous slice</label>
               <p id="sliceKeyboard" class="slice-hint">Arrow keys select a cell. Space applies the current tool.</p>
             </div>
@@ -1798,6 +1799,7 @@ title: Small sculpture
       volume: null,
       count: 0,
       failed: false,
+      lost: false,
     };
     const cubePick = { eye: null, width: 0, height: 0, points: [] };
     function mul4(a, b) {
@@ -1884,6 +1886,7 @@ title: Small sculpture
       cubeGpu.bound = true;
       canvas.addEventListener("webglcontextlost", (event) => {
         event.preventDefault();
+        cubeGpu.lost = true;
         cubeGpu.gl = null;
         cubeGpu.program = null;
         cubeGpu.vao = null;
@@ -1895,12 +1898,14 @@ title: Small sculpture
         showCubeUnavailable();
       });
       canvas.addEventListener("webglcontextrestored", () => {
-        requestAnimationFrame(drawCubes);
+        cubeGpu.lost = false;
+        cubeGpu.failed = false;
+        queueViewerDraw();
       });
       canvas.addEventListener("threemd-cubes", () => drawCubes());
     }
     function initCubeGl(canvas) {
-      if (cubeGpu.failed) return false;
+      if (cubeGpu.failed || cubeGpu.lost) return false;
       // Keep one context and its installed resources. Drawable resizing is handled
       // separately; avoid forcing a discrete GPU on Safari.
       const gl = canvas.getContext("webgl2", {
@@ -2117,7 +2122,12 @@ title: Small sculpture
     }
     function showCubeUnavailable() {
       document.getElementById("cubesEmpty").hidden = false;
-      document.getElementById("cubeEmptyText").textContent = "The cube stage needs WebGL2. Read this document in Preview, or try reopening it in a browser with GPU support.";
+      document.getElementById("cubeEmptyText").textContent = cubeGpu.lost
+        ? "The 3D view is waiting for graphics recovery. Your document is safe; Preview and Slice editing are available."
+        : "The cube stage needs WebGL2. Read this document in Preview, or try reopening it in a browser with GPU support.";
+      document.getElementById("sliceReferenceNote").textContent = cubeGpu.lost
+        ? "3D reference is waiting for graphics recovery. Slice editing is available."
+        : "3D reference needs WebGL2. Slice editing is available.";
       document.getElementById("cubeSample").hidden = true;
       document.getElementById("cubeTools").hidden = true;
     }
@@ -2154,18 +2164,20 @@ title: Small sculpture
       const height = canvas.clientHeight;
       if (width < 2 || height < 2) return;
       bindCubeContext(canvas);
+      // A lost context cannot be recovered by resizing or getContext(). Wait for
+      // webglcontextrestored before allocating drawables or rebuilding resources.
+      if (cubeGpu.lost || cubeGpu.gl?.isContextLost()) {
+        cubeGpu.lost = true;
+        canvas.dataset.renderer = "lost";
+        showCubeUnavailable();
+        return;
+      }
       const [bufferWidth, bufferHeight] = cubeBufferSize(width, height);
       // A small Slice reference must not leave a low-resolution bitmap stretched
       // across Cubes. Resize only changed drawable dimensions; keep the context,
       // program and geometry installed, then redraw with the current camera.
       if (canvas.width !== bufferWidth) canvas.width = bufferWidth;
       if (canvas.height !== bufferHeight) canvas.height = bufferHeight;
-      if (cubeGpu.gl && cubeGpu.gl.isContextLost()) {
-        cubeGpu.gl = null;
-        canvas.dataset.renderer = "lost";
-        showCubeUnavailable();
-        return;
-      }
       if (!cubeGpu.gl && !initCubeGl(canvas)) {
         if (canvas.dataset.renderer !== "lost") canvas.dataset.renderer = "none";
         if (cubeGpu.error) canvas.dataset.glError = cubeGpu.error.slice(0, 240);
@@ -2269,6 +2281,7 @@ title: Small sculpture
     const sliceUI = { tool: "draw", glyph: "#", size: 1, zoom: 1, previous: false, profile: null, text: null, stroke: null, cellSize: 1 };
     const sliceCanvas = document.getElementById("sliceGrid");
     const sliceScroll = document.getElementById("sliceScroll");
+    const sliceSurface = document.getElementById("sliceSurface");
     const slicePalette = "#@*+ox:=-";
     function sliceProfile(text) {
       const unavailable = (message) => ({ message, grids: [] });
@@ -2340,14 +2353,33 @@ title: Small sculpture
       }
       const fit = Math.max(2, Math.floor(Math.min(Math.max(1, sliceScroll.clientWidth - 2) / profile.width, Math.max(1, sliceScroll.clientHeight - 2) / profile.height)));
       const unit = fit * sliceUI.zoom; sliceUI.cellSize = unit;
-      sliceCanvas.width = Math.ceil(profile.width * unit); sliceCanvas.height = Math.ceil(profile.height * unit);
-      sliceCanvas.style.width = sliceCanvas.width + "px"; sliceCanvas.style.height = sliceCanvas.height + "px";
+      // The surface provides the full scroll range; only the visible cells have
+      // a bitmap. A 16x grid must not allocate hundreds of megabytes of pixels.
+      const gridWidth = profile.width * unit, gridHeight = profile.height * unit;
+      sliceSurface.style.width = gridWidth + "px"; sliceSurface.style.height = gridHeight + "px";
+      const width = Math.max(1, Math.min(gridWidth, sliceScroll.clientWidth));
+      const height = Math.max(1, Math.min(gridHeight, sliceScroll.clientHeight));
+      const offsetX = Math.min(sliceScroll.scrollLeft, Math.max(0, gridWidth - width));
+      const offsetY = Math.min(sliceScroll.scrollTop, Math.max(0, gridHeight - height));
+      const [bufferWidth, bufferHeight] = cubeBufferSize(width, height);
+      if (sliceCanvas.width !== bufferWidth) sliceCanvas.width = bufferWidth;
+      if (sliceCanvas.height !== bufferHeight) sliceCanvas.height = bufferHeight;
+      sliceCanvas.style.width = width + "px"; sliceCanvas.style.height = height + "px";
+      sliceCanvas.style.left = offsetX + "px"; sliceCanvas.style.top = offsetY + "px";
+      sliceUI.offsetX = offsetX; sliceUI.offsetY = offsetY;
+      sliceCanvas.dataset.offsetX = offsetX; sliceCanvas.dataset.offsetY = offsetY;
+      sliceCanvas.dataset.cellSize = unit;
       sliceCanvas.dataset.x = cell[0]; sliceCanvas.dataset.y = cell[1]; sliceCanvas.dataset.slice = z;
       sliceCanvas.setAttribute("aria-rowcount", profile.height); sliceCanvas.setAttribute("aria-colcount", profile.width);
       sliceCanvas.setAttribute("aria-label", `Slice ${z + 1} character grid, X ${cell[0] + 1}, Y ${cell[1] + 1}, ${sliceUI.tool} with ${sliceUI.glyph}`);
       const ctx = sliceCanvas.getContext("2d");
+      ctx.setTransform(1, 0, 0, 1, 0, 0); ctx.clearRect(0, 0, bufferWidth, bufferHeight);
+      const scaleX = bufferWidth / width, scaleY = bufferHeight / height;
+      ctx.setTransform(scaleX, 0, 0, scaleY, -offsetX * scaleX, -offsetY * scaleY);
       ctx.font = `${Math.max(7, unit * 0.6)}px Spline Sans Mono, monospace`; ctx.textAlign = "center"; ctx.textBaseline = "middle";
       profile.grids[z].values.forEach((row, y) => row.forEach((glyph, x) => {
+        if ((x + 1) * unit <= offsetX || x * unit >= offsetX + width
+          || (y + 1) * unit <= offsetY || y * unit >= offsetY + height) return;
         ctx.fillStyle = (x + y) % 2 ? "#202729" : "#1c2325"; ctx.fillRect(x * unit, y * unit, unit - 0.5, unit - 0.5);
         if (glyph !== "." && glyph !== " ") { ctx.fillStyle = "#e3eeed"; ctx.fillText(glyph, (x + 0.5) * unit, (y + 0.5) * unit); }
         else if (sliceUI.previous && z > 0) {
@@ -2365,7 +2397,7 @@ title: Small sculpture
       document.getElementById("slicePalette").hidden = sliceUI.tool === "erase";
       document.getElementById("sliceSize").hidden = sliceUI.tool === "fill";
       document.getElementById("sliceToolHint").textContent = sliceUI.tool === "fill" ? "Fill a connected region of matching characters." : sliceUI.tool === "erase" ? "Drag to erase from this slice." : `Drag to draw with ${sliceUI.glyph}.`;
-      document.getElementById("sliceReferenceNote").textContent = document.getElementById("cubeCanvas").dataset.renderer === "none" ? "3D reference needs WebGL2. Slice editing is available." : profile.occupied ? "Drag the reference to orbit. Scroll to zoom." : "Draw a character to see it in 3D.";
+      document.getElementById("sliceReferenceNote").textContent = cubeGpu.lost ? "3D reference is waiting for graphics recovery. Slice editing is available." : document.getElementById("cubeCanvas").dataset.renderer === "none" ? "3D reference needs WebGL2. Slice editing is available." : profile.occupied ? "Drag the reference to orbit. Scroll to zoom." : "Draw a character to see it in 3D.";
     }
     function sliceLine(start, end) {
       let [x, y] = start; const dx = Math.abs(end[0] - x), dy = -Math.abs(end[1] - y), sx = x < end[0] ? 1 : -1, sy = y < end[1] ? 1 : -1;
@@ -2429,7 +2461,7 @@ title: Small sculpture
     function sliceCellAt(event) {
       const rect = sliceCanvas.getBoundingClientRect(), profile = currentSliceProfile();
       if (profile.message) return null;
-      const x = Math.floor((event.clientX - rect.left) / sliceUI.cellSize), y = Math.floor((event.clientY - rect.top) / sliceUI.cellSize);
+      const x = Math.floor((event.clientX - rect.left + sliceUI.offsetX) / sliceUI.cellSize), y = Math.floor((event.clientY - rect.top + sliceUI.offsetY) / sliceUI.cellSize);
       return x >= 0 && y >= 0 && x < profile.width && y < profile.height ? [x, y] : null;
     }
     sliceCanvas.addEventListener("pointerdown", (event) => {
@@ -2494,7 +2526,21 @@ title: Small sculpture
       event.preventDefault(); const index = event.key === "Home" ? 0 : event.key === "End" ? buttons.length - 1 : Math.max(0, Math.min(buttons.length - 1, current + (["ArrowUp", "ArrowLeft"].includes(event.key) ? -1 : 1)));
       finishSliceStroke(); lab.goTo(index); drawSlice(); document.getElementById("sliceList").children[index]?.focus();
     });
-    new ResizeObserver(() => drawSlice()).observe(sliceScroll);
+    // Observer callbacks only queue work. Mutating layout during notification
+    // delivery causes ResizeObserver loop errors, especially around scrollbars.
+    let viewerDrawQueued = false;
+    function queueViewerDraw() {
+      if (viewerDrawQueued) return;
+      viewerDrawQueued = true;
+      requestAnimationFrame(() => {
+        viewerDrawQueued = false;
+        const pane = document.getElementById("stage").dataset.show;
+        if (pane === "slice") drawSlice();
+        if (["cubes", "slice"].includes(pane)) drawCubes();
+      });
+    }
+    if (window.ResizeObserver) new ResizeObserver(queueViewerDraw).observe(sliceScroll);
+    sliceScroll.addEventListener("scroll", queueViewerDraw, { passive: true });
 
     const grid = document.getElementById("grid");
     const stage = document.getElementById("stage");
@@ -2749,13 +2795,9 @@ title: Small sculpture
       else zoomCubes(Math.exp(-Math.max(-500, Math.min(500, event.deltaY * unit)) * 0.002));
     }, { passive: false });
     if (window.ResizeObserver) {
-      new ResizeObserver(() => {
-        if (["cubes", "slice"].includes(stage.dataset.show)) drawCubes();
-      }).observe(cubeCanvas);
+      new ResizeObserver(queueViewerDraw).observe(cubeCanvas);
     }
-    const redrawForDisplay = () => {
-      if (["cubes", "slice"].includes(stage.dataset.show)) requestAnimationFrame(drawCubes);
-    };
+    const redrawForDisplay = queueViewerDraw;
     window.addEventListener("resize", redrawForDisplay);
     function watchPixelDensity() {
       const display = matchMedia(`(resolution: ${window.devicePixelRatio || 1}dppx)`);
