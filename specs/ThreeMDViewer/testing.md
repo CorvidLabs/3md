@@ -86,3 +86,9 @@ Verify README and guide links resolve to existing source examples, direct viewer
 ## Canvas lifecycle repair
 
 High-zoom scrolled-cell painting/undo and genuine WEBGL_lose_context loss/restore regressions live in uitests/viewer.spec.mjs. Assert bounded visible bitmaps, no observer errors, no repeated context acquisition or bitmap resizing while lost, then restored drawing and unchanged pose/source/slice. Retain resolution and native-camera projection regressions.
+
+## Expanded viewer coverage
+
+The viewer suite now visits all 293 text examples across 48 axes through Cubes, Slice and Preview, opens all four binary samples through file input, retains embedded entries, and verifies four linked local-folder drafts. Desktop and phone boundary cases cover empty/single cells, 64-cell skinny grids, 4000/4096 occupied cells, 64/65 grid edges, 256/257 planes and the 1.5 MiB source limit. Unsupported Slice grids explain their refusal while preserving source and Preview. Details and actual live GitHub-folder/binary observations are in `docs/evidence/viewer-context/README.md`.
+
+2026-10-10 expanded complete suite: 242 Chromium/WebKit tests passed in 2.7 minutes, two workers, no skips or retries. The four new cases separately passed in both engines. These are agent checks, not human acceptance or live deployment.

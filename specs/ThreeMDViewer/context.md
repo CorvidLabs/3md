@@ -70,3 +70,5 @@ README and `docs/VIEWER.md` provide GitHub-backed text, binary, composition and 
 ## Canvas lifecycle repair
 
 Resize observers queue a single animation-frame redraw. The Slice surface provides virtual scroll extents while its bitmap covers only visible cells, at capped display density. Context loss suspends GPU allocation/drawing until restoration; drafts, camera and slice remain application state.
+
+The expanded viewer regression set covers all catalog documents and supported local binary/composition/folder inputs, with explicit phone/desktop size boundaries. Preview supports prose documents; only matching rectangular sculpture grids qualify for Slice. Test expansion does not change the shared runtime or the site's d2e875e pin.

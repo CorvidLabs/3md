@@ -53,3 +53,5 @@ spec: ThreeMDViewer.spec.md
 
 - [x] Document current viewer workflows, direct examples, binary distinctions and loading limits in README and a viewer guide.
 - [x] Add the guide to hosted documentation navigation and the selected-docs bundle.
+
+- [x] Add and verify every text catalog example, local binary/composition/folder inputs and desktop/phone size-boundary regressions requested by Leif.
