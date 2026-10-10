@@ -72,7 +72,7 @@
     background-image:linear-gradient(var(--ink-06) 1px,transparent 1px),linear-gradient(90deg,var(--ink-06) 1px,transparent 1px);
     background-size:40px 40px;min-height:100vh}
   a{color:var(--sheen);text-decoration:none} a:hover{text-decoration:underline}
-  .wrap{max-width:1320px;margin:0 auto;padding:18px 18px 64px}
+  .wrap{max-width:1320px;margin:0 auto;padding:12px 18px 12px;height:100vh;box-sizing:border-box;display:flex;flex-direction:column}
   .topbar{display:flex;align-items:center;justify-content:space-between;padding:6px 0 18px}
   .brand{display:flex;align-items:center;gap:10px;font-size:13px;letter-spacing:.04em;color:var(--ink)}
   .brand svg{width:24px;height:24px;color:var(--ink)}
@@ -125,13 +125,13 @@
   .pointform{display:flex;gap:8px;margin:0 0 14px}
   .pointform input{flex:1;min-width:0;font:inherit;font-size:14px;padding:8px 12px;border:1px solid var(--hairline);border-radius:4px;background:var(--surface);color:var(--ink)}
   .pointform input:focus-visible{outline:2px solid var(--sheen);outline-offset:2px}
-  .grid{display:grid;grid-template-columns:minmax(180px,240px) minmax(0,1fr);gap:16px;align-items:stretch}
-  .filelist{overflow:auto;flex:1;min-height:240px}
+  .grid{display:grid;grid-template-columns:minmax(180px,240px) minmax(0,1fr);gap:16px;align-items:stretch;flex:1;min-height:0}
+  .filelist{overflow:auto;flex:1;min-height:0}
   .filelist button,.filelist .empty{display:block;width:100%;text-align:left;font:inherit;font-size:12px;font-family:var(--code-font);padding:7px 12px;border:0;border-bottom:1px solid var(--hairline);background:transparent;color:var(--ink)}
   .filelist button{cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   .filelist button:hover,.filelist button:focus-visible,.filelist button[aria-current="true"]{background:color-mix(in srgb,var(--sheen) 12%,var(--surface));outline:none}
   .filelist .empty{color:var(--text-faint)}
-  .grid>*{min-width:0}
+  .grid>*{min-width:0;min-height:0}
   /* The primary share action is anchored to the right edge of the toolbar so the
      primary/secondary hierarchy survives wrapping. */
   .toolbar .primary{margin-left:auto}
@@ -151,8 +151,11 @@
   .stage[data-show="cubes"] .editor,
   .stage[data-show="cubes"] .viewer{display:none}
   .stage .bar{flex-wrap:wrap}
-  .stage .viewer{flex:1;min-height:560px}
-  .stage .cubes{flex:1;min-height:420px;height:calc(100vh - 250px);max-height:820px}
+  .stage{min-height:0}
+  .stage .viewer,
+  .stage .cubes{flex:1;min-height:0}
+  .stage .viewer{overflow:hidden;--three-md-height:100%}
+  .stage .viewer three-md{display:block;height:100%}
   #lab::part(play){display:none}
   @media(max-width:900px){
     .grid{grid-template-columns:1fr}
@@ -185,7 +188,7 @@
   .badge .dot{width:6px;height:6px;border-radius:50%;background:currentColor}
 
   /* ---- code editor (gutter + highlight backdrop + transparent textarea) ---- */
-  .editor{position:relative;flex:1;min-height:560px;overflow:hidden}
+  .editor{position:relative;flex:1;min-height:0;overflow:hidden}
   .backdrop{position:absolute;inset:0;overflow:hidden;margin:0;pointer-events:none;background:
     linear-gradient(90deg,var(--ink-06) 0,var(--ink-06) var(--gutter),transparent var(--gutter))}
   .hl{margin:0;counter-reset:ln;color:var(--ink)}
@@ -223,7 +226,7 @@
   three-md{--three-md-accent:var(--sheen);--three-md-bg:var(--surface-strong);--three-md-surface:var(--surface);--three-md-error:var(--danger);
     --three-md-text:var(--ink);--three-md-muted:var(--text-muted);--three-md-faint:var(--text-faint);
     --three-md-hairline:var(--hairline);--three-md-height:480px;--three-md-display:var(--font-display)}
-  .outline{display:flex;gap:6px;flex-wrap:wrap;padding:10px 13px;border-top:1px solid var(--hairline);
+  .outline{position:relative;z-index:2;display:flex;gap:6px;flex-wrap:wrap;padding:10px 13px;border-top:1px solid var(--hairline);
     max-height:120px;overflow:auto}
   .outline:empty{display:none}
   .ochip{font:inherit;font-size:11px;color:var(--text-muted);background:var(--surface-strong,var(--surface));
@@ -269,7 +272,7 @@
 
     <div class="head">
       <h1>3md viewer<span class="z">.</span></h1>
-      <p class="lead">Point at a public GitHub repo, folder, or file, or open one on this computer. Files stay on the left. Edit, the plane preview, and Cubes share one panel. Search reads every line. <a href="docs.html">docs</a> &middot; <a href="gallery.html">gallery</a></p>
+      <p class="lead">Point at a public GitHub repo, folder, or file, or open one on this computer. Files stay on the left. Cubes are on the stage. Edit and Preview are the other views of that same panel. Search reads every line. <a href="docs.html">docs</a> &middot; <a href="gallery.html">gallery</a></p>
     </div>
 
     <div class="toolbar">
@@ -313,12 +316,12 @@
         <div class="bar"><span id="filesTitle">files</span></div>
         <div id="fileList" class="filelist" role="listbox" aria-label="opened files"></div>
       </div>
-      <div class="pane stage" id="stage" data-show="edit">
+      <div class="pane stage" id="stage" data-show="cubes">
         <div class="bar">
           <div class="editpreview" role="tablist" aria-label="Edit or preview">
-            <button class="pstab" id="editTab" type="button" role="tab" data-pane="edit" aria-selected="true" aria-controls="editorWrap">Edit</button>
+            <button class="pstab" id="editTab" type="button" role="tab" data-pane="edit" aria-selected="false" aria-controls="editorWrap">Edit</button>
             <button class="pstab" id="previewTab" type="button" role="tab" data-pane="preview" aria-selected="false" aria-controls="previewPane">Preview</button>
-            <button class="pstab" id="cubesTab" type="button" role="tab" data-pane="cubes" aria-selected="false" aria-controls="cubesPane">Cubes</button>
+            <button class="pstab" id="cubesTab" type="button" role="tab" data-pane="cubes" aria-selected="true" aria-controls="cubesPane">Cubes</button>
           </div>
           <span class="right editmeta"><span id="sourceName">source.3md</span><span id="cursor">Ln 1, Col 1</span><span id="counts"></span></span>
           <span class="right previewmeta"><span id="validBadge" class="badge"><span class="dot"></span><span id="validText">&mdash;</span></span></span>
@@ -359,20 +362,45 @@
     window.threeMdOpen = { openBytes, openText, openFileSet, sectionsToDocument, packDocuments, kind2Bytes, loadGitHubPoint, parseGitHubLocator };
     const STARTER = `---
 3md: 1.0
-axis: time
-title: My first 3md
+axis: layer
+title: Small sculpture
 ---
-Write your own .3md here, or pick an example above. Switch to Preview to see it.
 
-@plane z=0 label="Monday"
-# Monday
-- [ ] Try the 3md viewer
-- [x] Learn the format in one screen
-See [[z=1|Tuesday]] for what's next.
+@plane z=0 label="floor"
+\`\`\`
+########
+########
+########
+########
+########
+########
+########
+########
+\`\`\`
 
-@plane z=1 label="Tuesday"
-# Tuesday
-- [ ] Share a link to this document
+@plane z=1 label="walls"
+\`\`\`
+########
+#......#
+#..oo..#
+#..oo..#
+#......#
+#..**..#
+#......#
+########
+\`\`\`
+
+@plane z=2 label="roof"
+\`\`\`
+........
+.######.
+..####..
+...##...
+...##...
+..####..
+.######.
+........
+\`\`\`
 `;
 
     const ed = document.getElementById("editor");
@@ -1255,6 +1283,7 @@ See [[z=1|Tuesday]] for what's next.
         ed.value = STARTER;
       }
       render(); updateCursor();
+      requestAnimationFrame(() => requestAnimationFrame(drawCubes));
       if (loadError) {
         status.className = "status err"; status.textContent = loadError;
         document.body.dataset.loadError = "true";

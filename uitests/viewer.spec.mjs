@@ -7,7 +7,50 @@ async function viewerReady(page) {
   await page.waitForFunction(() => document.getElementById("lab")?.shadowRoot?.querySelectorAll(".plane").length > 0);
 }
 
+async function showEditor(page) {
+  if (await page.locator("#editor").isVisible()) return;
+  await page.click("#editTab");
+}
+
 test.describe("viewer & editor (viewer.html)", () => {
+  test("opening the page shows lit cubes in the window", async ({ page }) => {
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await page.goto("/viewer.html");
+    await viewerReady(page);
+    await page.waitForFunction(() => {
+      const canvas = document.getElementById("cubeCanvas");
+      return canvas.dataset.renderer === "webgl2" && Number(canvas.dataset.cubes) > 8;
+    });
+    const seen = await page.evaluate(() => {
+      const canvas = document.getElementById("cubeCanvas");
+      const rect = canvas.getBoundingClientRect();
+      const gl = canvas.getContext("webgl2");
+      const ratio = canvas.width / Math.max(rect.width, 1);
+      const row = Math.max(0, Math.min(canvas.height - 1, Math.floor((rect.height / 2) * ratio)));
+      const pixels = new Uint8Array(canvas.width * 4);
+      gl.readPixels(0, row, canvas.width, 1, gl.RGBA, gl.UNSIGNED_BYTE, pixels);
+      let lit = 0;
+      for (let i = 0; i < pixels.length; i += 4) {
+        if (pixels[i] + pixels[i + 1] + pixels[i + 2] > 140) lit++;
+      }
+      return {
+        show: document.getElementById("stage").dataset.show,
+        top: rect.top,
+        bottom: rect.bottom,
+        height: rect.height,
+        lit,
+        cubes: Number(canvas.dataset.cubes),
+        viewH: window.innerHeight,
+      };
+    });
+    expect(seen.show).toBe("cubes");
+    expect(seen.height).toBeGreaterThan(80);
+    expect(seen.top).toBeGreaterThanOrEqual(0);
+    expect(seen.bottom).toBeLessThanOrEqual(seen.viewH + 1);
+    expect(seen.cubes).toBeGreaterThan(8);
+    expect(seen.lit).toBeGreaterThan(30);
+  });
+
   test("renders the starter document with no console errors", async ({ page }) => {
     const errors = [];
     page.on("console", (m) => { if (m.type() === "error") errors.push(m.text()); });
@@ -22,6 +65,7 @@ test.describe("viewer & editor (viewer.html)", () => {
   test("editing the source re-renders live", async ({ page }) => {
     await page.goto("/viewer.html");
     await viewerReady(page);
+    await showEditor(page);
     const doc = `---\n3md: 1.0\naxis: layer\ntitle: Edited\n---\n@plane z=0 label="a"\n# A\n@plane z=1 label="b"\n# B\n@plane z=2 label="c"\n# C\n`;
     await page.fill("#editor", doc);
     await page.waitForTimeout(350);
@@ -37,6 +81,7 @@ test.describe("viewer & editor (viewer.html)", () => {
     page.on("pageerror", (e) => errors.push(String(e)));
     await page.goto("/viewer.html");
     await viewerReady(page);
+    await showEditor(page);
     await page.fill("#editor", "this is not a valid 3md document");
     await page.waitForTimeout(350);
     const status = await page.textContent("#status");
@@ -62,6 +107,10 @@ test.describe("viewer & editor (viewer.html)", () => {
   test("editor highlights syntax and numbers every line", async ({ page }) => {
     await page.goto("/viewer.html");
     await viewerReady(page);
+    await showEditor(page);
+    await page.evaluate(() => {
+      window.threeMd.set("---\n3md: 1.0\naxis: time\ntitle: Monday\n---\n@plane z=0\nSee [[z=1|Tuesday]]\n");
+    });
     const r = await page.evaluate(() => {
       const hl = document.getElementById("hl");
       const ed = document.getElementById("editor");
@@ -86,6 +135,7 @@ test.describe("viewer & editor (viewer.html)", () => {
   test("Tab indents and Enter continues a list", async ({ page }) => {
     await page.goto("/viewer.html");
     await viewerReady(page);
+    await showEditor(page);
     await page.evaluate(() => {
       const ed = document.getElementById("editor");
       ed.value = "@plane z=0\n- first";
@@ -112,6 +162,7 @@ test.describe("viewer & editor (viewer.html)", () => {
   test("the highlight backdrop scrolls with the textarea (tall document)", async ({ page }) => {
     await page.goto("/viewer.html");
     await page.waitForFunction(() => document.getElementById("lab")?.shadowRoot?.querySelectorAll(".plane").length > 0);
+    await showEditor(page);
     const r = await page.evaluate(async () => {
       const ed = document.getElementById("editor"), hl = document.getElementById("hl");
       ed.focus(); ed.select();
@@ -128,6 +179,7 @@ test.describe("viewer & editor (viewer.html)", () => {
   test("smart-key edits are undoable and never corrupt the buffer", async ({ page }) => {
     await page.goto("/viewer.html");
     await page.waitForFunction(() => document.getElementById("lab")?.shadowRoot?.querySelectorAll(".plane").length > 0);
+    await showEditor(page);
     const starter = await page.evaluate(() => document.getElementById("editor").value);
     await page.click("#editor");
     await page.evaluate(() => { const ed = document.getElementById("editor"); ed.setSelectionRange(ed.value.length, ed.value.length); });
@@ -158,6 +210,7 @@ test.describe("viewer & editor (viewer.html)", () => {
     expect(Number(ok.planes)).toBeGreaterThan(0);
     expect(ok.bodyValid).toBe("true");
     expect(ok.live).toBe("polite");
+    await showEditor(page);
     await page.fill("#editor", "axis: time\nbroken");
     await page.waitForTimeout(250);
     const bad = await page.evaluate(() => ({
@@ -173,6 +226,7 @@ test.describe("viewer & editor (viewer.html)", () => {
   test("Tab does not trap keyboard focus (Esc then Tab leaves the editor)", async ({ page }) => {
     await page.goto("/viewer.html");
     await page.waitForFunction(() => document.getElementById("lab")?.shadowRoot?.querySelectorAll(".plane").length > 0);
+    await showEditor(page);
     await page.click("#editor");
     // Plain Tab indents and keeps focus in the editor.
     await page.keyboard.press("Tab");
@@ -276,6 +330,7 @@ test.describe("viewer & editor (viewer.html)", () => {
   test("markdown headings become planes and a plane search opens one", async ({ page }) => {
     await page.goto("/viewer.html");
     await viewerReady(page);
+    await showEditor(page);
     await page.fill("#editor", "# Project\n\nThe opening.\n\n## Install\n\nRun bun.\n");
     await page.click("#sectionsBtn");
     await page.waitForTimeout(400);
@@ -299,17 +354,24 @@ test.describe("viewer & editor (viewer.html)", () => {
       editmeta: getComputedStyle(document.querySelector(".editmeta")).display,
       previewmeta: getComputedStyle(document.querySelector(".previewmeta")).display,
       fileswitch: getComputedStyle(document.querySelector(".fileswitch")).display,
+      cubes: getComputedStyle(document.querySelector(".cubes")).display,
       show: document.getElementById("stage").dataset.show,
       point: document.getElementById("pointInput").getAttribute("aria-label"),
     }));
     expect(vis.files).not.toBe("none");
-    expect(vis.editor).not.toBe("none");
+    expect(vis.editor).toBe("none");
     expect(vis.viewer).toBe("none");
-    expect(vis.editmeta).not.toBe("none");
-    expect(vis.previewmeta).toBe("none");
+    expect(vis.cubes).not.toBe("none");
     expect(vis.fileswitch).toBe("none");
-    expect(vis.show).toBe("edit");
+    expect(vis.show).toBe("cubes");
     expect(vis.point).toContain("GitHub");
+    await page.click("#editTab");
+    const editing = await page.evaluate(() => ({
+      editor: getComputedStyle(document.querySelector(".editor")).display,
+      cubes: getComputedStyle(document.querySelector(".cubes")).display,
+    }));
+    expect(editing.editor).not.toBe("none");
+    expect(editing.cubes).toBe("none");
     await page.click("#previewTab");
     await page.waitForTimeout(150);
     const preview = await page.evaluate(() => ({
@@ -341,6 +403,7 @@ test.describe("viewer & editor (viewer.html)", () => {
     await page.setViewportSize({ width: 1280, height: 800 });
     await page.goto("/viewer.html");
     await viewerReady(page);
+    await showEditor(page);
     const sculpture = [
       "---", "3md: 1.0", "axis: layer", "title: Small sculpture", "---", "",
       "@plane z=0 label=\"floor\"", "```", "####", "####", "####", "####", "```", "",
@@ -412,8 +475,11 @@ test.describe("viewer & editor (viewer.html)", () => {
     expect(start.fileswitch).not.toBe("none");
     expect(start.files).toBe("none");
     expect(start.stage).not.toBe("none");
-    expect(start.editor).not.toBe("none");
+    expect(start.editor).toBe("none");
     expect(start.viewer).toBe("none");
+    await page.click("#editTab");
+    const editing = await page.evaluate(() => getComputedStyle(document.querySelector(".editor")).display);
+    expect(editing).not.toBe("none");
     await page.click("#previewTab");
     await page.waitForTimeout(150);
     const preview = await page.evaluate(() => ({
@@ -434,6 +500,7 @@ test.describe("viewer & editor (viewer.html)", () => {
   test("an empty document reads as a neutral prompt, not a red error", async ({ page }) => {
     await page.goto("/viewer.html");
     await page.waitForFunction(() => document.getElementById("lab")?.shadowRoot?.querySelectorAll(".plane").length > 0);
+    await showEditor(page);
     await page.fill("#editor", "");
     await page.waitForTimeout(250);
     const r = await page.evaluate(() => ({
@@ -508,6 +575,7 @@ test.describe("viewer & editor (viewer.html)", () => {
   test("dangling cross-plane links are flagged as a non-fatal warning", async ({ page }) => {
     await page.goto("/viewer.html");
     await page.waitForFunction(() => document.getElementById("lab")?.shadowRoot?.querySelectorAll(".plane").length > 0);
+    await showEditor(page);
     await page.fill("#editor", '---\n3md: 1.0\naxis: depth\n---\n@plane z=0\nSee [[z=9|nope]]\n@plane z=1\nB\n');
     await page.waitForTimeout(250);
     const ds = await page.evaluate(() => ({ ...document.getElementById("validBadge").dataset }));
@@ -535,6 +603,7 @@ test.describe("viewer & editor (viewer.html)", () => {
     await page.goto("/viewer.html");
     await page.waitForFunction(() => document.getElementById("lab")?.shadowRoot?.querySelectorAll(".plane").length > 0);
     // start valid (badge has data-planes), then break it
+    await showEditor(page);
     await page.fill("#editor", "axis: time\nbroken no version");
     await page.waitForTimeout(250);
     const ds = await page.evaluate(() => ({ ...document.getElementById("validBadge").dataset }));
@@ -546,6 +615,7 @@ test.describe("viewer & editor (viewer.html)", () => {
   test("an invalid document flags the offending line and the badge", async ({ page }) => {
     await page.goto("/viewer.html");
     await viewerReady(page);
+    await showEditor(page);
     await page.fill("#editor", "axis: time\n@plane z=0\nno frontmatter version");
     await page.waitForTimeout(300);
     const r = await page.evaluate(() => ({

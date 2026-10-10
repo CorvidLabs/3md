@@ -12,7 +12,7 @@ spec: ThreeMDViewer.spec.md
 
 - **REQ-ThreeMDViewer-001** The viewer page SHALL present files, source, and the live plane view. It SHALL open a public GitHub repo, folder, or file, or a file or folder from this computer. Search SHALL read every opened line and open that plane. Markdown headings SHALL become planes. Opened files SHALL pack into one text document, and that document SHALL download as uncompressed kind 2. The `<three-md>` element SHALL stay a text renderer.
 - **REQ-ThreeMDViewer-002** The page SHALL accept a GitHub locator only when the host is `github.com`, `www.github.com`, or `raw.githubusercontent.com`, or when the input is an `owner/repo` name. It SHALL NOT treat those names as a match when they appear only as a substring. A public load SHALL skip `node_modules`, SHALL keep at most 400 files, and SHALL skip a file larger than 1.5 MB. The line index SHALL keep at most 12,000 rows. Apple LZFSE SHALL be refused. The ThreeMD library SHALL stay free of filesystem and network I/O.
-- **REQ-ThreeMDViewer-003** The viewer page SHALL show Edit and Preview in one panel. Exactly one of them SHALL be visible. Edit SHALL be the default. Files SHALL stay in the column beside that panel. Below 900px, Files and the document SHALL take turns, and the document panel SHALL still switch Edit and Preview. Choosing Preview SHALL render the live plane view.
+- **REQ-ThreeMDViewer-003** The viewer page SHALL show Edit, Preview, and Cubes in one panel. Exactly one of them SHALL be visible. Cubes SHALL be the default, and the opening document SHALL be a small sculpture whose cubes are inside the window. Files SHALL stay in the column beside that panel. Below 900px, Files and the document SHALL take turns, and the document panel SHALL still switch Edit, Preview, and Cubes. Choosing Preview SHALL render the live plane view.
 - **REQ-ThreeMDViewer-004** The viewer page SHALL NOT offer a render-mode switch and SHALL NOT autoplay. Preview SHALL stay on one plane. Cubes SHALL draw a fenced character grid as lit cubes with WebGL2. Orbit and zoom SHALL move the camera. The element bundle SHALL stay a text renderer.
 
 ## Constraints
@@ -47,12 +47,12 @@ Acceptance Criteria:
 
 ### REQ-ThreeMDViewer-003
 
-The viewer page SHALL show Edit and Preview in one panel. Exactly one of them SHALL be visible. Edit SHALL be the default. Files SHALL stay in the column beside that panel. Below 900px, Files and the document SHALL take turns, and the document panel SHALL still switch Edit and Preview. Choosing Preview SHALL render the live plane view.
+The viewer page SHALL show Edit, Preview, and Cubes in one panel. Exactly one of them SHALL be visible. Cubes SHALL be the default, and the opening document SHALL be a small sculpture whose cubes are inside the window. Files SHALL stay in the column beside that panel. Below 900px, Files and the document SHALL take turns, and the document panel SHALL still switch Edit, Preview, and Cubes. Choosing Preview SHALL render the live plane view.
 
 Acceptance Criteria:
 
-- At a desktop width, files stay visible. Edit shows the editor and hides the preview. Preview shows the live plane view and hides the editor.
-- At 800px, Files and the document take turns. The document panel still switches Edit and Preview.
+- At a desktop width, files stay visible. Cubes shows first, and the lit cubes are inside the window. Edit shows the editor and hides the cubes. Preview shows the live plane view and hides the editor.
+- At 800px, Files and the document take turns. The document panel still switches Edit, Preview, and Cubes.
 - Evidence is VIEWER-6 and the layout tests in `uitests/viewer.spec.mjs`.
 
 ### REQ-ThreeMDViewer-004

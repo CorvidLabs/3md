@@ -14,7 +14,7 @@ The hosted page shipped in PR 90 and the ThreeMDViewer spec shipped in PR 91. Th
 - Branch `0xleif/viewer/edit-preview` in `/Users/leif/Development/_CorvidLabs/3md-edit-preview`, based on `e18f35e`. Do not push to main. Do not merge.
 - Files stay on the left. Edit and Preview share `.pane.stage`. Default is Edit. Below 900px, `.fileswitch` swaps Files and the document.
 - Choosing Preview calls `lab.render()` so the element measures the panel. The element still receives source while Edit is showing.
-- Cubes is a third state of that same panel. It reads the parsed planes and draws a fenced character grid as lit WebGL2 cubes. Orbit and zoom move the camera. The page does not offer a render-mode switch and does not autoplay. Preview stays on one plane. The element bundle is not a voxel engine and is not rebuilt.
+- Cubes is the first view of that panel, and the opening document is a small sculpture so the cubes are in the window. It reads the parsed planes and draws a fenced character grid as lit WebGL2 cubes. Orbit and zoom move the camera. The page does not offer a render-mode switch and does not autoplay. Preview stays on one plane. The element bundle is not a voxel engine and is not rebuilt.
 - The element bundle is not rebuilt. Do not bump versions or move tag `v2.2.1`.
 - Definition approval is still open. Do not self-approve, finalize, or archive.
 - Do not finalize the kind 2, GDScript, storage-ceiling, or 2.1 docs-coverage changes.

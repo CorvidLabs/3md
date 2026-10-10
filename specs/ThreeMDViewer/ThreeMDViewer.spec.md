@@ -1,6 +1,6 @@
 ---
 module: ThreeMDViewer
-version: 5
+version: 6
 status: active
 files:
   - web/viewer.html
@@ -23,7 +23,7 @@ depends_on:
 
 ## Purpose
 
-ThreeMDViewer is the hosted and local viewer page. Files stay on the left. Edit, the plane preview, and Cubes share the panel beside them. One is visible at a time, and Edit is the default. Below 900px, Files and the document take turns. The page does not offer a render-mode switch and does not autoplay. Preview stays on one plane. Cubes draws a fenced character grid as lit GPU cubes. The page opens a public GitHub repo, folder, or file, or a file or folder from this computer. Search reads every opened line and opens that plane. Markdown headings become planes. Opened files pack into one text document, and that document downloads as uncompressed kind 2.
+ThreeMDViewer is the hosted and local viewer page. Files stay on the left. Edit, the plane preview, and Cubes share the panel beside them. One is visible at a time, and Cubes is the default, inside the window. The opening document is a small sculpture. Below 900px, Files and the document take turns. The page does not offer a render-mode switch and does not autoplay. Preview stays on one plane. Cubes draws a fenced character grid as lit GPU cubes. The page opens a public GitHub repo, folder, or file, or a file or folder from this computer. Search reads every opened line and opens that plane. Markdown headings become planes. Opened files pack into one text document, and that document downloads as uncompressed kind 2.
 
 The `<three-md>` element stays a text renderer. Decode, composition, linked folders, GitHub fetch, search, sections, pack, and kind 2 download belong to this page. The ThreeMD library stays free of filesystem and network I/O. Human intent for this page is VIEWER-6 in `hi/tools.md`.
 
@@ -68,7 +68,7 @@ The `<three-md>` element stays a text renderer. Decode, composition, linked fold
 
 ## Invariants
 
-1. Files stay on the left. Edit, the plane preview, and Cubes share one panel, one is visible at a time, and Edit is the default. Below 900px, Files and the document take turns. The page does not switch render modes and does not autoplay. Choosing Preview renders the live plane view and holds it on one plane. Choosing Cubes draws a fenced character grid as lit cubes on a dark GPU stage. Orbit and zoom move the camera. The status bar shows the caret, the axis, and the cube count. The element stays a text renderer.
+1. Files stay on the left. Edit, the plane preview, and Cubes share one panel, one is visible at a time, and Cubes is the default. The opening document is a small sculpture, and its cubes are inside the window. Below 900px, Files and the document take turns. The page does not switch render modes and does not autoplay. Choosing Preview renders the live plane view and holds it on one plane. Choosing Cubes draws a fenced character grid as lit cubes on a dark GPU stage. Orbit and zoom move the camera. The status bar shows the caret, the axis, and the cube count. The element stays a text renderer.
 2. A public GitHub locator is accepted only when the host is `github.com`, `www.github.com`, or `raw.githubusercontent.com`, or when the input is an `owner/repo` name. A host string elsewhere in the URL is not a match.
 3. A public load skips `node_modules`, keeps at most 400 files, and skips a file larger than 1.5 MB. The line index keeps at most 12,000 rows.
 4. Search opens the plane for the chosen line.
@@ -134,3 +134,4 @@ The `<three-md>` element stays a text renderer. Decode, composition, linked fold
 | 2026-10-10 | ThreeMDViewer change | Edit and Preview share one panel and switch. Files stay on the left. Below 900px, Files and the document take turns. |
 | 2026-10-10 | ThreeMDViewer change | Add a Sculpt-style cube stage beside Edit and Preview, and a status bar for the caret, axis, and cube count. |
 | 2026-10-10 | ThreeMDViewer change | Remove the render-mode switch and autoplay. Draw the cube stage with WebGL2 so about 1400 cubes stay interactive. |
+| 2026-10-10 | ThreeMDViewer change | Open on the cube stage. The starter document is a small sculpture, and those cubes sit inside the window. |
