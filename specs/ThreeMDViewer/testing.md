@@ -78,3 +78,7 @@ At 1x and 2x density, exercise a phone-initialized canvas, small Slice reference
 2026-10-10: the post-resize full UI suite passed 230 tests; the final viewer suite including display-density listeners passed 130 tests; the final media-query/window-resize regressions passed 4 tests. No skips or retries. Actual browser bitmap/display measurements, screenshots, logs and implementation digests are in `docs/evidence/viewer-resolution/`; repository Trust and lifecycle verification remain separate. Native source is unchanged.
 
 Pinned Trust passed at implementation `95c1213` with Augur review risk 36 and configured soft provenance degradation. Strict root specs passed at 55/55 files and Hi at 87 criteria. Actual unsigned Codex provenance was recorded after the lane passed; unchanged strict signature/reviewer policy rejects it. Evidence is in `docs/evidence/viewer-resolution/`. Later lifecycle metadata does not change the HTML or tests.
+
+## Documentation examples
+
+Verify README and guide links resolve to existing source examples, direct viewer links use supported GitHub locators for binary, and hosted docs expose the Viewer anchor with the existing styles. Parse both generated docs mirrors, require an identical VIEWER plane, and check that they remain equal. Check live example destinations and inspect the local hosted-docs section. The two current loader gaps are documented rather than claimed repaired.

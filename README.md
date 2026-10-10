@@ -22,6 +22,29 @@ crates.io still serves `threemd` 2.1.0. The Homebrew formula `threemd` is
 [2.2.1 release notes](docs/RELEASE-2.2.1.md), and
 [linked file composition](docs/FILE-COMPOSITION.md).
 
+## Browser viewer
+
+[Open the viewer & editor](https://corvidlabs.github.io/3md/viewer.html) to read planes in **Preview**, rotate a
+sculpture in **Cubes**, edit a compatible grid in **Slice**, or change its source
+in **Edit**. Open a local file/folder, or paste a public GitHub repo, folder or
+file into the GitHub field.
+
+| Try it | Open in the viewer |
+| --- | --- |
+| `.3md` sculpture | [Reusable canopy](https://corvidlabs.github.io/3md/viewer.html?src=https%3A%2F%2Fgithub.com%2FCorvidLabs%2F3md%2Fblob%2Fmain%2FExamples%2FExtensions%2Fcanopy.3md) |
+| Reading planes | [Layered notes — choose Preview](https://corvidlabs.github.io/3md/viewer.html?src=https%3A%2F%2Fgithub.com%2FCorvidLabs%2F3md%2Fblob%2Fmain%2FExamples%2Flayered-notes.3md) |
+| Uncompressed `.3mdb`, kind 2 | [The same canopy as binary](https://corvidlabs.github.io/3md/viewer.html?src=https%3A%2F%2Fgithub.com%2FCorvidLabs%2F3md%2Fblob%2Fmain%2FExamples%2FExtensions%2Fcanopy.structured.3mdb) |
+| Self-contained binary composition | [Shared grove — choose an Inside entry](https://corvidlabs.github.io/3md/viewer.html?src=https%3A%2F%2Fgithub.com%2FCorvidLabs%2F3md%2Fblob%2Fmain%2FExamples%2FExtensions%2Fshared-grove.structured.3mdb) |
+| Public folder or repo | [Examples folder](https://corvidlabs.github.io/3md/viewer.html?src=https%3A%2F%2Fgithub.com%2FCorvidLabs%2F3md%2Ftree%2Fmain%2FExamples) · [Repository](https://corvidlabs.github.io/3md/viewer.html?src=https%3A%2F%2Fgithub.com%2FCorvidLabs%2F3md) |
+
+The [viewer guide](docs/VIEWER.md) covers older kind-1 binary, linked local
+folders, precise camera movement, Slice tools, downloads and current limits.
+LZFSE and Sculpt's default compact `.3mdb` need a readable or upstream
+uncompressed export. Cubes/Slice support bounded character grids; prose remains
+readable in Preview. GitHub linked folders and non-GitHub direct binary URLs
+have the [documented loading gaps](docs/VIEWER.md#supported-files-and-limits).
+Edits download as copies; the browser does not write back to a folder or GitHub.
+
 ## Sculpt.3md
 
 Sculpt.3md is the Mac app in this repository, at [apps/sculpt](apps/sculpt).
@@ -42,7 +65,7 @@ or flip through the
 **[animated deck](https://corvidlabs.github.io/3md/viewer.html?src=examples-gallery.3md)**
 where the strongest examples appear as motion cards.
 
-This repo eats its own dog food: every doc here is also combined into one
+This repo eats its own dog food: selected project docs are also combined into one
 [`docs.3md`](docs.3md) (each Markdown file is a plane). GitHub can't preview
 `.3md` natively, so **[open all the docs in the 3md viewer](https://corvidlabs.github.io/3md/viewer.html?src=docs.3md)**
 and scrub through them.

@@ -1,0 +1,45 @@
+{
+  "approvals": [
+    {
+      "gate": "definition",
+      "actor": "agent:codex",
+      "timestamp": 1791659721,
+      "digest": "15696a49a060f43344e43fcc830ce7413d265cda61d9031e33750ef073f6d590",
+      "note": "Codex records the bounded documentation definition under Leif’s direct request to update the README/docs with examples and links. This records executing-agent scope authorization; it does not claim a separate human definition interview, Leif implementation diff review, independent review, closing approval or signature.",
+      "approved_scope": {
+        "schema_version": 1,
+        "change_id": "document-viewer-examples-and-supported-file-folder-and-github-opening-workflows",
+        "title": "Document viewer examples and supported file folder and GitHub opening workflows",
+        "description": "Document viewer examples and supported file folder and GitHub opening workflows",
+        "kind": "documentation",
+        "affected_specs": [
+          "ThreeMD",
+          "ThreeMDViewer"
+        ],
+        "affected_paths": [
+          "README.md",
+          "docs.3md",
+          "docs/VIEWER.md",
+          "scripts/build-docs-3md.mjs",
+          "specs/ThreeMD/context.md",
+          "specs/ThreeMDViewer",
+          "web/docs.3md",
+          "web/docs.html"
+        ],
+        "no_spec_change": true,
+        "no_spec_change_rationale": "Describe and link the existing approved viewer behavior and verified limitations without changing formats, runtime controls, loaders or canonical normative requirements.",
+        "acceptance_criteria": [
+          "README and hosted docs link to directly openable text, both uncompressed binary kinds, self-contained composition, public repo and folder examples. A linked viewer guide explains local files/folders, GitHub locators, Preview/Cubes/Slice, camera and editing controls, downloads, binary/compact-format distinctions, limits and the two known loading gaps without claiming fixes. The generated docs bundle includes the guide; local links, exact example sources, published viewer URLs and generated text are verified, strict specs and pinned Trust pass."
+        ],
+        "dependencies": [],
+        "supersedes": [],
+        "answers": {
+          "architecture_risk": "no",
+          "public_contract": "no"
+        }
+      },
+      "approved_delta_digests": {}
+    }
+  ],
+  "reopenings": []
+}

@@ -155,3 +155,5 @@ push does not publish packages; do not tag a commit whose notes say the tag
 is absent; crates.io stays on the last release that `cargo-publish.yml` actually
 uploaded; Sculpt is an app and its compact `.3mdb` is not the upstream binary
 standard.
+
+On 2026-10-10 Leif requested viewer examples and links in README and docs. The documentation guide describes existing text, portable binary and linked-file APIs through their browser host, including current refusal/host limits. It preserves format/library contracts and historical release and lifecycle records. `scripts/build-docs-3md.mjs` now includes the viewer guide in the selected project-docs bundle.

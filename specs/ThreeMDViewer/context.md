@@ -62,3 +62,7 @@ The volume camera shows colored X/Y/Z rings and Free/X/Y/Z constraints. A normal
 ## Shared 3D drawable resolution repair
 
 The previous frozen bitmap could initialize at 368x322 in a small view and stretch to 1099x911 after expansion. Drawable dimensions now follow the visible pane at up to 2x pixel density with the existing proportional 2048-edge cap. Only changed dimensions are assigned; context, GPU resources, pose and source remain installed. Chromium/WebKit density 1/2 regressions exercise phone, reference, full stage and capped large sizes.
+
+## Viewer documentation
+
+README and `docs/VIEWER.md` provide GitHub-backed text, binary, composition and repo/folder examples. `web/docs.html` links them beside the grammar quick start, and the selected-docs bundle includes VIEWER. The guide distinguishes upstream uncompressed binary from LZFSE and Sculpt compact saves, covers bounded Slice/Cubes and download-only drafts, and explicitly documents GitHub linked-folder and non-GitHub direct-binary URL gaps. This documents current behavior without repairing loaders or changing format/camera/editing contracts.

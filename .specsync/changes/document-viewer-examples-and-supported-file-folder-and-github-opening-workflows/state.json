@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "workflow_version": 2,
+  "workflow_origin_version": 2,
+  "id": "document-viewer-examples-and-supported-file-folder-and-github-opening-workflows",
+  "slug": "document-viewer-examples-and-supported-file-folder-and-github-opening-workflows",
+  "title": "Document viewer examples and supported file folder and GitHub opening workflows",
+  "description": "Document viewer examples and supported file folder and GitHub opening workflows",
+  "kind": "documentation",
+  "state": "verifying",
+  "canonical_applied": true,
+  "base_commit": "e1beb0954c62328c56d451d7c12087cf732fb337",
+  "created_at": 1791659613,
+  "updated_at": 1791660493,
+  "affected_specs": [
+    "ThreeMDViewer",
+    "ThreeMD"
+  ],
+  "affected_paths": [
+    "README.md",
+    "docs/VIEWER.md",
+    "web/docs.html",
+    "docs.3md",
+    "web/docs.3md",
+    "scripts/build-docs-3md.mjs",
+    "specs/ThreeMDViewer",
+    "specs/ThreeMD/context.md"
+  ],
+  "no_spec_change": true,
+  "no_spec_change_rationale": "Describe and link the existing approved viewer behavior and verified limitations without changing formats, runtime controls, loaders or canonical normative requirements.",
+  "acceptance_criteria": [
+    "README and hosted docs link to directly openable text, both uncompressed binary kinds, self-contained composition, public repo and folder examples. A linked viewer guide explains local files/folders, GitHub locators, Preview/Cubes/Slice, camera and editing controls, downloads, binary/compact-format distinctions, limits and the two known loading gaps without claiming fixes. The generated docs bundle includes the guide; local links, exact example sources, published viewer URLs and generated text are verified, strict specs and pinned Trust pass."
+  ],
+  "selected_artifacts": [
+    "context",
+    "docs",
+    "design",
+    "tasks"
+  ],
+  "dependencies": [],
+  "answers": {
+    "architecture_risk": "no",
+    "public_contract": "no"
+  }
+}
