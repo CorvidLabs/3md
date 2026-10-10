@@ -33,11 +33,11 @@ describe("parseGitHubLocator", () => {
 describe("loadGitHubPoint", () => {
   test("loads text and 3md files from a public tree and skips other files", async () => {
     const loaded = await loadGitHubPoint("https://github.com/CorvidLabs/3md", async (url) => {
-      const address = String(url);
-      if (address.endsWith("/repos/CorvidLabs/3md")) {
+      const parsed = new URL(String(url));
+      if (parsed.hostname === "api.github.com" && parsed.pathname === "/repos/CorvidLabs/3md") {
         return Response.json({ default_branch: "main" });
       }
-      if (address.includes("/git/trees/")) {
+      if (parsed.hostname === "api.github.com" && parsed.pathname.startsWith("/repos/CorvidLabs/3md/git/trees/")) {
         return Response.json({
           truncated: false,
           tree: [
@@ -47,8 +47,8 @@ describe("loadGitHubPoint", () => {
           ],
         });
       }
-      if (address.includes("raw.githubusercontent.com")) {
-        const body = address.endsWith("README.md") ? "# Hi\n" : "@plane z=0 label=\"Room\"\nDoor.\n";
+      if (parsed.hostname === "raw.githubusercontent.com") {
+        const body = parsed.pathname.endsWith("/README.md") ? "# Hi\n" : "@plane z=0 label=\"Room\"\nDoor.\n";
         return new Response(body, { status: 200 });
       }
       return new Response("missing", { status: 404 });
