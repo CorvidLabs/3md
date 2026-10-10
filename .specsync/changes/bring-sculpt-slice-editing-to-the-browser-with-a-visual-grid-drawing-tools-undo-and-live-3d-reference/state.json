@@ -7,11 +7,11 @@
   "title": "Bring Sculpt slice editing to the browser with a visual grid, drawing tools, undo and live 3D reference",
   "description": "Bring Sculpt slice editing to the browser with a visual grid, drawing tools, undo and live 3D reference",
   "kind": "feature",
-  "state": "implementing",
+  "state": "verifying",
   "canonical_applied": true,
   "base_commit": "fa61988c163583e5e03cbe00f301b036f37dd7b2",
   "created_at": 1791652000,
-  "updated_at": 1791655366,
+  "updated_at": 1791655441,
   "affected_specs": [
     "ThreeMDViewer"
   ],
