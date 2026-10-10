@@ -49,7 +49,7 @@ spec: ThreeMDViewer.spec.md
 
 ## Current camera parity
 
-Leif explicitly approved full native/browser camera parity and verified closure on 2026-10-10. Both volume canvases now use full yaw/pitch turns, continuous pole bases, session-only screen pan, zoom 0.5...2 and the matched default Fit pose. Native interactive cameras use complete-volume framing while default utility cameras retain historical preview scale. Shared projection/picking fixtures and current screenshots are in `docs/evidence/viewer-camera/`. The X/Y/Z sphere and precise step controls have a separate complete draft; definition approval is pending.
+Leif explicitly approved full native/browser camera parity and verified closure on 2026-10-10. Both volume canvases now use full yaw/pitch turns, continuous pole bases, session-only screen pan, zoom 0.5...2 and the matched default Fit pose. Native interactive cameras use complete-volume framing while default utility cameras retain historical preview scale. Shared projection/picking fixtures and current screenshots are in `docs/evidence/viewer-camera/`. Leif subsequently approved the X/Y/Z sphere, precise steps and browser Slice definition together; implementation and current verification are recorded in `docs/evidence/viewer-slice/`.
 
 ## Slice and precise camera parity
 

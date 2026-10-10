@@ -46,4 +46,7 @@ spec: ThreeMDViewer.spec.md
 - [x] Match Sculpt and viewer full orbit through both poles with camera-only pan and proportional zoom.
 - [x] Add shared asymmetric native/browser projection and picking fixtures.
 - [x] Finish current cross-platform verification and lifecycle closure for the camera scope.
-- [ ] Await definition approval for the separate axis gizmo and numeric precision controls.
+- [x] Implement the approved matching axis gizmo and numeric precision controls.
+- [x] Add the approved browser Slice workspace and shared native/browser edit fixtures.
+- [x] Verify current macOS browser, Linux CI, native and pinned Trust checks.
+- [ ] Complete current Slice and precise-axis lifecycle closure.

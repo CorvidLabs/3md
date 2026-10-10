@@ -5,6 +5,7 @@ The browser Slice workspace follows Sculpt’s Draw/Erase/Fill, palette and squa
 Verified locally on 2026-10-10:
 
 - Full macOS Chromium/WebKit UI suite: 226 passed, no skips or retries (`mac-browser.log`).
+- Linux CI Chromium/WebKit suite: 218 passed, 8 existing platform-snapshot skips, no retries, in 3.4 minutes (`linux-ci.log`). The first run omitted CI=1 and passed all 218 functional tests but failed eight macOS-only visual snapshot comparisons; the complete rerun used the repository’s unchanged CI policy. All eight snapshots passed in the full macOS run.
 - Final expanded shared browser fixtures: 4 passed (`browser-fixtures.log`).
 - Final phone regressions at 390×844 and 320×740: 4 passed (`phone.log`).
 - Configured native regression selection: 637 tests in 54 suites passed (`native-full.log`), using the existing `--skip deterministicPortableInterchangeFixtures` selection. The previously established release-fixture/version mismatch remains outside this UI change; no new skip was introduced.
@@ -17,6 +18,6 @@ Slice preserves raw non-target text, including CRLF, fractional plane positions,
 
 The browser’s supported edit profile is complete common rectangular grids up to 64×64, 256 planes, 4000 occupied cells and 1.5 MiB source, with the native palette and dot/space empties. Structural slice actions, volume resizing and browser 3D painting remain subsequent work. Native storage, formats, library APIs, examples, generated browser bundles and releases are unchanged.
 
-Linux, final Trust and lifecycle receipts are recorded after their current runs complete. Actual reviewer identity is agent:codex. Scope and conditional verified closure were directly authorized by Leif; that does not supply a permitted signature or a human diff review. Existing soft unsigned provenance policy remains intact.
+Linux CI verification is complete. Final Trust and lifecycle receipts will be recorded after their current runs complete. Actual reviewer identity is agent:codex. Scope and conditional verified closure were directly authorized by Leif; that does not supply a permitted signature or a human diff review. Existing soft unsigned provenance policy remains intact.
 
 Implementation commit: `8e9a0c4`. Pinned Trust 1.2.2 / Fledge 1.7.2 passed (`trust-implementation.log`). Actual unsigned agent:codex record and unchanged policy result are in `attestation-implementation.json` and `provenance-implementation.json`; the strict provenance policy fails for the unsigned/unpermitted reviewer, while Trust’s configured soft mode passes with progressive provenance. No policy was changed.

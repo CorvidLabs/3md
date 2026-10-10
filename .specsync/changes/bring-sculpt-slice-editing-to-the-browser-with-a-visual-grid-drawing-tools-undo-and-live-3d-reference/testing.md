@@ -17,7 +17,7 @@ Run the complete viewer suite on macOS and the complete UI suite in the existing
 
 ## Execution evidence
 
-Implementation commit 8e9a0c4 has 226 passing macOS browser tests, 637 passing configured native tests and 11 passing final native parity tests. Expanded browser fixtures and phone checks each passed 4 cases. Pinned Trust passed; actual unsigned agent:codex provenance was recorded and fails the unchanged permitted-signature/reviewer policy as expected. Linux and final lifecycle receipts are recorded in docs/evidence/viewer-slice. Source and visual verification are distinct from Leif’s diff review.
+Implementation commit 8e9a0c4 has 226 passing macOS browser tests, 637 passing configured native tests and 11 passing final native parity tests. Expanded browser fixtures and phone checks each passed 4 cases. Pinned Trust passed; actual unsigned agent:codex provenance was recorded and fails the unchanged permitted-signature/reviewer policy as expected. Linux CI passed 218 functional tests with 8 existing platform-snapshot skips and no retries; all macOS snapshots passed. Current receipts are in docs/evidence/viewer-slice; final lifecycle receipts are separate. Source and visual verification are distinct from Leif’s diff review.
 
 ## Requirement evidence
 
