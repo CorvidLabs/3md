@@ -287,6 +287,22 @@ test.describe("viewer & editor (viewer.html)", () => {
     expect(index).toBe(1);
   });
 
+  test("desktop layout shows files, source, and the live view", async ({ page }) => {
+    await page.setViewportSize({ width: 1280, height: 800 });
+    await page.goto("/viewer.html");
+    await viewerReady(page);
+    const vis = await page.evaluate(() => ({
+      files: getComputedStyle(document.querySelector(".filesPane")).display,
+      editor: getComputedStyle(document.querySelector(".editorPane")).display,
+      viewer: getComputedStyle(document.querySelector(".viewerPane")).display,
+      point: document.getElementById("pointInput").getAttribute("aria-label"),
+    }));
+    expect(vis.files).not.toBe("none");
+    expect(vis.editor).not.toBe("none");
+    expect(vis.viewer).not.toBe("none");
+    expect(vis.point).toContain("GitHub");
+  });
+
   test("narrow layout offers a Source|Live switch that swaps the visible pane", async ({ page }) => {
     await page.setViewportSize({ width: 800, height: 760 });
     await page.goto("/viewer.html");

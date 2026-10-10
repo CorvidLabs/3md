@@ -122,7 +122,15 @@
     .toolbar .primary{order:99;width:100%;margin-left:0;padding:11px 12px}
   }
   .toolbar label{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--text-faint)}
-  .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:stretch}
+  .pointform{display:flex;gap:8px;margin:0 0 14px}
+  .pointform input{flex:1;min-width:0;font:inherit;font-size:14px;padding:8px 12px;border:1px solid var(--hairline);border-radius:4px;background:var(--surface);color:var(--ink)}
+  .pointform input:focus-visible{outline:2px solid var(--sheen);outline-offset:2px}
+  .grid{display:grid;grid-template-columns:minmax(180px,240px) minmax(0,1fr) minmax(0,1fr);gap:16px;align-items:stretch}
+  .filelist{overflow:auto;flex:1;min-height:240px}
+  .filelist button,.filelist .empty{display:block;width:100%;text-align:left;font:inherit;font-size:12px;font-family:var(--code-font);padding:7px 12px;border:0;border-bottom:1px solid var(--hairline);background:transparent;color:var(--ink)}
+  .filelist button{cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .filelist button:hover,.filelist button:focus-visible,.filelist button[aria-current="true"]{background:color-mix(in srgb,var(--sheen) 12%,var(--surface));outline:none}
+  .filelist .empty{color:var(--text-faint)}
   .grid>*{min-width:0}
   /* The primary share action is anchored to the right edge of the toolbar so the
      primary/secondary hierarchy survives wrapping. */
@@ -137,9 +145,10 @@
   @media(max-width:900px){
     .grid{grid-template-columns:1fr}
     .paneswitch{display:inline-flex}
-    .grid .viewerPane{display:none}
-    .grid[data-show="live"] .editorPane{display:none}
+    .grid .viewerPane,.grid .filesPane{display:none}
+    .grid[data-show="live"] .editorPane,.grid[data-show="files"] .editorPane{display:none}
     .grid[data-show="live"] .viewerPane{display:flex}
+    .grid[data-show="files"] .filesPane{display:flex}
   }
   .pane{border:1px solid var(--hairline);border-radius:8px;background:var(--surface);overflow:hidden;display:flex;flex-direction:column}
   .pane .bar{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:9px 13px;border-bottom:1px solid var(--hairline);
@@ -236,7 +245,7 @@
 
     <div class="head">
       <h1>3md viewer<span class="z">.</span></h1>
-      <p class="lead">Write or paste a <code>.3md</code>, open an uncompressed <code>.3mdb</code>, or open a folder. Search planes and files, turn Markdown headings into planes, or pack files into one document. The live view stays the text element. <a href="docs.html">docs</a> &middot; <a href="gallery.html">gallery</a></p>
+      <p class="lead">Point at a public GitHub repo, folder, or file, or open one on this computer. Files stay on the left, the source in the middle, and the live plane view on the right. Search reads every line. <a href="docs.html">docs</a> &middot; <a href="gallery.html">gallery</a></p>
     </div>
 
     <div class="toolbar">
@@ -244,7 +253,7 @@
       <select id="example" class="btn" aria-label="load a gallery example"></select>
       <div class="findwrap">
         <label for="findExample" class="sr-only">find</label>
-        <input id="findExample" class="btn" type="search" placeholder="find a plane, file, or example" aria-label="find a plane, file, or example" role="combobox" aria-autocomplete="list" aria-controls="findList" aria-expanded="false" autocomplete="off" />
+        <input id="findExample" class="btn" type="search" placeholder="search every line" aria-label="search every line" role="combobox" aria-autocomplete="list" aria-controls="findList" aria-expanded="false" autocomplete="off" />
         <div id="findList" class="findlist" hidden role="listbox" aria-label="matching examples"></div>
       </div>
       <label for="modeSel">mode</label>
@@ -279,11 +288,21 @@
       <button id="shareBtn" class="btn primary" type="button">copy share link</button>
     </div>
 
-    <div class="paneswitch" role="tablist" aria-label="Show source or live preview">
+    <form id="pointForm" class="pointform">
+      <label for="pointInput" class="sr-only">GitHub repo, folder, or file</label>
+      <input id="pointInput" type="text" placeholder="github.com/owner/repo, a folder, or a file" aria-label="open a public GitHub repo, folder, or file" autocomplete="off" spellcheck="false" />
+      <button class="btn" type="submit">open</button>
+    </form>
+    <div class="paneswitch" role="tablist" aria-label="Show files, source, or live preview">
+      <button class="pstab" type="button" role="tab" data-pane="files" aria-selected="false">Files</button>
       <button class="pstab" type="button" role="tab" data-pane="source" aria-selected="true">Source</button>
       <button class="pstab" type="button" role="tab" data-pane="live" aria-selected="false">Live</button>
     </div>
     <div class="grid" id="grid" data-show="source">
+      <div class="pane filesPane">
+        <div class="bar"><span id="filesTitle">files</span></div>
+        <div id="fileList" class="filelist" role="listbox" aria-label="opened files"></div>
+      </div>
       <div class="pane editorPane">
         <div class="bar">
           <span id="sourceName">source.3md</span>
@@ -310,8 +329,8 @@
   <script defer src="assets/theme.js"></script>
   <script type="module" src="assets/three-md.js?v=1.7.17"></script>
   <script type="module">
-    import { openBytes, openText, openFileSet, sectionsToDocument, packDocuments, kind2Bytes, searchRank } from "./assets/open-document.js?v=2";
-    window.threeMdOpen = { openBytes, openText, openFileSet, sectionsToDocument, packDocuments, kind2Bytes };
+    import { openBytes, openText, openFileSet, sectionsToDocument, packDocuments, kind2Bytes, searchRank, indexLines, loadGitHubPoint, parseGitHubLocator } from "./assets/open-document.js?v=3";
+    window.threeMdOpen = { openBytes, openText, openFileSet, sectionsToDocument, packDocuments, kind2Bytes, loadGitHubPoint, parseGitHubLocator };
     const STARTER = `---
 3md: 1.0
 axis: time
@@ -799,6 +818,8 @@ See [[z=1|Tuesday]] for what's next.
     let catalog = [];
     let currentPlanes = [];
     let gathered = [];
+    let lineIndex = [];
+    let openedFiles = [];
     const field = (src, key) => {
       const match = String(src).match(new RegExp("^" + key + ":\\s*\"?([^\"\\n]+)\"?\\s*$", "m"));
       return match ? match[1].trim() : "";
@@ -809,6 +830,13 @@ See [[z=1|Tuesday]] for what's next.
       findInput.value = "";
       findInput.setAttribute("aria-expanded", "false");
       try {
+        if (item.kind === "line") {
+          showOpened(openText(item.text));
+          sourceName.textContent = item.path.split("/").pop() || item.path;
+          markFile(item.path);
+          focusPlane(item.planeIndex);
+          return;
+        }
         if (item.kind === "plane") {
           focusPlane(item.index);
           return;
@@ -850,7 +878,7 @@ See [[z=1|Tuesday]] for what's next.
       const needle = query.trim();
       findList.replaceChildren();
       if (!needle) { findList.hidden = true; findInput.setAttribute("aria-expanded", "false"); return; }
-      const matches = catalog.concat(currentPlanes, gathered)
+      const matches = lineIndex.concat(catalog, currentPlanes, gathered)
         .map((item) => ({ item, rank: searchRank(needle, item.label, item.meta) }))
         .filter((row) => row.rank !== null)
         .sort((left, right) => right.rank - left.rank || left.item.label.localeCompare(right.item.label))
@@ -934,6 +962,87 @@ See [[z=1|Tuesday]] for what's next.
       if (!event.target.closest(".findwrap")) { findList.hidden = true; findInput.setAttribute("aria-expanded", "false"); }
     });
 
+    function indexSource(path, text) {
+      const lower = path.toLowerCase();
+      const prose = (lower.endsWith(".md") || lower.endsWith(".txt") || lower.endsWith(".markdown")) && !lower.endsWith(".3md");
+      const shown = prose ? sectionsToDocument(text, path) : text;
+      return indexLines(path, shown).map((hit) => ({ ...hit, text: shown }));
+    }
+    function markFile(path) {
+      document.querySelectorAll("#fileList button").forEach((button) => {
+        button.setAttribute("aria-current", button.dataset.path === path ? "true" : "false");
+      });
+    }
+    function renderFileList(title) {
+      const fileList = document.getElementById("fileList");
+      const filesTitle = document.getElementById("filesTitle");
+      fileList.replaceChildren();
+      filesTitle.textContent = title || (openedFiles.length ? openedFiles.length + " files" : "files");
+      if (!openedFiles.length) {
+        const empty = document.createElement("div");
+        empty.className = "empty";
+        empty.textContent = "Open a GitHub repo, a folder, or a file.";
+        fileList.appendChild(empty);
+        return;
+      }
+      for (const file of openedFiles) {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.dataset.path = file.path;
+        button.textContent = file.path;
+        button.setAttribute("role", "option");
+        button.addEventListener("click", () => {
+          const hits = lineIndex.filter((hit) => hit.path === file.path);
+          const text = hits[0] ? hits[0].text : file.text;
+          showOpened(openText(text));
+          sourceName.textContent = file.path.split("/").pop() || file.path;
+          markFile(file.path);
+          history.replaceState(null, "", "#" + enc(ed.value));
+        });
+        fileList.appendChild(button);
+      }
+    }
+    function setOpenedFiles(entries, title) {
+      openedFiles = entries;
+      lineIndex = [];
+      for (const entry of entries) {
+        lineIndex.push(...indexSource(entry.path, entry.text));
+        if (lineIndex.length > 12000) {
+          lineIndex.length = 12000;
+          break;
+        }
+      }
+      window.threeMdLineCount = lineIndex.length;
+      renderFileList(title);
+    }
+    function textFromFile(file) {
+      const lower = file.path.toLowerCase();
+      if (lower.endsWith(".3mdb")) {
+        try { return openBytes(file.data).text; } catch { return null; }
+      }
+      if (!(/\.(3md|md|txt|markdown)$/i.test(lower))) return null;
+      return new TextDecoder().decode(file.data);
+    }
+    async function openPoint(input) {
+      status.className = "status ok";
+      status.textContent = "Opening " + input.trim() + "...";
+      const loaded = await loadGitHubPoint(input);
+      const entries = [];
+      for (const file of loaded.files) {
+        const text = textFromFile(file);
+        if (text != null) entries.push({ path: file.path, text });
+      }
+      if (!entries.length) throw new Error("That GitHub path has no .3md, .3mdb, or Markdown files.");
+      const note = loaded.truncated ? " The list stopped at the first 400 files." : "";
+      setOpenedFiles(entries, loaded.label + "@" + loaded.ref);
+      const first = entries.find((entry) => entry.path.toLowerCase().endsWith(".3md")) || entries[0];
+      const hits = lineIndex.filter((hit) => hit.path === first.path);
+      showOpened(openText(hits[0] ? hits[0].text : first.text));
+      sourceName.textContent = first.path.split("/").pop() || first.path;
+      markFile(first.path);
+      status.className = "status ok";
+      status.textContent = "Opened " + loaded.label + " at " + loaded.ref + ". " + entries.length + " files." + note;
+    }
     function rememberGathered(files) {
       const decoder = new TextDecoder();
       gathered = [];
@@ -949,6 +1058,12 @@ See [[z=1|Tuesday]] for what's next.
     }
     function openLocal(files) {
       rememberGathered(files);
+      const entries = [];
+      for (const file of files) {
+        const text = textFromFile(file);
+        if (text != null) entries.push({ path: file.path, text });
+      }
+      if (entries.length) setOpenedFiles(entries);
       const docs = files.filter((file) => /\.3md/i.test(file.path));
       const prose = files.filter((file) => /\.(md|txt)$/i.test(file.path) && !/\.3md$/i.test(file.path));
       if (docs.length) return showOpened(openFileSet(docs));
@@ -1082,12 +1197,27 @@ See [[z=1|Tuesday]] for what's next.
       catch { status.className = "status ok"; status.textContent = "Share link is in the address bar."; }
     });
 
-    // Initial content: ?src=URL, then #<encoded>, then starter.
+    document.getElementById("pointForm").addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const input = document.getElementById("pointInput").value;
+      if (!input.trim()) return;
+      try { await openPoint(input); }
+      catch (error) { failOpen(error); }
+    });
+    renderFileList();
+
+    // Initial content: a GitHub ?src=, another ?src= URL, then #<encoded>, then starter.
     async function init() {
       const srcParam = new URLSearchParams(location.search).get("src");
       const hash = location.hash.slice(1);
       let loadError = "";
-      if (srcParam) {
+      if (srcParam && parseGitHubLocator(srcParam)) {
+        try { await openPoint(srcParam); }
+        catch (e) {
+          ed.value = "";
+          loadError = e && e.message ? e.message : "Could not open that GitHub path.";
+        }
+      } else if (srcParam) {
         try {
           const res = await fetch(srcParam);
           if (!res.ok) throw new Error("HTTP " + res.status);

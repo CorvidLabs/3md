@@ -16,7 +16,8 @@ import {
   type DocumentFileSource,
 } from "../js/src/index.ts";
 
-export { kind2Bytes, packDocuments, searchRank, searchScore, sectionsToDocument } from "./gather.ts";
+export { indexLines, kind2Bytes, packDocuments, searchRank, searchScore, sectionsToDocument } from "./gather.ts";
+export { loadGitHubPoint, parseGitHubLocator } from "./github-source.ts";
 
 export class OpenDocumentError extends Error {
   public readonly code: string;
