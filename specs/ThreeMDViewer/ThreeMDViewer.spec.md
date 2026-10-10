@@ -135,3 +135,4 @@ The `<three-md>` element stays a text renderer. Decode, composition, linked fold
 | 2026-10-10 | ThreeMDViewer change | Add a Sculpt-style cube stage beside Edit and Preview, and a status bar for the caret, axis, and cube count. |
 | 2026-10-10 | ThreeMDViewer change | Remove the render-mode switch and autoplay. Draw the cube stage with WebGL2 so about 1400 cubes stay interactive. |
 | 2026-10-10 | ThreeMDViewer change | Open on the cube stage. The starter document is a small sculpture, and those cubes sit inside the window. |
+| 2026-10-10 | ThreeMDViewer change | Keep one WebGL2 context. The bitmap size is set before the context is created so Safari does not drop it. |

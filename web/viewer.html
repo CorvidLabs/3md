@@ -1437,18 +1437,45 @@ title: Small sculpture
       }
       return data;
     }
+    function cubeBufferSize(width, height) {
+      const ratio = Math.min(window.devicePixelRatio || 1, 2);
+      const maxEdge = 2048;
+      let bufferWidth = Math.max(2, Math.floor(width * ratio));
+      let bufferHeight = Math.max(2, Math.floor(height * ratio));
+      const limit = Math.min(1, maxEdge / bufferWidth, maxEdge / bufferHeight);
+      return [Math.max(2, Math.floor(bufferWidth * limit)), Math.max(2, Math.floor(bufferHeight * limit))];
+    }
+    function bindCubeContext(canvas) {
+      if (cubeGpu.bound) return;
+      cubeGpu.bound = true;
+      canvas.addEventListener("webglcontextlost", (event) => {
+        event.preventDefault();
+        cubeGpu.gl = null;
+        cubeGpu.program = null;
+        cubeGpu.vao = null;
+        cubeGpu.instances = null;
+        cubeGpu.sig = "";
+        cubeGpu.failed = false;
+        canvas.__cubeGl = null;
+        canvas.dataset.renderer = "lost";
+      });
+      canvas.addEventListener("webglcontextrestored", () => {
+        requestAnimationFrame(drawCubes);
+      });
+      canvas.addEventListener("threemd-cubes", () => drawCubes());
+    }
     function initCubeGl(canvas) {
       if (cubeGpu.failed) return false;
+      // One context, created after the bitmap size is final. Resizing the bitmap
+      // or asking for the discrete GPU makes Safari drop the context.
       const gl = canvas.getContext("webgl2", {
         alpha: false,
         antialias: true,
         depth: true,
         stencil: false,
         premultipliedAlpha: false,
-        preserveDrawingBuffer: true,
-        powerPreference: "high-performance",
       });
-      if (!gl) { cubeGpu.failed = true; return false; }
+      if (!gl || gl.isContextLost()) return false;
       const vert = `#version 300 es
         layout(location=0) in vec3 aPos;
         layout(location=1) in vec3 aNrm;
@@ -1539,6 +1566,7 @@ title: Small sculpture
       cubeGpu.vao = vao;
       cubeGpu.instances = instances;
       cubeGpu.mvpLoc = gl.getUniformLocation(program, "uMvp");
+      canvas.__cubeGl = gl;
       return true;
     }
     function syncCubeInstances(volume, selected, planeCount) {
@@ -1601,19 +1629,25 @@ title: Small sculpture
       const width = parent ? parent.clientWidth : 0;
       const height = parent ? parent.clientHeight : 0;
       if (width < 2 || height < 2) return;
+      bindCubeContext(canvas);
+      const [bufferWidth, bufferHeight] = cubeBufferSize(width, height);
+      // Set the bitmap before the first getContext. Changing it later drops the
+      // Safari context, so a later layout change only updates the viewport.
+      if (!cubeGpu.gl) {
+        canvas.width = bufferWidth;
+        canvas.height = bufferHeight;
+      }
+      if (cubeGpu.gl && cubeGpu.gl.isContextLost()) {
+        cubeGpu.gl = null;
+        canvas.dataset.renderer = "lost";
+        return;
+      }
       if (!cubeGpu.gl && !initCubeGl(canvas)) {
-        canvas.dataset.renderer = "none";
+        if (canvas.dataset.renderer !== "lost") canvas.dataset.renderer = "none";
         if (cubeGpu.error) canvas.dataset.glError = cubeGpu.error.slice(0, 240);
         return;
       }
       canvas.dataset.renderer = "webgl2";
-      const ratio = Math.min(window.devicePixelRatio || 1, 2);
-      const bufferWidth = Math.floor(width * ratio);
-      const bufferHeight = Math.floor(height * ratio);
-      if (canvas.width !== bufferWidth || canvas.height !== bufferHeight) {
-        canvas.width = bufferWidth;
-        canvas.height = bufferHeight;
-      }
       const selected = doc ? (lab.currentIndex || 0) : -1;
       if (volume.cells.length) syncCubeInstances(volume, selected, doc && doc.planes ? doc.planes.length : 1);
       else { cubeGpu.count = 0; cubeGpu.sig = ""; cubePick.points = []; }

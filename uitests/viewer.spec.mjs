@@ -23,15 +23,19 @@ test.describe("viewer & editor (viewer.html)", () => {
     });
     const seen = await page.evaluate(() => {
       const canvas = document.getElementById("cubeCanvas");
+      canvas.dispatchEvent(new Event("threemd-cubes"));
       const rect = canvas.getBoundingClientRect();
-      const gl = canvas.getContext("webgl2");
-      const ratio = canvas.width / Math.max(rect.width, 1);
-      const row = Math.max(0, Math.min(canvas.height - 1, Math.floor((rect.height / 2) * ratio)));
-      const pixels = new Uint8Array(canvas.width * 4);
-      gl.readPixels(0, row, canvas.width, 1, gl.RGBA, gl.UNSIGNED_BYTE, pixels);
+      const gl = canvas.__cubeGl;
+      const lost = !gl || gl.isContextLost();
       let lit = 0;
-      for (let i = 0; i < pixels.length; i += 4) {
-        if (pixels[i] + pixels[i + 1] + pixels[i + 2] > 140) lit++;
+      if (!lost) {
+        const ratio = canvas.width / Math.max(rect.width, 1);
+        const row = Math.max(0, Math.min(canvas.height - 1, Math.floor((rect.height / 2) * ratio)));
+        const pixels = new Uint8Array(canvas.width * 4);
+        gl.readPixels(0, row, canvas.width, 1, gl.RGBA, gl.UNSIGNED_BYTE, pixels);
+        for (let i = 0; i < pixels.length; i += 4) {
+          if (pixels[i] + pixels[i + 1] + pixels[i + 2] > 140) lit++;
+        }
       }
       return {
         show: document.getElementById("stage").dataset.show,
@@ -39,11 +43,13 @@ test.describe("viewer & editor (viewer.html)", () => {
         bottom: rect.bottom,
         height: rect.height,
         lit,
+        lost,
         cubes: Number(canvas.dataset.cubes),
         viewH: window.innerHeight,
       };
     });
     expect(seen.show).toBe("cubes");
+    expect(seen.lost).toBe(false);
     expect(seen.height).toBeGreaterThan(80);
     expect(seen.top).toBeGreaterThanOrEqual(0);
     expect(seen.bottom).toBeLessThanOrEqual(seen.viewH + 1);
