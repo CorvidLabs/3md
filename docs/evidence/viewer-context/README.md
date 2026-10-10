@@ -36,3 +36,16 @@ An isolated built-site viewer opened the live public GitHub Examples folder (307
 The renderer remains byte-identical to implementation d2e875e. The expanded test file SHA-256 is `0c35ca8f3b8af09cde3b25a06450e1835c1b5373c19d018f360734f03cc32770`.
 
 The complete expanded suite passed all 242 tests on Chromium/WebKit with two workers in 2.7 minutes, without skips or retries, on 2026-10-10. Runtime bytes remain unchanged from d2e875e; the source hashes above distinguish the original test set from this expanded test set.
+
+## Safari startup follow-up (2026-10-10)
+
+The observations and source pin above describe the merged PR95 repair. Safari 26.5.2 still reproduced 256 `WebGL: context lost` console errors at the public viewer. The existing loss-event handler was insufficient when context creation failed or returned an already-lost context before the event reached the app. A controlled pre-fix test made 263 context requests during 256 redraws. The underlying intermittent Safari/GPU loss cause has not been established; subsequent fresh public loads also succeeded.
+
+The follow-up latches failure/loss directly during initialization and drawing, refuses null shader/program/vertex-array/buffer handles, and clears the loss latch only on actual restoration. No shader, camera, native app, file-format or loader behavior changed. A failed unavailable context makes one request for the page lifetime; a lost context resumes after restoration. Slice and Preview remain available while graphics are paused.
+
+- Complete browser suite: 256 passed on Chromium/WebKit, two workers, 2.8 minutes, no skips or retries. This includes all 293 text examples, binary/composition/folder inputs, size bounds and existing camera/picking/edit checks.
+- A subsequently added genuine early-loss test passed in both engines (2 checks). It suppresses the app's loss-event delivery, forces a real loss via `WEBGL_lose_context`, issues 256 redraws, then restores: one initial request, one rebuild, exact source/camera/slice retained and no GPU errors after restoration.
+- Native Safari 26.5.2 independently tested the same genuine startup-loss harness. While lost: one context request and zero draws. Slice erasure reduced the cube count 122 to 121; Undo restored 122 without another context request. After explicit graphics restoration: two total requests, one draw, one loss and one restoration, with the WebGL2 reference visible. Screenshot: [safari-startup-restored.png](safari-startup-restored.png). The diagnostic footer and restore button exist only in the temporary harness.
+- Null startup context and already-lost startup context each stay at one request through 256 redraws, Slice, phone resizing, 16x and Expand. All five null GPU-resource cases stop safely with Slice/Preview usable and source preserved.
+
+Tested `web/viewer.html` SHA-256: `591ab297de99f35198abf1214490e6be8c211e553d192d315bc8ef0ec85a16fa`. Tested `uitests/viewer.spec.mjs` SHA-256: `ca0222441f219e230f8571d389c66430e35d33ce21c4b198812989332524dbff`. Native observations supplement the automated WebKit checks; they do not prove every Safari device or the deployed public revision. Current repository-gate/provenance outcomes are reported separately after the actual gates run. No human diff review, trusted signature or lifecycle closure is claimed for this follow-up.

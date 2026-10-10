@@ -92,3 +92,9 @@ High-zoom scrolled-cell painting/undo and genuine WEBGL_lose_context loss/restor
 The viewer suite now visits all 293 text examples across 48 axes through Cubes, Slice and Preview, opens all four binary samples through file input, retains embedded entries, and verifies four linked local-folder drafts. Desktop and phone boundary cases cover empty/single cells, 64-cell skinny grids, 4000/4096 occupied cells, 64/65 grid edges, 256/257 planes and the 1.5 MiB source limit. Unsupported Slice grids explain their refusal while preserving source and Preview. Details and actual live GitHub-folder/binary observations are in `docs/evidence/viewer-context/README.md`.
 
 2026-10-10 expanded complete suite: 242 Chromium/WebKit tests passed in 2.7 minutes, two workers, no skips or retries. The four new cases separately passed in both engines. These are agent checks, not human acceptance or live deployment.
+
+## Safari startup follow-up
+
+Simulate null and already-lost context creation without a delivered loss event, issue 256 redraws and change views/viewport: one getContext attempt and unchanged failed bitmap. Null shader/program/vertex-array/mesh/instance allocations must stop without invalid GPU calls and preserve Slice/Preview. A genuine WEBGL_lose_context startup loss suppresses the application's loss event, then restoration rebuilds once with source, pose and slice preserved. Inspect actual Safari startup, Slice editing/Undo during loss and restoration, alongside the complete cross-browser suite.
+
+2026-10-10 Safari follow-up verification: complete Chromium/WebKit suite 256 passed without retries or skips (2 workers, 2.8 minutes), followed by the additional genuine early-loss test passing in both engines (2 checks). Native Safari 26.5.2 independently held at one context request while lost, retained Slice erase/Undo, and rebuilt exactly once after restoration. See docs/evidence/viewer-context/README.md for the proof boundaries.

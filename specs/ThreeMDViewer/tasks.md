@@ -55,3 +55,5 @@ spec: ThreeMDViewer.spec.md
 - [x] Add the guide to hosted documentation navigation and the selected-docs bundle.
 
 - [x] Add and verify every text catalog example, local binary/composition/folder inputs and desktop/phone size-boundary regressions requested by Leif.
+
+- [x] Stop startup context retries before loss-event delivery, guard unavailable GPU resources, and verify genuine early loss/restoration in both automated engines and native Safari.

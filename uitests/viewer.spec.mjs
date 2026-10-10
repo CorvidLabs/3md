@@ -1677,3 +1677,126 @@ test("a local linked folder resolves entries and preserves each edited draft", a
     expect(await page.evaluate(()=>window.threeMd.source)).toBe(original+"\nFolder draft marker");
   }
 });
+
+for (const startup of ["missing", "already-lost"]) {
+  test(`WebGL ${startup} at startup makes one context request across repeated redraws`, async ({ page }) => {
+    const errors = [];
+    page.on("pageerror", error => errors.push(error.message));
+    await page.addInitScript(startup => {
+      window.__startupContextCalls = 0;
+      const original = HTMLCanvasElement.prototype.getContext;
+      HTMLCanvasElement.prototype.getContext = function(type, ...args) {
+        if (this.id !== "cubeCanvas" || type !== "webgl2") return original.call(this, type, ...args);
+        window.__startupContextCalls++;
+        // Drivers may refuse creation or return a lost context before sending any event.
+        return startup === "missing" ? null : { isContextLost: () => true };
+      };
+    }, startup);
+    await page.goto("/viewer.html");
+    await viewerReady(page);
+    const source = await page.evaluate(() => window.threeMd.source);
+    await page.evaluate(() => {
+      const canvas = document.getElementById("cubeCanvas");
+      for (let index = 0; index < 256; index++) canvas.dispatchEvent(new Event("threemd-cubes"));
+    });
+    await expect(page.locator("#cubeCanvas")).toHaveAttribute("data-renderer", startup === "missing" ? "none" : "lost");
+    expect(await page.evaluate(() => window.__startupContextCalls)).toBe(1);
+    const bitmap = await page.locator("#cubeCanvas").evaluate(canvas => [canvas.width, canvas.height]);
+    await page.locator("#sliceTab").click();
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.locator('#sliceZoom [data-zoom="16"]').click();
+    await page.locator("#sliceExpand").click();
+    expect(await page.evaluate(() => window.__startupContextCalls)).toBe(1);
+    expect(await page.locator("#cubeCanvas").evaluate(canvas => [canvas.width, canvas.height])).toEqual(bitmap);
+    await page.locator("#previewTab").click();
+    expect(await page.evaluate(() => window.threeMd.source)).toBe(source);
+    expect(errors).toEqual([]);
+  });
+}
+
+for (const resource of ["shader", "program", "vertex-array", "mesh-buffer", "instance-buffer"]) {
+  test(`WebGL ${resource} allocation failure stops setup without invalid GPU calls`, async ({ page }) => {
+    const errors = [];
+    page.on("pageerror", error => errors.push(error.message));
+    page.on("console", message => { if (message.type() === "error") errors.push(message.text()); });
+    await page.addInitScript(resource => {
+      window.__allocationContextCalls = 0;
+      const original = HTMLCanvasElement.prototype.getContext;
+      HTMLCanvasElement.prototype.getContext = function(type, ...args) {
+        const context = original.call(this, type, ...args);
+        if (this.id !== "cubeCanvas" || type !== "webgl2" || !context) return context;
+        window.__allocationContextCalls++;
+        const method = { shader: "createShader", program: "createProgram", "vertex-array": "createVertexArray",
+          "mesh-buffer": "createBuffer", "instance-buffer": "createBuffer" }[resource];
+        const create = context[method].bind(context);
+        let calls = 0;
+        context[method] = (...args) => ++calls === (resource === "instance-buffer" ? 2 : 1) ? null : create(...args);
+        return context;
+      };
+    }, resource);
+    await page.goto("/viewer.html");
+    await viewerReady(page);
+    await expect(page.locator("#cubeCanvas")).toHaveAttribute("data-renderer", "none");
+    await expect(page.locator("#cubeCanvas")).toHaveAttribute("data-gl-error", /unavailable/);
+    const source = await page.evaluate(() => window.threeMd.source);
+    await page.evaluate(() => {
+      for (let index = 0; index < 256; index++) document.getElementById("cubeCanvas").dispatchEvent(new Event("threemd-cubes"));
+    });
+    expect(await page.evaluate(() => window.__allocationContextCalls)).toBe(1);
+    await page.locator("#sliceTab").click();
+    await expect(page.locator("#sliceWorkspace")).toBeVisible();
+    await page.locator("#previewTab").click();
+    expect(await page.evaluate(() => window.threeMd.source)).toBe(source);
+    expect(errors).toEqual([]);
+  });
+}
+
+test("a genuine startup loss pauses before its event and rebuilds once after restoration", async ({ page }) => {
+  const errors = [];
+  page.on("pageerror", error => errors.push(error.message));
+  await page.addInitScript(() => {
+    window.__earlyContextCalls = 0;
+    let first = true;
+    const original = HTMLCanvasElement.prototype.getContext;
+    HTMLCanvasElement.prototype.getContext = function(type, ...args) {
+      const context = original.call(this, type, ...args);
+      if (this.id !== "cubeCanvas" || type !== "webgl2" || !context) return context;
+      window.__earlyContextCalls++;
+      if (first) {
+        first = false;
+        window.__earlyLoss = context.getExtension("WEBGL_lose_context");
+        // Simulate a driver that loses its context before delivering the app's event.
+        this.addEventListener("webglcontextlost", event => {
+          event.preventDefault();
+          event.stopImmediatePropagation();
+          window.__earlyLossDelivered = true;
+        }, { capture: true, once: true });
+        window.__earlyLoss?.loseContext();
+      }
+      return context;
+    };
+  });
+  await page.goto("/viewer.html");
+  await viewerReady(page);
+  expect(await page.evaluate(() => Boolean(window.__earlyLoss))).toBe(true);
+  await expect(page.locator("#cubeCanvas")).toHaveAttribute("data-renderer", "lost");
+  await expect.poll(() => page.evaluate(() => window.__earlyLossDelivered)).toBe(true);
+  const source = await page.evaluate(() => window.threeMd.source);
+  await page.locator("#sliceTab").click();
+  await page.locator("#sliceList button").nth(1).click();
+  await page.evaluate(() => {
+    for (let index = 0; index < 256; index++) document.getElementById("cubeCanvas").dispatchEvent(new Event("threemd-cubes"));
+  });
+  expect(await page.evaluate(() => window.__earlyContextCalls)).toBe(1);
+  const pose = await page.locator("#cubeCanvas").evaluate(canvas =>
+    [canvas.dataset.yaw, canvas.dataset.pitch, canvas.dataset.rotation, canvas.dataset.panX, canvas.dataset.panY]);
+  await page.evaluate(() => window.__earlyLoss.restoreContext());
+  await expect(page.locator("#cubeCanvas")).toHaveAttribute("data-renderer", "webgl2");
+  expect(await page.evaluate(() => window.__earlyContextCalls)).toBe(2);
+  expect(await page.evaluate(() => document.getElementById("cubeCanvas").__cubeGl.getError())).toBe(0);
+  expect(await page.evaluate(() => window.threeMd.source)).toBe(source);
+  expect(await page.locator("#cubeCanvas").evaluate(canvas =>
+    [canvas.dataset.yaw, canvas.dataset.pitch, canvas.dataset.rotation, canvas.dataset.panX, canvas.dataset.panY])).toEqual(pose);
+  await expect(page.locator("#sliceHeading")).toHaveText("Slice 2 of 3");
+  expect(errors).toEqual([]);
+});

@@ -9,3 +9,5 @@ artifact: plan
 2. Render a viewport-sized Slice bitmap over a virtual scroll surface, preserving coordinates and sharp glyphs.
 3. Latch context loss, preserve application state and rebuild only after restoration.
 4. Verify regressions and the repository gate, publish a feature PR, then import its tested commit in a site follow-up PR.
+
+5. Repair the startup failure/event gap and partial-resource initialization under the existing loss-suspension contract; verify actual Safari and import the tested follow-up in the site.
