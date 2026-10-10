@@ -1,0 +1,19 @@
+{
+  "timestamp": 1791642684,
+  "commit": "58512a76333d3698e3ab7d140d7b378a1313ba2a",
+  "contract_digest": "3b63dbbb2bbe4105992cc11edf9c9e5af29cf072884081c8329b2389d8116e6d",
+  "execution_digest": "83b60b058c667a697e198215552d2b70040d8b858290098c25dbf50cf40f661b",
+  "workspace_digest": "ccf0dbace0554bce2254fe8eca0d40b709e80a9a6ecd0c862d8c9ade589df656",
+  "passed": true,
+  "commands": [
+    {
+      "command": "specsync check --spec ThreeMDViewer",
+      "success": true,
+      "exit_code": 0
+    }
+  ],
+  "requirement_ids": [
+    "REQ-ThreeMDViewer-003",
+    "REQ-ThreeMDViewer-004"
+  ]
+}

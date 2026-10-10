@@ -63,7 +63,6 @@ The viewer page SHALL NOT offer a render-mode switch and SHALL NOT autoplay. Pre
 Acceptance Criteria:
 
 - The page has no render-mode menu and no page play control. A frame-axis document is not playing.
-- A fenced grid draws on WebGL2, including about 1400 cubes. A single cell has filled faces from every side. Selection changes edge color while the face interior keeps its glyph color. Camera, zoom, and selection redraw without geometry uploads. Click picking selects the nearest visible cube’s Z slice.
-- X is the column, Y is the text row with row 0 toward the top, and Z is the plane index. Space, dot, and tab are empty. Keep the 64 by 64 per-plane and 4000-cell caps.
+- A fenced grid draws on WebGL2, including a volume of about 1400 cubes.
 - Evidence is VIEWER-6 and the cube tests in `uitests/viewer.spec.mjs`.
 

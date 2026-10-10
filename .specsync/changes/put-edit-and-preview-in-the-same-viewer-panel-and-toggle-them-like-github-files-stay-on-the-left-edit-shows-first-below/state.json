@@ -7,10 +7,11 @@
   "title": "Put Edit and Preview in the same viewer panel and toggle them like GitHub. Files stay on the left. Edit shows first. Below 900px, Files and the document take turns, and the document panel still switches Edit and Preview.",
   "description": "Put Edit and Preview in the same viewer panel and toggle them like GitHub. Files stay on the left. Edit shows first. Below 900px, Files and the document take turns, and the document panel still switches Edit and Preview.",
   "kind": "feature",
-  "state": "implementing",
+  "state": "verifying",
+  "canonical_applied": true,
   "base_commit": "e18f35e2c0c2c11c202342c5bf84b514ee12fe58",
   "created_at": 1791595505,
-  "updated_at": 1791642373,
+  "updated_at": 1791642689,
   "affected_specs": [
     "ThreeMDViewer"
   ],
