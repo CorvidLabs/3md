@@ -26,16 +26,19 @@ spec: ThreeMDViewer.spec.md
 ## Gaps
 
 - The previous page contract shipped in PR 91.
-- Definition approval for the shared Edit and Preview panel is still open.
+- Leif approved the final scope on 2026-10-10; verification, acceptance, and archiving remain pending.
 - The hosted page shows this layout after the branch merges.
 
 ## Review Sign-offs
 
-- **Product**: previous page contract approved by user:0xLeif and shipped in PR 91. This layout change is not approved yet.
-- **QA**: agent:codex local browser and visual verification; human review pending
+- **Product**: previous page contract approved by user:0xLeif and shipped in PR 91. Leif approved the final layout and navigation scope on 2026-10-10 and authorized lifecycle closure after verification passes.
+- **QA**: agent:codex prior browser and visual checks; final closure verification pending. Scope approval does not claim independent human diff review.
 - **Design**: n/a
-- **Dev**: pending
+- **Dev**: agent:codex implementation and self-review; final verification pending.
 
 - [x] Preserve file, linked-entry, invalid, and empty drafts with caret and selected plane across navigation.
 - [x] Mark edits, filter files, navigate by keyboard, reveal phone documents, and avoid stale source queries.
 - [x] Search and pack current drafts, and preserve the collection after a failed open.
+
+- [x] Preserve the selected slice across delayed source refresh and sort file paths for consistent keyboard navigation.
+- [x] Compact small-phone spacing without reducing existing assertions.

@@ -45,3 +45,9 @@ spec: ThreeMDViewer.spec.md
 ## File navigation fix
 
 The Chromium and WebKit viewer suite covers exact draft restoration, invalid and empty edits, the caret and slice, composition-entry independence, linked entry/file sharing, original-text edited markers, current-text download, search and pack, file filtering and keyboard selection, mobile document reveal, failed-open preservation, and stale source-query removal on navigation. Screenshots from live desktop and phone inspection are in `docs/evidence/viewer-navigation/`. These are agent checks and do not record human definition approval.
+
+## Closure regression coverage
+
+The file-draft test waits beyond the 160ms source-render debounce and checks that slice 1 survives before navigating. The phone keyboard test requires paths in alphabetical order before using End and Enter. The existing phone canvas, control separation, and overflow checks run unchanged at 390 by 844 and 320 by 740. The three original failures were reproduced and the targeted regression checks passed in Linux WebKit 1.61.1. The complete Linux hosted suite passed 190 tests with 8 existing skips in 2.1 minutes; the macOS viewer suite passed all 98 tests in 24.0 seconds. Targeted lifecycle verification, pinned Trust, and closure remain pending.
+
+Closure implementation checks: macOS viewer 98 passed; Linux hosted UI 190 passed and 8 existing skips; Bun helper suite 15 passed; strict SpecSync 4 specs passed with zero warnings and full configured coverage; Hi 85 criteria with no problems; pinned element bundle drift passed at 48840 bytes. Logs remain local under /private/tmp/3md-viewer-closure-*. The Trust and SpecSync closing gates are still pending.

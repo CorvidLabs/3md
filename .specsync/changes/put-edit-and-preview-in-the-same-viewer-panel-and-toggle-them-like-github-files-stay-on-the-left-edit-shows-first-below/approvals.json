@@ -1,4 +1,47 @@
 {
-  "approvals": [],
+  "approvals": [
+    {
+      "gate": "definition",
+      "actor": "user:0xLeif",
+      "timestamp": 1791642355,
+      "digest": "3b63dbbb2bbe4105992cc11edf9c9e5af29cf072884081c8329b2389d8116e6d",
+      "note": "Recorded by agent:codex from Leif’s explicit “I approve” on 2026-10-10, after final viewer behavior, PR 93, and approval/verification/acceptance/archive steps were presented. Authorizes current final scope and verified closure; does not claim backdated approval, human diff review, independent review, signed provenance, or merge authority.",
+      "approved_scope": {
+        "schema_version": 1,
+        "change_id": "put-edit-and-preview-in-the-same-viewer-panel-and-toggle-them-like-github-files-stay-on-the-left-edit-shows-first-below",
+        "title": "Put Edit and Preview in the same viewer panel and toggle them like GitHub. Files stay on the left. Edit shows first. Below 900px, Files and the document take turns, and the document panel still switches Edit and Preview.",
+        "description": "Put Edit and Preview in the same viewer panel and toggle them like GitHub. Files stay on the left. Edit shows first. Below 900px, Files and the document take turns, and the document panel still switches Edit and Preview.",
+        "kind": "feature",
+        "affected_specs": [
+          "ThreeMDViewer"
+        ],
+        "affected_paths": [
+          "hi/tools.md",
+          "specs/ThreeMDViewer",
+          "uitests/viewer.spec.mjs",
+          "web/viewer.html"
+        ],
+        "no_spec_change": false,
+        "no_spec_change_rationale": null,
+        "acceptance_criteria": [
+          "File and composition-entry switches preserve edits including invalid and empty drafts, caret, and selected plane. Linked entries share the corresponding file draft. File filtering and keyboard navigation retain focus; narrow-screen file and search opens reveal the document.",
+          "Files stay beside one document panel on desktop; Edit, Preview, and Cubes switch with exactly one visible. Cubes opens first with the framed small sculpture. Below 900px Files and the document take turns.",
+          "Local and public GitHub open, search, sections, pack, and text/kind 2 export remain available. Search and packing use current drafts. Failed local opens preserve the collection. Explicit navigation clears stale source queries in favor of the current hash. Drafts last until refresh or opening another collection.",
+          "The compact workspace keeps document identity and edited state visible, groups exports under Document, shows insert tools in Edit, and offers Preview for nongrid documents or unavailable WebGL2. Camera controls remain below the drawing with usable phone framing.",
+          "The element and open-document bundles, Sculpt app, library APIs, format, package versions, fixtures, and trust policies remain unchanged. Complete verified SpecSync closure on the existing feature PR under Leif's 2026-10-10 approval; Leif retains merge authority.",
+          "The page WebGL2 stage preserves Sculpt-style full outward-wound cubes, neighbor-face suppression, glyph fill and gold selected-slice edges, document axes, rendering caps, cached geometry, and one instanced draw. Camera and slice controls work with pointer and keyboard input."
+        ],
+        "dependencies": [],
+        "supersedes": [],
+        "answers": {
+          "architecture_risk": "no",
+          "public_contract": "yes"
+        }
+      },
+      "approved_delta_digests": {
+        "ThreeMDViewer": "f438551c5a5af59e2bab5ed4a52950750aead6e8efac276b849e298626211629"
+      }
+    }
+  ],
   "reopenings": []
 }

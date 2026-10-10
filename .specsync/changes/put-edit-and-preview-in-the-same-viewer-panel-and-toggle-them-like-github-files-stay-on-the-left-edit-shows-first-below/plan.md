@@ -7,7 +7,7 @@ artifact: plan
 
 ## WP1. Definition
 
-- Keep this change in draft until Leif approves the definition.
+- Record Leif's 2026-10-10 approval of the reconciled final definition, then verify and close this change on PR 93.
 - The semantic delta is `deltas/ThreeMDViewer.md`.
 - Hi for this behavior is VIEWER-6 in `hi/tools.md`.
 
@@ -35,3 +35,7 @@ Compact the identity row and toolbar. Use a native Document disclosure for expor
 ## File navigation fix
 
 Keep a page-owned draft for each opened file and composition entry, including invalid or empty edits. Share linked entry drafts with their corresponding source file. Refresh the line index from drafts when searching, use draft text when packing, and preserve selection and caret when returning. Validate a local open before replacing the collection. Show filenames and edited state across views, add a file filter with an explicit empty result, and reveal opened documents on narrow screens. Replace stale source queries on explicit navigation.
+
+## Hosted WebKit closure fixes
+
+Reproduce the three PR 93 UI failures with Linux Playwright 1.61.1. Preserve the selected slice through delayed source rendering and navigation, keep file-filter keyboard focus stable across native search events, and provide usable cube drawing space at a 320 by 740 viewport. Keep the existing assertions, then run the browser suites, strict contract checks, Hi, the pinned Trust lane, and provenance verification before closing the lifecycle.

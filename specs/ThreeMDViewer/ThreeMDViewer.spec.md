@@ -1,6 +1,6 @@
 ---
 module: ThreeMDViewer
-version: 9
+version: 10
 status: active
 files:
   - web/viewer.html
@@ -146,3 +146,5 @@ The cube input keeps at most 12 distinct non-space characters, at most 64 column
 | 2026-10-09 | agent:codex | Compact the workspace, group document actions, add Fit and accessible camera/slice controls, and clarify empty and loading states under Leif’s request to continue improving UI and UX. The layout definition remains an unapproved draft. |
 
 | 2026-10-10 | agent:codex | Preserve file and composition drafts across navigation, expose edited state, and improve file filtering, keyboard navigation, mobile reveal, and current-document URLs in a follow-up PR after PR 92 merged. The definition remains an unapproved draft. |
+
+| 2026-10-10 | agent:codex | Preserve the slice across editor refresh, sort file paths for consistent keyboard navigation, and compact small-phone spacing. Leif approved the final scope; verification, acceptance, and archiving are pending. |

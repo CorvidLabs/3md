@@ -1,6 +1,6 @@
 # Edit and Preview share one panel
 
-## ADDED
+## MODIFIED
 
 ### REQUIREMENT REQ-ThreeMDViewer-003
 

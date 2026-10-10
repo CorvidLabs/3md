@@ -20,7 +20,7 @@ spec: ThreeMDViewer.spec.md
 ## Current Status
 
 - PR 91 is on main. PR 92 shares Edit, Preview, and Cubes in one panel and adds Sculpt cube-stage parity plus the continuing UI and UX improvements.
-- Definition approval for this layout change is not recorded yet.
+- Leif approved the final viewer scope on 2026-10-10 and authorized acceptance and archiving after successful verification. Verification and closure are pending on PR 93; Leif retains merge authority.
 
 ## Notes
 
@@ -41,6 +41,8 @@ spec: ThreeMDViewer.spec.md
 - The canvas occupies the space above the camera strip. Framing and picking use its actual client dimensions; changing view or viewport still does not resize an established WebGL bitmap.
 - Export and conversion actions use a native disclosure with natural button focus, Escape dismissal, and outside-click closure. The source download shortcut preserves editor focus.
 
-- PR 92 has merged. Leif requested a new fix PR for file navigation. Draft state belongs to the page and survives file and composition-entry switches within the current collection. It is not browser storage or a write to the source files. The existing definition remains unapproved.
+- PR 92 has merged. Leif requested a new fix PR for file navigation. Draft state belongs to the page and survives file and composition-entry switches within the current collection. It is not browser storage or a write to the source files. That follow-up was kept in draft until Leif's explicit 2026-10-10 scope approval.
 
 - File activation focuses the document before restoring its caret. Chromium clears a restored selection when the editor remains blurred; focus-first restoration passes in both engines. Packing uses the current draft of the active document for each opened file, without rewriting composition profiles. The line index is reused until a draft or the collection changes.
+
+- Linux WebKit exposed a delayed-render slice reset, native directory enumeration differences, and insufficient drawing space on a 320 by 740 phone. Source refresh now restores the selected slice, the file list sorts paths for consistent keyboard navigation, and narrow-screen padding leaves more stage space. The final verification runs are pending; existing phone and focus assertions remain, with an added wait across the editor debounce.

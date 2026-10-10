@@ -10,7 +10,7 @@ artifact: tasks
 - [x] Call `render` when Preview is shown.
 - [x] Update VIEWER-6 and `specs/ThreeMDViewer/`.
 - [x] Update the desktop and narrow Playwright tests.
-- [ ] Record definition approval from Leif. Do not self-approve.
+- [x] Reconcile the final definition under Leif's direct 2026-10-10 approval; record that approval through SpecSync.
 
 - [x] Run Sculpt and compare the same sculpture in both live cube stages.
 - [x] Match lit glyph fill and gold selected-slice edges, full faces, background, axes, and framing.
@@ -26,8 +26,15 @@ artifact: tasks
 
 Pinned Trust runs after the feature head is committed and pushed; its result is recorded in the PR and local verification output.
 
-Definition and human diff approval remain open.
+Leif approved the final scope and verified closure on 2026-10-10. This records direct human authorization, without claiming human diff review.
 
 - [x] Preserve file, linked-entry, invalid, and empty drafts with caret and selected plane across navigation.
 - [x] Mark edits, filter files, navigate by keyboard, reveal phone documents, and avoid stale source queries.
 - [x] Search and pack current drafts, and preserve the collection after a failed open.
+
+## Hosted WebKit closure fixes
+
+- [x] Correct delayed-render slice preservation, stable alphabetical file navigation, and small-phone drawing space.
+- [x] Verify the implemented viewer behavior in macOS Chromium/WebKit, the full Linux hosted UI suite, strict specs, Hi, helper tests, and bundle drift.
+
+Targeted lifecycle verification, pinned Trust, provenance recording, acceptance, and archive remain pending. The verified implementation tasks above do not claim these later gates have completed.

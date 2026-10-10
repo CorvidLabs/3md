@@ -305,7 +305,7 @@
     .hint{line-height:1.7;font-size:10px}
     .foot{font-size:10px}
   }
-  @media(max-width:380px){.headerlinks a{display:none}.pstab{padding:9px 10px}}
+  @media(max-width:380px){.wrap{padding:8px}.topbar{padding-bottom:8px}.headerlinks a{display:none}.pstab{padding:9px 10px}}
 
 
   .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
@@ -707,11 +707,14 @@ title: Small sculpture
       const src = ed.value;
       updateDraftState();
       counts.textContent = src.split("\n").length + " lines, " + src.length + " chars";
+      // A delayed editor refresh must keep the slice selected before the refresh.
+      const selectedPlane = lab.currentIndex || 0;
       lab.setSource(src);
       document.getElementById("documentTitle").textContent = lab.document?.title || "Untitled document";
       // The page holds the preview on one plane. Axis names no longer start playback.
       if (lab.getAttribute("mode") !== "single") lab.setAttribute("mode", "single");
       if (lab.playing && typeof lab.pause === "function") lab.pause();
+      if (lab.document?.planes.length) lab.goTo(Math.min(selectedPlane, lab.document.planes.length - 1));
       // An empty document is NOT an error: show a neutral prompt, no red, no errline.
       if (!src.trim()) {
         errLine = -1;
@@ -1261,7 +1264,9 @@ title: Small sculpture
       document.getElementById("filesTitle").textContent = filesLabel || (openedFiles.length ? openedFiles.length + " files" : "files");
       fileFilter.hidden = openedFiles.length < 2;
       const needle = fileFilter.value.trim().toLowerCase();
-      const files = openedFiles.filter((file) => file.path.toLowerCase().includes(needle));
+      // Directory inputs have different native ordering across browsers and OSes.
+      const files = openedFiles.filter((file) => file.path.toLowerCase().includes(needle))
+        .sort((left, right) => left.path.localeCompare(right.path));
       if (!files.length) {
         const empty = document.createElement("div");
         empty.className = "empty";

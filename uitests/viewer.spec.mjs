@@ -940,6 +940,10 @@ test.describe("viewer & editor (viewer.html)", () => {
       document.getElementById("editor").setSelectionRange(20, 25);
       document.getElementById("lab").goTo(1);
     });
+    // Cross the 160ms editor debounce before navigation: refreshing source must
+    // retain the chosen slice, including on slower Linux WebKit runners.
+    await page.waitForTimeout(220);
+    expect(await page.evaluate(() => document.getElementById("lab").currentIndex)).toBe(1);
     await openedFile(page, "b.3md").click();
     await openedFile(page, "a.3md").click();
     await expect(page.locator("#editor")).toHaveValue(changed);
@@ -1047,6 +1051,7 @@ test.describe("viewer & editor (viewer.html)", () => {
     await expect(page.locator("#fileList")).toContainText("No files match");
     await page.locator("#fileFilter").press("Escape");
     await expect(page.locator("#fileList button")).toHaveCount(2);
+    await expect(page.locator("#fileList .file-name")).toHaveText(["a.3md", "b.3md"]);
     await page.locator("#fileFilter").press("ArrowDown");
     await page.keyboard.press("End");
     await expect(openedFile(page, "b.3md")).toBeFocused();
