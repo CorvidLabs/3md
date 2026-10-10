@@ -103,7 +103,7 @@
     "specs/RookDevelopment/requirements.md": "0efd07ebb2fa2d12769429f782dd1d2d70362adbeca2a82234251c6aa55abe90",
     "specs/RookRendering/RookRendering.spec.md": "acf982fb53c0904c028bb1d34eadd52de70843d413b3de5571356df9053e1eae",
     "specs/RookRendering/requirements.md": "231cdc3eb746b19c358a8b981d9cf3514cc28333aa19594e2e08f92b42510c61",
-    "specs/RookSculpture/RookSculpture.spec.md": "0667dab6dd88b6d56790d138eb6f9f9f731c575941670eeec29f985f5083a001",
+    "specs/RookSculpture/RookSculpture.spec.md": "6801c79aa4ebb6f72c772cf5515726a7aedaeb5e09a03fdf77fce53bfeee87a9",
     "specs/RookSculpture/requirements.md": "f629a4d8e7a2d5f2d0605c36291144f2a9f9bea911362abae60f47c7b4f7959a"
   },
   "snapshots": {
@@ -149,8 +149,8 @@
       "errors": [],
       "warnings": [],
       "notices": [],
-      "input_digest": "4aa97cef436b78d9d05327bb21089722e584f0ad0fccca7cd16344de7f90ad80",
-      "snapshot_digest": "81436258970f389dc47fb3fdec1cb0f33a48d87854fc8cfe5ac86eb4d59aec98"
+      "input_digest": "4dc94e85b7f48a954c2106993caa4d9efc1b0343fa20ee83c092a32deba9cc89",
+      "snapshot_digest": "9a51d8db5c6dcd0864e321551fe02219f9feef761f6798717fd26168009ad7b3"
     }
   }
 }
