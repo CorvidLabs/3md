@@ -50,6 +50,13 @@
       "approved_delta_digests": {
         "ThreeMDViewer": "8232bf97020dfd9d2395186bed985f2972ef59b6d46d94d61efcb68fe110f8c2"
       }
+    },
+    {
+      "gate": "finalization",
+      "actor": "specsync:finalization",
+      "timestamp": 1791649769,
+      "digest": "2684681bd1cb31b3eefa62fb43edb698ddf4ae64d7a91cd828afa886bcecfb17",
+      "note": "Same-PR finalization closing digest"
     }
   ],
   "reopenings": []

@@ -7,11 +7,11 @@
   "title": "Keep Sculpt and web cube cameras in parity with unrestricted orbit and screen-space pan",
   "description": "Keep Sculpt and web cube cameras in parity with unrestricted orbit and screen-space pan",
   "kind": "feature",
-  "state": "verifying",
+  "state": "archived",
   "canonical_applied": true,
   "base_commit": "fefd8316adfff3af8bdb87d26b4a417650540b56",
   "created_at": 1791643666,
-  "updated_at": 1791649368,
+  "updated_at": 1791649840,
   "affected_specs": [
     "ThreeMDViewer"
   ],
