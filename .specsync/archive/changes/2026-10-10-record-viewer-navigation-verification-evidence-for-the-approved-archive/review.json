@@ -1,0 +1,16 @@
+{
+  "schema_version": 2,
+  "change_id": "record-viewer-navigation-verification-evidence-for-the-approved-archive",
+  "reviewer": "agent:codex",
+  "provenance": {
+    "schema_version": 1,
+    "provider": "github_actions_check",
+    "required_check": "SpecSync scoped review"
+  },
+  "verdict": "pass",
+  "implementation_commit": "083a3d5c277be0cd736217ee097d7869f8ce3d50",
+  "contract_digest": "7b6ea3e8aed7f48a86cf966b2975ca9ef04a2e023c3a5f51402f7e0e34dab65b",
+  "execution_digest": "82d20742b15bee6a2b3aef0963278bb44b079661b72598eae0ced2bef0932944",
+  "workspace_digest": "9d1d4246e27778537055a9cf87c785b56a67ce526c69f177ce47eb615ae9f480",
+  "timestamp": 1791651286
+}

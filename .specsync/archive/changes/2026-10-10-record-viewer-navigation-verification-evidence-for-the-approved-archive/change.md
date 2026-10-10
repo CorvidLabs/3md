@@ -1,6 +1,6 @@
 ---
 id: record-viewer-navigation-verification-evidence-for-the-approved-archive
-state: implementing
+state: archived
 type: documentation
 base_commit: fefd8316adfff3af8bdb87d26b4a417650540b56
 ---
