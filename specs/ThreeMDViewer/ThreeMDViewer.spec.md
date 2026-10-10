@@ -1,6 +1,6 @@
 ---
 module: ThreeMDViewer
-version: 12
+version: 13
 status: active
 files:
   - web/viewer.html
@@ -23,7 +23,7 @@ depends_on:
 
 ## Purpose
 
-ThreeMDViewer is the hosted and local viewer page. Files stay on the left. Edit, the plane preview, and Cubes share the panel beside them. One is visible at a time, and Cubes is the default, inside the window. The opening document is a small sculpture. Below 900px, Files and the document take turns. The page does not offer a render-mode switch and does not autoplay. Preview stays on one plane. Cubes draws a fenced character grid with Sculpt-style lit, translucent glyph fill and visible edges. Gold edges mark the selected Z slice without repainting its fill. The page opens a public GitHub repo, folder, or file, or a file or folder from this computer. Search reads every opened line and opens that plane. Markdown headings become planes. Opened files pack into one text document, and that document downloads as uncompressed kind 2.
+ThreeMDViewer is the hosted and local viewer page. Files stay on the left. Edit, Slice, the plane preview, and Cubes share the panel beside them. One is visible at a time, and Cubes is the default, inside the window. The opening document is a small sculpture. Below 900px, Files and the document take turns. The page does not offer a render-mode switch and does not autoplay. Preview stays on one plane. Cubes draws a fenced character grid with Sculpt-style lit, translucent glyph fill and visible edges. Gold edges mark the selected Z slice without repainting its fill. The page opens a public GitHub repo, folder, or file, or a file or folder from this computer. Search reads every opened line and opens that plane. Markdown headings become planes. Opened files pack into one text document, and that document downloads as uncompressed kind 2.
 
 The `<three-md>` element stays a text renderer. Decode, composition, linked folders, GitHub fetch, search, sections, pack, and kind 2 download belong to this page. The compact workspace gives the stage room on desktop and phone screens. The document title stays visible, insert tools appear in Edit, and the Document disclosure holds export and conversion actions. Fit, zoom buttons, keyboard camera control, and a scrolling slice row make the cube stage usable without a mouse. A document without a grid offers Preview. The ThreeMD library stays free of filesystem and network I/O. Human intent for this page is VIEWER-6 in `hi/tools.md`.
 
@@ -33,7 +33,7 @@ The `<three-md>` element stays a text renderer. Decode, composition, linked fold
 
 | Name | Description |
 |------|-------------|
-| `viewer.html` | Files on the left. Edit, Preview, and Cubes share one panel and switch. Preview is the `<three-md>` element held on one plane. Cubes is a page WebGL2 stage. The point field takes a public GitHub locator. Open file, open folder, and drop read local bytes. |
+| `viewer.html` | Files on the left. Edit, Preview, Slice, and Cubes share one panel and switch. Preview is the `<three-md>` element held on one plane. Cubes is a page WebGL2 stage. The point field takes a public GitHub locator. Open file, open folder, and drop read local bytes. |
 | `open-document.js` | The browser bundle built from `web/open-document.ts`. The page imports it. The element bundle stays `web/assets/three-md.js`. |
 
 ### Exported functions
@@ -68,7 +68,7 @@ The `<three-md>` element stays a text renderer. Decode, composition, linked fold
 
 ## Invariants
 
-1. Files stay on the left. Edit, the plane preview, and Cubes share one panel, one is visible at a time, and Cubes is the default. The opening document is a small sculpture, and its cubes are inside the window. Below 900px, Files and the document take turns. The page does not switch render modes and does not autoplay. Choosing Preview renders the live plane view and holds it on one plane. Choosing Cubes draws a fenced character grid as lit cubes on a dark GPU stage. Web fill uses 0.5 opacity for visible faces under browser blending, compared with Sculpt’s native 0.35; glyph edges use 0.4, and selected edges use gold rgb(1, 0.79, 0.44) at 0.8. The background is rgb(0.065, 0.085, 0.10). All six cube faces are wound outward, back faces are culled, and faces shared with occupied neighbors are suppressed as in Sculpt. The cell scale is 0.98. X is the column, Y is the row with row 0 toward the top, and Z is the plane index. Orbit, zoom, and selection update camera or selection uniforms with one instanced draw, without scanning the document or uploading geometry. Click picking intersects full cube bounds and chooses the nearest hit. The camera follows Sculpt’s distance and scale with a fit margin that keeps complete cubes inside the pane. The status bar shows the caret, the axis, and the cube count. The element stays a text renderer.
+1. Files stay on the left. Edit, Slice, the plane preview, and Cubes share one panel, one is visible at a time, and Cubes is the default. The opening document is a small sculpture, and its cubes are inside the window. Below 900px, Files and the document take turns. The page does not switch render modes and does not autoplay. Choosing Preview renders the live plane view and holds it on one plane. Choosing Cubes draws a fenced character grid as lit cubes on a dark GPU stage. Web fill uses 0.5 opacity for visible faces under browser blending, compared with Sculpt’s native 0.35; glyph edges use 0.4, and selected edges use gold rgb(1, 0.79, 0.44) at 0.8. The background is rgb(0.065, 0.085, 0.10). All six cube faces are wound outward, back faces are culled, and faces shared with occupied neighbors are suppressed as in Sculpt. The cell scale is 0.98. X is the column, Y is the row with row 0 toward the top, and Z is the plane index. Orbit, zoom, and selection update camera or selection uniforms with one instanced draw, without scanning the document or uploading geometry. Click picking intersects full cube bounds and chooses the nearest hit. The camera follows Sculpt’s distance and scale with a fit margin that keeps complete cubes inside the pane. The status bar shows the caret, the axis, and the cube count. The element stays a text renderer.
 2. A public GitHub locator is accepted only when the host is `github.com`, `www.github.com`, or `raw.githubusercontent.com`, or when the input is an `owner/repo` name. A host string elsewhere in the URL is not a match.
 3. A public load skips `node_modules`, keeps at most 400 files, and skips a file larger than 1.5 MB. The line index keeps at most 12,000 rows.
 4. Search opens the plane for the chosen line.
@@ -162,3 +162,11 @@ Acceptance Criteria:
 | 2026-10-10 | agent:codex | Preserve the slice across editor refresh, sort file paths for consistent keyboard navigation, and compact small-phone spacing. Leif approved the final scope; verification, acceptance, and archiving are pending. |
 | 2026-10-10 | SpecSync | put-edit-and-preview-in-the-same-viewer-panel-and-toggle-them-like-github-files-stay-on-the-left-edit-shows-first-below: Put Edit and Preview in the same viewer panel and toggle them like GitHub. Files stay on the left. Edit shows first. Below 900px, Files and the document take turns, and the document panel still switches Edit and Preview. |
 | 2026-10-10 | SpecSync | keep-sculpt-and-web-cube-cameras-in-parity-with-unrestricted-orbit-and-screen-space-pan: Keep Sculpt and web cube cameras in parity with unrestricted orbit and screen-space pan |
+
+## Slice and precise camera parity
+
+Slice uses the native character palette `#@*+ox:=-`, Draw/Erase square brushes 1/3/5, integer gap-free strokes and four-neighbor fill confined to the selected plane. Exact raw source offsets preserve all untouched bytes, including CRLF and prose. Eligibility requires complete, common rectangular grids, at most 64 by 64 cells, 256 planes, 4000 occupied cells and 1.5 MiB source. Empty grids can be edited. Rejected over-budget strokes restore the entire transaction.
+
+History is shared with source typing and attached to each draft state, including linked entries. It retains at most 100 snapshots per draft and 8 MiB across the current collection; no-op strokes add no entry. Pointer up, cancellation, lost capture and navigation finish the accepted transaction. Thumbnails, one-based coordinates, keyboard arrows/Space, explicit cell Apply, previous-slice ghosts and Fit/2x/4x/8x/16x grid zoom use the same state. The live reference reparents the existing WebGL canvas rather than allocating another context; 2D editing remains available without WebGL. Phone layouts scroll inside Slice with full-size touch targets.
+
+The volume camera shows colored X/Y/Z rings and Free/X/Y/Z constraints. A normalized quaternion composes document-axis rotation with continuous free orbit. Numerical rotation defaults to 15 degrees and pan to 0.25 cells, accepting only finite positive steps. Fit restores the default orientation and zero pan. Shared independent matrix-reference cases cover three-axis projection and picking; shared edit cases run through actual Sculpt workspaces and browser pointer gestures.

@@ -5,9 +5,9 @@ artifact: tasks
 
 # Tasks
 
-- [ ] Approve the axis and precision definition.
-- [ ] Implement matched three-axis orientation.
-- [ ] Add native and browser sphere/constraint/step controls.
-- [ ] Verify numerical, picking, geometry and input parity.
-- [ ] Synchronize contracts and intent.
+- [x] Approve the axis and precision definition.
+- [x] Implement matched three-axis orientation.
+- [x] Add native and browser sphere/constraint/step controls.
+- [x] Verify numerical, picking, geometry and input parity.
+- [x] Synchronize contracts and intent.
 - [ ] Record current verification and complete approved lifecycle closure.

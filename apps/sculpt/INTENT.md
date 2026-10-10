@@ -20,7 +20,7 @@ WORLD-36 measures a literal physically initialized 1024-cubed one-byte developme
 
 <!-- hi:index -->
 - [composition](hi/composition.md): COMPOSITION (5 criteria)
-- [cubes](hi/cubes.md): CUBES (4 criteria)
+- [cubes](hi/cubes.md): CUBES (5 criteria)
 - [export](hi/export.md): EXPORT (8 criteria)
 - [gallery](hi/gallery.md): GALLERY (6 criteria)
 - [local](hi/local.md): LOCAL (2 criteria)

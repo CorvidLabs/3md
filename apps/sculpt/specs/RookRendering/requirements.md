@@ -97,7 +97,7 @@ Acceptance Criteria
 
 ### REQ-RookRendering-008
 
-Native scalar, prepared and live volume projection SHALL use the same full-turn camera basis, screen-space pan target and finite inputs. Panning SHALL translate both the eye and target in the camera right/up plane. Camera-facing surface selection and nearest-quad picking SHALL account for the translated eye. Camera updates SHALL reuse the installed document buffers. Rendering, ghost and export budgets SHALL remain unchanged.
+Scalar ASCII, CPU voxel and live GPU volume cameras SHALL consume the same normalized three-axis basis, including Z rotation, with matching projection and picking and no geometry reinstall. Native scalar, prepared and live volume projection SHALL use the same full-turn camera basis, screen-space pan target and finite inputs. Panning SHALL translate both the eye and target in the camera right/up plane. Camera-facing surface selection and nearest-quad picking SHALL account for the translated eye. Camera updates SHALL reuse the installed document buffers. Rendering, ghost and export budgets SHALL remain unchanged.
 
 Acceptance Criteria:
 

@@ -1,6 +1,6 @@
 ---
 id: add-matching-x-y-z-axis-rotation-gizmos-and-precise-camera-steps-to-sculpt-and-the-viewer
-state: draft
+state: implementing
 type: feature
 base_commit: fefd8316adfff3af8bdb87d26b4a417650540b56
 ---

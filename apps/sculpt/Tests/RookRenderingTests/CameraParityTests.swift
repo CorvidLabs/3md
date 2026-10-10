@@ -17,7 +17,7 @@ struct CameraParityTests {
         let dimensions = SIMD3(fixture.dimensions[0], fixture.dimensions[1], fixture.dimensions[2])
         let size = CGSize(width: fixture.viewport[0], height: fixture.viewport[1])
         for pose in fixture.cases {
-            let camera = SculptureCamera(
+            var camera = SculptureCamera(
                 yaw: pose.yaw,
                 pitch: pose.pitch,
                 zoom: pose.zoom,
@@ -25,6 +25,31 @@ struct CameraParityTests {
                 panY: pose.panY,
                 fitsVolume: true
             )
+            for step in pose.rotations ?? [] { camera.rotate(axis: Int(step[0]), radians: step[1] * .pi / 180) }
+            let layers = (0..<dimensions.z).map { z in
+                (0..<(dimensions.x * dimensions.y)).map { index in
+                    fixture.cells.contains { $0.x == index % dimensions.x && $0.y == index / dimensions.x && $0.z == z }
+                        ? UInt8(35) : Sculpture.empty
+                }
+            }
+            let sculpture = try Sculpture(
+                title: "Camera parity",
+                width: dimensions.x,
+                height: dimensions.y,
+                layers: layers
+            )
+            let scalar = SculptureVoxelProjection.frame(
+                sculpture,
+                camera: camera,
+                width: fixture.viewport[0],
+                height: fixture.viewport[1]
+            )
+            for (i, cell) in fixture.cells.enumerated() {
+                #expect(
+                    scalar.hitTest(x: pose.projected[i][0], y: pose.projected[i][1])?.cell
+                        == SculptureCell(x: cell.x, y: cell.y, z: cell.z)
+                )
+            }
             let transform = LiveVoxelCamera(dimensions: dimensions, camera: camera, size: size)
             for (column, expected) in [pose.right, pose.up, pose.back].enumerated() {
                 for axis in 0..<3 {
@@ -45,6 +70,45 @@ struct CameraParityTests {
                 #expect(abs(y - pose.projected[index][1]) < 0.001)
             }
         }
+    }
+
+    @Test func axisRotationsRemainOrthonormalAndInvalidInputsDoNotMoveCamera() {
+        var camera = SculptureCamera()
+        let original = camera.basis
+        for axis in 0...2 {
+            for _ in 0..<24 { camera.rotate(axis: axis, radians: .pi / 12) }
+        }
+        for (actual, expected) in [
+            (camera.basis.right, original.right), (camera.basis.up, original.up), (camera.basis.back, original.back),
+        ] {
+            #expect(((actual - expected) * (actual - expected)).sum() < 0.000_000_001)
+        }
+        for index in 0..<1000 { camera.rotate(axis: index % 3, radians: 0.013) }
+        let basis = camera.basis
+        #expect(abs((basis.right * basis.up).sum()) < 0.000_000_001)
+        #expect(abs((basis.back * basis.up).sum()) < 0.000_000_001)
+        #expect(abs((basis.right * basis.right).sum() - 1) < 0.000_000_001)
+        let before = camera
+        camera.rotate(axis: 3, radians: 1)
+        camera.rotate(axis: 0, radians: .nan)
+        #expect(camera == before)
+        #expect(SculptureCamera(axisRotation: SIMD4(.infinity, 0, 0, 0)).normalized.axisRotation == SIMD4(0, 0, 0, 1))
+    }
+
+    @Test func asciiPickingFollowsDocumentZRotation() throws {
+        var layers = Array(repeating: Array(repeating: Sculpture.empty, count: 63), count: 5)
+        layers[2][3 * 9 + 6] = 35
+        let sculpture = try Sculpture(title: "ASCII axis", width: 9, height: 7, layers: layers)
+        let cell = SculptureCell(x: 6, y: 3, z: 2)
+        var camera = SculptureCamera(yaw: 0, pitch: 0)
+        camera.rotate(axis: 2, radians: .pi / 2)
+        let rotated = SculptureProjection.frame(sculpture, camera: camera, columns: 160, rows: 100)
+        #expect(rotated.cell(column: 80, row: 62) == cell)
+        camera.rotate(axis: 2, radians: -.pi / 2)
+        #expect(
+            SculptureProjection.frame(sculpture, camera: camera, columns: 160, rows: 100).cell(column: 104, row: 50)
+                == cell
+        )
     }
 
     @Test func interactiveFramingPreservesDefaultExportCameraScale() {
@@ -101,4 +165,5 @@ private struct FixturePose: Decodable {
     let up: [Double]
     let back: [Double]
     let projected: [[Double]]
+    let rotations: [[Double]]?
 }

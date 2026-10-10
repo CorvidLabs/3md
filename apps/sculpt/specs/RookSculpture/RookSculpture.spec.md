@@ -1,6 +1,6 @@
 ---
 module: RookSculpture
-version: 23
+version: 24
 status: active
 files:
   - Sources/RookSculpture/SculptureVolumeStudyExamples.swift
@@ -234,6 +234,8 @@ Names below are the public declarations in the source files. This table does not
 | `projectionScale` | Native 0.68 viewport scale for supplied dimensions and viewport; `fitsVolume` opts into the same complete-cube fit margin as the browser. |
 | `fitsVolume` | Session framing flag. Interactive Sculpt cameras opt into the same complete-cube margin as the browser; default utility cameras keep the established 0.68 scale for deterministic example previews. The flag follows the session into CPU/ASCII/GPU rendering and exports and is never stored in a sculpture. |
 | `normalized` | A sanitized camera value with periodic angles, bounded zoom and finite bounded pan. |
+| `axisRotation` | Session-only normalized `(x, y, z, w)` quaternion composed before the yaw/pitch basis; invalid or zero quaternions become identity. |
+| `rotate` | `rotate(axis:radians:)` rotates the camera basis about document X, row-down Y or plane Z. Finite steps compose and normalize; invalid axes and angles leave it unchanged. |
 | `orbit` | `orbit(horizontal:vertical:)` applies 0.008 radians per local point without a vertical stop. Invalid inputs leave the camera unchanged. |
 | `pan` | `pan(horizontal:vertical:extent:width:height:)` applies screen-space movement using the inverse native projection scale. Invalid inputs leave the camera unchanged. |
 | `magnify` | `magnify(_:)` applies a finite positive zoom factor and clamps to 0.5...2. |
@@ -448,7 +450,7 @@ For EXPORT-35, explicit portable scene encoding and decoding SHALL use ThreeMD2 
 
 ### REQ-RookSculpture-012
 
-The session camera SHALL allow complete yaw and pitch turns and finite screen-space pan, with zoom bounded to 0.5...2. ASCII and cube cameras SHALL use the same normalized inputs. Nonfinite angles, zoom and pan SHALL become 0, 1 and 0 respectively; finite pan SHALL be bounded to one million cells in either direction. Drag orbit SHALL use 0.008 radians per point, pan SHALL use the inverse native 0.68 viewport scale, and invalid gesture inputs SHALL leave the camera unchanged. Camera state SHALL NOT be persisted in a sculpture.
+The session camera SHALL additionally support a normalized three-axis orientation, with document-axis X, row-down Y and plane Z rotation. Invalid axis or nonfinite rotation inputs SHALL leave the pose unchanged. The session camera SHALL allow complete yaw and pitch turns and finite screen-space pan, with zoom bounded to 0.5...2. ASCII and cube cameras SHALL use the same normalized inputs. Nonfinite angles, zoom and pan SHALL become 0, 1 and 0 respectively; finite pan SHALL be bounded to one million cells in either direction. Drag orbit SHALL use 0.008 radians per point, pan SHALL use the inverse native 0.68 viewport scale, and invalid gesture inputs SHALL leave the camera unchanged. Camera state SHALL NOT be persisted in a sculpture.
 
 Acceptance Criteria:
 
@@ -514,3 +516,7 @@ The package product `ThreeMD` comes from the `3md` package at `../..`. It handle
 | 2026-10-07 | open-and-resolve-linked-3md-compositions-from-a-chosen-project-folder-and-import-self-contained-bundles: Open and resolve linked 3md compositions from a chosen project folder and import self-contained bundles |
 | 2026-10-07 | show-every-example-in-one-gallery-and-add-a-math-generated-size-ladder-from-16-to-10-240-cells: Show every example in one gallery and add a math-generated size ladder from 16 to 10,240 cells |
 | 2026-10-07 | drop-math-ladder-worlds-1024-and-10240: Drop the 1,024-wide and 10,240-wide math-ladder worlds; the ladder is five voxel models |
+
+## Document-axis camera controls
+
+The interactive camera composes a normalized session quaternion with its continuous yaw/pitch basis. Positive axis steps follow document X, row-down Y and plane Z. Shared matrix-reference fixtures cover X, Y and Z rotation, mixed sequences, negative and inverse steps and full turns. Scalar ASCII, CPU voxel projection and the native live camera consume this same basis. Camera changes reuse installed geometry and do not edit document cells or history. Legacy default export framing remains unchanged.

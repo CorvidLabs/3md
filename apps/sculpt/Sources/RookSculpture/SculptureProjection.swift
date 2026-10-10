@@ -7,6 +7,7 @@ public struct SculptureCamera: Equatable, Sendable {
     public var panX: Double
     public var panY: Double
     public var fitsVolume: Bool
+    public var axisRotation: SIMD4<Double>
 
     public init(
         yaw: Double = -0.6,
@@ -14,7 +15,8 @@ public struct SculptureCamera: Equatable, Sendable {
         zoom: Double = 1,
         panX: Double = 0,
         panY: Double = 0,
-        fitsVolume: Bool = false
+        fitsVolume: Bool = false,
+        axisRotation: SIMD4<Double> = SIMD4(0, 0, 0, 1)
     ) {
         self.yaw = yaw
         self.pitch = pitch
@@ -22,6 +24,7 @@ public struct SculptureCamera: Equatable, Sendable {
         self.panX = panX
         self.panY = panY
         self.fitsVolume = fitsVolume
+        self.axisRotation = axisRotation
     }
 
     /// Session inputs are sanitized once for the scalar and live render paths.
@@ -32,7 +35,8 @@ public struct SculptureCamera: Equatable, Sendable {
             zoom: zoom.isFinite ? max(0.5, min(2, zoom)) : 1,
             panX: panX.isFinite ? max(-1_000_000, min(1_000_000, panX)) : 0,
             panY: panY.isFinite ? max(-1_000_000, min(1_000_000, panY)) : 0,
-            fitsVolume: fitsVolume
+            fitsVolume: fitsVolume,
+            axisRotation: normalizedRotation
         )
     }
 
@@ -40,8 +44,54 @@ public struct SculptureCamera: Equatable, Sendable {
         let camera = normalized
         let cy = cos(camera.yaw), sy = sin(camera.yaw), cp = cos(camera.pitch), sp = sin(camera.pitch)
         return (
-            SIMD3(cy, 0, sy), SIMD3(sy * sp, cp, -cy * sp), SIMD3(-sy * cp, sp, cy * cp)
+            rotated(SIMD3(cy, 0, sy)), rotated(SIMD3(sy * sp, cp, -cy * sp)),
+            rotated(SIMD3(-sy * cp, sp, cy * cp))
         )
+    }
+
+    private var normalizedRotation: SIMD4<Double> {
+        let largest = max(abs(axisRotation.x), abs(axisRotation.y), abs(axisRotation.z), abs(axisRotation.w))
+        guard largest.isFinite, largest > 0,
+            axisRotation.x.isFinite, axisRotation.y.isFinite, axisRotation.z.isFinite, axisRotation.w.isFinite
+        else { return SIMD4(0, 0, 0, 1) }
+        let scaled = axisRotation / largest
+        return scaled / sqrt((scaled * scaled).sum())
+    }
+
+    private func rotated(_ point: SIMD3<Double>) -> SIMD3<Double> {
+        let q = normalizedRotation
+        let vector = SIMD3(q.x, q.y, q.z)
+        let cross =
+            SIMD3(
+                vector.y * point.z - vector.z * point.y,
+                vector.z * point.x - vector.x * point.z,
+                vector.x * point.y - vector.y * point.x
+            ) * 2
+        return point + q.w * cross
+            + SIMD3(
+                vector.y * cross.z - vector.z * cross.y,
+                vector.z * cross.x - vector.x * cross.z,
+                vector.x * cross.y - vector.y * cross.x
+            )
+    }
+
+    /// Positive rotation follows document X, row-down Y, and plane Z. Orientation remains session-only.
+    public mutating func rotate(axis: Int, radians: Double) {
+        guard (0...2).contains(axis), radians.isFinite else { return }
+        let angle = radians.truncatingRemainder(dividingBy: 2 * .pi) / 2
+        var rotation = SIMD4<Double>(0, 0, 0, cos(angle))
+        rotation[axis] = sin(angle) * (axis == 1 ? -1 : 1)
+        let q = normalizedRotation
+        let a = SIMD3(rotation.x, rotation.y, rotation.z), b = SIMD3(q.x, q.y, q.z)
+        let vector =
+            rotation.w * b + q.w * a
+            + SIMD3(
+                a.y * b.z - a.z * b.y,
+                a.z * b.x - a.x * b.z,
+                a.x * b.y - a.y * b.x
+            )
+        axisRotation = SIMD4(vector.x, vector.y, vector.z, rotation.w * q.w - (a * b).sum())
+        self = normalized
     }
 
     /// Interactive sessions opt into complete-cube framing. Default cameras preserve existing exported previews.
@@ -148,17 +198,13 @@ public enum SculptureProjection {
             return SculptureFrame(columns: columns, rows: rows, pixels: pixels)
         }
         let camera = camera.normalized
-        let yaw = camera.yaw, pitch = camera.pitch
+        let basis = camera.basis
         let extent = Double(max(sculpture.width, sculpture.height, sculpture.depth))
         let scale = camera.projectionScale(
             dimensions: SIMD3(sculpture.width, sculpture.height, sculpture.depth),
             width: Double(columns) / 2,
             height: Double(rows)
         )
-        let cy = cos(yaw)
-        let sy = sin(yaw)
-        let cp = cos(pitch)
-        let sp = sin(pitch)
         let centerX = Double(sculpture.width - 1) / 2
         let centerY = Double(sculpture.height - 1) / 2
         let centerZ = Double(sculpture.depth - 1) / 2
@@ -176,10 +222,10 @@ public enum SculptureProjection {
                     guard glyph != Sculpture.empty else { continue }
                     let cell = SculptureCell(x: x, y: y, z: z)
                     let vx = Double(x) - centerX
-                    let rx = vx * cy + vz * sy
-                    let rz = -vx * sy + vz * cy
-                    let ry = vy * cp - rz * sp
-                    let depth = vy * sp + rz * cp
+                    let point = SIMD3(vx, vy, vz)
+                    let rx = (point * basis.right).sum()
+                    let ry = (point * basis.up).sum()
+                    let depth = (point * basis.back).sum()
                     let perspective = 1 / (1 - depth / (extent * 3))
                     let column = Int((Double(columns) / 2 + (rx - camera.panX) * scale * 2 * perspective).rounded())
                     let row = Int((Double(rows) / 2 - (ry - camera.panY) * scale * perspective).rounded())

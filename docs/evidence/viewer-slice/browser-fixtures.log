@@ -1,0 +1,88 @@
+
+Running 4 tests using 2 workers
+
+(node:48212) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:48211) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] ::1 - - [10/Oct/2026 11:56:30] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:56:30] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:56:30] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:56:30] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:56:30] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:56:30] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:56:30] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:56:30] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:56:30] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:56:30] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:56:30] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:56:30] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:56:30] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:56:30] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:56:30] "GET /nested-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:56:30] "GET /nested-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:56:30] "GET /binary-samples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:56:30] "GET /binary-samples.json HTTP/1.1" 200 -
+  ✓  2 [chromium] › viewer.spec.mjs:1316:3 › Sculpt Slice parity › grid edits preserve CRLF, labels, prose and downloads exactly (1.4s)
+(node:48225) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] ::1 - - [10/Oct/2026 11:56:32] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:56:33] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:56:33] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:56:33] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:56:33] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:56:33] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:56:33] "GET /nested-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:56:33] "GET /binary-samples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:56:33] "GET /all-examples.json HTTP/1.1" 200 -
+  ✓  1 [chromium] › viewer.spec.mjs:1298:3 › Sculpt Slice parity › shared native strokes, clipped brushes, four-neighbor fill and no-op undo (3.5s)
+[WebServer] ::1 - - [10/Oct/2026 11:56:33] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:56:33] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:56:33] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:56:33] "GET /binary-samples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:56:33] "GET /nested-examples.json HTTP/1.1" 200 -
+(node:48260) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] ::1 - - [10/Oct/2026 11:56:33] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:56:33] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:56:33] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:56:33] "GET /nested-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:56:33] "GET /binary-samples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:56:34] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:56:34] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:56:34] "GET /nested-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:56:34] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:56:34] "GET /binary-samples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:56:34] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:56:34] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:56:34] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:56:34] "GET /nested-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:56:34] "GET /binary-samples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:56:34] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:56:34] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:56:34] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:56:34] "GET /nested-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:56:34] "GET /binary-samples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:56:34] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:56:34] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:56:34] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:56:34] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:56:34] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:56:34] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:56:34] "GET /binary-samples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:56:34] "GET /nested-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:56:34] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:56:34] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:56:34] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:56:34] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:56:34] "GET /binary-samples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:56:34] "GET /nested-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:56:35] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:56:35] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:56:35] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:56:35] "GET /nested-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:56:35] "GET /binary-samples.json HTTP/1.1" 200 -
+  ✓  3 [webkit] › viewer.spec.mjs:1298:3 › Sculpt Slice parity › shared native strokes, clipped brushes, four-neighbor fill and no-op undo (3.3s)
+  ✓  4 [webkit] › viewer.spec.mjs:1316:3 › Sculpt Slice parity › grid edits preserve CRLF, labels, prose and downloads exactly (1.3s)
+
+  4 passed (6.6s)

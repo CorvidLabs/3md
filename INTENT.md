@@ -17,5 +17,5 @@ The title above is the product, not this worktree's directory name.
 - [reuse](hi/reuse.md): REUSE (11 criteria)
 - [storage](hi/storage.md): STORAGE (9 criteria)
 - [text](hi/text.md): TEXT (10 criteria)
-- [tools](hi/tools.md): CLI, VIEWER, EDITOR (17 criteria)
+- [tools](hi/tools.md): CLI, VIEWER, EDITOR (20 criteria)
 <!-- /hi:index -->

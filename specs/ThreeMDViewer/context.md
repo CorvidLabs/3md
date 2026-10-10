@@ -7,7 +7,7 @@ spec: ThreeMDViewer.spec.md
 - The page is its own module. `ThreeMD` stays the library. `ThreeMDElement` stays the text renderer. `ThreeMDCLI` stays the command.
 - GitHub hosts are compared with `URL.hostname`. A substring match is not enough.
 - The page fetches. The library stays free of filesystem and network I/O.
-- Edit, Preview, and Cubes share one panel. Files stay on the left. Cubes is the default. Below 900px, Files and the document take turns. Choosing Preview calls `render` so the element measures the panel. The element still receives source while Edit is showing.
+- Edit, Preview, Slice, and Cubes share one panel. Files stay on the left. Cubes is the default. Below 900px, Files and the document take turns. Choosing Preview calls `render` so the element measures the panel. The element still receives source while Edit is showing.
 
 ## Files to Read First
 
@@ -19,7 +19,7 @@ spec: ThreeMDViewer.spec.md
 
 ## Current Status
 
-- PR 91 is on main. PR 92 shares Edit, Preview, and Cubes in one panel and adds Sculpt cube-stage parity plus the continuing UI and UX improvements.
+- PR 91 is on main. PR 92 shares Edit, Preview, Slice, and Cubes in one panel and adds Sculpt cube-stage parity plus the continuing UI and UX improvements.
 - Leif approved the final viewer scope on 2026-10-10 and authorized acceptance and archiving after successful verification. Current verification passed and supported scoped review/finalization archived both viewer and camera records for PR 93; Leif retains merge authority.
 
 ## Notes
@@ -50,3 +50,11 @@ spec: ThreeMDViewer.spec.md
 ## Current camera parity
 
 Leif explicitly approved full native/browser camera parity and verified closure on 2026-10-10. Both volume canvases now use full yaw/pitch turns, continuous pole bases, session-only screen pan, zoom 0.5...2 and the matched default Fit pose. Native interactive cameras use complete-volume framing while default utility cameras retain historical preview scale. Shared projection/picking fixtures and current screenshots are in `docs/evidence/viewer-camera/`. The X/Y/Z sphere and precise step controls have a separate complete draft; definition approval is pending.
+
+## Slice and precise camera parity
+
+Slice uses the native character palette `#@*+ox:=-`, Draw/Erase square brushes 1/3/5, integer gap-free strokes and four-neighbor fill confined to the selected plane. Exact raw source offsets preserve all untouched bytes, including CRLF and prose. Eligibility requires complete, common rectangular grids, at most 64 by 64 cells, 256 planes, 4000 occupied cells and 1.5 MiB source. Empty grids can be edited. Rejected over-budget strokes restore the entire transaction.
+
+History is shared with source typing and attached to each draft state, including linked entries. It retains at most 100 snapshots per draft and 8 MiB across the current collection; no-op strokes add no entry. Pointer up, cancellation, lost capture and navigation finish the accepted transaction. Thumbnails, one-based coordinates, keyboard arrows/Space, explicit cell Apply, previous-slice ghosts and Fit/2x/4x/8x/16x grid zoom use the same state. The live reference reparents the existing WebGL canvas rather than allocating another context; 2D editing remains available without WebGL. Phone layouts scroll inside Slice with full-size touch targets.
+
+The volume camera shows colored X/Y/Z rings and Free/X/Y/Z constraints. A normalized quaternion composes document-axis rotation with continuous free orbit. Numerical rotation defaults to 15 degrees and pan to 0.25 cells, accepting only finite positive steps. Fit restores the default orientation and zero pan. Shared independent matrix-reference cases cover three-axis projection and picking; shared edit cases run through actual Sculpt workspaces and browser pointer gestures.

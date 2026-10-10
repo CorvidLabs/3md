@@ -27,7 +27,7 @@
     "Sources/RookApp/SculptureProjectFolder.swift": "30cd9a767de4aa6dc42e1586d6e9e6df3e029accfeec18da6030778301a80a4d",
     "Sources/RookApp/SculptureSaveJob.swift": "bc899f5561ce4b47151970f22115952b923cf4ccdedc2f354a78c98979101e28",
     "Sources/RookApp/SculptureSharedModelEditor.swift": "bbbf28951ca2d033cd77f656ce86190c2c99767161f791668f00107bd8c2cdaa",
-    "Sources/RookApp/SculptureViewport.swift": "8a0eff0a5647b3f313b913910182c28781acf5a816bb76cbea32db8ef91c3a12",
+    "Sources/RookApp/SculptureViewport.swift": "8d5ab6c914e03d60dadc58a3e8b6d4f595a261b1e032c46cc0cdbd0597757e45",
     "Sources/RookApp/SculptureWorkspace.swift": "efcd1768402f9f09c852a5aff6797abb90f10c5a316e2248e222d6a629dbef7c",
     "Sources/RookApp/SculptureWorldEditor.swift": "9746f952181a3c404dbcf377e179d1c2558006533712fe38ba56ccbaf5c14440",
     "Sources/RookApp/SculptureWorldHandoff.swift": "f365d857ee10180ba2250025f7ede14a6ca4272f803e515b3bf514e262a03ee9",
@@ -36,11 +36,11 @@
     "Sources/RookCore/AppAppearance.swift": "8ffcf78080400a89c49d67520c4763ca3b38f419a206d5b973794104221a09c1",
     "Sources/RookRendering/MetalSculptureView.swift": "69372bdc595a3d758c3a02660462f7c52ca1bc44a0ce4c0a940ef5b881b7293e",
     "Sources/RookRendering/SculptureAnimationExporter.swift": "78dab790a8d4bd7e49a95bb63b5dd2f04b72968ade2ed89b0b57f26c9b2f29a4",
-    "Sources/RookRendering/SculptureLiveVoxelView.swift": "6219712d95814080c86ccd2858c4c2b4ad2798a22a55880223caf8c73a8348c4",
+    "Sources/RookRendering/SculptureLiveVoxelView.swift": "610272100afb40b290302e64c8cf72544b67f3c2cee3543b292f796531c9750e",
     "Sources/RookRendering/SculptureLiveWorldView.swift": "61b75ba6d19de414c087681654bbed64077f5090d256f35a91e40f1123e60b5c",
     "Sources/RookRendering/SculptureRasterizer.swift": "849e685001f4a144f637dc7a30be5c2a1c2bdff5c4cd039d285f34fca9d97848",
     "Sources/RookRendering/SculptureRenderStyle.swift": "65525be59ccbe47f3d62ca557c2f7def035bdee1b88a64ed3c797d1cf76ab89b",
-    "Sources/RookRendering/SculptureVoxelGeometry.swift": "b57051c88a97b84f9b05af392f57ded3079e6a4ba710137e938754b54135dcf3",
+    "Sources/RookRendering/SculptureVoxelGeometry.swift": "24c096ecd359193366e02097643561e28fb3ff422e1fafda1661dbf0f706eb86",
     "Sources/RookRendering/SculptureVoxelMeshBuffers.swift": "9a4283a3dfdaf1651313419cad2520f989b5ba378c35e8b6c062d0b7706735e2",
     "Sources/RookRendering/SculptureVoxelRasterizer.swift": "4f5f25e2e144400b414a37700a028bb145824a75cc69bc2dc6c0851c9abc4a39",
     "Sources/RookRendering/SculptureVoxelSurface.swift": "677aa33e3a3858c80d154464a0a43278c1ae124a39a511b9d01fdd5b8c42085b",
@@ -66,7 +66,7 @@
     "Sources/RookSculpture/SculptureMathExamples.swift": "337c00886c702b93b207ee8404ed283a03885c469ac02895a8c87f1b3e42ab54",
     "Sources/RookSculpture/SculptureModelEditing.swift": "46f9142101e115290a12d9960fbb70f996a1133007927eb66eb2bb9022ecd3a8",
     "Sources/RookSculpture/SculptureOBJExporter.swift": "3afea2ba9254dd9c0d26bc5fb02b7da476983b5d8740a48379c56b64355a3e6e",
-    "Sources/RookSculpture/SculptureProjection.swift": "848f4c6175fc770c779cc9a691fdf0808563e0a2b747b38be394aebe7f592125",
+    "Sources/RookSculpture/SculptureProjection.swift": "d98745e56609642d7c65369aa67f251d82c3c6089199cd6a2bcc9b1fc928c8d4",
     "Sources/RookSculpture/SculptureSHA256.swift": "11351975a70db957b19cadb56bb8cae125927a3cda6d5d0eed847b66d72d8425",
     "Sources/RookSculpture/SculptureScene.swift": "625ead4b9e6b7bb3bbfceb81da895b047075d32cb25f6728809389c889bd044a",
     "Sources/RookSculpture/SculptureSceneInsertion.swift": "c36b4ad82fe0c7fb5dde412eb74a36e38781f5d0747bf9272f8e936357e5d423",
@@ -95,16 +95,16 @@
     "Sources/RookVerification/SwiftTestLog.swift": "665bbd1f611ec5c57aa81a551463b2d861cb260574c7cc3270631f6550585a73",
     "Sources/RookVerification/SwiftTestRunner.swift": "ee863fa503e0c589d32e8fb3e94507eb0978e4c59cbd7e6e1458ed9a2d09e945",
     "Sources/RookVerification/TestLogAssessment.swift": "67a38f94513a5be12a1432c1bae2e7d27e23686bafb37c19cecfcdbff927a4cc",
-    "specs/RookApp/RookApp.spec.md": "7180800595c6b1854046d1950dd73bd4d8586545cf47f92f3e6284ec9d522e8c",
-    "specs/RookApp/requirements.md": "48ec2fb4d8df476f57473a00f1eb5b2b43d640bf812dba4ee33a15fc11e587af",
+    "specs/RookApp/RookApp.spec.md": "328f0e0ec49767f115960ba7a09b1395626ef6dd78cdb76f79ffc61d3b381859",
+    "specs/RookApp/requirements.md": "a998087ec9c46dec9d5e3f6e3f4c2680966f67d766be19fe3a7a1c9ae9fec9d3",
     "specs/RookCore/RookCore.spec.md": "edd8f788a56817afc8eb2d477a0a75f3bc37135d205b1f6e9665d03ff0b74344",
     "specs/RookCore/requirements.md": "80305947b009aeab89c4fae62bc8ef48cb0c6c95cfbd351cea9e2fc0f47a0b21",
     "specs/RookDevelopment/RookDevelopment.spec.md": "b2c021c8fa8d74dc2197bd5ef8754e4f3eadb091c743831ad643b7867588c9d0",
     "specs/RookDevelopment/requirements.md": "0efd07ebb2fa2d12769429f782dd1d2d70362adbeca2a82234251c6aa55abe90",
-    "specs/RookRendering/RookRendering.spec.md": "acf982fb53c0904c028bb1d34eadd52de70843d413b3de5571356df9053e1eae",
-    "specs/RookRendering/requirements.md": "231cdc3eb746b19c358a8b981d9cf3514cc28333aa19594e2e08f92b42510c61",
-    "specs/RookSculpture/RookSculpture.spec.md": "6801c79aa4ebb6f72c772cf5515726a7aedaeb5e09a03fdf77fce53bfeee87a9",
-    "specs/RookSculpture/requirements.md": "f629a4d8e7a2d5f2d0605c36291144f2a9f9bea911362abae60f47c7b4f7959a"
+    "specs/RookRendering/RookRendering.spec.md": "3eaeae84bde150f19ca189a04310b28dda74cfb90d55430c8835f07b1ee1008d",
+    "specs/RookRendering/requirements.md": "9360c435f8fb30b54a7fa3e411a6d8f5347e089ea9038a80734fc821b49dcdcf",
+    "specs/RookSculpture/RookSculpture.spec.md": "a89be62701494e3b6c7ffbde27888091fe3c0d7d81fb91813fe697686d0381ae",
+    "specs/RookSculpture/requirements.md": "fddb51105fb11306fc54c53f1c74771fde301812c8a3da5a253108ec89b5000d"
   },
   "snapshots": {
     "specs/RookApp/RookApp.spec.md": {
@@ -113,8 +113,8 @@
       "errors": [],
       "warnings": [],
       "notices": [],
-      "input_digest": "2f0bb354ffab575c74017e2b7a024f97730096aa40e54576de4222380f9cd9cd",
-      "snapshot_digest": "b69ac8bc7da8ab6cf74f5a18de89b0480c8c05481e34d9b30a14ca6ffaeeb17e"
+      "input_digest": "5ac5341470754f4add3ef5867343c57ead06aa7731004f37c30176d21f3622ef",
+      "snapshot_digest": "740dde74d5d354b99cbd9da59d2c26c1f273af4138ea98af6b105a05a3101f19"
     },
     "specs/RookCore/RookCore.spec.md": {
       "snapshot_version": 1,
@@ -140,8 +140,8 @@
       "errors": [],
       "warnings": [],
       "notices": [],
-      "input_digest": "c8eccbd9179c8c56b2d6cbf6d5e4798f6521b0bb0028439e8406af8bf46a0ba7",
-      "snapshot_digest": "35faf5eae2f524d317c99f187e68c748a7573a13b124b505e1f818bf9e12720f"
+      "input_digest": "9c4ea0850ca2faa6b8889e82967a30ba1be8560a96715f7b754a300d2b558d43",
+      "snapshot_digest": "aef9f7ef2cc1f5270b49ccaec630b578c3b70623b10de61638fef71f99462f06"
     },
     "specs/RookSculpture/RookSculpture.spec.md": {
       "snapshot_version": 1,
@@ -149,8 +149,8 @@
       "errors": [],
       "warnings": [],
       "notices": [],
-      "input_digest": "4dc94e85b7f48a954c2106993caa4d9efc1b0343fa20ee83c092a32deba9cc89",
-      "snapshot_digest": "9a51d8db5c6dcd0864e321551fe02219f9feef761f6798717fd26168009ad7b3"
+      "input_digest": "f07345d2c229b7fd370b10dfe71380f84fd020e2fc5d783bd6f43b470643240d",
+      "snapshot_digest": "03567c819416801f9bf18d19006c4665c6baffccb4e79e01dd022973bbc06fca"
     }
   }
 }

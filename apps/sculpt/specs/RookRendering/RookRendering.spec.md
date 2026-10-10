@@ -1,6 +1,6 @@
 ---
 module: RookRendering
-version: 8
+version: 9
 status: active
 files:
   - Sources/RookRendering/SculptureWorldNavigation.swift
@@ -209,7 +209,7 @@ The world controller's publicly readable, privately set properties are `installe
 
 ### REQ-RookRendering-008
 
-Native scalar, prepared and live volume projection SHALL use the same full-turn camera basis, screen-space pan target and finite inputs. Panning SHALL translate both the eye and target in the camera right/up plane. Camera-facing surface selection and nearest-quad picking SHALL account for the translated eye. Camera updates SHALL reuse the installed document buffers. Rendering, ghost and export budgets SHALL remain unchanged.
+Scalar ASCII, CPU voxel and live GPU volume cameras SHALL consume the same normalized three-axis basis, including Z rotation, with matching projection and picking and no geometry reinstall. Native scalar, prepared and live volume projection SHALL use the same full-turn camera basis, screen-space pan target and finite inputs. Panning SHALL translate both the eye and target in the camera right/up plane. Camera-facing surface selection and nearest-quad picking SHALL account for the translated eye. Camera updates SHALL reuse the installed document buffers. Rendering, ghost and export budgets SHALL remain unchanged.
 
 Acceptance Criteria:
 
@@ -263,3 +263,7 @@ RookSculpture, AppKit, Observation, SceneKit, simd, Core Text, Core Graphics, Im
 - Correction, same version: adapt live empty-slice edge visibility below 2.5 projected AppKit points, retaining faint fill picking and unchanged mesh buffers. The dense-grid snapshot/target regression, full lane and actual native orbit, zoom, selection and face/ghost-stroke Undo checks passed; retained evidence is in that same directory.
 - Version 5: a Sendable prepared sparse-world scene and observable native SceneKit Metal controller retain shared model buffers across focus and camera changes. Exact integer rebasing precedes distance culling and GPU conversion; nearby placements use bounded full detail, farther or over-budget placements use selectable bounds. Unique prepared definitions are limited to 1_000_000 exterior faces; at most 512 active placements and 500_000 full/proxy faces are rendered. Controlled tests are authored with execution and new visual evidence pending in the root lane. Earlier bounded-document camera evidence is unchanged; no lifecycle approval, review, or finalization is claimed.
 | 2026-10-05 | add-free-exploration-of-sparse-worlds-with-wasd-movement-drag-to-look-vertical-travel-and-a-clear-overview: Add free exploration of sparse worlds with WASD movement, drag to look, vertical travel and a clear overview |
+
+## Document-axis camera controls
+
+The interactive camera composes a normalized session quaternion with its continuous yaw/pitch basis. Positive axis steps follow document X, row-down Y and plane Z. Shared matrix-reference fixtures cover X, Y and Z rotation, mixed sequences, negative and inverse steps and full turns. Scalar ASCII, CPU voxel projection and the native live camera consume this same basis. Camera changes reuse installed geometry and do not edit document cells or history. Legacy default export framing remains unchanged.

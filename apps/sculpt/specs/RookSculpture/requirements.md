@@ -181,7 +181,7 @@ Acceptance Criteria
 
 ### REQ-RookSculpture-012
 
-The session camera SHALL allow complete yaw and pitch turns and finite screen-space pan, with zoom bounded to 0.5...2. ASCII and cube cameras SHALL use the same normalized inputs. Nonfinite angles, zoom and pan SHALL become 0, 1 and 0 respectively; finite pan SHALL be bounded to one million cells in either direction. Drag orbit SHALL use 0.008 radians per point, pan SHALL use the inverse native 0.68 viewport scale, and invalid gesture inputs SHALL leave the camera unchanged. Camera state SHALL NOT be persisted in a sculpture.
+The session camera SHALL additionally support a normalized three-axis orientation, with document-axis X, row-down Y and plane Z rotation. Invalid axis or nonfinite rotation inputs SHALL leave the pose unchanged. The session camera SHALL allow complete yaw and pitch turns and finite screen-space pan, with zoom bounded to 0.5...2. ASCII and cube cameras SHALL use the same normalized inputs. Nonfinite angles, zoom and pan SHALL become 0, 1 and 0 respectively; finite pan SHALL be bounded to one million cells in either direction. Drag orbit SHALL use 0.008 radians per point, pan SHALL use the inverse native 0.68 viewport scale, and invalid gesture inputs SHALL leave the camera unchanged. Camera state SHALL NOT be persisted in a sculpture.
 
 Acceptance Criteria:
 

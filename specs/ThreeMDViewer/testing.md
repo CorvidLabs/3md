@@ -9,7 +9,7 @@ spec: ThreeMDViewer.spec.md
 | `web/gather.test.ts` | bun | Section planes, pack, kind 2 round-trip, line plane index, search rank. |
 | `web/github-source.test.ts` | bun | Repo, folder, file, and raw locators. Host and path routing. Issues URL rejected. |
 | `web/open-document.test.ts` | bun | Text, composition, kind 1, kind 2, LZFSE refusal, linked folder. |
-| `uitests/viewer.spec.mjs` | Playwright | Edit, Preview, and Cubes share one panel; full cube face pixels from all sides; glyph fill and gold edge selection; nearest slice picking; no camera/selection geometry uploads; about 1400 cubes; no console errors; narrow layout; kind 2, linked village, search, sections, composition; keyboard camera and slice controls; phone stage space; disclosure dismissal and both downloads; source shortcut focus; Preview empty state; GitHub busy/error recovery; GPU-unavailable guidance. |
+| `uitests/viewer.spec.mjs` | Playwright | Edit, Preview, Slice, and Cubes share one panel; full cube face pixels from all sides; glyph fill and gold edge selection; nearest slice picking; no camera/selection geometry uploads; about 1400 cubes; no console errors; narrow layout; kind 2, linked village, search, sections, composition; keyboard camera and slice controls; phone stage space; disclosure dismissal and both downloads; source shortcut focus; Preview empty state; GitHub busy/error recovery; GPU-unavailable guidance. |
 
 ## Requirement evidence
 
@@ -24,7 +24,7 @@ spec: ThreeMDViewer.spec.md
 
 - [x] Run Sculpt locally, orbit Character orb in Cubes, and compare the same orb in the refreshed local viewer. Screenshots: `docs/evidence/viewer-sculpt-parity/`.
 - [x] Inspect one-cell and starter sculptures for filled top, front, and side faces, visible edges, and pane framing.
-- [x] Open `viewer.html`. On a wide window, files stay on the left and Edit, Preview, and Cubes switch in the panel beside them. On a narrow window, Files and the document take turns.
+- [x] Open `viewer.html`. On a wide window, files stay on the left and Edit, Preview, Slice, and Cubes switch in the panel beside them. On a narrow window, Files and the document take turns.
 
 ## Edge Cases & Boundary Conditions
 
@@ -34,7 +34,7 @@ spec: ThreeMDViewer.spec.md
 | Tree contains `node_modules` or a file over 1.5 MB | Those files are skipped. |
 | More than 400 text files, or more than 12,000 lines | The list stops at the cap and says so. |
 | Apple LZFSE bytes | The page refuses them and names `compressionUnavailable`. |
-| Desktop width | Files stay visible while Edit, Preview, and Cubes switch. Preview shows the live plane view. |
+| Desktop width | Files stay visible while Edit, Preview, Slice, and Cubes switch. Preview shows the live plane view. |
 | Width at or below 900px | Files and the document take turns. The document still switches Edit and Preview. |
 
 ## Continuing UI and UX verification
@@ -55,3 +55,11 @@ Closure implementation checks: macOS viewer 98 passed; Linux hosted UI 190 passe
 ## Full camera parity
 
 `uitests/viewer.spec.mjs` covers complete yaw/pitch turns, continuous poles, unchanged GPU geometry, modified mouse and explicit Pan, Shift-arrow pan, wheel bounds, two-finger pinch/pan, pointer cancellation, Fit without slice/source changes, and the shared native/browser projection/picking fixture. Native `CameraParityTests`, `SculptureLiveVoxelTests` and `SculptureCanvasPointerTests` check matching transforms, scalar/live picking and camera-only input. Existing math example regressions verify compatible utility framing. Current results and limits are recorded in `docs/evidence/viewer-camera/README.md`; final Trust and lifecycle evidence remain separate.
+
+## Slice and precise camera parity
+
+Slice uses the native character palette `#@*+ox:=-`, Draw/Erase square brushes 1/3/5, integer gap-free strokes and four-neighbor fill confined to the selected plane. Exact raw source offsets preserve all untouched bytes, including CRLF and prose. Eligibility requires complete, common rectangular grids, at most 64 by 64 cells, 256 planes, 4000 occupied cells and 1.5 MiB source. Empty grids can be edited. Rejected over-budget strokes restore the entire transaction.
+
+History is shared with source typing and attached to each draft state, including linked entries. It retains at most 100 snapshots per draft and 8 MiB across the current collection; no-op strokes add no entry. Pointer up, cancellation, lost capture and navigation finish the accepted transaction. Thumbnails, one-based coordinates, keyboard arrows/Space, explicit cell Apply, previous-slice ghosts and Fit/2x/4x/8x/16x grid zoom use the same state. The live reference reparents the existing WebGL canvas rather than allocating another context; 2D editing remains available without WebGL. Phone layouts scroll inside Slice with full-size touch targets.
+
+The volume camera shows colored X/Y/Z rings and Free/X/Y/Z constraints. A normalized quaternion composes document-axis rotation with continuous free orbit. Numerical rotation defaults to 15 degrees and pan to 0.25 cells, accepting only finite positive steps. Fit restores the default orientation and zero pan. Shared independent matrix-reference cases cover three-axis projection and picking; shared edit cases run through actual Sculpt workspaces and browser pointer gestures.

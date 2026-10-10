@@ -7,10 +7,10 @@
   "title": "Add matching X Y Z axis rotation gizmos and precise camera steps to Sculpt and the viewer",
   "description": "Add matching X Y Z axis rotation gizmos and precise camera steps to Sculpt and the viewer",
   "kind": "feature",
-  "state": "draft",
+  "state": "implementing",
   "base_commit": "fefd8316adfff3af8bdb87d26b4a417650540b56",
   "created_at": 1791644309,
-  "updated_at": 1791644349,
+  "updated_at": 1791653029,
   "affected_specs": [
     "ThreeMDViewer"
   ],

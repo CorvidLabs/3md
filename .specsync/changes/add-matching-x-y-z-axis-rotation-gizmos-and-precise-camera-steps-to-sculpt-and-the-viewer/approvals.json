@@ -1,4 +1,53 @@
 {
-  "approvals": [],
+  "approvals": [
+    {
+      "gate": "definition",
+      "actor": "user:0xLeif",
+      "timestamp": 1791653015,
+      "digest": "4b6d4eb372c26f296d08a35c4242b772ba7f537d690b3ac81723034860824618",
+      "note": "Leif directly replied continue after the complete Slice and matching X/Y/Z camera definitions were presented together for approval and verified closure. This is scope approval, not human diff review or signed provenance.",
+      "approved_scope": {
+        "schema_version": 1,
+        "change_id": "add-matching-x-y-z-axis-rotation-gizmos-and-precise-camera-steps-to-sculpt-and-the-viewer",
+        "title": "Add matching X Y Z axis rotation gizmos and precise camera steps to Sculpt and the viewer",
+        "description": "Add matching X Y Z axis rotation gizmos and precise camera steps to Sculpt and the viewer",
+        "kind": "feature",
+        "affected_specs": [
+          "ThreeMDViewer"
+        ],
+        "affected_paths": [
+          "apps/sculpt/Sources/RookApp/SculptureViewport.swift",
+          "apps/sculpt/Sources/RookRendering/SculptureLiveVoxelView.swift",
+          "apps/sculpt/Sources/RookRendering/SculptureVoxelGeometry.swift",
+          "apps/sculpt/Sources/RookSculpture/SculptureProjection.swift",
+          "apps/sculpt/Tests",
+          "apps/sculpt/hi",
+          "apps/sculpt/specs",
+          "hi/tools.md",
+          "specs/ThreeMDViewer",
+          "uitests/viewer.spec.mjs",
+          "web/viewer.html"
+        ],
+        "no_spec_change": false,
+        "no_spec_change_rationale": null,
+        "acceptance_criteria": [
+          "Both views offer an editable rotation step in degrees (default 15 degrees) with minus and plus nudges, and an editable pan step in cells (default 0.25) with directional nudges. Values must be finite and positive; invalid input leaves the current camera unchanged. Fit resets the default pose and pan.",
+          "Both volume views show a small sphere with colored X, Y and Z rotation rings and accessible axis buttons. Choosing an axis constrains dragging and step buttons to rotation around that document axis; Free restores unconstrained orbit.",
+          "Synchronize viewer and Sculpt contracts and intent, record actual current tests, complete verified lifecycle closure under Leif’s approved PR 93 camera scope, and preserve storage, rendering budgets, parser APIs, releases and trust policy.",
+          "Tests compare shared asymmetric projection and picking cases including Z rotation, full X/Y/Z turns, negative nudges and exact inverse steps; native live and scalar renderers agree. Camera controls remain usable on narrow screens and have keyboard labels and focus indication.",
+          "Three-axis rotation preserves an orthonormal camera orientation and supports Z rotation without changing model cells, slice, Undo, files, or installed geometry. Native and browser use the same document-axis convention, including row Y and plane Z."
+        ],
+        "dependencies": [],
+        "supersedes": [],
+        "answers": {
+          "architecture_risk": "yes",
+          "public_contract": "yes"
+        }
+      },
+      "approved_delta_digests": {
+        "ThreeMDViewer": "41ce28706a4b04ba3801ad8ef3e98217bdaaf285333d2b519f476919f2767a08"
+      }
+    }
+  ],
   "reopenings": []
 }
