@@ -20,3 +20,7 @@ The hosted page shipped in PR 90 and the ThreeMDViewer spec shipped in PR 91. Th
 - Do not finalize the kind 2, GDScript, storage-ceiling, or 2.1 docs-coverage changes.
 
 The cube parity follow-up uses the live Sculpt view as reference: 0.5 lit glyph fill, 0.4 glyph edges, 0.8 gold selected-slice edges, matching background and axes, full outward-wound cubes, neighbor-face suppression, and one instanced draw. Geometry is cached per document. Camera and selection changes use uniforms. The input caps stay 64 by 64 and 4000 cells. Sculpt app edits, painting, large worlds, and OBJ export stay out of scope.
+
+## Continuing UI and UX pass
+
+Leif requested continued UI and UX work on 2026-10-09. Preserve the current draft lifecycle and all earlier cube-stage and publication limits. The compact layout keeps the existing CorvidLabs tokens and typography; the stage is the focus.

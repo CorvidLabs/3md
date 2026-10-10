@@ -58,8 +58,8 @@
   *{box-sizing:border-box}
   /* This page consumes the CorvidLabs design tokens (assets/tokens.css) directly:
      syntax colors use --code-*, state colors use --danger/--success, UI chrome is
-     the display face and only the source editor + code tokens are monospace. No
-     colors are re-derived here, so everything themes for free in light and dark. */
+     the display face and only the source editor + code tokens are monospace.
+     Workspace chrome follows light/dark tokens; the GPU stage and camera strip stay dark. */
   :root{
     --gutter:52px;
     --code-font:var(--font-mono,ui-monospace,"Spline Sans Mono",monospace);
@@ -72,25 +72,25 @@
     background-image:linear-gradient(var(--ink-06) 1px,transparent 1px),linear-gradient(90deg,var(--ink-06) 1px,transparent 1px);
     background-size:40px 40px;min-height:100vh}
   a{color:var(--sheen);text-decoration:none} a:hover{text-decoration:underline}
-  .wrap{max-width:1320px;margin:0 auto;padding:12px 18px 12px;height:100vh;box-sizing:border-box;display:flex;flex-direction:column}
-  .topbar{display:flex;align-items:center;justify-content:space-between;padding:6px 0 18px}
+  .wrap{max-width:1600px;margin:0 auto;padding:12px 18px;height:100vh;height:100dvh;min-height:540px;box-sizing:border-box;display:flex;flex-direction:column}
+  .topbar{display:flex;align-items:center;gap:20px;padding:0 0 12px;flex-shrink:0}
+  .headerlinks{display:flex;align-items:center;gap:16px;margin-left:auto;font-size:12px}
   .brand{display:flex;align-items:center;gap:10px;font-size:13px;letter-spacing:.04em;color:var(--ink)}
   .brand svg{width:24px;height:24px;color:var(--ink)}
   .brand b{font-weight:700}
-  .head{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin-bottom:6px}
-  h1{font-family:var(--font-display);font-weight:900;font-size:clamp(28px,5vw,44px);letter-spacing:-.03em;margin:0;color:var(--ink);position:relative}
+  .head{display:flex;align-items:baseline;gap:14px;min-width:0}
+  h1{font-family:var(--font-display);font-weight:900;font-size:26px;letter-spacing:-.03em;margin:0;color:var(--ink);position:relative}
   h1 .z{color:var(--sheen)}
   /* The one sanctioned gradient: a short feather-sheen accent under the wordmark. */
   h1::after{content:"";position:absolute;left:2px;bottom:-7px;width:52px;height:3px;border-radius:2px;background:var(--iridescence)}
-  .lead{color:var(--text-faint);font-size:13.5px;margin:0 0 14px}
-  .toolbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:14px}
-  .toolbar .sep{width:1px;height:22px;background:var(--hairline);margin:0 2px}
+  .lead{color:var(--text-faint);font-size:12px;margin:0}
+  .toolbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:10px;flex-shrink:0}
   .btn{font:inherit;font-size:12px;letter-spacing:.03em;color:var(--ink);background:var(--surface);border:1px solid var(--hairline);
     padding:8px 12px;border-radius:4px;cursor:pointer;transition:.15s;white-space:nowrap}
+  .btn:disabled{opacity:.5;cursor:wait}
   .btn:hover{border-color:var(--sheen);color:var(--sheen)}
   .btn:focus-visible{outline:2px solid var(--sheen);outline-offset:2px;box-shadow:0 0 0 2px var(--paper),0 0 0 4px var(--sheen)}
-  /* The primary share action is the ONLY filled-green element, lifted so it reads
-     as the single most important control. */
+  /* Sharing stays visible; less frequent document actions live in a disclosure. */
   .btn.primary{background:var(--sheen);color:var(--paper);border-color:var(--sheen);font-weight:600;
     box-shadow:0 1px 2px var(--ink-12),0 3px 10px color-mix(in srgb,var(--sheen) 24%,transparent)}
   .btn.primary:hover{background:var(--sheen-hover);border-color:var(--sheen-hover);color:var(--paper)}
@@ -102,8 +102,8 @@
   #cursor,#counts{font-family:var(--code-font);font-size:11px}
   select.btn{padding-right:8px;max-width:240px}
   #example{max-width:min(260px,52vw)}
-  .findwrap{position:relative}
-  #findExample{width:min(220px,46vw)}
+  .findwrap{position:relative;flex:1;min-width:160px}
+  #findExample{width:100%}
   .findlist{position:absolute;z-index:20;top:calc(100% + 4px);left:0;width:min(380px,82vw);max-height:280px;overflow:auto;
     background:var(--surface);border:1px solid var(--hairline);border-radius:4px;box-shadow:0 8px 24px var(--ink-12)}
   .findlist button{display:flex;justify-content:space-between;gap:12px;width:100%;text-align:left;font:inherit;font-size:12px;
@@ -111,33 +111,38 @@
   .findlist button:last-child{border-bottom:0}
   .findlist button:hover,.findlist button:focus-visible,.findlist button[aria-selected="true"]{background:color-mix(in srgb,var(--sheen) 12%,var(--surface));outline:none}
   .findlist .meta{color:var(--text-faint);font-family:var(--code-font);font-size:11px;white-space:nowrap}
-  /* Phone: buttons fill rows evenly and the primary share action becomes a full
-     width bar at the end, so the hierarchy survives instead of leaving the CTA
-     marooned on a half-empty row. */
-  @media(max-width:560px){
-    select.btn{max-width:46vw}
-    .toolbar{gap:7px}
-    .toolbar .btn:not(.primary):not(select){flex:1 1 auto;justify-content:center;text-align:center}
-    .toolbar .sep{display:none}
-    .toolbar .primary{order:99;width:100%;margin-left:0;padding:11px 12px}
-  }
-  .toolbar label{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--text-faint)}
-  .pointform{display:flex;gap:8px;margin:0 0 14px}
+  .document-menu{position:relative}
+  .document-menu summary{list-style:none;display:flex;align-items:center;gap:10px}
+  .document-menu summary::-webkit-details-marker{display:none}
+  .document-menu summary::after{content:"⌄";color:var(--text-faint)}
+  .document-menu[open] summary{border-color:var(--sheen)}
+  .document-actions{position:absolute;right:0;top:calc(100% + 6px);z-index:30;width:236px;padding:6px;
+    background:var(--surface);border:1px solid var(--hairline);border-radius:6px;box-shadow:0 12px 32px var(--ink-12)}
+  .document-actions .btn{display:block;width:100%;text-align:left;border:0;background:transparent;padding:11px 12px;letter-spacing:0}
+  .document-actions .btn[hidden]{display:none}
+  .document-actions .btn:hover{background:var(--ink-06);color:var(--ink)}
+  .document-actions hr{border:0;border-top:1px solid var(--hairline);margin:5px}
+  .edittools{display:none;gap:8px;padding:8px 12px;border-bottom:1px solid var(--hairline);flex-shrink:0}
+  .stage[data-show="edit"] .edittools{display:flex}
+  .edittools .btn{font-size:11px;padding:6px 9px}
+  .document-title{flex:1;font-size:12px;color:var(--ink);text-transform:none;letter-spacing:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+  .piecewrap{display:flex;align-items:center;gap:8px;padding:7px 12px;border-bottom:1px solid var(--hairline);font-size:12px}
+  .piecewrap[hidden]{display:none}
+  .piecewrap select{max-width:none;min-width:0;flex:1}
+  .pointform{display:flex;gap:8px;margin:0 0 10px}
   .pointform input{flex:1;min-width:0;font:inherit;font-size:14px;padding:8px 12px;border:1px solid var(--hairline);border-radius:4px;background:var(--surface);color:var(--ink)}
   .pointform input:focus-visible{outline:2px solid var(--sheen);outline-offset:2px}
-  .grid{display:grid;grid-template-columns:minmax(180px,240px) minmax(0,1fr);gap:16px;align-items:stretch;flex:1;min-height:0}
+  .grid{display:grid;grid-template-columns:minmax(180px,240px) minmax(0,1fr);gap:12px;align-items:stretch;flex:1;min-height:260px}
   .filelist{overflow:auto;flex:1;min-height:0}
   .filelist button,.filelist .empty{display:block;width:100%;text-align:left;font:inherit;font-size:12px;font-family:var(--code-font);padding:7px 12px;border:0;border-bottom:1px solid var(--hairline);background:transparent;color:var(--ink)}
   .filelist button{cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   .filelist button:hover,.filelist button:focus-visible,.filelist button[aria-current="true"]{background:color-mix(in srgb,var(--sheen) 12%,var(--surface));outline:none}
-  .filelist .empty{color:var(--text-faint)}
+  .filelist .empty{color:var(--text-faint);font-family:var(--ui-font);line-height:1.6;padding:16px 12px}
+  .filelist .empty strong{display:block;font-size:13px;font-weight:500;color:var(--ink);margin-bottom:6px}
   .grid>*{min-width:0;min-height:0}
-  /* The primary share action is anchored to the right edge of the toolbar so the
-     primary/secondary hierarchy survives wrapping. */
-  .toolbar .primary{margin-left:auto}
   /* Edit and Preview share one panel. Files stays beside it. On a narrow
      window, Files and the document take turns. */
-  .fileswitch{display:none;gap:0;margin-bottom:12px;border:1px solid var(--hairline);border-radius:7px;overflow:hidden;width:max-content}
+  .fileswitch{display:none;gap:0;margin-bottom:10px;border:1px solid var(--hairline);border-radius:7px;overflow:hidden;width:max-content}
   .editpreview{display:inline-flex;border:1px solid var(--hairline);border-radius:7px;overflow:hidden}
   .pstab{font:inherit;font-size:12px;font-weight:600;letter-spacing:.03em;text-transform:none;color:var(--text-muted);background:var(--surface);border:0;padding:8px 16px;cursor:pointer;transition:.15s}
   .pstab+.pstab{border-left:1px solid var(--hairline)}
@@ -174,13 +179,28 @@
   .hl .line.caretline{background:color-mix(in srgb,var(--sheen) 10%,transparent)}
   .idebar{display:flex;gap:14px;align-items:center;padding:4px 12px;border-top:1px solid var(--hairline);background:var(--surface);color:var(--text-muted);font-family:var(--code-font);font-size:11px}
   .idebar span:last-child{margin-left:auto}
-  .cubes{position:relative;background:#10161a;overflow:hidden}
-  .cubes canvas{width:100%;height:100%;display:block;touch-action:none;cursor:grab}
+  .wrap:not([data-view="edit"]) #ideCursor{display:none}
+  .cubes{position:relative;display:flex;flex-direction:column;background:#10161a;overflow:hidden}
+  .cubes canvas{width:100%;height:0;flex:1;min-height:0;display:block;touch-action:none;cursor:grab}
   .cubes canvas:active{cursor:grabbing}
+  .cubes canvas:focus-visible{outline:2px solid var(--sheen);outline-offset:-3px}
   .cubesempty{position:absolute;inset:0;display:grid;place-items:center;align-content:center;gap:12px;padding:24px;text-align:center;color:#d7e4ea}
   .cubesempty[hidden]{display:none}
   .cubesempty p{margin:0;max-width:36ch;line-height:1.45}
-  .cubehint{position:absolute;left:12px;bottom:10px;color:rgba(215,228,234,.72);font-size:11px;pointer-events:none}
+  .cube-tools{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:8px 12px;flex-shrink:0}
+  .cube-tools[hidden]{display:none}
+  .cubehint{color:rgba(215,228,234,.72);font-size:11px;line-height:1.5}
+  .cubehint .touch-hint{display:none}
+  .camera-controls{display:flex;flex-shrink:0;align-items:center;gap:2px;padding:3px;
+    background:#1b2329;border:1px solid #35434b;border-radius:6px;color:#d7e4ea}
+  .camera-controls[hidden]{display:none}
+  .camera-controls .btn{border:0;background:transparent;color:inherit;min-width:34px;min-height:32px;padding:6px 10px;letter-spacing:0}
+  .camera-controls .btn:hover{background:#2b3a42;color:#fff}
+  .camera-controls .btn:disabled{opacity:.4;cursor:default}
+  .camera-controls output{min-width:44px;text-align:center;font:11px var(--code-font);color:#aebdc5}
+  .cubesempty .empty-actions{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+  .cubesempty .btn{background:#1b2329;border-color:#35434b;color:#d7e4ea}
+  .cubesempty .btn:hover{border-color:#45d0bc;color:#45d0bc}
   .badge{display:inline-flex;align-items:center;gap:6px;font-size:11px;padding:3px 8px;border-radius:999px;border:1px solid var(--hairline);color:var(--text-muted)}
   .badge.ok{color:var(--success);border-color:color-mix(in srgb,var(--success) 45%,transparent)}
   .badge.err{color:var(--danger);border-color:color-mix(in srgb,var(--danger) 45%,transparent);cursor:pointer}
@@ -226,8 +246,8 @@
   three-md{--three-md-accent:var(--sheen);--three-md-bg:var(--surface-strong);--three-md-surface:var(--surface);--three-md-error:var(--danger);
     --three-md-text:var(--ink);--three-md-muted:var(--text-muted);--three-md-faint:var(--text-faint);
     --three-md-hairline:var(--hairline);--three-md-height:480px;--three-md-display:var(--font-display)}
-  .outline{position:relative;z-index:2;display:flex;gap:6px;flex-wrap:wrap;padding:10px 13px;border-top:1px solid var(--hairline);
-    max-height:120px;overflow:auto}
+  .outline{position:relative;z-index:2;display:flex;gap:6px;flex-wrap:nowrap;padding:10px 13px;flex-shrink:0;border-top:1px solid var(--hairline);
+    overflow:auto;scrollbar-width:thin}
   .outline:empty{display:none}
   .ochip{font:inherit;font-size:11px;color:var(--text-muted);background:var(--surface-strong,var(--surface));
     border:1px solid var(--hairline);border-radius:999px;padding:4px 10px;cursor:pointer;transition:.12s;white-space:nowrap}
@@ -239,10 +259,43 @@
   .status{font-size:12px;color:var(--text-faint);margin-top:10px;min-height:16px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
   .status.err{color:var(--danger)}
   .status.ok{color:var(--sheen-strong,var(--sheen))}
-  .hint{font-size:11.5px;color:var(--text-faint);margin-top:6px}
+  .hint{font-size:11.5px;color:var(--text-faint);margin:6px 0 0}
+  .wrap:not([data-view="edit"]) .hint{display:none}
   .hint kbd{font-family:var(--code-font);font-size:10.5px;background:var(--surface);border:1px solid var(--hairline);
     border-bottom-width:2px;border-radius:3px;padding:1px 5px;color:var(--text-muted)}
-  .foot{margin-top:22px;font-size:12px;color:var(--text-faint)}
+  .foot{margin:8px 0 0;font-size:11px;color:var(--text-faint)}
+  @media(max-width:1100px){.lead{display:none}}
+  @media(max-width:700px){
+    .wrap{padding:10px;min-height:620px}
+    .topbar{gap:12px}
+    .brand span{display:none}
+    h1{font-size:23px}
+    .headerlinks{gap:10px}
+    .headerlinks a:last-of-type{display:none}
+    .toolbar{display:grid;grid-template-columns:1fr 1fr auto;gap:7px}
+    #example{width:100%;max-width:none;grid-column:1 / 2}
+    .findwrap{grid-column:2 / 4;min-width:0}
+    .toolbar>.btn{padding:9px 8px}
+    .document-menu{grid-column:3;grid-row:2}
+    .toolbar .primary{grid-column:1 / 4;padding:9px}
+    .document-menu summary{justify-content:center;padding:9px}
+    .fileswitch{margin-bottom:8px}
+    .pane .bar{padding:8px;gap:7px}
+    .document-title{order:3;flex-basis:100%;font-size:11px}
+    .pstab{padding:9px 13px}
+    .editmeta #sourceName,.editmeta #counts{display:none}
+    .cube-tools{padding:7px 9px;gap:8px}
+    .camera-controls .btn{min-width:40px;min-height:40px;padding:6px 8px}
+    .camera-controls output{min-width:40px}
+    .cubehint{font-size:10px}
+    .cubehint .mouse-hint{display:none}
+    .cubehint .touch-hint{display:inline}
+    .idebar{gap:8px;font-size:10px;padding:5px 8px}
+    .hint{line-height:1.7;font-size:10px}
+    .foot{font-size:10px}
+  }
+  @media(max-width:380px){.headerlinks a{display:none}.pstab{padding:9px 10px}}
+
 
   .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
   .corvid-theme-toggle{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;padding:0;background:none;border:1px solid var(--ink-12,var(--hairline));color:var(--ink-70,var(--text-muted));cursor:pointer;transition:border-color .2s,color .2s;border-radius:3px}
@@ -258,47 +311,48 @@
 </style>
 </head>
 <body>
-  <div class="wrap">
+  <div class="wrap" data-view="cubes">
     <div class="topbar">
-      <a class="brand" href="index.html">
+      <a class="brand" href="index.html" aria-label="CorvidLabs">
         <svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="24" cy="32" r="18" fill="currentColor"/><path d="M33 21.5 L58.5 29.5 L33 39.5 Z" fill="currentColor"/><circle cx="27.5" cy="26" r="3" fill="var(--paper)"/></svg>
         <span>Corvid<b>Labs</b></span>
       </a>
-      <button type="button" class="corvid-theme-toggle" data-corvid-theme-toggle aria-pressed="false" aria-label="Switch theme" title="Switch theme">
-        <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.6v2.4M12 19v2.4M4.2 4.2l1.7 1.7M18.1 18.1l1.7 1.7M2.6 12h2.4M19 12h2.4M4.2 19.8l1.7-1.7M18.1 5.9l1.7-1.7"/></svg>
-        <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A8.6 8.6 0 1 1 11.2 3a6.7 6.7 0 0 0 9.8 9.8z"/></svg>
-      </button>
-    </div>
-
-    <div class="head">
-      <h1>3md viewer<span class="z">.</span></h1>
-      <p class="lead">Point at a public GitHub repo, folder, or file, or open one on this computer. Files stay on the left. Cubes are on the stage. Edit and Preview are the other views of that same panel. Search reads every line. <a href="docs.html">docs</a> &middot; <a href="gallery.html">gallery</a></p>
+      <div class="head">
+        <h1>3md viewer<span class="z">.</span></h1>
+        <p class="lead">Explore and edit layered documents.</p>
+      </div>
+      <nav class="headerlinks" aria-label="3md resources">
+        <a href="docs.html">Docs</a><a href="gallery.html">Gallery</a>
+        <button type="button" class="corvid-theme-toggle" data-corvid-theme-toggle aria-pressed="false" aria-label="Switch theme" title="Switch theme">
+          <svg class="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.6v2.4M12 19v2.4M4.2 4.2l1.7 1.7M18.1 18.1l1.7 1.7M2.6 12h2.4M19 12h2.4M4.2 19.8l1.7-1.7M18.1 5.9l1.7-1.7"/></svg>
+          <svg class="moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A8.6 8.6 0 1 1 11.2 3a6.7 6.7 0 0 0 9.8 9.8z"/></svg>
+        </button>
+      </nav>
     </div>
 
     <div class="toolbar">
-      <label for="example">gallery</label>
+      <label for="example" class="sr-only">Gallery</label>
       <select id="example" class="btn" aria-label="load a gallery example"></select>
       <div class="findwrap">
         <label for="findExample" class="sr-only">find</label>
         <input id="findExample" class="btn" type="search" placeholder="search every line" aria-label="search every line" role="combobox" aria-autocomplete="list" aria-controls="findList" aria-expanded="false" autocomplete="off" />
         <div id="findList" class="findlist" hidden role="listbox" aria-label="matching examples"></div>
       </div>
-      <span class="sep"></span>
-      <button id="planeBtn" class="btn icon ins" type="button" title="Insert a plane (Ctrl/Cmd+Enter inserts too)">+ plane</button>
-      <button id="linkBtn" class="btn icon ins" type="button" title="Insert a cross-plane link">+ link</button>
-      <button id="fmBtn" class="btn icon ins" type="button" title="Insert frontmatter">+ frontmatter</button>
-      <span class="sep"></span>
       <button id="openBtn" class="btn" type="button">open file</button>
       <input id="fileInput" type="file" accept=".3md,.3mdb,.md,.txt,text/plain,application/octet-stream" hidden />
       <button id="folderBtn" class="btn" type="button">open folder</button>
       <input id="folderInput" type="file" webkitdirectory multiple hidden />
-      <button id="sectionsBtn" class="btn" type="button" title="Turn Markdown headings into planes">sections</button>
-      <button id="packBtn" class="btn" type="button" hidden title="Put the opened files into one document">one document</button>
-      <button id="kind2Btn" class="btn" type="button" title="Download this document as uncompressed kind 2">kind 2</button>
-      <label id="pieceLabel" for="piece" hidden>inside</label>
-      <select id="piece" class="btn" hidden aria-label="document inside this open"></select>
-      <button id="copyBtn" class="btn" type="button">copy source</button>
-      <button id="dlBtn" class="btn" type="button">download</button>
+      <details class="document-menu" id="documentMenu">
+        <summary class="btn">Document</summary>
+        <div class="document-actions">
+          <button id="dlBtn" class="btn" type="button">Download .3md</button>
+          <button id="kind2Btn" class="btn" type="button" title="Download this document as uncompressed kind 2">Download .3mdb (kind 2)</button>
+          <button id="copyBtn" class="btn" type="button">Copy source</button>
+          <hr />
+          <button id="sectionsBtn" class="btn" type="button" title="Turn Markdown headings into planes">Headings to planes</button>
+          <button id="packBtn" class="btn" type="button" hidden title="Put the opened files into one document">Pack files into one document</button>
+        </div>
+      </details>
       <button id="shareBtn" class="btn primary" type="button">copy share link</button>
     </div>
 
@@ -318,13 +372,23 @@
       </div>
       <div class="pane stage" id="stage" data-show="cubes">
         <div class="bar">
-          <div class="editpreview" role="tablist" aria-label="Edit or preview">
+          <div class="editpreview" role="tablist" aria-label="Document view">
             <button class="pstab" id="editTab" type="button" role="tab" data-pane="edit" aria-selected="false" aria-controls="editorWrap">Edit</button>
             <button class="pstab" id="previewTab" type="button" role="tab" data-pane="preview" aria-selected="false" aria-controls="previewPane">Preview</button>
             <button class="pstab" id="cubesTab" type="button" role="tab" data-pane="cubes" aria-selected="true" aria-controls="cubesPane">Cubes</button>
           </div>
+          <span class="document-title" id="documentTitle">Small sculpture</span>
           <span class="right editmeta"><span id="sourceName">source.3md</span><span id="cursor">Ln 1, Col 1</span><span id="counts"></span></span>
           <span class="right previewmeta"><span id="validBadge" class="badge"><span class="dot"></span><span id="validText">&mdash;</span></span></span>
+        </div>
+        <div class="piecewrap" id="pieceWrap" hidden>
+          <label id="pieceLabel" for="piece" hidden>Inside</label>
+          <select id="piece" class="btn" hidden aria-label="document inside this open"></select>
+        </div>
+        <div class="edittools" aria-label="Insert into source">
+      <button id="planeBtn" class="btn icon ins" type="button" title="Insert a plane (Ctrl/Cmd+Enter inserts too)">+ plane</button>
+      <button id="linkBtn" class="btn icon ins" type="button" title="Insert a cross-plane link">+ link</button>
+      <button id="fmBtn" class="btn icon ins" type="button" title="Insert frontmatter">+ frontmatter</button>
         </div>
         <div class="editor" id="editorWrap" role="tabpanel" aria-labelledby="editTab">
           <div class="backdrop" aria-hidden="true"><pre class="hl" id="hl"></pre></div>
@@ -333,12 +397,24 @@
         <div class="viewer" id="previewPane" role="tabpanel" aria-labelledby="previewTab"><three-md id="lab" mode="single" role="group" aria-label="Live 3md preview" aria-describedby="planeLive"></three-md></div>
         <div id="planeLive" class="sr-only" aria-live="polite"></div>
         <div class="cubes" id="cubesPane" role="tabpanel" aria-labelledby="cubesTab">
-          <canvas id="cubeCanvas" width="800" height="560" aria-label="Sculpt-style cubes"></canvas>
+          <canvas id="cubeCanvas" width="800" height="560" tabindex="0" aria-label="Sculpt-style cubes" aria-describedby="cameraHelp"></canvas>
           <div class="cubesempty" id="cubesEmpty">
-            <p>This document has no cube grid. A fenced block of a few characters, one plane per slice, becomes lit cubes.</p>
-            <button id="cubeSample" class="btn" type="button">Open a small sculpture</button>
+            <p id="cubeEmptyText">This document has no cube grid. Read it in Preview, or open a sculpture to explore in 3D.</p>
+            <div class="empty-actions">
+              <button id="cubePreview" class="btn" type="button">Read in Preview</button>
+              <button id="cubeSample" class="btn" type="button">Open a small sculpture</button>
+            </div>
           </div>
-          <div class="cubehint">GPU · drag to orbit · scroll to zoom · click a cube to pick its slice</div>
+          <div class="cube-tools" id="cubeTools">
+            <div class="cubehint"><span class="mouse-hint">Drag to orbit · scroll to zoom · click a cube to select a slice</span><span class="touch-hint">Drag to orbit · tap a cube to select a slice</span></div>
+            <p class="sr-only" id="cameraHelp">Use arrow keys to orbit, plus or minus to zoom, and Home to fit. Select a slice from the plane outline below.</p>
+            <div class="camera-controls" id="cameraControls" role="group" aria-label="Cube camera">
+              <button class="btn" id="cubeFit" type="button" title="Reset the camera and fit the sculpture (Home)">Fit</button>
+              <button class="btn" id="cubeZoomOut" type="button" aria-label="Zoom out" title="Zoom out (−)">−</button>
+              <output id="cubeZoom" aria-label="Zoom level">100%</output>
+              <button class="btn" id="cubeZoomIn" type="button" aria-label="Zoom in" title="Zoom in (+)">+</button>
+            </div>
+          </div>
         </div>
         <div class="outline" id="outline" role="group" aria-label="plane outline"></div>
         <div class="idebar" id="idebar">
@@ -352,7 +428,7 @@
     <div class="status" id="status" role="status" aria-live="polite"></div>
     <p class="hint"><kbd>Tab</kbd> indent &middot; <kbd>Esc</kbd> then <kbd>Tab</kbd> to leave &middot; <kbd>Enter</kbd> continues lists &middot; <kbd>Ctrl/&#8984;+S</kbd> download &middot; <kbd>Ctrl/&#8984;+Enter</kbd> new plane</p>
 
-    <p class="foot">Powered by the open-source <a href="https://github.com/CorvidLabs/3md">3md</a> format and the <code>&lt;three-md&gt;</code> web component. MIT. &middot; <a href="https://github.com/CorvidLabs/3md/blob/main/SPEC.md">format spec</a></p>
+    <p class="foot">Open-source <a href="https://github.com/CorvidLabs/3md">3md</a> &middot; MIT &middot; <a href="https://github.com/CorvidLabs/3md/blob/main/SPEC.md">format spec</a></p>
   </div>
 
   <script defer src="assets/theme.js"></script>
@@ -531,13 +607,38 @@ title: Small sculpture
     }
     const planeLive = document.getElementById("planeLive");
     function markOutline(i) {
-      [...outline.children].forEach((c, j) => c.setAttribute("aria-current", j === i ? "true" : "false"));
+      [...outline.children].forEach((c, j) => {
+        c.setAttribute("aria-current", j === i ? "true" : "false");
+        c.tabIndex = j === i ? 0 : -1;
+      });
+      const selected = outline.children[i];
+      if (selected) {
+        const chip = selected.getBoundingClientRect(), row = outline.getBoundingClientRect();
+        if (chip.left < row.left) outline.scrollLeft -= row.left - chip.left + 13;
+        else if (chip.right > row.right) outline.scrollLeft += chip.right - row.right + 13;
+      }
       if (document.getElementById("stage")?.dataset.show === "cubes") drawCubes();
       const doc = lab.document;
       if (doc && doc.planes[i]) {
         planeLive.textContent = `Plane ${i + 1} of ${doc.planes.length}: ${doc.planes[i].label || ("z " + doc.planes[i].z)}`;
       }
     }
+
+    outline.addEventListener("keydown", (event) => {
+      const buttons = [...outline.children];
+      const current = buttons.indexOf(document.activeElement);
+      if (current < 0) return;
+      let next = current;
+      if (event.key === "ArrowRight") next = Math.min(current + 1, buttons.length - 1);
+      else if (event.key === "ArrowLeft") next = Math.max(current - 1, 0);
+      else if (event.key === "Home") next = 0;
+      else if (event.key === "End") next = buttons.length - 1;
+      else return;
+      event.preventDefault();
+      lab.goTo(next);
+      markOutline(next);
+      buttons[next].focus({ preventScroll: true });
+    });
 
     let openNote = "";
     let openedPieces = [];
@@ -546,6 +647,7 @@ title: Small sculpture
       const src = ed.value;
       counts.textContent = src.split("\n").length + " lines, " + src.length + " chars";
       lab.setSource(src);
+      document.getElementById("documentTitle").textContent = lab.document?.title || "Untitled document";
       // The page holds the preview on one plane. Axis names no longer start playback.
       if (lab.getAttribute("mode") !== "single") lab.setAttribute("mode", "single");
       if (lab.playing && typeof lab.pause === "function") lab.pause();
@@ -840,9 +942,11 @@ title: Small sculpture
         }
         pieceSel.hidden = false;
         pieceLabel.hidden = false;
+        document.getElementById("pieceWrap").hidden = false;
       } else {
         pieceSel.hidden = true;
         pieceLabel.hidden = true;
+        document.getElementById("pieceWrap").hidden = true;
       }
       const active = openedPieces.find((item) => item.id === opened.activeId);
       sourceName.textContent = active ? active.label : "source.3md";
@@ -1028,7 +1132,7 @@ title: Small sculpture
       if (!openedFiles.length) {
         const empty = document.createElement("div");
         empty.className = "empty";
-        empty.textContent = "Open a GitHub repo, a folder, or a file.";
+        empty.innerHTML = "<strong>No files opened</strong>Open a file or folder above, or paste a public GitHub path. You can also drop files here.";
         fileList.appendChild(empty);
         return;
       }
@@ -1071,24 +1175,39 @@ title: Small sculpture
       return new TextDecoder().decode(file.data);
     }
     async function openPoint(input) {
-      status.className = "status ok";
-      status.textContent = "Opening " + input.trim() + "...";
-      const loaded = await loadGitHubPoint(input);
-      const entries = [];
-      for (const file of loaded.files) {
-        const text = textFromFile(file);
-        if (text != null) entries.push({ path: file.path, text });
+      const form = document.getElementById("pointForm");
+      if (form.getAttribute("aria-busy") === "true") return;
+      const button = form.querySelector("button[type=submit]");
+      const locator = document.getElementById("pointInput");
+      form.setAttribute("aria-busy", "true");
+      button.disabled = true;
+      button.textContent = "Opening…";
+      locator.readOnly = true;
+      try {
+        status.className = "status ok";
+        status.textContent = "Opening " + input.trim() + "...";
+        const loaded = await loadGitHubPoint(input);
+        const entries = [];
+        for (const file of loaded.files) {
+          const text = textFromFile(file);
+          if (text != null) entries.push({ path: file.path, text });
+        }
+        if (!entries.length) throw new Error("That GitHub path has no .3md, .3mdb, or Markdown files.");
+        const note = loaded.truncated ? " The list stopped at the first 400 files." : "";
+        setOpenedFiles(entries, loaded.label + "@" + loaded.ref);
+        const first = entries.find((entry) => entry.path.toLowerCase().endsWith(".3md")) || entries[0];
+        const hits = lineIndex.filter((hit) => hit.path === first.path);
+        showOpened(openText(hits[0] ? hits[0].text : first.text));
+        sourceName.textContent = first.path.split("/").pop() || first.path;
+        markFile(first.path);
+        status.className = "status ok";
+        status.textContent = "Opened " + loaded.label + " at " + loaded.ref + ". " + entries.length + " files." + note;
+      } finally {
+        form.setAttribute("aria-busy", "false");
+        button.disabled = false;
+        button.textContent = "open";
+        locator.readOnly = false;
       }
-      if (!entries.length) throw new Error("That GitHub path has no .3md, .3mdb, or Markdown files.");
-      const note = loaded.truncated ? " The list stopped at the first 400 files." : "";
-      setOpenedFiles(entries, loaded.label + "@" + loaded.ref);
-      const first = entries.find((entry) => entry.path.toLowerCase().endsWith(".3md")) || entries[0];
-      const hits = lineIndex.filter((hit) => hit.path === first.path);
-      showOpened(openText(hits[0] ? hits[0].text : first.text));
-      sourceName.textContent = first.path.split("/").pop() || first.path;
-      markFile(first.path);
-      status.className = "status ok";
-      status.textContent = "Opened " + loaded.label + " at " + loaded.ref + ". " + entries.length + " files." + note;
     }
     function rememberGathered(files) {
       const decoder = new TextDecoder();
@@ -1242,6 +1361,24 @@ title: Small sculpture
       history.replaceState(null, "", url);
       try { await navigator.clipboard.writeText(url); status.className = "status ok"; status.textContent = "Share link copied to clipboard."; }
       catch { status.className = "status ok"; status.textContent = "Share link is in the address bar."; }
+    });
+
+    const documentMenu = document.getElementById("documentMenu");
+    documentMenu.addEventListener("click", (event) => {
+      if (documentMenu.open && event.target.closest("button")) {
+        documentMenu.open = false;
+        documentMenu.querySelector("summary").focus();
+      }
+    });
+    document.addEventListener("click", (event) => {
+      if (!documentMenu.contains(event.target)) documentMenu.open = false;
+    });
+    documentMenu.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") {
+        event.preventDefault();
+        documentMenu.open = false;
+        documentMenu.querySelector("summary").focus();
+      }
     });
 
     document.getElementById("pointForm").addEventListener("submit", async (event) => {
@@ -1468,6 +1605,7 @@ title: Small sculpture
         cubeGpu.failed = false;
         canvas.__cubeGl = null;
         canvas.dataset.renderer = "lost";
+        showCubeUnavailable();
       });
       canvas.addEventListener("webglcontextrestored", () => {
         requestAnimationFrame(drawCubes);
@@ -1667,6 +1805,12 @@ title: Small sculpture
       cubePick.tanHalf = tanHalf;
       return mul4(proj, view);
     }
+    function showCubeUnavailable() {
+      document.getElementById("cubesEmpty").hidden = false;
+      document.getElementById("cubeEmptyText").textContent = "The cube stage needs WebGL2. Read this document in Preview, or try reopening it in a browser with GPU support.";
+      document.getElementById("cubeSample").hidden = true;
+      document.getElementById("cubeTools").hidden = true;
+    }
     function drawCubes() {
       const canvas = document.getElementById("cubeCanvas");
       const empty = document.getElementById("cubesEmpty");
@@ -1675,9 +1819,16 @@ title: Small sculpture
       const volume = currentCubeVolume(doc);
       canvas.dataset.cubes = String(volume.cells.length);
       if (empty) empty.hidden = volume.cells.length > 0;
-      const parent = canvas.parentElement;
-      const width = parent ? parent.clientWidth : 0;
-      const height = parent ? parent.clientHeight : 0;
+      document.getElementById("cubeEmptyText").textContent = "This document has no cube grid. Read it in Preview, or open a sculpture to explore in 3D.";
+      document.getElementById("cubeSample").hidden = false;
+      document.getElementById("cubeTools").hidden = volume.cells.length === 0;
+      document.getElementById("cameraControls").hidden = volume.cells.length === 0;
+      document.getElementById("cubePreview").hidden = !doc;
+      document.getElementById("cubeZoom").textContent = Math.round(cubeView.zoom * 100) + "%";
+      document.getElementById("cubeZoomOut").disabled = cubeView.zoom <= 0.45;
+      document.getElementById("cubeZoomIn").disabled = cubeView.zoom >= 3.2;
+      const width = canvas.clientWidth;
+      const height = canvas.clientHeight;
       if (width < 2 || height < 2) return;
       bindCubeContext(canvas);
       const [bufferWidth, bufferHeight] = cubeBufferSize(width, height);
@@ -1690,11 +1841,13 @@ title: Small sculpture
       if (cubeGpu.gl && cubeGpu.gl.isContextLost()) {
         cubeGpu.gl = null;
         canvas.dataset.renderer = "lost";
+        showCubeUnavailable();
         return;
       }
       if (!cubeGpu.gl && !initCubeGl(canvas)) {
         if (canvas.dataset.renderer !== "lost") canvas.dataset.renderer = "none";
         if (cubeGpu.error) canvas.dataset.glError = cubeGpu.error.slice(0, 240);
+        showCubeUnavailable();
         return;
       }
       canvas.dataset.renderer = "webgl2";
@@ -1719,17 +1872,24 @@ title: Small sculpture
     const stage = document.getElementById("stage");
     function selectTab(root, tab, apply) {
       apply(tab.dataset.pane);
-      root.querySelectorAll(".pstab").forEach((item) => item.setAttribute("aria-selected", String(item === tab)));
+      root.querySelectorAll(".pstab").forEach((item) => {
+        item.setAttribute("aria-selected", String(item === tab));
+        item.tabIndex = item === tab ? 0 : -1;
+      });
     }
     function wireTabs(root, apply) {
+      root.querySelectorAll(".pstab").forEach((tab) => {
+        tab.tabIndex = tab.getAttribute("aria-selected") === "true" ? 0 : -1;
+      });
       root.addEventListener("keydown", (event) => {
-        if (event.key !== "ArrowRight" && event.key !== "ArrowLeft") return;
+        if (!["ArrowRight", "ArrowLeft", "Home", "End"].includes(event.key)) return;
         const tabs = [...root.querySelectorAll(".pstab")];
         const current = tabs.indexOf(document.activeElement);
         if (current < 0) return;
         event.preventDefault();
         const step = event.key === "ArrowRight" ? 1 : tabs.length - 1;
-        const next = tabs[(current + step) % tabs.length];
+        const next = event.key === "Home" ? tabs[0]
+          : event.key === "End" ? tabs[tabs.length - 1] : tabs[(current + step) % tabs.length];
         next.focus();
         selectTab(root, next, apply);
       });
@@ -1739,6 +1899,7 @@ title: Small sculpture
     }
     wireTabs(document.querySelector(".editpreview"), (pane) => {
       stage.dataset.show = pane;
+      document.querySelector(".wrap").dataset.view = pane;
       if (pane === "preview" && lab.render) lab.render();
       if (pane === "cubes") requestAnimationFrame(drawCubes);
     });
@@ -1748,13 +1909,45 @@ title: Small sculpture
       if (pane === "document" && stage.dataset.show === "cubes") requestAnimationFrame(drawCubes);
     });
     const cubeCanvas = document.getElementById("cubeCanvas");
+    function zoomCubes(factor) {
+      cubeView.zoom = Math.max(0.45, Math.min(3.2, cubeView.zoom * factor));
+      drawCubes();
+    }
+    function fitCubes() {
+      cubeView.yaw = 0.6;
+      cubeView.pitch = 0.35;
+      cubeView.zoom = 1;
+      drawCubes();
+    }
+    document.getElementById("cubeFit").addEventListener("click", fitCubes);
+    document.getElementById("cubeZoomOut").addEventListener("click", () => zoomCubes(1 / 1.15));
+    document.getElementById("cubeZoomIn").addEventListener("click", () => zoomCubes(1.15));
+    cubeCanvas.addEventListener("keydown", (event) => {
+      if (event.altKey || event.ctrlKey || event.metaKey) return;
+      if (event.key === "Home") fitCubes();
+      else if (["+", "="].includes(event.key)) zoomCubes(1.15);
+      else if (["-", "_"].includes(event.key)) zoomCubes(1 / 1.15);
+      else if (event.key === "ArrowLeft") { cubeView.yaw -= 0.12; drawCubes(); }
+      else if (event.key === "ArrowRight") { cubeView.yaw += 0.12; drawCubes(); }
+      else if (event.key === "ArrowUp") { cubeView.pitch = Math.min(1.2, cubeView.pitch + 0.12); drawCubes(); }
+      else if (event.key === "ArrowDown") { cubeView.pitch = Math.max(-1.2, cubeView.pitch - 0.12); drawCubes(); }
+      else return;
+      event.preventDefault();
+    });
+    document.getElementById("cubePreview").addEventListener("click", () => {
+      document.getElementById("previewTab").click();
+      lab.setAttribute("tabindex", "0");
+      lab.focus();
+    });
     let cubeDrag = null;
     cubeCanvas.addEventListener("pointerdown", (event) => {
-      cubeDrag = { x: event.clientX, y: event.clientY, yaw: cubeView.yaw, pitch: cubeView.pitch, moved: false };
+      if ((event.pointerType === "touch" && !event.isPrimary) || event.button !== 0) return;
+      cubeCanvas.focus({ preventScroll: true });
+      cubeDrag = { pointerId: event.pointerId, x: event.clientX, y: event.clientY, yaw: cubeView.yaw, pitch: cubeView.pitch, moved: false };
       try { cubeCanvas.setPointerCapture(event.pointerId); } catch (_) { /* synthetic tests have no live pointer */ }
     });
     cubeCanvas.addEventListener("pointermove", (event) => {
-      if (!cubeDrag) return;
+      if (!cubeDrag || cubeDrag.pointerId !== event.pointerId) return;
       const dx = event.clientX - cubeDrag.x;
       const dy = event.clientY - cubeDrag.y;
       if (Math.abs(dx) + Math.abs(dy) > 3) cubeDrag.moved = true;
@@ -1763,7 +1956,8 @@ title: Small sculpture
       drawCubes();
     });
     cubeCanvas.addEventListener("pointerup", (event) => {
-      if (cubeDrag && !cubeDrag.moved && cubePick.eye) {
+      if (!cubeDrag || cubeDrag.pointerId !== event.pointerId) return;
+      if (!cubeDrag.moved && cubePick.eye) {
         const rect = cubeCanvas.getBoundingClientRect();
         const sx = ((event.clientX - rect.left) / cubePick.width * 2 - 1)
           * cubePick.tanHalf * cubePick.width / cubePick.height;
@@ -1791,37 +1985,23 @@ title: Small sculpture
       }
       cubeDrag = null;
     });
-    cubeCanvas.addEventListener("pointercancel", () => { cubeDrag = null; });
+    cubeCanvas.addEventListener("pointercancel", (event) => {
+      if (cubeDrag?.pointerId === event.pointerId) cubeDrag = null;
+    });
     cubeCanvas.addEventListener("wheel", (event) => {
       event.preventDefault();
-      cubeView.zoom = Math.max(0.45, Math.min(3.2, cubeView.zoom * (event.deltaY > 0 ? 0.92 : 1.08)));
-      drawCubes();
+      zoomCubes(event.deltaY > 0 ? 0.92 : 1.08);
     }, { passive: false });
     if (window.ResizeObserver) {
       new ResizeObserver(() => {
         if (stage.dataset.show === "cubes") drawCubes();
-      }).observe(cubeCanvas.parentElement);
+      }).observe(cubeCanvas);
     }
     document.getElementById("cubeSample").addEventListener("click", () => {
-      ed.value = [
-        "---", "3md: 1.0", "axis: layer", "title: Small sculpture", "---", "",
-        "@plane z=0 label=\"floor\"", "```",
-        "########", "########", "########", "########", "########", "########", "########", "########",
-        "```", "",
-        "@plane z=1 label=\"walls\"", "```",
-        "########", "#......#", "#..oo..#", "#..oo..#", "#......#", "#..**..#", "#......#", "########",
-        "```", "",
-        "@plane z=2 label=\"roof\"", "```",
-        "........", ".######.", "..####..", "...##...", "...##...", "..####..", ".######.", "........",
-        "```", "",
-      ].join("\n");
-      render();
-      updateCursor();
+      showOpened(openText(STARTER));
+      fitCubes();
       if (typeof lab.goTo === "function") lab.goTo(1);
-      stage.dataset.show = "cubes";
-      document.querySelectorAll(".editpreview .pstab").forEach((item) => {
-        item.setAttribute("aria-selected", String(item.dataset.pane === "cubes"));
-      });
+      document.getElementById("cubesTab").click();
       requestAnimationFrame(drawCubes);
     });
 

@@ -9,7 +9,7 @@ spec: ThreeMDViewer.spec.md
 | `web/gather.test.ts` | bun | Section planes, pack, kind 2 round-trip, line plane index, search rank. |
 | `web/github-source.test.ts` | bun | Repo, folder, file, and raw locators. Host and path routing. Issues URL rejected. |
 | `web/open-document.test.ts` | bun | Text, composition, kind 1, kind 2, LZFSE refusal, linked folder. |
-| `uitests/viewer.spec.mjs` | Playwright | Edit, Preview, and Cubes share one panel; full cube face pixels from all sides; glyph fill and gold edge selection; nearest slice picking; no camera/selection geometry uploads; about 1400 cubes; no console errors; narrow layout; kind 2, linked village, search, sections, composition. |
+| `uitests/viewer.spec.mjs` | Playwright | Edit, Preview, and Cubes share one panel; full cube face pixels from all sides; glyph fill and gold edge selection; nearest slice picking; no camera/selection geometry uploads; about 1400 cubes; no console errors; narrow layout; kind 2, linked village, search, sections, composition; keyboard camera and slice controls; phone stage space; disclosure dismissal and both downloads; source shortcut focus; Preview empty state; GitHub busy/error recovery; GPU-unavailable guidance. |
 
 ## Requirement evidence
 
@@ -36,3 +36,8 @@ spec: ThreeMDViewer.spec.md
 | Apple LZFSE bytes | The page refuses them and names `compressionUnavailable`. |
 | Desktop width | Files stay visible while Edit, Preview, and Cubes switch. Preview shows the live plane view. |
 | Width at or below 900px | Files and the document take turns. The document still switches Edit and Preview. |
+
+## Continuing UI and UX verification
+
+- The viewer suite exercises the new controls in Chromium and WebKit. Binary export is compared as parsed document fields and plane bodies because decoding returns canonical text. Camera direction assertions are independent of font-driven aspect-ratio changes.
+- Live desktop dark, desktop light, Edit, and phone views are inspected and captured in `docs/evidence/viewer-ui/`. These are agent visual checks, not human approval.

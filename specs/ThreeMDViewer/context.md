@@ -19,7 +19,7 @@ spec: ThreeMDViewer.spec.md
 
 ## Current Status
 
-- PR 91 is on main. PR 92 shares Edit, Preview, and Cubes in one panel and adds Sculpt cube-stage parity.
+- PR 91 is on main. PR 92 shares Edit, Preview, and Cubes in one panel and adds Sculpt cube-stage parity plus the continuing UI and UX improvements.
 - Definition approval for this layout change is not recorded yet.
 
 ## Notes
@@ -36,3 +36,7 @@ spec: ThreeMDViewer.spec.md
 
 - Cube geometry and neighbor visibility are cached per parsed document. Camera movement does no document scans; slice selection is a uniform. One draw combines lit 0.5 fill and antialiased glyph or gold edges. Shared interior faces are suppressed to retain translucency.
 - Sculpt was run locally and its Character orb compared in both live stages. Native and web screenshots are in `docs/evidence/viewer-sculpt-parity/`. This is agent visual verification, not Leif’s review or definition approval.
+
+- Leif directly requested continued UI and UX work on 2026-10-09. This covers the compact workspace and controls in the existing page scope; it does not record definition approval, human diff review, or a merge.
+- The canvas occupies the space above the camera strip. Framing and picking use its actual client dimensions; changing view or viewport still does not resize an established WebGL bitmap.
+- Export and conversion actions use a native disclosure with natural button focus, Escape dismissal, and outside-click closure. The source download shortcut preserves editor focus.

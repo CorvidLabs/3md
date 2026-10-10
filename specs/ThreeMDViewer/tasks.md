@@ -19,6 +19,10 @@ spec: ThreeMDViewer.spec.md
 - [x] Keep full cubes framed in the pane and pick the nearest cube’s Z slice.
 - [x] Reuse geometry on orbit, zoom, and selection, with one instanced draw.
 
+- [x] Give the stage more room, retain visible document identity, and group document actions.
+- [x] Add Fit, zoom buttons, keyboard orbiting, and a scrolling slice row with keyboard navigation.
+- [x] Offer Preview for prose and unavailable WebGL2, and recover GitHub controls after errors.
+
 ## Gaps
 
 - The previous page contract shipped in PR 91.

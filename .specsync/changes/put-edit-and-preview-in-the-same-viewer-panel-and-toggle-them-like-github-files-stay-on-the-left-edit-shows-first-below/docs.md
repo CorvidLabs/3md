@@ -11,3 +11,7 @@ artifact: docs
 - The public README, package versions, and release notes stay as they are. This change does not publish and does not move `v2.2.1`.
 
 Sculpt parity and the caps are recorded in the canonical spec and VIEWER-6. Live comparison screenshots and verification results are in `docs/evidence/viewer-sculpt-parity/`. Definition approval remains open; no lifecycle approval, finalization, or archive was performed.
+
+## Continuing UI and UX pass
+
+Synchronize VIEWER-6 and the canonical ThreeMDViewer contract and companions with the compact workspace, Document actions, camera controls, keyboard navigation, and empty/loading feedback. Record visual evidence under docs/evidence/viewer-ui/. Definition approval and permitted signed provenance remain separate gaps.

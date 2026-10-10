@@ -19,3 +19,7 @@ artifact: testing
 The Sculpt parity pass runs `./node_modules/.bin/playwright test viewer.spec.mjs` in `uitests` on Chromium and WebKit. Added GPU pixel evidence for a full single cell from six viewpoints and gold edges with unchanged glyph fill; nearest-Z picking; 1600 cells with zero camera/selection geometry uploads and one instanced draw per redraw. Live screenshots for Character orb and the starter geometry are in `docs/evidence/viewer-sculpt-parity/`. This is agent verification and leaves definition approval open.
 
 Final parity browser verification: 70 passed on Chromium and WebKit. Strict ThreeMDViewer SpecSync check: 1 passed, zero warnings or failures. `hi check`: 85 criteria, no problems. Element bundle: current, 48840 bytes, no storage code.
+
+## Continuing UI and UX pass
+
+The Chromium/WebKit suite covers camera controls, phone layout and non-overlapping controls, Document disclosure dismissal, text and kind 2 download fidelity, editor focus after the save shortcut, prose Preview and sample loading, 30-slice keyboard navigation, GitHub rate-limit recovery, and WebGL2-unavailable guidance. Inspect dark/light desktop, Edit, and phone views and preserve screenshots under docs/evidence/viewer-ui/.

@@ -425,6 +425,7 @@ test.describe("viewer & editor (viewer.html)", () => {
     await viewerReady(page);
     await showEditor(page);
     await page.fill("#editor", "# Project\n\nThe opening.\n\n## Install\n\nRun bun.\n");
+    await page.click("#documentMenu summary");
     await page.click("#sectionsBtn");
     await page.waitForTimeout(400);
     const labels = await page.evaluate(() => document.getElementById("lab").document.planes.map((plane) => plane.label));
@@ -743,4 +744,169 @@ test.describe("viewer & editor (viewer.html)", () => {
     const title = await page.evaluate(() => document.getElementById("lab").document.title);
     expect(title).toBe("Shared");
   });
+
+  test("camera buttons and keyboard orbit, zoom, and fit without changing the document", async ({ page }) => {
+    await page.goto("/viewer.html");
+    await viewerReady(page);
+    await page.waitForFunction(() => document.getElementById("cubeCanvas").dataset.renderer === "webgl2");
+    const source = await page.evaluate(() => window.threeMd.source);
+    const matrix = () => page.evaluate(() => {
+      const gl = document.getElementById("cubeCanvas").__cubeGl;
+      const program = gl.getParameter(gl.CURRENT_PROGRAM);
+      const mvp = gl.getUniform(program, gl.getUniformLocation(program, "uMvp"));
+      // Camera direction is independent of layout shifts while the web font loads.
+      return [mvp[3], mvp[7], mvp[11]];
+    });
+    const initial = await matrix();
+    await page.locator("#cubeCanvas").press("ArrowRight");
+    expect(await matrix()).not.toEqual(initial);
+    await page.getByRole("button", { name: "Zoom in", exact: true }).click();
+    await expect(page.locator("#cubeZoom")).toHaveText("115%");
+    await page.locator("#cubeCanvas").press("-");
+    await expect(page.locator("#cubeZoom")).toHaveText("100%");
+    await page.locator("#cubeCanvas").press("Home");
+    expect(await matrix()).toEqual(initial);
+    for (let i = 0; i < 12; i++) await page.locator("#cubeCanvas").press("+");
+    await expect(page.locator("#cubeZoom")).toHaveText("320%");
+    await expect(page.locator("#cubeZoomIn")).toBeDisabled();
+    await page.getByRole("button", { name: "Fit", exact: true }).click();
+    expect(await matrix()).toEqual(initial);
+    expect(await page.evaluate(() => window.threeMd.source)).toBe(source);
+  });
+
+  test("phone layout leaves room for cubes and keeps controls outside the drawing", async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto("/viewer.html");
+    await viewerReady(page);
+    for (const size of [{ width: 390, height: 844 }, { width: 320, height: 740 }]) {
+      await page.setViewportSize(size);
+      const geometry = await page.evaluate(() => {
+        const canvas = document.getElementById("cubeCanvas").getBoundingClientRect();
+        const tools = document.getElementById("cubeTools").getBoundingClientRect();
+        return { height: canvas.height, bottom: canvas.bottom, toolsTop: tools.top, toolsBottom: tools.bottom,
+          width: document.body.scrollWidth, viewWidth: innerWidth, viewHeight: innerHeight };
+      });
+      expect(geometry.height).toBeGreaterThan(180);
+      expect(geometry.toolsTop).toBeGreaterThanOrEqual(geometry.bottom - 1);
+      expect(geometry.toolsBottom).toBeLessThan(geometry.viewHeight);
+      expect(geometry.width).toBeLessThanOrEqual(geometry.viewWidth);
+      await page.click("#documentMenu summary");
+      await expect(page.locator("#kind2Btn")).toBeVisible();
+      await page.locator("#documentMenu summary").press("Escape");
+    }
+  });
+
+  test("Document disclosure dismisses with Escape and both downloads preserve the document", async ({ page }) => {
+    await page.goto("/viewer.html");
+    await viewerReady(page);
+    const original = await page.evaluate(() => window.threeMd.source);
+    const originalDoc = await page.evaluate(() => window.threeMd.document);
+    await page.locator("#documentMenu summary").press("Enter");
+    await expect(page.locator("#dlBtn")).toBeVisible();
+    await page.locator("#dlBtn").press("Escape");
+    await expect(page.locator("#dlBtn")).toBeHidden();
+    await expect(page.locator("#documentMenu summary")).toBeFocused();
+    const { readFile } = await import("node:fs/promises");
+    for (const [button, filename] of [["#dlBtn", "small-sculpture.3md"], ["#kind2Btn", "small-sculpture.3mdb"]]) {
+      await page.click("#documentMenu summary");
+      const downloadEvent = page.waitForEvent("download");
+      await page.click(button);
+      const download = await downloadEvent;
+      expect(download.suggestedFilename()).toBe(filename);
+      const bytes = await readFile(await download.path());
+      const source = button === "#dlBtn" ? bytes.toString("utf8") : await page.evaluate(
+        (data) => window.threeMdOpen.openBytes(new Uint8Array(data)).text, Array.from(bytes));
+      if (button === "#dlBtn") expect(source).toBe(original);
+      else {
+        // Binary decoding returns canonical text; compare parsed fields and plane bodies.
+        const decoded = await page.evaluate((text) => { window.threeMd.set(text); return window.threeMd.document; }, source);
+        expect(decoded).toEqual(originalDoc);
+        await page.evaluate((text) => window.threeMd.set(text), original);
+      }
+      await expect(page.locator("#documentMenu")).not.toHaveAttribute("open", "");
+    }
+    await showEditor(page);
+    await page.locator("#editor").focus();
+    const saved = page.waitForEvent("download");
+    await page.keyboard.press(process.platform === "darwin" ? "Meta+s" : "Control+s");
+    await saved;
+    await expect(page.locator("#editor")).toBeFocused();
+  });
+
+  test("a prose document offers Preview without replacing its source", async ({ page }) => {
+    await page.goto("/viewer.html");
+    await viewerReady(page);
+    const source = "---\n3md: 1.0\naxis: time\ntitle: Reading notes\n---\n@plane z=0\n# A useful note\nLong-form text is readable here.\n";
+    await page.evaluate((value) => window.threeMd.set(value), source);
+    await expect(page.locator("#cubesEmpty")).toBeVisible();
+    await expect(page.locator("#cubeTools")).toBeHidden();
+    await page.click("#cubePreview");
+    await expect(page.locator("#stage")).toHaveAttribute("data-show", "preview");
+    expect(await page.evaluate(() => window.threeMd.source)).toBe(source);
+    await page.locator("#previewTab").press("End");
+    await expect(page.locator("#cubesTab")).toBeFocused();
+    await page.click("#cubeSample");
+    await expect(page.locator("#documentTitle")).toHaveText("Small sculpture");
+    await expect(page.locator("#cubesEmpty")).toBeHidden();
+    await expect(page.locator("#cubeZoom")).toHaveText("100%");
+  });
+
+  test("slice navigation keeps the selected plane in a single scrolling row", async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto("/viewer.html");
+    await viewerReady(page);
+    const planes = Array.from({ length: 30 }, (_, i) => `@plane z=${i} label="Slice ${i}"\n\`\`\`\n#\n\`\`\``).join("\n");
+    await page.evaluate((source) => window.threeMd.set(source), `---\n3md: 1.0\naxis: layer\n---\n${planes}`);
+    await page.locator("#outline .ochip").first().press("End");
+    expect(await page.evaluate(() => document.getElementById("lab").currentIndex)).toBe(29);
+    const outline = await page.evaluate(() => {
+      const row = document.getElementById("outline"), selected = row.querySelector('[aria-current="true"]');
+      const bounds = row.getBoundingClientRect(), chip = selected.getBoundingClientRect();
+      return { left: chip.left, right: chip.right, rowLeft: bounds.left, rowRight: bounds.right,
+        tabStops: [...row.children].filter((button) => button.tabIndex === 0).length, height: bounds.height };
+    });
+    expect(outline.left).toBeGreaterThanOrEqual(outline.rowLeft);
+    expect(outline.right).toBeLessThanOrEqual(outline.rowRight);
+    expect(outline.tabStops).toBe(1);
+    expect(outline.height).toBeLessThan(60);
+    await page.locator("#outline .ochip").last().press("Home");
+    expect(await page.evaluate(() => document.getElementById("lab").currentIndex)).toBe(0);
+  });
+
+  test("a GitHub load shows busy state and recovers after a rate limit", async ({ page }) => {
+    let release;
+    const response = new Promise((resolve) => { release = resolve; });
+    await page.route("https://api.github.com/**", async (route) => {
+      await response;
+      await route.fulfill({ status: 429, contentType: "application/json", body: '{"message":"rate limit"}' });
+    });
+    await page.goto("/viewer.html");
+    await viewerReady(page);
+    await page.fill("#pointInput", "CorvidLabs/3md");
+    await page.click("#pointForm button");
+    await expect(page.locator("#pointForm")).toHaveAttribute("aria-busy", "true");
+    await expect(page.locator("#pointForm button")).toBeDisabled();
+    release();
+    await expect(page.locator("#status")).toContainText(/rate.limit/i);
+    await expect(page.locator("#pointForm")).toHaveAttribute("aria-busy", "false");
+    await expect(page.locator("#pointForm button")).toBeEnabled();
+    await expect(page.locator("#pointInput")).toBeEditable();
+  });
+
+  test("GPU unavailability explains how to keep reading in Preview", async ({ page }) => {
+    await page.addInitScript(() => {
+      const context = HTMLCanvasElement.prototype.getContext;
+      HTMLCanvasElement.prototype.getContext = function (type, ...args) {
+        return type === "webgl2" ? null : context.call(this, type, ...args);
+      };
+    });
+    await page.goto("/viewer.html");
+    await viewerReady(page);
+    await expect(page.locator("#cubeEmptyText")).toContainText("WebGL2");
+    await expect(page.locator("#cubeSample")).toBeHidden();
+    await page.click("#cubePreview");
+    await expect(page.locator("#stage")).toHaveAttribute("data-show", "preview");
+    expect(await page.evaluate(() => document.getElementById("lab").document.title)).toBe("Small sculpture");
+  });
+
 });
