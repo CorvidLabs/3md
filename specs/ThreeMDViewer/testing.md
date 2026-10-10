@@ -9,7 +9,7 @@ spec: ThreeMDViewer.spec.md
 | `web/gather.test.ts` | bun | Section planes, pack, kind 2 round-trip, line plane index, search rank. |
 | `web/github-source.test.ts` | bun | Repo, folder, file, and raw locators. Host and path routing. Issues URL rejected. |
 | `web/open-document.test.ts` | bun | Text, composition, kind 1, kind 2, LZFSE refusal, linked folder. |
-| `uitests/viewer.spec.mjs` | Playwright | Edit and Preview share one panel, narrow Files and document switch, kind 2, linked village, catalog search, section jump, composition. |
+| `uitests/viewer.spec.mjs` | Playwright | Edit, Preview, and Cubes share one panel; full cube face pixels from all sides; glyph fill and gold edge selection; nearest slice picking; no camera/selection geometry uploads; about 1400 cubes; no console errors; narrow layout; kind 2, linked village, search, sections, composition. |
 
 ## Requirement evidence
 
@@ -22,7 +22,9 @@ spec: ThreeMDViewer.spec.md
 
 ## Manual Testing
 
-- [ ] Open `viewer.html`. On a wide window, files stay on the left and Edit and Preview switch in the panel beside them. On a narrow window, Files and the document take turns.
+- [x] Run Sculpt locally, orbit Character orb in Cubes, and compare the same orb in the refreshed local viewer. Screenshots: `docs/evidence/viewer-sculpt-parity/`.
+- [x] Inspect one-cell and starter sculptures for filled top, front, and side faces, visible edges, and pane framing.
+- [x] Open `viewer.html`. On a wide window, files stay on the left and Edit, Preview, and Cubes switch in the panel beside them. On a narrow window, Files and the document take turns.
 
 ## Edge Cases & Boundary Conditions
 
@@ -32,5 +34,5 @@ spec: ThreeMDViewer.spec.md
 | Tree contains `node_modules` or a file over 1.5 MB | Those files are skipped. |
 | More than 400 text files, or more than 12,000 lines | The list stops at the cap and says so. |
 | Apple LZFSE bytes | The page refuses them and names `compressionUnavailable`. |
-| Desktop width | Files stay visible while Edit and Preview switch. Preview shows the live plane view. |
+| Desktop width | Files stay visible while Edit, Preview, and Cubes switch. Preview shows the live plane view. |
 | Width at or below 900px | Files and the document take turns. The document still switches Edit and Preview. |

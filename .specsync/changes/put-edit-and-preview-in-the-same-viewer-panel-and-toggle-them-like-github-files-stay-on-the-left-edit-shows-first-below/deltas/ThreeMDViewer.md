@@ -14,7 +14,7 @@ Acceptance Criteria:
 
 ### REQUIREMENT REQ-ThreeMDViewer-004
 
-The viewer page SHALL NOT offer a render-mode switch and SHALL NOT autoplay. Preview SHALL stay on one plane. Cubes SHALL draw a fenced character grid as lit cubes with WebGL2. Orbit and zoom SHALL move the camera. The element bundle SHALL stay a text renderer.
+The viewer page SHALL NOT offer a render-mode switch and SHALL NOT autoplay. Preview SHALL stay on one plane. Cubes SHALL draw complete, nearly cell-sized cubes with WebGL2, lit glyph-colored fill at 0.5 opacity and visible glyph-colored edges. The selected Z slice SHALL have gold edges at 0.8 opacity while retaining its glyph fill. The background SHALL be rgb(0.065, 0.085, 0.10). X SHALL be the column, Y the text row with row 0 toward the top, and Z the plane index. Orbit, zoom, and slice selection SHALL reuse the installed geometry. Each redraw SHALL use one instanced draw. The element bundle SHALL stay a text renderer.
 
 Acceptance Criteria:
 

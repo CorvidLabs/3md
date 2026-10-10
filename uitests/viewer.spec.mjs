@@ -57,6 +57,93 @@ test.describe("viewer & editor (viewer.html)", () => {
     expect(seen.lit).toBeGreaterThan(30);
   });
 
+  test("one cell has filled faces from every side, with gold edges and glyph fill", async ({ page }) => {
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await page.goto("/viewer.html");
+    await viewerReady(page);
+    await page.evaluate(() => window.threeMd.set("---\n3md: 1.0\naxis: space\n---\n@plane z=0\n```\n#\n```\n@plane z=1\n```\n.\n```\n"));
+    const views = await page.evaluate(() => {
+      const canvas = document.getElementById("cubeCanvas"), gl = canvas.__cubeGl;
+      function pixels() {
+        canvas.dispatchEvent(new Event("threemd-cubes"));
+        const bytes = new Uint8Array(canvas.width * canvas.height * 4);
+        gl.readPixels(0, 0, canvas.width, canvas.height, gl.RGBA, gl.UNSIGNED_BYTE, bytes);
+        let gold = 0, teal = 0, holes = 0;
+        let left = canvas.width, right = 0, top = canvas.height, bottom = 0;
+        for (let y = 0; y < canvas.height; y++) {
+          let first = -1, last = -1;
+          for (let x = 0; x < canvas.width; x++) {
+            const at = (y * canvas.width + x) * 4;
+            const r = bytes[at], g = bytes[at + 1], b = bytes[at + 2];
+            if (r > g * 1.12 && g > b * 1.2 && r > 70) gold++;
+            if (g > r * 1.5 && b > r * 1.4 && g > 55) teal++;
+            if (r + g + b > 100) {
+              if (first < 0) first = x;
+              last = x;
+              left = Math.min(left, x); right = Math.max(right, x);
+              top = Math.min(top, y); bottom = Math.max(bottom, y);
+            }
+          }
+          // An open face leaves background inside the silhouette, even with bright edges.
+          for (let x = first + 2; first >= 0 && x < last - 2; x++) {
+            const at = (y * canvas.width + x) * 4;
+            if (bytes[at] + bytes[at + 1] + bytes[at + 2] < 85) holes++;
+          }
+        }
+        return { gold, teal, holes, left, right, top, bottom, width: canvas.width, height: canvas.height, bytes };
+      }
+      const selected = pixels();
+      document.getElementById("lab").goTo(1);
+      const unselected = pixels();
+      let changedFill = 0;
+      for (let at = 0; at < selected.bytes.length; at += 4) {
+        // Compare the teal face interiors, excluding antialiased edges.
+        if (selected.bytes[at + 1] > selected.bytes[at] * 1.5 && selected.bytes[at + 2] > selected.bytes[at] * 1.4) {
+          if (Math.abs(selected.bytes[at] - unselected.bytes[at]) > 2 ||
+              Math.abs(selected.bytes[at + 1] - unselected.bytes[at + 1]) > 2) changedFill++;
+        }
+      }
+      document.getElementById("lab").goTo(0);
+      const sides = [];
+      let yaw = 0.6, pitch = 0.35;
+      for (const [nextYaw, nextPitch] of [[0.6, 0.35], [2.2, 0.35], [3.8, 0.35], [5.3, 0.35], [0.6, 1.2], [0.6, -1.2]]) {
+        canvas.dispatchEvent(new PointerEvent("pointerdown", { clientX: 0, clientY: 0, pointerId: 1 }));
+        canvas.dispatchEvent(new PointerEvent("pointermove", { clientX: (nextYaw - yaw) / 0.01, clientY: (nextPitch - pitch) / 0.01, pointerId: 1 }));
+        canvas.dispatchEvent(new PointerEvent("pointercancel", { pointerId: 1 }));
+        const { bytes, ...seen } = pixels();
+        sides.push(seen);
+        yaw = nextYaw; pitch = nextPitch;
+      }
+      return { selected: { gold: selected.gold, teal: selected.teal }, unselected: { gold: unselected.gold }, changedFill, sides, lost: gl.isContextLost() };
+    });
+    expect(views.lost).toBe(false);
+    expect(views.selected.gold).toBeGreaterThan(50);
+    expect(views.selected.teal).toBeGreaterThan(1000);
+    expect(views.unselected.gold).toBe(0);
+    expect(views.changedFill).toBeLessThan(views.selected.teal * 0.03); // Allow only antialiased edge pixels.
+    for (const side of views.sides) {
+      expect(side.teal).toBeGreaterThan(1000);
+      expect(side.holes).toBeLessThan(10);
+      expect(side.left).toBeGreaterThan(0);
+      expect(side.right).toBeLessThan(side.width - 1);
+      expect(side.top).toBeGreaterThan(0);
+      expect(side.bottom).toBeLessThan(side.height - 1);
+    }
+  });
+
+  test("clicking a visible cube picks its Z slice and blank stage does not", async ({ page }) => {
+    await page.setViewportSize({ width: 1440, height: 900 });
+    await page.goto("/viewer.html");
+    await viewerReady(page);
+    await page.evaluate(() => window.threeMd.set("---\n3md: 1.0\naxis: space\n---\n@plane z=0\n```\n...\n...\n...\n```\n@plane z=1\n```\n...\n.#.\n...\n```\n@plane z=2\n```\n...\n...\n...\n```\n"));
+    const box = await page.locator("#cubeCanvas").boundingBox();
+    await page.mouse.click(box.x + box.width / 2, box.y + box.height / 2);
+    expect(await page.evaluate(() => document.getElementById("lab").currentIndex)).toBe(1);
+    await page.click("#outline .ochip:first-child");
+    await page.mouse.click(box.x + 5, box.y + 5);
+    expect(await page.evaluate(() => document.getElementById("lab").currentIndex)).toBe(0);
+  });
+
   test("renders the starter document with no console errors", async ({ page }) => {
     const errors = [];
     page.on("console", (m) => { if (m.type() === "error") errors.push(m.text()); });
@@ -450,14 +537,26 @@ test.describe("viewer & editor (viewer.html)", () => {
     await page.waitForFunction(() => document.getElementById("cubeCanvas").dataset.renderer === "webgl2");
     const timed = await page.evaluate(() => {
       const canvas = document.getElementById("cubeCanvas");
+      const gl = canvas.__cubeGl;
+      let uploads = 0, draws = 0;
+      const upload = gl.bufferSubData.bind(gl), draw = gl.drawArraysInstanced.bind(gl);
+      gl.bufferSubData = (...args) => { uploads++; return upload(...args); };
+      gl.drawArraysInstanced = (...args) => { draws++; return draw(...args); };
       const start = performance.now();
       for (let i = 0; i < 20; i++) {
         canvas.dispatchEvent(new PointerEvent("pointerdown", { clientX: 400, clientY: 300, pointerId: 1, bubbles: true }));
         canvas.dispatchEvent(new PointerEvent("pointermove", { clientX: 400 + i * 6, clientY: 300 + i, pointerId: 1, bubbles: true }));
         canvas.dispatchEvent(new PointerEvent("pointerup", { clientX: 460, clientY: 320, pointerId: 1, bubbles: true }));
       }
+      canvas.dispatchEvent(new WheelEvent("wheel", { deltaY: -20, cancelable: true }));
+      document.getElementById("lab").goTo(2);
+      const ms = performance.now() - start;
+      gl.bufferSubData = upload;
+      gl.drawArraysInstanced = draw;
       return {
-        ms: performance.now() - start,
+        uploads, draws,
+        lost: gl.isContextLost(),
+        ms,
         count: Number(canvas.dataset.cubes),
         renderer: canvas.dataset.renderer,
       };
@@ -465,6 +564,9 @@ test.describe("viewer & editor (viewer.html)", () => {
     expect(timed.renderer).toBe("webgl2");
     expect(timed.count).toBeGreaterThan(1400);
     expect(timed.ms).toBeLessThan(800);
+    expect(timed.uploads).toBe(0);
+    expect(timed.draws).toBe(22); // One draw per pointer update, zoom, or selection.
+    expect(timed.lost).toBe(false);
   });
 
   test("narrow layout switches Files and the document, and Edit and Preview still switch", async ({ page }) => {

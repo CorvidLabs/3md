@@ -15,3 +15,7 @@ artifact: testing
 - `specsync check --spec ThreeMDViewer`
 - `hi check` at the repository root
 - Playwright `uitests/viewer.spec.mjs` passed 60 tests on Chromium and WebKit after the outline chip opens Preview first. The desktop and narrow layout tests passed again after the bar metadata hide.
+
+The Sculpt parity pass runs `./node_modules/.bin/playwright test viewer.spec.mjs` in `uitests` on Chromium and WebKit. Added GPU pixel evidence for a full single cell from six viewpoints and gold edges with unchanged glyph fill; nearest-Z picking; 1600 cells with zero camera/selection geometry uploads and one instanced draw per redraw. Live screenshots for Character orb and the starter geometry are in `docs/evidence/viewer-sculpt-parity/`. This is agent verification and leaves definition approval open.
+
+Final parity browser verification: 70 passed on Chromium and WebKit. Strict ThreeMDViewer SpecSync check: 1 passed, zero warnings or failures. `hi check`: 85 criteria, no problems. Element bundle: current, 48840 bytes, no storage code.

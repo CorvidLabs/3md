@@ -1,6 +1,6 @@
 ---
 module: ThreeMDViewer
-version: 6
+version: 7
 status: active
 files:
   - web/viewer.html
@@ -23,7 +23,7 @@ depends_on:
 
 ## Purpose
 
-ThreeMDViewer is the hosted and local viewer page. Files stay on the left. Edit, the plane preview, and Cubes share the panel beside them. One is visible at a time, and Cubes is the default, inside the window. The opening document is a small sculpture. Below 900px, Files and the document take turns. The page does not offer a render-mode switch and does not autoplay. Preview stays on one plane. Cubes draws a fenced character grid as lit GPU cubes. The page opens a public GitHub repo, folder, or file, or a file or folder from this computer. Search reads every opened line and opens that plane. Markdown headings become planes. Opened files pack into one text document, and that document downloads as uncompressed kind 2.
+ThreeMDViewer is the hosted and local viewer page. Files stay on the left. Edit, the plane preview, and Cubes share the panel beside them. One is visible at a time, and Cubes is the default, inside the window. The opening document is a small sculpture. Below 900px, Files and the document take turns. The page does not offer a render-mode switch and does not autoplay. Preview stays on one plane. Cubes draws a fenced character grid with Sculpt-style lit, translucent glyph fill and visible edges. Gold edges mark the selected Z slice without repainting its fill. The page opens a public GitHub repo, folder, or file, or a file or folder from this computer. Search reads every opened line and opens that plane. Markdown headings become planes. Opened files pack into one text document, and that document downloads as uncompressed kind 2.
 
 The `<three-md>` element stays a text renderer. Decode, composition, linked folders, GitHub fetch, search, sections, pack, and kind 2 download belong to this page. The ThreeMD library stays free of filesystem and network I/O. Human intent for this page is VIEWER-6 in `hi/tools.md`.
 
@@ -68,12 +68,14 @@ The `<three-md>` element stays a text renderer. Decode, composition, linked fold
 
 ## Invariants
 
-1. Files stay on the left. Edit, the plane preview, and Cubes share one panel, one is visible at a time, and Cubes is the default. The opening document is a small sculpture, and its cubes are inside the window. Below 900px, Files and the document take turns. The page does not switch render modes and does not autoplay. Choosing Preview renders the live plane view and holds it on one plane. Choosing Cubes draws a fenced character grid as lit cubes on a dark GPU stage. Orbit and zoom move the camera. The status bar shows the caret, the axis, and the cube count. The element stays a text renderer.
+1. Files stay on the left. Edit, the plane preview, and Cubes share one panel, one is visible at a time, and Cubes is the default. The opening document is a small sculpture, and its cubes are inside the window. Below 900px, Files and the document take turns. The page does not switch render modes and does not autoplay. Choosing Preview renders the live plane view and holds it on one plane. Choosing Cubes draws a fenced character grid as lit cubes on a dark GPU stage. Web fill uses 0.5 opacity for visible faces under browser blending, compared with Sculpt’s native 0.35; glyph edges use 0.4, and selected edges use gold rgb(1, 0.79, 0.44) at 0.8. The background is rgb(0.065, 0.085, 0.10). All six cube faces are wound outward, back faces are culled, and faces shared with occupied neighbors are suppressed as in Sculpt. The cell scale is 0.98. X is the column, Y is the row with row 0 toward the top, and Z is the plane index. Orbit, zoom, and selection update camera or selection uniforms with one instanced draw, without scanning the document or uploading geometry. Click picking intersects full cube bounds and chooses the nearest hit. The camera follows Sculpt’s distance and scale with a fit margin that keeps complete cubes inside the pane. The status bar shows the caret, the axis, and the cube count. The element stays a text renderer.
 2. A public GitHub locator is accepted only when the host is `github.com`, `www.github.com`, or `raw.githubusercontent.com`, or when the input is an `owner/repo` name. A host string elsewhere in the URL is not a match.
 3. A public load skips `node_modules`, keeps at most 400 files, and skips a file larger than 1.5 MB. The line index keeps at most 12,000 rows.
 4. Search opens the plane for the chosen line.
 5. Markdown headings become planes. Opened files pack into one text document. Kind 2 download writes uncompressed kind 2.
 6. Apple LZFSE is refused. The element stays a text renderer. The library stays free of filesystem and network I/O.
+
+The cube input keeps at most 12 distinct non-space characters, at most 64 columns and 64 rows per plane, and at most 4000 occupied cells. Space, dot, and tab are empty. Cube painting and erasing into source, 256 cubed volumes, sparse worlds, OBJ export, and changes to Sculpt are outside this pass. The page does not rebuild the element or open-document bundles.
 
 ## Behavioral Examples
 
@@ -137,3 +139,4 @@ The `<three-md>` element stays a text renderer. Decode, composition, linked fold
 | 2026-10-10 | ThreeMDViewer change | Open on the cube stage. The starter document is a small sculpture, and those cubes sit inside the window. |
 | 2026-10-10 | ThreeMDViewer change | Keep one WebGL2 context. The bitmap size is set before the context is created so Safari does not drop it. |
 | 2026-10-10 | ThreeMDViewer change | Draw every cube face. Each cell is a solid cube. |
+| 2026-10-09 | agent:codex | Match Sculpt fill, glyph edges, gold selected-slice edges, background, document axes, and camera framing; retain one instanced draw and geometry reuse. |
