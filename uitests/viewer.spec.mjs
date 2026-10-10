@@ -1284,14 +1284,28 @@ async function openSlice(page, source) {
   await page.locator("#sliceTab").click();
   await expect(page.locator("#sliceGrid")).toBeVisible();
 }
+async function sliceCellPoints(page, points) {
+  const grid = page.locator("#sliceGrid");
+  await expect(grid).toBeVisible();
+  await expect(grid).toHaveAttribute("aria-colcount", /^[1-9]\d*$/);
+  await expect(grid).toHaveAttribute("aria-rowcount", /^[1-9]\d*$/);
+  // Tab/viewport changes queue drawing, then layout may queue a second frame.
+  // Measure the rendered scroll surface after those frames, not the old bitmap.
+  await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+  return grid.evaluate((canvas, points) => {
+    const surface = document.getElementById("sliceSurface").getBoundingClientRect();
+    const width = Number(canvas.getAttribute("aria-colcount"));
+    const height = Number(canvas.getAttribute("aria-rowcount"));
+    return points.map(([x, y]) => ({ clientX: surface.x + (x + 0.5) * surface.width / width,
+      clientY: surface.y + (y + 0.5) * surface.height / height }));
+  }, points);
+}
 async function sliceStroke(page, points, end = "pointerup") {
-  const rect = await page.locator("#sliceGrid").boundingBox();
-  const dimensions = await page.locator("#sliceDimensions").textContent();
-  const [w,h] = dimensions.match(/\d+/g).map(Number);
-  const at = ([x,y]) => ({pointerId:77,pointerType:"mouse",button:0,isPrimary:true,clientX:rect.x+(x+.5)*rect.width/w,clientY:rect.y+(y+.5)*rect.height/h});
-  await page.dispatchEvent("#sliceGrid","pointerdown",at(points[0]));
-  for (const point of points.slice(1)) await page.dispatchEvent("#sliceGrid","pointermove",at(point));
-  await page.dispatchEvent("#sliceGrid",end,at(points.at(-1)));
+  const locations = await sliceCellPoints(page, points);
+  const at = point => ({pointerId:77,pointerType:"mouse",button:0,isPrimary:true,...point});
+  await page.dispatchEvent("#sliceGrid","pointerdown",at(locations[0]));
+  for (const point of locations.slice(1)) await page.dispatchEvent("#sliceGrid","pointermove",at(point));
+  await page.dispatchEvent("#sliceGrid",end,at(locations.at(-1)));
 }
 
 test.describe("Sculpt Slice parity", () => {
@@ -1412,10 +1426,10 @@ test("Slice navigation finishes a touch stroke and ignores its late pointer move
   await page.goto("/viewer.html");await viewerReady(page);
   const source=sliceSource([["...","..."]]);await openCollection(page,{"one.3md":source,"two.3md":source});
   await openedFile(page,"one.3md").click();await page.locator("#sliceTab").click();
-  const rect=await page.locator("#sliceGrid").boundingBox();
-  await page.dispatchEvent("#sliceGrid","pointerdown",{pointerId:83,pointerType:"touch",isPrimary:true,button:0,clientX:rect.x+rect.width/6,clientY:rect.y+rect.height/4});
+  const [first, late] = await sliceCellPoints(page, [[0,0], [1,0]]);
+  await page.dispatchEvent("#sliceGrid","pointerdown",{pointerId:83,pointerType:"touch",isPrimary:true,button:0,...first});
   await openedFile(page,"two.3md").click();
-  await page.dispatchEvent("#sliceGrid","pointermove",{pointerId:83,pointerType:"touch",clientX:rect.x+rect.width/2,clientY:rect.y+rect.height/4});
+  await page.dispatchEvent("#sliceGrid","pointermove",{pointerId:83,pointerType:"touch",...late});
   await page.dispatchEvent("#sliceGrid","pointerup",{pointerId:83,pointerType:"touch"});
   expect(await page.evaluate(()=>window.threeMd.source)).toBe(source);
   await openedFile(page,"one.3md").click();expect(await page.evaluate(()=>window.threeMd.source)).toBe(source.replace('...\n...','#..\n...'));

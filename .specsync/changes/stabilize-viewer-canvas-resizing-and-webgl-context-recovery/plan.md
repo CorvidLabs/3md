@@ -11,3 +11,5 @@ artifact: plan
 4. Verify regressions and the repository gate, publish a feature PR, then import its tested commit in a site follow-up PR.
 
 5. Repair the startup failure/event gap and partial-resource initialization under the existing loss-suspension contract; verify actual Safari and import the tested follow-up in the site.
+
+6. Reproduce the main Linux Slice gesture failures, synchronize helpers with deferred drawing and the virtual grid, verify repeated and full Linux/macOS suites, and publish a feature CI repair without another site import.

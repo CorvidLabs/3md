@@ -12,3 +12,5 @@ artifact: tasks
 - [x] Add and verify every text catalog example, local binary/composition/folder inputs and desktop/phone size-boundary regressions requested by Leif.
 
 - [x] Verify the Safari startup/event gap, safe resource failure and actual native restoration.
+
+- [x] Reproduce Linux main UI Slice timing failures and synchronize synthetic gesture coordinates with rendered grid metadata and the full scroll surface.

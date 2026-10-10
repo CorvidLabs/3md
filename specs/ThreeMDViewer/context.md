@@ -76,3 +76,7 @@ The expanded viewer regression set covers all catalog documents and supported lo
 ## Safari startup follow-up
 
 Leif reported 256 context-loss messages after PR95 and the site import merged. Actual Safari 26.5.2 reproduced the loss on the public site; a fresh copy subsequently rendered, so the hardware/origin cause is not proven. Initialization previously returned on a null or already-lost context without latching it, allowing hundreds of getContext attempts before a loss event. Startup and resource failures now stop further allocations/draws, and restoration clears the cached error and rebuilds once. Shader, color, camera, picking, format and editing behavior remain unchanged. Native Safari evidence complements Playwright WebKit; a green WebKit run alone did not establish Safari stability.
+
+## Main UI CI follow-up
+
+After PR96 merged, Linux main UI run 38090326009 exposed Slice gesture tests measuring before the deferred redraw completed. The helpers used the clipped bitmap bounds as the full grid and separately read dimensions that could still be empty or stale. The helpers now require rendered grid dimensions, wait through queued drawing/layout frames and target cells using the full virtual scroll surface. Exact source, CRLF, download and Undo assertions remain unchanged. The runtime is byte-identical to the merged Safari startup repair; this verification follow-up requires no site import.
