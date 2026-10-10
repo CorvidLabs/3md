@@ -231,7 +231,7 @@ Names below are the public declarations in the source files. This table does not
 | `panX` | Session target offset along camera right, in cells; defaults to zero. |
 | `panY` | Session target offset along camera up, in cells; defaults to zero. |
 | `basis` | Continuous camera right, up and back vectors from normalized full-turn inputs. |
-| `projectionScale` | Native 0.68 viewport scale with the same complete-cube fit margin as the browser, for supplied dimensions and viewport. |
+| `projectionScale` | Native 0.68 viewport scale for supplied dimensions and viewport; `fitsVolume` opts into the same complete-cube fit margin as the browser. |
 | `fitsVolume` | Session framing flag. Interactive Sculpt cameras opt into the same complete-cube margin as the browser; default utility cameras keep the established 0.68 scale for deterministic example previews. The flag follows the session into CPU/ASCII/GPU rendering and exports and is never stored in a sculpture. |
 | `normalized` | A sanitized camera value with periodic angles, bounded zoom and finite bounded pan. |
 | `orbit` | `orbit(horizontal:vertical:)` applies 0.008 radians per local point without a vertical stop. Invalid inputs leave the camera unchanged. |

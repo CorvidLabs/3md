@@ -9,9 +9,9 @@ Interactive native cameras opt into complete-volume framing with `fitsVolume`. D
 ## Current verification
 
 - macOS Chromium/WebKit viewer: 106 passed.
-- Current Linux complete UI suite: 197 passed and one WebKit heavy-use check passed on retry; eight existing skips. Current Linux projection and phone checks passed independently (four tests). A prior run loaded the earlier fixture and found a phone spacing issue; both were corrected and rechecked.
+- Current Linux complete UI suite: 197 passed and one WebKit heavy-use check passed on retry; eight existing skips. The single heavy-use test also passed alone after the concurrent native workload ended. Current Linux projection and phone checks passed independently (four tests). A prior run loaded the earlier fixture and found a phone spacing issue; both were corrected and rechecked.
 - Native camera, live projection/picking, pointer input and math example regression selection: 23 tests in four suites passed.
-- Full native suite using the existing CI selection (`--no-parallel --skip deterministicPortableInterchangeFixtures`): pending. The prior run found five preview differences, now resolved by preserving default utility framing. An earlier unconstrained parallel run also showed AppKit focus interference. No new skips were introduced.
+- Full native suite using the existing CI selection (`--no-parallel --skip deterministicPortableInterchangeFixtures`): 635 tests in 54 suites passed. The prior run found five preview differences, resolved by preserving default utility framing. An earlier unconstrained parallel run also showed AppKit focus interference. No new skips were introduced.
 - Root strict SpecSync: four specs passed with zero warnings and 55/55 source files covered. Native strict SpecSync: five specs passed with zero warnings and 94/94 files covered.
 - Root Hi: 85 criteria passed. Native Hi: 48 criteria passed.
 - Current pinned Trust and lifecycle closure: pending. Scope approval is not human diff review, independent review or signed provenance.
