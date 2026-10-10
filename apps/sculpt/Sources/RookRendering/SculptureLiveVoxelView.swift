@@ -354,19 +354,21 @@ internal struct LiveVoxelCamera {
     init(dimensions: SIMD3<Int>, camera: SculptureCamera, size: CGSize) {
         let extent = Double(max(dimensions.x, dimensions.y, dimensions.z))
         let distance = extent * 3
-        let yaw = camera.yaw.isFinite ? camera.yaw.truncatingRemainder(dividingBy: 2 * .pi) : 0
-        let pitch = camera.pitch.isFinite ? max(-1.4, min(1.4, camera.pitch)) : 0
-        let zoom = camera.zoom.isFinite ? max(0.5, min(2, camera.zoom)) : 1
+        let camera = camera.normalized
+        let yaw = camera.yaw, pitch = camera.pitch
         let width = max(1, Double(size.width)), height = max(1, Double(size.height))
-        let scale = min(width, height) * 0.68 / extent * zoom
+        let scale = camera.projectionScale(dimensions: dimensions, width: width, height: height)
         let cy = cos(yaw), sy = sin(yaw), cp = cos(pitch), sp = sin(pitch)
         projectedGridSpacing = scale * min(sqrt(cy * cy + sy * sy * sp * sp), abs(cp))
+        let eyeX = -sy * cp * distance + cy * camera.panX + sy * sp * camera.panY
+        let eyeY = sp * distance + cp * camera.panY
+        let eyeZ = cy * cp * distance + sy * camera.panX - cy * sp * camera.panY
         cameraToWorld = simd_float4x4(
             columns: (
                 SIMD4(Float(cy), 0, Float(sy), 0),
                 SIMD4(Float(sy * sp), Float(cp), Float(-cy * sp), 0),
                 SIMD4(Float(-sy * cp), Float(sp), Float(cy * cp), 0),
-                SIMD4(Float(-sy * cp * distance), Float(sp * distance), Float(cy * cp * distance), 1)
+                SIMD4(Float(eyeX), Float(eyeY), Float(eyeZ), 1)
             )
         )
         near = max(0.01, extent * 0.01)

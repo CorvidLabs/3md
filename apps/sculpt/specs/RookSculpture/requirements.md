@@ -178,3 +178,11 @@ Acceptance Criteria
 - The RookSculpture spec files list includes `Sources/CLzfse/shim.h`.
 - `specsync check` from `apps/sculpt` reports 94/94 implementation files.
 
+
+### REQ-RookSculpture-012
+
+The session camera SHALL allow complete yaw and pitch turns and finite screen-space pan, with zoom bounded to 0.5...2. ASCII and cube cameras SHALL use the same normalized inputs. Nonfinite angles, zoom and pan SHALL become 0, 1 and 0 respectively; finite pan SHALL be bounded to one million cells in either direction. Drag orbit SHALL use 0.008 radians per point, pan SHALL use the inverse native 0.68 viewport scale, and invalid gesture inputs SHALL leave the camera unchanged. Camera state SHALL NOT be persisted in a sculpture.
+
+Acceptance Criteria:
+
+- Shared native/browser cases cover both poles, upside-down and translated views. Full turns restore the basis, inverse pan restores the origin, zoom clamps at both limits, and invalid inputs cannot corrupt the camera.

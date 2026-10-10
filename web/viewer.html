@@ -193,6 +193,7 @@
   .wrap:not([data-view="edit"]) #ideCursor{display:none}
   .cubes{position:relative;display:flex;flex-direction:column;background:#10161a;overflow:hidden}
   .cubes canvas{width:100%;height:0;flex:1;min-height:0;display:block;touch-action:none;cursor:grab}
+  .cubes canvas[data-tool="pan"]{cursor:move}
   .cubes canvas:active{cursor:grabbing}
   .cubes canvas:focus-visible{outline:2px solid var(--sheen);outline-offset:-3px}
   .cubesempty{position:absolute;inset:0;display:grid;place-items:center;align-content:center;gap:12px;padding:24px;text-align:center;color:#d7e4ea}
@@ -208,6 +209,8 @@
   .camera-controls .btn{border:0;background:transparent;color:inherit;min-width:34px;min-height:32px;padding:6px 10px;letter-spacing:0}
   .camera-controls .btn:hover{background:#2b3a42;color:#fff}
   .camera-controls .btn:disabled{opacity:.4;cursor:default}
+  .camera-controls .btn[aria-pressed="true"]{background:#35434b;color:#fff}
+  .camera-tools .btn{min-width:52px}
   .camera-controls output{min-width:44px;text-align:center;font:11px var(--code-font);color:#aebdc5}
   .cubesempty .empty-actions{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
   .cubesempty .btn{background:#1b2329;border-color:#35434b;color:#d7e4ea}
@@ -288,15 +291,18 @@
     .findwrap{grid-column:2 / 4;min-width:0}
     .toolbar>.btn{padding:9px 8px}
     .document-menu{grid-column:3;grid-row:2}
-    .toolbar .primary{grid-column:1 / 4;padding:9px}
+    .toolbar .primary{grid-column:1 / 3;grid-row:2;padding:9px}
     .document-menu summary{justify-content:center;padding:9px}
     .fileswitch{margin-bottom:8px}
     .pane .bar{padding:8px;gap:7px}
     .document-title{order:3;flex-basis:100%;font-size:11px}
     .pstab{padding:9px 13px}
     .editmeta #sourceName,.editmeta #counts{display:none}
-    .cube-tools{padding:7px 9px;gap:8px}
+    .cube-tools{padding:7px 9px;gap:6px;flex-wrap:wrap}
+    .cubehint{flex-basis:100%}
+    #cameraControls{margin-left:auto}
     .camera-controls .btn{min-width:40px;min-height:40px;padding:6px 8px}
+    .camera-tools .btn{min-width:0;padding:6px 7px;font-size:11px}
     .camera-controls output{min-width:40px}
     .cubehint{font-size:10px}
     .cubehint .mouse-hint{display:none}
@@ -305,7 +311,7 @@
     .hint{line-height:1.7;font-size:10px}
     .foot{font-size:10px}
   }
-  @media(max-width:380px){.wrap{padding:8px}.topbar{padding-bottom:8px}.headerlinks a{display:none}.pstab{padding:9px 10px}}
+  @media(max-width:380px){.cube-tools{padding:4px 9px;gap:4px}.wrap{padding:6px}.topbar{padding-bottom:4px}.headerlinks a{display:none}.pstab{padding:9px 10px}}
 
 
   .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
@@ -409,7 +415,7 @@
         <div class="viewer" id="previewPane" role="tabpanel" aria-labelledby="previewTab"><three-md id="lab" mode="single" role="group" aria-label="Live 3md preview" aria-describedby="planeLive"></three-md></div>
         <div id="planeLive" class="sr-only" aria-live="polite"></div>
         <div class="cubes" id="cubesPane" role="tabpanel" aria-labelledby="cubesTab">
-          <canvas id="cubeCanvas" width="800" height="560" tabindex="0" aria-label="Sculpt-style cubes" aria-describedby="cameraHelp"></canvas>
+          <canvas id="cubeCanvas" width="800" height="560" data-tool="orbit" tabindex="0" aria-label="Sculpt-style cubes" aria-describedby="cameraHelp"></canvas>
           <div class="cubesempty" id="cubesEmpty">
             <p id="cubeEmptyText">This document has no cube grid. Read it in Preview, or open a sculpture to explore in 3D.</p>
             <div class="empty-actions">
@@ -418,8 +424,12 @@
             </div>
           </div>
           <div class="cube-tools" id="cubeTools">
-            <div class="cubehint"><span class="mouse-hint">Drag to orbit · scroll to zoom · click a cube to select a slice</span><span class="touch-hint">Drag to orbit · tap a cube to select a slice</span></div>
-            <p class="sr-only" id="cameraHelp">Use arrow keys to orbit, plus or minus to zoom, and Home to fit. Select a slice from the plane outline below.</p>
+            <div class="cubehint"><span class="mouse-hint">Drag to orbit · Shift or right-drag to pan · scroll to zoom</span><span class="touch-hint">Drag to orbit · 2 fingers pan / zoom</span></div>
+            <p class="sr-only" id="cameraHelp">Choose Orbit or Pan for dragging. Shift, middle-button, or right-button dragging pans. Two fingers pan and pinch to zoom. Arrow keys orbit, Shift-arrows pan, plus or minus zoom, and Home fits. Click or tap a cube in Orbit to select its slice.</p>
+            <div class="camera-controls camera-tools" role="group" aria-label="Camera drag tool">
+              <button class="btn" id="cubeOrbit" type="button" aria-pressed="true" title="Drag to rotate freely">Orbit</button>
+              <button class="btn" id="cubePan" type="button" aria-pressed="false" title="Drag to move the sculpture (Shift-drag)">Pan</button>
+            </div>
             <div class="camera-controls" id="cameraControls" role="group" aria-label="Cube camera">
               <button class="btn" id="cubeFit" type="button" title="Reset the camera and fit the sculpture (Home)">Fit</button>
               <button class="btn" id="cubeZoomOut" type="button" aria-label="Zoom out" title="Zoom out (−)">−</button>
@@ -1666,7 +1676,7 @@ title: Small sculpture
       "X": [0.94, 0.54, 0.58], ":": [0.52, 0.67, 0.48], "=": [0.87, 0.76, 0.55],
       "-": [0.49, 0.83, 0.89],
     };
-    const cubeView = { yaw: 0.6, pitch: 0.35, zoom: 1 };
+    const cubeView = { yaw: 0.6, pitch: 0.35, zoom: 1, panX: 0, panY: 0 };
     const cubeScene = { doc: undefined, volume: null };
     function currentCubeVolume(doc) {
       if (cubeScene.doc !== doc) {
@@ -1972,11 +1982,16 @@ title: Small sculpture
         }
       }
       tanHalf = Math.max(tanHalf, fitHalf * 1.12 / cubeView.zoom);
-      const eye = [sy * cp * dist, sp * dist, cy * cp * dist];
-      const view = lookAt(eye, [0, 0, 0], [0, 1, 0]);
+      // This camera basis stays continuous through the poles and upside-down views.
+      const up = [-sy * sp, cp, -cy * sp];
+      const target = [cy * cubeView.panX + up[0] * cubeView.panY,
+        up[1] * cubeView.panY, -sy * cubeView.panX + up[2] * cubeView.panY];
+      const eye = [target[0] + sy * cp * dist, target[1] + sp * dist, target[2] + cy * cp * dist];
+      const view = lookAt(eye, target, up);
       const proj = perspective(2 * Math.atan(tanHalf), width / Math.max(height, 1), extent * 0.01, dist + extent * 2);
       cubePick.eye = eye;
       cubePick.tanHalf = tanHalf;
+      cubePick.worldPerPixel = 2 * dist * tanHalf / Math.max(height, 1);
       return mul4(proj, view);
     }
     function showCubeUnavailable() {
@@ -1989,9 +2004,19 @@ title: Small sculpture
       const canvas = document.getElementById("cubeCanvas");
       const empty = document.getElementById("cubesEmpty");
       if (!canvas) return;
+      cubeView.yaw = Number.isFinite(cubeView.yaw) ? cubeView.yaw % (2 * Math.PI) : 0;
+      cubeView.pitch = Number.isFinite(cubeView.pitch) ? cubeView.pitch % (2 * Math.PI) : 0;
+      cubeView.zoom = Number.isFinite(cubeView.zoom) ? Math.max(0.5, Math.min(2, cubeView.zoom)) : 1;
+      for (const key of ["panX", "panY"]) {
+        cubeView[key] = Number.isFinite(cubeView[key]) ? Math.max(-1000000, Math.min(1000000, cubeView[key])) : 0;
+      }
       const doc = lab.document;
       const volume = currentCubeVolume(doc);
       canvas.dataset.cubes = String(volume.cells.length);
+      canvas.dataset.yaw = String(cubeView.yaw);
+      canvas.dataset.pitch = String(cubeView.pitch);
+      canvas.dataset.panX = String(cubeView.panX);
+      canvas.dataset.panY = String(cubeView.panY);
       if (empty) empty.hidden = volume.cells.length > 0;
       document.getElementById("cubeEmptyText").textContent = "This document has no cube grid. Read it in Preview, or open a sculpture to explore in 3D.";
       document.getElementById("cubeSample").hidden = false;
@@ -1999,8 +2024,8 @@ title: Small sculpture
       document.getElementById("cameraControls").hidden = volume.cells.length === 0;
       document.getElementById("cubePreview").hidden = !doc;
       document.getElementById("cubeZoom").textContent = Math.round(cubeView.zoom * 100) + "%";
-      document.getElementById("cubeZoomOut").disabled = cubeView.zoom <= 0.45;
-      document.getElementById("cubeZoomIn").disabled = cubeView.zoom >= 3.2;
+      document.getElementById("cubeZoomOut").disabled = cubeView.zoom <= 0.5;
+      document.getElementById("cubeZoomIn").disabled = cubeView.zoom >= 2;
       const width = canvas.clientWidth;
       const height = canvas.clientHeight;
       if (width < 2 || height < 2) return;
@@ -2084,15 +2109,32 @@ title: Small sculpture
     });
     const cubeCanvas = document.getElementById("cubeCanvas");
     function zoomCubes(factor) {
-      cubeView.zoom = Math.max(0.45, Math.min(3.2, cubeView.zoom * factor));
+      cubeView.zoom = Math.max(0.5, Math.min(2, cubeView.zoom * factor));
       drawCubes();
     }
     function fitCubes() {
       cubeView.yaw = 0.6;
       cubeView.pitch = 0.35;
       cubeView.zoom = 1;
+      cubeView.panX = 0;
+      cubeView.panY = 0;
       drawCubes();
     }
+    function panCubes(dx, dy) {
+      const scale = cubePick.worldPerPixel || 0;
+      cubeView.panX -= dx * scale;
+      cubeView.panY += dy * scale;
+      drawCubes();
+    }
+    let cubeTool = "orbit";
+    function chooseCubeTool(tool) {
+      cubeTool = tool;
+      cubeCanvas.dataset.tool = tool;
+      document.getElementById("cubeOrbit").setAttribute("aria-pressed", String(tool === "orbit"));
+      document.getElementById("cubePan").setAttribute("aria-pressed", String(tool === "pan"));
+    }
+    document.getElementById("cubeOrbit").addEventListener("click", () => chooseCubeTool("orbit"));
+    document.getElementById("cubePan").addEventListener("click", () => chooseCubeTool("pan"));
     document.getElementById("cubeFit").addEventListener("click", fitCubes);
     document.getElementById("cubeZoomOut").addEventListener("click", () => zoomCubes(1 / 1.15));
     document.getElementById("cubeZoomIn").addEventListener("click", () => zoomCubes(1.15));
@@ -2101,10 +2143,14 @@ title: Small sculpture
       if (event.key === "Home") fitCubes();
       else if (["+", "="].includes(event.key)) zoomCubes(1.15);
       else if (["-", "_"].includes(event.key)) zoomCubes(1 / 1.15);
+      else if (event.shiftKey && ["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"].includes(event.key)) {
+        panCubes(event.key === "ArrowLeft" ? -24 : event.key === "ArrowRight" ? 24 : 0,
+          event.key === "ArrowUp" ? -24 : event.key === "ArrowDown" ? 24 : 0);
+      }
       else if (event.key === "ArrowLeft") { cubeView.yaw -= 0.12; drawCubes(); }
       else if (event.key === "ArrowRight") { cubeView.yaw += 0.12; drawCubes(); }
-      else if (event.key === "ArrowUp") { cubeView.pitch = Math.min(1.2, cubeView.pitch + 0.12); drawCubes(); }
-      else if (event.key === "ArrowDown") { cubeView.pitch = Math.max(-1.2, cubeView.pitch - 0.12); drawCubes(); }
+      else if (event.key === "ArrowUp") { cubeView.pitch += 0.12; drawCubes(); }
+      else if (event.key === "ArrowDown") { cubeView.pitch -= 0.12; drawCubes(); }
       else return;
       event.preventDefault();
     });
@@ -2114,24 +2160,60 @@ title: Small sculpture
       lab.focus();
     });
     let cubeDrag = null;
+    let cubeGesture = null;
+    const cubePointers = new Map();
+    function startCubeDrag(event, moved = false) {
+      cubeDrag = { pointerId: event.pointerId, x: event.clientX, y: event.clientY,
+        yaw: cubeView.yaw, pitch: cubeView.pitch, panX: cubeView.panX, panY: cubeView.panY,
+        scale: cubePick.worldPerPixel || 0, moved,
+        tool: cubeTool === "pan" || event.shiftKey || event.button === 1 || event.button === 2 ? "pan" : "orbit" };
+    }
+    function touchPair() {
+      const [a, b] = [...cubePointers.values()];
+      return { x: (a.clientX + b.clientX) / 2, y: (a.clientY + b.clientY) / 2,
+        distance: Math.max(1, Math.hypot(b.clientX - a.clientX, b.clientY - a.clientY)) };
+    }
+    function startCubeGesture() {
+      const pair = touchPair();
+      cubeGesture = { ...pair, panX: cubeView.panX, panY: cubeView.panY,
+        scale: cubePick.worldPerPixel || 0, zoom: cubeView.zoom };
+      cubeDrag = null;
+    }
+    cubeCanvas.addEventListener("contextmenu", (event) => event.preventDefault());
     cubeCanvas.addEventListener("pointerdown", (event) => {
-      if ((event.pointerType === "touch" && !event.isPrimary) || event.button !== 0) return;
+      if (event.pointerType !== "touch" && ![0, 1, 2].includes(event.button)) return;
+      if (event.pointerType !== "touch" && cubeDrag) return;
+      event.preventDefault();
       cubeCanvas.focus({ preventScroll: true });
-      cubeDrag = { pointerId: event.pointerId, x: event.clientX, y: event.clientY, yaw: cubeView.yaw, pitch: cubeView.pitch, moved: false };
+      cubePointers.set(event.pointerId, event);
+      if (cubePointers.size >= 2) startCubeGesture();
+      else startCubeDrag(event);
       try { cubeCanvas.setPointerCapture(event.pointerId); } catch (_) { /* synthetic tests have no live pointer */ }
     });
     cubeCanvas.addEventListener("pointermove", (event) => {
-      if (!cubeDrag || cubeDrag.pointerId !== event.pointerId) return;
-      const dx = event.clientX - cubeDrag.x;
-      const dy = event.clientY - cubeDrag.y;
-      if (Math.abs(dx) + Math.abs(dy) > 3) cubeDrag.moved = true;
-      cubeView.yaw = cubeDrag.yaw + dx * 0.01;
-      cubeView.pitch = Math.max(-1.2, Math.min(1.2, cubeDrag.pitch + dy * 0.01));
+      if (!cubePointers.has(event.pointerId)) return;
+      cubePointers.set(event.pointerId, event);
+      if (cubeGesture && cubePointers.size >= 2) {
+        const pair = touchPair();
+        cubeView.panX = cubeGesture.panX - (pair.x - cubeGesture.x) * cubeGesture.scale;
+        cubeView.panY = cubeGesture.panY + (pair.y - cubeGesture.y) * cubeGesture.scale;
+        cubeView.zoom = Math.max(0.5, Math.min(2, cubeGesture.zoom * pair.distance / cubeGesture.distance));
+      } else if (cubeDrag?.pointerId === event.pointerId) {
+        const dx = event.clientX - cubeDrag.x, dy = event.clientY - cubeDrag.y;
+        if (Math.abs(dx) + Math.abs(dy) > 3) cubeDrag.moved = true;
+        if (cubeDrag.tool === "pan") {
+          cubeView.panX = cubeDrag.panX - dx * cubeDrag.scale;
+          cubeView.panY = cubeDrag.panY + dy * cubeDrag.scale;
+        } else {
+          cubeView.yaw = cubeDrag.yaw - dx * 0.008;
+          cubeView.pitch = cubeDrag.pitch + dy * 0.008;
+        }
+      } else return;
       drawCubes();
     });
-    cubeCanvas.addEventListener("pointerup", (event) => {
-      if (!cubeDrag || cubeDrag.pointerId !== event.pointerId) return;
-      if (!cubeDrag.moved && cubePick.eye) {
+    function finishCubePointer(event, select) {
+      if (!cubePointers.has(event.pointerId)) return;
+      if (select && cubeDrag?.pointerId === event.pointerId && cubeDrag.tool === "orbit" && !cubeDrag.moved && cubePick.eye) {
         const rect = cubeCanvas.getBoundingClientRect();
         const sx = ((event.clientX - rect.left) / cubePick.width * 2 - 1)
           * cubePick.tanHalf * cubePick.width / cubePick.height;
@@ -2157,14 +2239,21 @@ title: Small sculpture
         }
         if (best) { lab.goTo(best.plane); markOutline(best.plane); }
       }
+      cubePointers.delete(event.pointerId);
       cubeDrag = null;
-    });
-    cubeCanvas.addEventListener("pointercancel", (event) => {
-      if (cubeDrag?.pointerId === event.pointerId) cubeDrag = null;
-    });
+      cubeGesture = null;
+      // Continue from the remaining finger's current position, without a jump or tap.
+      if (cubePointers.size >= 2) startCubeGesture();
+      else if (cubePointers.size === 1) startCubeDrag([...cubePointers.values()][0], true);
+    }
+    cubeCanvas.addEventListener("pointerup", (event) => finishCubePointer(event, true));
+    cubeCanvas.addEventListener("pointercancel", (event) => finishCubePointer(event, false));
+    cubeCanvas.addEventListener("lostpointercapture", (event) => finishCubePointer(event, false));
     cubeCanvas.addEventListener("wheel", (event) => {
       event.preventDefault();
-      zoomCubes(event.deltaY > 0 ? 0.92 : 1.08);
+      const unit = event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? cubeCanvas.clientHeight : 1;
+      if (event.shiftKey) panCubes(-event.deltaX * unit, -event.deltaY * unit);
+      else zoomCubes(Math.exp(-Math.max(-500, Math.min(500, event.deltaY * unit)) * 0.002));
     }, { passive: false });
     if (window.ResizeObserver) {
       new ResizeObserver(() => {

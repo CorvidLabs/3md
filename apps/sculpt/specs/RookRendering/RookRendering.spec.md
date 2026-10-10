@@ -1,6 +1,6 @@
 ---
 module: RookRendering
-version: 7
+version: 8
 status: active
 files:
   - Sources/RookRendering/SculptureWorldNavigation.swift
@@ -207,6 +207,14 @@ The world controller's publicly readable, privately set properties are `installe
 22. World scene identity changes install one GPU geometry set per prepared model definition. Repeated instances share that set. Focus and radius changes rebuild only bounded placement nodes and proxy/detail choices. Camera-only updates retain model buffers and instance nodes and update native transform/projection only; they do not resolve models, extract surfaces, scan placements, or run the CPU rasterizer. Native resize updates the projection. Session focus, distances, and camera are not document metadata.
 23. Native world mouse dragging beyond the click threshold changes yaw/pitch; scroll changes bounded zoom. A click selects the nearest detailed surface or proxy bounds through upper-left-origin native view-local picking, returning its stored instance ID. This view owns no placement edit, undo transaction, filesystem access, process, or network capability. World rendering has no selected-slice ghost mesh. The caller owns world edits and supplies a changed identity and prepared scene for those edits.
 
+### REQ-RookRendering-008
+
+Native scalar, prepared and live volume projection SHALL use the same full-turn camera basis, screen-space pan target and finite inputs. Panning SHALL translate both the eye and target in the camera right/up plane. Camera-facing surface selection and nearest-quad picking SHALL account for the translated eye. Camera updates SHALL reuse the installed document buffers. Rendering, ghost and export budgets SHALL remain unchanged.
+
+Acceptance Criteria:
+
+- The shared camera fixture compares native basis and projected points with browser values. Native scalar/live picks agree through the poles, upside down and after pan; the mesh installation count remains one.
+
 ## Behavioral Examples
 
 - A frame raster is wider than an empty frame's uniform charcoal only where glyphs were projected.
@@ -242,6 +250,8 @@ World preparation propagates model-resolution and single-model extraction errors
 RookSculpture, AppKit, Observation, SceneKit, simd, Core Text, Core Graphics, ImageIO, UniformTypeIdentifiers, Core Image, Metal, MetalKit, AVFoundation, CoreVideo, and SwiftUI. No package dependencies. No authored GPU shader.
 
 ## Change Log
+
+- 2026-10-10: Full-turn volume camera, screen-space pan and matched browser/native projection. Verification and lifecycle closure are recorded separately.
 
 - Version 6: worker-prepared native mesh/ghost bytes, cached model reuse across world placement edits, subpixel grid edge detail, direct-neighbor exterior extraction and a prepared-scene cube projection reused by animation jobs for WORLD-33. Existing scalar fallback and capacity limits remain. New release measurements and verification are recorded separately under `docs/evidence/blockhaven/`; no lifecycle approval or finalization is claimed.
 

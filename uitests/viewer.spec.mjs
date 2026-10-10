@@ -785,11 +785,171 @@ test.describe("viewer & editor (viewer.html)", () => {
     await page.locator("#cubeCanvas").press("Home");
     expect(await matrix()).toEqual(initial);
     for (let i = 0; i < 12; i++) await page.locator("#cubeCanvas").press("+");
-    await expect(page.locator("#cubeZoom")).toHaveText("320%");
+    await expect(page.locator("#cubeZoom")).toHaveText("200%");
     await expect(page.locator("#cubeZoomIn")).toBeDisabled();
     await page.getByRole("button", { name: "Fit", exact: true }).click();
     expect(await matrix()).toEqual(initial);
     expect(await page.evaluate(() => window.threeMd.source)).toBe(source);
+  });
+
+  test("full camera turns cross both poles continuously and retain geometry", async ({ page }) => {
+    await page.goto("/viewer.html");
+    await viewerReady(page);
+    await page.waitForFunction(() => document.getElementById("cubeCanvas").dataset.renderer === "webgl2");
+    await page.evaluate(() => {
+      const canvas = document.getElementById("cubeCanvas");
+      const gl = canvas.__cubeGl;
+      canvas.__uploads = 0;
+      const upload = gl.bufferSubData.bind(gl);
+      gl.bufferSubData = (...args) => { canvas.__uploads++; return upload(...args); };
+    });
+    const source = await page.evaluate(() => window.threeMd.source);
+    // Pointer delivery uses the real event handler, including capture cancellation.
+    const drag = async (dx, dy) => page.dispatchEvent("#cubeCanvas", "pointerdown", {
+      pointerId: 91, pointerType: "mouse", button: 0, clientX: 150, clientY: 150,
+    }).then(() => page.dispatchEvent("#cubeCanvas", "pointermove", {
+      pointerId: 91, pointerType: "mouse", buttons: 1, clientX: 150 + dx, clientY: 150 + dy,
+    })).then(() => page.dispatchEvent("#cubeCanvas", "pointerup", {
+      pointerId: 91, pointerType: "mouse", button: 0, clientX: 150 + dx, clientY: 150 + dy,
+    }));
+    const matrix = () => page.evaluate(() => {
+      const gl = document.getElementById("cubeCanvas").__cubeGl;
+      const matrix = gl.getUniform(gl.getParameter(gl.CURRENT_PROGRAM),
+        gl.getUniformLocation(gl.getParameter(gl.CURRENT_PROGRAM), "uMvp"));
+      return [0, 1, 3].flatMap(row => {
+        const vector = [matrix[row], matrix[row + 4], matrix[row + 8]];
+        const length = Math.hypot(...vector);
+        return vector.map(value => value / length);
+      });
+    });
+    const initial = await matrix();
+    await drag(0, 2 * Math.PI / 0.008);
+    const full = await matrix();
+    full.forEach((value, i) => expect(value).toBeCloseTo(initial[i], 4));
+    await drag(2 * Math.PI / 0.008, 0);
+    const both = await matrix();
+    both.forEach((value, i) => expect(value).toBeCloseTo(initial[i], 4));
+    await drag(0, (Math.PI / 2 - 0.35 - 0.0001) / 0.008);
+    const before = await matrix();
+    await drag(0, 0.0002 / 0.008);
+    const after = await matrix();
+    expect(after.every(Number.isFinite)).toBe(true);
+    expect(Math.max(...after.map((v, i) => Math.abs(v - before[i])))).toBeLessThan(0.01);
+    await page.locator("#cubeCanvas").press("Home");
+    expect(await page.evaluate(() => document.getElementById("cubeCanvas").__uploads)).toBe(0);
+    expect(await page.evaluate(() => window.threeMd.source)).toBe(source);
+  });
+
+  test("pan tools and modified dragging move only the camera and Fit recenters", async ({ page }) => {
+    await page.goto("/viewer.html");
+    await viewerReady(page);
+    await page.waitForFunction(() => document.getElementById("cubeCanvas").dataset.renderer === "webgl2");
+    const source = await page.evaluate(() => window.threeMd.source);
+    await page.locator("#outline button").nth(1).click();
+    const state = () => page.evaluate(() => ({ ...document.getElementById("cubeCanvas").dataset,
+      slice: document.getElementById("lab").currentIndex }));
+    const initial = await state();
+    for (const input of [{ button: 0, shiftKey: true }, { button: 1 }, { button: 2 }]) {
+      await page.dispatchEvent("#cubeCanvas", "pointerdown", { pointerId: 92, pointerType: "mouse", clientX: 100, clientY: 100, ...input });
+      await page.dispatchEvent("#cubeCanvas", "pointermove", { pointerId: 92, pointerType: "mouse", clientX: 135, clientY: 125 });
+      await page.dispatchEvent("#cubeCanvas", "pointerup", { pointerId: 92, pointerType: "mouse", clientX: 135, clientY: 125, ...input });
+      const current = await state();
+      expect(current.yaw).toBe(initial.yaw);
+      expect(current.pitch).toBe(initial.pitch);
+      expect(current.slice).toBe(initial.slice);
+      expect(Number(current.panX)).toBeLessThan(0);
+      expect(Number(current.panY)).toBeGreaterThan(0);
+      await page.locator("#cubeCanvas").press("Home");
+    }
+    await page.getByRole("button", { name: "Pan", exact: true }).click();
+    await expect(page.locator("#cubeCanvas")).toHaveAttribute("data-tool", "pan");
+    await page.locator("#cubeCanvas").press("Shift+ArrowRight");
+    expect(Number((await state()).panX)).toBeLessThan(0);
+    await page.locator("#cubeCanvas").press("Home");
+    expect(Number((await state()).panX)).toBe(0);
+    expect(Number((await state()).panY)).toBe(0);
+    expect(await page.evaluate(() => window.threeMd.source)).toBe(source);
+  });
+
+  test("two fingers pan and pinch and a cancelled gesture cannot select a slice", async ({ page }) => {
+    await page.goto("/viewer.html");
+    await viewerReady(page);
+    await page.waitForFunction(() => document.getElementById("cubeCanvas").dataset.renderer === "webgl2");
+    const state = () => page.evaluate(() => ({ ...document.getElementById("cubeCanvas").dataset,
+      slice: document.getElementById("lab").currentIndex, zoom: document.getElementById("cubeZoom").textContent }));
+    const initial = await state();
+    for (const [pointerId, clientX] of [[101, 100], [102, 200]]) {
+      await page.dispatchEvent("#cubeCanvas", "pointerdown", { pointerId, clientX, clientY: 150, pointerType: "touch", button: 0 });
+    }
+    await page.dispatchEvent("#cubeCanvas", "pointermove", { pointerId: 102, clientX: 250, clientY: 180, pointerType: "touch" });
+    const moved = await state();
+    expect(moved.zoom).not.toBe(initial.zoom);
+    expect(moved.panX).not.toBe(initial.panX);
+    expect(moved.yaw).toBe(initial.yaw);
+    expect(moved.pitch).toBe(initial.pitch);
+    await page.dispatchEvent("#cubeCanvas", "pointercancel", { pointerId: 102, pointerType: "touch" });
+    await page.dispatchEvent("#cubeCanvas", "pointerup", { pointerId: 101, clientX: 100, clientY: 150, pointerType: "touch" });
+    expect((await state()).slice).toBe(initial.slice);
+    await page.locator("#cubeCanvas").press("Home");
+    await expect(page.locator("#cubeZoom")).toHaveText("100%");
+  });
+
+  test("browser camera projects and picks the shared native parity fixture", async ({ page }) => {
+    const { readFile } = await import("node:fs/promises");
+    const fixture = JSON.parse(await readFile(new URL("../docs/evidence/viewer-camera/camera-parity.json", import.meta.url), "utf8"));
+    const [w, h, depth] = fixture.dimensions;
+    const planes = Array.from({ length: depth }, (_, z) => {
+      const rows = Array.from({ length: h }, (_, y) => Array.from({ length: w }, (_, x) =>
+        fixture.cells.find(cell => cell.x === x && cell.y === y && cell.z === z)?.glyph || ".").join(""));
+      return `@plane z=${z}\n\`\`\`\n${rows.join("\n")}\n\`\`\`\n`;
+    }).join("\n");
+    await page.goto("/viewer.html");
+    await viewerReady(page);
+    await showEditor(page);
+    await page.fill("#editor", `---\n3md: 1.0\naxis: layer\ntitle: Camera parity\n---\n${planes}`);
+    await page.waitForTimeout(220);
+    await page.locator("#cubesTab").click();
+    await page.evaluate(() => {
+      const canvas = document.getElementById("cubeCanvas");
+      canvas.style.width = "400px";
+      canvas.style.height = "320px";
+      canvas.style.flex = "none";
+      window.dispatchEvent(new Event("resize"));
+    });
+    await page.waitForFunction(() => document.getElementById("cubeCanvas").dataset.cubes === "3");
+    const drag = async (dx, dy) => {
+      await page.dispatchEvent("#cubeCanvas", "pointerdown", { pointerId: 93, pointerType: "mouse", button: 0, clientX: 100, clientY: 100 });
+      await page.dispatchEvent("#cubeCanvas", "pointermove", { pointerId: 93, pointerType: "mouse", clientX: 100 + dx, clientY: 100 + dy });
+      await page.dispatchEvent("#cubeCanvas", "pointerup", { pointerId: 93, pointerType: "mouse", button: 0, clientX: 100 + dx, clientY: 100 + dy });
+    };
+    for (const pose of fixture.cases) {
+      await page.locator("#cubeFit").click();
+      await page.locator("#cubeOrbit").click();
+      await drag((0.6 + pose.yaw) / 0.008, (pose.pitch - 0.35) / 0.008);
+      await page.dispatchEvent("#cubeCanvas", "wheel", { deltaY: -Math.log(pose.zoom) / 0.002 });
+      await page.locator("#cubePan").click();
+      const pixelsPerCell = pose.scale;
+      await drag(-pose.panX * pixelsPerCell, pose.panY * pixelsPerCell);
+      const projected = await page.evaluate(cells => {
+        const canvas = document.getElementById("cubeCanvas");
+        const gl = canvas.__cubeGl;
+        const program = gl.getParameter(gl.CURRENT_PROGRAM);
+        const m = gl.getUniform(program, gl.getUniformLocation(program, "uMvp"));
+        return cells.map(cell => {
+          const point = [cell.x - 4, 3 - cell.y, cell.z - 2, 1];
+          const clip = [0, 1, 2, 3].map(row => point.reduce((sum, value, column) => sum + value * m[column * 4 + row], 0));
+          return [(clip[0] / clip[3] + 1) * 200, (1 - clip[1] / clip[3]) * 160];
+        });
+      }, fixture.cells);
+      for (const [i, coordinates] of projected.entries()) {
+        coordinates.forEach((value, axis) => expect(value, pose.name).toBeCloseTo(pose.projected[i][axis], 2));
+      }
+      await page.locator("#cubeOrbit").click();
+      for (const [i, coordinates] of projected.entries()) {
+        await page.locator("#cubeCanvas").click({ position: { x: coordinates[0], y: coordinates[1] } });
+        expect(await page.evaluate(() => document.getElementById("lab").currentIndex), pose.name).toBe(fixture.cells[i].z);
+      }
+    }
   });
 
   test("phone layout leaves room for cubes and keeps controls outside the drawing", async ({ page }) => {

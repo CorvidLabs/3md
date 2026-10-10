@@ -39,3 +39,7 @@ Keep a page-owned draft for each opened file and composition entry, including in
 ## Hosted WebKit closure fixes
 
 Reproduce the three PR 93 UI failures with Linux Playwright 1.61.1. Preserve the selected slice through delayed source rendering and navigation, keep file-filter keyboard focus stable across native search events, and provide usable cube drawing space at a 320 by 740 viewport. Keep the existing assertions, then run the browser suites, strict contract checks, Hi, the pinned Trust lane, and provenance verification before closing the lifecycle.
+
+## Full camera movement request
+
+On 2026-10-10 Leif reported, "I can't rotate it fully 360 and easiy move it etc..." The same viewer fix now includes full horizontal and vertical orbit, stable orientation across the poles, visible Orbit/Pan tools, Shift/right/middle drag panning, Shift-arrow panning, two-finger pan and pinch zoom, and proportional wheel zoom. Fit resets camera position without changing the source or selected slice. Camera input keeps cached geometry and the single-draw renderer. These changes are pending implementation and verification; archiving remains pending.

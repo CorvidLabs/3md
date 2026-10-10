@@ -42,3 +42,8 @@ spec: ThreeMDViewer.spec.md
 
 - [x] Preserve the selected slice across delayed source refresh and sort file paths for consistent keyboard navigation.
 - [x] Compact small-phone spacing without reducing existing assertions.
+
+- [x] Match Sculpt and viewer full orbit through both poles with camera-only pan and proportional zoom.
+- [x] Add shared asymmetric native/browser projection and picking fixtures.
+- [ ] Finish current cross-platform verification and lifecycle closure for the camera scope.
+- [ ] Await definition approval for the separate axis gizmo and numeric precision controls.

@@ -1,6 +1,6 @@
 ---
 module: RookApp
-version: 21
+version: 22
 status: active
 files:
   - Sources/RookApp/SculpturePortableInterchange.swift
@@ -111,6 +111,14 @@ The slice list creates rows lazily while preserving stable slice identifiers. It
 15. Gallery construction runs outside the main actor so the first 256-volume scene construction does not block search controls. The command palette offers New 256-cubed volume through the same dirty-replacement path as the File menu.
 16. Reopen uses the shared codec's private preparse limit of 100,000 physical lines as well as the 20 MiB bound. A tiny-line-heavy rejected file leaves the open sculpture unchanged and does not reach ThreeMD's per-line parsing allocations.
 
+### REQ-RookApp-088
+
+The volume canvas SHALL offer Pan in addition to Orbit. Shift-left, middle and right dragging SHALL pan without painting or selecting a slice, including when Paint is active. Scroll and trackpad magnification SHALL zoom proportionally within 0.5...2. The local pointer bridge SHALL retain the starting drag mode through mouse-up and preserve canvas keyboard focus. Fit SHALL restore the default orbit pose, zoom 1 and zero pan. Ordinary Paint and grouped stroke Undo SHALL remain available.
+
+Acceptance Criteria:
+
+- Native pointer regressions prove modified dragging emits only camera events and preserves ordinary mouse delivery. Native picking and painting continue to share the matched camera. Returning to Paint releases the Pan tool.
+
 ## Behavioral Examples
 
 - Closing the main window and choosing Show Sculpt.3md orders that same window forward.
@@ -136,6 +144,8 @@ COMPOSITION-39 makes insertion discoverable. While a composition or world sheet 
 
 RookCore, RookSculpture, RookRendering, SwiftUI, AppKit, and UniformTypeIdentifiers. RookSculpture carries the immutable ThreeMD package dependency; the native portable adapter also imports its types directly. No bundled font or image.
 ## Change Log
+
+- 2026-10-10: Full-turn volume camera, screen-space pan and matched browser/native projection. Verification and lifecycle closure are recorded separately.
 
 - Version 12: explicit portable file actions and retained upstream shared-edit snapshots for EXPORT-35. Actual native observations and new test receipts are recorded separately.
 

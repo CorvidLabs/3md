@@ -46,3 +46,7 @@ spec: ThreeMDViewer.spec.md
 - File activation focuses the document before restoring its caret. Chromium clears a restored selection when the editor remains blurred; focus-first restoration passes in both engines. Packing uses the current draft of the active document for each opened file, without rewriting composition profiles. The line index is reused until a draft or the collection changes.
 
 - Linux WebKit exposed a delayed-render slice reset, native directory enumeration differences, and insufficient drawing space on a 320 by 740 phone. Source refresh now restores the selected slice, the file list sorts paths for consistent keyboard navigation, and narrow-screen padding leaves more stage space. The final verification runs are pending; existing phone and focus assertions remain, with an added wait across the editor debounce.
+
+## Current camera parity
+
+Leif explicitly approved full native/browser camera parity and verified closure on 2026-10-10. Both volume canvases now use full yaw/pitch turns, continuous pole bases, session-only screen pan, zoom 0.5...2 and the matched default Fit pose. Native interactive cameras use complete-volume framing while default utility cameras retain historical preview scale. Shared projection/picking fixtures and current screenshots are in `docs/evidence/viewer-camera/`. The X/Y/Z sphere and precise step controls have a separate complete draft; definition approval is pending.

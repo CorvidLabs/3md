@@ -14,4 +14,4 @@ I want to orbit and zoom a large sculpture immediately, without waiting for the 
 ## Criteria
 
 - **RENDER-25**  Larger previews render away from the interface so I can keep using the editor, and an export that exceeds its mesh limit explains the limit without changing my sculpture.
-- **RENDER-29**  Live cube camera movement reuses the sculpture's prepared surfaces and updates the GPU camera without scanning the volume or rasterizing a bitmap on each event. Painting and selection still target the visible sculpture, and the packaged app uses an optimized build.
+- **RENDER-29**  Live cube camera movement reuses the sculpture's prepared surfaces and updates the GPU camera without scanning the volume or rasterizing a bitmap on each event. I can rotate through full turns, pan with a tool or modified drag, scroll or pinch to zoom, and Fit returns the sculpture to its starting view. Painting and selection still target the visible sculpture, camera controls match the web viewer, and the packaged app uses an optimized build.

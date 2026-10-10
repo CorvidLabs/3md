@@ -38,3 +38,8 @@ Leif approved the final scope and verified closure on 2026-10-10. This records d
 - [x] Verify the implemented viewer behavior in macOS Chromium/WebKit, the full Linux hosted UI suite, strict specs, Hi, helper tests, and bundle drift.
 
 Targeted lifecycle verification, pinned Trust, provenance recording, acceptance, and archive remain pending. The verified implementation tasks above do not claim these later gates have completed.
+
+## Full camera movement
+
+- [ ] Implement full orbit, screen-space panning, touch pan/pinch, proportional wheel zoom, and Fit recovery.
+- [ ] Verify camera input, pole stability, picking, unchanged source/slice, geometry reuse, and phone layout.

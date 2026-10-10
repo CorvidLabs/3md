@@ -272,6 +272,8 @@ private struct VoxelCamera {
     let cp: Double
     let sp: Double
     let distance: Double
+    let panX: Double
+    let panY: Double
 
     init(sculpture: Sculpture, camera: SculptureCamera, width: Int, height: Int) {
         self.init(
@@ -291,10 +293,14 @@ private struct VoxelCamera {
         self.width = Double(width)
         self.height = Double(height)
         let extent = Double(max(volumeWidth, volumeHeight, volumeDepth))
-        let yaw = camera.yaw.isFinite ? camera.yaw.truncatingRemainder(dividingBy: 2 * .pi) : 0
-        let pitch = camera.pitch.isFinite ? max(-1.4, min(1.4, camera.pitch)) : 0
-        let zoom = camera.zoom.isFinite ? max(0.5, min(2, camera.zoom)) : 1
-        scale = Double(min(width, height)) * 0.68 / extent * zoom
+        let camera = camera.normalized
+        let yaw = camera.yaw, pitch = camera.pitch
+        panX = camera.panX; panY = camera.panY
+        scale = camera.projectionScale(
+            dimensions: SIMD3(volumeWidth, volumeHeight, volumeDepth),
+            width: Double(width),
+            height: Double(height)
+        )
         cy = cos(yaw); sy = sin(yaw); cp = cos(pitch); sp = sin(pitch)
         distance = extent * 3
     }
@@ -305,7 +311,10 @@ private struct VoxelCamera {
         let x = Double(cell.x) - centerX + nx * 0.5
         let y = centerY - Double(cell.y) + ny * 0.5
         let z = Double(cell.z) - centerZ + nz * 0.5
-        return nx * (-sy * cp * distance - x) + ny * (sp * distance - y) + nz * (cy * cp * distance - z) > 0.000_001
+        let eyeX = -sy * cp * distance + cy * panX + sy * sp * panY
+        let eyeY = sp * distance + cp * panY
+        let eyeZ = cy * cp * distance + sy * panX - cy * sp * panY
+        return nx * (eyeX - x) + ny * (eyeY - y) + nz * (eyeZ - z) > 0.000_001
     }
 
     func face(_ face: SculptureVoxelFace, cell: SculptureCell, glyph: UInt8, adjacent: SculptureCell?)
@@ -400,8 +409,8 @@ private struct VoxelCamera {
         let depth = vy * sp + rz * cp
         let perspective = 1 / (1 - depth / distance)
         return SculptureVoxelVertex(
-            x: width / 2 + rx * scale * perspective,
-            y: height / 2 - ry * scale * perspective,
+            x: width / 2 + (rx - panX) * scale * perspective,
+            y: height / 2 - (ry - panY) * scale * perspective,
             depth: depth
         )
     }

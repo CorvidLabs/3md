@@ -94,3 +94,11 @@ Acceptance Criteria
 - Coarse geometry remains bounded, camera-independent and recognizable for nonempty models.
 - Directions, normalization, Int64 edges and input cancellation have semantic and native tests.
 - Native and visual evidence is distinct from FPS claims.
+
+### REQ-RookRendering-008
+
+Native scalar, prepared and live volume projection SHALL use the same full-turn camera basis, screen-space pan target and finite inputs. Panning SHALL translate both the eye and target in the camera right/up plane. Camera-facing surface selection and nearest-quad picking SHALL account for the translated eye. Camera updates SHALL reuse the installed document buffers. Rendering, ghost and export budgets SHALL remain unchanged.
+
+Acceptance Criteria:
+
+- The shared camera fixture compares native basis and projected points with browser values. Native scalar/live picks agree through the poles, upside down and after pan; the mesh installation count remains one.

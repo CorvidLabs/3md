@@ -24,3 +24,9 @@ The cube parity follow-up uses the live Sculpt view as reference: 0.5 lit glyph 
 ## Continuing UI and UX pass
 
 Leif requested continued UI and UX work on 2026-10-09. Preserve the cube-stage and publication limits. The draft lifecycle restriction was superseded by Leif's explicit 2026-10-10 approval of verified closure. The compact layout keeps the existing CorvidLabs tokens and typography; the stage is the focus.
+
+## Full camera movement request
+
+On 2026-10-10 Leif reported, "I can't rotate it fully 360 and easiy move it etc..." The same viewer fix now includes full horizontal and vertical orbit, stable orientation across the poles, visible Orbit/Pan tools, Shift/right/middle drag panning, Shift-arrow panning, two-finger pan and pinch zoom, and proportional wheel zoom. Fit resets camera position without changing the source or selected slice. Camera input keeps cached geometry and the single-draw renderer. These changes are pending implementation and verification; archiving remains pending.
+
+Current implementation and shared fixture receipts are in `docs/evidence/viewer-camera/`. Live pan and Fit preserved the native scene and slice. Default utility-camera framing preserves historical example images. Final full suites, Trust and lifecycle closure remain pending; the separate gizmo definition is not approved.

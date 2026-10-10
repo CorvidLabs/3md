@@ -1,0 +1,38 @@
+{
+  "approvals": [
+    {
+      "gate": "definition",
+      "actor": "user:0xLeif",
+      "timestamp": 1791647235,
+      "digest": "7b6ea3e8aed7f48a86cf966b2975ca9ef04a2e023c3a5f51402f7e0e34dab65b",
+      "note": "Leif approved the viewer definition and verified closure and explicitly selected Approve camera parity and verified closure on 2026-10-10. This evidence-only record declares the navigation and camera receipts required by those approvals. It does not claim a new product-scope approval or user diff review.",
+      "approved_scope": {
+        "schema_version": 1,
+        "change_id": "record-viewer-navigation-verification-evidence-for-the-approved-archive",
+        "title": "Record viewer navigation verification evidence for the approved archive",
+        "description": "Record viewer navigation verification evidence for the approved archive",
+        "kind": "documentation",
+        "affected_specs": [
+          "ThreeMDViewer"
+        ],
+        "affected_paths": [
+          "docs/evidence/viewer-camera",
+          "docs/evidence/viewer-navigation"
+        ],
+        "no_spec_change": true,
+        "no_spec_change_rationale": "Declare the existing PR 93 screenshots and verification README for complete delivery coverage; viewer behavior remains in the approved workspace change and no canonical contract change is required for evidence files.",
+        "acceptance_criteria": [
+          "Record actual navigation and camera verification results and screenshots while preserving test and provenance limitations"
+        ],
+        "dependencies": [],
+        "supersedes": [],
+        "answers": {
+          "architecture_risk": "no",
+          "public_contract": "no"
+        }
+      },
+      "approved_delta_digests": {}
+    }
+  ],
+  "reopenings": []
+}
