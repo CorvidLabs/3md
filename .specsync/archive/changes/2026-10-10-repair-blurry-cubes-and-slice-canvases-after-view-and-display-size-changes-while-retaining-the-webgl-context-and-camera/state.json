@@ -7,11 +7,11 @@
   "title": "Repair blurry Cubes and Slice canvases after view and display-size changes while retaining the WebGL context and camera parity",
   "description": "Repair blurry Cubes and Slice canvases after view and display-size changes while retaining the WebGL context and camera parity",
   "kind": "bug_fix",
-  "state": "verifying",
+  "state": "archived",
   "canonical_applied": true,
   "base_commit": "dab4258541208f8bf6bb5a38f6200a5b348a858e",
   "created_at": 1791656681,
-  "updated_at": 1791657959,
+  "updated_at": 1791658049,
   "affected_specs": [
     "ThreeMDViewer"
   ],
