@@ -41,5 +41,5 @@ Targeted lifecycle verification, pinned Trust, provenance recording, acceptance,
 
 ## Full camera movement
 
-- [ ] Implement full orbit, screen-space panning, touch pan/pinch, proportional wheel zoom, and Fit recovery.
-- [ ] Verify camera input, pole stability, picking, unchanged source/slice, geometry reuse, and phone layout.
+- [x] Implement full orbit, screen-space panning, touch pan/pinch, proportional wheel zoom, and Fit recovery.
+- [x] Verify camera input, pole stability, picking, unchanged source/slice, geometry reuse, and phone layout.

@@ -8,6 +8,7 @@ artifact: tasks
 - [x] Approve the complete cross-app camera definition.
 - [x] Match native and browser orbit, pan, zoom and Fit behavior.
 - [x] Verify projection and picking parity through poles and panning.
-- [ ] Run relevant native and browser regressions and record evidence.
+- [x] Run relevant native and browser regressions and record evidence.
 - [x] Synchronize contracts and human intent.
-- [ ] Complete current verification, truthful review and approved closure.
+
+Lifecycle verification, truthful scoped review and the authorized archive remain pending. These are subsequent tool gates; no completion is claimed here.
