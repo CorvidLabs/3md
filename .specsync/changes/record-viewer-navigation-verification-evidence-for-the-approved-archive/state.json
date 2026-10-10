@@ -7,10 +7,11 @@
   "title": "Record viewer navigation verification evidence for the approved archive",
   "description": "Record viewer navigation verification evidence for the approved archive",
   "kind": "documentation",
-  "state": "implementing",
+  "state": "verifying",
+  "canonical_applied": true,
   "base_commit": "fefd8316adfff3af8bdb87d26b4a417650540b56",
   "created_at": 1791643208,
-  "updated_at": 1791647245,
+  "updated_at": 1791647875,
   "affected_specs": [
     "ThreeMDViewer"
   ],
