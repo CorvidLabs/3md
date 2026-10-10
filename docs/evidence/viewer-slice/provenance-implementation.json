@@ -1,0 +1,1 @@
+{"checkedCommits":1,"passed":false,"violations":[{"commit":"8e9a0c4eecfa50b8918b864b3569c1dec5fde559","detail":"no valid signed attestation","rule":"requireSignature"},{"commit":"8e9a0c4eecfa50b8918b864b3569c1dec5fde559","detail":"reviewer agent:codex is not in the allow-list [\"agent:claude\", \"human:\"]","rule":"allowedReviewers"}]}

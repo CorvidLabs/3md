@@ -14,6 +14,6 @@ artifact: tasks
 - [x] Verify shared native/browser edit fixtures and preserve existing camera/file/export behavior.
 - [x] Verify desktop, phone, keyboard, touch, canceled-pointer and GPU-unavailable behavior.
 - [x] Synchronize canonical contracts and human intent with the resulting implementation.
-- [ ] Run pinned Trust, record actual provenance and present verification evidence.
+- [x] Run pinned Trust, record actual provenance and present verification evidence.
 
 Lifecycle acceptance/archive and PR update require the recorded verified-closure authority and passing current verification. Scope approval is not an independent review or a permitted signature.

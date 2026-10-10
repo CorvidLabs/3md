@@ -1,6 +1,6 @@
 ---
 module: ThreeMDViewer
-version: 13
+version: 15
 status: active
 files:
   - web/viewer.html
@@ -162,6 +162,8 @@ Acceptance Criteria:
 | 2026-10-10 | agent:codex | Preserve the slice across editor refresh, sort file paths for consistent keyboard navigation, and compact small-phone spacing. Leif approved the final scope; verification, acceptance, and archiving are pending. |
 | 2026-10-10 | SpecSync | put-edit-and-preview-in-the-same-viewer-panel-and-toggle-them-like-github-files-stay-on-the-left-edit-shows-first-below: Put Edit and Preview in the same viewer panel and toggle them like GitHub. Files stay on the left. Edit shows first. Below 900px, Files and the document take turns, and the document panel still switches Edit and Preview. |
 | 2026-10-10 | SpecSync | keep-sculpt-and-web-cube-cameras-in-parity-with-unrestricted-orbit-and-screen-space-pan: Keep Sculpt and web cube cameras in parity with unrestricted orbit and screen-space pan |
+| 2026-10-10 | SpecSync | bring-sculpt-slice-editing-to-the-browser-with-a-visual-grid-drawing-tools-undo-and-live-3d-reference: Bring Sculpt slice editing to the browser with a visual grid, drawing tools, undo and live 3D reference |
+| 2026-10-10 | SpecSync | add-matching-x-y-z-axis-rotation-gizmos-and-precise-camera-steps-to-sculpt-and-the-viewer: Add matching X Y Z axis rotation gizmos and precise camera steps to Sculpt and the viewer |
 
 ## Slice and precise camera parity
 

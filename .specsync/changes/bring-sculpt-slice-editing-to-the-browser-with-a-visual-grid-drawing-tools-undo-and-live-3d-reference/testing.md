@@ -13,4 +13,15 @@ History checks mix source typing, insert tools, grid strokes and undo/redo; swit
 
 Chromium/WebKit checks cover desktop and 390x844/320x740 layouts, primary touch drawing, keyboard cell movement and Space, explicit X/Y validation, every zoom option and previous-slice visibility. Require internal grid scrolling, visible controls and meaningful accessibility names. GPU-unavailable Slice editing remains usable. Existing one-context, no camera-only geometry upload, nearest picking and pole-crossing tests run unchanged.
 
-Run the complete viewer suite on macOS and the complete UI suite in the existing Linux Playwright environment. Run the focused native workspace fixture selection and broaden native tests only if behavior or failures warrant it. Run strict root and nested app specs with full configured coverage, root/native Hi and pinned Trust 1.2.2 with Fledge 1.7.2. Record actual actor, tested source commit, retries/skips and unchanged provenance limits. No tests or visual approval are claimed yet.
+Run the complete viewer suite on macOS and the complete UI suite in the existing Linux Playwright environment. Run the focused native workspace fixture selection and broaden native tests only if behavior or failures warrant it. Run strict root and nested app specs with full configured coverage, root/native Hi and pinned Trust 1.2.2 with Fledge 1.7.2. Record actual actor, tested source commit, retries/skips and unchanged provenance limits. Actual execution evidence is recorded under docs/evidence/viewer-slice. No independent human review or permitted signature is claimed.
+
+## Execution evidence
+
+Implementation commit 8e9a0c4 has 226 passing macOS browser tests, 637 passing configured native tests and 11 passing final native parity tests. Expanded browser fixtures and phone checks each passed 4 cases. Pinned Trust passed; actual unsigned agent:codex provenance was recorded and fails the unchanged permitted-signature/reviewer policy as expected. Linux and final lifecycle receipts are recorded in docs/evidence/viewer-slice. Source and visual verification are distinct from Leif’s diff review.
+
+## Requirement evidence
+
+| ID | Canonical | Evidence |
+| --- | --- | --- |
+| REQ-ThreeMDViewer-003 | REQ-ThreeMDViewer-003 | Actual four-view layout in web/viewer.html; full Chromium/WebKit viewer regressions and desktop/phone screenshots in docs/evidence/viewer-slice. |
+| REQ-ThreeMDViewer-008 | REQ-ThreeMDViewer-008 | Shared slice-parity.json cases run by browser pointer gestures and native browserSliceFixturesMatchNativeWorkspaceToolsAndWholeStrokeHistory. Source preservation, bounded history, navigation, keyboard, downloads, GPU refusal and phone tests pass; actual logs are in docs/evidence/viewer-slice. |

@@ -10,4 +10,4 @@ artifact: tasks
 - [x] Add native and browser sphere/constraint/step controls.
 - [x] Verify numerical, picking, geometry and input parity.
 - [x] Synchronize contracts and intent.
-- [ ] Record current verification and complete approved lifecycle closure.
+- [x] Record current verification and prepare approved lifecycle closure.
