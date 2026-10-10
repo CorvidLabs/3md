@@ -18,6 +18,7 @@ spec: ThreeMDViewer.spec.md
 | REQ-ThreeMDViewer-001 | REQ-ThreeMDViewer-001 | VIEWER-6 in `hi/tools.md`. The page and the bun and Playwright tests above. |
 | REQ-ThreeMDViewer-002 | REQ-ThreeMDViewer-002 | `web/github-source.ts` hostname checks, the 400 file and 1.5 MB caps, the 12,000 line cap in `web/viewer.html`, and the LZFSE test. |
 | REQ-ThreeMDViewer-003 | REQ-ThreeMDViewer-003 | VIEWER-6 in `hi/tools.md`. Desktop and narrow layout tests in `uitests/viewer.spec.mjs`. |
+| REQ-ThreeMDViewer-004 | REQ-ThreeMDViewer-004 | VIEWER-6 in `hi/tools.md`. `uitests/viewer.spec.mjs` checks that the page does not autoplay and that a fenced grid draws on WebGL2, including about 1400 cubes. |
 
 ## Manual Testing
 

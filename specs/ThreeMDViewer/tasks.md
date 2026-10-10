@@ -12,6 +12,8 @@ spec: ThreeMDViewer.spec.md
 - [x] Keep the element a text renderer and refuse Apple LZFSE.
 - [x] Match GitHub hosts by hostname.
 - [x] Record the contract in this spec and in VIEWER-6.
+- [x] Hold Preview on one plane, with no render-mode switch and no autoplay.
+- [x] Draw fenced grids as lit WebGL2 cubes.
 
 ## Gaps
 

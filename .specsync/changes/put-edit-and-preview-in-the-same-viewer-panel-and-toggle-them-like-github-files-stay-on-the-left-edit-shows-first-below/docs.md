@@ -5,7 +5,7 @@ artifact: docs
 
 # Docs
 
-- Human intent for the page is VIEWER-6 in `hi/tools.md`. It now says files stay on the left and Edit and Preview share one panel.
-- The canonical contract is `specs/ThreeMDViewer/ThreeMDViewer.spec.md`, version 3, including REQ-ThreeMDViewer-003.
-- The page lead in `web/viewer.html` says Edit and Preview share the panel beside the files.
+- Human intent for the page is VIEWER-6 in `hi/tools.md`. It now says files stay on the left, Edit, Preview, and Cubes share one panel, and the page does not autoplay.
+- The canonical contract is `specs/ThreeMDViewer/ThreeMDViewer.spec.md`, version 5, including REQ-ThreeMDViewer-003 and REQ-ThreeMDViewer-004.
+- The page lead in `web/viewer.html` says Edit, the plane preview, and Cubes share the panel beside the files.
 - The public README, package versions, and release notes stay as they are. This change does not publish and does not move `v2.2.1`.

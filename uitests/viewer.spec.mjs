@@ -356,6 +356,7 @@ test.describe("viewer & editor (viewer.html)", () => {
       viewer: getComputedStyle(document.querySelector(".viewer")).display,
       cubes: getComputedStyle(document.querySelector(".cubes")).display,
       count: Number(document.getElementById("cubeCanvas").dataset.cubes),
+      renderer: document.getElementById("cubeCanvas").dataset.renderer,
       bar: document.getElementById("ideDoc").textContent,
     }));
     expect(view.show).toBe("cubes");
@@ -363,7 +364,38 @@ test.describe("viewer & editor (viewer.html)", () => {
     expect(view.viewer).toBe("none");
     expect(view.cubes).not.toBe("none");
     expect(view.count).toBeGreaterThan(8);
+    expect(view.renderer).toBe("webgl2");
     expect(view.bar).toContain("layer");
+  });
+
+  test("orbiting about 1400 gpu cubes stays interactive", async ({ page }) => {
+    await page.setViewportSize({ width: 1280, height: 800 });
+    await page.goto("/viewer.html");
+    await viewerReady(page);
+    const row = "####################";
+    const grid = Array.from({ length: 20 }, () => row).join("\n");
+    const planes = [0, 1, 2, 3].map((z) => `@plane z=${z}\n\`\`\`\n${grid}\n\`\`\``).join("\n\n");
+    const doc = `---\n3md: 1.0\naxis: layer\n---\n\n${planes}\n`;
+    await page.evaluate((source) => window.threeMd.set(source), doc);
+    await page.click("#cubesTab");
+    await page.waitForFunction(() => document.getElementById("cubeCanvas").dataset.renderer === "webgl2");
+    const timed = await page.evaluate(() => {
+      const canvas = document.getElementById("cubeCanvas");
+      const start = performance.now();
+      for (let i = 0; i < 20; i++) {
+        canvas.dispatchEvent(new PointerEvent("pointerdown", { clientX: 400, clientY: 300, pointerId: 1, bubbles: true }));
+        canvas.dispatchEvent(new PointerEvent("pointermove", { clientX: 400 + i * 6, clientY: 300 + i, pointerId: 1, bubbles: true }));
+        canvas.dispatchEvent(new PointerEvent("pointerup", { clientX: 460, clientY: 320, pointerId: 1, bubbles: true }));
+      }
+      return {
+        ms: performance.now() - start,
+        count: Number(canvas.dataset.cubes),
+        renderer: canvas.dataset.renderer,
+      };
+    });
+    expect(timed.renderer).toBe("webgl2");
+    expect(timed.count).toBeGreaterThan(1400);
+    expect(timed.ms).toBeLessThan(800);
   });
 
   test("narrow layout switches Files and the document, and Edit and Preview still switch", async ({ page }) => {
@@ -439,26 +471,28 @@ test.describe("viewer & editor (viewer.html)", () => {
     // A known axis is clean.
     const ok = await page.evaluate(() => window.threeMd.set('---\n3md: 1.0\naxis: time\n---\n@plane z=0\nA\n'));
     expect(ok.axisKnown).toBe(true);
-    expect(ok.mode).toBe("stack");
+    expect(ok.mode).toBe("single");
   });
 
-  test("the blend (3D) mode option is disabled for non-voxel docs, enabled for ASCII art", async ({ page }) => {
+  test("the page has no render-mode switch and does not autoplay", async ({ page }) => {
     await page.goto("/viewer.html");
     await page.waitForFunction(() => document.getElementById("lab")?.shadowRoot !== undefined);
-    // Pure-text doc: blend disabled.
-    const txt = await page.evaluate(() => {
-      window.threeMd.set('---\n3md: 1.0\naxis: time\n---\n@plane z=0\n# Hi\njust prose\n');
-      return { disabled: document.getElementById("blendOpt").disabled, voxelizable: document.getElementById("lab").voxelizable };
+    const frame = await page.evaluate(() => {
+      window.threeMd.set('---\n3md: 1.0\naxis: frame\n---\n@plane z=0\nA\n@plane z=1\nB\n');
+      const lab = document.getElementById("lab");
+      return {
+        modeSwitch: document.getElementById("modeSel"),
+        play: document.getElementById("playBtn"),
+        playing: lab.playing,
+        mode: lab.mode,
+        autoplay: lab.hasAttribute("autoplay"),
+      };
     });
-    expect(txt.voxelizable).toBe(false);
-    expect(txt.disabled).toBe(true);
-    // ASCII-art doc (a small grid): blend enabled.
-    const art = await page.evaluate(() => {
-      window.threeMd.set('---\n3md: 1.0\naxis: depth\n---\n@plane z=0\n```\n##  ##\n######\n##  ##\n```\n@plane z=1\n```\n.####.\n######\n.####.\n```\n');
-      return { disabled: document.getElementById("blendOpt").disabled, voxelizable: document.getElementById("lab").voxelizable };
-    });
-    expect(art.voxelizable).toBe(true);
-    expect(art.disabled).toBe(false);
+    expect(frame.modeSwitch).toBeNull();
+    expect(frame.play).toBeNull();
+    expect(frame.playing).toBe(false);
+    expect(frame.mode).toBe("single");
+    expect(frame.autoplay).toBe(false);
   });
 
   test("the agent schema lists error codes and the axis-to-mode map", async ({ page }) => {

@@ -151,8 +151,9 @@
   .stage[data-show="cubes"] .editor,
   .stage[data-show="cubes"] .viewer{display:none}
   .stage .bar{flex-wrap:wrap}
-  .stage .viewer,
-  .stage .cubes{flex:1;min-height:560px}
+  .stage .viewer{flex:1;min-height:560px}
+  .stage .cubes{flex:1;min-height:420px;height:calc(100vh - 250px);max-height:820px}
+  #lab::part(play){display:none}
   @media(max-width:900px){
     .grid{grid-template-columns:1fr}
     .fileswitch{display:inline-flex}
@@ -279,19 +280,6 @@
         <input id="findExample" class="btn" type="search" placeholder="search every line" aria-label="search every line" role="combobox" aria-autocomplete="list" aria-controls="findList" aria-expanded="false" autocomplete="off" />
         <div id="findList" class="findlist" hidden role="listbox" aria-label="matching examples"></div>
       </div>
-      <label for="modeSel">mode</label>
-      <select id="modeSel" class="btn" aria-label="override render mode">
-        <option value="">auto (from axis)</option>
-        <option value="stack">deck</option>
-        <option value="layers">layers</option>
-        <option value="elevator">elevator (floors)</option>
-        <option value="play">animation</option>
-        <option value="single">reader</option>
-        <option value="present">slides</option>
-        <option value="blend" id="blendOpt">3D object</option>
-        <option value="map">map</option>
-      </select>
-      <button id="playBtn" class="btn" type="button">play</button>
       <span class="sep"></span>
       <button id="planeBtn" class="btn icon ins" type="button" title="Insert a plane (Ctrl/Cmd+Enter inserts too)">+ plane</button>
       <button id="linkBtn" class="btn icon ins" type="button" title="Insert a cross-plane link">+ link</button>
@@ -339,15 +327,15 @@
           <div class="backdrop" aria-hidden="true"><pre class="hl" id="hl"></pre></div>
           <textarea class="ta" id="editor" spellcheck="false" autocomplete="off" autocapitalize="off" autocorrect="off" wrap="soft" aria-label="3md source editor"></textarea>
         </div>
-        <div class="viewer" id="previewPane" role="tabpanel" aria-labelledby="previewTab"><three-md id="lab" role="group" aria-label="Live 3md preview" aria-describedby="planeLive"></three-md></div>
+        <div class="viewer" id="previewPane" role="tabpanel" aria-labelledby="previewTab"><three-md id="lab" mode="single" role="group" aria-label="Live 3md preview" aria-describedby="planeLive"></three-md></div>
         <div id="planeLive" class="sr-only" aria-live="polite"></div>
         <div class="cubes" id="cubesPane" role="tabpanel" aria-labelledby="cubesTab">
           <canvas id="cubeCanvas" width="800" height="560" aria-label="Sculpt-style cubes"></canvas>
           <div class="cubesempty" id="cubesEmpty">
-            <p>This document has no cube grid. A fenced block of a few characters, one plane per slice, becomes translucent cubes.</p>
+            <p>This document has no cube grid. A fenced block of a few characters, one plane per slice, becomes lit cubes.</p>
             <button id="cubeSample" class="btn" type="button">Open a small sculpture</button>
           </div>
-          <div class="cubehint">drag to orbit · scroll to zoom · click a cube to pick its slice</div>
+          <div class="cubehint">GPU · drag to orbit · scroll to zoom · click a cube to pick its slice</div>
         </div>
         <div class="outline" id="outline" role="group" aria-label="plane outline"></div>
         <div class="idebar" id="idebar">
@@ -359,7 +347,7 @@
       </div>
     </div>
     <div class="status" id="status" role="status" aria-live="polite"></div>
-    <p class="hint"><kbd>Tab</kbd> indent &middot; <kbd>Esc</kbd> then <kbd>Tab</kbd> to leave &middot; <kbd>Enter</kbd> continues lists &middot; <kbd>Ctrl/&#8984;+S</kbd> download &middot; <kbd>Ctrl/&#8984;+Enter</kbd> new plane &middot; <kbd>Ctrl/&#8984;+/</kbd> play</p>
+    <p class="hint"><kbd>Tab</kbd> indent &middot; <kbd>Esc</kbd> then <kbd>Tab</kbd> to leave &middot; <kbd>Enter</kbd> continues lists &middot; <kbd>Ctrl/&#8984;+S</kbd> download &middot; <kbd>Ctrl/&#8984;+Enter</kbd> new plane</p>
 
     <p class="foot">Powered by the open-source <a href="https://github.com/CorvidLabs/3md">3md</a> format and the <code>&lt;three-md&gt;</code> web component. MIT. &middot; <a href="https://github.com/CorvidLabs/3md/blob/main/SPEC.md">format spec</a></p>
   </div>
@@ -393,9 +381,7 @@ See [[z=1|Tuesday]] for what's next.
     const status = document.getElementById("status");
     const counts = document.getElementById("counts");
     const cursor = document.getElementById("cursor");
-    const modeSel = document.getElementById("modeSel");
     const exampleSel = document.getElementById("example");
-    const playBtn = document.getElementById("playBtn");
     const outline = document.getElementById("outline");
     const validBadge = document.getElementById("validBadge");
     const validText = document.getElementById("validText");
@@ -525,16 +511,6 @@ See [[z=1|Tuesday]] for what's next.
       }
     }
 
-    const blendOpt = document.getElementById("blendOpt");
-    function updateBlendOption() {
-      // 3D/blend is only meaningful with voxelizable ASCII art; disable it otherwise
-      // so a text doc cannot be switched into a garbled voxel cloud.
-      const ok = !lab.error && lab.voxelizable;
-      blendOpt.disabled = !ok;
-      blendOpt.textContent = ok ? "3D object" : "3D object (needs ASCII art)";
-      if (!ok && modeSel.value === "blend") { modeSel.value = ""; lab.removeAttribute("mode"); }
-    }
-
     let openNote = "";
     let openedPieces = [];
 
@@ -542,7 +518,9 @@ See [[z=1|Tuesday]] for what's next.
       const src = ed.value;
       counts.textContent = src.split("\n").length + " lines, " + src.length + " chars";
       lab.setSource(src);
-      updateBlendOption();
+      // The page holds the preview on one plane. Axis names no longer start playback.
+      if (lab.getAttribute("mode") !== "single") lab.setAttribute("mode", "single");
+      if (lab.playing && typeof lab.pause === "function") lab.pause();
       // An empty document is NOT an error: show a neutral prompt, no red, no errline.
       if (!src.trim()) {
         errLine = -1;
@@ -727,7 +705,6 @@ See [[z=1|Tuesday]] for what's next.
       if (e.key !== "Tab" && e.key !== "Shift") tabEscapes = false; // one-shot arm
       if (mod && (e.key === "s" || e.key === "S")) { e.preventDefault(); document.getElementById("dlBtn").click(); return; }
       if (mod && e.key === "Enter") { e.preventDefault(); insertPlane(); return; }
-      if (mod && e.key === "/") { e.preventDefault(); playBtn.click(); return; }
       if (mod && !e.shiftKey && (e.key === "y" || e.key === "Y")) { e.preventDefault(); ed.focus(); document.execCommand("redo"); return; }
       if (e.key === "Tab") {
         if (tabEscapes) { tabEscapes = false; return; } // armed: let Tab move focus out
@@ -787,17 +764,8 @@ See [[z=1|Tuesday]] for what's next.
       insertAtCursor("---\n3md: 1.0\naxis: time\ntitle: Untitled\n---\n\n", 0);
     });
 
-    modeSel.addEventListener("change", () => {
-      if (modeSel.value) lab.setAttribute("mode", modeSel.value); else lab.removeAttribute("mode");
-      render();
-    });
-
-    playBtn.addEventListener("click", () => {
-      if (lab.playing) { lab.pause(); playBtn.textContent = "play"; }
-      else { lab.play(); playBtn.textContent = "pause"; }
-    });
     lab.addEventListener("planechange", (ev) => {
-      playBtn.textContent = lab.playing ? "pause" : "play";
+      if (lab.playing && typeof lab.pause === "function") lab.pause();
       if (ev && ev.detail && typeof ev.detail.index === "number") markOutline(ev.detail.index);
     });
 
@@ -1356,17 +1324,241 @@ See [[z=1|Tuesday]] for what's next.
       "@": [0.65, 0.57, 0.94], "*": [0.98, 0.76, 0.42], "+": [0.46, 0.71, 0.95],
       "o": [0.57, 0.83, 0.49], "O": [0.57, 0.83, 0.49], "x": [0.94, 0.54, 0.58],
       "X": [0.94, 0.54, 0.58], ":": [0.52, 0.67, 0.48], "=": [0.87, 0.76, 0.55],
-      "-": [0.49, 0.83, 0.89],
+      "-": [0.49, 0.83, 0.89], "#": [0.42, 0.82, 0.78],
     };
-    const cubeView = { yaw: 0.55, pitch: 0.42, zoom: 1.15 };
-    let cubePicks = [];
-    function projectCube(x, y, z) {
-      const cy = Math.cos(cubeView.yaw), sy = Math.sin(cubeView.yaw);
-      const cp = Math.cos(cubeView.pitch), sp = Math.sin(cubeView.pitch);
-      const x1 = x * cy - z * sy;
-      const z1 = x * sy + z * cy;
-      const y1 = y * cp - z1 * sp;
-      return { x: x1, y: y1, depth: y * sp + z1 * cp };
+    const cubeView = { yaw: 0.72, pitch: 0.5, zoom: 1.35 };
+    const cubeGpu = {
+      gl: null,
+      program: null,
+      vao: null,
+      instances: null,
+      mvpLoc: null,
+      sig: "",
+      count: 0,
+      failed: false,
+    };
+    const cubePick = { mvp: null, width: 0, height: 0, points: [] };
+    function mul4(a, b) {
+      const out = new Float32Array(16);
+      for (let col = 0; col < 4; col++) {
+        for (let row = 0; row < 4; row++) {
+          out[col * 4 + row] =
+            a[row] * b[col * 4] +
+            a[4 + row] * b[col * 4 + 1] +
+            a[8 + row] * b[col * 4 + 2] +
+            a[12 + row] * b[col * 4 + 3];
+        }
+      }
+      return out;
+    }
+    function lookAt(eye, target, up) {
+      let zx = eye[0] - target[0], zy = eye[1] - target[1], zz = eye[2] - target[2];
+      let len = Math.hypot(zx, zy, zz) || 1;
+      zx /= len; zy /= len; zz /= len;
+      let xx = up[1] * zz - up[2] * zy;
+      let xy = up[2] * zx - up[0] * zz;
+      let xz = up[0] * zy - up[1] * zx;
+      len = Math.hypot(xx, xy, xz) || 1;
+      xx /= len; xy /= len; xz /= len;
+      const yx = zy * xz - zz * xy;
+      const yy = zz * xx - zx * xz;
+      const yz = zx * xy - zy * xx;
+      return new Float32Array([
+        xx, yx, zx, 0,
+        xy, yy, zy, 0,
+        xz, yz, zz, 0,
+        -(xx * eye[0] + xy * eye[1] + xz * eye[2]),
+        -(yx * eye[0] + yy * eye[1] + yz * eye[2]),
+        -(zx * eye[0] + zy * eye[1] + zz * eye[2]),
+        1,
+      ]);
+    }
+    function perspective(fovy, aspect, near, far) {
+      const f = 1 / Math.tan(fovy / 2);
+      const nf = 1 / (near - far);
+      return new Float32Array([
+        f / aspect, 0, 0, 0,
+        0, f, 0, 0,
+        0, 0, (far + near) * nf, -1,
+        0, 0, (2 * far * near) * nf, 0,
+      ]);
+    }
+    function cubeMesh() {
+      const faces = [
+        [[0, 1, 0], [-0.5, 0.5, -0.5], [0.5, 0.5, -0.5], [0.5, 0.5, 0.5], [-0.5, 0.5, 0.5]],
+        [[0, -1, 0], [-0.5, -0.5, 0.5], [0.5, -0.5, 0.5], [0.5, -0.5, -0.5], [-0.5, -0.5, -0.5]],
+        [[0, 0, 1], [-0.5, -0.5, 0.5], [0.5, -0.5, 0.5], [0.5, 0.5, 0.5], [-0.5, 0.5, 0.5]],
+        [[0, 0, -1], [0.5, -0.5, -0.5], [-0.5, -0.5, -0.5], [-0.5, 0.5, -0.5], [0.5, 0.5, -0.5]],
+        [[1, 0, 0], [0.5, -0.5, -0.5], [0.5, -0.5, 0.5], [0.5, 0.5, 0.5], [0.5, 0.5, -0.5]],
+        [[-1, 0, 0], [-0.5, -0.5, 0.5], [-0.5, -0.5, -0.5], [-0.5, 0.5, -0.5], [-0.5, 0.5, 0.5]],
+      ];
+      const data = new Float32Array(36 * 6);
+      let cursor = 0;
+      for (const face of faces) {
+        const n = face[0];
+        const corners = [face[1], face[2], face[3], face[1], face[3], face[4]];
+        for (const corner of corners) {
+          data[cursor++] = corner[0];
+          data[cursor++] = corner[1];
+          data[cursor++] = corner[2];
+          data[cursor++] = n[0];
+          data[cursor++] = n[1];
+          data[cursor++] = n[2];
+        }
+      }
+      return data;
+    }
+    function initCubeGl(canvas) {
+      if (cubeGpu.failed) return false;
+      const gl = canvas.getContext("webgl2", {
+        alpha: false,
+        antialias: true,
+        depth: true,
+        stencil: false,
+        premultipliedAlpha: false,
+        preserveDrawingBuffer: true,
+        powerPreference: "high-performance",
+      });
+      if (!gl) { cubeGpu.failed = true; return false; }
+      const vert = `#version 300 es
+        layout(location=0) in vec3 aPos;
+        layout(location=1) in vec3 aNrm;
+        layout(location=2) in vec3 iOff;
+        layout(location=3) in vec3 iCol;
+        layout(location=4) in float iSel;
+        uniform mat4 uMvp;
+        out vec3 vColor;
+        out vec3 vLocal;
+        void main() {
+          vec3 base = mix(iCol, vec3(1.0, 0.78, 0.34), iSel);
+          float key = max(dot(aNrm, normalize(vec3(0.34, 0.88, 0.38))), 0.0);
+          float fill = max(dot(aNrm, normalize(vec3(-0.45, 0.22, -0.4))), 0.0);
+          float shade = 0.82 + 0.34 * key + 0.12 * fill;
+          vColor = base * shade;
+          vLocal = aPos;
+          float scale = mix(0.92, 0.98, iSel);
+          gl_Position = uMvp * vec4(aPos * scale + iOff, 1.0);
+        }`;
+      const frag = `#version 300 es
+        precision highp float;
+        in vec3 vColor;
+        in vec3 vLocal;
+        out vec4 frag;
+        void main() {
+          float ax = abs(vLocal.x);
+          float ay = abs(vLocal.y);
+          float az = abs(vLocal.z);
+          float edge = ay >= ax && ay >= az
+            ? min(0.5 - ax, 0.5 - az)
+            : ax >= az
+              ? min(0.5 - ay, 0.5 - az)
+              : min(0.5 - ax, 0.5 - ay);
+          float rim = smoothstep(0.0, 0.04, edge);
+          frag = vec4(mix(vec3(0.03, 0.04, 0.05), vColor, rim), 1.0);
+        }`;
+      function shader(type, source) {
+        const compiled = gl.createShader(type);
+        gl.shaderSource(compiled, source);
+        gl.compileShader(compiled);
+        if (!gl.getShaderParameter(compiled, gl.COMPILE_STATUS)) {
+          cubeGpu.failed = true;
+          cubeGpu.error = gl.getShaderInfoLog(compiled) || "shader";
+          return null;
+        }
+        return compiled;
+      }
+      const vs = shader(gl.VERTEX_SHADER, vert);
+      const fs = shader(gl.FRAGMENT_SHADER, frag);
+      if (!vs || !fs) return false;
+      const program = gl.createProgram();
+      gl.attachShader(program, vs);
+      gl.attachShader(program, fs);
+      gl.linkProgram(program);
+      if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+        cubeGpu.failed = true;
+        cubeGpu.error = gl.getProgramInfoLog(program) || "link";
+        return false;
+      }
+      const vao = gl.createVertexArray();
+      gl.bindVertexArray(vao);
+      const mesh = gl.createBuffer();
+      gl.bindBuffer(gl.ARRAY_BUFFER, mesh);
+      gl.bufferData(gl.ARRAY_BUFFER, cubeMesh(), gl.STATIC_DRAW);
+      gl.enableVertexAttribArray(0);
+      gl.vertexAttribPointer(0, 3, gl.FLOAT, false, 24, 0);
+      gl.enableVertexAttribArray(1);
+      gl.vertexAttribPointer(1, 3, gl.FLOAT, false, 24, 12);
+      const instances = gl.createBuffer();
+      gl.bindBuffer(gl.ARRAY_BUFFER, instances);
+      gl.bufferData(gl.ARRAY_BUFFER, 4000 * 7 * 4, gl.DYNAMIC_DRAW);
+      gl.enableVertexAttribArray(2);
+      gl.vertexAttribPointer(2, 3, gl.FLOAT, false, 28, 0);
+      gl.vertexAttribDivisor(2, 1);
+      gl.enableVertexAttribArray(3);
+      gl.vertexAttribPointer(3, 3, gl.FLOAT, false, 28, 12);
+      gl.vertexAttribDivisor(3, 1);
+      gl.enableVertexAttribArray(4);
+      gl.vertexAttribPointer(4, 1, gl.FLOAT, false, 28, 24);
+      gl.vertexAttribDivisor(4, 1);
+      gl.bindVertexArray(null);
+      gl.enable(gl.DEPTH_TEST);
+      gl.disable(gl.BLEND);
+      gl.enable(gl.CULL_FACE);
+      gl.cullFace(gl.BACK);
+      cubeGpu.gl = gl;
+      cubeGpu.program = program;
+      cubeGpu.vao = vao;
+      cubeGpu.instances = instances;
+      cubeGpu.mvpLoc = gl.getUniformLocation(program, "uMvp");
+      return true;
+    }
+    function syncCubeInstances(volume, selected, planeCount) {
+      const cells = volume.cells;
+      let sig = (selected + 1) * 131 + cells.length + planeCount * 17;
+      for (let i = 0; i < cells.length; i++) {
+        const cell = cells[i];
+        sig = Math.imul(sig, 33) ^ (cell.x + cell.y * 64 + cell.z * 4096 + cell.ch.charCodeAt(0));
+      }
+      if (sig === cubeGpu.sig) return;
+      cubeGpu.sig = sig;
+      const ox = (volume.w - 1) / 2;
+      const oy = (volume.h - 1) / 2;
+      const oz = (Math.max(planeCount, 1) - 1) / 2;
+      const data = new Float32Array(cells.length * 7);
+      const points = [];
+      for (let i = 0; i < cells.length; i++) {
+        const cell = cells[i];
+        const color = GLYPH_COLOR[cell.ch] || [0.38, 0.96, 0.83];
+        const x = cell.x - ox;
+        const y = oy - cell.y;
+        const z = cell.z - oz;
+        const at = i * 7;
+        data[at] = x;
+        data[at + 1] = y;
+        data[at + 2] = z;
+        data[at + 3] = color[0];
+        data[at + 4] = color[1];
+        data[at + 5] = color[2];
+        data[at + 6] = cell.z === selected ? 1 : 0;
+        points.push({ x, y, z, plane: cell.z });
+      }
+      const gl = cubeGpu.gl;
+      gl.bindBuffer(gl.ARRAY_BUFFER, cubeGpu.instances);
+      gl.bufferSubData(gl.ARRAY_BUFFER, 0, data);
+      cubeGpu.count = cells.length;
+      cubePick.points = points;
+    }
+    function cubeCamera(width, height, span) {
+      const fovy = 34 * Math.PI / 180;
+      const dist = (Math.max(span, 1) * 0.78) / Math.tan(fovy / 2) / cubeView.zoom;
+      const cp = Math.cos(cubeView.pitch);
+      const sp = Math.sin(cubeView.pitch);
+      const cy = Math.cos(cubeView.yaw);
+      const sy = Math.sin(cubeView.yaw);
+      const eye = [sy * cp * dist, sp * dist, cy * cp * dist];
+      const view = lookAt(eye, [0, 0, 0], [0, 1, 0]);
+      const proj = perspective(fovy, width / Math.max(height, 1), 0.05, dist + span * 4 + 8);
+      return mul4(proj, view);
     }
     function drawCubes() {
       const canvas = document.getElementById("cubeCanvas");
@@ -1377,64 +1569,39 @@ See [[z=1|Tuesday]] for what's next.
       canvas.dataset.cubes = String(volume.cells.length);
       if (empty) empty.hidden = volume.cells.length > 0;
       const parent = canvas.parentElement;
-      const width = Math.max(2, parent.clientWidth || 800);
-      const height = Math.max(2, parent.clientHeight || 560);
-      const ratio = window.devicePixelRatio || 1;
-      canvas.width = Math.floor(width * ratio);
-      canvas.height = Math.floor(height * ratio);
-      const ctx = canvas.getContext("2d");
-      ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
-      ctx.fillStyle = "#10161a";
-      ctx.fillRect(0, 0, width, height);
-      cubePicks = [];
-      if (!volume.cells.length || !doc) return;
-      const ox = (volume.w - 1) / 2;
-      const oy = (volume.h - 1) / 2;
-      const oz = (doc.planes.length - 1) / 2;
-      const span = Math.max(volume.w, volume.h, doc.planes.length, 1);
-      const scale = (Math.min(width, height) / (span * 2.15)) * cubeView.zoom;
-      const selected = lab.currentIndex || 0;
-      const faces = [
-        { shade: 1, verts: [[0, 1, 0], [1, 1, 0], [1, 1, 1], [0, 1, 1]] },
-        { shade: 0.72, verts: [[0, 0, 1], [1, 0, 1], [1, 1, 1], [0, 1, 1]] },
-        { shade: 0.5, verts: [[1, 0, 0], [1, 0, 1], [1, 1, 1], [1, 1, 0]] },
-        { shade: 0.42, verts: [[0, 0, 0], [0, 0, 1], [0, 1, 1], [0, 1, 0]] },
-      ];
-      const ordered = volume.cells.map((cell) => {
-        const center = projectCube(cell.x - ox + 0.5, oy - cell.y + 0.5, cell.z - oz + 0.5);
-        return { cell, depth: center.depth };
-      }).sort((a, b) => a.depth - b.depth);
-      for (const item of ordered) {
-        const cell = item.cell;
-        const base = GLYPH_COLOR[cell.ch] || [0.38, 0.96, 0.83];
-        const tint = cell.z === selected ? [1, 0.79, 0.44] : base;
-        const origin = [cell.x - ox, oy - cell.y, cell.z - oz];
-        let pick = null;
-        for (const face of faces) {
-          const pts = face.verts.map((v) => {
-            const p = projectCube(origin[0] + v[0], origin[1] + v[1], origin[2] + v[2]);
-            return { sx: width / 2 + p.x * scale, sy: height / 2 - p.y * scale };
-          });
-          const ax = pts[1].sx - pts[0].sx, ay = pts[1].sy - pts[0].sy;
-          const bx = pts[3].sx - pts[0].sx, by = pts[3].sy - pts[0].sy;
-          if (ax * by - ay * bx >= 0) continue;
-          ctx.beginPath();
-          ctx.moveTo(pts[0].sx, pts[0].sy);
-          for (let i = 1; i < pts.length; i++) ctx.lineTo(pts[i].sx, pts[i].sy);
-          ctx.closePath();
-          ctx.fillStyle = "rgba(" + Math.round(tint[0] * face.shade * 255) + "," + Math.round(tint[1] * face.shade * 255) + "," + Math.round(tint[2] * face.shade * 255) + ",0.58)";
-          ctx.fill();
-          ctx.strokeStyle = cell.z === selected
-            ? "rgba(255,201,112,0.95)"
-            : "rgba(" + Math.round(tint[0] * 255) + "," + Math.round(tint[1] * 255) + "," + Math.round(tint[2] * 255) + ",0.75)";
-          ctx.lineWidth = cell.z === selected ? 1.4 : 0.8;
-          ctx.stroke();
-          const sx = (pts[0].sx + pts[1].sx + pts[2].sx + pts[3].sx) / 4;
-          const sy = (pts[0].sy + pts[1].sy + pts[2].sy + pts[3].sy) / 4;
-          if (!pick || item.depth > pick.depth) pick = { x: sx, y: sy, z: cell.z, depth: item.depth };
-        }
-        if (pick) cubePicks.push(pick);
+      const width = parent ? parent.clientWidth : 0;
+      const height = parent ? parent.clientHeight : 0;
+      if (width < 2 || height < 2) return;
+      if (!cubeGpu.gl && !initCubeGl(canvas)) {
+        canvas.dataset.renderer = "none";
+        if (cubeGpu.error) canvas.dataset.glError = cubeGpu.error.slice(0, 240);
+        return;
       }
+      canvas.dataset.renderer = "webgl2";
+      const ratio = Math.min(window.devicePixelRatio || 1, 2);
+      const bufferWidth = Math.floor(width * ratio);
+      const bufferHeight = Math.floor(height * ratio);
+      if (canvas.width !== bufferWidth || canvas.height !== bufferHeight) {
+        canvas.width = bufferWidth;
+        canvas.height = bufferHeight;
+      }
+      const selected = doc ? (lab.currentIndex || 0) : -1;
+      if (volume.cells.length) syncCubeInstances(volume, selected, doc && doc.planes ? doc.planes.length : 1);
+      else { cubeGpu.count = 0; cubeGpu.sig = ""; cubePick.points = []; }
+      const span = Math.max(volume.w, volume.h, doc && doc.planes ? doc.planes.length : 1, 1);
+      const mvp = cubeCamera(width, height, span);
+      const gl = cubeGpu.gl;
+      gl.viewport(0, 0, canvas.width, canvas.height);
+      gl.clearColor(0.063, 0.086, 0.102, 1);
+      gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+      gl.useProgram(cubeGpu.program);
+      gl.bindVertexArray(cubeGpu.vao);
+      gl.uniformMatrix4fv(cubeGpu.mvpLoc, false, mvp);
+      if (cubeGpu.count > 0) gl.drawArraysInstanced(gl.TRIANGLES, 0, 36, cubeGpu.count);
+      gl.bindVertexArray(null);
+      cubePick.mvp = mvp;
+      cubePick.width = width;
+      cubePick.height = height;
     }
     const grid = document.getElementById("grid");
     const stage = document.getElementById("stage");
@@ -1472,7 +1639,7 @@ See [[z=1|Tuesday]] for what's next.
     let cubeDrag = null;
     cubeCanvas.addEventListener("pointerdown", (event) => {
       cubeDrag = { x: event.clientX, y: event.clientY, yaw: cubeView.yaw, pitch: cubeView.pitch, moved: false };
-      cubeCanvas.setPointerCapture(event.pointerId);
+      try { cubeCanvas.setPointerCapture(event.pointerId); } catch (_) { /* synthetic tests have no live pointer */ }
     });
     cubeCanvas.addEventListener("pointermove", (event) => {
       if (!cubeDrag) return;
@@ -1484,16 +1651,23 @@ See [[z=1|Tuesday]] for what's next.
       drawCubes();
     });
     cubeCanvas.addEventListener("pointerup", (event) => {
-      if (cubeDrag && !cubeDrag.moved) {
+      if (cubeDrag && !cubeDrag.moved && cubePick.mvp) {
         const rect = cubeCanvas.getBoundingClientRect();
         const x = event.clientX - rect.left;
         const y = event.clientY - rect.top;
+        const mvp = cubePick.mvp;
         let best = null;
-        for (const pick of cubePicks) {
-          const distance = (pick.x - x) * (pick.x - x) + (pick.y - y) * (pick.y - y);
-          if (distance < 24 * 24 && (!best || distance < best.distance)) best = { distance, z: pick.z };
+        for (const point of cubePick.points) {
+          const px = mvp[0] * point.x + mvp[4] * point.y + mvp[8] * point.z + mvp[12];
+          const py = mvp[1] * point.x + mvp[5] * point.y + mvp[9] * point.z + mvp[13];
+          const pw = mvp[3] * point.x + mvp[7] * point.y + mvp[11] * point.z + mvp[15];
+          if (pw <= 0.001) continue;
+          const sx = (px / pw * 0.5 + 0.5) * cubePick.width;
+          const sy = (1 - (py / pw * 0.5 + 0.5)) * cubePick.height;
+          const distance = (sx - x) * (sx - x) + (sy - y) * (sy - y);
+          if (distance < 28 * 28 && (!best || distance < best.distance)) best = { distance, plane: point.plane };
         }
-        if (best) { lab.goTo(best.z); markOutline(best.z); }
+        if (best) { lab.goTo(best.plane); markOutline(best.plane); }
       }
       cubeDrag = null;
     });
@@ -1522,6 +1696,7 @@ See [[z=1|Tuesday]] for what's next.
       ].join("\n");
       render();
       updateCursor();
+      if (typeof lab.goTo === "function") lab.goTo(1);
       stage.dataset.show = "cubes";
       document.querySelectorAll(".editpreview .pstab").forEach((item) => {
         item.setAttribute("aria-selected", String(item.dataset.pane === "cubes"));
