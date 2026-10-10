@@ -125,7 +125,7 @@
   .pointform{display:flex;gap:8px;margin:0 0 14px}
   .pointform input{flex:1;min-width:0;font:inherit;font-size:14px;padding:8px 12px;border:1px solid var(--hairline);border-radius:4px;background:var(--surface);color:var(--ink)}
   .pointform input:focus-visible{outline:2px solid var(--sheen);outline-offset:2px}
-  .grid{display:grid;grid-template-columns:minmax(180px,240px) minmax(0,1fr) minmax(0,1fr);gap:16px;align-items:stretch}
+  .grid{display:grid;grid-template-columns:minmax(180px,240px) minmax(0,1fr);gap:16px;align-items:stretch}
   .filelist{overflow:auto;flex:1;min-height:240px}
   .filelist button,.filelist .empty{display:block;width:100%;text-align:left;font:inherit;font-size:12px;font-family:var(--code-font);padding:7px 12px;border:0;border-bottom:1px solid var(--hairline);background:transparent;color:var(--ink)}
   .filelist button{cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -135,25 +135,32 @@
   /* The primary share action is anchored to the right edge of the toolbar so the
      primary/secondary hierarchy survives wrapping. */
   .toolbar .primary{margin-left:auto}
-  /* Segmented Source|Live switch: only shown when the layout is too narrow for a
-     useful side-by-side, so the live preview is one tap away (not below the fold). */
-  .paneswitch{display:none;gap:0;margin-bottom:12px;border:1px solid var(--hairline);border-radius:7px;overflow:hidden;width:max-content}
-  .pstab{font:inherit;font-size:12px;font-weight:600;letter-spacing:.03em;color:var(--text-muted);background:var(--surface);border:0;padding:8px 20px;cursor:pointer;transition:.15s}
+  /* Edit and Preview share one panel. Files stays beside it. On a narrow
+     window, Files and the document take turns. */
+  .fileswitch{display:none;gap:0;margin-bottom:12px;border:1px solid var(--hairline);border-radius:7px;overflow:hidden;width:max-content}
+  .editpreview{display:inline-flex;border:1px solid var(--hairline);border-radius:7px;overflow:hidden}
+  .pstab{font:inherit;font-size:12px;font-weight:600;letter-spacing:.03em;text-transform:none;color:var(--text-muted);background:var(--surface);border:0;padding:8px 16px;cursor:pointer;transition:.15s}
   .pstab+.pstab{border-left:1px solid var(--hairline)}
   .pstab[aria-selected="true"]{background:var(--sheen);color:var(--paper)}
   .pstab:focus-visible{outline:2px solid var(--sheen);outline-offset:-2px}
+  .stage[data-show="edit"] .viewer,
+  .stage[data-show="edit"] .outline{display:none}
+  .stage[data-show="preview"] .editor{display:none}
+  .stage .bar{flex-wrap:wrap}
+  .stage .viewer{flex:1;min-height:560px}
   @media(max-width:900px){
     .grid{grid-template-columns:1fr}
-    .paneswitch{display:inline-flex}
-    .grid .viewerPane,.grid .filesPane{display:none}
-    .grid[data-show="live"] .editorPane,.grid[data-show="files"] .editorPane{display:none}
-    .grid[data-show="live"] .viewerPane{display:flex}
+    .fileswitch{display:inline-flex}
+    .grid .filesPane{display:none}
+    .grid[data-show="files"] .stage{display:none}
     .grid[data-show="files"] .filesPane{display:flex}
   }
   .pane{border:1px solid var(--hairline);border-radius:8px;background:var(--surface);overflow:hidden;display:flex;flex-direction:column}
   .pane .bar{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:9px 13px;border-bottom:1px solid var(--hairline);
     font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--text-faint)}
   .pane .bar .right{display:flex;align-items:center;gap:10px;text-transform:none;letter-spacing:.02em}
+  .stage[data-show="edit"] .bar .previewmeta,
+  .stage[data-show="preview"] .bar .editmeta{display:none}
   .badge{display:inline-flex;align-items:center;gap:6px;font-size:11px;padding:3px 8px;border-radius:999px;border:1px solid var(--hairline);color:var(--text-muted)}
   .badge.ok{color:var(--success);border-color:color-mix(in srgb,var(--success) 45%,transparent)}
   .badge.err{color:var(--danger);border-color:color-mix(in srgb,var(--danger) 45%,transparent);cursor:pointer}
@@ -245,7 +252,7 @@
 
     <div class="head">
       <h1>3md viewer<span class="z">.</span></h1>
-      <p class="lead">Point at a public GitHub repo, folder, or file, or open one on this computer. Files stay on the left, the source in the middle, and the live plane view on the right. Search reads every line. <a href="docs.html">docs</a> &middot; <a href="gallery.html">gallery</a></p>
+      <p class="lead">Point at a public GitHub repo, folder, or file, or open one on this computer. Files stay on the left. Edit and Preview share the panel beside them and switch. Search reads every line. <a href="docs.html">docs</a> &middot; <a href="gallery.html">gallery</a></p>
     </div>
 
     <div class="toolbar">
@@ -293,29 +300,29 @@
       <input id="pointInput" type="text" placeholder="github.com/owner/repo, a folder, or a file" aria-label="open a public GitHub repo, folder, or file" autocomplete="off" spellcheck="false" />
       <button class="btn" type="submit">open</button>
     </form>
-    <div class="paneswitch" role="tablist" aria-label="Show files, source, or live preview">
+    <div class="fileswitch" role="tablist" aria-label="Files or the document">
       <button class="pstab" type="button" role="tab" data-pane="files" aria-selected="false">Files</button>
-      <button class="pstab" type="button" role="tab" data-pane="source" aria-selected="true">Source</button>
-      <button class="pstab" type="button" role="tab" data-pane="live" aria-selected="false">Live</button>
+      <button class="pstab" type="button" role="tab" data-pane="document" aria-selected="true">Document</button>
     </div>
-    <div class="grid" id="grid" data-show="source">
+    <div class="grid" id="grid" data-show="document">
       <div class="pane filesPane">
         <div class="bar"><span id="filesTitle">files</span></div>
         <div id="fileList" class="filelist" role="listbox" aria-label="opened files"></div>
       </div>
-      <div class="pane editorPane">
+      <div class="pane stage" id="stage" data-show="edit">
         <div class="bar">
-          <span id="sourceName">source.3md</span>
-          <span class="right"><span id="cursor">Ln 1, Col 1</span> &middot; <span id="counts"></span></span>
+          <div class="editpreview" role="tablist" aria-label="Edit or preview">
+            <button class="pstab" id="editTab" type="button" role="tab" data-pane="edit" aria-selected="true" aria-controls="editorWrap">Edit</button>
+            <button class="pstab" id="previewTab" type="button" role="tab" data-pane="preview" aria-selected="false" aria-controls="previewPane">Preview</button>
+          </div>
+          <span class="right editmeta"><span id="sourceName">source.3md</span><span id="cursor">Ln 1, Col 1</span><span id="counts"></span></span>
+          <span class="right previewmeta"><span id="validBadge" class="badge"><span class="dot"></span><span id="validText">&mdash;</span></span></span>
         </div>
-        <div class="editor" id="editorWrap">
+        <div class="editor" id="editorWrap" role="tabpanel" aria-labelledby="editTab">
           <div class="backdrop" aria-hidden="true"><pre class="hl" id="hl"></pre></div>
           <textarea class="ta" id="editor" spellcheck="false" autocomplete="off" autocapitalize="off" autocorrect="off" wrap="soft" aria-label="3md source editor"></textarea>
         </div>
-      </div>
-      <div class="pane viewerPane">
-        <div class="bar"><span>live viewer</span><span class="right"><span id="validBadge" class="badge"><span class="dot"></span><span id="validText">&mdash;</span></span></span></div>
-        <div class="viewer"><three-md id="lab" role="group" aria-label="Live 3md preview" aria-describedby="planeLive"></three-md></div>
+        <div class="viewer" id="previewPane" role="tabpanel" aria-labelledby="previewTab"><three-md id="lab" role="group" aria-label="Live 3md preview" aria-describedby="planeLive"></three-md></div>
         <div id="planeLive" class="sr-only" aria-live="polite"></div>
         <div class="outline" id="outline" role="group" aria-label="plane outline"></div>
       </div>
@@ -336,7 +343,7 @@
 axis: time
 title: My first 3md
 ---
-Write your own .3md here, or pick an example above. It renders live on the right.
+Write your own .3md here, or pick an example above. Switch to Preview to see it.
 
 @plane z=0 label="Monday"
 # Monday
@@ -1244,15 +1251,37 @@ See [[z=1|Tuesday]] for what's next.
         delete document.body.dataset.loadError;
       }
     }
-    // Source|Live segmented switch (visible only on narrow layouts).
+    // Edit and Preview share one panel. Files stays beside it, and on a narrow
+    // window Files and the document take turns.
     const grid = document.getElementById("grid");
-    document.querySelectorAll(".pstab").forEach((tab) => {
-      tab.addEventListener("click", () => {
-        const pane = tab.dataset.pane;
-        grid.dataset.show = pane;
-        document.querySelectorAll(".pstab").forEach((t) => t.setAttribute("aria-selected", String(t === tab)));
-        if (pane === "live") lab.render && lab.render(); // re-measure now that it's visible
+    const stage = document.getElementById("stage");
+    function selectTab(root, tab, apply) {
+      apply(tab.dataset.pane);
+      root.querySelectorAll(".pstab").forEach((item) => item.setAttribute("aria-selected", String(item === tab)));
+    }
+    function wireTabs(root, apply) {
+      root.addEventListener("keydown", (event) => {
+        if (event.key !== "ArrowRight" && event.key !== "ArrowLeft") return;
+        const tabs = [...root.querySelectorAll(".pstab")];
+        const current = tabs.indexOf(document.activeElement);
+        if (current < 0) return;
+        event.preventDefault();
+        const step = event.key === "ArrowRight" ? 1 : tabs.length - 1;
+        const next = tabs[(current + step) % tabs.length];
+        next.focus();
+        selectTab(root, next, apply);
       });
+      root.querySelectorAll(".pstab").forEach((tab) => {
+        tab.addEventListener("click", () => selectTab(root, tab, apply));
+      });
+    }
+    wireTabs(document.querySelector(".editpreview"), (pane) => {
+      stage.dataset.show = pane;
+      if (pane === "preview" && lab.render) lab.render();
+    });
+    wireTabs(document.querySelector(".fileswitch"), (pane) => {
+      grid.dataset.show = pane;
+      if (pane === "document" && stage.dataset.show === "preview" && lab.render) lab.render();
     });
 
     // Programmatic API for headless agents: set/validate without synthesizing DOM

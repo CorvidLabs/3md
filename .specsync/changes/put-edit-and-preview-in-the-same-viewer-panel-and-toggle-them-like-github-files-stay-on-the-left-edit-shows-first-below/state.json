@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "workflow_version": 2,
+  "workflow_origin_version": 2,
+  "id": "put-edit-and-preview-in-the-same-viewer-panel-and-toggle-them-like-github-files-stay-on-the-left-edit-shows-first-below",
+  "slug": "put-edit-and-preview-in-the-same-viewer-panel-and-toggle-them-like-github-files-stay-on-the-left-edit-shows-first-below",
+  "title": "Put Edit and Preview in the same viewer panel and toggle them like GitHub. Files stay on the left. Edit shows first. Below 900px, Files and the document take turns, and the document panel still switches Edit and Preview.",
+  "description": "Put Edit and Preview in the same viewer panel and toggle them like GitHub. Files stay on the left. Edit shows first. Below 900px, Files and the document take turns, and the document panel still switches Edit and Preview.",
+  "kind": "feature",
+  "state": "draft",
+  "base_commit": "e18f35e2c0c2c11c202342c5bf84b514ee12fe58",
+  "created_at": 1791595505,
+  "updated_at": 1791595557,
+  "affected_specs": [
+    "ThreeMDViewer"
+  ],
+  "affected_paths": [
+    "web/viewer.html",
+    "uitests/viewer.spec.mjs",
+    "hi/tools.md",
+    "specs/ThreeMDViewer"
+  ],
+  "no_spec_change": false,
+  "no_spec_change_rationale": null,
+  "acceptance_criteria": [
+    "On a wide window, files stay on the left while Edit and Preview switch in one panel. Edit shows first and hides the preview. Preview shows the live plane view and hides the editor. Below 900px, Files and the document take turns, and the document still switches Edit and Preview. GitHub open, search, pack, and kind 2 stay. The element stays a text renderer."
+  ],
+  "selected_artifacts": [
+    "context",
+    "requirements",
+    "plan",
+    "tasks",
+    "testing",
+    "docs"
+  ],
+  "dependencies": [],
+  "answers": {
+    "architecture_risk": "no",
+    "public_contract": "yes"
+  }
+}

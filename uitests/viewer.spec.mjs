@@ -101,6 +101,7 @@ test.describe("viewer & editor (viewer.html)", () => {
   test("clicking a plane outline chip focuses that plane", async ({ page }) => {
     await page.goto("/viewer.html");
     await viewerReady(page);
+    await page.click("#previewTab");
     await page.waitForFunction(() => document.querySelectorAll("#outline .ochip").length >= 2);
     await page.click("#outline .ochip:nth-child(2)");
     await page.waitForTimeout(200);
@@ -287,37 +288,86 @@ test.describe("viewer & editor (viewer.html)", () => {
     expect(index).toBe(1);
   });
 
-  test("desktop layout shows files, source, and the live view", async ({ page }) => {
+  test("desktop layout keeps files beside a panel that switches Edit and Preview", async ({ page }) => {
     await page.setViewportSize({ width: 1280, height: 800 });
     await page.goto("/viewer.html");
     await viewerReady(page);
     const vis = await page.evaluate(() => ({
       files: getComputedStyle(document.querySelector(".filesPane")).display,
-      editor: getComputedStyle(document.querySelector(".editorPane")).display,
-      viewer: getComputedStyle(document.querySelector(".viewerPane")).display,
+      editor: getComputedStyle(document.querySelector(".editor")).display,
+      viewer: getComputedStyle(document.querySelector(".viewer")).display,
+      editmeta: getComputedStyle(document.querySelector(".editmeta")).display,
+      previewmeta: getComputedStyle(document.querySelector(".previewmeta")).display,
+      fileswitch: getComputedStyle(document.querySelector(".fileswitch")).display,
+      show: document.getElementById("stage").dataset.show,
       point: document.getElementById("pointInput").getAttribute("aria-label"),
     }));
     expect(vis.files).not.toBe("none");
     expect(vis.editor).not.toBe("none");
-    expect(vis.viewer).not.toBe("none");
+    expect(vis.viewer).toBe("none");
+    expect(vis.editmeta).not.toBe("none");
+    expect(vis.previewmeta).toBe("none");
+    expect(vis.fileswitch).toBe("none");
+    expect(vis.show).toBe("edit");
     expect(vis.point).toContain("GitHub");
+    await page.click("#previewTab");
+    await page.waitForTimeout(150);
+    const preview = await page.evaluate(() => ({
+      files: getComputedStyle(document.querySelector(".filesPane")).display,
+      editor: getComputedStyle(document.querySelector(".editor")).display,
+      viewer: getComputedStyle(document.querySelector(".viewer")).display,
+      editmeta: getComputedStyle(document.querySelector(".editmeta")).display,
+      previewmeta: getComputedStyle(document.querySelector(".previewmeta")).display,
+      planes: document.getElementById("lab").shadowRoot.querySelectorAll(".plane").length,
+      show: document.getElementById("stage").dataset.show,
+    }));
+    expect(preview.files).not.toBe("none");
+    expect(preview.editor).toBe("none");
+    expect(preview.viewer).not.toBe("none");
+    expect(preview.editmeta).toBe("none");
+    expect(preview.previewmeta).not.toBe("none");
+    expect(preview.planes).toBeGreaterThan(0);
+    expect(preview.show).toBe("preview");
+    await page.click("#editTab");
+    const back = await page.evaluate(() => ({
+      editor: getComputedStyle(document.querySelector(".editor")).display,
+      viewer: getComputedStyle(document.querySelector(".viewer")).display,
+    }));
+    expect(back.editor).not.toBe("none");
+    expect(back.viewer).toBe("none");
   });
 
-  test("narrow layout offers a Source|Live switch that swaps the visible pane", async ({ page }) => {
+  test("narrow layout switches Files and the document, and Edit and Preview still switch", async ({ page }) => {
     await page.setViewportSize({ width: 800, height: 760 });
     await page.goto("/viewer.html");
     await page.waitForFunction(() => document.getElementById("lab")?.shadowRoot !== undefined);
-    const sw = await page.evaluate(() => getComputedStyle(document.querySelector(".paneswitch")).display);
-    expect(sw).not.toBe("none"); // switch is visible on narrow
-    // Default shows the editor; tapping Live shows the viewer and hides the editor.
-    await page.click('.pstab[data-pane="live"]');
-    await page.waitForTimeout(150);
-    const vis = await page.evaluate(() => ({
-      viewer: getComputedStyle(document.querySelector(".viewerPane")).display,
-      editor: getComputedStyle(document.querySelector(".editorPane")).display,
+    const start = await page.evaluate(() => ({
+      fileswitch: getComputedStyle(document.querySelector(".fileswitch")).display,
+      files: getComputedStyle(document.querySelector(".filesPane")).display,
+      stage: getComputedStyle(document.querySelector(".stage")).display,
+      editor: getComputedStyle(document.querySelector(".editor")).display,
+      viewer: getComputedStyle(document.querySelector(".viewer")).display,
     }));
-    expect(vis.viewer).not.toBe("none");
-    expect(vis.editor).toBe("none");
+    expect(start.fileswitch).not.toBe("none");
+    expect(start.files).toBe("none");
+    expect(start.stage).not.toBe("none");
+    expect(start.editor).not.toBe("none");
+    expect(start.viewer).toBe("none");
+    await page.click("#previewTab");
+    await page.waitForTimeout(150);
+    const preview = await page.evaluate(() => ({
+      viewer: getComputedStyle(document.querySelector(".viewer")).display,
+      editor: getComputedStyle(document.querySelector(".editor")).display,
+    }));
+    expect(preview.viewer).not.toBe("none");
+    expect(preview.editor).toBe("none");
+    await page.click('.fileswitch .pstab[data-pane="files"]');
+    const files = await page.evaluate(() => ({
+      stage: getComputedStyle(document.querySelector(".stage")).display,
+      files: getComputedStyle(document.querySelector(".filesPane")).display,
+    }));
+    expect(files.stage).toBe("none");
+    expect(files.files).not.toBe("none");
   });
 
   test("an empty document reads as a neutral prompt, not a red error", async ({ page }) => {
