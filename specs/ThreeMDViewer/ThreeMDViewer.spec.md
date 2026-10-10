@@ -1,6 +1,6 @@
 ---
 module: ThreeMDViewer
-version: 17
+version: 18
 status: active
 files:
   - web/viewer.html
@@ -163,6 +163,7 @@ Acceptance Criteria:
 | 2026-10-10 | SpecSync | bring-sculpt-slice-editing-to-the-browser-with-a-visual-grid-drawing-tools-undo-and-live-3d-reference: Bring Sculpt slice editing to the browser with a visual grid, drawing tools, undo and live 3D reference |
 | 2026-10-10 | SpecSync | add-matching-x-y-z-axis-rotation-gizmos-and-precise-camera-steps-to-sculpt-and-the-viewer: Add matching X Y Z axis rotation gizmos and precise camera steps to Sculpt and the viewer |
 | 2026-10-10 | agent:codex | Repair the frozen small drawable being stretched across Cubes after Slice or phone layout; update only changed bitmap dimensions and retain the context, geometry and camera. |
+| 2026-10-10 | SpecSync | repair-blurry-cubes-and-slice-canvases-after-view-and-display-size-changes-while-retaining-the-webgl-context-and-camera: Repair blurry Cubes and Slice canvases after view and display-size changes while retaining the WebGL context and camera parity |
 
 ## Slice and precise camera parity
 
