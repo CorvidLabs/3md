@@ -18,3 +18,9 @@ Native behavior was already verified in `../viewer-slice/`; it is unchanged by t
 
 - `web/viewer.html`: `d5c226e7ccb6b46c7e462c6d72a89772138080dce9269f0813cd0979d10116b8`
 - `uitests/viewer.spec.mjs`: `59894ffd439caff704f34d3fba39425e991f854fcfe83a73aca673b0883c1c97`
+
+## Repository verification and provenance
+
+Pinned Trust 1.2.2 with Fledge 1.7.2 passed on implementation commit `95c1213886b853a7b945fd833a5af02fa0f8128d`; Augur returned review at risk 36, with configured soft provenance degradation. The full configured verification lane passed. Strict root specs passed at 55/55 files and Hi passed 87 criteria. Source digests above bind the browser results to this implementation; later lifecycle/materialization records do not change the HTML or tests.
+
+Actual unsigned agent:codex attestation was recorded after the lane passed. The unchanged strict Attest policy rejects the unavailable permitted signature and reviewer allow-list, as shown in `attest-policy.json`. This is not a human review or signed provenance claim, and no policy was changed. Lifecycle closure is recorded separately in its supported receipt.
