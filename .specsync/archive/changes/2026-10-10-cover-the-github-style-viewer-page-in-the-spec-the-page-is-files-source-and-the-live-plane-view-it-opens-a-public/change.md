@@ -1,6 +1,6 @@
 ---
 id: cover-the-github-style-viewer-page-in-the-spec-the-page-is-files-source-and-the-live-plane-view-it-opens-a-public
-state: implementing
+state: archived
 type: feature
 base_commit: 84307639c2f24f6a23418a2b712f52a1d5b37551
 ---

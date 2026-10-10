@@ -7,11 +7,11 @@
   "title": "Cover the GitHub-style viewer page in the spec. The page is files, source, and the live plane view. It opens a public GitHub repo, folder, or file, or a local file or folder. Search reads every line and opens that plane. Markdown headings become planes. Opened files pack into one text document and download as uncompressed kind 2. The three-md element stays a text renderer.",
   "description": "Cover the GitHub-style viewer page in the spec. The page is files, source, and the live plane view. It opens a public GitHub repo, folder, or file, or a local file or folder. Search reads every line and opens that plane. Markdown headings become planes. Opened files pack into one text document and download as uncompressed kind 2. The three-md element stays a text renderer.",
   "kind": "feature",
-  "state": "verifying",
+  "state": "accepted",
   "canonical_applied": true,
   "base_commit": "84307639c2f24f6a23418a2b712f52a1d5b37551",
   "created_at": 1791591845,
-  "updated_at": 1791593386,
+  "updated_at": 1791593998,
   "affected_specs": [
     "ThreeMDViewer"
   ],

@@ -25,3 +25,9 @@ spec: ThreeMDViewer.spec.md
 
 - Rebuild the page bundle with `bun build ./web/open-document.ts --outfile ./web/assets/open-document.js --format esm --target browser --minify`.
 - Leave `web/assets/three-md.js` on the element build.
+
+## Lessons
+
+- The page shipped in PR 90 with VIEWER-6 before this module existed. `specsync check` on the library specs stayed green and still left `web/viewer.html` outside every spec file list. The page is its own module.
+- A GitHub host check uses `URL.hostname`. The loader test's substring match of `raw.githubusercontent.com` was the CodeQL finding.
+- Leif reviewed the change as `user:0xLeif` on 2026-10-10. It was finalized on the follow-up pull request after PR 90 had merged.

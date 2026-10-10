@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "workflow_version": 2,
+  "workflow_origin_version": 2,
+  "id": "cover-the-github-style-viewer-page-in-the-spec-the-page-is-files-source-and-the-live-plane-view-it-opens-a-public",
+  "slug": "cover-the-github-style-viewer-page-in-the-spec-the-page-is-files-source-and-the-live-plane-view-it-opens-a-public",
+  "title": "Cover the GitHub-style viewer page in the spec. The page is files, source, and the live plane view. It opens a public GitHub repo, folder, or file, or a local file or folder. Search reads every line and opens that plane. Markdown headings become planes. Opened files pack into one text document and download as uncompressed kind 2. The three-md element stays a text renderer.",
+  "description": "Cover the GitHub-style viewer page in the spec. The page is files, source, and the live plane view. It opens a public GitHub repo, folder, or file, or a local file or folder. Search reads every line and opens that plane. Markdown headings become planes. Opened files pack into one text document and download as uncompressed kind 2. The three-md element stays a text renderer.",
+  "kind": "feature",
+  "state": "archived",
+  "canonical_applied": true,
+  "base_commit": "84307639c2f24f6a23418a2b712f52a1d5b37551",
+  "created_at": 1791591845,
+  "updated_at": 1791594039,
+  "affected_specs": [
+    "ThreeMDViewer"
+  ],
+  "affected_paths": [
+    "web/viewer.html",
+    "web/gather.ts",
+    "web/github-source.ts",
+    "web/open-document.ts",
+    "web/assets/open-document.js",
+    "hi/tools.md",
+    "uitests/viewer.spec.mjs"
+  ],
+  "no_spec_change": false,
+  "no_spec_change_rationale": null,
+  "acceptance_criteria": [
+    "The spec states files, source, and live view; a public GitHub repo, folder, or file; a local file or folder; every-line search that opens that plane; section planes; pack; kind 2 download; and the element stays a text renderer. Evidence is the existing bun tests and the Playwright viewer spec."
+  ],
+  "selected_artifacts": [
+    "context",
+    "requirements",
+    "plan",
+    "tasks",
+    "testing",
+    "docs",
+    "design",
+    "research"
+  ],
+  "dependencies": [],
+  "answers": {
+    "architecture_risk": "yes",
+    "public_contract": "yes"
+  }
+}

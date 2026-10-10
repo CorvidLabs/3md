@@ -1,0 +1,12 @@
+{
+  "schema_version": 2,
+  "change_id": "cover-the-github-style-viewer-page-in-the-spec-the-page-is-files-source-and-the-live-plane-view-it-opens-a-public",
+  "implementation_commit": "418acbc17c43b7fac48a16b22e1a195e077b6a81",
+  "implementation_tree": "5664855ae4b287d494dbf51d322bd0747445f260",
+  "contract_digest": "ab31ab533facfd4edea86e81c683133d78da5984b03657295bb6bd49a0e3fd3b",
+  "workspace_digest": "69090f4de523d8ea774b38210a41c8a0bfef30d1c9e6b9a3f2a16396b89ea411",
+  "closing_digest": "22f4565d7cebd91076fcbf515b84c438131ac309368cd1fb193bf39ad0cdc17a",
+  "review_digest": "d6623c743c663791ccdf4432a20be711c61c782548fec127d8e045b078ae2351",
+  "finalization_digest": "7eada753bd294efde3207fc76e1312da66c8b8020d3551ce3d2cb57a3fab3c34",
+  "timestamp": 1791593998
+}
