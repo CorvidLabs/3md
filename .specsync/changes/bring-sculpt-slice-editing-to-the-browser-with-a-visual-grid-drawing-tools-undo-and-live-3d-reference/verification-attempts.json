@@ -57,6 +57,25 @@
         "REQ-ThreeMDViewer-003",
         "REQ-ThreeMDViewer-008"
       ]
+    },
+    {
+      "timestamp": 1791655699,
+      "commit": "0f32c12ab9f932c428f319d0bf38a02f3cf6f1da",
+      "contract_digest": "c0b8195b500e020a9703bb7edd72d722e7f379c81edd26658c5b1473356c2d6f",
+      "execution_digest": "8c0c3460123946ea2d50872aab0d8775180c71215745e6aad70feea619be0636",
+      "workspace_digest": "fde013fc78a6110e0c0b88de16f5f6e7522e6561a06c0a5c5fd273d884ed5278",
+      "passed": true,
+      "commands": [
+        {
+          "command": "specsync check --spec ThreeMDViewer --strict",
+          "success": true,
+          "exit_code": 0
+        }
+      ],
+      "requirement_ids": [
+        "REQ-ThreeMDViewer-003",
+        "REQ-ThreeMDViewer-008"
+      ]
     }
   ]
 }
