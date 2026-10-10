@@ -1,6 +1,6 @@
 ---
 id: bring-sculpt-slice-editing-to-the-browser-with-a-visual-grid-drawing-tools-undo-and-live-3d-reference
-state: implementing
+state: archived
 type: feature
 base_commit: fa61988c163583e5e03cbe00f301b036f37dd7b2
 ---
