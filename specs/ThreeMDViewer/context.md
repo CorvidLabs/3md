@@ -40,3 +40,7 @@ spec: ThreeMDViewer.spec.md
 - Leif directly requested continued UI and UX work on 2026-10-09. This covers the compact workspace and controls in the existing page scope; it does not record definition approval, human diff review, or a merge.
 - The canvas occupies the space above the camera strip. Framing and picking use its actual client dimensions; changing view or viewport still does not resize an established WebGL bitmap.
 - Export and conversion actions use a native disclosure with natural button focus, Escape dismissal, and outside-click closure. The source download shortcut preserves editor focus.
+
+- PR 92 has merged. Leif requested a new fix PR for file navigation. Draft state belongs to the page and survives file and composition-entry switches within the current collection. It is not browser storage or a write to the source files. The existing definition remains unapproved.
+
+- File activation focuses the document before restoring its caret. Chromium clears a restored selection when the editor remains blurred; focus-first restoration passes in both engines. Packing uses the current draft of the active document for each opened file, without rewriting composition profiles. The line index is reused until a draft or the collection changes.

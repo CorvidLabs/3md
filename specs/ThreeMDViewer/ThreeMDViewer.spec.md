@@ -1,6 +1,6 @@
 ---
 module: ThreeMDViewer
-version: 8
+version: 9
 status: active
 files:
   - web/viewer.html
@@ -76,6 +76,8 @@ The `<three-md>` element stays a text renderer. Decode, composition, linked fold
 6. Apple LZFSE is refused. The element stays a text renderer. The library stays free of filesystem and network I/O.
 7. The workspace SHALL keep infrequent export and conversion actions in the Document disclosure, show insert tools only in Edit, and show the document title in every view. Tabs and the single-row plane outline SHALL provide one tab stop per group, with arrow, Home, and End navigation. Fit SHALL restore yaw 0.6, pitch 0.35, and zoom 1 without changing source or the selected slice. Camera buttons and the focused canvas SHALL support bounded zoom, and arrow keys SHALL orbit the focused canvas. Camera controls SHALL sit below the drawing without covering cubes. A document without a cube grid and an unavailable WebGL2 context SHALL offer Preview while preserving the source. The Document disclosure closes after an action, outside click, or Escape; Escape returns focus to its summary. The source download shortcut keeps focus in Edit. GitHub open exposes a busy state, prevents duplicate submits, and recovers its controls even on failure. Zoom is bounded from 0.45 to 3.2. Camera controls use the canvas dimensions for framing and occupy a separate strip below it.
 
+8. File and composition-entry navigation SHALL preserve current edits, caret, and selected plane within the open collection. Edited documents SHALL be identified in every view. Opened files SHALL support filtering and keyboard navigation. Choosing a file or search result on a narrow screen SHALL reveal the document. Search and packing SHALL use current drafts. Failed local opens SHALL preserve the current collection. Explicit document navigation SHALL replace a stale source query with the current document hash. Drafts are in memory for the current collection. Download exports the current document and does not write the original file or clear its Edited marker. Opening another collection or refreshing clears these session drafts. Linked entries share their draft with the matching source file. Composition downloads remain exports of the selected document; edits do not rewrite the composition profile.
+
 The cube input keeps at most 12 distinct non-space characters, at most 64 columns and 64 rows per plane, and at most 4000 occupied cells. Space, dot, and tab are empty. Cube painting and erasing into source, 256 cubed volumes, sparse worlds, OBJ export, and changes to Sculpt are outside this pass. The page does not rebuild the element or open-document bundles.
 
 ## Behavioral Examples
@@ -142,3 +144,5 @@ The cube input keeps at most 12 distinct non-space characters, at most 64 column
 | 2026-10-10 | ThreeMDViewer change | Draw every cube face. Each cell is a solid cube. |
 | 2026-10-09 | agent:codex | Match Sculpt fill, glyph edges, gold selected-slice edges, background, document axes, and camera framing; retain one instanced draw and geometry reuse. |
 | 2026-10-09 | agent:codex | Compact the workspace, group document actions, add Fit and accessible camera/slice controls, and clarify empty and loading states under Leif’s request to continue improving UI and UX. The layout definition remains an unapproved draft. |
+
+| 2026-10-10 | agent:codex | Preserve file and composition drafts across navigation, expose edited state, and improve file filtering, keyboard navigation, mobile reveal, and current-document URLs in a follow-up PR after PR 92 merged. The definition remains an unapproved draft. |

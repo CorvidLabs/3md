@@ -35,3 +35,7 @@ spec: ThreeMDViewer.spec.md
 - **QA**: agent:codex local browser and visual verification; human review pending
 - **Design**: n/a
 - **Dev**: pending
+
+- [x] Preserve file, linked-entry, invalid, and empty drafts with caret and selected plane across navigation.
+- [x] Mark edits, filter files, navigate by keyboard, reveal phone documents, and avoid stale source queries.
+- [x] Search and pack current drafts, and preserve the collection after a failed open.

@@ -1,4 +1,22 @@
 import { test, expect } from "@playwright/test";
+import { mkdtemp, mkdir, writeFile, rm, readFile } from "node:fs/promises";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
+
+const draftDocument = (title, body = "Original marker") => `---\n3md: 1.0\naxis: layer\ntitle: ${title}\n---\n@plane z=0 label="First"\n${body}\n@plane z=1 label="Second"\nSecond marker\n`;
+async function openCollection(page, files) {
+  const directory = await mkdtemp(join(tmpdir(), "3md-viewer-drafts-"));
+  try {
+    for (const [path, text] of Object.entries(files)) {
+      const target = join(directory, path);
+      await mkdir(join(target, ".."), { recursive: true });
+      await writeFile(target, text);
+    }
+    await page.locator("#folderInput").setInputFiles(directory);
+    await expect(page.locator("#fileList button")).toHaveCount(Object.keys(files).length);
+  } finally { await rm(directory, { recursive: true, force: true }); }
+}
+const openedFile = (page, name) => page.locator("#fileList button").filter({ has: page.locator(".file-name", { hasText: name }) });
 
 // The official viewer/editor (web/viewer.html): live-edit any 3md and see it
 // render in the <three-md> component, with shareable links.
@@ -907,6 +925,179 @@ test.describe("viewer & editor (viewer.html)", () => {
     await page.click("#cubePreview");
     await expect(page.locator("#stage")).toHaveAttribute("data-show", "preview");
     expect(await page.evaluate(() => document.getElementById("lab").document.title)).toBe("Small sculpture");
+  });
+
+  test("file switches preserve edited, invalid, and empty drafts with caret and slice", async ({ page }) => {
+    await page.goto("/viewer.html");
+    await viewerReady(page);
+    await openCollection(page, { "a.3md": draftDocument("A"), "nested/b.3md": draftDocument("B") });
+    await openedFile(page, "a.3md").click();
+    await showEditor(page);
+    const original = await page.locator("#editor").inputValue();
+    const changed = draftDocument("A edited", "Unique draft text");
+    await page.fill("#editor", changed);
+    await page.evaluate(() => {
+      document.getElementById("editor").setSelectionRange(20, 25);
+      document.getElementById("lab").goTo(1);
+    });
+    await openedFile(page, "b.3md").click();
+    await openedFile(page, "a.3md").click();
+    await expect(page.locator("#editor")).toHaveValue(changed);
+    expect(await page.evaluate(() => {
+      const ed = document.getElementById("editor");
+      return { start: ed.selectionStart, end: ed.selectionEnd, plane: document.getElementById("lab").currentIndex };
+    })).toEqual({ start: 20, end: 25, plane: 1 });
+    await expect(page.locator("#draftState")).toBeVisible();
+    await expect(openedFile(page, "a.3md")).toHaveAttribute("data-edited", "true");
+    await page.click("#documentMenu summary");
+    const downloadEvent = page.waitForEvent("download");
+    await page.click("#dlBtn");
+    const download = await downloadEvent;
+    expect(await readFile(await download.path(), "utf8")).toBe(changed);
+    await expect(page.locator("#draftState")).toBeVisible();
+    for (const draft of ["invalid draft kept verbatim", ""]) {
+      await page.fill("#editor", draft);
+      await openedFile(page, "b.3md").click();
+      await openedFile(page, "a.3md").click();
+      await expect(page.locator("#editor")).toHaveValue(draft);
+    }
+    await page.fill("#editor", original);
+    await expect(page.locator("#draftState")).toBeHidden();
+    await expect(openedFile(page, "a.3md")).toHaveAttribute("data-edited", "false");
+  });
+
+  test("composition entry switches preserve each draft without copying it into another entry", async ({ page }) => {
+    await page.goto("/viewer.html");
+    await viewerReady(page);
+    await page.waitForFunction(() => window.threeMdCatalogCount > 200);
+    await page.fill("#findExample", "Extensions/shared-grove.3md");
+    await page.locator("#findList button", { hasText: "layer · Extensions/shared-grove.3md" }).click();
+    await showEditor(page);
+    const rootId = await page.locator("#piece").inputValue();
+    const rootSource = await page.locator("#editor").inputValue();
+    const changedRoot = rootSource + "\nRoot draft marker\n";
+    await page.fill("#editor", changedRoot);
+    await page.locator("#piece").focus();
+    await page.selectOption("#piece", "canopy");
+    await expect(page.locator("#piece")).toBeFocused();
+    const canopySource = await page.locator("#editor").inputValue();
+    expect(canopySource).not.toContain("Root draft marker");
+    const changedCanopy = canopySource + "\nCanopy draft marker\n";
+    await page.fill("#editor", changedCanopy);
+    await page.selectOption("#piece", rootId);
+    await expect(page.locator("#editor")).toHaveValue(changedRoot);
+    await page.selectOption("#piece", "canopy");
+    await expect(page.locator("#editor")).toHaveValue(changedCanopy);
+    await page.click("#cubesTab");
+    await expect(page.locator("#draftState")).toBeVisible();
+    await expect(page.locator("#sourceName")).toBeVisible();
+  });
+
+  test("linked entries and file navigation share the same draft", async ({ page }) => {
+    await page.goto("/viewer.html");
+    await viewerReady(page);
+    const files = {};
+    for (const path of ["scene.3md", "models/house.3md", "models/tree.3md", "models/tower.3md"]) {
+      files[path] = await readFile(new URL(`../Examples/LinkedVillage/${path}`, import.meta.url), "utf8");
+    }
+    await openCollection(page, files);
+    await showEditor(page);
+    const rootId = await page.locator("#piece").inputValue();
+    const houseId = await page.locator("#piece option").evaluateAll((options) => options.find((option) => option.textContent.endsWith("models/house.3md")).value);
+    await page.selectOption("#piece", houseId);
+    const changed = (await page.locator("#editor").inputValue()) + "\nLinked house draft\n";
+    await page.fill("#editor", changed);
+    await openedFile(page, "house.3md").click();
+    await expect(page.locator("#editor")).toHaveValue(changed);
+    const revised = changed + "From the file list\n";
+    await page.fill("#editor", revised);
+    await openedFile(page, "scene.3md").click();
+    await page.selectOption("#piece", rootId);
+    await page.selectOption("#piece", houseId);
+    await expect(page.locator("#editor")).toHaveValue(revised);
+    await expect(openedFile(page, "house.3md")).toHaveAttribute("data-edited", "true");
+  });
+
+  test("search and packing use drafts rather than original file text", async ({ page }) => {
+    await page.goto("/viewer.html");
+    await viewerReady(page);
+    await openCollection(page, { "a.3md": draftDocument("A"), "b.3md": draftDocument("B") });
+    await openedFile(page, "a.3md").click();
+    await showEditor(page);
+    const changed = draftDocument("A", "DraftOnlyNeedle9381");
+    await page.fill("#editor", changed);
+    await openedFile(page, "b.3md").click();
+    await page.fill("#findExample", "DraftOnlyNeedle9381");
+    await page.locator("#findList button", { hasText: "DraftOnlyNeedle9381" }).click();
+    await expect(page.locator("#editor")).toHaveValue(changed);
+    await page.click("#documentMenu summary");
+    await page.click("#packBtn");
+    expect(await page.locator("#editor").inputValue()).toContain("DraftOnlyNeedle9381");
+  });
+
+  test("file filtering, keyboard selection, and phone opens reveal the document", async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto("/viewer.html");
+    await viewerReady(page);
+    await page.getByRole("tab", { name: "Files", exact: true }).click();
+    await openCollection(page, { "a.3md": draftDocument("A"), "nested/b.3md": draftDocument("B") });
+    await expect(page.locator("#grid")).toHaveAttribute("data-show", "document");
+    await page.getByRole("tab", { name: "Files", exact: true }).click();
+    await page.fill("#fileFilter", "not-here");
+    await expect(page.locator("#fileList")).toContainText("No files match");
+    await page.locator("#fileFilter").press("Escape");
+    await expect(page.locator("#fileList button")).toHaveCount(2);
+    await page.locator("#fileFilter").press("ArrowDown");
+    await page.keyboard.press("End");
+    await expect(openedFile(page, "b.3md")).toBeFocused();
+    await page.keyboard.press("Enter");
+    await expect(page.locator("#grid")).toHaveAttribute("data-show", "document");
+    await expect(page.locator("#sourceName")).toHaveText("b.3md");
+    await expect(page.locator("#cubeCanvas")).toBeFocused();
+    expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(390);
+    await page.getByRole("tab", { name: "Files", exact: true }).click();
+    await page.fill("#findExample", "Second marker");
+    await page.locator("#findList button").filter({ hasText: "Second marker" }).first().click();
+    await expect(page.locator("#grid")).toHaveAttribute("data-show", "document");
+    expect(await page.evaluate(() => document.getElementById("lab").currentIndex)).toBe(1);
+  });
+
+  test("a failed local open preserves the collection and current draft", async ({ page }) => {
+    await page.goto("/viewer.html");
+    await viewerReady(page);
+    await openCollection(page, { "a.3md": draftDocument("A"), "b.3md": draftDocument("B") });
+    await openedFile(page, "a.3md").click();
+    await showEditor(page);
+    const changed = draftDocument("A", "Keep after failed open");
+    await page.fill("#editor", changed);
+    await page.locator("#fileInput").setInputFiles({ name: "broken.3md", mimeType: "text/plain", buffer: Buffer.from("invalid document") });
+    await expect(page.locator("#status")).toHaveClass(/err/);
+    await page.waitForTimeout(350); // A pending editor render must not clear the open error.
+    await expect(page.locator("#status")).toHaveClass(/err/);
+    await expect(page.locator("#fileList button")).toHaveCount(2);
+    await expect(page.locator("#editor")).toHaveValue(changed);
+    await openedFile(page, "b.3md").click();
+    await openedFile(page, "a.3md").click();
+    await expect(page.locator("#editor")).toHaveValue(changed);
+  });
+
+  test("explicit document navigation removes stale source queries and reloads the chosen source", async ({ page }) => {
+    const old = draftDocument("Old source");
+    await page.route("**/original-document.3md", (route) => route.fulfill({ status: 200, contentType: "text/plain", body: old }));
+    await page.goto("/viewer.html?src=original-document.3md&theme=dark");
+    await viewerReady(page);
+    await expect(page.locator("#documentTitle")).toHaveText("Old source");
+    await page.click("#cubeSample");
+    expect(new URL(page.url()).searchParams.has("src")).toBe(false);
+    expect(new URL(page.url()).searchParams.get("theme")).toBe("dark");
+    await page.reload();
+    await viewerReady(page);
+    await expect(page.locator("#documentTitle")).toHaveText("Small sculpture");
+    await openCollection(page, { "a.3md": draftDocument("A"), "b.3md": draftDocument("B") });
+    await openedFile(page, "b.3md").click();
+    await page.reload();
+    await viewerReady(page);
+    await expect(page.locator("#documentTitle")).toHaveText("B");
   });
 
 });

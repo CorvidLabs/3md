@@ -125,7 +125,12 @@
   .edittools{display:none;gap:8px;padding:8px 12px;border-bottom:1px solid var(--hairline);flex-shrink:0}
   .stage[data-show="edit"] .edittools{display:flex}
   .edittools .btn{font-size:11px;padding:6px 9px}
-  .document-title{flex:1;font-size:12px;color:var(--ink);text-transform:none;letter-spacing:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+  .document-heading{flex:1;min-width:90px;display:flex;align-items:center;gap:8px}
+  .document-heading>div{min-width:0}
+  .document-source{display:block;font:10px var(--code-font);color:var(--text-faint);text-transform:none;letter-spacing:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-top:3px}
+  .draft-state{font:11px var(--ui-font);color:var(--warning);text-transform:none;letter-spacing:0;flex-shrink:0}
+  .draft-state[hidden]{display:none}
+  .document-title{display:block;font-size:12px;color:var(--ink);text-transform:none;letter-spacing:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
   .piecewrap{display:flex;align-items:center;gap:8px;padding:7px 12px;border-bottom:1px solid var(--hairline);font-size:12px}
   .piecewrap[hidden]{display:none}
   .piecewrap select{max-width:none;min-width:0;flex:1}
@@ -135,7 +140,13 @@
   .grid{display:grid;grid-template-columns:minmax(180px,240px) minmax(0,1fr);gap:12px;align-items:stretch;flex:1;min-height:260px}
   .filelist{overflow:auto;flex:1;min-height:0}
   .filelist button,.filelist .empty{display:block;width:100%;text-align:left;font:inherit;font-size:12px;font-family:var(--code-font);padding:7px 12px;border:0;border-bottom:1px solid var(--hairline);background:transparent;color:var(--ink)}
-  .filelist button{cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .filelist button{cursor:pointer;position:relative;padding:10px 24px 10px 12px;min-height:44px}
+  .filelist .file-name,.filelist .file-path{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .filelist .file-path{font:10px var(--code-font);color:var(--text-faint);margin-top:4px}
+  .filelist button[data-edited="true"]::after{content:"";position:absolute;right:12px;top:16px;width:6px;height:6px;border-radius:50%;background:var(--warning)}
+  .file-filter{margin:10px 12px;min-width:0;font:12px var(--ui-font);color:var(--ink);background:var(--paper);border:1px solid var(--hairline);border-radius:4px;padding:8px 10px}
+  .file-filter[hidden]{display:none}
+  .file-filter:focus-visible{outline:2px solid var(--sheen);outline-offset:2px}
   .filelist button:hover,.filelist button:focus-visible,.filelist button[aria-current="true"]{background:color-mix(in srgb,var(--sheen) 12%,var(--surface));outline:none}
   .filelist .empty{color:var(--text-faint);font-family:var(--ui-font);line-height:1.6;padding:16px 12px}
   .filelist .empty strong{display:block;font-size:13px;font-weight:500;color:var(--ink);margin-bottom:6px}
@@ -368,6 +379,7 @@
     <div class="grid" id="grid" data-show="document">
       <div class="pane filesPane">
         <div class="bar"><span id="filesTitle">files</span></div>
+        <input id="fileFilter" class="file-filter" type="search" placeholder="Filter files" aria-label="Filter opened files" hidden />
         <div id="fileList" class="filelist" role="listbox" aria-label="opened files"></div>
       </div>
       <div class="pane stage" id="stage" data-show="cubes">
@@ -377,8 +389,8 @@
             <button class="pstab" id="previewTab" type="button" role="tab" data-pane="preview" aria-selected="false" aria-controls="previewPane">Preview</button>
             <button class="pstab" id="cubesTab" type="button" role="tab" data-pane="cubes" aria-selected="true" aria-controls="cubesPane">Cubes</button>
           </div>
-          <span class="document-title" id="documentTitle">Small sculpture</span>
-          <span class="right editmeta"><span id="sourceName">source.3md</span><span id="cursor">Ln 1, Col 1</span><span id="counts"></span></span>
+          <div class="document-heading"><div><span class="document-title" id="documentTitle">Small sculpture</span><span class="document-source" id="sourceName">source.3md</span></div><span class="draft-state" id="draftState" hidden title="Changes are kept in this open collection until you refresh or open another. Download this document to keep them.">Edited</span></div>
+          <span class="right editmeta"><span id="cursor">Ln 1, Col 1</span><span id="counts"></span></span>
           <span class="right previewmeta"><span id="validBadge" class="badge"><span class="dot"></span><span id="validText">&mdash;</span></span></span>
         </div>
         <div class="piecewrap" id="pieceWrap" hidden>
@@ -642,9 +654,58 @@ title: Small sculpture
 
     let openNote = "";
     let openedPieces = [];
+    let activeSession = null;
+    let fileSessions = new Map();
+    let fileDrafts = new Map();
+    let filesLabel = "";
+    let lineIndexDirty = true;
+    const baseName = (path) => path.split("/").pop() || path;
+    const draftPiece = () => activeSession?.pieces.find((piece) => piece.id === activeSession.activeId);
+    const sessionEdited = (session) => session.pieces.some((piece) => piece.state.text !== piece.state.original);
+    function saveCaret() {
+      const piece = draftPiece();
+      if (!piece || document.activeElement !== ed) return;
+      Object.assign(piece.state, { start: ed.selectionStart, end: ed.selectionEnd, scrollTop: ed.scrollTop, scrollLeft: ed.scrollLeft });
+    }
+    function saveDraft() {
+      saveCaret();
+      const piece = draftPiece();
+      if (!piece) return;
+      Object.assign(piece.state, {
+        text: ed.value, plane: lab.currentIndex || 0,
+      });
+    }
+    function updateDraftState() {
+      const piece = draftPiece();
+      if (piece && piece.state.text !== ed.value) { piece.state.text = ed.value; lineIndexDirty = true; }
+      document.getElementById("draftState").hidden = !piece || piece.state.text === piece.state.original;
+      document.querySelectorAll("#fileList button").forEach((button) => {
+        const session = fileSessions.get(button.dataset.path);
+        const state = fileDrafts.get(button.dataset.path);
+        const edited = session ? sessionEdited(session) : state && state.text !== state.original;
+        button.dataset.edited = String(Boolean(edited));
+        button.setAttribute("aria-label", button.dataset.path + (edited ? ", edited" : ""));
+      });
+    }
+    function documentURL() {
+      // An old ?src= must not win over the document chosen in this session.
+      const url = new URL(location.href);
+      url.searchParams.delete("src");
+      url.hash = enc(ed.value);
+      history.replaceState(null, "", url);
+    }
+    function revealDocument(focus = false) {
+      const narrow = matchMedia("(max-width:900px)").matches;
+      document.querySelector('.fileswitch [data-pane="document"]').click();
+      if (!focus && !narrow) return;
+      if (document.getElementById("stage").dataset.show === "edit") ed.focus({ preventScroll: true });
+      else if (document.getElementById("stage").dataset.show === "cubes") document.getElementById("cubeCanvas").focus({ preventScroll: true });
+      else { lab.setAttribute("tabindex", "0"); lab.focus({ preventScroll: true }); }
+    }
 
     function render() {
       const src = ed.value;
+      updateDraftState();
       counts.textContent = src.split("\n").length + " lines, " + src.length + " chars";
       lab.setSource(src);
       document.getElementById("documentTitle").textContent = lab.document?.title || "Untitled document";
@@ -789,6 +850,7 @@ title: Small sculpture
     }
 
     function updateCursor() {
+      saveCaret();
       const upto = ed.value.slice(0, ed.selectionStart);
       const line = upto.split("\n");
       const label = "Ln " + line.length + ", Col " + (line[line.length - 1].length + 1);
@@ -799,8 +861,12 @@ title: Small sculpture
     }
 
     let timer = null;
-    ed.addEventListener("input", () => { openNote = ""; paint(); clearTimeout(timer); timer = setTimeout(render, 160); });
-    ed.addEventListener("scroll", syncScroll);
+    ed.addEventListener("input", () => { openNote = ""; updateDraftState(); paint(); clearTimeout(timer); timer = setTimeout(render, 160); });
+    ed.addEventListener("scroll", () => { syncScroll(); saveCaret(); });
+
+    // Capture before pointer focus leaves Edit; hidden textarea selection differs
+    // across engines and must not overwrite the last visible caret.
+    document.addEventListener("pointerdown", saveDraft, true);
     ed.addEventListener("keyup", updateCursor);
     ed.addEventListener("click", updateCursor);
     ed.addEventListener("select", updateCursor);
@@ -924,44 +990,81 @@ title: Small sculpture
       const slug = exampleSel.value;
       if (!slug || !EXAMPLES[slug]) return;
       showOpened(openText(EXAMPLES[slug]));
-      history.replaceState(null, "", "#" + enc(ed.value));
+      documentURL();
     });
 
     const pieceSel = document.getElementById("piece");
     const pieceLabel = document.getElementById("pieceLabel");
     const sourceName = document.getElementById("sourceName");
-    function showOpened(opened) {
-      openedPieces = opened.pieces || [];
-      openNote = opened.note || "";
-      pieceSel.replaceChildren();
-      if (openedPieces.length > 1) {
-        for (const item of openedPieces) {
-          const option = new Option(item.label, item.id);
-          if (item.id === opened.activeId) option.selected = true;
-          pieceSel.appendChild(option);
-        }
-        pieceSel.hidden = false;
-        pieceLabel.hidden = false;
-        document.getElementById("pieceWrap").hidden = false;
-      } else {
-        pieceSel.hidden = true;
-        pieceLabel.hidden = true;
-        document.getElementById("pieceWrap").hidden = true;
+    function createSession(opened, path = null) {
+      const pieces = opened.pieces.length ? opened.pieces : [{ id: "document", label: path ? baseName(path) : "source.3md", text: opened.text }];
+      const session = { path, activeId: opened.pieces.length ? opened.activeId : "document", note: opened.note || "", pieces: [] };
+      for (const piece of pieces) {
+        // Linked composition labels are exact source paths. Reuse the same draft
+        // when that entry is opened through the file list instead of Inside.
+        const sourcePath = path && openedFiles.some((file) => file.path === piece.label) ? piece.label
+          : pieces.length === 1 ? path : null;
+        let state = sourcePath && fileDrafts.get(sourcePath);
+        if (!state) state = { text: piece.text, original: piece.text, start: 0, end: 0, scrollTop: 0, scrollLeft: 0, plane: 0 };
+        if (sourcePath) fileDrafts.set(sourcePath, state);
+        session.pieces.push({ id: piece.id, label: piece.label, state });
       }
-      const active = openedPieces.find((item) => item.id === opened.activeId);
-      sourceName.textContent = active ? active.label : "source.3md";
-      ed.value = opened.text;
+      return session;
+    }
+    function showSession(session, pieceId = null) {
+      saveDraft();
+      if (pieceId && session.pieces.some((piece) => piece.id === pieceId)) session.activeId = pieceId;
+      clearTimeout(timer);
+      activeSession = session;
+      openedPieces = session.pieces;
+      openNote = session.note;
+      pieceSel.replaceChildren();
+      const multiple = openedPieces.length > 1;
+      for (const item of openedPieces) {
+        if (multiple) pieceSel.appendChild(new Option(item.label, item.id, false, item.id === session.activeId));
+      }
+      pieceSel.hidden = !multiple;
+      pieceLabel.hidden = !multiple;
+      document.getElementById("pieceWrap").hidden = !multiple;
+      const active = draftPiece();
+      sourceName.textContent = active.label;
+      sourceName.title = session.path || active.label;
+      ed.value = active.state.text;
       render();
+      lab.goTo(Math.min(active.state.plane, Math.max(0, (lab.document?.planes.length || 1) - 1)));
+      revealDocument(true);
+      ed.setSelectionRange(active.state.start, active.state.end);
+      ed.scrollTop = active.state.scrollTop;
+      ed.scrollLeft = active.state.scrollLeft;
       updateCursor();
+      markFile(session.path);
+    }
+    function showOpened(opened, path = null) {
+      const session = createSession(opened, path);
+      if (path) { fileSessions.set(path, session); lineIndexDirty = true; }
+      showSession(session);
+    }
+    function openFile(path, pieceId = null) {
+      saveDraft();
+      let session = fileSessions.get(path);
+      if (!session) {
+        const file = openedFiles.find((entry) => entry.path === path);
+        if (!file) throw new Error("That file is no longer in this open collection.");
+        session = createSession(openText(sourceText(file.path, file.text)), path);
+        fileSessions.set(path, session);
+        lineIndexDirty = true;
+      }
+      showSession(session, pieceId);
+      documentURL();
     }
     pieceSel.addEventListener("change", () => {
-      const item = openedPieces.find((piece) => piece.id === pieceSel.value);
-      if (!item) return;
-      openNote = "Showing " + item.label + ".";
-      sourceName.textContent = item.label;
-      ed.value = item.text;
-      render();
-      updateCursor();
+      const nextId = pieceSel.value;
+      if (!activeSession?.pieces.some((piece) => piece.id === nextId)) return;
+      const keepFocus = document.activeElement === pieceSel;
+      showSession(activeSession, nextId);
+      if (keepFocus) pieceSel.focus();
+      openNote = "Showing " + draftPiece().label + ".";
+      documentURL();
     });
 
     const findInput = document.getElementById("findExample");
@@ -982,9 +1085,7 @@ title: Small sculpture
       findInput.setAttribute("aria-expanded", "false");
       try {
         if (item.kind === "line") {
-          showOpened(openText(item.text));
-          sourceName.textContent = item.path.split("/").pop() || item.path;
-          markFile(item.path);
+          openFile(item.path, item.pieceId);
           focusPlane(item.planeIndex);
           return;
         }
@@ -993,7 +1094,7 @@ title: Small sculpture
           return;
         }
         if (item.kind === "file") {
-          showOpened(openText(item.text));
+          openFile(item.path);
         } else if (item.files) {
           const encoder = new TextEncoder();
           showOpened(openFileSet(item.files.map((file) => ({
@@ -1003,7 +1104,7 @@ title: Small sculpture
         } else {
           showOpened(item.bytes ? openBytes(item.bytes) : openText(item.src));
         }
-        history.replaceState(null, "", "#" + enc(ed.value));
+        documentURL();
       } catch (error) {
         status.className = "status err";
         status.textContent = error && error.message ? error.message : "Could not open that example.";
@@ -1018,15 +1119,17 @@ title: Small sculpture
         if (seen === index) { at = i; break; }
         seen += 1;
       }
-      const offset = lines.slice(0, at).join("\n").length;
-      ed.focus();
+      const offset = lines.slice(0, at).join("\n").length + (at ? 1 : 0);
       ed.setSelectionRange(offset, offset);
+      revealDocument(true);
       if (lab.goTo) lab.goTo(index);
       status.className = "status ok";
       status.textContent = "Showing plane " + (index + 1) + ".";
     }
     function showMatches(query) {
       const needle = query.trim();
+      saveDraft();
+      rebuildLineIndex();
       findList.replaceChildren();
       if (!needle) { findList.hidden = true; findInput.setAttribute("aria-expanded", "false"); return; }
       const matches = lineIndex.concat(catalog, currentPlanes, gathered)
@@ -1113,58 +1216,111 @@ title: Small sculpture
       if (!event.target.closest(".findwrap")) { findList.hidden = true; findInput.setAttribute("aria-expanded", "false"); }
     });
 
+    function sourceText(path, text) {
+      const prose = /\.(md|txt|markdown)$/i.test(path);
+      return prose ? sectionsToDocument(text, path) : text;
+    }
     function indexSource(path, text) {
-      const lower = path.toLowerCase();
-      const prose = (lower.endsWith(".md") || lower.endsWith(".txt") || lower.endsWith(".markdown")) && !lower.endsWith(".3md");
-      const shown = prose ? sectionsToDocument(text, path) : text;
+      const shown = sourceText(path, text);
       return indexLines(path, shown).map((hit) => ({ ...hit, text: shown }));
     }
-    function markFile(path) {
-      document.querySelectorAll("#fileList button").forEach((button) => {
-        button.setAttribute("aria-current", button.dataset.path === path ? "true" : "false");
-      });
+    function rebuildLineIndex() {
+      if (!lineIndexDirty) return;
+      lineIndexDirty = false;
+      lineIndex = [];
+      for (const file of openedFiles) {
+        const session = fileSessions.get(file.path);
+        if (session) {
+          for (const piece of session.pieces) {
+            lineIndex.push(...indexLines(file.path, piece.state.text).map((hit) => ({ ...hit, text: piece.state.text, pieceId: piece.id })));
+            if (lineIndex.length >= 12000) break;
+          }
+        } else if (fileDrafts.has(file.path)) {
+          const text = fileDrafts.get(file.path).text;
+          lineIndex.push(...indexLines(file.path, text).map((hit) => ({ ...hit, text })));
+        } else lineIndex.push(...indexSource(file.path, file.text));
+        if (lineIndex.length >= 12000) { lineIndex.length = 12000; break; }
+      }
+      window.threeMdLineCount = lineIndex.length;
     }
-    function renderFileList(title) {
+    function markFile(path) {
+      const buttons = [...document.querySelectorAll("#fileList button")];
+      const selected = buttons.find((button) => button.dataset.path === path);
+      buttons.forEach((button, index) => {
+        const active = button === selected;
+        button.setAttribute("aria-current", String(active));
+        button.setAttribute("aria-selected", String(active));
+        button.tabIndex = active || (!selected && index === 0) ? 0 : -1;
+      });
+      updateDraftState();
+    }
+    const fileFilter = document.getElementById("fileFilter");
+    function renderFileList() {
       const fileList = document.getElementById("fileList");
-      const filesTitle = document.getElementById("filesTitle");
       fileList.replaceChildren();
-      filesTitle.textContent = title || (openedFiles.length ? openedFiles.length + " files" : "files");
-      if (!openedFiles.length) {
+      document.getElementById("filesTitle").textContent = filesLabel || (openedFiles.length ? openedFiles.length + " files" : "files");
+      fileFilter.hidden = openedFiles.length < 2;
+      const needle = fileFilter.value.trim().toLowerCase();
+      const files = openedFiles.filter((file) => file.path.toLowerCase().includes(needle));
+      if (!files.length) {
         const empty = document.createElement("div");
         empty.className = "empty";
-        empty.innerHTML = "<strong>No files opened</strong>Open a file or folder above, or paste a public GitHub path. You can also drop files here.";
+        if (openedFiles.length) empty.textContent = "No files match. Clear the filter to see all opened files.";
+        else empty.innerHTML = "<strong>No files opened</strong>Open a file or folder above, or paste a public GitHub path. You can also drop files here.";
         fileList.appendChild(empty);
         return;
       }
-      for (const file of openedFiles) {
+      for (const file of files) {
         const button = document.createElement("button");
         button.type = "button";
         button.dataset.path = file.path;
-        button.textContent = file.path;
+        button.title = file.path;
+        const name = document.createElement("span");
+        name.className = "file-name";
+        name.textContent = baseName(file.path);
+        button.appendChild(name);
+        const slash = file.path.lastIndexOf("/");
+        if (slash >= 0) {
+          const path = document.createElement("span");
+          path.className = "file-path";
+          path.textContent = file.path.slice(0, slash);
+          button.appendChild(path);
+        }
         button.setAttribute("role", "option");
-        button.addEventListener("click", () => {
-          const hits = lineIndex.filter((hit) => hit.path === file.path);
-          const text = hits[0] ? hits[0].text : file.text;
-          showOpened(openText(text));
-          sourceName.textContent = file.path.split("/").pop() || file.path;
-          markFile(file.path);
-          history.replaceState(null, "", "#" + enc(ed.value));
-        });
+        button.addEventListener("click", () => { try { openFile(file.path); } catch (error) { failOpen(error); } });
         fileList.appendChild(button);
       }
+      markFile(activeSession?.path);
     }
-    function setOpenedFiles(entries, title) {
-      openedFiles = entries;
-      lineIndex = [];
-      for (const entry of entries) {
-        lineIndex.push(...indexSource(entry.path, entry.text));
-        if (lineIndex.length > 12000) {
-          lineIndex.length = 12000;
-          break;
-        }
+    fileFilter.addEventListener("input", renderFileList);
+    fileFilter.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") { fileFilter.value = ""; renderFileList(); }
+      else if (event.key === "ArrowDown") {
+        const first = document.querySelector("#fileList button");
+        if (first) { event.preventDefault(); first.focus(); }
       }
-      window.threeMdLineCount = lineIndex.length;
-      renderFileList(title);
+    });
+    document.getElementById("fileList").addEventListener("keydown", (event) => {
+      const buttons = [...document.querySelectorAll("#fileList button")];
+      const at = buttons.indexOf(document.activeElement);
+      if (at < 0) return;
+      const next = event.key === "ArrowDown" ? Math.min(at + 1, buttons.length - 1)
+        : event.key === "ArrowUp" ? Math.max(at - 1, 0)
+        : event.key === "Home" ? 0 : event.key === "End" ? buttons.length - 1 : null;
+      if (next === null) return;
+      event.preventDefault();
+      buttons[next].focus();
+    });
+    function setOpenedFiles(entries, title = "") {
+      saveDraft();
+      openedFiles = entries;
+      fileSessions = new Map();
+      fileDrafts = new Map();
+      filesLabel = title;
+      lineIndexDirty = true;
+      fileFilter.value = "";
+      rebuildLineIndex();
+      renderFileList();
     }
     function textFromFile(file) {
       const lower = file.path.toLowerCase();
@@ -1194,12 +1350,11 @@ title: Small sculpture
         }
         if (!entries.length) throw new Error("That GitHub path has no .3md, .3mdb, or Markdown files.");
         const note = loaded.truncated ? " The list stopped at the first 400 files." : "";
-        setOpenedFiles(entries, loaded.label + "@" + loaded.ref);
         const first = entries.find((entry) => entry.path.toLowerCase().endsWith(".3md")) || entries[0];
-        const hits = lineIndex.filter((hit) => hit.path === first.path);
-        showOpened(openText(hits[0] ? hits[0].text : first.text));
-        sourceName.textContent = first.path.split("/").pop() || first.path;
-        markFile(first.path);
+        const opened = openText(sourceText(first.path, first.text));
+        setOpenedFiles(entries, loaded.label + "@" + loaded.ref);
+        showOpened(opened, first.path);
+        rememberGathered(loaded.files);
         status.className = "status ok";
         status.textContent = "Opened " + loaded.label + " at " + loaded.ref + ". " + entries.length + " files." + note;
       } finally {
@@ -1223,22 +1378,25 @@ title: Small sculpture
       packBtn.hidden = gathered.length < 2;
     }
     function openLocal(files) {
+      const entries = files.map((file) => ({ path: file.path, text: textFromFile(file) })).filter((file) => file.text != null);
+      const docs = files.filter((file) => /\.(3md|3mdb)$/i.test(file.path));
+      const prose = files.filter((file) => /\.(md|txt|markdown)$/i.test(file.path));
+      let opened, path = null;
+      if (docs.length) {
+        opened = openFileSet(docs);
+        path = (docs.find((file) => file.path === "scene.3md" || file.path.endsWith("/scene.3md"))
+          || docs.find((file) => file.path.toLowerCase().endsWith(".3md")) || docs[0]).path;
+      } else if (prose.length === 1) {
+        path = prose[0].path;
+        opened = openText(sectionsToDocument(new TextDecoder().decode(prose[0].data), path));
+      } else if (prose.length > 1) {
+        opened = openText(packDocuments(prose.map((file) => ({ path: file.path, text: new TextDecoder().decode(file.data) }))));
+      } else opened = openFileSet(files);
+      // Decode first so a failed open cannot replace the current file collection.
+      setOpenedFiles(entries);
       rememberGathered(files);
-      const entries = [];
-      for (const file of files) {
-        const text = textFromFile(file);
-        if (text != null) entries.push({ path: file.path, text });
-      }
-      if (entries.length) setOpenedFiles(entries);
-      const docs = files.filter((file) => /\.3md/i.test(file.path));
-      const prose = files.filter((file) => /\.(md|txt)$/i.test(file.path) && !/\.3md$/i.test(file.path));
-      if (docs.length) return showOpened(openFileSet(docs));
-      const decoder = new TextDecoder();
-      if (prose.length === 1) return showOpened(openText(sectionsToDocument(decoder.decode(prose[0].data), prose[0].path)));
-      if (prose.length > 1) {
-        return showOpened(openText(packDocuments(prose.map((file) => ({ path: file.path, text: decoder.decode(file.data) })))));
-      }
-      return showOpened(openFileSet(files));
+      showOpened(opened, path);
+      documentURL();
     }
     async function filesFromList(list) {
       const files = [];
@@ -1265,6 +1423,8 @@ title: Small sculpture
       return nested;
     }
     function failOpen(error) {
+      clearTimeout(timer);
+      render();
       status.className = "status err";
       status.textContent = error && error.message ? error.message : "Could not open that document.";
     }
@@ -1321,13 +1481,19 @@ title: Small sculpture
       }
       try {
         showOpened(openText(sectionsToDocument(ed.value)));
-        history.replaceState(null, "", "#" + enc(ed.value));
+        documentURL();
       } catch (error) { failOpen(error); }
     });
     document.getElementById("packBtn").addEventListener("click", () => {
       try {
-        showOpened(openText(packDocuments(gathered.map((file) => ({ path: file.path, text: file.text })))));
-        history.replaceState(null, "", "#" + enc(ed.value));
+        saveDraft();
+        const files = gathered.map((file) => {
+          const session = fileSessions.get(file.path);
+          const state = fileDrafts.get(file.path) || session?.pieces.find((piece) => piece.id === session.activeId)?.state;
+          return { path: state ? file.path.replace(/\.(md|txt|markdown)$/i, ".3md") : file.path, text: state ? state.text : file.text };
+        });
+        showOpened(openText(packDocuments(files)));
+        documentURL();
       } catch (error) { failOpen(error); }
     });
     document.getElementById("kind2Btn").addEventListener("click", () => {
@@ -1385,7 +1551,7 @@ title: Small sculpture
       event.preventDefault();
       const input = document.getElementById("pointInput").value;
       if (!input.trim()) return;
-      try { await openPoint(input); }
+      try { await openPoint(input); documentURL(); }
       catch (error) { failOpen(error); }
     });
     renderFileList();
@@ -1418,6 +1584,9 @@ title: Small sculpture
         else { ed.value = ""; loadError = "Share link could not be decoded."; }
       } else {
         ed.value = STARTER;
+      }
+      if (!activeSession) {
+        activeSession = createSession({ text: ed.value, activeId: null, pieces: [], note: null });
       }
       render(); updateCursor();
       requestAnimationFrame(() => requestAnimationFrame(drawCubes));
@@ -1999,6 +2168,7 @@ title: Small sculpture
     }
     document.getElementById("cubeSample").addEventListener("click", () => {
       showOpened(openText(STARTER));
+      documentURL();
       fitCubes();
       if (typeof lab.goTo === "function") lab.goTo(1);
       document.getElementById("cubesTab").click();

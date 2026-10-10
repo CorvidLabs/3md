@@ -30,3 +30,7 @@ Leif requested continued UI and UX implementation on 2026-10-09. This artifact r
 ## No-spec Rationale
 
 Not applicable
+
+## File navigation fix after PR 92
+
+Leif merged PR 92 and requested a new fix PR. File and composition-entry navigation SHALL preserve current edits, caret, and selected plane within the open collection. Edited documents SHALL be identified in every view. Opened files SHALL support filtering and keyboard navigation. Choosing a file or search result on a narrow screen SHALL reveal the document. Search and packing SHALL use current drafts. Failed local opens SHALL preserve the current collection. Explicit document navigation SHALL replace a stale source query with the current document hash. Session drafts do not write local or GitHub files and are cleared by refreshing or opening another collection. Existing definition approval remains unrecorded.

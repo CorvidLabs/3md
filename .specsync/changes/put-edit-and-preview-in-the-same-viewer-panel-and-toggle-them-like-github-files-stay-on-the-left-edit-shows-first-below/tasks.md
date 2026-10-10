@@ -27,3 +27,7 @@ artifact: tasks
 Pinned Trust runs after the feature head is committed and pushed; its result is recorded in the PR and local verification output.
 
 Definition and human diff approval remain open.
+
+- [x] Preserve file, linked-entry, invalid, and empty drafts with caret and selected plane across navigation.
+- [x] Mark edits, filter files, navigate by keyboard, reveal phone documents, and avoid stale source queries.
+- [x] Search and pack current drafts, and preserve the collection after a failed open.

@@ -31,3 +31,7 @@ The cube parity follow-up uses the live Sculpt view as reference: 0.5 lit glyph 
 ## Continuing UI and UX pass
 
 Compact the identity row and toolbar. Use a native Document disclosure for export and conversion tools, keep composition entry selection in the stage, and show insertion tools only in Edit. Place camera controls below the canvas and use the canvas dimensions for camera framing. Add keyboard camera, tab, and slice navigation, with one tab stop in each navigation group. Explain nongrid documents and unavailable GPU support with a Preview action. Add busy/recovery feedback around the existing GitHub loader.
+
+## File navigation fix
+
+Keep a page-owned draft for each opened file and composition entry, including invalid or empty edits. Share linked entry drafts with their corresponding source file. Refresh the line index from drafts when searching, use draft text when packing, and preserve selection and caret when returning. Validate a local open before replacing the collection. Show filenames and edited state across views, add a file filter with an explicit empty result, and reveal opened documents on narrow screens. Replace stale source queries on explicit navigation.
