@@ -20,3 +20,11 @@ The viewer suite now visits all 293 text examples across 48 axes through Cubes, 
 Safari follow-up: reproduce null/already-lost startup contexts before loss-event delivery, 256 redraws, safe null resource creation, and genuine early loss/restoration. Verify actual Safari alongside Playwright; record the independent native observations and the unresolved hardware cause honestly.
 
 2026-10-10 Safari follow-up verification: complete Chromium/WebKit suite 256 passed without retries or skips (2 workers, 2.8 minutes), followed by the additional genuine early-loss test passing in both engines (2 checks). Native Safari 26.5.2 independently held at one context request while lost, retained Slice erase/Undo, and rebuilt exactly once after restoration. See docs/evidence/viewer-context/README.md for the proof boundaries.
+
+## Linux CI gesture readiness
+
+Main UI runs 38086816399 and 38090326009 exposed synthetic Slice gestures measuring stale/empty metadata or using clipped bitmap bounds before queued drawing. Wait for rendered ARIA grid dimensions and two animation frames, then measure cell centers on the full virtual scroll surface in one browser evaluation. Keep the existing exact source, CRLF/download, Undo/history, cancellation, touch navigation and phone assertions; do not add retries or relax expectations.
+
+On Ubuntu Noble ARM64 with Playwright 1.61.1, the unmodified main helper failed 2 of 30 focused Chromium checks. The repaired helper passed 90 repeated checks with two workers and no retries. The full macOS Chromium/WebKit suite passed 258 checks in 2.6 minutes with two workers and no retries or skips. Full suite receipts are recorded in docs/evidence/viewer-context/README.md; exact-head hosted CI is reported on the follow-up PR. Local ARM64 Docker is not the hosted x86_64 runner.
+
+Full Linux Chromium/WebKit verification passed 250 checks in 6.5 minutes with two workers and no retries; the eight existing CI image-snapshot skips remain unchanged. Playwright 1.61.1 ran in the official Ubuntu Noble ARM64 container with CI=1. The complete macOS suite passed all 258 checks in 2.6 minutes without retries or skips. All 293 catalog documents across 48 axes, local binary/composition/folder inputs, source/history and desktop/phone boundaries remain covered.

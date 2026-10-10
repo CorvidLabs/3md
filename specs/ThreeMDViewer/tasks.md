@@ -57,3 +57,5 @@ spec: ThreeMDViewer.spec.md
 - [x] Add and verify every text catalog example, local binary/composition/folder inputs and desktop/phone size-boundary regressions requested by Leif.
 
 - [x] Stop startup context retries before loss-event delivery, guard unavailable GPU resources, and verify genuine early loss/restoration in both automated engines and native Safari.
+
+- [x] Repair Linux Slice gesture test readiness for deferred drawing and the virtual scroll surface, retaining exact edit/history assertions.

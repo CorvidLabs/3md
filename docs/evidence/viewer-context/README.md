@@ -49,3 +49,17 @@ The follow-up latches failure/loss directly during initialization and drawing, r
 - Null startup context and already-lost startup context each stay at one request through 256 redraws, Slice, phone resizing, 16x and Expand. All five null GPU-resource cases stop safely with Slice/Preview usable and source preserved.
 
 Tested `web/viewer.html` SHA-256: `591ab297de99f35198abf1214490e6be8c211e553d192d315bc8ef0ec85a16fa`. Tested `uitests/viewer.spec.mjs` SHA-256: `ca0222441f219e230f8571d389c66430e35d33ce21c4b198812989332524dbff`. Native observations supplement the automated WebKit checks; they do not prove every Safari device or the deployed public revision. Current repository-gate/provenance outcomes are reported separately after the actual gates run. No human diff review, trusted signature or lifecycle closure is claimed for this follow-up.
+
+## Main UI CI follow-up (2026-10-10)
+
+After PR96 merged at ff547d72e4ca14ffa2f103f9f0c260efca70d8a2, [main UI run 38090326009](https://github.com/CorvidLabs/3md/actions/runs/38090326009) failed the touch-stroke/navigation assertion and retried a wrong-cell CRLF edit. [Previous main UI run 38086816399](https://github.com/CorvidLabs/3md/actions/runs/38086816399) also exposed empty metadata and missed first edits. Other current main workflows passed.
+
+The synthetic gesture helpers measured before the deferred Slice redraw completed and treated the clipped canvas bitmap as the complete grid. The repair waits for rendered ARIA grid dimensions and queued drawing/layout frames, then measures cell centers on the full virtual scroll surface. Exact source, CRLF/download, Undo/history, cancellation, touch navigation and phone assertions remain unchanged. No retry, timeout, skip, runtime, camera, parser, format, dependency or trust-policy change is included. The site already imported the merged Safari repair; this test-only follow-up needs no site import.
+
+- Unmodified main on Linux: 2 failures / 28 passes in 30 focused Chromium checks, two workers and no retries; missed touch edits reproduce the hosted failure.
+- Repaired helpers on Linux: 90/90 repeated focused Chromium checks passed, two workers and no retries.
+- Complete Linux suite: 250 passed, eight existing CI image-snapshot skips, two workers, no retries, 6.5 minutes. Official Playwright 1.61.1 Ubuntu Noble ARM64 container with CI=1; this is not the hosted x86_64 runner.
+- Complete macOS suite: 258 passed, two workers, no retries or skips, 2.6 minutes.
+- Both complete suites retain all 293 catalog documents across 48 axes, actual binary/composition/folder inputs, desktop/phone size limits, Slice edits/history, camera/picking and startup loss/restoration coverage. Exact-head hosted CI is reported on the follow-up PR after it runs.
+
+Unchanged `web/viewer.html` SHA-256: `591ab297de99f35198abf1214490e6be8c211e553d192d315bc8ef0ec85a16fa`. Tested `uitests/viewer.spec.mjs` SHA-256: `c318d3f046da23036803c7543ac52e48057558cfeea58f38277f6e449ca40d64`. Repository-gate and actual unsigned Codex provenance outcomes are reported separately after those steps run. These receipts do not claim human diff review, trusted signatures, main CI completion for this unmerged branch, or lifecycle acceptance/archive.
