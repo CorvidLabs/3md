@@ -26,15 +26,15 @@ spec: ThreeMDViewer.spec.md
 ## Gaps
 
 - The previous page contract shipped in PR 91.
-- Leif approved the final scope on 2026-10-10; verification, acceptance, and archiving remain pending.
+- Leif approved the final scope and verified closure on 2026-10-10; supported scoped review and finalization archived the viewer and camera changes.
 - The hosted page shows this layout after the branch merges.
 
 ## Review Sign-offs
 
 - **Product**: previous page contract approved by user:0xLeif and shipped in PR 91. Leif approved the final layout and navigation scope on 2026-10-10 and authorized lifecycle closure after verification passes.
-- **QA**: agent:codex prior browser and visual checks; final closure verification pending. Scope approval does not claim independent human diff review.
+- **QA**: agent:codex current browser/native checks and visual observations; verified viewer and camera records archived. Scope approval does not claim independent human diff review.
 - **Design**: n/a
-- **Dev**: agent:codex implementation and self-review; final verification pending.
+- **Dev**: agent:codex implementation and scoped review; current automated verification passed.
 
 - [x] Preserve file, linked-entry, invalid, and empty drafts with caret and selected plane across navigation.
 - [x] Mark edits, filter files, navigate by keyboard, reveal phone documents, and avoid stale source queries.
@@ -45,5 +45,5 @@ spec: ThreeMDViewer.spec.md
 
 - [x] Match Sculpt and viewer full orbit through both poles with camera-only pan and proportional zoom.
 - [x] Add shared asymmetric native/browser projection and picking fixtures.
-- [ ] Finish current cross-platform verification and lifecycle closure for the camera scope.
+- [x] Finish current cross-platform verification and lifecycle closure for the camera scope.
 - [ ] Await definition approval for the separate axis gizmo and numeric precision controls.

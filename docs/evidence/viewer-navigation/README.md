@@ -19,3 +19,7 @@ Leif approved final viewer scope and authorized acceptance and archiving after s
 - Bun helpers: 15 passed. Strict specs: 4 passed, zero warnings, 55/55 files and 21185/21185 configured LOC. Hi: 85 criteria, no problems. Element bundle drift: current at 48840 bytes.
 
 These are implementation verification results. Targeted SpecSync verification, pinned Trust, provenance, acceptance, and archiving remain pending at this checkpoint. Approval was recorded after the earlier draft implementation; it is not backdated and does not claim independent human diff review or signed provenance.
+
+## Verified closure (2026-10-10)
+
+The final camera-inclusive checks passed: 106 macOS viewer tests; Linux UI 197 first-pass tests and one successful retry, with eight existing skips; 635 native tests in 54 suites using the unchanged CI selection. See `../viewer-camera/README.md` for the shared projection fixture, isolated rerun and provenance limits. Supported scoped reviews and finalization archived the viewer and camera changes; the reviews identify the actual `agent:codex`. Viewer archive commit: `8cf7a07`; camera archive commit: `182dc07`. The final archive head receives pinned Trust verification before PR publication. Leif retains merge authority.

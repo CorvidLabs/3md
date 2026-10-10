@@ -66,15 +66,31 @@
       "command": "hi check",
       "directory": "apps/sculpt",
       "passed_criteria": 48
+    },
+    {
+      "command": "pinned fledge-trust verify",
+      "fledge_version": "1.7.2",
+      "trust_version": "1.2.2",
+      "commit": "6f4d9640f4ddfd7890a22323b9f976da80860fd9",
+      "exit_code": 0,
+      "augur_verdict": "review",
+      "risk_score": 36,
+      "provenance": "degraded progressive provenance; the unsigned actual agent claim does not meet signature/reviewer policy"
     }
   ],
   "pending": [
-    "current pinned Trust",
-    "scoped lifecycle review and archive",
+    "final archive head pinned Trust result is recorded in the PR",
+    "evidence-only record closure at this documentation checkpoint",
     "separate X/Y/Z gizmo definition approval"
   ],
   "limitations": [
     "An unsigned codex claim cannot satisfy the pinned Attest signature and reviewer policy.",
     "Local UI observations are agent verification rather than user diff review."
-  ]
+  ],
+  "lifecycle": {
+    "camera": "archived by supported scoped review and finalize; archive commit 182dc07",
+    "viewer_navigation": "archived by supported scoped review and finalize; archive commit 8cf7a07",
+    "reviewer": "agent:codex",
+    "approval": "Leif directly approved scope and verified closure; no independent human diff review claimed"
+  }
 }

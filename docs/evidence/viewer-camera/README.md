@@ -14,7 +14,8 @@ Interactive native cameras opt into complete-volume framing with `fitsVolume`. D
 - Full native suite using the existing CI selection (`--no-parallel --skip deterministicPortableInterchangeFixtures`): 635 tests in 54 suites passed. The prior run found five preview differences, resolved by preserving default utility framing. An earlier unconstrained parallel run also showed AppKit focus interference. No new skips were introduced.
 - Root strict SpecSync: four specs passed with zero warnings and 55/55 source files covered. Native strict SpecSync: five specs passed with zero warnings and 94/94 files covered.
 - Root Hi: 85 criteria passed. Native Hi: 48 criteria passed.
-- Current pinned Trust and lifecycle closure: pending. Scope approval is not human diff review, independent review or signed provenance.
+- Pinned Trust 1.2.2 with Fledge 1.7.2 passed at `6f4d9640f4ddfd7890a22323b9f976da80860fd9`; Augur returned review at risk 36. Root and native strict checks then passed with zero warnings. Provenance remains degraded under the unchanged signature and reviewer policy.
+- Supported scoped review and finalization archived both the camera and original viewer changes on 2026-10-10. Archive commits are `182dc07` and `8cf7a07`. Reviews identify `agent:codex`; scope approval is not human diff review, independent review or signed provenance. The final archive head receives a fresh pinned Trust run before publication; the PR records that result.
 
 ## Live inspection
 

@@ -20,7 +20,7 @@ spec: ThreeMDViewer.spec.md
 ## Current Status
 
 - PR 91 is on main. PR 92 shares Edit, Preview, and Cubes in one panel and adds Sculpt cube-stage parity plus the continuing UI and UX improvements.
-- Leif approved the final viewer scope on 2026-10-10 and authorized acceptance and archiving after successful verification. Verification and closure are pending on PR 93; Leif retains merge authority.
+- Leif approved the final viewer scope on 2026-10-10 and authorized acceptance and archiving after successful verification. Current verification passed and supported scoped review/finalization archived both viewer and camera records for PR 93; Leif retains merge authority.
 
 ## Notes
 
@@ -45,7 +45,7 @@ spec: ThreeMDViewer.spec.md
 
 - File activation focuses the document before restoring its caret. Chromium clears a restored selection when the editor remains blurred; focus-first restoration passes in both engines. Packing uses the current draft of the active document for each opened file, without rewriting composition profiles. The line index is reused until a draft or the collection changes.
 
-- Linux WebKit exposed a delayed-render slice reset, native directory enumeration differences, and insufficient drawing space on a 320 by 740 phone. Source refresh now restores the selected slice, the file list sorts paths for consistent keyboard navigation, and narrow-screen padding leaves more stage space. The final verification runs are pending; existing phone and focus assertions remain, with an added wait across the editor debounce.
+- Linux WebKit exposed a delayed-render slice reset, native directory enumeration differences, and insufficient drawing space on a 320 by 740 phone. Source refresh now restores the selected slice, the file list sorts paths for consistent keyboard navigation, and narrow-screen padding leaves more stage space. Current macOS viewer and Linux UI runs passed; existing phone and focus assertions remain, with an added wait across the editor debounce.
 
 ## Current camera parity
 
