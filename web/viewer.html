@@ -144,10 +144,15 @@
   .pstab[aria-selected="true"]{background:var(--sheen);color:var(--paper)}
   .pstab:focus-visible{outline:2px solid var(--sheen);outline-offset:-2px}
   .stage[data-show="edit"] .viewer,
-  .stage[data-show="edit"] .outline{display:none}
-  .stage[data-show="preview"] .editor{display:none}
+  .stage[data-show="edit"] .outline,
+  .stage[data-show="edit"] .cubes{display:none}
+  .stage[data-show="preview"] .editor,
+  .stage[data-show="preview"] .cubes{display:none}
+  .stage[data-show="cubes"] .editor,
+  .stage[data-show="cubes"] .viewer{display:none}
   .stage .bar{flex-wrap:wrap}
-  .stage .viewer{flex:1;min-height:560px}
+  .stage .viewer,
+  .stage .cubes{flex:1;min-height:560px}
   @media(max-width:900px){
     .grid{grid-template-columns:1fr}
     .fileswitch{display:inline-flex}
@@ -160,7 +165,18 @@
     font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--text-faint)}
   .pane .bar .right{display:flex;align-items:center;gap:10px;text-transform:none;letter-spacing:.02em}
   .stage[data-show="edit"] .bar .previewmeta,
-  .stage[data-show="preview"] .bar .editmeta{display:none}
+  .stage[data-show="preview"] .bar .editmeta,
+  .stage[data-show="cubes"] .bar .editmeta{display:none}
+  .hl .line.caretline{background:color-mix(in srgb,var(--sheen) 10%,transparent)}
+  .idebar{display:flex;gap:14px;align-items:center;padding:4px 12px;border-top:1px solid var(--hairline);background:var(--surface);color:var(--text-muted);font-family:var(--code-font);font-size:11px}
+  .idebar span:last-child{margin-left:auto}
+  .cubes{position:relative;background:#10161a;overflow:hidden}
+  .cubes canvas{width:100%;height:100%;display:block;touch-action:none;cursor:grab}
+  .cubes canvas:active{cursor:grabbing}
+  .cubesempty{position:absolute;inset:0;display:grid;place-items:center;align-content:center;gap:12px;padding:24px;text-align:center;color:#d7e4ea}
+  .cubesempty[hidden]{display:none}
+  .cubesempty p{margin:0;max-width:36ch;line-height:1.45}
+  .cubehint{position:absolute;left:12px;bottom:10px;color:rgba(215,228,234,.72);font-size:11px;pointer-events:none}
   .badge{display:inline-flex;align-items:center;gap:6px;font-size:11px;padding:3px 8px;border-radius:999px;border:1px solid var(--hairline);color:var(--text-muted)}
   .badge.ok{color:var(--success);border-color:color-mix(in srgb,var(--success) 45%,transparent)}
   .badge.err{color:var(--danger);border-color:color-mix(in srgb,var(--danger) 45%,transparent);cursor:pointer}
@@ -252,7 +268,7 @@
 
     <div class="head">
       <h1>3md viewer<span class="z">.</span></h1>
-      <p class="lead">Point at a public GitHub repo, folder, or file, or open one on this computer. Files stay on the left. Edit and Preview share the panel beside them and switch. Search reads every line. <a href="docs.html">docs</a> &middot; <a href="gallery.html">gallery</a></p>
+      <p class="lead">Point at a public GitHub repo, folder, or file, or open one on this computer. Files stay on the left. Edit, the plane preview, and Cubes share one panel. Search reads every line. <a href="docs.html">docs</a> &middot; <a href="gallery.html">gallery</a></p>
     </div>
 
     <div class="toolbar">
@@ -314,6 +330,7 @@
           <div class="editpreview" role="tablist" aria-label="Edit or preview">
             <button class="pstab" id="editTab" type="button" role="tab" data-pane="edit" aria-selected="true" aria-controls="editorWrap">Edit</button>
             <button class="pstab" id="previewTab" type="button" role="tab" data-pane="preview" aria-selected="false" aria-controls="previewPane">Preview</button>
+            <button class="pstab" id="cubesTab" type="button" role="tab" data-pane="cubes" aria-selected="false" aria-controls="cubesPane">Cubes</button>
           </div>
           <span class="right editmeta"><span id="sourceName">source.3md</span><span id="cursor">Ln 1, Col 1</span><span id="counts"></span></span>
           <span class="right previewmeta"><span id="validBadge" class="badge"><span class="dot"></span><span id="validText">&mdash;</span></span></span>
@@ -324,7 +341,21 @@
         </div>
         <div class="viewer" id="previewPane" role="tabpanel" aria-labelledby="previewTab"><three-md id="lab" role="group" aria-label="Live 3md preview" aria-describedby="planeLive"></three-md></div>
         <div id="planeLive" class="sr-only" aria-live="polite"></div>
+        <div class="cubes" id="cubesPane" role="tabpanel" aria-labelledby="cubesTab">
+          <canvas id="cubeCanvas" width="800" height="560" aria-label="Sculpt-style cubes"></canvas>
+          <div class="cubesempty" id="cubesEmpty">
+            <p>This document has no cube grid. A fenced block of a few characters, one plane per slice, becomes translucent cubes.</p>
+            <button id="cubeSample" class="btn" type="button">Open a small sculpture</button>
+          </div>
+          <div class="cubehint">drag to orbit · scroll to zoom · click a cube to pick its slice</div>
+        </div>
         <div class="outline" id="outline" role="group" aria-label="plane outline"></div>
+        <div class="idebar" id="idebar">
+          <span id="ideCursor">Ln 1, Col 1</span>
+          <span>3md</span>
+          <span id="ideDoc">no document</span>
+          <span id="ideCubes">0 cubes</span>
+        </div>
       </div>
     </div>
     <div class="status" id="status" role="status" aria-live="polite"></div>
@@ -451,6 +482,9 @@ See [[z=1|Tuesday]] for what's next.
     function paintNow() {
       paintQueued = false;
       hl.innerHTML = highlight(ed.value);
+      const caret = ed.value.slice(0, ed.selectionStart).split("\n").length - 1;
+      const caretNode = hl.children[caret];
+      if (caretNode) caretNode.classList.add("caretline");
       if (errLine >= 0) { const node = hl.children[errLine]; if (node) node.classList.add("errline"); }
       syncScroll();
     }
@@ -484,6 +518,7 @@ See [[z=1|Tuesday]] for what's next.
     const planeLive = document.getElementById("planeLive");
     function markOutline(i) {
       [...outline.children].forEach((c, j) => c.setAttribute("aria-current", j === i ? "true" : "false"));
+      if (document.getElementById("stage")?.dataset.show === "cubes") drawCubes();
       const doc = lab.document;
       if (doc && doc.planes[i]) {
         planeLive.textContent = `Plane ${i + 1} of ${doc.planes.length}: ${doc.planes[i].label || ("z " + doc.planes[i].z)}`;
@@ -522,7 +557,9 @@ See [[z=1|Tuesday]] for what's next.
         validBadge.removeAttribute("role"); validBadge.removeAttribute("tabindex"); validBadge.removeAttribute("aria-label");
         document.body.dataset.threeMdValid = "false";
         outline.innerHTML = "";
+        setIdeStatus(null, 0);
         paintNow();
+        drawCubes();
         return;
       }
       delete validBadge.dataset.empty;
@@ -550,6 +587,7 @@ See [[z=1|Tuesday]] for what's next.
           validBadge.setAttribute("aria-label", "Jump to error on line " + (errLine + 1));
         } else { validBadge.removeAttribute("role"); validBadge.removeAttribute("tabindex"); validBadge.removeAttribute("aria-label"); }
         outline.innerHTML = "";
+        setIdeStatus(null, 0);
       } else {
         errLine = -1;
         const doc = lab.document;
@@ -599,8 +637,10 @@ See [[z=1|Tuesday]] for what's next.
         else { delete validBadge.dataset.warnings; }
         if (openNote) status.textContent += " · " + openNote;
         buildOutline(doc);
+        setIdeStatus(doc, cubeCells(doc).cells.length);
       }
       paintNow(); // apply/clear the error-line highlight synchronously
+      if (document.getElementById("stage")?.dataset.show === "cubes") drawCubes();
     }
 
     // Canonical axes (for the "did you mean" hint) and the full set the renderer
@@ -643,7 +683,11 @@ See [[z=1|Tuesday]] for what's next.
     function updateCursor() {
       const upto = ed.value.slice(0, ed.selectionStart);
       const line = upto.split("\n");
-      cursor.textContent = "Ln " + line.length + ", Col " + (line[line.length - 1].length + 1);
+      const label = "Ln " + line.length + ", Col " + (line[line.length - 1].length + 1);
+      cursor.textContent = label;
+      const ideCursor = document.getElementById("ideCursor");
+      if (ideCursor) ideCursor.textContent = label;
+      paint();
     }
 
     let timer = null;
@@ -1251,8 +1295,147 @@ See [[z=1|Tuesday]] for what's next.
         delete document.body.dataset.loadError;
       }
     }
-    // Edit and Preview share one panel. Files stays beside it, and on a narrow
-    // window Files and the document take turns.
+    // Edit, the plane preview, and Cubes share one panel. Files stays beside it,
+    // and on a narrow window Files and the document take turns.
+    function setIdeStatus(doc, cubeCount) {
+      const ideDoc = document.getElementById("ideDoc");
+      const ideCubes = document.getElementById("ideCubes");
+      if (!ideDoc || !ideCubes) return;
+      if (!doc) {
+        ideDoc.textContent = "no document";
+        ideCubes.textContent = "0 cubes";
+        return;
+      }
+      const planes = doc.planes ? doc.planes.length : 0;
+      ideDoc.textContent = (doc.axis || "axis") + " · " + planes + (planes === 1 ? " plane" : " planes");
+      ideCubes.textContent = cubeCount + (cubeCount === 1 ? " cube" : " cubes");
+    }
+    function gridOf(body) {
+      const lines = String(body || "").split("\n");
+      let rows = [];
+      const fence = lines.findIndex((line) => line.startsWith("```"));
+      if (fence >= 0) {
+        for (let i = fence + 1; i < lines.length && !lines[i].startsWith("```"); i++) rows.push(lines[i]);
+      } else {
+        rows = lines.filter((line) => line.length > 0);
+        if (rows.length < 2) return null;
+      }
+      if (!rows.length) return null;
+      const chars = new Set();
+      for (const row of rows) for (const ch of row) if (ch !== " " && ch !== "\t") chars.add(ch);
+      if (!chars.size || chars.size > 12) return null;
+      const width = Math.max(...rows.map((row) => row.length));
+      if (width > 64 || rows.length > 64) return null;
+      const cells = [];
+      for (let r = 0; r < rows.length; r++) {
+        for (let c = 0; c < width; c++) {
+          const ch = rows[r][c] || " ";
+          if (ch !== " " && ch !== "." && ch !== "\t") cells.push({ c, r, ch });
+        }
+      }
+      return cells.length ? { w: width, h: rows.length, cells } : null;
+    }
+    function cubeCells(doc) {
+      const cells = [];
+      if (!doc || !doc.planes) return { cells, w: 0, h: 0 };
+      let w = 0;
+      let h = 0;
+      for (let z = 0; z < doc.planes.length; z++) {
+        const grid = gridOf(doc.planes[z].body);
+        if (!grid) continue;
+        w = Math.max(w, grid.w);
+        h = Math.max(h, grid.h);
+        for (const cell of grid.cells) {
+          if (cells.length >= 4000) break;
+          cells.push({ x: cell.c, y: cell.r, z, ch: cell.ch });
+        }
+      }
+      return { cells, w, h };
+    }
+    const GLYPH_COLOR = {
+      "@": [0.65, 0.57, 0.94], "*": [0.98, 0.76, 0.42], "+": [0.46, 0.71, 0.95],
+      "o": [0.57, 0.83, 0.49], "O": [0.57, 0.83, 0.49], "x": [0.94, 0.54, 0.58],
+      "X": [0.94, 0.54, 0.58], ":": [0.52, 0.67, 0.48], "=": [0.87, 0.76, 0.55],
+      "-": [0.49, 0.83, 0.89],
+    };
+    const cubeView = { yaw: 0.55, pitch: 0.42, zoom: 1.15 };
+    let cubePicks = [];
+    function projectCube(x, y, z) {
+      const cy = Math.cos(cubeView.yaw), sy = Math.sin(cubeView.yaw);
+      const cp = Math.cos(cubeView.pitch), sp = Math.sin(cubeView.pitch);
+      const x1 = x * cy - z * sy;
+      const z1 = x * sy + z * cy;
+      const y1 = y * cp - z1 * sp;
+      return { x: x1, y: y1, depth: y * sp + z1 * cp };
+    }
+    function drawCubes() {
+      const canvas = document.getElementById("cubeCanvas");
+      const empty = document.getElementById("cubesEmpty");
+      if (!canvas) return;
+      const doc = lab.document;
+      const volume = cubeCells(doc);
+      canvas.dataset.cubes = String(volume.cells.length);
+      if (empty) empty.hidden = volume.cells.length > 0;
+      const parent = canvas.parentElement;
+      const width = Math.max(2, parent.clientWidth || 800);
+      const height = Math.max(2, parent.clientHeight || 560);
+      const ratio = window.devicePixelRatio || 1;
+      canvas.width = Math.floor(width * ratio);
+      canvas.height = Math.floor(height * ratio);
+      const ctx = canvas.getContext("2d");
+      ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+      ctx.fillStyle = "#10161a";
+      ctx.fillRect(0, 0, width, height);
+      cubePicks = [];
+      if (!volume.cells.length || !doc) return;
+      const ox = (volume.w - 1) / 2;
+      const oy = (volume.h - 1) / 2;
+      const oz = (doc.planes.length - 1) / 2;
+      const span = Math.max(volume.w, volume.h, doc.planes.length, 1);
+      const scale = (Math.min(width, height) / (span * 2.15)) * cubeView.zoom;
+      const selected = lab.currentIndex || 0;
+      const faces = [
+        { shade: 1, verts: [[0, 1, 0], [1, 1, 0], [1, 1, 1], [0, 1, 1]] },
+        { shade: 0.72, verts: [[0, 0, 1], [1, 0, 1], [1, 1, 1], [0, 1, 1]] },
+        { shade: 0.5, verts: [[1, 0, 0], [1, 0, 1], [1, 1, 1], [1, 1, 0]] },
+        { shade: 0.42, verts: [[0, 0, 0], [0, 0, 1], [0, 1, 1], [0, 1, 0]] },
+      ];
+      const ordered = volume.cells.map((cell) => {
+        const center = projectCube(cell.x - ox + 0.5, oy - cell.y + 0.5, cell.z - oz + 0.5);
+        return { cell, depth: center.depth };
+      }).sort((a, b) => a.depth - b.depth);
+      for (const item of ordered) {
+        const cell = item.cell;
+        const base = GLYPH_COLOR[cell.ch] || [0.38, 0.96, 0.83];
+        const tint = cell.z === selected ? [1, 0.79, 0.44] : base;
+        const origin = [cell.x - ox, oy - cell.y, cell.z - oz];
+        let pick = null;
+        for (const face of faces) {
+          const pts = face.verts.map((v) => {
+            const p = projectCube(origin[0] + v[0], origin[1] + v[1], origin[2] + v[2]);
+            return { sx: width / 2 + p.x * scale, sy: height / 2 - p.y * scale };
+          });
+          const ax = pts[1].sx - pts[0].sx, ay = pts[1].sy - pts[0].sy;
+          const bx = pts[3].sx - pts[0].sx, by = pts[3].sy - pts[0].sy;
+          if (ax * by - ay * bx >= 0) continue;
+          ctx.beginPath();
+          ctx.moveTo(pts[0].sx, pts[0].sy);
+          for (let i = 1; i < pts.length; i++) ctx.lineTo(pts[i].sx, pts[i].sy);
+          ctx.closePath();
+          ctx.fillStyle = "rgba(" + Math.round(tint[0] * face.shade * 255) + "," + Math.round(tint[1] * face.shade * 255) + "," + Math.round(tint[2] * face.shade * 255) + ",0.58)";
+          ctx.fill();
+          ctx.strokeStyle = cell.z === selected
+            ? "rgba(255,201,112,0.95)"
+            : "rgba(" + Math.round(tint[0] * 255) + "," + Math.round(tint[1] * 255) + "," + Math.round(tint[2] * 255) + ",0.75)";
+          ctx.lineWidth = cell.z === selected ? 1.4 : 0.8;
+          ctx.stroke();
+          const sx = (pts[0].sx + pts[1].sx + pts[2].sx + pts[3].sx) / 4;
+          const sy = (pts[0].sy + pts[1].sy + pts[2].sy + pts[3].sy) / 4;
+          if (!pick || item.depth > pick.depth) pick = { x: sx, y: sy, z: cell.z, depth: item.depth };
+        }
+        if (pick) cubePicks.push(pick);
+      }
+    }
     const grid = document.getElementById("grid");
     const stage = document.getElementById("stage");
     function selectTab(root, tab, apply) {
@@ -1278,10 +1461,72 @@ See [[z=1|Tuesday]] for what's next.
     wireTabs(document.querySelector(".editpreview"), (pane) => {
       stage.dataset.show = pane;
       if (pane === "preview" && lab.render) lab.render();
+      if (pane === "cubes") requestAnimationFrame(drawCubes);
     });
     wireTabs(document.querySelector(".fileswitch"), (pane) => {
       grid.dataset.show = pane;
       if (pane === "document" && stage.dataset.show === "preview" && lab.render) lab.render();
+      if (pane === "document" && stage.dataset.show === "cubes") requestAnimationFrame(drawCubes);
+    });
+    const cubeCanvas = document.getElementById("cubeCanvas");
+    let cubeDrag = null;
+    cubeCanvas.addEventListener("pointerdown", (event) => {
+      cubeDrag = { x: event.clientX, y: event.clientY, yaw: cubeView.yaw, pitch: cubeView.pitch, moved: false };
+      cubeCanvas.setPointerCapture(event.pointerId);
+    });
+    cubeCanvas.addEventListener("pointermove", (event) => {
+      if (!cubeDrag) return;
+      const dx = event.clientX - cubeDrag.x;
+      const dy = event.clientY - cubeDrag.y;
+      if (Math.abs(dx) + Math.abs(dy) > 3) cubeDrag.moved = true;
+      cubeView.yaw = cubeDrag.yaw + dx * 0.01;
+      cubeView.pitch = Math.max(-1.2, Math.min(1.2, cubeDrag.pitch + dy * 0.01));
+      drawCubes();
+    });
+    cubeCanvas.addEventListener("pointerup", (event) => {
+      if (cubeDrag && !cubeDrag.moved) {
+        const rect = cubeCanvas.getBoundingClientRect();
+        const x = event.clientX - rect.left;
+        const y = event.clientY - rect.top;
+        let best = null;
+        for (const pick of cubePicks) {
+          const distance = (pick.x - x) * (pick.x - x) + (pick.y - y) * (pick.y - y);
+          if (distance < 24 * 24 && (!best || distance < best.distance)) best = { distance, z: pick.z };
+        }
+        if (best) { lab.goTo(best.z); markOutline(best.z); }
+      }
+      cubeDrag = null;
+    });
+    cubeCanvas.addEventListener("wheel", (event) => {
+      event.preventDefault();
+      cubeView.zoom = Math.max(0.45, Math.min(3.2, cubeView.zoom * (event.deltaY > 0 ? 0.92 : 1.08)));
+      drawCubes();
+    }, { passive: false });
+    if (window.ResizeObserver) {
+      new ResizeObserver(() => {
+        if (stage.dataset.show === "cubes") drawCubes();
+      }).observe(cubeCanvas.parentElement);
+    }
+    document.getElementById("cubeSample").addEventListener("click", () => {
+      ed.value = [
+        "---", "3md: 1.0", "axis: layer", "title: Small sculpture", "---", "",
+        "@plane z=0 label=\"floor\"", "```",
+        "########", "########", "########", "########", "########", "########", "########", "########",
+        "```", "",
+        "@plane z=1 label=\"walls\"", "```",
+        "########", "#......#", "#..oo..#", "#..oo..#", "#......#", "#..**..#", "#......#", "########",
+        "```", "",
+        "@plane z=2 label=\"roof\"", "```",
+        "........", ".######.", "..####..", "...##...", "...##...", "..####..", ".######.", "........",
+        "```", "",
+      ].join("\n");
+      render();
+      updateCursor();
+      stage.dataset.show = "cubes";
+      document.querySelectorAll(".editpreview .pstab").forEach((item) => {
+        item.setAttribute("aria-selected", String(item.dataset.pane === "cubes"));
+      });
+      requestAnimationFrame(drawCubes);
     });
 
     // Programmatic API for headless agents: set/validate without synthesizing DOM

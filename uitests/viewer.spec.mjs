@@ -337,6 +337,35 @@ test.describe("viewer & editor (viewer.html)", () => {
     expect(back.viewer).toBe("none");
   });
 
+  test("cubes tab draws a fenced grid as translucent cubes", async ({ page }) => {
+    await page.setViewportSize({ width: 1280, height: 800 });
+    await page.goto("/viewer.html");
+    await viewerReady(page);
+    const sculpture = [
+      "---", "3md: 1.0", "axis: layer", "title: Small sculpture", "---", "",
+      "@plane z=0 label=\"floor\"", "```", "####", "####", "####", "####", "```", "",
+      "@plane z=1 label=\"top\"", "```", "....", ".##.", ".##.", "....", "```", "",
+    ].join("\n");
+    await page.fill("#editor", sculpture);
+    await page.waitForTimeout(300);
+    await page.click("#cubesTab");
+    await page.waitForTimeout(200);
+    const view = await page.evaluate(() => ({
+      show: document.getElementById("stage").dataset.show,
+      editor: getComputedStyle(document.querySelector(".editor")).display,
+      viewer: getComputedStyle(document.querySelector(".viewer")).display,
+      cubes: getComputedStyle(document.querySelector(".cubes")).display,
+      count: Number(document.getElementById("cubeCanvas").dataset.cubes),
+      bar: document.getElementById("ideDoc").textContent,
+    }));
+    expect(view.show).toBe("cubes");
+    expect(view.editor).toBe("none");
+    expect(view.viewer).toBe("none");
+    expect(view.cubes).not.toBe("none");
+    expect(view.count).toBeGreaterThan(8);
+    expect(view.bar).toContain("layer");
+  });
+
   test("narrow layout switches Files and the document, and Edit and Preview still switch", async ({ page }) => {
     await page.setViewportSize({ width: 800, height: 760 });
     await page.goto("/viewer.html");

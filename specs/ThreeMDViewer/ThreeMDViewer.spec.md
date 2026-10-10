@@ -1,6 +1,6 @@
 ---
 module: ThreeMDViewer
-version: 3
+version: 4
 status: active
 files:
   - web/viewer.html
@@ -23,7 +23,7 @@ depends_on:
 
 ## Purpose
 
-ThreeMDViewer is the hosted and local viewer page. Files stay on the left. Edit and Preview share the panel beside them. One is visible at a time, and Edit is the default. Below 900px, Files and the document take turns, and the document panel still switches Edit and Preview. The page opens a public GitHub repo, folder, or file, or a file or folder from this computer. Search reads every opened line and opens that plane. Markdown headings become planes. Opened files pack into one text document, and that document downloads as uncompressed kind 2.
+ThreeMDViewer is the hosted and local viewer page. Files stay on the left. Edit, the plane preview, and Cubes share the panel beside them. One is visible at a time, and Edit is the default. Below 900px, Files and the document take turns. Cubes draws a fenced character grid as translucent cubes. The page opens a public GitHub repo, folder, or file, or a file or folder from this computer. Search reads every opened line and opens that plane. Markdown headings become planes. Opened files pack into one text document, and that document downloads as uncompressed kind 2.
 
 The `<three-md>` element stays a text renderer. Decode, composition, linked folders, GitHub fetch, search, sections, pack, and kind 2 download belong to this page. The ThreeMD library stays free of filesystem and network I/O. Human intent for this page is VIEWER-6 in `hi/tools.md`.
 
@@ -68,7 +68,7 @@ The `<three-md>` element stays a text renderer. Decode, composition, linked fold
 
 ## Invariants
 
-1. Files stay on the left. Edit and Preview share one panel, one is visible at a time, and Edit is the default. Below 900px, Files and the document take turns, and the document panel still switches Edit and Preview. Choosing Preview renders the live plane view.
+1. Files stay on the left. Edit, the plane preview, and Cubes share one panel, one is visible at a time, and Edit is the default. Below 900px, Files and the document take turns. Choosing Preview renders the live plane view. Choosing Cubes draws a fenced character grid as translucent cubes on a dark stage. The status bar shows the caret, the axis, and the cube count. The element stays a text renderer.
 2. A public GitHub locator is accepted only when the host is `github.com`, `www.github.com`, or `raw.githubusercontent.com`, or when the input is an `owner/repo` name. A host string elsewhere in the URL is not a match.
 3. A public load skips `node_modules`, keeps at most 400 files, and skips a file larger than 1.5 MB. The line index keeps at most 12,000 rows.
 4. Search opens the plane for the chosen line.
@@ -132,3 +132,4 @@ The `<three-md>` element stays a text renderer. Decode, composition, linked fold
 | 2026-10-09 | ThreeMDViewer change | Add the page contract for files, source, live view, public GitHub open, line search, sections, pack, and kind 2 download. |
 | 2026-10-10 | SpecSync | cover-the-github-style-viewer-page-in-the-spec-the-page-is-files-source-and-the-live-plane-view-it-opens-a-public: Cover the GitHub-style viewer page in the spec. The page is files, source, and the live plane view. It opens a public GitHub repo, folder, or file, or a local file or folder. Search reads every line and opens that plane. Markdown headings become planes. Opened files pack into one text document and download as uncompressed kind 2. The three-md element stays a text renderer. |
 | 2026-10-10 | ThreeMDViewer change | Edit and Preview share one panel and switch. Files stay on the left. Below 900px, Files and the document take turns. |
+| 2026-10-10 | ThreeMDViewer change | Add a Sculpt-style cube stage beside Edit and Preview, and a status bar for the caret, axis, and cube count. |
