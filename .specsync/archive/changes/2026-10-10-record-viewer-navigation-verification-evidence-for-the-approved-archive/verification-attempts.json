@@ -1,0 +1,277 @@
+{
+  "schema_version": 1,
+  "attempts": [
+    {
+      "timestamp": 1791647869,
+      "commit": "1e56f9bc3ea3d891143bab01778e28bec7852d29",
+      "contract_digest": "7b6ea3e8aed7f48a86cf966b2975ca9ef04a2e023c3a5f51402f7e0e34dab65b",
+      "execution_digest": "82d20742b15bee6a2b3aef0963278bb44b079661b72598eae0ced2bef0932944",
+      "workspace_digest": "1fe89875c5f9e17b3f56b2e358519c256a4f2c83f55f5d95221dabd8b5a8ce0c",
+      "passed": true,
+      "commands": [
+        {
+          "command": "specsync check --spec ThreeMDViewer",
+          "success": true,
+          "exit_code": 0
+        }
+      ],
+      "requirement_ids": []
+    },
+    {
+      "timestamp": 1791647887,
+      "commit": "53a4c199d789267b3834140178430217cee602a8",
+      "contract_digest": "7b6ea3e8aed7f48a86cf966b2975ca9ef04a2e023c3a5f51402f7e0e34dab65b",
+      "execution_digest": "82d20742b15bee6a2b3aef0963278bb44b079661b72598eae0ced2bef0932944",
+      "workspace_digest": "1fe89875c5f9e17b3f56b2e358519c256a4f2c83f55f5d95221dabd8b5a8ce0c",
+      "passed": true,
+      "commands": [
+        {
+          "command": "specsync check --spec ThreeMDViewer",
+          "success": true,
+          "exit_code": 0
+        }
+      ],
+      "requirement_ids": []
+    },
+    {
+      "timestamp": 1791648135,
+      "commit": "fbfb7a5a97f155744383b3282ec00f363c4ee874",
+      "contract_digest": "7b6ea3e8aed7f48a86cf966b2975ca9ef04a2e023c3a5f51402f7e0e34dab65b",
+      "execution_digest": "82d20742b15bee6a2b3aef0963278bb44b079661b72598eae0ced2bef0932944",
+      "workspace_digest": "1fe89875c5f9e17b3f56b2e358519c256a4f2c83f55f5d95221dabd8b5a8ce0c",
+      "passed": true,
+      "commands": [
+        {
+          "command": "specsync check --spec ThreeMDViewer --strict",
+          "success": true,
+          "exit_code": 0
+        }
+      ],
+      "requirement_ids": []
+    },
+    {
+      "timestamp": 1791651244,
+      "commit": "c26fdfce25179ec22d69fe82a2fcea26ff8488c7",
+      "contract_digest": "7b6ea3e8aed7f48a86cf966b2975ca9ef04a2e023c3a5f51402f7e0e34dab65b",
+      "execution_digest": "82d20742b15bee6a2b3aef0963278bb44b079661b72598eae0ced2bef0932944",
+      "workspace_digest": "9d1d4246e27778537055a9cf87c785b56a67ce526c69f177ce47eb615ae9f480",
+      "passed": true,
+      "commands": [
+        {
+          "command": "specsync check --spec ThreeMDViewer",
+          "success": true,
+          "exit_code": 0
+        }
+      ],
+      "requirement_ids": []
+    },
+    {
+      "timestamp": 1791651262,
+      "commit": "7161e4d83ee37916e19c88e082d4aef7d4571332",
+      "contract_digest": "7b6ea3e8aed7f48a86cf966b2975ca9ef04a2e023c3a5f51402f7e0e34dab65b",
+      "execution_digest": "82d20742b15bee6a2b3aef0963278bb44b079661b72598eae0ced2bef0932944",
+      "workspace_digest": "9d1d4246e27778537055a9cf87c785b56a67ce526c69f177ce47eb615ae9f480",
+      "passed": true,
+      "commands": [
+        {
+          "command": "specsync check --spec ThreeMDViewer",
+          "success": true,
+          "exit_code": 0
+        }
+      ],
+      "requirement_ids": []
+    },
+    {
+      "timestamp": 1791651262,
+      "commit": "083a3d5c277be0cd736217ee097d7869f8ce3d50",
+      "contract_digest": "7b6ea3e8aed7f48a86cf966b2975ca9ef04a2e023c3a5f51402f7e0e34dab65b",
+      "execution_digest": "82d20742b15bee6a2b3aef0963278bb44b079661b72598eae0ced2bef0932944",
+      "workspace_digest": "9d1d4246e27778537055a9cf87c785b56a67ce526c69f177ce47eb615ae9f480",
+      "acceptance_input_digest": "07eb2a36893013f4c919ac965ca1f085b83eceadbea01d7e13e746e376f2fde4",
+      "acceptance_manifest": {
+        "schema_version": 1,
+        "entries": [
+          {
+            "path": "docs/evidence/viewer-camera",
+            "kind": "non_file",
+            "mode": 0,
+            "payload_digest": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "entry_digest": "0224f6df0a928630c9021722c48f51397f4befa92b9282fa946a3f238b7ee5ab",
+            "owners": [
+              "@exact:delivery"
+            ]
+          },
+          {
+            "path": "docs/evidence/viewer-camera/README.md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "53bbe5a8d8f4f2f17ebea677fca24661c1f43024bdd14b6bc02053c14a995258",
+            "entry_digest": "71cee6cd930a4a86f485c6dde97bf779494956a35795054d2a3d1108d904c52c",
+            "owners": [
+              "@exact:delivery"
+            ]
+          },
+          {
+            "path": "docs/evidence/viewer-camera/camera-parity.3md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "faa46b7ebb3f3c1c7a73413bfbbf3b08802e9a7d34503ef4d6ef14823160305c",
+            "entry_digest": "abe06f475c17303ca9cfaaf90da85464a10b1056e6a5bc9ef5c3d0c8897b5cef",
+            "owners": [
+              "@exact:delivery"
+            ]
+          },
+          {
+            "path": "docs/evidence/viewer-camera/camera-parity.json",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "7aba56ae365864d46a79b0f9fe3fbfefff1bffc818ef12e1297291c00eef7969",
+            "entry_digest": "045ea0b36108124a822d94ea5a78574ab161f86c87f4a2a4244b6d8a77587ac2",
+            "owners": [
+              "@exact:delivery"
+            ]
+          },
+          {
+            "path": "docs/evidence/viewer-camera/local-verification.json",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "1f65e49461641eadc2185139e5bb8e657ff144cd8ae8e5f64fda26a0332dc896",
+            "entry_digest": "562cb03a986d12c5035b27b6a3f7a804913ec9195d5294063260ac6116d36fdb",
+            "owners": [
+              "@exact:delivery"
+            ]
+          },
+          {
+            "path": "docs/evidence/viewer-camera/sculpt-current.png",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "3b7d91b8f341b788076addbc48bcbc41136802648200ba64ae0f69df2a22f296",
+            "entry_digest": "01f02a65fd826a53e361216b12c8b2552b6db66fdd04acddf77044651af85849",
+            "owners": [
+              "@exact:delivery"
+            ]
+          },
+          {
+            "path": "docs/evidence/viewer-camera/viewer-current.jpg",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "11fa94393462b83d7525c66387f28afdcb320ceaedd964204bd8b2ccdee65e3a",
+            "entry_digest": "8d44d08b523bf8f18a403ce2cc19ac339cc8dba82796719722ce5d068647eee5",
+            "owners": [
+              "@exact:delivery"
+            ]
+          },
+          {
+            "path": "docs/evidence/viewer-navigation",
+            "kind": "non_file",
+            "mode": 0,
+            "payload_digest": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "entry_digest": "4825c798737741569741a61f0e9e5354ccc4a2097b547f0551a4be8bb80b51cb",
+            "owners": [
+              "@exact:delivery"
+            ]
+          },
+          {
+            "path": "docs/evidence/viewer-navigation/README.md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "c7a8f3989ba219e1cdc3ffcb5a7b9742272e353b5dd19f29338e39f83d91af4d",
+            "entry_digest": "8bbf6aab36bbce8fc2641a632f77df43ad3a0a131b6d7c2aaa233506a57a1dac",
+            "owners": [
+              "@exact:delivery"
+            ]
+          },
+          {
+            "path": "docs/evidence/viewer-navigation/desktop.jpg",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "ecfa9612c696c4bb815a8a34d0e0187be6d9e3df2040c05a28061946f51a48d5",
+            "entry_digest": "f375924f6c76ca8bd4e414cb0d8915d6b901d9f5770350a38921947f65a75075",
+            "owners": [
+              "@exact:delivery"
+            ]
+          },
+          {
+            "path": "docs/evidence/viewer-navigation/phone-files.jpg",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "53802ebe42e86c58077dfee86489c648d9e93e22e5b3115e7a762a182ddead41",
+            "entry_digest": "2f14f232db596f47cb8836d83d0afaf82fe726b79fb725b498df4154331c6054",
+            "owners": [
+              "@exact:delivery"
+            ]
+          },
+          {
+            "path": "docs/evidence/viewer-navigation/phone.jpg",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "66b256687d16e3c28992316287f07a6ab7d9c2b534dde5bed863abb72297e148",
+            "entry_digest": "2d859dd5e7a247e373c1591b028424eb87066e5b7feec5840729f8a4b0683c7a",
+            "owners": [
+              "@exact:delivery"
+            ]
+          },
+          {
+            "path": "specs/ThreeMDViewer/ThreeMDViewer.spec.md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "5179c246eb258124753ca8d43972397d7e4f4e127f328b08e850de0a384c85ae",
+            "entry_digest": "a37f342f975c33eb5ca5fbc7cdef521c1acbe4a5c2a1b5696148da3d4d92ecb4",
+            "owners": [
+              "ThreeMDViewer"
+            ]
+          },
+          {
+            "path": "specs/ThreeMDViewer/context.md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "01c41362ddc8ac88b1c7baced558428b2083945ab29e4e8f1d428c32bbf186d5",
+            "entry_digest": "123abf2dcc8baffeaaa50e60f6b43fe681d912b8514616ba88019e8a3b4347e5",
+            "owners": [
+              "ThreeMDViewer"
+            ]
+          },
+          {
+            "path": "specs/ThreeMDViewer/requirements.md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "85322d8b84eff25c4d066df2c18d0151f91840366b142063b01f394d52a418ee",
+            "entry_digest": "7a0a9b1a29b3873df944466ee2b1171c8130aac2caa2ce4727aff1d154b53f6a",
+            "owners": [
+              "ThreeMDViewer"
+            ]
+          },
+          {
+            "path": "specs/ThreeMDViewer/tasks.md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "522a4319d65b92b58385ebd2324477b9cbfe4c7e32ca6dc4912ed57483cb1c85",
+            "entry_digest": "36a320b8026eb9a2936d247e843cfc857d5404feddc2c9e770096e9145264b0d",
+            "owners": [
+              "ThreeMDViewer"
+            ]
+          },
+          {
+            "path": "specs/ThreeMDViewer/testing.md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "77e9e80d5ece361fbbeab6965779db0d043476558b73091ea06f4c5f01142f13",
+            "entry_digest": "fd7665984f3453381ff2b848e3507cdead5297842b8f6faffa9e67e1587ba6e8",
+            "owners": [
+              "ThreeMDViewer"
+            ]
+          }
+        ]
+      },
+      "passed": true,
+      "commands": [
+        {
+          "command": "specsync check --spec ThreeMDViewer",
+          "success": true,
+          "exit_code": 0
+        }
+      ],
+      "requirement_ids": []
+    }
+  ]
+}

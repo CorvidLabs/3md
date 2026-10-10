@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "workflow_version": 2,
+  "workflow_origin_version": 2,
+  "id": "record-viewer-navigation-verification-evidence-for-the-approved-archive",
+  "slug": "record-viewer-navigation-verification-evidence-for-the-approved-archive",
+  "title": "Record viewer navigation verification evidence for the approved archive",
+  "description": "Record viewer navigation verification evidence for the approved archive",
+  "kind": "documentation",
+  "state": "accepted",
+  "canonical_applied": true,
+  "base_commit": "fefd8316adfff3af8bdb87d26b4a417650540b56",
+  "created_at": 1791643208,
+  "updated_at": 1791651315,
+  "affected_specs": [
+    "ThreeMDViewer"
+  ],
+  "affected_paths": [
+    "docs/evidence/viewer-navigation",
+    "docs/evidence/viewer-camera"
+  ],
+  "no_spec_change": true,
+  "no_spec_change_rationale": "Declare the existing PR 93 screenshots and verification README for complete delivery coverage; viewer behavior remains in the approved workspace change and no canonical contract change is required for evidence files.",
+  "acceptance_criteria": [
+    "Record actual navigation and camera verification results and screenshots while preserving test and provenance limitations"
+  ],
+  "selected_artifacts": [
+    "context",
+    "docs"
+  ],
+  "dependencies": [],
+  "answers": {
+    "architecture_risk": "no",
+    "public_contract": "no"
+  }
+}

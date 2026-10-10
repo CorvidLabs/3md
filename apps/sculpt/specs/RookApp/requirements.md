@@ -164,3 +164,11 @@ Acceptance Criteria
 - In-process tests open a model, a composition and a world from the gallery, cancel a large entry while it loads, and confirm the current document and history are unchanged afterwards.
 - Listing the gallery generates no large entry.
 
+
+### REQ-RookApp-088
+
+The volume canvas SHALL also show colored X/Y/Z sphere rings and accessible Free/X/Y/Z constraints. Selected-axis dragging and finite positive degree steps (default 15) SHALL rotate only that document axis. Finite positive pan steps (default 0.25 cells) SHALL move in screen space; invalid step input SHALL leave the pose unchanged. The volume canvas SHALL offer Pan in addition to Orbit. Shift-left, middle and right dragging SHALL pan without painting or selecting a slice, including when Paint is active. Scroll and trackpad magnification SHALL zoom proportionally within 0.5...2. The local pointer bridge SHALL retain the starting drag mode through mouse-up and preserve canvas keyboard focus. Fit SHALL restore the default orbit pose, zoom 1 and zero pan. Ordinary Paint and grouped stroke Undo SHALL remain available.
+
+Acceptance Criteria:
+
+- Native pointer regressions prove modified dragging emits only camera events and preserves ordinary mouse delivery. Native picking and painting continue to share the matched camera. Returning to Paint releases the Pan tool.

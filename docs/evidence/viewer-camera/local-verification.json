@@ -1,0 +1,96 @@
+{
+  "actor": "agent:codex",
+  "date": "2026-10-10",
+  "implementation_commit": "c94e075164664cf724115f0a7e02cc53905a3114",
+  "description": "Actual local execution results. Scope approval is not independent review or signed provenance.",
+  "checks": [
+    {
+      "command": "node node_modules/@playwright/test/cli.js test viewer.spec.mjs --workers=2",
+      "directory": "uitests",
+      "platform": "macOS",
+      "passed": 106,
+      "exit_code": 0
+    },
+    {
+      "command": "playwright test --workers=2",
+      "platform": "Linux container mcr.microsoft.com/playwright:v1.61.1-noble",
+      "passed_without_retry": 197,
+      "passed_on_retry": 1,
+      "existing_skips": 8,
+      "exit_code": 0
+    },
+    {
+      "command": "playwright test robustness.spec.mjs --project=webkit --grep DOM does not grow --workers=1",
+      "platform": "same Linux container",
+      "passed": 1,
+      "exit_code": 0
+    },
+    {
+      "command": "swift test --no-parallel --skip deterministicPortableInterchangeFixtures",
+      "directory": "apps/sculpt",
+      "platform": "macOS",
+      "passed": 635,
+      "suites": 54,
+      "exit_code": 0,
+      "selection": "Existing sculpt.yml CI selection. The excluded upstream-version fixture remains a pre-existing limitation."
+    },
+    {
+      "command": "swift test --no-parallel --filter CameraParityTests|SculptureLiveVoxelTests|SculptureCanvasPointerTests|SculptureMathExampleExportTests",
+      "directory": "apps/sculpt",
+      "passed": 23,
+      "suites": 4,
+      "exit_code": 0
+    },
+    {
+      "command": "specsync check --strict --require-coverage 100",
+      "directory": ".",
+      "passed_specs": 4,
+      "warnings": 0,
+      "covered_files": 55,
+      "total_files": 55
+    },
+    {
+      "command": "specsync check --strict --require-coverage 100",
+      "directory": "apps/sculpt",
+      "passed_specs": 5,
+      "warnings": 0,
+      "covered_files": 94,
+      "total_files": 94
+    },
+    {
+      "command": "hi check",
+      "directory": ".",
+      "passed_criteria": 85
+    },
+    {
+      "command": "hi check",
+      "directory": "apps/sculpt",
+      "passed_criteria": 48
+    },
+    {
+      "command": "pinned fledge-trust verify",
+      "fledge_version": "1.7.2",
+      "trust_version": "1.2.2",
+      "commit": "6f4d9640f4ddfd7890a22323b9f976da80860fd9",
+      "exit_code": 0,
+      "augur_verdict": "review",
+      "risk_score": 36,
+      "provenance": "degraded progressive provenance; the unsigned actual agent claim does not meet signature/reviewer policy"
+    }
+  ],
+  "pending": [
+    "final archive head pinned Trust result is recorded in the PR",
+    "evidence-only record closure at this documentation checkpoint",
+    "separate X/Y/Z gizmo definition approval"
+  ],
+  "limitations": [
+    "An unsigned codex claim cannot satisfy the pinned Attest signature and reviewer policy.",
+    "Local UI observations are agent verification rather than user diff review."
+  ],
+  "lifecycle": {
+    "camera": "archived by supported scoped review and finalize; archive commit 182dc07",
+    "viewer_navigation": "archived by supported scoped review and finalize; archive commit 8cf7a07",
+    "reviewer": "agent:codex",
+    "approval": "Leif directly approved scope and verified closure; no independent human diff review claimed"
+  }
+}

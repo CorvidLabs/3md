@@ -1,0 +1,53 @@
+
+Running 4 tests using 2 workers
+
+(node:47769) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:47770) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] ::1 - - [10/Oct/2026 11:55:09] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:55:09] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:55:09] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:55:09] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:55:09] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:55:09] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:55:09] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:55:09] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:55:09] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:55:09] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:55:10] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:55:10] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:55:10] "GET /nested-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:55:10] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:55:10] "GET /binary-samples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:55:10] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:55:10] "GET /nested-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:55:10] "GET /binary-samples.json HTTP/1.1" 200 -
+  ✓  1 [chromium] › viewer.spec.mjs:965:3 › viewer & editor (viewer.html) › phone layout leaves room for cubes and keeps controls outside the drawing (1.2s)
+  ✓  2 [chromium] › viewer.spec.mjs:1360:3 › Sculpt Slice parity › phone Slice tools and axis controls stay usable without horizontal page overflow (1.3s)
+(node:47783) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:47784) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] ::1 - - [10/Oct/2026 11:55:12] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:55:12] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:55:12] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:55:12] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:55:12] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:55:12] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:55:12] "GET /binary-samples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:55:12] "GET /nested-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:55:12] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:55:12] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:55:12] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:55:12] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:55:12] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:55:12] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:55:12] "GET /nested-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:55:12] "GET /binary-samples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:55:12] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:55:12] "GET /gallery-data.json HTTP/1.1" 200 -
+  ✓  3 [webkit] › viewer.spec.mjs:965:3 › viewer & editor (viewer.html) › phone layout leaves room for cubes and keeps controls outside the drawing (1.0s)
+  ✓  4 [webkit] › viewer.spec.mjs:1360:3 › Sculpt Slice parity › phone Slice tools and axis controls stay usable without horizontal page overflow (1.3s)
+
+  4 passed (4.0s)

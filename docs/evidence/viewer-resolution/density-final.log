@@ -1,0 +1,53 @@
+
+Running 4 tests using 2 workers
+
+(node:78296) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:78295) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] ::1 - - [10/Oct/2026 12:37:32] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 12:37:32] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 12:37:32] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 12:37:32] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 12:37:32] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 12:37:32] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 12:37:32] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 12:37:32] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 12:37:32] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 12:37:32] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 12:37:32] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 12:37:32] "GET /nested-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 12:37:32] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 12:37:32] "GET /binary-samples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 12:37:32] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 12:37:32] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 12:37:32] "GET /nested-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 12:37:32] "GET /binary-samples.json HTTP/1.1" 200 -
+  ✓  1 [chromium] › viewer.spec.mjs:1427:3 › shared cube drawable stays sharp through view/viewport changes at 1x density (2.6s)
+  ✓  2 [chromium] › viewer.spec.mjs:1427:3 › shared cube drawable stays sharp through view/viewport changes at 2x density (2.7s)
+(node:78314) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:78315) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] ::1 - - [10/Oct/2026 12:37:35] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 12:37:35] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 12:37:35] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 12:37:35] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 12:37:35] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 12:37:35] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 12:37:35] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 12:37:35] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 12:37:35] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 12:37:35] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 12:37:35] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 12:37:35] "GET /binary-samples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 12:37:35] "GET /nested-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 12:37:35] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 12:37:35] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 12:37:35] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 12:37:35] "GET /nested-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 12:37:35] "GET /binary-samples.json HTTP/1.1" 200 -
+  ✓  4 [webkit] › viewer.spec.mjs:1427:3 › shared cube drawable stays sharp through view/viewport changes at 2x density (2.0s)
+  ✓  3 [webkit] › viewer.spec.mjs:1427:3 › shared cube drawable stays sharp through view/viewport changes at 1x density (2.3s)
+
+  4 passed (6.3s)

@@ -1,6 +1,6 @@
 ---
 module: RookSculpture
-version: 22
+version: 24
 status: active
 files:
   - Sources/RookSculpture/SculptureVolumeStudyExamples.swift
@@ -226,8 +226,19 @@ Names below are the public declarations in the source files. This table does not
 | `format` | format(of:) chooses compact only when the complete eight-byte compact magic matches; otherwise the readable codec performs validation. |
 | `SculptureCamera` | Session pose. |
 | `yaw` | Horizontal orbit, in radians. |
-| `pitch` | Vertical tilt, in radians. |
-| `zoom` | Frame scale. |
+| `pitch` | Full-turn vertical orbit, in radians. |
+| `zoom` | Frame scale, normalized to 0.5...2. |
+| `panX` | Session target offset along camera right, in cells; defaults to zero. |
+| `panY` | Session target offset along camera up, in cells; defaults to zero. |
+| `basis` | Continuous camera right, up and back vectors from normalized full-turn inputs. |
+| `projectionScale` | Native 0.68 viewport scale for supplied dimensions and viewport; `fitsVolume` opts into the same complete-cube fit margin as the browser. |
+| `fitsVolume` | Session framing flag. Interactive Sculpt cameras opt into the same complete-cube margin as the browser; default utility cameras keep the established 0.68 scale for deterministic example previews. The flag follows the session into CPU/ASCII/GPU rendering and exports and is never stored in a sculpture. |
+| `normalized` | A sanitized camera value with periodic angles, bounded zoom and finite bounded pan. |
+| `axisRotation` | Session-only normalized `(x, y, z, w)` quaternion composed before the yaw/pitch basis; invalid or zero quaternions become identity. |
+| `rotate` | `rotate(axis:radians:)` rotates the camera basis about document X, row-down Y or plane Z. Finite steps compose and normalize; invalid axes and angles leave it unchanged. |
+| `orbit` | `orbit(horizontal:vertical:)` applies 0.008 radians per local point without a vertical stop. Invalid inputs leave the camera unchanged. |
+| `pan` | `pan(horizontal:vertical:extent:width:height:)` applies screen-space movement using the inverse native projection scale. Invalid inputs leave the camera unchanged. |
+| `magnify` | `magnify(_:)` applies a finite positive zoom factor and clamps to 0.5...2. |
 | `ProjectedGlyph` | One projected cell. |
 | `brightness` | Projected glyph brightness. |
 | `SculptureFrame` | PNG-independent view. |
@@ -406,7 +417,7 @@ For EXPORT-35, explicit portable scene encoding and decoding SHALL use ThreeMD2 
 5. The document is 3md. `encode` sets the document version to `1.0`, axis `space`, the sculpture title, and metadata keys `scene-schema`, `width`, and `height` only. `scene-schema` is `ascii-sculpture-1`. Width and height are decimal strings. There is no preamble. Plane `z` values are `0..<depth`. The written label is `Slice N`. The body is a `ascii` fence with `height` rows of `width` bytes.
 6. `decode` refuses data larger than 20_971_520 bytes before parsing and bounds plane directives to 256. A private preparse cap rejects more than 100,000 physical lines with `invalidGrid` before ThreeMD can allocate per-line parsing structures, independently of the byte bound. It requires axis `space`, that schema, those three metadata keys and no others, integer width and height in 1...256, 1...256 planes, no preamble, and `planesByZ` enumerated so each `z` equals its index (`0`, `1`, `2`, ...). Planes have no `x`, `y`, or extra attributes. Each body is a `ascii` fence of that rectangle. A missing document title becomes `Untitled`. The camera is not read. Existing smaller documents remain valid; the schema is unchanged.
 7. A title is 1...80 bytes, each in 32...126. The codec does not drop characters or convert another schema into this one.
-8. Projection does not encode PNG. Empty cells are omitted. A later glyph replaces a pixel only when its depth is greater. Non-finite yaw, pitch, and zoom become 0, 0, and 1. Finite pitch stays in -1.4...1.4 and finite zoom stays in 0.5...2. The existing nonthrowing API checks cancellation before geometry work, per row, and before returning; cancellation returns a bounded all-nil frame rather than partial projected glyphs. Normal traversal and occlusion remain unchanged.
+8. Projection does not encode PNG. Empty cells are omitted. A later glyph replaces a pixel only when its depth is greater. Non-finite yaw, pitch, and zoom become 0, 0, and 1. Finite yaw and pitch normalize by complete turns, finite zoom stays in 0.5...2, and normalized finite pan stays within +/-1_000_000 cells. Nonfinite pan becomes zero. Projection uses the translated camera target. The existing nonthrowing API checks cancellation before geometry work, per row, and before returning; cancellation returns a bounded all-nil frame rather than partial projected glyphs. Normal traversal and occlusion remain unchanged.
 9. This module does not import RookApp, RookCore, RookRendering, or the development targets, and it does not open a network connection or start a process.
 10. `SculptureExamples.all` contains twenty-one values. The original twelve retain their order and IDs: `character-orb`, `woven-torus`, `moon-gate`, `spiral-tower`, `crystal-garden`, `little-rocket`, `pixel-bonsai`, `orbital-rings`, `hill-observatory`, `terraced-island`, `canal-city`, and `alpine-valley`. `character-orb` is `Sculpture.orb()`. Each other original volume is 24 by 24 by 24. The original `Maps` are `terraced-island`, `canal-city`, and `alpine-valley`; the other original nine are `Sculptures`. Their map samples use Y for elevation and Z for depth, sampling grid Y at Y + 6 inside the 24-cubed volume.
 11. The first eight appended examples are each 64 by 64 by 64, in this order: `wandering-cartographer` (`Characters`), `clockwork-dragon`, `woodland-fox`, `deep-sea-whale` (all `Creatures`), `citadel-of-arches` (`Architecture`), `sky-island-village`, `canyon-waterfall`, and `moonlit-harbor` (all `Worlds`). Their deterministic primitives provide posed human features, creature anatomy, castle structure, and spatial scenery. All examples use only palette bytes and periods and satisfy the existing title and schema rules.
@@ -436,6 +447,14 @@ For EXPORT-35, explicit portable scene encoding and decoding SHALL use ThreeMD2 
 | 20..<28 | UInt32 uncompressed voxel count and compressed stream byte count. |
 | 28..<60 | SHA256 of the first 28 header bytes, title, and uncompressed voxels. |
 | 60... | Printable ASCII title bytes, then exactly one LZFSE stream. |
+
+### REQ-RookSculpture-012
+
+The session camera SHALL additionally support a normalized three-axis orientation, with document-axis X, row-down Y and plane Z rotation. Invalid axis or nonfinite rotation inputs SHALL leave the pose unchanged. The session camera SHALL allow complete yaw and pitch turns and finite screen-space pan, with zoom bounded to 0.5...2. ASCII and cube cameras SHALL use the same normalized inputs. Nonfinite angles, zoom and pan SHALL become 0, 1 and 0 respectively; finite pan SHALL be bounded to one million cells in either direction. Drag orbit SHALL use 0.008 radians per point, pan SHALL use the inverse native 0.68 viewport scale, and invalid gesture inputs SHALL leave the camera unchanged. Camera state SHALL NOT be persisted in a sculpture.
+
+Acceptance Criteria:
+
+- Shared native/browser cases cover both poles, upside-down and translated views. Full turns restore the basis, inverse pan restores the origin, zoom clamps at both limits, and invalid inputs cannot corrupt the camera.
 
 ## Behavioral Examples
 
@@ -469,6 +488,8 @@ The package product `ThreeMD` comes from the `3md` package at `../..`. It handle
 
 ## Change Log
 
+- 2026-10-10: Full-turn volume camera, screen-space pan and matched browser/native projection. Verification and lifecycle closure are recorded separately.
+
 - Linux unit tests: `Sources/CLzfse/shim.h` is part of this module. It is the liblzfse header link. Compact `.3mdb` stays the app save, not an upstream ThreeMD standard.
 
 - Version 12: explicit ThreeMD2 portable scene copies, retained upstream snapshots and atomic shared edits for EXPORT-35. Current verification is recorded separately; old schemas and receipts remain historical.
@@ -495,3 +516,7 @@ The package product `ThreeMD` comes from the `3md` package at `../..`. It handle
 | 2026-10-07 | open-and-resolve-linked-3md-compositions-from-a-chosen-project-folder-and-import-self-contained-bundles: Open and resolve linked 3md compositions from a chosen project folder and import self-contained bundles |
 | 2026-10-07 | show-every-example-in-one-gallery-and-add-a-math-generated-size-ladder-from-16-to-10-240-cells: Show every example in one gallery and add a math-generated size ladder from 16 to 10,240 cells |
 | 2026-10-07 | drop-math-ladder-worlds-1024-and-10240: Drop the 1,024-wide and 10,240-wide math-ladder worlds; the ladder is five voxel models |
+
+## Document-axis camera controls
+
+The interactive camera composes a normalized session quaternion with its continuous yaw/pitch basis. Positive axis steps follow document X, row-down Y and plane Z. Shared matrix-reference fixtures cover X, Y and Z rotation, mixed sequences, negative and inverse steps and full turns. Scalar ASCII, CPU voxel projection and the native live camera consume this same basis. Camera changes reuse installed geometry and do not edit document cells or history. Legacy default export framing remains unchanged.

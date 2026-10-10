@@ -267,11 +267,12 @@ private struct VoxelCamera {
     let width: Double
     let height: Double
     let scale: Double
-    let cy: Double
-    let sy: Double
-    let cp: Double
-    let sp: Double
+    let right: SIMD3<Double>
+    let up: SIMD3<Double>
+    let back: SIMD3<Double>
     let distance: Double
+    let panX: Double
+    let panY: Double
 
     init(sculpture: Sculpture, camera: SculptureCamera, width: Int, height: Int) {
         self.init(
@@ -291,11 +292,15 @@ private struct VoxelCamera {
         self.width = Double(width)
         self.height = Double(height)
         let extent = Double(max(volumeWidth, volumeHeight, volumeDepth))
-        let yaw = camera.yaw.isFinite ? camera.yaw.truncatingRemainder(dividingBy: 2 * .pi) : 0
-        let pitch = camera.pitch.isFinite ? max(-1.4, min(1.4, camera.pitch)) : 0
-        let zoom = camera.zoom.isFinite ? max(0.5, min(2, camera.zoom)) : 1
-        scale = Double(min(width, height)) * 0.68 / extent * zoom
-        cy = cos(yaw); sy = sin(yaw); cp = cos(pitch); sp = sin(pitch)
+        let camera = camera.normalized
+        let basis = camera.basis
+        panX = camera.panX; panY = camera.panY
+        scale = camera.projectionScale(
+            dimensions: SIMD3(volumeWidth, volumeHeight, volumeDepth),
+            width: Double(width),
+            height: Double(height)
+        )
+        right = basis.right; up = basis.up; back = basis.back
         distance = extent * 3
     }
 
@@ -305,7 +310,9 @@ private struct VoxelCamera {
         let x = Double(cell.x) - centerX + nx * 0.5
         let y = centerY - Double(cell.y) + ny * 0.5
         let z = Double(cell.z) - centerZ + nz * 0.5
-        return nx * (-sy * cp * distance - x) + ny * (sp * distance - y) + nz * (cy * cp * distance - z) > 0.000_001
+        let eye = back * distance + right * panX + up * panY
+        let eyeX = eye.x, eyeY = eye.y, eyeZ = eye.z
+        return nx * (eyeX - x) + ny * (eyeY - y) + nz * (eyeZ - z) > 0.000_001
     }
 
     func face(_ face: SculptureVoxelFace, cell: SculptureCell, glyph: UInt8, adjacent: SculptureCell?)
@@ -394,14 +401,14 @@ private struct VoxelCamera {
 
     private func project(_ point: (Double, Double, Double)) -> SculptureVoxelVertex {
         let vx = point.0 - centerX, vy = centerY - point.1, vz = point.2 - centerZ
-        let rx = vx * cy + vz * sy
-        let rz = -vx * sy + vz * cy
-        let ry = vy * cp - rz * sp
-        let depth = vy * sp + rz * cp
+        let position = SIMD3(vx, vy, vz)
+        let rx = (position * right).sum()
+        let ry = (position * up).sum()
+        let depth = (position * back).sum()
         let perspective = 1 / (1 - depth / distance)
         return SculptureVoxelVertex(
-            x: width / 2 + rx * scale * perspective,
-            y: height / 2 - ry * scale * perspective,
+            x: width / 2 + (rx - panX) * scale * perspective,
+            y: height / 2 - (ry - panY) * scale * perspective,
             depth: depth
         )
     }

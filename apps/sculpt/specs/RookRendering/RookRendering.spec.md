@@ -1,6 +1,6 @@
 ---
 module: RookRendering
-version: 7
+version: 9
 status: active
 files:
   - Sources/RookRendering/SculptureWorldNavigation.swift
@@ -207,6 +207,14 @@ The world controller's publicly readable, privately set properties are `installe
 22. World scene identity changes install one GPU geometry set per prepared model definition. Repeated instances share that set. Focus and radius changes rebuild only bounded placement nodes and proxy/detail choices. Camera-only updates retain model buffers and instance nodes and update native transform/projection only; they do not resolve models, extract surfaces, scan placements, or run the CPU rasterizer. Native resize updates the projection. Session focus, distances, and camera are not document metadata.
 23. Native world mouse dragging beyond the click threshold changes yaw/pitch; scroll changes bounded zoom. A click selects the nearest detailed surface or proxy bounds through upper-left-origin native view-local picking, returning its stored instance ID. This view owns no placement edit, undo transaction, filesystem access, process, or network capability. World rendering has no selected-slice ghost mesh. The caller owns world edits and supplies a changed identity and prepared scene for those edits.
 
+### REQ-RookRendering-008
+
+Scalar ASCII, CPU voxel and live GPU volume cameras SHALL consume the same normalized three-axis basis, including Z rotation, with matching projection and picking and no geometry reinstall. Native scalar, prepared and live volume projection SHALL use the same full-turn camera basis, screen-space pan target and finite inputs. Panning SHALL translate both the eye and target in the camera right/up plane. Camera-facing surface selection and nearest-quad picking SHALL account for the translated eye. Camera updates SHALL reuse the installed document buffers. Rendering, ghost and export budgets SHALL remain unchanged.
+
+Acceptance Criteria:
+
+- The shared camera fixture compares native basis and projected points with browser values. Native scalar/live picks agree through the poles, upside down and after pan; the mesh installation count remains one.
+
 ## Behavioral Examples
 
 - A frame raster is wider than an empty frame's uniform charcoal only where glyphs were projected.
@@ -243,6 +251,8 @@ RookSculpture, AppKit, Observation, SceneKit, simd, Core Text, Core Graphics, Im
 
 ## Change Log
 
+- 2026-10-10: Full-turn volume camera, screen-space pan and matched browser/native projection. Verification and lifecycle closure are recorded separately.
+
 - Version 6: worker-prepared native mesh/ghost bytes, cached model reuse across world placement edits, subpixel grid edge detail, direct-neighbor exterior extraction and a prepared-scene cube projection reused by animation jobs for WORLD-33. Existing scalar fallback and capacity limits remain. New release measurements and verification are recorded separately under `docs/evidence/blockhaven/`; no lifecycle approval or finalization is claimed.
 
 - Version 1: raster and Metal-backed view from the sources on `leif/ascii-sculpture`. Export names are bare. No review or finalization is claimed.
@@ -253,3 +263,7 @@ RookSculpture, AppKit, Observation, SceneKit, simd, Core Text, Core Graphics, Im
 - Correction, same version: adapt live empty-slice edge visibility below 2.5 projected AppKit points, retaining faint fill picking and unchanged mesh buffers. The dense-grid snapshot/target regression, full lane and actual native orbit, zoom, selection and face/ghost-stroke Undo checks passed; retained evidence is in that same directory.
 - Version 5: a Sendable prepared sparse-world scene and observable native SceneKit Metal controller retain shared model buffers across focus and camera changes. Exact integer rebasing precedes distance culling and GPU conversion; nearby placements use bounded full detail, farther or over-budget placements use selectable bounds. Unique prepared definitions are limited to 1_000_000 exterior faces; at most 512 active placements and 500_000 full/proxy faces are rendered. Controlled tests are authored with execution and new visual evidence pending in the root lane. Earlier bounded-document camera evidence is unchanged; no lifecycle approval, review, or finalization is claimed.
 | 2026-10-05 | add-free-exploration-of-sparse-worlds-with-wasd-movement-drag-to-look-vertical-travel-and-a-clear-overview: Add free exploration of sparse worlds with WASD movement, drag to look, vertical travel and a clear overview |
+
+## Document-axis camera controls
+
+The interactive camera composes a normalized session quaternion with its continuous yaw/pitch basis. Positive axis steps follow document X, row-down Y and plane Z. Shared matrix-reference fixtures cover X, Y and Z rotation, mixed sequences, negative and inverse steps and full turns. Scalar ASCII, CPU voxel projection and the native live camera consume this same basis. Camera changes reuse installed geometry and do not edit document cells or history. Legacy default export framing remains unchanged.

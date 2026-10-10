@@ -1,0 +1,12 @@
+{
+  "schema_version": 2,
+  "change_id": "repair-blurry-cubes-and-slice-canvases-after-view-and-display-size-changes-while-retaining-the-webgl-context-and-camera",
+  "implementation_commit": "57a2db9ac4e98000a36aa9660df39e74aa21e17b",
+  "implementation_tree": "7f0597b4ae0f13eadb2f00388b1b6c7bb5216796",
+  "contract_digest": "2434816b883b109a6be3b8d0f9f72837258bc21346df7a0d4357d9df27fe8dd0",
+  "workspace_digest": "8d823c7fee2b7188d8da38049f5c4691eed8c49ad8f71a6b4210edcb9d2492b3",
+  "closing_digest": "35f18f24b91066a63ba3add8c3a8035b64813c30cdce7b5322583a08ad75eb3a",
+  "review_digest": "7ab87f1a1b99acbf5bff08b07a16dc0b0b0f78c182d1b962b8ad72b1e68549bd",
+  "finalization_digest": "7dce16ee853ce3924ccc051ca1fbc17002d8c7871abb4f89660bd65b83bd4ecf",
+  "timestamp": 1791657999
+}

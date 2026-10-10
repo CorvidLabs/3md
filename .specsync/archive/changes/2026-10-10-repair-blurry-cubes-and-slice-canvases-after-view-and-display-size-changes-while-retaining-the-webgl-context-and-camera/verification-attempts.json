@@ -1,0 +1,255 @@
+{
+  "schema_version": 1,
+  "attempts": [
+    {
+      "timestamp": 1791657937,
+      "commit": "cc71e781a3226550611ea09d8637cbaf2e67a1c8",
+      "contract_digest": "2434816b883b109a6be3b8d0f9f72837258bc21346df7a0d4357d9df27fe8dd0",
+      "execution_digest": "a67030d2d4fae6350ec00846e2a062e089570c761064ec0b92e2f51bc1fb7ceb",
+      "workspace_digest": "8d823c7fee2b7188d8da38049f5c4691eed8c49ad8f71a6b4210edcb9d2492b3",
+      "passed": true,
+      "commands": [
+        {
+          "command": "specsync check --spec ThreeMDViewer --strict",
+          "success": true,
+          "exit_code": 0
+        }
+      ],
+      "requirement_ids": [
+        "REQ-ThreeMDViewer-004"
+      ]
+    },
+    {
+      "timestamp": 1791657954,
+      "commit": "1269bffeb78bbca596decc28757938543df1a88f",
+      "contract_digest": "2434816b883b109a6be3b8d0f9f72837258bc21346df7a0d4357d9df27fe8dd0",
+      "execution_digest": "a67030d2d4fae6350ec00846e2a062e089570c761064ec0b92e2f51bc1fb7ceb",
+      "workspace_digest": "8d823c7fee2b7188d8da38049f5c4691eed8c49ad8f71a6b4210edcb9d2492b3",
+      "passed": true,
+      "commands": [
+        {
+          "command": "specsync check --spec ThreeMDViewer --strict",
+          "success": true,
+          "exit_code": 0
+        }
+      ],
+      "requirement_ids": [
+        "REQ-ThreeMDViewer-004"
+      ]
+    },
+    {
+      "timestamp": 1791657954,
+      "commit": "57a2db9ac4e98000a36aa9660df39e74aa21e17b",
+      "contract_digest": "2434816b883b109a6be3b8d0f9f72837258bc21346df7a0d4357d9df27fe8dd0",
+      "execution_digest": "a67030d2d4fae6350ec00846e2a062e089570c761064ec0b92e2f51bc1fb7ceb",
+      "workspace_digest": "8d823c7fee2b7188d8da38049f5c4691eed8c49ad8f71a6b4210edcb9d2492b3",
+      "acceptance_input_digest": "474024b8d244e1b0e66609fa2555e10bb14829248a2539c9606188898d4020ea",
+      "acceptance_manifest": {
+        "schema_version": 1,
+        "entries": [
+          {
+            "path": "docs/evidence/viewer-resolution",
+            "kind": "non_file",
+            "mode": 0,
+            "payload_digest": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "entry_digest": "1181f446a18468191a072ade800c6ab693b2ed1dadc57d03da27b41b9fc3a3ff",
+            "owners": [
+              "@exact:delivery"
+            ]
+          },
+          {
+            "path": "docs/evidence/viewer-resolution/README.md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "7559047d56b41d7b92476e8880be512074186c309ded7d33de63bb8479220e1d",
+            "entry_digest": "df4cbb2e9c537933efbe70a8083143254b2df01cbb9c33eb3ce51b53282c4d51",
+            "owners": [
+              "@exact:delivery"
+            ]
+          },
+          {
+            "path": "docs/evidence/viewer-resolution/attest-implementation.json",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "ebf8266fd7a37f7000ffb0ac1dda354903618d47f204d8c0d6e023b3f03945ea",
+            "entry_digest": "1345beebaa173db2e613589ce7040659a6b66a837c96dfa59562a4b29e2c53f4",
+            "owners": [
+              "@exact:delivery"
+            ]
+          },
+          {
+            "path": "docs/evidence/viewer-resolution/attest-policy.json",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "75e89fd087362ae70a2e1edc8d998953de6655773018babea94783230a137bdf",
+            "entry_digest": "9e07cd2c092474a9ba50c4f93520a98993c819ecfc09c71fee13e7da5876741f",
+            "owners": [
+              "@exact:delivery"
+            ]
+          },
+          {
+            "path": "docs/evidence/viewer-resolution/browser-after.png",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "32ab5ee993c52f5c17b5744bdd10326d47f132567d868042d63bdee4cfbfccf9",
+            "entry_digest": "0144a6e8335bb916f98f9f5d82e0cb5f1892f9daa70cf0ae9677c1787e051cd0",
+            "owners": [
+              "@exact:delivery"
+            ]
+          },
+          {
+            "path": "docs/evidence/viewer-resolution/browser-before.png",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "b72015dc9ed9c634e022dda0f4c7021d56edd4af1e23f786180bf5df5c826eac",
+            "entry_digest": "586995ccca4e70d99751ad9ff94aeef7cd26b785c066ef25e0a47a2c132659ec",
+            "owners": [
+              "@exact:delivery"
+            ]
+          },
+          {
+            "path": "docs/evidence/viewer-resolution/browser-full.log",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "d7a1034a41ea1aa87f04c8f0699af8aa692b6d33ffe7d7f990931797d5a28d51",
+            "entry_digest": "ea458237acf04e3fab7bf3b5b321b5a9a837bddb0ee080e3154dfb7ed23b7a9a",
+            "owners": [
+              "@exact:delivery"
+            ]
+          },
+          {
+            "path": "docs/evidence/viewer-resolution/density-final.log",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "4ea0c6f45736a3d53a0678057abfb45a33c26afb515501e668fff7b2a7aaffa9",
+            "entry_digest": "d8cdc825d3cb0efd3d9baf285e5c59b5580a0f7ef75940f00e2d6cbe803aaf24",
+            "owners": [
+              "@exact:delivery"
+            ]
+          },
+          {
+            "path": "docs/evidence/viewer-resolution/strict-implementation.json",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "e65b3be05140229cc195848694ecf5457afad42551f7d52769e00babee0b6f4f",
+            "entry_digest": "cdbe0c731a4a6ad2aef535556b8be975bf6059179a2ef3aca6e2f8516ad73784",
+            "owners": [
+              "@exact:delivery"
+            ]
+          },
+          {
+            "path": "docs/evidence/viewer-resolution/trust-implementation.log",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "f6b524e5e16be131f202250e7ad006b61ffbce3c3bdf6ed0877aac0e80068227",
+            "entry_digest": "fa15062abb14bd0af5575017896f5f36cf81141dcbf55b918fc45f2d317b1117",
+            "owners": [
+              "@exact:delivery"
+            ]
+          },
+          {
+            "path": "docs/evidence/viewer-resolution/viewer-final.log",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "9f08854409164c2d0046121631cb23ba537a0a1ff3b1f5504a402da9992d3f31",
+            "entry_digest": "45b6f6e6dfb9193e42dee450258ac77bb2f259a058453275c4617d75397d2bf5",
+            "owners": [
+              "@exact:delivery"
+            ]
+          },
+          {
+            "path": "specs/ThreeMDViewer",
+            "kind": "non_file",
+            "mode": 0,
+            "payload_digest": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "entry_digest": "b53a01354acef7fb830687d9789c70f85c60f43e94da4a2dd0816c771a3bf773",
+            "owners": [
+              "ThreeMDViewer"
+            ]
+          },
+          {
+            "path": "specs/ThreeMDViewer/ThreeMDViewer.spec.md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "bac308a20661b3e1b61a6851c67de191c89d5a7246ba84dfcee459e1fb3f06da",
+            "entry_digest": "a60eb3fe5bb7d6dc19fc57f9787fe7757fc9e472697f56c68e6c9dc024e5a190",
+            "owners": [
+              "ThreeMDViewer"
+            ]
+          },
+          {
+            "path": "specs/ThreeMDViewer/context.md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "f09326e825a394cb101529b853966c6b5322a2fc3badf79fb1fd2f9d320ef047",
+            "entry_digest": "336da9d0cb28b6c6ddfc58263c1a3b07f2a4c39c63d37a989b40844d5d90c17d",
+            "owners": [
+              "ThreeMDViewer"
+            ]
+          },
+          {
+            "path": "specs/ThreeMDViewer/requirements.md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "3dac32212b6c3e224405474d1d7691a739cc502cce4b0bfd3159b5a44dbb46d0",
+            "entry_digest": "b58e0f42ebd2f6b8eaa9cdc1bd7970d34031262b334b43bf9de66a56dcedf382",
+            "owners": [
+              "ThreeMDViewer"
+            ]
+          },
+          {
+            "path": "specs/ThreeMDViewer/tasks.md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "1067ddf384b6f388c737b630526ea78a96b74af4a4592c3f9b53ec6ee4098eae",
+            "entry_digest": "59ae09c0a423c2b88af674e7bc7ed35b795891289ea775b3708575e05dc8225d",
+            "owners": [
+              "ThreeMDViewer"
+            ]
+          },
+          {
+            "path": "specs/ThreeMDViewer/testing.md",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "6165442a33a7522678bc97daf88f790ac7dbe7235126760dc766909a5d7bb814",
+            "entry_digest": "04aa5d18efa83971c44d2f4412ff5a176ce1666ff86be9206c0262ed6d064c3d",
+            "owners": [
+              "ThreeMDViewer"
+            ]
+          },
+          {
+            "path": "uitests/viewer.spec.mjs",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "59894ffd439caff704f34d3fba39425e991f854fcfe83a73aca673b0883c1c97",
+            "entry_digest": "1af3072d0be2fb62f3b2f714b5cba967db575341c2b52d922246a262dc36302c",
+            "owners": [
+              "ThreeMDViewer"
+            ]
+          },
+          {
+            "path": "web/viewer.html",
+            "kind": "file",
+            "mode": 33188,
+            "payload_digest": "d5c226e7ccb6b46c7e462c6d72a89772138080dce9269f0813cd0979d10116b8",
+            "entry_digest": "99be08aa8855f3adc79655fc5802caee2260cc034f786496de965bf99a78cd3c",
+            "owners": [
+              "ThreeMDViewer"
+            ]
+          }
+        ]
+      },
+      "passed": true,
+      "commands": [
+        {
+          "command": "specsync check --spec ThreeMDViewer --strict",
+          "success": true,
+          "exit_code": 0
+        }
+      ],
+      "requirement_ids": [
+        "REQ-ThreeMDViewer-004"
+      ]
+    }
+  ]
+}

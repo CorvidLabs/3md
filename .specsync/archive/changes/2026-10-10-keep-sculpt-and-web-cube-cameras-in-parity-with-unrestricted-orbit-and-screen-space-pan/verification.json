@@ -1,0 +1,214 @@
+{
+  "timestamp": 1791649364,
+  "commit": "2cb08248efb492b03de8a2bb300b00383f732945",
+  "contract_digest": "c2c55f58dfdb8194f5d97358776f7e3321fbbb3fc6a127b3a990cc625f0cfcab",
+  "execution_digest": "2bb9d898086382e584700b0f1790c04fa97f14a030ffa1d3bc9df50113287a57",
+  "workspace_digest": "94bd7478dfb8735a51286b1c04445028dc910df8754b57775bc06773797a4420",
+  "acceptance_input_digest": "1a57b9d7ce82cfa977d3d8769e3950e3ee1cf8e17af2cc9e24b000d945c30aef",
+  "acceptance_manifest": {
+    "schema_version": 1,
+    "entries": [
+      {
+        "path": "\"apps/sculpt/Sources/RookApp/SculptureCanvasPointer.swift\"",
+        "kind": "missing",
+        "mode": 0,
+        "payload_digest": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "entry_digest": "c4ba82a18d4d935812536f149be4aa0b5615e431cdd806c5618bf7d03545f120",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "\"apps/sculpt/Sources/RookApp/SculptureEditor.swift\"",
+        "kind": "missing",
+        "mode": 0,
+        "payload_digest": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "entry_digest": "45a705552c723e5d3c62e35ff1f91e155943a3cd887b17ac36f0c5b8d2120b86",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "\"apps/sculpt/Sources/RookApp/SculptureViewport.swift\"",
+        "kind": "missing",
+        "mode": 0,
+        "payload_digest": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "entry_digest": "0a5bbf6f8aef29d5ace9b35066576156f996102ad9770cb9e40e2a6c65061616",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "\"apps/sculpt/Sources/RookRendering/SculptureLiveVoxelView.swift\"",
+        "kind": "missing",
+        "mode": 0,
+        "payload_digest": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "entry_digest": "7ae6181860cec53e573e3f42fd1432ec51aa33cf410c416a436ceb81f5e6e7f0",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "\"apps/sculpt/Sources/RookRendering/SculptureVoxelGeometry.swift\"",
+        "kind": "missing",
+        "mode": 0,
+        "payload_digest": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "entry_digest": "64700adc1884bc2d37af3dbc29ec024a32f1d5df89691296f45e33790a8aabd9",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "\"apps/sculpt/Sources/RookSculpture/SculptureProjection.swift\"",
+        "kind": "missing",
+        "mode": 0,
+        "payload_digest": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "entry_digest": "c82d81d1768efa3a8e32bfaccf6e601e2214cb0dcfe0d614f38a2ce514989404",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "\"apps/sculpt/Tests\"",
+        "kind": "missing",
+        "mode": 0,
+        "payload_digest": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "entry_digest": "5f7933e46330edbd7ab99ab287e0eaee835e563d4d7e892636373e526c2f76f1",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "\"apps/sculpt/hi\"",
+        "kind": "missing",
+        "mode": 0,
+        "payload_digest": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "entry_digest": "3243eb22a46bf2b39b571a6d2b86d90f807280529da5e13e1ad5a5f2a149563c",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "\"apps/sculpt/specs\"",
+        "kind": "missing",
+        "mode": 0,
+        "payload_digest": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "entry_digest": "96c94711df54f292a1bb3cce4402e5524586ac7e9544498719133db7d3ab006f",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "\"docs/evidence/viewer-camera\"]",
+        "kind": "missing",
+        "mode": 0,
+        "payload_digest": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "entry_digest": "363103111f6f1dfe638e03b0253eb25d568542b943f8b303efb5037590600f8a",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "\"hi/tools.md\"",
+        "kind": "missing",
+        "mode": 0,
+        "payload_digest": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "entry_digest": "a6adf830b1bbe4b6c7a1709d3b873f36295782746f1814837845046864e7f402",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "\"specs/ThreeMDViewer\"",
+        "kind": "missing",
+        "mode": 0,
+        "payload_digest": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "entry_digest": "e091bda9c951f304c4db8c40cb26760645c0d559ce2b0cff41a0a4c2201a92a0",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "\"uitests/viewer.spec.mjs\"",
+        "kind": "missing",
+        "mode": 0,
+        "payload_digest": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "entry_digest": "9cfdec9d3b12ce5e5e37f86cb59f272fbf41d0dd7e3a093da5df6acfaec7ef38",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "[\"web/viewer.html\"",
+        "kind": "missing",
+        "mode": 0,
+        "payload_digest": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "entry_digest": "4d154a3745b205f5afbe72d25471d40d225a9ec35bd838d5c84961d54a830ffa",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": "specs/ThreeMDViewer/ThreeMDViewer.spec.md",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "5179c246eb258124753ca8d43972397d7e4f4e127f328b08e850de0a384c85ae",
+        "entry_digest": "a37f342f975c33eb5ca5fbc7cdef521c1acbe4a5c2a1b5696148da3d4d92ecb4",
+        "owners": [
+          "ThreeMDViewer"
+        ]
+      },
+      {
+        "path": "specs/ThreeMDViewer/context.md",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "a7ab898f969d9ff40b61db395ce087ae405c91ee030eac801841b61f5620b1a2",
+        "entry_digest": "ebb8aad85405c195091c5abe00fd981bc7b136341b46118384e1d34ea35a965f",
+        "owners": [
+          "ThreeMDViewer"
+        ]
+      },
+      {
+        "path": "specs/ThreeMDViewer/requirements.md",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "85322d8b84eff25c4d066df2c18d0151f91840366b142063b01f394d52a418ee",
+        "entry_digest": "7a0a9b1a29b3873df944466ee2b1171c8130aac2caa2ce4727aff1d154b53f6a",
+        "owners": [
+          "ThreeMDViewer"
+        ]
+      },
+      {
+        "path": "specs/ThreeMDViewer/tasks.md",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "6f50ec382d73d01804ec0a8b9712a3df6f4c3106d831e380151ddd08ca079dcb",
+        "entry_digest": "79d6c9552eb5eb74e8bea36ab47c5a85baceab186fa2543e267507b89e900848",
+        "owners": [
+          "ThreeMDViewer"
+        ]
+      },
+      {
+        "path": "specs/ThreeMDViewer/testing.md",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "77e9e80d5ece361fbbeab6965779db0d043476558b73091ea06f4c5f01142f13",
+        "entry_digest": "fd7665984f3453381ff2b848e3507cdead5297842b8f6faffa9e67e1587ba6e8",
+        "owners": [
+          "ThreeMDViewer"
+        ]
+      }
+    ]
+  },
+  "passed": true,
+  "commands": [
+    {
+      "command": "specsync check --spec ThreeMDViewer",
+      "success": true,
+      "exit_code": 0
+    }
+  ],
+  "requirement_ids": [
+    "REQ-ThreeMDViewer-006"
+  ]
+}

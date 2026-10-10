@@ -1,0 +1,16 @@
+{
+  "schema_version": 2,
+  "change_id": "put-edit-and-preview-in-the-same-viewer-panel-and-toggle-them-like-github-files-stay-on-the-left-edit-shows-first-below",
+  "reviewer": "agent:codex",
+  "provenance": {
+    "schema_version": 1,
+    "provider": "github_actions_check",
+    "required_check": "SpecSync scoped review"
+  },
+  "verdict": "pass",
+  "implementation_commit": "47e18d32375406f98df343f4a580ea3e98f6d32d",
+  "contract_digest": "3b63dbbb2bbe4105992cc11edf9c9e5af29cf072884081c8329b2389d8116e6d",
+  "execution_digest": "ca236272754b3912cc5221e45a62020c70ffb0bb389840b6fb33d745834b8707",
+  "workspace_digest": "94bd7478dfb8735a51286b1c04445028dc910df8754b57775bc06773797a4420",
+  "timestamp": 1791651032
+}

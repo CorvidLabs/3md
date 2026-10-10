@@ -1205,6 +1205,9 @@ internal struct SculptureEditor: View {
     }
 
     private func fitCamera() {
+        workspace.camera.fitsVolume = true
+        workspace.camera.panX = 0
+        workspace.camera.panY = 0
         if workspace.renderStyle == .cubes { workspace.camera.zoom = 1; return }
         var camera = workspace.camera
         camera.zoom = 0.5

@@ -1,0 +1,29 @@
+---
+id: put-edit-and-preview-in-the-same-viewer-panel-and-toggle-them-like-github-files-stay-on-the-left-edit-shows-first-below
+state: archived
+type: feature
+base_commit: e18f35e2c0c2c11c202342c5bf84b514ee12fe58
+---
+
+# Put Edit and Preview in the same viewer panel and toggle them like GitHub. Files stay on the left. Edit shows first. Below 900px, Files and the document take turns, and the document panel still switches Edit and Preview.
+
+## Intent
+
+Put Edit and Preview in the same viewer panel and toggle them like GitHub. Files stay on the left. Edit shows first. Below 900px, Files and the document take turns, and the document panel still switches Edit and Preview.
+
+## Affected Canonical Specs
+
+- `ThreeMDViewer`
+
+## Acceptance Criteria
+
+- Files stay beside one document panel on desktop; Edit, Preview, and Cubes switch with exactly one visible. Cubes opens first with the framed small sculpture. Below 900px Files and the document take turns.
+- The page WebGL2 stage preserves Sculpt-style full outward-wound cubes, neighbor-face suppression, glyph fill and gold selected-slice edges, document axes, rendering caps, cached geometry, and one instanced draw. Camera and slice controls work with pointer and keyboard input.
+- The compact workspace keeps document identity and edited state visible, groups exports under Document, shows insert tools in Edit, and offers Preview for nongrid documents or unavailable WebGL2. Camera controls remain below the drawing with usable phone framing.
+- File and composition-entry switches preserve edits including invalid and empty drafts, caret, and selected plane. Linked entries share the corresponding file draft. File filtering and keyboard navigation retain focus; narrow-screen file and search opens reveal the document.
+- Local and public GitHub open, search, sections, pack, and text/kind 2 export remain available. Search and packing use current drafts. Failed local opens preserve the collection. Explicit navigation clears stale source queries in favor of the current hash. Drafts last until refresh or opening another collection.
+- The element and open-document bundles, Sculpt app, library APIs, format, package versions, fixtures, and trust policies remain unchanged. Complete verified SpecSync closure on the existing feature PR under Leif's 2026-10-10 approval; Leif retains merge authority.
+
+## No-spec Rationale
+
+Not applicable

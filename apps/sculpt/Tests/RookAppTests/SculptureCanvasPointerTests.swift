@@ -83,6 +83,31 @@ struct SculptureCanvasPointerTests {
     }
 
     @MainActor
+    @Test func modifiedDragsPanWithoutDispatchingPaintOrSelectionEvents() throws {
+        _ = NSApplication.shared
+        let window = pointerWindow()
+        defer { window.close() }
+        let pointer = SculptureCanvasPointerView(frame: CGRect(x: 0, y: 0, width: 200, height: 100))
+        try #require(window.contentView).addSubview(pointer)
+        var phases: [SculpturePointerPhase] = []
+        var ordinaryEvents = 0
+        pointer.event = { _, _ in ordinaryEvents += 1 }
+        pointer.camera = { input in
+            if case .pan(let phase, _) = input { phases.append(phase) }
+        }
+        pointer.mouseDown(with: try mouse(.leftMouseDown, at: .zero, in: window, modifiers: .shift))
+        pointer.mouseDragged(with: try mouse(.leftMouseDragged, at: CGPoint(x: 10, y: 10), in: window))
+        pointer.mouseUp(with: try mouse(.leftMouseUp, at: CGPoint(x: 20, y: 20), in: window))
+        pointer.rightMouseDown(with: try mouse(.rightMouseDown, at: .zero, in: window))
+        pointer.rightMouseDragged(with: try mouse(.rightMouseDragged, at: CGPoint(x: 10, y: 10), in: window))
+        pointer.rightMouseUp(with: try mouse(.rightMouseUp, at: CGPoint(x: 20, y: 20), in: window))
+        #expect(phases == [.down, .drag, .up, .down, .drag, .up])
+        #expect(ordinaryEvents == 0)
+        pointer.mouseDown(with: try mouse(.leftMouseDown, at: .zero, in: window))
+        #expect(ordinaryEvents == 1)
+    }
+
+    @MainActor
     private func pointerWindow() -> NSWindow {
         let window = NSWindow(
             contentRect: CGRect(x: -20_000, y: -20_000, width: 400, height: 300),
@@ -96,12 +121,17 @@ struct SculptureCanvasPointerTests {
     }
 
     @MainActor
-    private func mouse(_ type: NSEvent.EventType, at point: CGPoint, in window: NSWindow) throws -> NSEvent {
+    private func mouse(
+        _ type: NSEvent.EventType,
+        at point: CGPoint,
+        in window: NSWindow,
+        modifiers: NSEvent.ModifierFlags = []
+    ) throws -> NSEvent {
         try #require(
             NSEvent.mouseEvent(
                 with: type,
                 location: point,
-                modifierFlags: [],
+                modifierFlags: modifiers,
                 timestamp: 1,
                 windowNumber: window.windowNumber,
                 context: nil,

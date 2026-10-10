@@ -1,0 +1,16 @@
+{
+  "schema_version": 2,
+  "change_id": "bring-sculpt-slice-editing-to-the-browser-with-a-visual-grid-drawing-tools-undo-and-live-3d-reference",
+  "reviewer": "agent:codex",
+  "provenance": {
+    "schema_version": 1,
+    "provider": "github_actions_check",
+    "required_check": "SpecSync scoped review"
+  },
+  "verdict": "pass",
+  "implementation_commit": "6e8d0bb72dec11684d501cf5cbdc25b2f276b853",
+  "contract_digest": "c0b8195b500e020a9703bb7edd72d722e7f379c81edd26658c5b1473356c2d6f",
+  "execution_digest": "8c0c3460123946ea2d50872aab0d8775180c71215745e6aad70feea619be0636",
+  "workspace_digest": "fde013fc78a6110e0c0b88de16f5f6e7522e6561a06c0a5c5fd273d884ed5278",
+  "timestamp": 1791655744
+}

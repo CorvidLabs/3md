@@ -1,0 +1,13 @@
+{
+  "archived": "/Users/leif/Development/_CorvidLabs/3md-edit-preview/.specsync/archive/changes/2026-10-10-bring-sculpt-slice-editing-to-the-browser-with-a-visual-grid-drawing-tools-undo-and-live-3d-reference",
+  "contract_digest": "c0b8195b500e020a9703bb7edd72d722e7f379c81edd26658c5b1473356c2d6f",
+  "finalization_digest": "0caf17781aef4d755beecc9b6930d254942651a5365545cae8df19c5ed4bee94",
+  "id": "bring-sculpt-slice-editing-to-the-browser-with-a-visual-grid-drawing-tools-undo-and-live-3d-reference",
+  "implementation_commit": "6e8d0bb72dec11684d501cf5cbdc25b2f276b853",
+  "implementation_tree": "87451f2cfbbdf4b72ad4e767612aa45e91478c81",
+  "lesson_bundle": "/Users/leif/Development/_CorvidLabs/3md-edit-preview/.specsync/archive/changes/2026-10-10-bring-sculpt-slice-editing-to-the-browser-with-a-visual-grid-drawing-tools-undo-and-live-3d-reference/lesson-bundle.md",
+  "next_action": "merge the PR on GitHub",
+  "ready_for_github_merge": true,
+  "review_digest": "855b061f32615f8397bb99951a89b1b7d0a691fc1508e574abe41b268a242ca6",
+  "workspace_digest": "fde013fc78a6110e0c0b88de16f5f6e7522e6561a06c0a5c5fd273d884ed5278"
+}

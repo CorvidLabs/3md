@@ -125,7 +125,12 @@
   .edittools{display:none;gap:8px;padding:8px 12px;border-bottom:1px solid var(--hairline);flex-shrink:0}
   .stage[data-show="edit"] .edittools{display:flex}
   .edittools .btn{font-size:11px;padding:6px 9px}
-  .document-title{flex:1;font-size:12px;color:var(--ink);text-transform:none;letter-spacing:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+  .document-heading{flex:1;min-width:90px;display:flex;align-items:center;gap:8px}
+  .document-heading>div{min-width:0}
+  .document-source{display:block;font:10px var(--code-font);color:var(--text-faint);text-transform:none;letter-spacing:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-top:3px}
+  .draft-state{font:11px var(--ui-font);color:var(--warning);text-transform:none;letter-spacing:0;flex-shrink:0}
+  .draft-state[hidden]{display:none}
+  .document-title{display:block;font-size:12px;color:var(--ink);text-transform:none;letter-spacing:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
   .piecewrap{display:flex;align-items:center;gap:8px;padding:7px 12px;border-bottom:1px solid var(--hairline);font-size:12px}
   .piecewrap[hidden]{display:none}
   .piecewrap select{max-width:none;min-width:0;flex:1}
@@ -135,7 +140,13 @@
   .grid{display:grid;grid-template-columns:minmax(180px,240px) minmax(0,1fr);gap:12px;align-items:stretch;flex:1;min-height:260px}
   .filelist{overflow:auto;flex:1;min-height:0}
   .filelist button,.filelist .empty{display:block;width:100%;text-align:left;font:inherit;font-size:12px;font-family:var(--code-font);padding:7px 12px;border:0;border-bottom:1px solid var(--hairline);background:transparent;color:var(--ink)}
-  .filelist button{cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .filelist button{cursor:pointer;position:relative;padding:10px 24px 10px 12px;min-height:44px}
+  .filelist .file-name,.filelist .file-path{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .filelist .file-path{font:10px var(--code-font);color:var(--text-faint);margin-top:4px}
+  .filelist button[data-edited="true"]::after{content:"";position:absolute;right:12px;top:16px;width:6px;height:6px;border-radius:50%;background:var(--warning)}
+  .file-filter{margin:10px 12px;min-width:0;font:12px var(--ui-font);color:var(--ink);background:var(--paper);border:1px solid var(--hairline);border-radius:4px;padding:8px 10px}
+  .file-filter[hidden]{display:none}
+  .file-filter:focus-visible{outline:2px solid var(--sheen);outline-offset:2px}
   .filelist button:hover,.filelist button:focus-visible,.filelist button[aria-current="true"]{background:color-mix(in srgb,var(--sheen) 12%,var(--surface));outline:none}
   .filelist .empty{color:var(--text-faint);font-family:var(--ui-font);line-height:1.6;padding:16px 12px}
   .filelist .empty strong{display:block;font-size:13px;font-weight:500;color:var(--ink);margin-bottom:6px}
@@ -182,6 +193,7 @@
   .wrap:not([data-view="edit"]) #ideCursor{display:none}
   .cubes{position:relative;display:flex;flex-direction:column;background:#10161a;overflow:hidden}
   .cubes canvas{width:100%;height:0;flex:1;min-height:0;display:block;touch-action:none;cursor:grab}
+  .cubes canvas[data-tool="pan"]{cursor:move}
   .cubes canvas:active{cursor:grabbing}
   .cubes canvas:focus-visible{outline:2px solid var(--sheen);outline-offset:-3px}
   .cubesempty{position:absolute;inset:0;display:grid;place-items:center;align-content:center;gap:12px;padding:24px;text-align:center;color:#d7e4ea}
@@ -197,6 +209,8 @@
   .camera-controls .btn{border:0;background:transparent;color:inherit;min-width:34px;min-height:32px;padding:6px 10px;letter-spacing:0}
   .camera-controls .btn:hover{background:#2b3a42;color:#fff}
   .camera-controls .btn:disabled{opacity:.4;cursor:default}
+  .camera-controls .btn[aria-pressed="true"]{background:#35434b;color:#fff}
+  .camera-tools .btn{min-width:52px}
   .camera-controls output{min-width:44px;text-align:center;font:11px var(--code-font);color:#aebdc5}
   .cubesempty .empty-actions{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
   .cubesempty .btn{background:#1b2329;border-color:#35434b;color:#d7e4ea}
@@ -277,15 +291,18 @@
     .findwrap{grid-column:2 / 4;min-width:0}
     .toolbar>.btn{padding:9px 8px}
     .document-menu{grid-column:3;grid-row:2}
-    .toolbar .primary{grid-column:1 / 4;padding:9px}
+    .toolbar .primary{grid-column:1 / 3;grid-row:2;padding:9px}
     .document-menu summary{justify-content:center;padding:9px}
     .fileswitch{margin-bottom:8px}
     .pane .bar{padding:8px;gap:7px}
     .document-title{order:3;flex-basis:100%;font-size:11px}
     .pstab{padding:9px 13px}
     .editmeta #sourceName,.editmeta #counts{display:none}
-    .cube-tools{padding:7px 9px;gap:8px}
+    .cube-tools{padding:7px 9px;gap:6px;flex-wrap:wrap}
+    .cubehint{flex-basis:100%}
+    #cameraControls{margin-left:auto}
     .camera-controls .btn{min-width:40px;min-height:40px;padding:6px 8px}
+    .camera-tools .btn{min-width:0;padding:6px 7px;font-size:11px}
     .camera-controls output{min-width:40px}
     .cubehint{font-size:10px}
     .cubehint .mouse-hint{display:none}
@@ -294,7 +311,7 @@
     .hint{line-height:1.7;font-size:10px}
     .foot{font-size:10px}
   }
-  @media(max-width:380px){.headerlinks a{display:none}.pstab{padding:9px 10px}}
+  @media(max-width:380px){.cube-tools{padding:4px 9px;gap:4px}.wrap{padding:6px}.topbar{padding-bottom:4px}.headerlinks a{display:none}.pstab{padding:9px 10px}}
 
 
   .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
@@ -308,6 +325,63 @@
   @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .corvid-theme-toggle .sun{display:none}:root:not([data-theme="light"]) .corvid-theme-toggle .moon{display:inline}}
   :root[data-theme="light"] .corvid-theme-toggle .sun{display:inline}
   :root[data-theme="light"] .corvid-theme-toggle .moon{display:none}
+
+  .stage[data-show="slice"] .editor,.stage[data-show="slice"] .viewer,.stage[data-show="slice"] .cubes,.stage[data-show="slice"] .outline,.stage[data-show="slice"] .bar .editmeta{display:none}
+  .slice-pane{display:none;flex:1;min-height:0;padding:12px;background:var(--surface)}
+  .stage[data-show="slice"] .slice-pane{display:flex;flex-direction:column}
+  .axis-sphere{position:absolute;right:12px;top:12px;width:120px;padding:5px;background:var(--surface);border:1px solid var(--hairline);border-radius:12px;z-index:2}
+  .axis-sphere svg{display:block;width:76px;height:76px;margin:auto;touch-action:none;cursor:grab}
+  .axis-sphere path{fill:none;stroke-width:2;opacity:.65}.axis-sphere path[data-axis="0"]{stroke:#f27b7b}.axis-sphere path[data-axis="1"]{stroke:#8ebd86}.axis-sphere path[data-axis="2"]{stroke:#78b5eb}
+  .axis-sphere path.selected{stroke-width:4;opacity:1}.sphere-outline{fill:none;stroke:var(--hairline)}
+  .axis-buttons{display:flex;gap:2px}.axis-buttons button{font:inherit;font-size:11px;padding:5px 3px;min-width:22px;border:0;border-radius:4px;color:var(--ink);background:transparent;cursor:pointer}
+  .axis-buttons button[aria-pressed="true"]{background:var(--sheen-bright);color:#102221}
+  .camera-precision{position:absolute;left:12px;top:12px;z-index:3;padding:5px 10px;font-size:12px;background:var(--surface);border:1px solid var(--hairline);border-radius:8px;max-width:calc(100% - 140px)}.camera-precision summary{cursor:pointer;width:max-content;padding:5px 0}
+  .precision-fields{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:8px}.precision-fields label{display:flex;align-items:center;gap:8px}.precision-fields input{width:70px;padding:8px;background:var(--surface);color:var(--ink);border:1px solid var(--hairline);border-radius:5px}
+  @media(pointer:coarse){.camera-precision summary{min-height:44px}.axis-buttons button{min-height:44px}.axis-sphere{width:142px}.axis-buttons button{min-width:32px}}
+  .slice-workspace[hidden],.slice-buttons[hidden]{display:none}
+  .slice-workspace{display:grid;grid-template-columns:94px minmax(0,1fr) 214px;gap:16px;flex:1;min-height:0}
+  .slice-sidebar{display:flex;flex-direction:column;min-height:0;gap:8px}
+  .slice-sidebar strong,.slice-main strong{font-size:14px}
+  .slice-list{overflow:auto;display:flex;flex-direction:column;gap:4px;min-height:0}
+  .slice-thumb{display:flex;align-items:center;gap:8px;min-height:44px;border:1px solid transparent;background:transparent;color:var(--ink);border-radius:6px;padding:6px;cursor:pointer;font:inherit;font-size:12px}
+  .slice-thumb[aria-current="true"]{border-color:var(--sheen);background:var(--ink-06)}
+  .slice-thumb canvas{width:28px;height:28px;background:#161d20}
+  .slice-main{display:flex;flex-direction:column;gap:8px;min-width:0;min-height:0}
+  .slice-heading{display:flex;justify-content:space-between;align-items:center;font-size:12px}
+  .slice-zoom{display:flex;gap:4px;align-items:center;flex-wrap:wrap;font-size:11px;color:var(--text-faint)}
+  .slice-zoom button{padding:5px 9px;min-height:34px}
+  .slice-scroll{overflow:auto;flex:1;min-height:150px;background:#161d20;border:1px solid var(--hairline);border-radius:6px}
+  #sliceGrid{display:block;touch-action:none;outline-offset:-3px;margin:auto}
+  .slice-tools{display:flex;flex-direction:column;gap:12px;overflow:auto;min-height:0;font-size:12px}
+  .slice-reference{height:170px;position:relative;flex-shrink:0;background:#11161a;border-radius:8px;overflow:hidden}
+  .slice-reference #cubeCanvas{display:block;width:100%;height:100%;min-height:0}
+  .slice-reference-note{font-size:11px;line-height:1.4;color:var(--text-faint);margin:0}
+  .slice-buttons{display:flex;gap:4px;flex-wrap:wrap}
+  .slice-buttons button{min-height:40px;padding:7px 10px}
+  .slice-buttons button[aria-pressed="true"],.slice-zoom button[aria-pressed="true"]{border-color:var(--sheen);background:var(--ink-06)}
+  .slice-palette{display:grid;grid-template-columns:repeat(5,1fr);gap:5px}
+  .slice-palette button{font:18px var(--code-font);height:40px;padding:4px}
+  .slice-cell-controls{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+  .slice-cell-controls label{display:flex;gap:5px;align-items:center}
+  .slice-cell-controls input{min-width:0;width:100%;padding:7px;color:var(--ink);background:var(--paper);border:1px solid var(--hairline);border-radius:4px}
+  .slice-cell-controls button{grid-column:1/-1;min-height:40px}
+  .slice-hint{font-size:11px;color:var(--text-faint);margin:0;line-height:1.4}
+  .slice-previous{display:flex;gap:7px;align-items:center;font-size:12px;min-height:30px}
+  #sliceUnavailable{padding:18px;max-width:65ch;font-size:13px;line-height:1.6}
+  #sliceMessage{font-size:12px;min-height:16px;color:var(--text-faint);margin-top:6px}
+  @media(max-width:1150px){.slice-workspace{grid-template-columns:72px minmax(0,1fr) 180px;gap:10px}}
+  @media(max-width:700px){
+    .slice-pane{padding:8px;overflow:auto}.slice-workspace{display:flex;flex-direction:column;gap:10px;flex:none}
+    .slice-sidebar{flex-direction:row;align-items:center;flex-shrink:0}.slice-sidebar>span{display:none}
+    .slice-list{flex-direction:row;flex:1;overflow-x:auto}.slice-thumb{flex-shrink:0;min-width:52px}
+    .slice-main{height:330px;flex-shrink:0}.slice-tools{overflow:visible;display:grid;grid-template-columns:1fr 1fr;align-items:start}
+    .slice-reference{height:150px;grid-column:1/-1}.slice-reference-title,.slice-reference-note{grid-column:1/-1}
+    #sliceTool,#sliceSize,.slice-palette{grid-column:1/-1}
+    .slice-palette{grid-template-columns:repeat(5,minmax(44px,1fr))}
+    .slice-buttons button,.slice-palette button,.slice-zoom button{min-width:44px;min-height:44px}
+    .slice-hint{grid-column:1/-1}.slice-cell-controls{grid-column:1/-1}.slice-history{grid-column:1/-1}
+  }
+
 </style>
 </head>
 <body>
@@ -368,6 +442,7 @@
     <div class="grid" id="grid" data-show="document">
       <div class="pane filesPane">
         <div class="bar"><span id="filesTitle">files</span></div>
+        <input id="fileFilter" class="file-filter" type="search" placeholder="Filter files" aria-label="Filter opened files" hidden />
         <div id="fileList" class="filelist" role="listbox" aria-label="opened files"></div>
       </div>
       <div class="pane stage" id="stage" data-show="cubes">
@@ -375,10 +450,11 @@
           <div class="editpreview" role="tablist" aria-label="Document view">
             <button class="pstab" id="editTab" type="button" role="tab" data-pane="edit" aria-selected="false" aria-controls="editorWrap">Edit</button>
             <button class="pstab" id="previewTab" type="button" role="tab" data-pane="preview" aria-selected="false" aria-controls="previewPane">Preview</button>
+            <button class="pstab" id="sliceTab" type="button" role="tab" data-pane="slice" aria-selected="false" aria-controls="slicePane">Slice</button>
             <button class="pstab" id="cubesTab" type="button" role="tab" data-pane="cubes" aria-selected="true" aria-controls="cubesPane">Cubes</button>
           </div>
-          <span class="document-title" id="documentTitle">Small sculpture</span>
-          <span class="right editmeta"><span id="sourceName">source.3md</span><span id="cursor">Ln 1, Col 1</span><span id="counts"></span></span>
+          <div class="document-heading"><div><span class="document-title" id="documentTitle">Small sculpture</span><span class="document-source" id="sourceName">source.3md</span></div><span class="draft-state" id="draftState" hidden title="Changes are kept in this open collection until you refresh or open another. Download this document to keep them.">Edited</span></div>
+          <span class="right editmeta"><span id="cursor">Ln 1, Col 1</span><span id="counts"></span></span>
           <span class="right previewmeta"><span id="validBadge" class="badge"><span class="dot"></span><span id="validText">&mdash;</span></span></span>
         </div>
         <div class="piecewrap" id="pieceWrap" hidden>
@@ -397,7 +473,7 @@
         <div class="viewer" id="previewPane" role="tabpanel" aria-labelledby="previewTab"><three-md id="lab" mode="single" role="group" aria-label="Live 3md preview" aria-describedby="planeLive"></three-md></div>
         <div id="planeLive" class="sr-only" aria-live="polite"></div>
         <div class="cubes" id="cubesPane" role="tabpanel" aria-labelledby="cubesTab">
-          <canvas id="cubeCanvas" width="800" height="560" tabindex="0" aria-label="Sculpt-style cubes" aria-describedby="cameraHelp"></canvas>
+          <canvas id="cubeCanvas" width="800" height="560" data-tool="orbit" tabindex="0" aria-label="Sculpt-style cubes" aria-describedby="cameraHelp"></canvas>
           <div class="cubesempty" id="cubesEmpty">
             <p id="cubeEmptyText">This document has no cube grid. Read it in Preview, or open a sculpture to explore in 3D.</p>
             <div class="empty-actions">
@@ -405,9 +481,17 @@
               <button id="cubeSample" class="btn" type="button">Open a small sculpture</button>
             </div>
           </div>
+          <div class="axis-sphere" id="axisSphere" role="group" aria-label="Document axis rotation sphere">
+            <svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="34" class="sphere-outline"/><path data-axis="0"/><path data-axis="1"/><path data-axis="2"/></svg>
+            <div id="axisButtons" class="axis-buttons"><button data-axis="free" aria-pressed="true">Free</button><button data-axis="0" aria-label="Rotate around X" aria-pressed="false">X</button><button data-axis="1" aria-label="Rotate around Y" aria-pressed="false">Y</button><button data-axis="2" aria-label="Rotate around Z" aria-pressed="false">Z</button></div>
+          </div>
           <div class="cube-tools" id="cubeTools">
-            <div class="cubehint"><span class="mouse-hint">Drag to orbit · scroll to zoom · click a cube to select a slice</span><span class="touch-hint">Drag to orbit · tap a cube to select a slice</span></div>
-            <p class="sr-only" id="cameraHelp">Use arrow keys to orbit, plus or minus to zoom, and Home to fit. Select a slice from the plane outline below.</p>
+            <div class="cubehint"><span class="mouse-hint">Drag to orbit · Shift or right-drag to pan · scroll to zoom</span><span class="touch-hint">Drag to orbit · 2 fingers pan / zoom</span></div>
+            <p class="sr-only" id="cameraHelp">Choose Orbit or Pan for dragging. Shift, middle-button, or right-button dragging pans. Two fingers pan and pinch to zoom. Arrow keys orbit, Shift-arrows pan, plus or minus zoom, and Home fits. Click or tap a cube in Orbit to select its slice.</p>
+            <div class="camera-controls camera-tools" role="group" aria-label="Camera drag tool">
+              <button class="btn" id="cubeOrbit" type="button" aria-pressed="true" title="Drag to rotate freely">Orbit</button>
+              <button class="btn" id="cubePan" type="button" aria-pressed="false" title="Drag to move the sculpture (Shift-drag)">Pan</button>
+            </div>
             <div class="camera-controls" id="cameraControls" role="group" aria-label="Cube camera">
               <button class="btn" id="cubeFit" type="button" title="Reset the camera and fit the sculpture (Home)">Fit</button>
               <button class="btn" id="cubeZoomOut" type="button" aria-label="Zoom out" title="Zoom out (−)">−</button>
@@ -415,7 +499,37 @@
               <button class="btn" id="cubeZoomIn" type="button" aria-label="Zoom in" title="Zoom in (+)">+</button>
             </div>
           </div>
+          <details class="camera-precision" id="cameraPrecision"><summary>Precise movement</summary>
+            <div class="precision-fields"><label>Degrees<input id="rotationStep" type="number" value="15" min="0" step="any" aria-label="Rotation step in degrees"></label><button id="axisMinus" class="btn" aria-label="Rotate negative step" disabled>−</button><button id="axisPlus" class="btn" aria-label="Rotate positive step" disabled>+</button><span id="axisHint">Choose X, Y or Z.</span></div>
+            <div class="precision-fields"><label>Pan cells<input id="panStep" type="number" value="0.25" min="0" step="any" aria-label="Pan step in cells"></label><button data-pan="-1,0" class="btn" aria-label="Pan left">←</button><button data-pan="0,-1" class="btn" aria-label="Pan up">↑</button><button data-pan="0,1" class="btn" aria-label="Pan down">↓</button><button data-pan="1,0" class="btn" aria-label="Pan right">→</button></div>
+            <p id="precisionMessage" class="slice-hint" role="status"></p>
+          </details>
         </div>
+
+        <section id="slicePane" class="slice-pane" role="tabpanel" aria-labelledby="sliceTab">
+          <div id="sliceUnavailable" hidden></div>
+          <div class="slice-workspace" id="sliceWorkspace">
+            <aside class="slice-sidebar" aria-label="Slices"><strong>Slices</strong><div id="sliceList" class="slice-list"></div><span id="sliceDimensions" class="slice-hint"></span></aside>
+            <div class="slice-main">
+              <div class="slice-heading"><strong id="sliceHeading">Slice 1</strong><span id="sliceCoordinates">X 1 · Y 1</span></div>
+              <div class="slice-zoom" id="sliceZoom"><span>Grid zoom</span><button class="btn" data-zoom="1" aria-pressed="true">Fit</button><button class="btn" data-zoom="2" aria-pressed="false">2x</button><button class="btn" data-zoom="4" aria-pressed="false">4x</button><button class="btn" data-zoom="8" aria-pressed="false">8x</button><button class="btn" data-zoom="16" aria-pressed="false">16x</button></div>
+              <div id="sliceScroll" class="slice-scroll"><canvas id="sliceGrid" tabindex="0" role="grid" aria-label="Slice character grid" aria-describedby="sliceKeyboard sliceCoordinates"></canvas></div>
+              <label class="slice-previous"><input type="checkbox" id="slicePrevious">Show previous slice</label>
+              <p id="sliceKeyboard" class="slice-hint">Arrow keys select a cell. Space applies the current tool.</p>
+            </div>
+            <aside class="slice-tools" aria-label="Slice drawing tools">
+              <div class="slice-heading slice-reference-title"><strong>3D reference</strong><button id="sliceExpand" class="btn">Expand</button></div>
+              <div class="slice-reference" id="sliceReference"></div><p id="sliceReferenceNote" class="slice-reference-note"></p>
+              <div class="slice-buttons" id="sliceTool" role="group" aria-label="Editing tool"><button class="btn" data-tool="draw" aria-pressed="true">Draw</button><button class="btn" data-tool="erase" aria-pressed="false">Erase</button><button class="btn" data-tool="fill" aria-pressed="false">Fill</button></div>
+              <div class="slice-palette slice-buttons" id="slicePalette" role="group" aria-label="Character palette"></div>
+              <div class="slice-buttons" id="sliceSize" role="group" aria-label="Brush size"><span>Size</span><button class="btn" data-size="1" aria-pressed="true">1</button><button class="btn" data-size="3" aria-pressed="false">3</button><button class="btn" data-size="5" aria-pressed="false">5</button></div>
+              <p id="sliceToolHint" class="slice-hint">Drag to draw with #.</p>
+              <details><summary>Selected cell</summary><div class="slice-cell-controls"><label>X<input id="sliceX" type="number" min="1" step="1" aria-label="Selected cell X"></label><label>Y<input id="sliceY" type="number" min="1" step="1" aria-label="Selected cell Y"></label><button id="sliceApply" class="btn">Apply current tool</button></div></details>
+              <div class="slice-buttons slice-history"><button id="sliceUndo" class="btn" disabled>Undo</button><button id="sliceRedo" class="btn" disabled>Redo</button></div>
+            </aside>
+          </div><div id="sliceMessage" role="status" aria-live="polite"></div>
+        </section>
+
         <div class="outline" id="outline" role="group" aria-label="plane outline"></div>
         <div class="idebar" id="idebar">
           <span id="ideCursor">Ln 1, Col 1</span>
@@ -617,7 +731,8 @@ title: Small sculpture
         if (chip.left < row.left) outline.scrollLeft -= row.left - chip.left + 13;
         else if (chip.right > row.right) outline.scrollLeft += chip.right - row.right + 13;
       }
-      if (document.getElementById("stage")?.dataset.show === "cubes") drawCubes();
+      if (["cubes", "slice"].includes(document.getElementById("stage")?.dataset.show)) drawCubes();
+      drawSlice();
       const doc = lab.document;
       if (doc && doc.planes[i]) {
         planeLive.textContent = `Plane ${i + 1} of ${doc.planes.length}: ${doc.planes[i].label || ("z " + doc.planes[i].z)}`;
@@ -642,15 +757,68 @@ title: Small sculpture
 
     let openNote = "";
     let openedPieces = [];
+    let activeSession = null;
+    let fileSessions = new Map();
+    let fileDrafts = new Map();
+    let filesLabel = "";
+    let lineIndexDirty = true;
+    const baseName = (path) => path.split("/").pop() || path;
+    const draftPiece = () => activeSession?.pieces.find((piece) => piece.id === activeSession.activeId);
+    const sessionEdited = (session) => session.pieces.some((piece) => piece.state.text !== piece.state.original);
+    function saveCaret() {
+      const piece = draftPiece();
+      if (!piece || document.activeElement !== ed) return;
+      Object.assign(piece.state, { start: ed.selectionStart, end: ed.selectionEnd, scrollTop: ed.scrollTop, scrollLeft: ed.scrollLeft });
+    }
+    function saveDraft() {
+      finishSliceStroke();
+      saveCaret();
+      const piece = draftPiece();
+      if (!piece) return;
+      Object.assign(piece.state, {
+        text: currentText(), plane: lab.currentIndex || 0,
+      });
+    }
+    function updateDraftState() {
+      const piece = draftPiece();
+      if (piece && normalizeSource(piece.state.text) !== ed.value) { piece.state.text = patchRawSource(piece.state.text, ed.value); lineIndexDirty = true; }
+      document.getElementById("draftState").hidden = !piece || piece.state.text === piece.state.original;
+      document.querySelectorAll("#fileList button").forEach((button) => {
+        const session = fileSessions.get(button.dataset.path);
+        const state = fileDrafts.get(button.dataset.path);
+        const edited = session ? sessionEdited(session) : state && state.text !== state.original;
+        button.dataset.edited = String(Boolean(edited));
+        button.setAttribute("aria-label", button.dataset.path + (edited ? ", edited" : ""));
+      });
+    }
+    function documentURL() {
+      // An old ?src= must not win over the document chosen in this session.
+      const url = new URL(location.href);
+      url.searchParams.delete("src");
+      url.hash = enc(currentText());
+      history.replaceState(null, "", url);
+    }
+    function revealDocument(focus = false) {
+      const narrow = matchMedia("(max-width:900px)").matches;
+      document.querySelector('.fileswitch [data-pane="document"]').click();
+      if (!focus && !narrow) return;
+      if (document.getElementById("stage").dataset.show === "edit") ed.focus({ preventScroll: true });
+      else if (document.getElementById("stage").dataset.show === "cubes") document.getElementById("cubeCanvas").focus({ preventScroll: true });
+      else { lab.setAttribute("tabindex", "0"); lab.focus({ preventScroll: true }); }
+    }
 
     function render() {
-      const src = ed.value;
+      updateDraftState();
+      const src = currentText();
       counts.textContent = src.split("\n").length + " lines, " + src.length + " chars";
+      // A delayed editor refresh must keep the slice selected before the refresh.
+      const selectedPlane = lab.currentIndex || 0;
       lab.setSource(src);
       document.getElementById("documentTitle").textContent = lab.document?.title || "Untitled document";
       // The page holds the preview on one plane. Axis names no longer start playback.
       if (lab.getAttribute("mode") !== "single") lab.setAttribute("mode", "single");
       if (lab.playing && typeof lab.pause === "function") lab.pause();
+      if (lab.document?.planes.length) lab.goTo(Math.min(selectedPlane, lab.document.planes.length - 1));
       // An empty document is NOT an error: show a neutral prompt, no red, no errline.
       if (!src.trim()) {
         errLine = -1;
@@ -748,7 +916,8 @@ title: Small sculpture
         setIdeStatus(doc, currentCubeVolume(doc).cells.length);
       }
       paintNow(); // apply/clear the error-line highlight synchronously
-      if (document.getElementById("stage")?.dataset.show === "cubes") drawCubes();
+      if (["cubes", "slice"].includes(document.getElementById("stage")?.dataset.show)) drawCubes();
+      drawSlice();
     }
 
     // Canonical axes (for the "did you mean" hint) and the full set the renderer
@@ -789,6 +958,7 @@ title: Small sculpture
     }
 
     function updateCursor() {
+      saveCaret();
       const upto = ed.value.slice(0, ed.selectionStart);
       const line = upto.split("\n");
       const label = "Ln " + line.length + ", Col " + (line[line.length - 1].length + 1);
@@ -799,25 +969,31 @@ title: Small sculpture
     }
 
     let timer = null;
-    ed.addEventListener("input", () => { openNote = ""; paint(); clearTimeout(timer); timer = setTimeout(render, 160); });
-    ed.addEventListener("scroll", syncScroll);
+    ed.addEventListener("input", (event) => {
+      recordSourceInput(event.inputType || "replace");
+      openNote = ""; updateDraftState(); paint(); clearTimeout(timer); timer = setTimeout(render, 160);
+    });
+    ed.addEventListener("beforeinput", (event) => {
+      if (["historyUndo", "historyRedo"].includes(event.inputType)) {
+        event.preventDefault(); moveEditHistory(event.inputType === "historyRedo");
+      }
+    });
+    ed.addEventListener("scroll", () => { syncScroll(); saveCaret(); });
+
+    // Capture before pointer focus leaves Edit; hidden textarea selection differs
+    // across engines and must not overwrite the last visible caret.
+    document.addEventListener("pointerdown", saveDraft, true);
     ed.addEventListener("keyup", updateCursor);
     ed.addEventListener("click", updateCursor);
     ed.addEventListener("select", updateCursor);
 
     // ---- smart editing keys
     function setRange(start, end) { ed.selectionStart = start; ed.selectionEnd = end; }
-    // Apply an edit THROUGH the native undo stack so Ctrl/Cmd+Z works for every
-    // smart edit. execCommand("insertText") is deprecated but is the only
-    // cross-engine way to mutate a textarea while preserving (and not corrupting)
-    // its undo history; setRangeText/value= silently break it. It also fires the
-    // "input" event itself, which drives paint()/render().
+    // Smart edits enter the same draft history as typing and visual strokes.
     function applyEdit(start, end, text) {
       ed.focus();
-      ed.setSelectionRange(start, end);
-      let ok = false;
-      try { ok = document.execCommand("insertText", false, text); } catch (_) {}
-      if (!ok) { ed.setRangeText(text, start, end, "end"); ed.dispatchEvent(new Event("input")); }
+      ed.setRangeText(text, start, end, "end");
+      ed.dispatchEvent(new InputEvent("input", { inputType: "insertReplacementText", bubbles: true }));
     }
     function replaceSel(text) { applyEdit(ed.selectionStart, ed.selectionEnd, text); }
     function insertAtCursor(snippet, caretBack) {
@@ -835,7 +1011,9 @@ title: Small sculpture
       if (e.key !== "Tab" && e.key !== "Shift") tabEscapes = false; // one-shot arm
       if (mod && (e.key === "s" || e.key === "S")) { e.preventDefault(); document.getElementById("dlBtn").click(); return; }
       if (mod && e.key === "Enter") { e.preventDefault(); insertPlane(); return; }
-      if (mod && !e.shiftKey && (e.key === "y" || e.key === "Y")) { e.preventDefault(); ed.focus(); document.execCommand("redo"); return; }
+      if (mod && ["z", "Z", "y", "Y"].includes(e.key)) {
+        e.preventDefault(); moveEditHistory(e.shiftKey || e.key.toLowerCase() === "y"); return;
+      }
       if (e.key === "Tab") {
         if (tabEscapes) { tabEscapes = false; return; } // armed: let Tab move focus out
         e.preventDefault();
@@ -924,44 +1102,85 @@ title: Small sculpture
       const slug = exampleSel.value;
       if (!slug || !EXAMPLES[slug]) return;
       showOpened(openText(EXAMPLES[slug]));
-      history.replaceState(null, "", "#" + enc(ed.value));
+      documentURL();
     });
 
     const pieceSel = document.getElementById("piece");
     const pieceLabel = document.getElementById("pieceLabel");
     const sourceName = document.getElementById("sourceName");
-    function showOpened(opened) {
-      openedPieces = opened.pieces || [];
-      openNote = opened.note || "";
-      pieceSel.replaceChildren();
-      if (openedPieces.length > 1) {
-        for (const item of openedPieces) {
-          const option = new Option(item.label, item.id);
-          if (item.id === opened.activeId) option.selected = true;
-          pieceSel.appendChild(option);
+    function createSession(opened, path = null) {
+      const pieces = opened.pieces.length ? opened.pieces : [{ id: "document", label: path ? baseName(path) : "source.3md", text: opened.text }];
+      const session = { path, activeId: opened.pieces.length ? opened.activeId : "document", note: opened.note || "", pieces: [] };
+      for (const piece of pieces) {
+        // Linked composition labels are exact source paths. Reuse the same draft
+        // when that entry is opened through the file list instead of Inside.
+        const sourcePath = path && openedFiles.some((file) => file.path === piece.label) ? piece.label
+          : pieces.length === 1 ? path : null;
+        let state = sourcePath && fileDrafts.get(sourcePath);
+        if (!state) {
+          const source = sourcePath && openedFiles.find(file => file.path === sourcePath);
+          const text = source && /\.3md$/i.test(sourcePath) ? source.text : piece.text;
+          state = { text, original: text, start: 0, end: 0, scrollTop: 0, scrollLeft: 0, plane: 0 };
         }
-        pieceSel.hidden = false;
-        pieceLabel.hidden = false;
-        document.getElementById("pieceWrap").hidden = false;
-      } else {
-        pieceSel.hidden = true;
-        pieceLabel.hidden = true;
-        document.getElementById("pieceWrap").hidden = true;
+        if (sourcePath) fileDrafts.set(sourcePath, state);
+        session.pieces.push({ id: piece.id, label: piece.label, state });
       }
-      const active = openedPieces.find((item) => item.id === opened.activeId);
-      sourceName.textContent = active ? active.label : "source.3md";
-      ed.value = opened.text;
+      return session;
+    }
+    function showSession(session, pieceId = null) {
+      saveDraft();
+      if (pieceId && session.pieces.some((piece) => piece.id === pieceId)) session.activeId = pieceId;
+      clearTimeout(timer);
+      activeSession = session;
+      openedPieces = session.pieces;
+      openNote = session.note;
+      pieceSel.replaceChildren();
+      const multiple = openedPieces.length > 1;
+      for (const item of openedPieces) {
+        if (multiple) pieceSel.appendChild(new Option(item.label, item.id, false, item.id === session.activeId));
+      }
+      pieceSel.hidden = !multiple;
+      pieceLabel.hidden = !multiple;
+      document.getElementById("pieceWrap").hidden = !multiple;
+      const active = draftPiece();
+      sourceName.textContent = active.label;
+      sourceName.title = session.path || active.label;
+      ed.value = active.state.text;
       render();
+      lab.goTo(Math.min(active.state.plane, Math.max(0, (lab.document?.planes.length || 1) - 1)));
+      revealDocument(true);
+      ed.setSelectionRange(active.state.start, active.state.end);
+      ed.scrollTop = active.state.scrollTop;
+      ed.scrollLeft = active.state.scrollLeft;
       updateCursor();
+      markFile(session.path);
+    }
+    function showOpened(opened, path = null) {
+      const session = createSession(opened, path);
+      if (path) { fileSessions.set(path, session); lineIndexDirty = true; }
+      showSession(session);
+    }
+    function openFile(path, pieceId = null) {
+      saveDraft();
+      let session = fileSessions.get(path);
+      if (!session) {
+        const file = openedFiles.find((entry) => entry.path === path);
+        if (!file) throw new Error("That file is no longer in this open collection.");
+        session = createSession(openText(sourceText(file.path, file.text)), path);
+        fileSessions.set(path, session);
+        lineIndexDirty = true;
+      }
+      showSession(session, pieceId);
+      documentURL();
     }
     pieceSel.addEventListener("change", () => {
-      const item = openedPieces.find((piece) => piece.id === pieceSel.value);
-      if (!item) return;
-      openNote = "Showing " + item.label + ".";
-      sourceName.textContent = item.label;
-      ed.value = item.text;
-      render();
-      updateCursor();
+      const nextId = pieceSel.value;
+      if (!activeSession?.pieces.some((piece) => piece.id === nextId)) return;
+      const keepFocus = document.activeElement === pieceSel;
+      showSession(activeSession, nextId);
+      if (keepFocus) pieceSel.focus();
+      openNote = "Showing " + draftPiece().label + ".";
+      documentURL();
     });
 
     const findInput = document.getElementById("findExample");
@@ -982,9 +1201,7 @@ title: Small sculpture
       findInput.setAttribute("aria-expanded", "false");
       try {
         if (item.kind === "line") {
-          showOpened(openText(item.text));
-          sourceName.textContent = item.path.split("/").pop() || item.path;
-          markFile(item.path);
+          openFile(item.path, item.pieceId);
           focusPlane(item.planeIndex);
           return;
         }
@@ -993,7 +1210,7 @@ title: Small sculpture
           return;
         }
         if (item.kind === "file") {
-          showOpened(openText(item.text));
+          openFile(item.path);
         } else if (item.files) {
           const encoder = new TextEncoder();
           showOpened(openFileSet(item.files.map((file) => ({
@@ -1003,7 +1220,7 @@ title: Small sculpture
         } else {
           showOpened(item.bytes ? openBytes(item.bytes) : openText(item.src));
         }
-        history.replaceState(null, "", "#" + enc(ed.value));
+        documentURL();
       } catch (error) {
         status.className = "status err";
         status.textContent = error && error.message ? error.message : "Could not open that example.";
@@ -1018,15 +1235,17 @@ title: Small sculpture
         if (seen === index) { at = i; break; }
         seen += 1;
       }
-      const offset = lines.slice(0, at).join("\n").length;
-      ed.focus();
+      const offset = lines.slice(0, at).join("\n").length + (at ? 1 : 0);
       ed.setSelectionRange(offset, offset);
+      revealDocument(true);
       if (lab.goTo) lab.goTo(index);
       status.className = "status ok";
       status.textContent = "Showing plane " + (index + 1) + ".";
     }
     function showMatches(query) {
       const needle = query.trim();
+      saveDraft();
+      rebuildLineIndex();
       findList.replaceChildren();
       if (!needle) { findList.hidden = true; findInput.setAttribute("aria-expanded", "false"); return; }
       const matches = lineIndex.concat(catalog, currentPlanes, gathered)
@@ -1113,58 +1332,113 @@ title: Small sculpture
       if (!event.target.closest(".findwrap")) { findList.hidden = true; findInput.setAttribute("aria-expanded", "false"); }
     });
 
+    function sourceText(path, text) {
+      const prose = /\.(md|txt|markdown)$/i.test(path);
+      return prose ? sectionsToDocument(text, path) : text;
+    }
     function indexSource(path, text) {
-      const lower = path.toLowerCase();
-      const prose = (lower.endsWith(".md") || lower.endsWith(".txt") || lower.endsWith(".markdown")) && !lower.endsWith(".3md");
-      const shown = prose ? sectionsToDocument(text, path) : text;
+      const shown = sourceText(path, text);
       return indexLines(path, shown).map((hit) => ({ ...hit, text: shown }));
     }
-    function markFile(path) {
-      document.querySelectorAll("#fileList button").forEach((button) => {
-        button.setAttribute("aria-current", button.dataset.path === path ? "true" : "false");
-      });
+    function rebuildLineIndex() {
+      if (!lineIndexDirty) return;
+      lineIndexDirty = false;
+      lineIndex = [];
+      for (const file of openedFiles) {
+        const session = fileSessions.get(file.path);
+        if (session) {
+          for (const piece of session.pieces) {
+            lineIndex.push(...indexLines(file.path, piece.state.text).map((hit) => ({ ...hit, text: piece.state.text, pieceId: piece.id })));
+            if (lineIndex.length >= 12000) break;
+          }
+        } else if (fileDrafts.has(file.path)) {
+          const text = fileDrafts.get(file.path).text;
+          lineIndex.push(...indexLines(file.path, text).map((hit) => ({ ...hit, text })));
+        } else lineIndex.push(...indexSource(file.path, file.text));
+        if (lineIndex.length >= 12000) { lineIndex.length = 12000; break; }
+      }
+      window.threeMdLineCount = lineIndex.length;
     }
-    function renderFileList(title) {
+    function markFile(path) {
+      const buttons = [...document.querySelectorAll("#fileList button")];
+      const selected = buttons.find((button) => button.dataset.path === path);
+      buttons.forEach((button, index) => {
+        const active = button === selected;
+        button.setAttribute("aria-current", String(active));
+        button.setAttribute("aria-selected", String(active));
+        button.tabIndex = active || (!selected && index === 0) ? 0 : -1;
+      });
+      updateDraftState();
+    }
+    const fileFilter = document.getElementById("fileFilter");
+    function renderFileList() {
       const fileList = document.getElementById("fileList");
-      const filesTitle = document.getElementById("filesTitle");
       fileList.replaceChildren();
-      filesTitle.textContent = title || (openedFiles.length ? openedFiles.length + " files" : "files");
-      if (!openedFiles.length) {
+      document.getElementById("filesTitle").textContent = filesLabel || (openedFiles.length ? openedFiles.length + " files" : "files");
+      fileFilter.hidden = openedFiles.length < 2;
+      const needle = fileFilter.value.trim().toLowerCase();
+      // Directory inputs have different native ordering across browsers and OSes.
+      const files = openedFiles.filter((file) => file.path.toLowerCase().includes(needle))
+        .sort((left, right) => left.path.localeCompare(right.path));
+      if (!files.length) {
         const empty = document.createElement("div");
         empty.className = "empty";
-        empty.innerHTML = "<strong>No files opened</strong>Open a file or folder above, or paste a public GitHub path. You can also drop files here.";
+        if (openedFiles.length) empty.textContent = "No files match. Clear the filter to see all opened files.";
+        else empty.innerHTML = "<strong>No files opened</strong>Open a file or folder above, or paste a public GitHub path. You can also drop files here.";
         fileList.appendChild(empty);
         return;
       }
-      for (const file of openedFiles) {
+      for (const file of files) {
         const button = document.createElement("button");
         button.type = "button";
         button.dataset.path = file.path;
-        button.textContent = file.path;
+        button.title = file.path;
+        const name = document.createElement("span");
+        name.className = "file-name";
+        name.textContent = baseName(file.path);
+        button.appendChild(name);
+        const slash = file.path.lastIndexOf("/");
+        if (slash >= 0) {
+          const path = document.createElement("span");
+          path.className = "file-path";
+          path.textContent = file.path.slice(0, slash);
+          button.appendChild(path);
+        }
         button.setAttribute("role", "option");
-        button.addEventListener("click", () => {
-          const hits = lineIndex.filter((hit) => hit.path === file.path);
-          const text = hits[0] ? hits[0].text : file.text;
-          showOpened(openText(text));
-          sourceName.textContent = file.path.split("/").pop() || file.path;
-          markFile(file.path);
-          history.replaceState(null, "", "#" + enc(ed.value));
-        });
+        button.addEventListener("click", () => { try { openFile(file.path); } catch (error) { failOpen(error); } });
         fileList.appendChild(button);
       }
+      markFile(activeSession?.path);
     }
-    function setOpenedFiles(entries, title) {
-      openedFiles = entries;
-      lineIndex = [];
-      for (const entry of entries) {
-        lineIndex.push(...indexSource(entry.path, entry.text));
-        if (lineIndex.length > 12000) {
-          lineIndex.length = 12000;
-          break;
-        }
+    fileFilter.addEventListener("input", renderFileList);
+    fileFilter.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") { fileFilter.value = ""; renderFileList(); }
+      else if (event.key === "ArrowDown") {
+        const first = document.querySelector("#fileList button");
+        if (first) { event.preventDefault(); first.focus(); }
       }
-      window.threeMdLineCount = lineIndex.length;
-      renderFileList(title);
+    });
+    document.getElementById("fileList").addEventListener("keydown", (event) => {
+      const buttons = [...document.querySelectorAll("#fileList button")];
+      const at = buttons.indexOf(document.activeElement);
+      if (at < 0) return;
+      const next = event.key === "ArrowDown" ? Math.min(at + 1, buttons.length - 1)
+        : event.key === "ArrowUp" ? Math.max(at - 1, 0)
+        : event.key === "Home" ? 0 : event.key === "End" ? buttons.length - 1 : null;
+      if (next === null) return;
+      event.preventDefault();
+      buttons[next].focus();
+    });
+    function setOpenedFiles(entries, title = "") {
+      saveDraft();
+      openedFiles = entries;
+      fileSessions = new Map();
+      fileDrafts = new Map();
+      filesLabel = title;
+      lineIndexDirty = true;
+      fileFilter.value = "";
+      rebuildLineIndex();
+      renderFileList();
     }
     function textFromFile(file) {
       const lower = file.path.toLowerCase();
@@ -1194,12 +1468,11 @@ title: Small sculpture
         }
         if (!entries.length) throw new Error("That GitHub path has no .3md, .3mdb, or Markdown files.");
         const note = loaded.truncated ? " The list stopped at the first 400 files." : "";
-        setOpenedFiles(entries, loaded.label + "@" + loaded.ref);
         const first = entries.find((entry) => entry.path.toLowerCase().endsWith(".3md")) || entries[0];
-        const hits = lineIndex.filter((hit) => hit.path === first.path);
-        showOpened(openText(hits[0] ? hits[0].text : first.text));
-        sourceName.textContent = first.path.split("/").pop() || first.path;
-        markFile(first.path);
+        const opened = openText(sourceText(first.path, first.text));
+        setOpenedFiles(entries, loaded.label + "@" + loaded.ref);
+        showOpened(opened, first.path);
+        rememberGathered(loaded.files);
         status.className = "status ok";
         status.textContent = "Opened " + loaded.label + " at " + loaded.ref + ". " + entries.length + " files." + note;
       } finally {
@@ -1223,22 +1496,25 @@ title: Small sculpture
       packBtn.hidden = gathered.length < 2;
     }
     function openLocal(files) {
+      const entries = files.map((file) => ({ path: file.path, text: textFromFile(file) })).filter((file) => file.text != null);
+      const docs = files.filter((file) => /\.(3md|3mdb)$/i.test(file.path));
+      const prose = files.filter((file) => /\.(md|txt|markdown)$/i.test(file.path));
+      let opened, path = null;
+      if (docs.length) {
+        opened = openFileSet(docs);
+        path = (docs.find((file) => file.path === "scene.3md" || file.path.endsWith("/scene.3md"))
+          || docs.find((file) => file.path.toLowerCase().endsWith(".3md")) || docs[0]).path;
+      } else if (prose.length === 1) {
+        path = prose[0].path;
+        opened = openText(sectionsToDocument(new TextDecoder().decode(prose[0].data), path));
+      } else if (prose.length > 1) {
+        opened = openText(packDocuments(prose.map((file) => ({ path: file.path, text: new TextDecoder().decode(file.data) }))));
+      } else opened = openFileSet(files);
+      // Decode first so a failed open cannot replace the current file collection.
+      setOpenedFiles(entries);
       rememberGathered(files);
-      const entries = [];
-      for (const file of files) {
-        const text = textFromFile(file);
-        if (text != null) entries.push({ path: file.path, text });
-      }
-      if (entries.length) setOpenedFiles(entries);
-      const docs = files.filter((file) => /\.3md/i.test(file.path));
-      const prose = files.filter((file) => /\.(md|txt)$/i.test(file.path) && !/\.3md$/i.test(file.path));
-      if (docs.length) return showOpened(openFileSet(docs));
-      const decoder = new TextDecoder();
-      if (prose.length === 1) return showOpened(openText(sectionsToDocument(decoder.decode(prose[0].data), prose[0].path)));
-      if (prose.length > 1) {
-        return showOpened(openText(packDocuments(prose.map((file) => ({ path: file.path, text: decoder.decode(file.data) })))));
-      }
-      return showOpened(openFileSet(files));
+      showOpened(opened, path);
+      documentURL();
     }
     async function filesFromList(list) {
       const files = [];
@@ -1265,6 +1541,8 @@ title: Small sculpture
       return nested;
     }
     function failOpen(error) {
+      clearTimeout(timer);
+      render();
       status.className = "status err";
       status.textContent = error && error.message ? error.message : "Could not open that document.";
     }
@@ -1308,7 +1586,7 @@ title: Small sculpture
 
     // Copy the raw source (agent-friendly: grab the exact document)
     document.getElementById("copyBtn").addEventListener("click", async () => {
-      try { await navigator.clipboard.writeText(ed.value); status.className = "status ok"; status.textContent = "Source copied to clipboard."; }
+      try { await navigator.clipboard.writeText(currentText()); status.className = "status ok"; status.textContent = "Source copied to clipboard."; }
       catch { status.className = "status err"; status.textContent = "Could not copy (clipboard blocked)."; }
     });
 
@@ -1321,18 +1599,24 @@ title: Small sculpture
       }
       try {
         showOpened(openText(sectionsToDocument(ed.value)));
-        history.replaceState(null, "", "#" + enc(ed.value));
+        documentURL();
       } catch (error) { failOpen(error); }
     });
     document.getElementById("packBtn").addEventListener("click", () => {
       try {
-        showOpened(openText(packDocuments(gathered.map((file) => ({ path: file.path, text: file.text })))));
-        history.replaceState(null, "", "#" + enc(ed.value));
+        saveDraft();
+        const files = gathered.map((file) => {
+          const session = fileSessions.get(file.path);
+          const state = fileDrafts.get(file.path) || session?.pieces.find((piece) => piece.id === session.activeId)?.state;
+          return { path: state ? file.path.replace(/\.(md|txt|markdown)$/i, ".3md") : file.path, text: state ? state.text : file.text };
+        });
+        showOpened(openText(packDocuments(files)));
+        documentURL();
       } catch (error) { failOpen(error); }
     });
     document.getElementById("kind2Btn").addEventListener("click", () => {
       try {
-        const bytes = kind2Bytes(ed.value);
+        const bytes = kind2Bytes(currentText());
         const blob = new Blob([bytes], { type: "application/octet-stream" });
         const a = document.createElement("a");
         a.href = URL.createObjectURL(blob);
@@ -1345,7 +1629,7 @@ title: Small sculpture
       } catch (error) { failOpen(error); }
     });
     document.getElementById("dlBtn").addEventListener("click", () => {
-      const blob = new Blob([ed.value], { type: "text/plain" });
+      const blob = new Blob([currentText()], { type: "text/plain" });
       const a = document.createElement("a");
       a.href = URL.createObjectURL(blob);
       const title = (ed.value.match(/^title:\s*(.+)$/m) || [])[1];
@@ -1357,7 +1641,7 @@ title: Small sculpture
 
     // Share: put the whole document in the URL hash and copy the link
     document.getElementById("shareBtn").addEventListener("click", async () => {
-      const url = location.origin + location.pathname + "#" + enc(ed.value);
+      const url = location.origin + location.pathname + "#" + enc(currentText());
       history.replaceState(null, "", url);
       try { await navigator.clipboard.writeText(url); status.className = "status ok"; status.textContent = "Share link copied to clipboard."; }
       catch { status.className = "status ok"; status.textContent = "Share link is in the address bar."; }
@@ -1385,7 +1669,7 @@ title: Small sculpture
       event.preventDefault();
       const input = document.getElementById("pointInput").value;
       if (!input.trim()) return;
-      try { await openPoint(input); }
+      try { await openPoint(input); documentURL(); }
       catch (error) { failOpen(error); }
     });
     renderFileList();
@@ -1418,6 +1702,9 @@ title: Small sculpture
         else { ed.value = ""; loadError = "Share link could not be decoded."; }
       } else {
         ed.value = STARTER;
+      }
+      if (!activeSession) {
+        activeSession = createSession({ text: ed.value, activeId: null, pieces: [], note: null });
       }
       render(); updateCursor();
       requestAnimationFrame(() => requestAnimationFrame(drawCubes));
@@ -1492,7 +1779,7 @@ title: Small sculpture
       "X": [0.94, 0.54, 0.58], ":": [0.52, 0.67, 0.48], "=": [0.87, 0.76, 0.55],
       "-": [0.49, 0.83, 0.89],
     };
-    const cubeView = { yaw: 0.6, pitch: 0.35, zoom: 1 };
+    const cubeView = { yaw: 0.6, pitch: 0.35, zoom: 1, panX: 0, panY: 0, rotation: [0, 0, 0, 1] };
     const cubeScene = { doc: undefined, volume: null };
     function currentCubeVolume(doc) {
       if (cubeScene.doc !== doc) {
@@ -1614,8 +1901,8 @@ title: Small sculpture
     }
     function initCubeGl(canvas) {
       if (cubeGpu.failed) return false;
-      // One context, created after the bitmap size is final. Resizing the bitmap
-      // or asking for the discrete GPU makes Safari drop the context.
+      // Keep one context and its installed resources. Drawable resizing is handled
+      // separately; avoid forcing a discrete GPU on Safari.
       const gl = canvas.getContext("webgl2", {
         alpha: false,
         antialias: true,
@@ -1776,33 +2063,56 @@ title: Small sculpture
       cubeGpu.count = cells.length;
       cubePick.points = points;
     }
+    const cross3 = (a, b) => [a[1]*b[2]-a[2]*b[1], a[2]*b[0]-a[0]*b[2], a[0]*b[1]-a[1]*b[0]];
+    const dot3 = (a, b) => a.reduce((sum, value, i) => sum + value * b[i], 0);
+    function normalizedRotation(q) {
+      if (!Array.isArray(q) || q.length !== 4 || q.some(value => !Number.isFinite(value))) return [0, 0, 0, 1];
+      const largest = Math.max(...q.map(Math.abs)); if (!largest) return [0, 0, 0, 1];
+      const scaled = q.map(value => value / largest), length = Math.hypot(...scaled);
+      return scaled.map(value => value / length);
+    }
+    function rotatedAxis(q, axis, radians) {
+      if (![0,1,2].includes(axis) || !Number.isFinite(radians)) return q;
+      const angle = radians % (2 * Math.PI) / 2, a = [0, 0, 0]; a[axis] = Math.sin(angle) * (axis === 1 ? -1 : 1);
+      const w = Math.cos(angle), b = q.slice(0, 3), cross = cross3(a, b);
+      return normalizedRotation([...b.map((value, i) => w * value + q[3] * a[i] + cross[i]), w * q[3] - dot3(a, b)]);
+    }
+    function cameraBasis() {
+      const cy = Math.cos(cubeView.yaw), sy = Math.sin(cubeView.yaw), cp = Math.cos(cubeView.pitch), sp = Math.sin(cubeView.pitch);
+      const q = normalizedRotation(cubeView.rotation), v = q.slice(0, 3);
+      return [[cy,0,-sy],[-sy*sp,cp,-cy*sp],[sy*cp,sp,cy*cp]].map(point => {
+        const t = cross3(v, point).map(value => 2 * value), c = cross3(v, t);
+        return point.map((value, i) => value + q[3] * t[i] + c[i]);
+      });
+    }
     function cubeCamera(width, height, volume, planeCount) {
       // Sculpt's camera: three extents away, 0.68 of the smaller pane dimension per extent.
       const extent = Math.max(volume.w, volume.h, planeCount, 1);
       const dist = extent * 3;
       const scale = Math.min(width, height) * 0.68 / extent * cubeView.zoom;
       let tanHalf = height / (2 * scale * dist);
-      const cp = Math.cos(cubeView.pitch), sp = Math.sin(cubeView.pitch);
-      const cy = Math.cos(cubeView.yaw), sy = Math.sin(cubeView.yaw);
+      const [rightAxis, up, back] = cameraBasis();
       // Keep the native scale when it fits; leave a margin around small, close cubes.
       const aspect = width / Math.max(height, 1);
       let fitHalf = 0;
       for (const x of [-Math.max(volume.w, 1) / 2, Math.max(volume.w, 1) / 2]) {
         for (const y of [-Math.max(volume.h, 1) / 2, Math.max(volume.h, 1) / 2]) {
           for (const z of [-planeCount / 2, planeCount / 2]) {
-            const right = cy * x - sy * z;
-            const up = -sy * sp * x + cp * y - cy * sp * z;
-            const depth = dist - (sy * cp * x + sp * y + cy * cp * z);
-            fitHalf = Math.max(fitHalf, Math.abs(up) / depth, Math.abs(right) / depth / aspect);
+            const point = [x,y,z], right = dot3(point,rightAxis), vertical = dot3(point,up);
+            const depth = dist - dot3(point,back);
+            fitHalf = Math.max(fitHalf, Math.abs(vertical) / depth, Math.abs(right) / depth / aspect);
           }
         }
       }
       tanHalf = Math.max(tanHalf, fitHalf * 1.12 / cubeView.zoom);
-      const eye = [sy * cp * dist, sp * dist, cy * cp * dist];
-      const view = lookAt(eye, [0, 0, 0], [0, 1, 0]);
+      // This camera basis stays continuous through the poles and upside-down views.
+      const target = rightAxis.map((value, i) => value * cubeView.panX + up[i] * cubeView.panY);
+      const eye = target.map((value, i) => value + back[i] * dist);
+      const view = lookAt(eye, target, up);
       const proj = perspective(2 * Math.atan(tanHalf), width / Math.max(height, 1), extent * 0.01, dist + extent * 2);
       cubePick.eye = eye;
       cubePick.tanHalf = tanHalf;
+      cubePick.worldPerPixel = 2 * dist * tanHalf / Math.max(height, 1);
       return mul4(proj, view);
     }
     function showCubeUnavailable() {
@@ -1815,9 +2125,22 @@ title: Small sculpture
       const canvas = document.getElementById("cubeCanvas");
       const empty = document.getElementById("cubesEmpty");
       if (!canvas) return;
+      cubeView.yaw = Number.isFinite(cubeView.yaw) ? cubeView.yaw % (2 * Math.PI) : 0;
+      cubeView.pitch = Number.isFinite(cubeView.pitch) ? cubeView.pitch % (2 * Math.PI) : 0;
+      cubeView.zoom = Number.isFinite(cubeView.zoom) ? Math.max(0.5, Math.min(2, cubeView.zoom)) : 1;
+      for (const key of ["panX", "panY"]) {
+        cubeView[key] = Number.isFinite(cubeView[key]) ? Math.max(-1000000, Math.min(1000000, cubeView[key])) : 0;
+      }
+      cubeView.rotation = normalizedRotation(cubeView.rotation);
+      drawAxisSphere();
+      canvas.dataset.rotation = JSON.stringify(cubeView.rotation);
       const doc = lab.document;
       const volume = currentCubeVolume(doc);
       canvas.dataset.cubes = String(volume.cells.length);
+      canvas.dataset.yaw = String(cubeView.yaw);
+      canvas.dataset.pitch = String(cubeView.pitch);
+      canvas.dataset.panX = String(cubeView.panX);
+      canvas.dataset.panY = String(cubeView.panY);
       if (empty) empty.hidden = volume.cells.length > 0;
       document.getElementById("cubeEmptyText").textContent = "This document has no cube grid. Read it in Preview, or open a sculpture to explore in 3D.";
       document.getElementById("cubeSample").hidden = false;
@@ -1825,19 +2148,18 @@ title: Small sculpture
       document.getElementById("cameraControls").hidden = volume.cells.length === 0;
       document.getElementById("cubePreview").hidden = !doc;
       document.getElementById("cubeZoom").textContent = Math.round(cubeView.zoom * 100) + "%";
-      document.getElementById("cubeZoomOut").disabled = cubeView.zoom <= 0.45;
-      document.getElementById("cubeZoomIn").disabled = cubeView.zoom >= 3.2;
+      document.getElementById("cubeZoomOut").disabled = cubeView.zoom <= 0.5;
+      document.getElementById("cubeZoomIn").disabled = cubeView.zoom >= 2;
       const width = canvas.clientWidth;
       const height = canvas.clientHeight;
       if (width < 2 || height < 2) return;
       bindCubeContext(canvas);
       const [bufferWidth, bufferHeight] = cubeBufferSize(width, height);
-      // Set the bitmap before the first getContext. Changing it later drops the
-      // Safari context, so a later layout change only updates the viewport.
-      if (!cubeGpu.gl) {
-        canvas.width = bufferWidth;
-        canvas.height = bufferHeight;
-      }
+      // A small Slice reference must not leave a low-resolution bitmap stretched
+      // across Cubes. Resize only changed drawable dimensions; keep the context,
+      // program and geometry installed, then redraw with the current camera.
+      if (canvas.width !== bufferWidth) canvas.width = bufferWidth;
+      if (canvas.height !== bufferHeight) canvas.height = bufferHeight;
       if (cubeGpu.gl && cubeGpu.gl.isContextLost()) {
         cubeGpu.gl = null;
         canvas.dataset.renderer = "lost";
@@ -1868,6 +2190,312 @@ title: Small sculpture
       cubePick.width = width;
       cubePick.height = height;
     }
+
+    const normalizeSource = (text) => text.replace(/\r\n?/g, "\n");
+    function rawOffset(text, index) {
+      let at = 0, normalized = 0;
+      while (at < text.length && normalized < index) {
+        if (text[at] === "\r" && text[at + 1] === "\n") at++;
+        at++; normalized++;
+      }
+      return at;
+    }
+    function patchRawSource(raw, next) {
+      const before = normalizeSource(raw);
+      if (before === next) return raw;
+      let start = 0, end = 0;
+      while (start < before.length && start < next.length && before[start] === next[start]) start++;
+      while (end < before.length - start && end < next.length - start && before[before.length - 1 - end] === next[next.length - 1 - end]) end++;
+      const newline = raw.match(/\r\n|\r|\n/)?.[0] || "\n";
+      return raw.slice(0, rawOffset(raw, start)) + next.slice(start, next.length - end).replace(/\n/g, newline)
+        + raw.slice(rawOffset(raw, before.length - end));
+    }
+    function currentText() {
+      const state = draftPiece()?.state;
+      return state && normalizeSource(state.text) === ed.value ? state.text : ed.value;
+    }
+    let historySequence = 0;
+    function historyState(state = draftPiece()?.state) {
+      if (!state) return null;
+      state.undo ||= []; state.redo ||= [];
+      return state;
+    }
+    function editSnapshot(state) {
+      return { text: state.text, start: ed.selectionStart, end: ed.selectionEnd, plane: lab.currentIndex || 0,
+        cell: [...(state.cell || [0, 0])], bytes: state.text.length * 2, sequence: ++historySequence };
+    }
+    function trimEditHistory() {
+      const states = new Set(fileDrafts.values());
+      for (const session of fileSessions.values()) for (const piece of session.pieces) states.add(piece.state);
+      for (const piece of activeSession?.pieces || []) states.add(piece.state);
+      const entries = [];
+      for (const state of states) {
+        historyState(state);
+        while (state.undo.length + state.redo.length > 100) state.undo.length ? state.undo.shift() : state.redo.shift();
+        for (const stack of [state.undo, state.redo]) for (const entry of stack) entries.push({ stack, entry });
+      }
+      let bytes = entries.reduce((total, { entry }) => total + entry.bytes, 0);
+      entries.sort((a, b) => a.entry.sequence - b.entry.sequence);
+      for (const { stack, entry } of entries) {
+        if (bytes <= 8 * 1024 * 1024) break;
+        stack.splice(stack.indexOf(entry), 1); bytes -= entry.bytes;
+      }
+    }
+    function rememberEdit(state, snapshot = editSnapshot(state)) {
+      historyState(state).undo.push(snapshot); state.redo = []; state.lastTypingAt = 0;
+      trimEditHistory();
+    }
+    function recordSourceInput(inputType) {
+      const state = historyState();
+      if (!state || normalizeSource(state.text) === ed.value) return;
+      const now = performance.now();
+      const grouped = inputType === "insertText" && state.lastInputType === inputType && state.lastTypingAt > 0 && now - state.lastTypingAt < 650;
+      if (!grouped) rememberEdit(state);
+      state.lastTypingAt = inputType === "insertText" ? now : 0; state.lastInputType = inputType;
+    }
+    function moveEditHistory(redo) {
+      finishSliceStroke();
+      const state = historyState();
+      if (!state) return;
+      const entry = (redo ? state.redo : state.undo).pop();
+      if (!entry) return;
+      (redo ? state.undo : state.redo).push(editSnapshot(state));
+      state.text = entry.text; state.cell = entry.cell; state.lastTypingAt = 0;
+      ed.value = state.text; ed.setSelectionRange(entry.start, entry.end);
+      clearTimeout(timer); render();
+      lab.goTo(Math.min(entry.plane, Math.max(0, (lab.document?.planes.length || 1) - 1)));
+      lineIndexDirty = true; updateDraftState(); drawSlice(); trimEditHistory();
+    }
+    const sliceUI = { tool: "draw", glyph: "#", size: 1, zoom: 1, previous: false, profile: null, text: null, stroke: null, cellSize: 1 };
+    const sliceCanvas = document.getElementById("sliceGrid");
+    const sliceScroll = document.getElementById("sliceScroll");
+    const slicePalette = "#@*+ox:=-";
+    function sliceProfile(text) {
+      const unavailable = (message) => ({ message, grids: [] });
+      if (!lab.document || lab.error) return unavailable("Open a valid sculpture to edit its slices. You can correct this document in Edit.");
+      if (new TextEncoder().encode(text).length > 1.5 * 1024 * 1024 || lab.document.planes.length > 256) return unavailable("This document is larger than the Slice editor supports. Use Edit to keep working with its source.");
+      const lines = [], expression = /([^\r\n]*)(\r\n|\r|\n|$)/g;
+      for (let match; (match = expression.exec(text)) && match[0].length;) lines.push({ text: match[1], start: match.index });
+      const sections = []; let section = null, fenced = false;
+      for (const line of lines) {
+        if (line.text.startsWith("```")) fenced = !fenced;
+        if (!fenced && /^@plane\s/.test(line.text)) { section = []; sections.push(section); }
+        else if (section) section.push(line);
+      }
+      if (sections.length !== lab.document.planes.length) return unavailable("This document needs explicit slice planes. Use Edit for its current source.");
+      const grids = []; let width = 0, height = 0, occupied = 0;
+      for (const lines of sections) {
+        const begin = lines.findIndex((line) => /^```[^`]*$/.test(line.text));
+        const end = begin < 0 ? -1 : lines.findIndex((line, index) => index > begin && /^```\s*$/.test(line.text));
+        if (begin < 0 || end < 0) return unavailable("Each slice needs a complete fenced character grid. Use Edit to add or repair one.");
+        const rows = lines.slice(begin + 1, end);
+        const w = rows[0]?.text.length || 0;
+        if (!w || w > 64 || !rows.length || rows.length > 64 || rows.some((row) => row.text.length !== w || /[^.#@*+ox:=\- ]/.test(row.text))) return unavailable("Slice editing supports rectangular grids up to 64 × 64 using Sculpt’s character palette. Use Edit for other content.");
+        if (grids.length && (w !== width || rows.length !== height)) return unavailable("Slice grids need matching dimensions for visual editing. You can adjust them in Edit.");
+        width = w; height = rows.length;
+        const values = rows.map((row) => [...row.text]);
+        occupied += values.flat().filter((glyph) => glyph !== "." && glyph !== " ").length;
+        grids.push({ rows, values });
+      }
+      if (!grids.length || occupied > 4000) return unavailable("The Slice editor supports up to 4000 occupied cells. Use Edit for this document.");
+      return { grids, width, height, occupied, message: null };
+    }
+    function currentSliceProfile() {
+      if (sliceUI.stroke && !sliceUI.stroke.rejected) return sliceUI.stroke.profile;
+      const text = currentText();
+      if (sliceUI.text !== text) { sliceUI.text = text; sliceUI.profile = sliceProfile(text); }
+      return sliceUI.profile;
+    }
+    function sliceMessage(text = "") { document.getElementById("sliceMessage").textContent = text; }
+    function drawSlice() {
+      if (document.getElementById("stage")?.dataset.show !== "slice") return;
+      const profile = currentSliceProfile();
+      document.getElementById("sliceUnavailable").hidden = !profile.message;
+      document.getElementById("sliceWorkspace").hidden = Boolean(profile.message);
+      document.getElementById("sliceUnavailable").textContent = profile.message || "";
+      if (profile.message) return;
+      const state = historyState();
+      if (!state) return;
+      const z = Math.min(lab.currentIndex || 0, profile.grids.length - 1);
+      const cell = state.cell ||= [0, 0];
+      cell[0] = Math.max(0, Math.min(cell[0], profile.width - 1)); cell[1] = Math.max(0, Math.min(cell[1], profile.height - 1));
+      document.getElementById("sliceHeading").textContent = `Slice ${z + 1} of ${profile.grids.length}`;
+      document.getElementById("sliceCoordinates").textContent = `X ${cell[0] + 1} · Y ${cell[1] + 1}`;
+      document.getElementById("sliceDimensions").textContent = `${profile.width} × ${profile.height} cells`;
+      const list = document.getElementById("sliceList");
+      const listKey = currentText() + ":" + z;
+      if (sliceUI.listKey !== listKey) {
+        sliceUI.listKey = listKey; list.replaceChildren();
+        profile.grids.forEach((grid, index) => {
+          const button = document.createElement("button"), thumbnail = document.createElement("canvas"), label = document.createElement("span");
+          button.className = "slice-thumb"; button.type = "button"; button.setAttribute("aria-label", `Slice ${index + 1}`);
+          button.setAttribute("aria-current", String(index === z)); button.tabIndex = index === z ? 0 : -1;
+          thumbnail.width = thumbnail.height = 32;
+          const ctx = thumbnail.getContext("2d"), unit = 30 / Math.max(profile.width, profile.height);
+          ctx.fillStyle = "#65b7af";
+          grid.values.forEach((row, y) => row.forEach((glyph, x) => { if (glyph !== "." && glyph !== " ") ctx.fillRect(1 + x * unit, 1 + y * unit, unit, unit); }));
+          label.textContent = String(index + 1); button.append(thumbnail, label);
+          button.addEventListener("click", () => { finishSliceStroke(); lab.goTo(index); drawSlice(); }); list.append(button);
+        });
+      }
+      const fit = Math.max(2, Math.floor(Math.min(Math.max(1, sliceScroll.clientWidth - 2) / profile.width, Math.max(1, sliceScroll.clientHeight - 2) / profile.height)));
+      const unit = fit * sliceUI.zoom; sliceUI.cellSize = unit;
+      sliceCanvas.width = Math.ceil(profile.width * unit); sliceCanvas.height = Math.ceil(profile.height * unit);
+      sliceCanvas.style.width = sliceCanvas.width + "px"; sliceCanvas.style.height = sliceCanvas.height + "px";
+      sliceCanvas.dataset.x = cell[0]; sliceCanvas.dataset.y = cell[1]; sliceCanvas.dataset.slice = z;
+      sliceCanvas.setAttribute("aria-rowcount", profile.height); sliceCanvas.setAttribute("aria-colcount", profile.width);
+      sliceCanvas.setAttribute("aria-label", `Slice ${z + 1} character grid, X ${cell[0] + 1}, Y ${cell[1] + 1}, ${sliceUI.tool} with ${sliceUI.glyph}`);
+      const ctx = sliceCanvas.getContext("2d");
+      ctx.font = `${Math.max(7, unit * 0.6)}px Spline Sans Mono, monospace`; ctx.textAlign = "center"; ctx.textBaseline = "middle";
+      profile.grids[z].values.forEach((row, y) => row.forEach((glyph, x) => {
+        ctx.fillStyle = (x + y) % 2 ? "#202729" : "#1c2325"; ctx.fillRect(x * unit, y * unit, unit - 0.5, unit - 0.5);
+        if (glyph !== "." && glyph !== " ") { ctx.fillStyle = "#e3eeed"; ctx.fillText(glyph, (x + 0.5) * unit, (y + 0.5) * unit); }
+        else if (sliceUI.previous && z > 0) {
+          const previous = profile.grids[z - 1].values[y][x];
+          if (previous !== "." && previous !== " ") { ctx.fillStyle = "#58847d"; ctx.fillText(previous, (x + 0.5) * unit, (y + 0.5) * unit); }
+        }
+      }));
+      ctx.strokeStyle = "#39cbbb"; ctx.lineWidth = 2; ctx.strokeRect(cell[0] * unit + 1, cell[1] * unit + 1, unit - 2, unit - 2);
+      const previous = document.getElementById("slicePrevious"); previous.disabled = z === 0; previous.checked = sliceUI.previous && z > 0;
+      for (const [id, value, max] of [["sliceX", cell[0] + 1, profile.width], ["sliceY", cell[1] + 1, profile.height]]) {
+        const field = document.getElementById(id); field.max = max; if (document.activeElement !== field) field.value = value;
+      }
+      document.getElementById("sliceUndo").disabled = !state.undo.length;
+      document.getElementById("sliceRedo").disabled = !state.redo.length;
+      document.getElementById("slicePalette").hidden = sliceUI.tool === "erase";
+      document.getElementById("sliceSize").hidden = sliceUI.tool === "fill";
+      document.getElementById("sliceToolHint").textContent = sliceUI.tool === "fill" ? "Fill a connected region of matching characters." : sliceUI.tool === "erase" ? "Drag to erase from this slice." : `Drag to draw with ${sliceUI.glyph}.`;
+      document.getElementById("sliceReferenceNote").textContent = document.getElementById("cubeCanvas").dataset.renderer === "none" ? "3D reference needs WebGL2. Slice editing is available." : profile.occupied ? "Drag the reference to orbit. Scroll to zoom." : "Draw a character to see it in 3D.";
+    }
+    function sliceLine(start, end) {
+      let [x, y] = start; const dx = Math.abs(end[0] - x), dy = -Math.abs(end[1] - y), sx = x < end[0] ? 1 : -1, sy = y < end[1] ? 1 : -1;
+      let error = dx + dy; const result = [];
+      while (true) { result.push([x, y]); if (x === end[0] && y === end[1]) return result;
+        const twice = 2 * error; if (twice >= dy) { error += dy; x += sx; } if (twice <= dx) { error += dx; y += sy; }
+      }
+    }
+    function beginSliceStroke(pointerId = null) {
+      finishSliceStroke(); const profile = currentSliceProfile(), state = historyState();
+      if (!state || profile.message) return false;
+      sliceMessage();
+      sliceUI.stroke = { profile, state, pointerId, original: state.text, snapshot: editSnapshot(state), last: null, changed: false, rejected: false, redo: state.redo, tool: sliceUI.tool, glyph: sliceUI.glyph, size: sliceUI.size, z: lab.currentIndex || 0 };
+      return true;
+    }
+    function paintSliceCell(cell) {
+      const stroke = sliceUI.stroke;
+      if (!stroke || stroke.rejected || stroke.state !== draftPiece()?.state) return;
+      const { profile } = stroke, grid = profile.grids[stroke.z], points = [];
+      if (stroke.tool === "fill") {
+        if (stroke.last) return;
+        const previous = grid.values[cell[1]][cell[0]].replace(" ", "."), visited = new Set(); const queue = [cell];
+        for (let i = 0; i < queue.length; i++) {
+          const [x, y] = queue[i], key = y * profile.width + x;
+          if (x < 0 || y < 0 || x >= profile.width || y >= profile.height || visited.has(key)) continue;
+          visited.add(key); if (grid.values[y][x].replace(" ", ".") !== previous) continue;
+          points.push([x, y]); queue.push([x - 1, y], [x + 1, y], [x, y - 1], [x, y + 1]);
+        }
+      } else {
+        const radius = Math.floor(stroke.size / 2);
+        for (const [x, y] of sliceLine(stroke.last || cell, cell)) for (let row = y - radius; row <= y + radius; row++) for (let col = x - radius; col <= x + radius; col++) {
+          if (col >= 0 && row >= 0 && col < profile.width && row < profile.height) points.push([col, row]);
+        }
+      }
+      stroke.last = cell; stroke.state.cell = cell;
+      const glyph = stroke.tool === "erase" ? "." : stroke.glyph;
+      let changed = false;
+      for (const [x, y] of points) {
+        const before = grid.values[y][x]; if (before === glyph || (glyph === "." && before === " ")) continue;
+        profile.occupied += (glyph !== "." ? 1 : 0) - (before !== "." && before !== " " ? 1 : 0);
+        grid.values[y][x] = glyph; changed = true;
+      }
+      if (profile.occupied > 4000) {
+        if (stroke.changed) { const index = stroke.state.undo.indexOf(stroke.snapshot); if (index >= 0) stroke.state.undo.splice(index, 1); stroke.state.redo = stroke.redo; }
+        stroke.state.text = stroke.original; ed.value = stroke.original; stroke.rejected = true;
+        sliceUI.text = null; render(); sliceMessage("This edit would exceed 4000 occupied cells. The stroke was restored."); return;
+      }
+      if (changed) {
+        if (!stroke.changed) { rememberEdit(stroke.state, stroke.snapshot); stroke.changed = true; }
+        const edits = grid.rows.map((row, y) => ({ start: row.start, end: row.start + row.text.length, text: grid.values[y].join("") }));
+        let text = stroke.original; for (const edit of edits.reverse()) text = text.slice(0, edit.start) + edit.text + text.slice(edit.end);
+        stroke.state.text = text; ed.value = text; lineIndexDirty = true; updateDraftState();
+        if (!sliceUI.renderQueued) { sliceUI.renderQueued = true; requestAnimationFrame(() => { sliceUI.renderQueued = false; render(); }); }
+      }
+      drawSlice();
+    }
+    function finishSliceStroke() {
+      if (!sliceUI.stroke) return;
+      sliceUI.stroke = null; sliceUI.text = null;
+    }
+    function sliceCellAt(event) {
+      const rect = sliceCanvas.getBoundingClientRect(), profile = currentSliceProfile();
+      if (profile.message) return null;
+      const x = Math.floor((event.clientX - rect.left) / sliceUI.cellSize), y = Math.floor((event.clientY - rect.top) / sliceUI.cellSize);
+      return x >= 0 && y >= 0 && x < profile.width && y < profile.height ? [x, y] : null;
+    }
+    sliceCanvas.addEventListener("pointerdown", (event) => {
+      if (event.button !== 0 || event.isPrimary === false || sliceUI.stroke) return;
+      const cell = sliceCellAt(event); if (!cell || !beginSliceStroke(event.pointerId)) return;
+      event.preventDefault(); sliceCanvas.focus({ preventScroll: true });
+      try { sliceCanvas.setPointerCapture(event.pointerId); } catch (_) {}
+      paintSliceCell(cell);
+    });
+    sliceCanvas.addEventListener("pointermove", (event) => {
+      if (sliceUI.stroke?.pointerId !== event.pointerId) return;
+      const cell = sliceCellAt(event); if (cell) paintSliceCell(cell);
+    });
+    for (const type of ["pointerup", "pointercancel", "lostpointercapture"]) sliceCanvas.addEventListener(type, (event) => {
+      if (sliceUI.stroke?.pointerId === event.pointerId) { finishSliceStroke(); drawSlice(); }
+    });
+    sliceCanvas.addEventListener("keydown", (event) => {
+      if ((event.metaKey || event.ctrlKey) && ["z", "y"].includes(event.key.toLowerCase())) { event.preventDefault(); moveEditHistory(event.shiftKey || event.key.toLowerCase() === "y"); return; }
+      const state = historyState(), profile = currentSliceProfile(); if (!state || profile.message) return;
+      const cell = [...(state.cell || [0, 0])];
+      if (event.key === "ArrowLeft") cell[0]--; else if (event.key === "ArrowRight") cell[0]++;
+      else if (event.key === "ArrowUp") cell[1]--; else if (event.key === "ArrowDown") cell[1]++;
+      else if (event.key === " ") { event.preventDefault(); if (beginSliceStroke()) { paintSliceCell(cell); finishSliceStroke(); drawSlice(); } return; }
+      else return;
+      event.preventDefault(); cell[0] = Math.max(0, Math.min(cell[0], profile.width - 1)); cell[1] = Math.max(0, Math.min(cell[1], profile.height - 1)); state.cell = cell; drawSlice();
+      const unit = sliceUI.cellSize; if (cell[0] * unit < sliceScroll.scrollLeft) sliceScroll.scrollLeft = cell[0] * unit;
+      if ((cell[0] + 1) * unit > sliceScroll.scrollLeft + sliceScroll.clientWidth) sliceScroll.scrollLeft = (cell[0] + 1) * unit - sliceScroll.clientWidth;
+      if (cell[1] * unit < sliceScroll.scrollTop) sliceScroll.scrollTop = cell[1] * unit;
+      if ((cell[1] + 1) * unit > sliceScroll.scrollTop + sliceScroll.clientHeight) sliceScroll.scrollTop = (cell[1] + 1) * unit - sliceScroll.clientHeight;
+    });
+    for (const [id, key, attribute] of [["sliceTool", "tool", "tool"], ["sliceSize", "size", "size"], ["sliceZoom", "zoom", "zoom"]]) {
+      document.getElementById(id).addEventListener("click", (event) => {
+        const button = event.target.closest("button"); if (!button) return; finishSliceStroke();
+        sliceUI[key] = key === "tool" ? button.dataset[attribute] : Number(button.dataset[attribute]);
+        for (const item of button.parentElement.querySelectorAll("button")) item.setAttribute("aria-pressed", String(item === button)); drawSlice();
+      });
+    }
+    for (const glyph of slicePalette) {
+      const button = document.createElement("button"); button.type = "button"; button.className = "btn"; button.textContent = glyph;
+      button.setAttribute("aria-label", `Paint ${glyph}`); button.setAttribute("aria-pressed", String(glyph === sliceUI.glyph));
+      button.addEventListener("click", () => { finishSliceStroke(); sliceUI.glyph = glyph;
+        for (const item of button.parentElement.children) item.setAttribute("aria-pressed", String(item === button)); drawSlice(); }); document.getElementById("slicePalette").append(button);
+    }
+    document.getElementById("slicePrevious").addEventListener("change", (event) => { sliceUI.previous = event.target.checked; drawSlice(); });
+    for (const id of ["sliceX", "sliceY"]) document.getElementById(id).addEventListener("change", () => {
+      const profile = currentSliceProfile(), x = Number(document.getElementById("sliceX").value) - 1, y = Number(document.getElementById("sliceY").value) - 1;
+      if (!profile.message && Number.isInteger(x) && Number.isInteger(y) && x >= 0 && y >= 0 && x < profile.width && y < profile.height) {
+        historyState().cell = [x,y]; drawSlice();
+      } else sliceMessage("Choose X and Y inside the current grid.");
+    });
+    document.getElementById("sliceApply").addEventListener("click", () => {
+      const x = Number(document.getElementById("sliceX").value) - 1, y = Number(document.getElementById("sliceY").value) - 1, profile = currentSliceProfile();
+      if (profile.message || !Number.isInteger(x) || !Number.isInteger(y) || x < 0 || y < 0 || x >= profile.width || y >= profile.height) { sliceMessage("Choose X and Y inside the current grid."); return; }
+      if (beginSliceStroke()) { paintSliceCell([x, y]); finishSliceStroke(); drawSlice(); }
+    });
+    document.getElementById("sliceUndo").addEventListener("click", () => moveEditHistory(false));
+    document.getElementById("sliceRedo").addEventListener("click", () => moveEditHistory(true));
+    document.getElementById("sliceExpand").addEventListener("click", () => document.getElementById("cubesTab").click());
+    document.getElementById("sliceList").addEventListener("keydown", (event) => {
+      const buttons = [...event.currentTarget.children], current = buttons.indexOf(document.activeElement);
+      if (current < 0 || !["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) return;
+      event.preventDefault(); const index = event.key === "Home" ? 0 : event.key === "End" ? buttons.length - 1 : Math.max(0, Math.min(buttons.length - 1, current + (["ArrowUp", "ArrowLeft"].includes(event.key) ? -1 : 1)));
+      finishSliceStroke(); lab.goTo(index); drawSlice(); document.getElementById("sliceList").children[index]?.focus();
+    });
+    new ResizeObserver(() => drawSlice()).observe(sliceScroll);
+
     const grid = document.getElementById("grid");
     const stage = document.getElementById("stage");
     function selectTab(root, tab, apply) {
@@ -1901,24 +2529,101 @@ title: Small sculpture
       stage.dataset.show = pane;
       document.querySelector(".wrap").dataset.view = pane;
       if (pane === "preview" && lab.render) lab.render();
-      if (pane === "cubes") requestAnimationFrame(drawCubes);
+      finishSliceStroke();
+      const canvas = document.getElementById("cubeCanvas");
+      if (pane === "slice") {
+        document.getElementById("sliceReference").appendChild(canvas);
+        requestAnimationFrame(() => { drawSlice(); drawCubes(); });
+      } else {
+        document.getElementById("cubesPane").prepend(canvas);
+        if (pane === "cubes") requestAnimationFrame(drawCubes);
+      }
     });
     wireTabs(document.querySelector(".fileswitch"), (pane) => {
       grid.dataset.show = pane;
       if (pane === "document" && stage.dataset.show === "preview" && lab.render) lab.render();
-      if (pane === "document" && stage.dataset.show === "cubes") requestAnimationFrame(drawCubes);
+      if (pane === "document" && ["cubes", "slice"].includes(stage.dataset.show)) requestAnimationFrame(() => { drawSlice(); drawCubes(); });
     });
     const cubeCanvas = document.getElementById("cubeCanvas");
     function zoomCubes(factor) {
-      cubeView.zoom = Math.max(0.45, Math.min(3.2, cubeView.zoom * factor));
+      cubeView.zoom = Math.max(0.5, Math.min(2, cubeView.zoom * factor));
       drawCubes();
     }
     function fitCubes() {
       cubeView.yaw = 0.6;
       cubeView.pitch = 0.35;
       cubeView.zoom = 1;
+      cubeView.panX = 0;
+      cubeView.panY = 0;
+      cubeView.rotation = [0,0,0,1];
       drawCubes();
     }
+    function panCubes(dx, dy) {
+      const scale = cubePick.worldPerPixel || 0;
+      cubeView.panX -= dx * scale;
+      cubeView.panY += dy * scale;
+      drawCubes();
+    }
+    let selectedAxis = null;
+    function chooseAxis(axis) {
+      selectedAxis = axis; chooseCubeTool("orbit");
+      document.querySelectorAll("#axisButtons button").forEach(button => button.setAttribute("aria-pressed", String(button.dataset.axis === (axis === null ? "free" : String(axis)))));
+      for (const id of ["axisMinus", "axisPlus"]) document.getElementById(id).disabled = axis === null;
+      document.getElementById("axisHint").textContent = axis === null ? "Choose X, Y or Z." : `Rotate around ${"XYZ"[axis]}.`;
+      cubeCanvas.dataset.axis = axis === null ? "free" : "XYZ"[axis]; drawAxisSphere();
+    }
+    function drawAxisSphere() {
+      const [right,up] = cameraBasis();
+      document.querySelectorAll("#axisSphere path").forEach(path => {
+        const axis = Number(path.dataset.axis), other = [0,1,2].filter(value => value !== axis);
+        const points = Array.from({length:65}, (_, i) => {
+          const point = [0,0,0], angle = i * Math.PI / 32; point[other[0]] = Math.cos(angle); point[other[1]] = Math.sin(angle); point[1] *= -1;
+          return `${i ? "L" : "M"}${50+34*dot3(point,right)},${50-34*dot3(point,up)}`;
+        });
+        path.setAttribute("d", points.join(" ")); path.classList.toggle("selected", selectedAxis === axis);
+      });
+    }
+    document.querySelectorAll("#axisButtons button").forEach(button => button.addEventListener("click", () => chooseAxis(button.dataset.axis === "free" ? null : Number(button.dataset.axis))));
+    function validStep(id) {
+      const field = document.getElementById(id), value = Number(field.value), valid = field.value.trim() && Number.isFinite(value) && value > 0;
+      field.setAttribute("aria-invalid", String(!valid)); document.getElementById("precisionMessage").textContent = valid ? "" : "Enter a finite, positive step.";
+      return valid ? value : null;
+    }
+    for (const [id, sign] of [["axisMinus",-1],["axisPlus",1]]) document.getElementById(id).addEventListener("click", () => {
+      const step = validStep("rotationStep"); if (step === null || selectedAxis === null) return;
+      cubeView.rotation = rotatedAxis(cubeView.rotation, selectedAxis, sign * (step % 360) * Math.PI / 180); drawCubes();
+    });
+    document.querySelectorAll("[data-pan]").forEach(button => button.addEventListener("click", () => {
+      const step = validStep("panStep"); if (step === null) return; const [x,y] = button.dataset.pan.split(",").map(Number);
+      cubeView.panX -= x * step; cubeView.panY += y * step; drawCubes();
+    }));
+    let sphereDrag = null;
+    const sphere = document.querySelector("#axisSphere svg");
+    sphere.addEventListener("pointerdown", event => {
+      if (event.button !== 0 || event.isPrimary === false) return;
+      const rect = sphere.getBoundingClientRect(), x = (event.clientX-rect.left)*100/rect.width, y = (event.clientY-rect.top)*100/rect.height;
+      let nearest = { distance: Infinity, axis: 0 };
+      document.querySelectorAll("#axisSphere path").forEach(path => {
+        for (let at=0, length=path.getTotalLength(); at<=length; at+=2) { const p=path.getPointAtLength(at), distance=Math.hypot(x-p.x,y-p.y); if(distance<nearest.distance) nearest={distance,axis:Number(path.dataset.axis)}; }
+      });
+      chooseAxis(nearest.axis); sphereDrag={id:event.pointerId,x:event.clientX,y:event.clientY,rotation:[...cubeView.rotation],axis:nearest.axis};
+      sphere.setPointerCapture(event.pointerId); event.preventDefault();
+    });
+    sphere.addEventListener("pointermove", event => {
+      if (sphereDrag?.id !== event.pointerId) return;
+      const dx=event.clientX-sphereDrag.x, dy=event.clientY-sphereDrag.y;
+      cubeView.rotation=rotatedAxis(sphereDrag.rotation,sphereDrag.axis,(Math.abs(dx)>=Math.abs(dy)?dx:-dy)*.008); drawCubes();
+    });
+    for(const type of ["pointerup","pointercancel","lostpointercapture"]) sphere.addEventListener(type, () => {sphereDrag=null;});
+    let cubeTool = "orbit";
+    function chooseCubeTool(tool) {
+      cubeTool = tool;
+      cubeCanvas.dataset.tool = tool;
+      document.getElementById("cubeOrbit").setAttribute("aria-pressed", String(tool === "orbit"));
+      document.getElementById("cubePan").setAttribute("aria-pressed", String(tool === "pan"));
+    }
+    document.getElementById("cubeOrbit").addEventListener("click", () => chooseCubeTool("orbit"));
+    document.getElementById("cubePan").addEventListener("click", () => chooseCubeTool("pan"));
     document.getElementById("cubeFit").addEventListener("click", fitCubes);
     document.getElementById("cubeZoomOut").addEventListener("click", () => zoomCubes(1 / 1.15));
     document.getElementById("cubeZoomIn").addEventListener("click", () => zoomCubes(1.15));
@@ -1927,10 +2632,17 @@ title: Small sculpture
       if (event.key === "Home") fitCubes();
       else if (["+", "="].includes(event.key)) zoomCubes(1.15);
       else if (["-", "_"].includes(event.key)) zoomCubes(1 / 1.15);
+      else if (event.shiftKey && ["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"].includes(event.key)) {
+        panCubes(event.key === "ArrowLeft" ? -24 : event.key === "ArrowRight" ? 24 : 0,
+          event.key === "ArrowUp" ? -24 : event.key === "ArrowDown" ? 24 : 0);
+      }
+      else if (selectedAxis !== null && ["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"].includes(event.key)) {
+        cubeView.rotation = rotatedAxis(cubeView.rotation, selectedAxis, ["ArrowRight", "ArrowUp"].includes(event.key) ? 0.12 : -0.12); drawCubes();
+      }
       else if (event.key === "ArrowLeft") { cubeView.yaw -= 0.12; drawCubes(); }
       else if (event.key === "ArrowRight") { cubeView.yaw += 0.12; drawCubes(); }
-      else if (event.key === "ArrowUp") { cubeView.pitch = Math.min(1.2, cubeView.pitch + 0.12); drawCubes(); }
-      else if (event.key === "ArrowDown") { cubeView.pitch = Math.max(-1.2, cubeView.pitch - 0.12); drawCubes(); }
+      else if (event.key === "ArrowUp") { cubeView.pitch += 0.12; drawCubes(); }
+      else if (event.key === "ArrowDown") { cubeView.pitch -= 0.12; drawCubes(); }
       else return;
       event.preventDefault();
     });
@@ -1940,31 +2652,68 @@ title: Small sculpture
       lab.focus();
     });
     let cubeDrag = null;
+    let cubeGesture = null;
+    const cubePointers = new Map();
+    function startCubeDrag(event, moved = false) {
+      cubeDrag = { pointerId: event.pointerId, x: event.clientX, y: event.clientY,
+        yaw: cubeView.yaw, pitch: cubeView.pitch, rotation: [...cubeView.rotation], axis: selectedAxis, panX: cubeView.panX, panY: cubeView.panY,
+        scale: cubePick.worldPerPixel || 0, moved,
+        tool: cubeTool === "pan" || event.shiftKey || event.button === 1 || event.button === 2 ? "pan" : "orbit" };
+    }
+    function touchPair() {
+      const [a, b] = [...cubePointers.values()];
+      return { x: (a.clientX + b.clientX) / 2, y: (a.clientY + b.clientY) / 2,
+        distance: Math.max(1, Math.hypot(b.clientX - a.clientX, b.clientY - a.clientY)) };
+    }
+    function startCubeGesture() {
+      const pair = touchPair();
+      cubeGesture = { ...pair, panX: cubeView.panX, panY: cubeView.panY,
+        scale: cubePick.worldPerPixel || 0, zoom: cubeView.zoom };
+      cubeDrag = null;
+    }
+    cubeCanvas.addEventListener("contextmenu", (event) => event.preventDefault());
     cubeCanvas.addEventListener("pointerdown", (event) => {
-      if ((event.pointerType === "touch" && !event.isPrimary) || event.button !== 0) return;
+      if (event.pointerType !== "touch" && ![0, 1, 2].includes(event.button)) return;
+      if (event.pointerType !== "touch" && cubeDrag) return;
+      event.preventDefault();
       cubeCanvas.focus({ preventScroll: true });
-      cubeDrag = { pointerId: event.pointerId, x: event.clientX, y: event.clientY, yaw: cubeView.yaw, pitch: cubeView.pitch, moved: false };
+      cubePointers.set(event.pointerId, event);
+      if (cubePointers.size >= 2) startCubeGesture();
+      else startCubeDrag(event);
       try { cubeCanvas.setPointerCapture(event.pointerId); } catch (_) { /* synthetic tests have no live pointer */ }
     });
     cubeCanvas.addEventListener("pointermove", (event) => {
-      if (!cubeDrag || cubeDrag.pointerId !== event.pointerId) return;
-      const dx = event.clientX - cubeDrag.x;
-      const dy = event.clientY - cubeDrag.y;
-      if (Math.abs(dx) + Math.abs(dy) > 3) cubeDrag.moved = true;
-      cubeView.yaw = cubeDrag.yaw + dx * 0.01;
-      cubeView.pitch = Math.max(-1.2, Math.min(1.2, cubeDrag.pitch + dy * 0.01));
+      if (!cubePointers.has(event.pointerId)) return;
+      cubePointers.set(event.pointerId, event);
+      if (cubeGesture && cubePointers.size >= 2) {
+        const pair = touchPair();
+        cubeView.panX = cubeGesture.panX - (pair.x - cubeGesture.x) * cubeGesture.scale;
+        cubeView.panY = cubeGesture.panY + (pair.y - cubeGesture.y) * cubeGesture.scale;
+        cubeView.zoom = Math.max(0.5, Math.min(2, cubeGesture.zoom * pair.distance / cubeGesture.distance));
+      } else if (cubeDrag?.pointerId === event.pointerId) {
+        const dx = event.clientX - cubeDrag.x, dy = event.clientY - cubeDrag.y;
+        if (Math.abs(dx) + Math.abs(dy) > 3) cubeDrag.moved = true;
+        if (cubeDrag.tool === "pan") {
+          cubeView.panX = cubeDrag.panX - dx * cubeDrag.scale;
+          cubeView.panY = cubeDrag.panY + dy * cubeDrag.scale;
+        } else if (cubeDrag.axis !== null) {
+          cubeView.rotation = rotatedAxis(cubeDrag.rotation, cubeDrag.axis, (Math.abs(dx) >= Math.abs(dy) ? dx : -dy) * 0.008);
+        } else {
+          cubeView.yaw = cubeDrag.yaw - dx * 0.008;
+          cubeView.pitch = cubeDrag.pitch + dy * 0.008;
+        }
+      } else return;
       drawCubes();
     });
-    cubeCanvas.addEventListener("pointerup", (event) => {
-      if (!cubeDrag || cubeDrag.pointerId !== event.pointerId) return;
-      if (!cubeDrag.moved && cubePick.eye) {
+    function finishCubePointer(event, select) {
+      if (!cubePointers.has(event.pointerId)) return;
+      if (select && cubeDrag?.pointerId === event.pointerId && cubeDrag.tool === "orbit" && !cubeDrag.moved && cubePick.eye) {
         const rect = cubeCanvas.getBoundingClientRect();
         const sx = ((event.clientX - rect.left) / cubePick.width * 2 - 1)
           * cubePick.tanHalf * cubePick.width / cubePick.height;
         const sy = (1 - (event.clientY - rect.top) / cubePick.height * 2) * cubePick.tanHalf;
-        const cy = Math.cos(cubeView.yaw), syaw = Math.sin(cubeView.yaw);
-        const cp = Math.cos(cubeView.pitch), sp = Math.sin(cubeView.pitch);
-        const ray = [cy * sx - syaw * sp * sy - syaw * cp, cp * sy - sp, -syaw * sx - cy * sp * sy - cy * cp];
+        const [right, up, back] = cameraBasis();
+        const ray = right.map((value, i) => value * sx + up[i] * sy - back[i]);
         let best = null;
         for (const point of cubePick.points) {
           let near = 0, far = Infinity;
@@ -1983,22 +2732,39 @@ title: Small sculpture
         }
         if (best) { lab.goTo(best.plane); markOutline(best.plane); }
       }
+      cubePointers.delete(event.pointerId);
       cubeDrag = null;
-    });
-    cubeCanvas.addEventListener("pointercancel", (event) => {
-      if (cubeDrag?.pointerId === event.pointerId) cubeDrag = null;
-    });
+      cubeGesture = null;
+      // Continue from the remaining finger's current position, without a jump or tap.
+      if (cubePointers.size >= 2) startCubeGesture();
+      else if (cubePointers.size === 1) startCubeDrag([...cubePointers.values()][0], true);
+    }
+    cubeCanvas.addEventListener("pointerup", (event) => finishCubePointer(event, true));
+    cubeCanvas.addEventListener("pointercancel", (event) => finishCubePointer(event, false));
+    cubeCanvas.addEventListener("lostpointercapture", (event) => finishCubePointer(event, false));
     cubeCanvas.addEventListener("wheel", (event) => {
       event.preventDefault();
-      zoomCubes(event.deltaY > 0 ? 0.92 : 1.08);
+      const unit = event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? cubeCanvas.clientHeight : 1;
+      if (event.shiftKey) panCubes(-event.deltaX * unit, -event.deltaY * unit);
+      else zoomCubes(Math.exp(-Math.max(-500, Math.min(500, event.deltaY * unit)) * 0.002));
     }, { passive: false });
     if (window.ResizeObserver) {
       new ResizeObserver(() => {
-        if (stage.dataset.show === "cubes") drawCubes();
+        if (["cubes", "slice"].includes(stage.dataset.show)) drawCubes();
       }).observe(cubeCanvas);
     }
+    const redrawForDisplay = () => {
+      if (["cubes", "slice"].includes(stage.dataset.show)) requestAnimationFrame(drawCubes);
+    };
+    window.addEventListener("resize", redrawForDisplay);
+    function watchPixelDensity() {
+      const display = matchMedia(`(resolution: ${window.devicePixelRatio || 1}dppx)`);
+      display.addEventListener("change", () => { watchPixelDensity(); redrawForDisplay(); }, { once: true });
+    }
+    watchPixelDensity();
     document.getElementById("cubeSample").addEventListener("click", () => {
       showOpened(openText(STARTER));
+      documentURL();
       fitCubes();
       if (typeof lab.goTo === "function") lab.goTo(1);
       document.getElementById("cubesTab").click();
@@ -2028,7 +2794,7 @@ title: Small sculpture
       };
     }
     window.threeMd = {
-      set(src) { ready(); ed.value = String(src); render(); updateCursor(); return snapshot(); },
+      set(src) { ready(); finishSliceStroke(); if (draftPiece()) draftPiece().state.text = String(src); ed.value = String(src); render(); updateCursor(); return snapshot(); },
       // Side-effect-free: parses `src` and restores the live editor document after.
       validate(src) {
         ready();
@@ -2039,7 +2805,7 @@ title: Small sculpture
         return result;
       },
       get document() { ready(); return lab.document; },
-      get source() { return ed.value; },
+      get source() { return currentText(); },
     };
 
     if (window.customElements) customElements.whenDefined("three-md").then(init);

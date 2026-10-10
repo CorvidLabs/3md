@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "workflow_version": 2,
+  "workflow_origin_version": 2,
+  "id": "repair-blurry-cubes-and-slice-canvases-after-view-and-display-size-changes-while-retaining-the-webgl-context-and-camera",
+  "slug": "repair-blurry-cubes-and-slice-canvases-after-view-and-display-size-changes-while-retaining-the-webgl-context-and-camera",
+  "title": "Repair blurry Cubes and Slice canvases after view and display-size changes while retaining the WebGL context and camera parity",
+  "description": "Repair blurry Cubes and Slice canvases after view and display-size changes while retaining the WebGL context and camera parity",
+  "kind": "bug_fix",
+  "state": "archived",
+  "canonical_applied": true,
+  "base_commit": "dab4258541208f8bf6bb5a38f6200a5b348a858e",
+  "created_at": 1791656681,
+  "updated_at": 1791658049,
+  "affected_specs": [
+    "ThreeMDViewer"
+  ],
+  "affected_paths": [
+    "web/viewer.html",
+    "uitests/viewer.spec.mjs",
+    "specs/ThreeMDViewer",
+    "docs/evidence/viewer-resolution"
+  ],
+  "no_spec_change": false,
+  "no_spec_change_rationale": null,
+  "acceptance_criteria": [
+    "The shared 3D canvas drawing buffer follows the displayed Cubes or Slice-reference size and device pixel ratio within the existing 2048-edge/2x limits; switching from a small reference or phone viewport to a large stage remains sharp; resizing retains the same WebGL context, geometry and camera/source/selection; Chromium, WebKit and the actual in-app browser verify transitions and picking."
+  ],
+  "selected_artifacts": [
+    "context",
+    "testing",
+    "tasks"
+  ],
+  "dependencies": [],
+  "answers": {
+    "architecture_risk": "no",
+    "public_contract": "no"
+  }
+}

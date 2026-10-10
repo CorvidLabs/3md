@@ -86,6 +86,12 @@ internal struct SculptureViewport: View {
     @State private var orbitStart: SculptureCamera?
     @State private var pointerStart: CGPoint?
     @State private var showingCamera = false
+    @State private var panMode = false
+    @State private var rotationAxis: Int?
+    @State private var rotationStep = "15"
+    @State private var panStep = "0.25"
+    @State private var precisionMessage = ""
+    @State private var sphereStart: SculptureCamera?
     @State private var rendered: RenderedCanvas?
     @State private var strokeFrame: RenderedCanvas?
     @State private var strokeDocument: UUID?
@@ -119,8 +125,18 @@ internal struct SculptureViewport: View {
                 canvas(request: request, liveRequest: liveRequest, size: geometry.size)
                 if showsControls { cameraBar.padding(16) }
             }
+            .overlay(alignment: .topTrailing) {
+                if showsControls { axisSphere.padding(12) }
+            }
             .background(Color(red: 0.065, green: 0.085, blue: 0.10))
             .clipShape(RoundedRectangle(cornerRadius: 12))
+            .onAppear { workspace.camera.fitsVolume = true }
+            .onChange(of: workspace.camera.fitsVolume) { _, fits in
+                if !fits { workspace.camera.fitsVolume = true }
+            }
+            .onChange(of: workspace.paintsIn3D) { _, paints in
+                if paints { panMode = false }
+            }
             .task(id: rasterRequest) {
                 guard let request = rasterRequest else { return }
                 let worker = Task.detached(priority: .userInitiated) { RenderedCanvas.render(request) }
@@ -239,9 +255,44 @@ internal struct SculptureViewport: View {
                     Text("Choose Paint and click the slice grid, or open an example.").font(.callout)
                 }.foregroundStyle(.white.opacity(0.8)).padding(30)
             }
-            SculptureCanvasPointer(paint: isPainting) { phase, point in
-                handlePointer(phase, point: point, request: request, liveRequest: liveRequest, size: size)
-            }
+            SculptureCanvasPointer(
+                paint: isPainting,
+                event: { phase, point in
+                    handlePointer(phase, point: point, request: request, liveRequest: liveRequest, size: size)
+                },
+                camera: { input in
+                    switch input {
+                    case .pan(let phase, let point):
+                        handlePointer(
+                            phase,
+                            point: point,
+                            request: request,
+                            liveRequest: liveRequest,
+                            size: size,
+                            pan: true
+                        )
+                    case .panBy(let delta):
+                        finishStroke()
+                        workspace.camera.pan(
+                            horizontal: delta.width,
+                            vertical: delta.height,
+                            extent: Double(
+                                max(workspace.sculpture.width, workspace.sculpture.height, workspace.sculpture.depth)
+                            ),
+                            width: size.width,
+                            height: size.height,
+                            dimensions: SIMD3(
+                                workspace.sculpture.width,
+                                workspace.sculpture.height,
+                                workspace.sculpture.depth
+                            )
+                        )
+                    case .zoom(let factor):
+                        finishStroke()
+                        workspace.camera.magnify(factor)
+                    }
+                }
+            )
         }
         .accessibilityElement(children: .ignore)
         .accessibilityLabel("3D sculpture canvas")
@@ -251,7 +302,7 @@ internal struct SculptureViewport: View {
         .accessibilityHint(
             isPainting
                 ? "Draw adds a cube on a face or an empty slice cell. Erase removes the clicked cube. Each drag is one undo step."
-                : "Drag to orbit. Click a cell to select its slice. Amber marks the selected slice."
+                : "Drag to orbit freely. Choose Pan or Shift, middle or right drag to move. Scroll or pinch to zoom. Click a cube to select its slice."
         )
         .accessibilityIdentifier("editor.canvas")
     }
@@ -261,14 +312,17 @@ internal struct SculptureViewport: View {
         point: CGPoint,
         request: CanvasRenderRequest,
         liveRequest: LiveSceneRequest,
-        size: CGSize
+        size: CGSize,
+        pan: Bool = false
     ) {
+        let pans = pan || panMode
+        let paints = isPainting && !pans
         if phase == .down {
             focusCanvas()
             pointerStart = point
             orbitStart = workspace.camera
         }
-        if liveRequest.enabled, isPainting, phase != .up {
+        if liveRequest.enabled, paints, phase != .up {
             if liveStroke == nil {
                 guard let liveScene, liveScene.request == liveRequest,
                     liveController.installedSceneID == request.revision,
@@ -294,7 +348,7 @@ internal struct SculptureViewport: View {
             }
             return
         }
-        if isPainting, phase != .up {
+        if paints, phase != .up {
             guard rendered?.cubes?.isOverBudget != true else {
                 workspace.message = "Cube preview limit exceeded. Use Slice or ASCII to edit this volume."
                 return
@@ -317,14 +371,33 @@ internal struct SculptureViewport: View {
             } else {
                 workspace.message = "Click a cube face or an empty cell in the selected slice grid."
             }
-        } else if !isPainting, let start = pointerStart {
+        } else if !paints, let start = pointerStart {
             let dx = point.x - start.x, dy = point.y - start.y
             if phase == .drag, let orbitStart, abs(dx) + abs(dy) >= 3 {
-                let yaw = orbitStart.yaw + dx * 0.008
-                workspace.camera.yaw = atan2(sin(yaw), cos(yaw))
-                workspace.camera.pitch = max(-1.4, min(1.4, orbitStart.pitch + dy * 0.008))
+                var camera = orbitStart
+                if pans {
+                    camera.pan(
+                        horizontal: dx,
+                        vertical: dy,
+                        extent: Double(
+                            max(workspace.sculpture.width, workspace.sculpture.height, workspace.sculpture.depth)
+                        ),
+                        width: size.width,
+                        height: size.height,
+                        dimensions: SIMD3(
+                            workspace.sculpture.width,
+                            workspace.sculpture.height,
+                            workspace.sculpture.depth
+                        )
+                    )
+                } else if let rotationAxis {
+                    camera.rotate(axis: rotationAxis, radians: (abs(dx) >= abs(dy) ? dx : -dy) * 0.008)
+                } else {
+                    camera.orbit(horizontal: dx, vertical: dy)
+                }
+                workspace.camera = camera
                 workspace.viewpoint = .perspective
-            } else if phase == .up, abs(dx) + abs(dy) < 3 {
+            } else if phase == .up, !pans, abs(dx) + abs(dy) < 3 {
                 if liveRequest.enabled, liveScene?.request == liveRequest,
                     liveController.installedSceneID == request.revision,
                     liveController.currentCamera == request.camera,
@@ -341,7 +414,9 @@ internal struct SculptureViewport: View {
             finishStroke()
         }
     }
-    private var isPainting: Bool { showsControls && workspace.renderStyle == .cubes && workspace.paintsIn3D }
+    private var isPainting: Bool {
+        showsControls && workspace.renderStyle == .cubes && workspace.paintsIn3D && !panMode
+    }
 
     private func finishStroke() {
         workspace.endStroke()
@@ -373,6 +448,97 @@ internal struct SculptureViewport: View {
         }
     }
 
+    private func chooseAxis(_ axis: Int?) {
+        workspace.endStroke()
+        workspace.paintsIn3D = false
+        panMode = false
+        rotationAxis = axis
+    }
+
+    private func nudgeRotation(_ sign: Double) {
+        guard let axis = rotationAxis, let step = Double(rotationStep), step.isFinite, step > 0 else {
+            precisionMessage = "Choose an axis and enter a finite, positive step."
+            return
+        }
+        precisionMessage = ""
+        workspace.camera.rotate(axis: axis, radians: sign * step.truncatingRemainder(dividingBy: 360) * .pi / 180)
+        workspace.viewpoint = .perspective
+    }
+
+    private func nudgePan(_ x: Double, _ y: Double) {
+        guard let step = Double(panStep), step.isFinite, step > 0 else {
+            precisionMessage = "Enter a finite, positive pan step."
+            return
+        }
+        precisionMessage = ""
+        workspace.camera.panX -= x * step
+        workspace.camera.panY += y * step
+        workspace.camera = workspace.camera.normalized
+    }
+
+    private func ringPoint(axis: Int, angle: Double) -> CGPoint {
+        let other = (0...2).filter { $0 != axis }
+        var point = SIMD3<Double>(repeating: 0)
+        point[other[0]] = cos(angle)
+        point[other[1]] = sin(angle)
+        point.y *= -1
+        let basis = workspace.camera.basis
+        return CGPoint(x: 50 + 34 * (point * basis.right).sum(), y: 50 - 34 * (point * basis.up).sum())
+    }
+
+    private var axisSphere: some View {
+        VStack(spacing: 4) {
+            Canvas { context, _ in
+                let colors: [Color] = [.red, .green, .blue]
+                for axis in 0...2 {
+                    var path = Path()
+                    for index in 0...64 {
+                        let point = ringPoint(axis: axis, angle: Double(index) * .pi / 32)
+                        if index == 0 { path.move(to: point) } else { path.addLine(to: point) }
+                    }
+                    context.stroke(
+                        path,
+                        with: .color(colors[axis].opacity(rotationAxis == axis ? 1 : 0.65)),
+                        lineWidth: rotationAxis == axis ? 4 : 2
+                    )
+                }
+            }
+            .frame(width: 100, height: 100)
+            .accessibilityHidden(true)
+            .gesture(
+                DragGesture(minimumDistance: 0).onChanged { value in
+                    if sphereStart == nil {
+                        var nearest = (distance: Double.infinity, axis: 0)
+                        for axis in 0...2 {
+                            for index in 0...128 {
+                                let point = ringPoint(axis: axis, angle: Double(index) * .pi / 64)
+                                let distance = hypot(point.x - value.startLocation.x, point.y - value.startLocation.y)
+                                if distance < nearest.distance { nearest = (distance, axis) }
+                            }
+                        }
+                        chooseAxis(nearest.axis)
+                        sphereStart = workspace.camera
+                    }
+                    guard var camera = sphereStart, let rotationAxis else { return }
+                    let dx = value.translation.width, dy = value.translation.height
+                    camera.rotate(axis: rotationAxis, radians: (abs(dx) >= abs(dy) ? dx : -dy) * 0.008)
+                    workspace.camera = camera
+                    workspace.viewpoint = .perspective
+                }.onEnded { _ in sphereStart = nil }
+            )
+            HStack(spacing: 8) {
+                Button("Free") { chooseAxis(nil) }.accessibilityLabel("Free orbit")
+                ForEach(0...2, id: \.self) { axis in
+                    Button(["X", "Y", "Z"][axis]) { chooseAxis(axis) }
+                        .foregroundStyle(rotationAxis == axis ? Color.accentColor : Color.primary)
+                        .accessibilityLabel("Rotate around " + ["X", "Y", "Z"][axis])
+                        .accessibilityValue(rotationAxis == axis ? "Selected" : "Unselected")
+                }
+            }.buttonStyle(.borderless).font(.caption)
+        }
+        .padding(8).background(.regularMaterial, in: RoundedRectangle(cornerRadius: 10))
+    }
+
     private var cameraBar: some View {
         HStack(spacing: 12) {
             Menu {
@@ -390,7 +556,16 @@ internal struct SculptureViewport: View {
                 )
             }
             .accessibilityLabel("Camera view").accessibilityIdentifier("editor.camera.view")
-            Button("Fit", action: fit).accessibilityLabel("Fit sculpture in canvas").accessibilityIdentifier(
+            Button("Pan") {
+                panMode.toggle()
+                if panMode { workspace.paintsIn3D = false }
+            }
+            .foregroundStyle(panMode ? Color.accentColor : Color.primary)
+            .accessibilityValue(panMode ? "On" : "Off").accessibilityIdentifier("editor.camera.pan")
+            Button("Fit") {
+                workspace.setViewpoint(.perspective)
+                fit()
+            }.accessibilityLabel("Fit sculpture in canvas").accessibilityIdentifier(
                 "editor.camera.fit"
             )
             Divider().frame(height: 18)
@@ -407,12 +582,29 @@ internal struct SculptureViewport: View {
             .popover(isPresented: $showingCamera) {
                 VStack(alignment: .leading, spacing: 16) {
                     Text("Camera").font(.headline)
+                    HStack {
+                        Text("Degrees")
+                        TextField("Degrees", text: $rotationStep).frame(width: 70)
+                            .accessibilityLabel("Rotation step in degrees")
+                        Button("−") { nudgeRotation(-1) }.accessibilityLabel("Rotate negative step")
+                        Button("+") { nudgeRotation(1) }.accessibilityLabel("Rotate positive step")
+                    }.disabled(rotationAxis == nil)
+                    HStack {
+                        Text("Pan cells")
+                        TextField("Pan cells", text: $panStep).frame(width: 70)
+                            .accessibilityLabel("Pan step in cells")
+                        Button("←") { nudgePan(-1, 0) }.accessibilityLabel("Pan left")
+                        Button("↑") { nudgePan(0, -1) }.accessibilityLabel("Pan up")
+                        Button("↓") { nudgePan(0, 1) }.accessibilityLabel("Pan down")
+                        Button("→") { nudgePan(1, 0) }.accessibilityLabel("Pan right")
+                    }
+                    if !precisionMessage.isEmpty { Text(precisionMessage).font(.caption) }
                     LabeledContent("Orbit") {
                         Slider(value: $workspace.camera.yaw, in: (-Double.pi)...Double.pi)
                             .accessibilityLabel("Camera orbit").accessibilityIdentifier("editor.camera.orbit")
                     }
                     LabeledContent("Tilt") {
-                        Slider(value: $workspace.camera.pitch, in: -1.4...1.4)
+                        Slider(value: $workspace.camera.pitch, in: (-Double.pi)...Double.pi)
                             .accessibilityLabel("Camera tilt").accessibilityIdentifier("editor.camera.tilt")
                     }
                     if workspace.renderStyle == .cubes {

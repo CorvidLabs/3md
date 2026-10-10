@@ -26,12 +26,27 @@ spec: ThreeMDViewer.spec.md
 ## Gaps
 
 - The previous page contract shipped in PR 91.
-- Definition approval for the shared Edit and Preview panel is still open.
+- Leif approved the final scope and verified closure on 2026-10-10; supported scoped review and finalization archived the viewer and camera changes.
 - The hosted page shows this layout after the branch merges.
 
 ## Review Sign-offs
 
-- **Product**: previous page contract approved by user:0xLeif and shipped in PR 91. This layout change is not approved yet.
-- **QA**: agent:codex local browser and visual verification; human review pending
+- **Product**: previous page contract approved by user:0xLeif and shipped in PR 91. Leif approved the final layout and navigation scope on 2026-10-10 and authorized lifecycle closure after verification passes.
+- **QA**: agent:codex current browser/native checks and visual observations; verified viewer and camera records archived. Scope approval does not claim independent human diff review.
 - **Design**: n/a
-- **Dev**: pending
+- **Dev**: agent:codex implementation and scoped review; current automated verification passed.
+
+- [x] Preserve file, linked-entry, invalid, and empty drafts with caret and selected plane across navigation.
+- [x] Mark edits, filter files, navigate by keyboard, reveal phone documents, and avoid stale source queries.
+- [x] Search and pack current drafts, and preserve the collection after a failed open.
+
+- [x] Preserve the selected slice across delayed source refresh and sort file paths for consistent keyboard navigation.
+- [x] Compact small-phone spacing without reducing existing assertions.
+
+- [x] Match Sculpt and viewer full orbit through both poles with camera-only pan and proportional zoom.
+- [x] Add shared asymmetric native/browser projection and picking fixtures.
+- [x] Finish current cross-platform verification and lifecycle closure for the camera scope.
+- [x] Implement the approved matching axis gizmo and numeric precision controls.
+- [x] Add the approved browser Slice workspace and shared native/browser edit fixtures.
+- [x] Verify current macOS browser, Linux CI, native and pinned Trust checks.
+- [x] Complete current Slice and precise-axis lifecycle closure with actual agent:codex scoped review.

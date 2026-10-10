@@ -1,0 +1,50 @@
+{
+  "approvals": [
+    {
+      "gate": "definition",
+      "actor": "user:0xLeif",
+      "timestamp": 1791653000,
+      "digest": "c0b8195b500e020a9703bb7edd72d722e7f379c81edd26658c5b1473356c2d6f",
+      "note": "Leif directly replied continue after being presented the complete Slice and axis-control definitions and their approval prompt. This records definition and conditional verified-closure authorization, not a diff review or signature.",
+      "approved_scope": {
+        "schema_version": 1,
+        "change_id": "bring-sculpt-slice-editing-to-the-browser-with-a-visual-grid-drawing-tools-undo-and-live-3d-reference",
+        "title": "Bring Sculpt slice editing to the browser with a visual grid, drawing tools, undo and live 3D reference",
+        "description": "Bring Sculpt slice editing to the browser with a visual grid, drawing tools, undo and live 3D reference",
+        "kind": "feature",
+        "affected_specs": [
+          "ThreeMDViewer"
+        ],
+        "affected_paths": [
+          "apps/sculpt/Tests/RookAppTests/SculptureWorkspaceTests.swift",
+          "docs/evidence/viewer-slice",
+          "hi/tools.md",
+          "uitests/viewer.spec.mjs",
+          "web/viewer.html"
+        ],
+        "no_spec_change": false,
+        "no_spec_change_rationale": null,
+        "acceptance_criteria": [
+          "Add a Sculpt-style Slice workspace with thumbnails, an editable grid, Draw Erase Fill, the native glyph palette, square brush sizes 1 3 5, gap-free strokes, one undo step per drag, redo, keyboard cell controls, previous-slice overlay, grid zoom and live 3D reference; preserve exact source outside edited grid cells and existing drafts downloads and camera behavior; verify shared native/browser edit fixtures and Chromium WebKit desktop phone interaction checks."
+        ],
+        "dependencies": [],
+        "supersedes": [],
+        "answers": {
+          "architecture_risk": "yes",
+          "public_contract": "yes"
+        }
+      },
+      "approved_delta_digests": {
+        "ThreeMDViewer": "5da4b8303d240d01a794275be3f3e806b949aef6525dccdd19e2c4cf9b9cca9e"
+      }
+    },
+    {
+      "gate": "finalization",
+      "actor": "specsync:finalization",
+      "timestamp": 1791655783,
+      "digest": "81add2ee28a6a48eb29571e64c50b2f5a19e4e2c9f085554f3a00a71a731a620",
+      "note": "Same-PR finalization closing digest"
+    }
+  ],
+  "reopenings": []
+}

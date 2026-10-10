@@ -1,0 +1,49 @@
+{
+  "approvals": [
+    {
+      "gate": "definition",
+      "actor": "agent:codex",
+      "timestamp": 1791656803,
+      "digest": "2434816b883b109a6be3b8d0f9f72837258bc21346df7a0d4357d9df27fe8dd0",
+      "note": "Codex records the narrow corrective scope under Leif’s standing direct authorization to keep improving browser/Sculpt parity and fix PR 93, prompted by the current blur report. This applies existing repair authority; it is not a claim of a new human definition review, Leif diff review, independent review or signature.",
+      "approved_scope": {
+        "schema_version": 1,
+        "change_id": "repair-blurry-cubes-and-slice-canvases-after-view-and-display-size-changes-while-retaining-the-webgl-context-and-camera",
+        "title": "Repair blurry Cubes and Slice canvases after view and display-size changes while retaining the WebGL context and camera parity",
+        "description": "Repair blurry Cubes and Slice canvases after view and display-size changes while retaining the WebGL context and camera parity",
+        "kind": "bug_fix",
+        "affected_specs": [
+          "ThreeMDViewer"
+        ],
+        "affected_paths": [
+          "docs/evidence/viewer-resolution",
+          "specs/ThreeMDViewer",
+          "uitests/viewer.spec.mjs",
+          "web/viewer.html"
+        ],
+        "no_spec_change": false,
+        "no_spec_change_rationale": null,
+        "acceptance_criteria": [
+          "The shared 3D canvas drawing buffer follows the displayed Cubes or Slice-reference size and device pixel ratio within the existing 2048-edge/2x limits; switching from a small reference or phone viewport to a large stage remains sharp; resizing retains the same WebGL context, geometry and camera/source/selection; Chromium, WebKit and the actual in-app browser verify transitions and picking."
+        ],
+        "dependencies": [],
+        "supersedes": [],
+        "answers": {
+          "architecture_risk": "no",
+          "public_contract": "no"
+        }
+      },
+      "approved_delta_digests": {
+        "ThreeMDViewer": "77b5cd3341a46906bd1c09ba7e2e6c3bff2aa8f9c8e30c453b632c680c52fed9"
+      }
+    },
+    {
+      "gate": "finalization",
+      "actor": "specsync:finalization",
+      "timestamp": 1791657999,
+      "digest": "35f18f24b91066a63ba3add8c3a8035b64813c30cdce7b5322583a08ad75eb3a",
+      "note": "Same-PR finalization closing digest"
+    }
+  ],
+  "reopenings": []
+}

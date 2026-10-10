@@ -7,7 +7,7 @@ spec: ThreeMDViewer.spec.md
 - The page is its own module. `ThreeMD` stays the library. `ThreeMDElement` stays the text renderer. `ThreeMDCLI` stays the command.
 - GitHub hosts are compared with `URL.hostname`. A substring match is not enough.
 - The page fetches. The library stays free of filesystem and network I/O.
-- Edit, Preview, and Cubes share one panel. Files stay on the left. Cubes is the default. Below 900px, Files and the document take turns. Choosing Preview calls `render` so the element measures the panel. The element still receives source while Edit is showing.
+- Edit, Preview, Slice, and Cubes share one panel. Files stay on the left. Cubes is the default. Below 900px, Files and the document take turns. Choosing Preview calls `render` so the element measures the panel. The element still receives source while Edit is showing.
 
 ## Files to Read First
 
@@ -19,8 +19,8 @@ spec: ThreeMDViewer.spec.md
 
 ## Current Status
 
-- PR 91 is on main. PR 92 shares Edit, Preview, and Cubes in one panel and adds Sculpt cube-stage parity plus the continuing UI and UX improvements.
-- Definition approval for this layout change is not recorded yet.
+- PR 91 is on main. PR 92 shares Edit, Preview, Slice, and Cubes in one panel and adds Sculpt cube-stage parity plus the continuing UI and UX improvements.
+- Leif approved the final viewer scope on 2026-10-10 and authorized acceptance and archiving after successful verification. Current verification passed and supported scoped review/finalization archived both viewer and camera records for PR 93; Leif retains merge authority.
 
 ## Notes
 
@@ -38,5 +38,27 @@ spec: ThreeMDViewer.spec.md
 - Sculpt was run locally and its Character orb compared in both live stages. Native and web screenshots are in `docs/evidence/viewer-sculpt-parity/`. This is agent visual verification, not Leif’s review or definition approval.
 
 - Leif directly requested continued UI and UX work on 2026-10-09. This covers the compact workspace and controls in the existing page scope; it does not record definition approval, human diff review, or a merge.
-- The canvas occupies the space above the camera strip. Framing and picking use its actual client dimensions; changing view or viewport still does not resize an established WebGL bitmap.
+- The canvas occupies the space above the camera strip. Framing and picking use its actual client dimensions; changing view or viewport updates the drawable to the displayed pane and capped device pixel ratio while retaining the established WebGL context and geometry.
 - Export and conversion actions use a native disclosure with natural button focus, Escape dismissal, and outside-click closure. The source download shortcut preserves editor focus.
+
+- PR 92 has merged. Leif requested a new fix PR for file navigation. Draft state belongs to the page and survives file and composition-entry switches within the current collection. It is not browser storage or a write to the source files. That follow-up was kept in draft until Leif's explicit 2026-10-10 scope approval.
+
+- File activation focuses the document before restoring its caret. Chromium clears a restored selection when the editor remains blurred; focus-first restoration passes in both engines. Packing uses the current draft of the active document for each opened file, without rewriting composition profiles. The line index is reused until a draft or the collection changes.
+
+- Linux WebKit exposed a delayed-render slice reset, native directory enumeration differences, and insufficient drawing space on a 320 by 740 phone. Source refresh now restores the selected slice, the file list sorts paths for consistent keyboard navigation, and narrow-screen padding leaves more stage space. Current macOS viewer and Linux UI runs passed; existing phone and focus assertions remain, with an added wait across the editor debounce.
+
+## Current camera parity
+
+Leif explicitly approved full native/browser camera parity and verified closure on 2026-10-10. Both volume canvases now use full yaw/pitch turns, continuous pole bases, session-only screen pan, zoom 0.5...2 and the matched default Fit pose. Native interactive cameras use complete-volume framing while default utility cameras retain historical preview scale. Shared projection/picking fixtures and current screenshots are in `docs/evidence/viewer-camera/`. Leif subsequently approved the X/Y/Z sphere, precise steps and browser Slice definition together; implementation and current verification are recorded in `docs/evidence/viewer-slice/`.
+
+## Slice and precise camera parity
+
+Slice uses the native character palette `#@*+ox:=-`, Draw/Erase square brushes 1/3/5, integer gap-free strokes and four-neighbor fill confined to the selected plane. Exact raw source offsets preserve all untouched bytes, including CRLF and prose. Eligibility requires complete, common rectangular grids, at most 64 by 64 cells, 256 planes, 4000 occupied cells and 1.5 MiB source. Empty grids can be edited. Rejected over-budget strokes restore the entire transaction.
+
+History is shared with source typing and attached to each draft state, including linked entries. It retains at most 100 snapshots per draft and 8 MiB across the current collection; no-op strokes add no entry. Pointer up, cancellation, lost capture and navigation finish the accepted transaction. Thumbnails, one-based coordinates, keyboard arrows/Space, explicit cell Apply, previous-slice ghosts and Fit/2x/4x/8x/16x grid zoom use the same state. The live reference reparents the existing WebGL canvas rather than allocating another context; 2D editing remains available without WebGL. Phone layouts scroll inside Slice with full-size touch targets.
+
+The volume camera shows colored X/Y/Z rings and Free/X/Y/Z constraints. A normalized quaternion composes document-axis rotation with continuous free orbit. Numerical rotation defaults to 15 degrees and pan to 0.25 cells, accepting only finite positive steps. Fit restores the default orientation and zero pan. Shared independent matrix-reference cases cover three-axis projection and picking; shared edit cases run through actual Sculpt workspaces and browser pointer gestures.
+
+## Shared 3D drawable resolution repair
+
+The previous frozen bitmap could initialize at 368x322 in a small view and stretch to 1099x911 after expansion. Drawable dimensions now follow the visible pane at up to 2x pixel density with the existing proportional 2048-edge cap. Only changed dimensions are assigned; context, GPU resources, pose and source remain installed. Chromium/WebKit density 1/2 regressions exercise phone, reference, full stage and capped large sizes.

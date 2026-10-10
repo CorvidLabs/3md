@@ -1,0 +1,12 @@
+{
+  "schema_version": 2,
+  "change_id": "add-matching-x-y-z-axis-rotation-gizmos-and-precise-camera-steps-to-sculpt-and-the-viewer",
+  "implementation_commit": "60055f7806a4d46964b766672784be45713e3c3a",
+  "implementation_tree": "9970ef31ab167b4c3429cc3aa17af3651c830918",
+  "contract_digest": "4b6d4eb372c26f296d08a35c4242b772ba7f537d690b3ac81723034860824618",
+  "workspace_digest": "fde013fc78a6110e0c0b88de16f5f6e7522e6561a06c0a5c5fd273d884ed5278",
+  "closing_digest": "97d2b14dc39e8ae4fc624f05df89f8af6d26f2dda73159226b4dcd2c0639793d",
+  "review_digest": "cf186ff11b71dbf0169c2d3aeaa61edefc6e214954bf82620c6ad53d5759d410",
+  "finalization_digest": "1225a89a0f4a47068497828dd6ef78edf4902c37edde6c9670427d91af38c098",
+  "timestamp": 1791655945
+}

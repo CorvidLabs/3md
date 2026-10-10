@@ -1,6 +1,6 @@
 ---
 module: RookApp
-version: 21
+version: 23
 status: active
 files:
   - Sources/RookApp/SculpturePortableInterchange.swift
@@ -111,6 +111,14 @@ The slice list creates rows lazily while preserving stable slice identifiers. It
 15. Gallery construction runs outside the main actor so the first 256-volume scene construction does not block search controls. The command palette offers New 256-cubed volume through the same dirty-replacement path as the File menu.
 16. Reopen uses the shared codec's private preparse limit of 100,000 physical lines as well as the 20 MiB bound. A tiny-line-heavy rejected file leaves the open sculpture unchanged and does not reach ThreeMD's per-line parsing allocations.
 
+### REQ-RookApp-088
+
+The volume canvas SHALL also show colored X/Y/Z sphere rings and accessible Free/X/Y/Z constraints. Selected-axis dragging and finite positive degree steps (default 15) SHALL rotate only that document axis. Finite positive pan steps (default 0.25 cells) SHALL move in screen space; invalid step input SHALL leave the pose unchanged. The volume canvas SHALL offer Pan in addition to Orbit. Shift-left, middle and right dragging SHALL pan without painting or selecting a slice, including when Paint is active. Scroll and trackpad magnification SHALL zoom proportionally within 0.5...2. The local pointer bridge SHALL retain the starting drag mode through mouse-up and preserve canvas keyboard focus. Fit SHALL restore the default orbit pose, zoom 1 and zero pan. Ordinary Paint and grouped stroke Undo SHALL remain available.
+
+Acceptance Criteria:
+
+- Native pointer regressions prove modified dragging emits only camera events and preserves ordinary mouse delivery. Native picking and painting continue to share the matched camera. Returning to Paint releases the Pan tool.
+
 ## Behavioral Examples
 
 - Closing the main window and choosing Show Sculpt.3md orders that same window forward.
@@ -136,6 +144,8 @@ COMPOSITION-39 makes insertion discoverable. While a composition or world sheet 
 
 RookCore, RookSculpture, RookRendering, SwiftUI, AppKit, and UniformTypeIdentifiers. RookSculpture carries the immutable ThreeMD package dependency; the native portable adapter also imports its types directly. No bundled font or image.
 ## Change Log
+
+- 2026-10-10: Full-turn volume camera, screen-space pan and matched browser/native projection. Verification and lifecycle closure are recorded separately.
 
 - Version 12: explicit portable file actions and retained upstream shared-edit snapshots for EXPORT-35. Actual native observations and new test receipts are recorded separately.
 
@@ -165,3 +175,7 @@ RookCore, RookSculpture, RookRendering, SwiftUI, AppKit, and UniformTypeIdentifi
 | 2026-10-06 | make-3md-file-and-folder-insertion-discoverable-and-reliable-for-people-and-explicit-file-agent-tools: Make 3md file and folder insertion discoverable and reliable for people and explicit-file agent tools |
 | 2026-10-07 | open-and-resolve-linked-3md-compositions-from-a-chosen-project-folder-and-import-self-contained-bundles: Open and resolve linked 3md compositions from a chosen project folder and import self-contained bundles |
 | 2026-10-07 | show-every-example-in-one-gallery-and-add-a-math-generated-size-ladder-from-16-to-10-240-cells: Show every example in one gallery and add a math-generated size ladder from 16 to 10,240 cells |
+
+## Document-axis camera controls
+
+The interactive camera composes a normalized session quaternion with its continuous yaw/pitch basis. Positive axis steps follow document X, row-down Y and plane Z. Shared matrix-reference fixtures cover X, Y and Z rotation, mixed sequences, negative and inverse steps and full turns. Scalar ASCII, CPU voxel projection and the native live camera consume this same basis. Camera changes reuse installed geometry and do not edit document cells or history. Legacy default export framing remains unchanged.

@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "workflow_version": 2,
+  "workflow_origin_version": 2,
+  "id": "bring-sculpt-slice-editing-to-the-browser-with-a-visual-grid-drawing-tools-undo-and-live-3d-reference",
+  "slug": "bring-sculpt-slice-editing-to-the-browser-with-a-visual-grid-drawing-tools-undo-and-live-3d-reference",
+  "title": "Bring Sculpt slice editing to the browser with a visual grid, drawing tools, undo and live 3D reference",
+  "description": "Bring Sculpt slice editing to the browser with a visual grid, drawing tools, undo and live 3D reference",
+  "kind": "feature",
+  "state": "archived",
+  "canonical_applied": true,
+  "base_commit": "fa61988c163583e5e03cbe00f301b036f37dd7b2",
+  "created_at": 1791652000,
+  "updated_at": 1791655837,
+  "affected_specs": [
+    "ThreeMDViewer"
+  ],
+  "affected_paths": [
+    "web/viewer.html",
+    "uitests/viewer.spec.mjs",
+    "apps/sculpt/Tests/RookAppTests/SculptureWorkspaceTests.swift",
+    "docs/evidence/viewer-slice",
+    "hi/tools.md"
+  ],
+  "no_spec_change": false,
+  "no_spec_change_rationale": null,
+  "acceptance_criteria": [
+    "Add a Sculpt-style Slice workspace with thumbnails, an editable grid, Draw Erase Fill, the native glyph palette, square brush sizes 1 3 5, gap-free strokes, one undo step per drag, redo, keyboard cell controls, previous-slice overlay, grid zoom and live 3D reference; preserve exact source outside edited grid cells and existing drafts downloads and camera behavior; verify shared native/browser edit fixtures and Chromium WebKit desktop phone interaction checks."
+  ],
+  "selected_artifacts": [
+    "context",
+    "requirements",
+    "plan",
+    "tasks",
+    "testing",
+    "docs",
+    "design",
+    "research"
+  ],
+  "dependencies": [],
+  "answers": {
+    "architecture_risk": "yes",
+    "public_contract": "yes"
+  }
+}

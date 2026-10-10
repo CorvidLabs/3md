@@ -1,0 +1,12 @@
+{
+  "schema_version": 2,
+  "change_id": "put-edit-and-preview-in-the-same-viewer-panel-and-toggle-them-like-github-files-stay-on-the-left-edit-shows-first-below",
+  "implementation_commit": "47e18d32375406f98df343f4a580ea3e98f6d32d",
+  "implementation_tree": "39171f2e2bc521fae5c237ce54c6aad144404224",
+  "contract_digest": "3b63dbbb2bbe4105992cc11edf9c9e5af29cf072884081c8329b2389d8116e6d",
+  "workspace_digest": "94bd7478dfb8735a51286b1c04445028dc910df8754b57775bc06773797a4420",
+  "closing_digest": "c9fe3ea1761918c78195b8c9180169f787156e7d6b437505e9dd64d0152f4406",
+  "review_digest": "a626e9583b81095da2fd19af1229d93a01c698eeea3d684d6977f0a52aadca70",
+  "finalization_digest": "ee618ca48f72cd856bd14188ec0b7efd4dcd8588860e937f3bb399e30c2c1491",
+  "timestamp": 1791651086
+}

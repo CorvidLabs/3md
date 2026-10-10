@@ -203,3 +203,52 @@ import Testing
     #expect(!workspace.canUndo)
     #expect(workspace.error != nil)
 }
+
+private struct SliceEditFixtures: Decodable {
+    let cases: [SliceEditCase]
+}
+private struct SliceEditCase: Decodable {
+    let name: String
+    let initial: [[String]]
+    let expected: [[String]]
+    let tool: String
+    let glyph: String
+    let size: Int
+    let z: Int
+    let path: [[Int]]
+}
+
+@MainActor @Test func browserSliceFixturesMatchNativeWorkspaceToolsAndWholeStrokeHistory() throws {
+    var root = URL(fileURLWithPath: #filePath)
+    for _ in 0..<5 { root.deleteLastPathComponent() }
+    let fixtures = try JSONDecoder().decode(
+        SliceEditFixtures.self,
+        from: Data(contentsOf: root.appendingPathComponent("docs/evidence/viewer-slice/slice-parity.json"))
+    )
+    for item in fixtures.cases {
+        let original = try Sculpture(
+            title: item.name,
+            width: item.initial[0][0].utf8.count,
+            height: item.initial[0].count,
+            layers: item.initial.map { Array($0.joined().utf8) }
+        )
+        let workspace = SculptureWorkspace()
+        workspace.replace(with: original, opened: true)
+        workspace.tool = item.tool == "erase" ? .erase : item.tool == "fill" ? .fill : .draw
+        workspace.brush = item.glyph.utf8.first ?? 35
+        workspace.brushSize = item.size
+        for (index, point) in item.path.enumerated() {
+            workspace.paint(SculptureCell(x: point[0], y: point[1], z: item.z), start: index == 0)
+        }
+        workspace.endStroke()
+        #expect(workspace.sculpture.layers == item.expected.map { Array($0.joined().utf8) })
+        #expect(workspace.canUndo == (item.initial != item.expected))
+        if workspace.canUndo {
+            workspace.undo()
+            #expect(workspace.sculpture == original)
+            #expect(!workspace.canUndo)
+            workspace.redo()
+            #expect(workspace.sculpture.layers == item.expected.map { Array($0.joined().utf8) })
+        }
+    }
+}

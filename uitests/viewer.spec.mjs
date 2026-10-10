@@ -1,4 +1,22 @@
 import { test, expect } from "@playwright/test";
+import { mkdtemp, mkdir, writeFile, rm, readFile } from "node:fs/promises";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
+
+const draftDocument = (title, body = "Original marker") => `---\n3md: 1.0\naxis: layer\ntitle: ${title}\n---\n@plane z=0 label="First"\n${body}\n@plane z=1 label="Second"\nSecond marker\n`;
+async function openCollection(page, files) {
+  const directory = await mkdtemp(join(tmpdir(), "3md-viewer-drafts-"));
+  try {
+    for (const [path, text] of Object.entries(files)) {
+      const target = join(directory, path);
+      await mkdir(join(target, ".."), { recursive: true });
+      await writeFile(target, text);
+    }
+    await page.locator("#folderInput").setInputFiles(directory);
+    await expect(page.locator("#fileList button")).toHaveCount(Object.keys(files).length);
+  } finally { await rm(directory, { recursive: true, force: true }); }
+}
+const openedFile = (page, name) => page.locator("#fileList button").filter({ has: page.locator(".file-name", { hasText: name }) });
 
 // The official viewer/editor (web/viewer.html): live-edit any 3md and see it
 // render in the <three-md> component, with shareable links.
@@ -767,11 +785,181 @@ test.describe("viewer & editor (viewer.html)", () => {
     await page.locator("#cubeCanvas").press("Home");
     expect(await matrix()).toEqual(initial);
     for (let i = 0; i < 12; i++) await page.locator("#cubeCanvas").press("+");
-    await expect(page.locator("#cubeZoom")).toHaveText("320%");
+    await expect(page.locator("#cubeZoom")).toHaveText("200%");
     await expect(page.locator("#cubeZoomIn")).toBeDisabled();
     await page.getByRole("button", { name: "Fit", exact: true }).click();
     expect(await matrix()).toEqual(initial);
     expect(await page.evaluate(() => window.threeMd.source)).toBe(source);
+  });
+
+  test("full camera turns cross both poles continuously and retain geometry", async ({ page }) => {
+    await page.goto("/viewer.html");
+    await viewerReady(page);
+    await page.waitForFunction(() => document.getElementById("cubeCanvas").dataset.renderer === "webgl2");
+    await page.evaluate(() => {
+      const canvas = document.getElementById("cubeCanvas");
+      const gl = canvas.__cubeGl;
+      canvas.__uploads = 0;
+      const upload = gl.bufferSubData.bind(gl);
+      gl.bufferSubData = (...args) => { canvas.__uploads++; return upload(...args); };
+    });
+    const source = await page.evaluate(() => window.threeMd.source);
+    // Pointer delivery uses the real event handler, including capture cancellation.
+    const drag = async (dx, dy) => page.dispatchEvent("#cubeCanvas", "pointerdown", {
+      pointerId: 91, pointerType: "mouse", button: 0, clientX: 150, clientY: 150,
+    }).then(() => page.dispatchEvent("#cubeCanvas", "pointermove", {
+      pointerId: 91, pointerType: "mouse", buttons: 1, clientX: 150 + dx, clientY: 150 + dy,
+    })).then(() => page.dispatchEvent("#cubeCanvas", "pointerup", {
+      pointerId: 91, pointerType: "mouse", button: 0, clientX: 150 + dx, clientY: 150 + dy,
+    }));
+    const matrix = () => page.evaluate(() => {
+      const gl = document.getElementById("cubeCanvas").__cubeGl;
+      const matrix = gl.getUniform(gl.getParameter(gl.CURRENT_PROGRAM),
+        gl.getUniformLocation(gl.getParameter(gl.CURRENT_PROGRAM), "uMvp"));
+      return [0, 1, 3].flatMap(row => {
+        const vector = [matrix[row], matrix[row + 4], matrix[row + 8]];
+        const length = Math.hypot(...vector);
+        return vector.map(value => value / length);
+      });
+    });
+    const initial = await matrix();
+    await drag(0, 2 * Math.PI / 0.008);
+    const full = await matrix();
+    full.forEach((value, i) => expect(value).toBeCloseTo(initial[i], 4));
+    await drag(2 * Math.PI / 0.008, 0);
+    const both = await matrix();
+    both.forEach((value, i) => expect(value).toBeCloseTo(initial[i], 4));
+    await drag(0, (Math.PI / 2 - 0.35 - 0.0001) / 0.008);
+    const before = await matrix();
+    await drag(0, 0.0002 / 0.008);
+    const after = await matrix();
+    expect(after.every(Number.isFinite)).toBe(true);
+    expect(Math.max(...after.map((v, i) => Math.abs(v - before[i])))).toBeLessThan(0.01);
+    await page.locator("#cubeCanvas").press("Home");
+    expect(await page.evaluate(() => document.getElementById("cubeCanvas").__uploads)).toBe(0);
+    expect(await page.evaluate(() => window.threeMd.source)).toBe(source);
+  });
+
+  test("pan tools and modified dragging move only the camera and Fit recenters", async ({ page }) => {
+    await page.goto("/viewer.html");
+    await viewerReady(page);
+    await page.waitForFunction(() => document.getElementById("cubeCanvas").dataset.renderer === "webgl2");
+    const source = await page.evaluate(() => window.threeMd.source);
+    await page.locator("#outline button").nth(1).click();
+    const state = () => page.evaluate(() => ({ ...document.getElementById("cubeCanvas").dataset,
+      slice: document.getElementById("lab").currentIndex }));
+    const initial = await state();
+    for (const input of [{ button: 0, shiftKey: true }, { button: 1 }, { button: 2 }]) {
+      await page.dispatchEvent("#cubeCanvas", "pointerdown", { pointerId: 92, pointerType: "mouse", clientX: 100, clientY: 100, ...input });
+      await page.dispatchEvent("#cubeCanvas", "pointermove", { pointerId: 92, pointerType: "mouse", clientX: 135, clientY: 125 });
+      await page.dispatchEvent("#cubeCanvas", "pointerup", { pointerId: 92, pointerType: "mouse", clientX: 135, clientY: 125, ...input });
+      const current = await state();
+      expect(current.yaw).toBe(initial.yaw);
+      expect(current.pitch).toBe(initial.pitch);
+      expect(current.slice).toBe(initial.slice);
+      expect(Number(current.panX)).toBeLessThan(0);
+      expect(Number(current.panY)).toBeGreaterThan(0);
+      await page.locator("#cubeCanvas").press("Home");
+    }
+    await page.getByRole("button", { name: "Pan", exact: true }).click();
+    await expect(page.locator("#cubeCanvas")).toHaveAttribute("data-tool", "pan");
+    await page.locator("#cubeCanvas").press("Shift+ArrowRight");
+    expect(Number((await state()).panX)).toBeLessThan(0);
+    await page.locator("#cubeCanvas").press("Home");
+    expect(Number((await state()).panX)).toBe(0);
+    expect(Number((await state()).panY)).toBe(0);
+    expect(await page.evaluate(() => window.threeMd.source)).toBe(source);
+  });
+
+  test("two fingers pan and pinch and a cancelled gesture cannot select a slice", async ({ page }) => {
+    await page.goto("/viewer.html");
+    await viewerReady(page);
+    await page.waitForFunction(() => document.getElementById("cubeCanvas").dataset.renderer === "webgl2");
+    const state = () => page.evaluate(() => ({ ...document.getElementById("cubeCanvas").dataset,
+      slice: document.getElementById("lab").currentIndex, zoom: document.getElementById("cubeZoom").textContent }));
+    const initial = await state();
+    for (const [pointerId, clientX] of [[101, 100], [102, 200]]) {
+      await page.dispatchEvent("#cubeCanvas", "pointerdown", { pointerId, clientX, clientY: 150, pointerType: "touch", button: 0 });
+    }
+    await page.dispatchEvent("#cubeCanvas", "pointermove", { pointerId: 102, clientX: 250, clientY: 180, pointerType: "touch" });
+    const moved = await state();
+    expect(moved.zoom).not.toBe(initial.zoom);
+    expect(moved.panX).not.toBe(initial.panX);
+    expect(moved.yaw).toBe(initial.yaw);
+    expect(moved.pitch).toBe(initial.pitch);
+    await page.dispatchEvent("#cubeCanvas", "pointercancel", { pointerId: 102, pointerType: "touch" });
+    await page.dispatchEvent("#cubeCanvas", "pointerup", { pointerId: 101, clientX: 100, clientY: 150, pointerType: "touch" });
+    expect((await state()).slice).toBe(initial.slice);
+    await page.locator("#cubeCanvas").press("Home");
+    await expect(page.locator("#cubeZoom")).toHaveText("100%");
+  });
+
+  test("browser camera projects and picks the shared native parity fixture", async ({ page }) => {
+    const { readFile } = await import("node:fs/promises");
+    const fixture = JSON.parse(await readFile(new URL("../docs/evidence/viewer-camera/camera-parity.json", import.meta.url), "utf8"));
+    const [w, h, depth] = fixture.dimensions;
+    const planes = Array.from({ length: depth }, (_, z) => {
+      const rows = Array.from({ length: h }, (_, y) => Array.from({ length: w }, (_, x) =>
+        fixture.cells.find(cell => cell.x === x && cell.y === y && cell.z === z)?.glyph || ".").join(""));
+      return `@plane z=${z}\n\`\`\`\n${rows.join("\n")}\n\`\`\`\n`;
+    }).join("\n");
+    await page.goto("/viewer.html");
+    await viewerReady(page);
+    await showEditor(page);
+    await page.fill("#editor", `---\n3md: 1.0\naxis: layer\ntitle: Camera parity\n---\n${planes}`);
+    await page.waitForTimeout(220);
+    await page.locator("#cubesTab").click();
+    await page.evaluate(() => {
+      const canvas = document.getElementById("cubeCanvas");
+      canvas.style.width = "400px";
+      canvas.style.height = "320px";
+      canvas.style.flex = "none";
+      window.dispatchEvent(new Event("resize"));
+    });
+    await page.waitForFunction(() => document.getElementById("cubeCanvas").dataset.cubes === "3");
+    const drag = async (dx, dy) => {
+      await page.dispatchEvent("#cubeCanvas", "pointerdown", { pointerId: 93, pointerType: "mouse", button: 0, clientX: 100, clientY: 100 });
+      await page.dispatchEvent("#cubeCanvas", "pointermove", { pointerId: 93, pointerType: "mouse", clientX: 100 + dx, clientY: 100 + dy });
+      await page.dispatchEvent("#cubeCanvas", "pointerup", { pointerId: 93, pointerType: "mouse", button: 0, clientX: 100 + dx, clientY: 100 + dy });
+    };
+    for (const pose of fixture.cases) {
+      await page.locator("#cubeFit").click();
+      await page.locator("#cubeOrbit").click();
+      await drag((0.6 + pose.yaw) / 0.008, (pose.pitch - 0.35) / 0.008);
+      await page.dispatchEvent("#cubeCanvas", "wheel", { deltaY: -Math.log(pose.zoom) / 0.002 });
+      if (pose.rotations) {
+        await page.locator("#cameraPrecision summary").click();
+        for (const [axis, degrees] of pose.rotations) {
+          await page.locator(`#axisButtons [data-axis="${axis}"]`).click();
+          await page.locator("#rotationStep").fill(String(Math.abs(degrees)));
+          await page.locator(degrees < 0 ? "#axisMinus" : "#axisPlus").click();
+        }
+        await page.locator('#axisButtons [data-axis="free"]').click();
+        await page.locator("#cameraPrecision summary").click();
+      }
+      await page.locator("#cubePan").click();
+      const pixelsPerCell = pose.scale;
+      await drag(-pose.panX * pixelsPerCell, pose.panY * pixelsPerCell);
+      const projected = await page.evaluate(cells => {
+        const canvas = document.getElementById("cubeCanvas");
+        const gl = canvas.__cubeGl;
+        const program = gl.getParameter(gl.CURRENT_PROGRAM);
+        const m = gl.getUniform(program, gl.getUniformLocation(program, "uMvp"));
+        return cells.map(cell => {
+          const point = [cell.x - 4, 3 - cell.y, cell.z - 2, 1];
+          const clip = [0, 1, 2, 3].map(row => point.reduce((sum, value, column) => sum + value * m[column * 4 + row], 0));
+          return [(clip[0] / clip[3] + 1) * 200, (1 - clip[1] / clip[3]) * 160];
+        });
+      }, fixture.cells);
+      for (const [i, coordinates] of projected.entries()) {
+        coordinates.forEach((value, axis) => expect(value, pose.name).toBeCloseTo(pose.projected[i][axis], 2));
+      }
+      await page.locator("#cubeOrbit").click();
+      for (const [i, coordinates] of projected.entries()) {
+        await page.locator("#cubeCanvas").click({ position: { x: coordinates[0], y: coordinates[1] } });
+        expect(await page.evaluate(() => document.getElementById("lab").currentIndex), pose.name).toBe(fixture.cells[i].z);
+      }
+    }
   });
 
   test("phone layout leaves room for cubes and keeps controls outside the drawing", async ({ page }) => {
@@ -909,4 +1097,408 @@ test.describe("viewer & editor (viewer.html)", () => {
     expect(await page.evaluate(() => document.getElementById("lab").document.title)).toBe("Small sculpture");
   });
 
+  test("file switches preserve edited, invalid, and empty drafts with caret and slice", async ({ page }) => {
+    await page.goto("/viewer.html");
+    await viewerReady(page);
+    await openCollection(page, { "a.3md": draftDocument("A"), "nested/b.3md": draftDocument("B") });
+    await openedFile(page, "a.3md").click();
+    await showEditor(page);
+    const original = await page.locator("#editor").inputValue();
+    const changed = draftDocument("A edited", "Unique draft text");
+    await page.fill("#editor", changed);
+    await page.evaluate(() => {
+      document.getElementById("editor").setSelectionRange(20, 25);
+      document.getElementById("lab").goTo(1);
+    });
+    // Cross the 160ms editor debounce before navigation: refreshing source must
+    // retain the chosen slice, including on slower Linux WebKit runners.
+    await page.waitForTimeout(220);
+    expect(await page.evaluate(() => document.getElementById("lab").currentIndex)).toBe(1);
+    await openedFile(page, "b.3md").click();
+    await openedFile(page, "a.3md").click();
+    await expect(page.locator("#editor")).toHaveValue(changed);
+    expect(await page.evaluate(() => {
+      const ed = document.getElementById("editor");
+      return { start: ed.selectionStart, end: ed.selectionEnd, plane: document.getElementById("lab").currentIndex };
+    })).toEqual({ start: 20, end: 25, plane: 1 });
+    await expect(page.locator("#draftState")).toBeVisible();
+    await expect(openedFile(page, "a.3md")).toHaveAttribute("data-edited", "true");
+    await page.click("#documentMenu summary");
+    const downloadEvent = page.waitForEvent("download");
+    await page.click("#dlBtn");
+    const download = await downloadEvent;
+    expect(await readFile(await download.path(), "utf8")).toBe(changed);
+    await expect(page.locator("#draftState")).toBeVisible();
+    for (const draft of ["invalid draft kept verbatim", ""]) {
+      await page.fill("#editor", draft);
+      await openedFile(page, "b.3md").click();
+      await openedFile(page, "a.3md").click();
+      await expect(page.locator("#editor")).toHaveValue(draft);
+    }
+    await page.fill("#editor", original);
+    await expect(page.locator("#draftState")).toBeHidden();
+    await expect(openedFile(page, "a.3md")).toHaveAttribute("data-edited", "false");
+  });
+
+  test("composition entry switches preserve each draft without copying it into another entry", async ({ page }) => {
+    await page.goto("/viewer.html");
+    await viewerReady(page);
+    await page.waitForFunction(() => window.threeMdCatalogCount > 200);
+    await page.fill("#findExample", "Extensions/shared-grove.3md");
+    await page.locator("#findList button", { hasText: "layer · Extensions/shared-grove.3md" }).click();
+    await showEditor(page);
+    const rootId = await page.locator("#piece").inputValue();
+    const rootSource = await page.locator("#editor").inputValue();
+    const changedRoot = rootSource + "\nRoot draft marker\n";
+    await page.fill("#editor", changedRoot);
+    await page.locator("#piece").focus();
+    await page.selectOption("#piece", "canopy");
+    await expect(page.locator("#piece")).toBeFocused();
+    const canopySource = await page.locator("#editor").inputValue();
+    expect(canopySource).not.toContain("Root draft marker");
+    const changedCanopy = canopySource + "\nCanopy draft marker\n";
+    await page.fill("#editor", changedCanopy);
+    await page.selectOption("#piece", rootId);
+    await expect(page.locator("#editor")).toHaveValue(changedRoot);
+    await page.selectOption("#piece", "canopy");
+    await expect(page.locator("#editor")).toHaveValue(changedCanopy);
+    await page.click("#cubesTab");
+    await expect(page.locator("#draftState")).toBeVisible();
+    await expect(page.locator("#sourceName")).toBeVisible();
+  });
+
+  test("linked entries and file navigation share the same draft", async ({ page }) => {
+    await page.goto("/viewer.html");
+    await viewerReady(page);
+    const files = {};
+    for (const path of ["scene.3md", "models/house.3md", "models/tree.3md", "models/tower.3md"]) {
+      files[path] = await readFile(new URL(`../Examples/LinkedVillage/${path}`, import.meta.url), "utf8");
+    }
+    await openCollection(page, files);
+    await showEditor(page);
+    const rootId = await page.locator("#piece").inputValue();
+    const houseId = await page.locator("#piece option").evaluateAll((options) => options.find((option) => option.textContent.endsWith("models/house.3md")).value);
+    await page.selectOption("#piece", houseId);
+    const changed = (await page.locator("#editor").inputValue()) + "\nLinked house draft\n";
+    await page.fill("#editor", changed);
+    await openedFile(page, "house.3md").click();
+    await expect(page.locator("#editor")).toHaveValue(changed);
+    const revised = changed + "From the file list\n";
+    await page.fill("#editor", revised);
+    await openedFile(page, "scene.3md").click();
+    await page.selectOption("#piece", rootId);
+    await page.selectOption("#piece", houseId);
+    await expect(page.locator("#editor")).toHaveValue(revised);
+    await expect(openedFile(page, "house.3md")).toHaveAttribute("data-edited", "true");
+  });
+
+  test("search and packing use drafts rather than original file text", async ({ page }) => {
+    await page.goto("/viewer.html");
+    await viewerReady(page);
+    await openCollection(page, { "a.3md": draftDocument("A"), "b.3md": draftDocument("B") });
+    await openedFile(page, "a.3md").click();
+    await showEditor(page);
+    const changed = draftDocument("A", "DraftOnlyNeedle9381");
+    await page.fill("#editor", changed);
+    await openedFile(page, "b.3md").click();
+    await page.fill("#findExample", "DraftOnlyNeedle9381");
+    await page.locator("#findList button", { hasText: "DraftOnlyNeedle9381" }).click();
+    await expect(page.locator("#editor")).toHaveValue(changed);
+    await page.click("#documentMenu summary");
+    await page.click("#packBtn");
+    expect(await page.locator("#editor").inputValue()).toContain("DraftOnlyNeedle9381");
+  });
+
+  test("file filtering, keyboard selection, and phone opens reveal the document", async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.goto("/viewer.html");
+    await viewerReady(page);
+    await page.getByRole("tab", { name: "Files", exact: true }).click();
+    await openCollection(page, { "a.3md": draftDocument("A"), "nested/b.3md": draftDocument("B") });
+    await expect(page.locator("#grid")).toHaveAttribute("data-show", "document");
+    await page.getByRole("tab", { name: "Files", exact: true }).click();
+    await page.fill("#fileFilter", "not-here");
+    await expect(page.locator("#fileList")).toContainText("No files match");
+    await page.locator("#fileFilter").press("Escape");
+    await expect(page.locator("#fileList button")).toHaveCount(2);
+    await expect(page.locator("#fileList .file-name")).toHaveText(["a.3md", "b.3md"]);
+    await page.locator("#fileFilter").press("ArrowDown");
+    await page.keyboard.press("End");
+    await expect(openedFile(page, "b.3md")).toBeFocused();
+    await page.keyboard.press("Enter");
+    await expect(page.locator("#grid")).toHaveAttribute("data-show", "document");
+    await expect(page.locator("#sourceName")).toHaveText("b.3md");
+    await expect(page.locator("#cubeCanvas")).toBeFocused();
+    expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(390);
+    await page.getByRole("tab", { name: "Files", exact: true }).click();
+    await page.fill("#findExample", "Second marker");
+    await page.locator("#findList button").filter({ hasText: "Second marker" }).first().click();
+    await expect(page.locator("#grid")).toHaveAttribute("data-show", "document");
+    expect(await page.evaluate(() => document.getElementById("lab").currentIndex)).toBe(1);
+  });
+
+  test("a failed local open preserves the collection and current draft", async ({ page }) => {
+    await page.goto("/viewer.html");
+    await viewerReady(page);
+    await openCollection(page, { "a.3md": draftDocument("A"), "b.3md": draftDocument("B") });
+    await openedFile(page, "a.3md").click();
+    await showEditor(page);
+    const changed = draftDocument("A", "Keep after failed open");
+    await page.fill("#editor", changed);
+    await page.locator("#fileInput").setInputFiles({ name: "broken.3md", mimeType: "text/plain", buffer: Buffer.from("invalid document") });
+    await expect(page.locator("#status")).toHaveClass(/err/);
+    await page.waitForTimeout(350); // A pending editor render must not clear the open error.
+    await expect(page.locator("#status")).toHaveClass(/err/);
+    await expect(page.locator("#fileList button")).toHaveCount(2);
+    await expect(page.locator("#editor")).toHaveValue(changed);
+    await openedFile(page, "b.3md").click();
+    await openedFile(page, "a.3md").click();
+    await expect(page.locator("#editor")).toHaveValue(changed);
+  });
+
+  test("explicit document navigation removes stale source queries and reloads the chosen source", async ({ page }) => {
+    const old = draftDocument("Old source");
+    await page.route("**/original-document.3md", (route) => route.fulfill({ status: 200, contentType: "text/plain", body: old }));
+    await page.goto("/viewer.html?src=original-document.3md&theme=dark");
+    await viewerReady(page);
+    await expect(page.locator("#documentTitle")).toHaveText("Old source");
+    await page.click("#cubeSample");
+    expect(new URL(page.url()).searchParams.has("src")).toBe(false);
+    expect(new URL(page.url()).searchParams.get("theme")).toBe("dark");
+    await page.reload();
+    await viewerReady(page);
+    await expect(page.locator("#documentTitle")).toHaveText("Small sculpture");
+    await openCollection(page, { "a.3md": draftDocument("A"), "b.3md": draftDocument("B") });
+    await openedFile(page, "b.3md").click();
+    await page.reload();
+    await viewerReady(page);
+    await expect(page.locator("#documentTitle")).toHaveText("B");
+  });
+
 });
+
+const sliceSource = grids => `---\n3md: 1.0\naxis: layer\ntitle: Slice parity\n---\n\n${grids.map((rows,z) => `@plane z=${z} label="Slice ${z+1}"\n\`\`\`\n${rows.join("\n")}\n\`\`\`\n`).join("\n")}`;
+async function openSlice(page, source) {
+  await page.goto("/viewer.html"); await viewerReady(page);
+  await page.evaluate(text => window.threeMd.set(text), source);
+  await page.locator("#sliceTab").click();
+  await expect(page.locator("#sliceGrid")).toBeVisible();
+}
+async function sliceStroke(page, points, end = "pointerup") {
+  const rect = await page.locator("#sliceGrid").boundingBox();
+  const dimensions = await page.locator("#sliceDimensions").textContent();
+  const [w,h] = dimensions.match(/\d+/g).map(Number);
+  const at = ([x,y]) => ({pointerId:77,pointerType:"mouse",button:0,isPrimary:true,clientX:rect.x+(x+.5)*rect.width/w,clientY:rect.y+(y+.5)*rect.height/h});
+  await page.dispatchEvent("#sliceGrid","pointerdown",at(points[0]));
+  for (const point of points.slice(1)) await page.dispatchEvent("#sliceGrid","pointermove",at(point));
+  await page.dispatchEvent("#sliceGrid",end,at(points.at(-1)));
+}
+
+test.describe("Sculpt Slice parity", () => {
+  test("shared native strokes, clipped brushes, four-neighbor fill and no-op undo", async ({page}) => {
+    const fixture = JSON.parse(await readFile(new URL("../docs/evidence/viewer-slice/slice-parity.json",import.meta.url),"utf8"));
+    for (const item of fixture.cases) {
+      await openSlice(page,sliceSource(item.initial));
+      if(item.z) await page.getByRole("button",{name:`Slice ${item.z+1}`,exact:true}).click();
+      await page.locator(`#sliceTool [data-tool="${item.tool}"]`).click();
+      if(item.tool!=="erase") await page.getByRole("button",{name:`Paint ${item.glyph}`,exact:true}).click();
+      if(item.tool!=="fill") await page.locator(`#sliceSize [data-size="${item.size}"]`).click();
+      await sliceStroke(page,item.path);
+      expect(await page.evaluate(()=>window.threeMd.source),item.name).toBe(sliceSource(item.expected));
+      if(JSON.stringify(item.initial)===JSON.stringify(item.expected)) await expect(page.locator("#sliceUndo")).toBeDisabled();
+      else {
+        await page.locator("#sliceUndo").click(); expect(await page.evaluate(()=>window.threeMd.source)).toBe(sliceSource(item.initial));
+        await expect(page.locator("#sliceUndo")).toBeDisabled(); await page.locator("#sliceRedo").click();
+        expect(await page.evaluate(()=>window.threeMd.source)).toBe(sliceSource(item.expected));
+      }
+    }
+  });
+  test("grid edits preserve CRLF, labels, prose and downloads exactly",async({page})=>{
+    const original=sliceSource([["...","..."],["...","..."]]).replace("@plane z=1", "@plane z=7.5").replace('```\n','Intro **kept**\n```ascii\n')+'\nAfter the grid.\n';
+    const raw=original.replace(/\n/g,"\r\n"), expected=raw.replace('...\r\n...','.#.\r\n...');
+    await openSlice(page,raw); await sliceStroke(page,[[1,0]],"pointercancel");
+    expect(await page.evaluate(()=>window.threeMd.source)).toBe(expected);
+    await expect(page.locator("#draftState")).toBeVisible();
+    await page.locator("#documentMenu summary").click();
+    const download=page.waitForEvent("download"); await page.locator("#dlBtn").click();
+    expect(await readFile(await (await download).path(),"utf8")).toBe(expected);
+    await page.locator("#documentMenu summary").press("Escape");
+    await page.locator("#sliceUndo").click(); expect(await page.evaluate(()=>window.threeMd.source)).toBe(raw);
+  });
+  test("keyboard cells, grid zoom, previous overlay and shared WebGL reference",async({page})=>{
+    await openSlice(page,sliceSource([["#..","..."],["...","..."]]));
+    const initial=await page.evaluate(()=>{const c=document.getElementById("cubeCanvas");window.sliceContext=c.getContext("webgl2");return window.threeMd.source;});
+    await page.getByRole("button",{name:"Slice 2",exact:true}).click(); await page.locator("#slicePrevious").check();
+    expect(await page.evaluate(()=>window.threeMd.source)).toBe(initial);
+    await page.locator("#sliceGrid").press("ArrowRight"); await page.locator("#sliceGrid").press("ArrowDown"); await page.locator("#sliceGrid").press("Space");
+    expect(await page.evaluate(()=>window.threeMd.source)).toBe(sliceSource([["#..","..."],["...",".#."]]));
+    await page.locator('#sliceZoom [data-zoom="4"]').click();
+    expect(await page.evaluate(()=>document.getElementById("sliceScroll").scrollWidth > document.getElementById("sliceScroll").clientWidth)).toBe(true);
+    await page.locator("#sliceExpand").click(); await expect(page.locator("#cubesPane > #cubeCanvas")).toBeVisible();
+    expect(await page.evaluate(()=>document.getElementById("cubeCanvas").getContext("webgl2")===window.sliceContext)).toBe(true);
+    expect(await page.evaluate(()=>document.getElementById("lab").currentIndex)).toBe(1);
+  });
+  test("source typing and Slice share undo and retain it across file navigation",async({page})=>{
+    await page.goto("/viewer.html");await viewerReady(page);
+    const one=sliceSource([["...","..."]]),two=sliceSource([["@@@","..."]]);
+    await openCollection(page,{"one.3md":one,"two.3md":two});await openedFile(page,"one.3md").click();
+    await page.locator("#sliceTab").click();await sliceStroke(page,[[0,0]]);
+    await openedFile(page,"two.3md").click();await openedFile(page,"one.3md").click();
+    expect(await page.evaluate(()=>window.threeMd.source)).toBe(one.replace('...\n...','#..\n...'));
+    await showEditor(page);await page.locator("#editor").press("ControlOrMeta+End");await page.locator("#editor").pressSequentially("prose");
+    await page.locator("#editor").press("ControlOrMeta+z");expect(await page.evaluate(()=>window.threeMd.source)).toBe(one.replace('...\n...','#..\n...'));
+    await page.locator("#editor").press("ControlOrMeta+z");expect(await page.evaluate(()=>window.threeMd.source)).toBe(one);
+    await page.locator("#editor").press("ControlOrMeta+Shift+z");expect(await page.evaluate(()=>window.threeMd.source)).toBe(one.replace('...\n...','#..\n...'));
+  });
+  test("unsupported grids stay readable and budget rejection restores the full stroke",async({page})=>{
+    await page.goto("/viewer.html");await viewerReady(page);await page.evaluate(text=>window.threeMd.set(text),sliceSource([["xx","x"]]));await page.locator("#sliceTab").click();
+    await expect(page.locator("#sliceUnavailable")).toContainText("rectangular");await expect(page.locator("#sliceWorkspace")).toBeHidden();
+    const rows=Array.from({length:64},(_,y)=>y<62?'#'.repeat(64):'.'.repeat(64));
+    const original=sliceSource([rows]);await page.evaluate(text=>window.threeMd.set(text),original);
+    await page.locator('#sliceSize [data-size="5"]').click();await sliceStroke(page,[[0,63],[63,63]]);
+    expect(await page.evaluate(()=>window.threeMd.source)).toBe(original);await expect(page.locator("#sliceUndo")).toBeDisabled();await expect(page.locator("#sliceMessage")).toContainText("restored");
+  });
+  test("phone Slice tools and axis controls stay usable without horizontal page overflow",async({page})=>{
+    await openSlice(page,sliceSource([["...","..."],["...","..."]]));
+    for(const size of [{width:390,height:844},{width:320,height:740}]){
+      await page.setViewportSize(size);await expect(page.locator("#sliceGrid")).toBeVisible();await sliceStroke(page,[[1,1]]);
+      expect(await page.evaluate(()=>document.body.scrollWidth<=innerWidth)).toBe(true);
+    }
+    await page.locator("#sliceExpand").click();await page.locator('#axisButtons [data-axis="2"]').click();await page.locator("#cameraPrecision summary").click();
+    await page.locator("#axisPlus").click();expect(await page.evaluate(()=>document.body.scrollWidth<=innerWidth)).toBe(true);
+  });
+  test("2D editing works with an unavailable WebGL reference",async({page})=>{
+    await page.addInitScript(()=>{const get=HTMLCanvasElement.prototype.getContext;HTMLCanvasElement.prototype.getContext=function(type,...args){return type==='webgl2'?null:get.call(this,type,...args);};});
+    await openSlice(page,sliceSource([["...","..."]]));await sliceStroke(page,[[2,1]]);
+    expect(await page.evaluate(()=>window.threeMd.source)).toBe(sliceSource([["...","..#"]]));await expect(page.locator("#sliceReferenceNote")).toContainText("WebGL2");
+  });
+  test("axis inverse, finite inputs, pan steps and Fit leave source and geometry intact",async({page})=>{
+    await page.goto("/viewer.html");await viewerReady(page);const source=await page.evaluate(()=>window.threeMd.source);
+    await page.locator("#cameraPrecision summary").click();await page.locator('#axisButtons [data-axis="2"]').click();
+    await page.locator("#axisPlus").click();const turned=await page.locator("#cubeCanvas").getAttribute("data-rotation");
+    expect(JSON.parse(turned)[2]).not.toBe(0);await page.locator("#axisMinus").click();expect(JSON.parse(await page.locator("#cubeCanvas").getAttribute("data-rotation"))[2]).toBeCloseTo(0,12);
+    await page.locator("#rotationStep").fill("0");await page.locator("#axisPlus").click();await expect(page.locator("#rotationStep")).toHaveAttribute("aria-invalid","true");
+    await page.getByRole("button",{name:"Pan right",exact:true}).click();await expect(page.locator("#cubeCanvas")).toHaveAttribute("data-pan-x","-0.25");
+    await page.locator("#panStep").fill("-1");await page.getByRole("button",{name:"Pan right",exact:true}).click();await expect(page.locator("#cubeCanvas")).toHaveAttribute("data-pan-x","-0.25");
+    await page.locator("#cubeFit").click();await expect(page.locator("#cubeCanvas")).toHaveAttribute("data-rotation","[0,0,0,1]");await expect(page.locator("#cubeCanvas")).toHaveAttribute("data-pan-x","0");
+    expect(await page.evaluate(()=>window.threeMd.source)).toBe(source);
+  });
+});
+
+
+test("Slice history drops only old snapshots at the per-draft and collection budgets", async ({page}) => {
+  await openSlice(page,sliceSource([["...","..."]]));
+  for (let index=0;index<104;index++) {
+    await page.locator(`#sliceTool [data-tool="${index%2 ? "erase" : "draw"}"]`).click();
+    await page.locator("#sliceGrid").press("Space");
+  }
+  for(let index=0;index<100;index++) await page.locator("#sliceUndo").click();
+  await expect(page.locator("#sliceUndo")).toBeDisabled();
+  expect(await page.evaluate(()=>window.threeMd.source)).toBe(sliceSource([["...","..."]]));
+  const large=sliceSource([["...","..."]])+"\n"+"a".repeat(800000)+"\n";
+  await openCollection(page,{"a.3md":large,"b.3md":large,"c.3md":large,"d.3md":large});
+  for(const name of ["a.3md","b.3md","c.3md","d.3md"]){
+    await openedFile(page,name).click(); await page.locator("#sliceTab").click();
+    await page.locator('#sliceTool [data-tool="draw"]').click(); await page.locator("#sliceGrid").press("Space");
+    await page.locator("#sliceGrid").press("ArrowRight"); await page.locator("#sliceGrid").press("Space");
+  }
+  await openedFile(page,"a.3md").click();await expect(page.locator("#sliceUndo")).toBeDisabled();
+  expect((await page.evaluate(()=>window.threeMd.source)).includes("##." )).toBe(true);
+  await openedFile(page,"d.3md").click();await page.locator("#sliceUndo").click();await page.locator("#sliceUndo").click();
+  expect(await page.evaluate(()=>window.threeMd.source)).toBe(large);
+});
+
+test("Slice navigation finishes a touch stroke and ignores its late pointer movement",async({page})=>{
+  await page.goto("/viewer.html");await viewerReady(page);
+  const source=sliceSource([["...","..."]]);await openCollection(page,{"one.3md":source,"two.3md":source});
+  await openedFile(page,"one.3md").click();await page.locator("#sliceTab").click();
+  const rect=await page.locator("#sliceGrid").boundingBox();
+  await page.dispatchEvent("#sliceGrid","pointerdown",{pointerId:83,pointerType:"touch",isPrimary:true,button:0,clientX:rect.x+rect.width/6,clientY:rect.y+rect.height/4});
+  await openedFile(page,"two.3md").click();
+  await page.dispatchEvent("#sliceGrid","pointermove",{pointerId:83,pointerType:"touch",clientX:rect.x+rect.width/2,clientY:rect.y+rect.height/4});
+  await page.dispatchEvent("#sliceGrid","pointerup",{pointerId:83,pointerType:"touch"});
+  expect(await page.evaluate(()=>window.threeMd.source)).toBe(source);
+  await openedFile(page,"one.3md").click();expect(await page.evaluate(()=>window.threeMd.source)).toBe(source.replace('...\n...','#..\n...'));
+  await page.locator("#sliceUndo").click();expect(await page.evaluate(()=>window.threeMd.source)).toBe(source);
+});
+
+
+for (const density of [1, 2]) {
+  test(`shared cube drawable stays sharp through view/viewport changes at ${density}x density`, async ({ browser }) => {
+    const context = await browser.newContext({ viewport: { width: 390, height: 844 }, deviceScaleFactor: density });
+    try {
+      const page = await context.newPage();
+      await page.addInitScript(() => {
+        window.__cubeResolution = { contexts: 0, losses: 0, uploads: 0, allocations: 0 };
+        const original = HTMLCanvasElement.prototype.getContext;
+        HTMLCanvasElement.prototype.getContext = function(type, ...args) {
+          if (this.id === "cubeCanvas" && type === "webgl2") window.__cubeResolution.contexts++;
+          return original.call(this, type, ...args);
+        };
+        document.addEventListener("webglcontextlost", () => window.__cubeResolution.losses++, true);
+        const media = window.matchMedia.bind(window);
+        window.matchMedia = query => {
+          const result = media(query);
+          if (query.startsWith("(resolution:")) window.__cubeResolution.display = result;
+          return result;
+        };
+      });
+      await page.goto("/viewer.html"); await viewerReady(page);
+      await page.waitForFunction(() => document.getElementById("cubeCanvas").dataset.renderer === "webgl2");
+      await page.locator("#outline button").nth(1).click();
+      await page.locator('#axisButtons [data-axis="2"]').click();
+      await page.locator("#cubeCanvas").press("ArrowRight");
+      const source = await page.evaluate(() => window.threeMd.source);
+      const pose = await page.evaluate(() => {
+        const canvas = document.getElementById("cubeCanvas"), gl = canvas.__cubeGl;
+        window.__cubeResolution.gl = gl;
+        window.__cubeResolution.program = gl.getParameter(gl.CURRENT_PROGRAM);
+        const upload = gl.bufferSubData.bind(gl), allocate = gl.bufferData.bind(gl);
+        gl.bufferSubData = (...args) => { window.__cubeResolution.uploads++; return upload(...args); };
+        gl.bufferData = (...args) => { window.__cubeResolution.allocations++; return allocate(...args); };
+        return [canvas.dataset.rotation, canvas.dataset.yaw, canvas.dataset.pitch, canvas.dataset.panX, canvas.dataset.panY];
+      });
+      const sharp = async () => {
+        await expect.poll(() => page.evaluate(() => {
+          const canvas = document.getElementById("cubeCanvas"), gl = canvas.__cubeGl;
+          let w = Math.max(2, Math.floor(canvas.clientWidth * Math.min(devicePixelRatio, 2)));
+          let h = Math.max(2, Math.floor(canvas.clientHeight * Math.min(devicePixelRatio, 2)));
+          const limit = Math.min(1, 2048 / w, 2048 / h);
+          w = Math.max(2, Math.floor(w * limit)); h = Math.max(2, Math.floor(h * limit));
+          return canvas.width === w && canvas.height === h && gl?.drawingBufferWidth === w && gl?.drawingBufferHeight === h;
+        })).toBe(true);
+        const state = await page.evaluate(() => {
+          const canvas = document.getElementById("cubeCanvas"), gl = canvas.__cubeGl, receipt = window.__cubeResolution;
+          return { sameContext: gl === receipt.gl, sameProgram: gl?.getParameter(gl.CURRENT_PROGRAM) === receipt.program,
+            contexts: receipt.contexts, losses: receipt.losses, uploads: receipt.uploads, allocations: receipt.allocations,
+            pose: [canvas.dataset.rotation, canvas.dataset.yaw, canvas.dataset.pitch, canvas.dataset.panX, canvas.dataset.panY] };
+        });
+        expect(state).toEqual({ sameContext: true, sameProgram: true, contexts: 1, losses: 0, uploads: 0, allocations: 0, pose });
+        expect(await page.evaluate(() => window.threeMd.source)).toBe(source);
+        await expect(page.locator("#planeLive")).toHaveText("Plane 2 of 3: walls");
+      };
+      await sharp();
+      for (const viewport of [{ width: 1440, height: 1000 }, { width: 3200, height: 2000 }, { width: 390, height: 844 }]) {
+        await page.locator("#sliceTab").click(); await sharp();
+        await page.setViewportSize(viewport); await sharp();
+        await page.locator("#sliceExpand").click(); await sharp();
+      }
+      for (let i = 0; i < 3; i++) {
+        await page.locator("#sliceTab").click(); await sharp();
+        await page.locator("#cubesTab").click(); await sharp();
+      }
+      // A display-density change can leave the CSS size unchanged.
+      await page.evaluate(value => {
+        Object.defineProperty(window, "devicePixelRatio", { configurable: true, value });
+        window.__cubeResolution.display.dispatchEvent(new Event("change"));
+      }, density === 1 ? 2 : 1);
+      await sharp();
+      expect(await page.evaluate(() => window.__cubeResolution.display.media)).toBe(`(resolution: ${density === 1 ? 2 : 1}dppx)`);
+      await page.evaluate(value => {
+        Object.defineProperty(window, "devicePixelRatio", { configurable: true, value });
+        window.dispatchEvent(new Event("resize"));
+      }, density);
+      await sharp();
+    } finally { await context.close(); }
+  });
+}

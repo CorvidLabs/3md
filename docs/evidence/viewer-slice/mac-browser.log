@@ -1,0 +1,1876 @@
+
+Running 226 tests using 2 workers
+
+(node:46477) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:46478) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] ::1 - - [10/Oct/2026 11:50:25] "GET /embed-example.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:25] "GET /embed-example.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:25] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:25] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:25] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:25] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:25] "GET /sample.3md HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:25] "GET /sample.3md HTTP/1.1" 200 -
+  ✓    1 [chromium] › component.spec.mjs:35:3 › <three-md> component › upgrades, renders planes, no console errors (112ms)
+  ✓    2 [chromium] › component.spec.mjs:53:3 › <three-md> component › all deck cards share one width (focused matches the cards behind it) (111ms)
+[WebServer] ::1 - - [10/Oct/2026 11:50:25] "GET /embed-example.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:25] "GET /embed-example.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:25] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:25] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:25] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:25] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:25] "GET /sample.3md HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:25] "GET /sample.3md HTTP/1.1" 200 -
+  ✓    3 [chromium] › component.spec.mjs:69:3 › <three-md> component › wide ASCII-art content is not clipped (card widens to fit rigid blocks) (91ms)
+[WebServer] ::1 - - [10/Oct/2026 11:50:25] "GET /embed-example.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:25] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:25] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:25] "GET /sample.3md HTTP/1.1" 200 -
+  ✓    4 [chromium] › component.spec.mjs:84:3 › <three-md> component › focused plane is frontmost across the scrubber (696ms)
+[WebServer] ::1 - - [10/Oct/2026 11:50:26] "GET /embed-example.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:26] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:26] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:26] "GET /sample.3md HTTP/1.1" 200 -
+  ✓    6 [chromium] › component.spec.mjs:109:3 › <three-md> component › no horizontal overflow from 320px to 1440px (174ms)
+[WebServer] ::1 - - [10/Oct/2026 11:50:26] "GET /embed-example.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:26] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:26] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:26] "GET /sample.3md HTTP/1.1" 200 -
+  ✓    7 [chromium] › component.spec.mjs:123:3 › <three-md> component › playback advances and pauses (animations) (2.4s)
+[WebServer] ::1 - - [10/Oct/2026 11:50:28] "GET /embed-example.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:28] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:28] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:28] "GET /sample.3md HTTP/1.1" 200 -
+  ✓    8 [chromium] › component.spec.mjs:139:3 › <three-md> component › frame animations render as a flipbook (one frame, no deck) and autoplay (93ms)
+[WebServer] ::1 - - [10/Oct/2026 11:50:28] "GET /embed-example.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:28] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:28] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:28] "GET /sample.3md HTTP/1.1" 200 -
+  ✓    9 [chromium] › component.spec.mjs:160:3 › <three-md> component › does not auto-convert characters; an optional legend maps them (94ms)
+[WebServer] ::1 - - [10/Oct/2026 11:50:29] "GET /embed-example.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:29] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:29] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:29] "GET /sample.3md HTTP/1.1" 200 -
+  ✓   10 [chromium] › component.spec.mjs:184:3 › <three-md> component › camera: WASD/wheel/orbit move the scene; retired modes alias (98ms)
+[WebServer] ::1 - - [10/Oct/2026 11:50:29] "GET /embed-example.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:29] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:29] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:29] "GET /sample.3md HTTP/1.1" 200 -
+  ✓   11 [chromium] › component.spec.mjs:210:3 › <three-md> component › map mode lays planes out by x/y (94ms)
+[WebServer] ::1 - - [10/Oct/2026 11:50:29] "GET /embed-example.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:29] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:29] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:29] "GET /sample.3md HTTP/1.1" 200 -
+  ✓   12 [chromium] › component.spec.mjs:223:3 › <three-md> component › renders Markdown tables (not raw pipes) (95ms)
+[WebServer] ::1 - - [10/Oct/2026 11:50:29] "GET /embed-example.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:29] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:29] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:29] "GET /sample.3md HTTP/1.1" 200 -
+  ✓   13 [chromium] › component.spec.mjs:239:3 › <three-md> component › layers shows aligned overlays at once, with toggle chips (92ms)
+[WebServer] ::1 - - [10/Oct/2026 11:50:29] "GET /embed-example.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:29] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:29] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:29] "GET /sample.3md HTTP/1.1" 200 -
+  ✓   14 [chromium] › component.spec.mjs:261:3 › <three-md> component › blend mode renders content as 3D voxels (95ms)
+[WebServer] ::1 - - [10/Oct/2026 11:50:29] "GET /embed-example.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:29] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:29] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:29] "GET /sample.3md HTTP/1.1" 200 -
+  ✓   15 [chromium] › component.spec.mjs:281:3 › <three-md> component › single-card mode shows only the focused plane (233ms)
+[WebServer] ::1 - - [10/Oct/2026 11:50:29] "GET /embed-example.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:29] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:29] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:29] "GET /sample.3md HTTP/1.1" 200 -
+  ✓   16 [chromium] › component.spec.mjs:303:3 › <three-md> component › single-card mode scrolls a long plane (reader) (97ms)
+[WebServer] ::1 - - [10/Oct/2026 11:50:29] "GET /embed-example.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:29] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:29] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:29] "GET /sample.3md HTTP/1.1" 200 -
+  ✓   17 [chromium] › component.spec.mjs:326:3 › <three-md> component › reflects the resolved mode as data-mode (for fullscreen styling) (94ms)
+[WebServer] ::1 - - [10/Oct/2026 11:50:29] "GET /embed-example.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:29] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:29] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:29] "GET /sample.3md HTTP/1.1" 200 -
+  ✓   18 [chromium] › component.spec.mjs:343:3 › <three-md> component › space and PageDown advance like a slideshow (not in reader) (99ms)
+[WebServer] ::1 - - [10/Oct/2026 11:50:30] "GET /embed-example.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:30] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:30] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:30] "GET /sample.3md HTTP/1.1" 200 -
+  ✓   19 [chromium] › component.spec.mjs:366:3 › <three-md> component › cross-plane links [[z=N|text]] are clickable and navigate (88ms)
+[WebServer] ::1 - - [10/Oct/2026 11:50:30] "GET /embed-example.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:30] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:30] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:30] "GET /sample.3md HTTP/1.1" 200 -
+  ✓   20 [chromium] › component.spec.mjs:383:3 › <three-md> component › a tap (pointer, no drag) on a cross-plane link navigates (89ms)
+[WebServer] ::1 - - [10/Oct/2026 11:50:30] "GET /embed-example.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:30] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:30] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:30] "GET /sample.3md HTTP/1.1" 200 -
+  ✓   21 [chromium] › component.spec.mjs:402:3 › <three-md> component › flipbook frames are a fixed size (no resize between frames) (87ms)
+[WebServer] ::1 - - [10/Oct/2026 11:50:30] "GET /embed-example.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:30] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:30] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:30] "GET /sample.3md HTTP/1.1" 200 -
+  ✓   22 [chromium] › component.spec.mjs:420:3 › <three-md> component › loop toggle controls whether playback wraps (91ms)
+[WebServer] ::1 - - [10/Oct/2026 11:50:30] "GET /embed-example.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:30] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:30] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:30] "GET /sample.3md HTTP/1.1" 200 -
+  ✓   23 [chromium] › component.spec.mjs:438:3 › <three-md> component › emits planechange when stepping (91ms)
+[WebServer] ::1 - - [10/Oct/2026 11:50:30] "GET /embed-example.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:30] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:30] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:30] "GET /sample.3md HTTP/1.1" 200 -
+  ✓   24 [chromium] › component.spec.mjs:450:3 › <three-md> component › legend values cannot inject HTML (XSS sink is escaped) (275ms)
+[WebServer] ::1 - - [10/Oct/2026 11:50:30] "GET /embed-example.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:30] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:30] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:30] "GET /sample.3md HTTP/1.1" 200 -
+  ✓   25 [chromium] › component.spec.mjs:485:3 › <three-md> component › cross-plane links work for decimal z (not just integers) (84ms)
+[WebServer] ::1 - - [10/Oct/2026 11:50:30] "GET /embed-example.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:30] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:30] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:30] "GET /sample.3md HTTP/1.1" 200 -
+  ✓   26 [chromium] › component.spec.mjs:503:3 › <three-md> component › switching into blend after load builds voxels (no empty stage) (272ms)
+[WebServer] ::1 - - [10/Oct/2026 11:50:31] "GET /embed-example.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:31] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:31] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:31] "GET /sample.3md HTTP/1.1" 200 -
+  ✓   27 [chromium] › component.spec.mjs:518:3 › <three-md> component › blend voxels are the legend-mapped character glyphs, and billboard faces the camera (91ms)
+[WebServer] ::1 - - [10/Oct/2026 11:50:31] "GET /embed-example.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:31] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:31] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:31] "GET /sample.3md HTTP/1.1" 200 -
+  ✓   28 [chromium] › component.spec.mjs:537:3 › <three-md> component › without a legend, blend voxels show the raw characters (83ms)
+[WebServer] ::1 - - [10/Oct/2026 11:50:31] "GET /embed-example.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:31] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:31] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:31] "GET /sample.3md HTTP/1.1" 200 -
+  ✓   29 [chromium] › component.spec.mjs:549:3 › <three-md> component › blend is gated to COMPACT art: a sprawling grid is not voxelizable (falls back to deck) (93ms)
+[WebServer] ::1 - - [10/Oct/2026 11:50:31] "GET /embed-example.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:31] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:31] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:31] "GET /sample.3md HTTP/1.1" 200 -
+  ✓   30 [chromium] › component.spec.mjs:571:3 › <three-md> component › map and layers keep every tile inside the stage on all edges (many tiles) (95ms)
+[WebServer] ::1 - - [10/Oct/2026 11:50:31] "GET /embed-example.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:31] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:31] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:31] "GET /sample.3md HTTP/1.1" 200 -
+  ✓   31 [chromium] › component.spec.mjs:598:3 › <three-md> component › map orbit is clamped so an extreme pose never spills a tile off the stage (90ms)
+[WebServer] ::1 - - [10/Oct/2026 11:50:31] "GET /embed-example.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:31] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:31] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+  ✓    5 [chromium] › component.spec.mjs:94:3 › <three-md> component › works with requestAnimationFrame paused (Low Power Mode) (6.1s)
+[WebServer] ::1 - - [10/Oct/2026 11:50:31] "GET /sample.3md HTTP/1.1" 200 -
+  ✓   32 [chromium] › component.spec.mjs:623:3 › <three-md> component › map snaps coordinates to a non-overlapping grid (same x = column, same y = row) (90ms)
+[WebServer] ::1 - - [10/Oct/2026 11:50:31] "GET /embed-example.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:31] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:31] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:31] "GET /embed-example.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:31] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:31] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:31] "GET /sample.3md HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:31] "GET /sample.3md HTTP/1.1" 200 -
+  ✓   33 [chromium] › component.spec.mjs:652:3 › <three-md> component › map: no-coordinate planes lay out in a clean non-overlapping grid (112ms)
+  ✓   34 [chromium] › component.spec.mjs:672:3 › <three-md> component › map: the focused card pops to a larger readable size than the board tiles (92ms)
+[WebServer] ::1 - - [10/Oct/2026 11:50:31] "GET /embed-example.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:31] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:31] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:31] "GET /embed-example.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:31] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:31] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:31] "GET /sample.3md HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:31] "GET /sample.3md HTTP/1.1" 200 -
+  ✓   35 [chromium] › component.spec.mjs:689:3 › <three-md> component › map opens on a full-board overview (nothing forced open) until a tile is opened (92ms)
+  ✓   36 [chromium] › component.spec.mjs:711:3 › <three-md> component › map: partially-positioned planes (only x or only y) do not pile up (88ms)
+[WebServer] ::1 - - [10/Oct/2026 11:50:31] "GET /embed-example.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:31] "GET /embed-example.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:31] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:31] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:31] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:31] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:31] "GET /sample.3md HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:31] "GET /sample.3md HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:31] "GET /all-examples.json HTTP/1.1" 200 -
+  ✓   37 [chromium] › component.spec.mjs:728:3 › <three-md> component › map: unpositioned planes do not collapse onto explicit (0,0) (98ms)
+[WebServer] ::1 - - [10/Oct/2026 11:50:32] "GET /index.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:32] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:32] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:32] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:32] "GET /all-examples.json HTTP/1.1" 200 -
+  ✓   39 [chromium] › lab.spec.mjs:59:3 › lab demo (index.html, backed by <three-md>) › renders via the component with no console errors (599ms)
+[WebServer] ::1 - - [10/Oct/2026 11:50:32] "GET /index.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:32] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:32] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:32] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:32] "GET /all-examples.json HTTP/1.1" 200 -
+  ✓   38 [chromium] › examples-coverage.spec.mjs:8:1 › the component renders every gallery example cleanly (1.8s)
+[WebServer] ::1 - - [10/Oct/2026 11:50:33] "GET /index.html HTTP/1.1" 200 -
+  ✓   40 [chromium] › lab.spec.mjs:69:3 › lab demo (index.html, backed by <three-md>) › focused plane is frontmost across the scrubber (1.2s)
+[WebServer] ::1 - - [10/Oct/2026 11:50:33] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:33] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:33] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:33] "GET /index.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:33] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:33] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:33] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:34] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:34] "GET /all-examples.json HTTP/1.1" 200 -
+  ✓   42 [chromium] › lab.spec.mjs:92:3 › lab demo (index.html, backed by <three-md>) › no horizontal overflow from 320px to 1440px (843ms)
+[WebServer] ::1 - - [10/Oct/2026 11:50:34] "GET /index.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:34] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:34] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:34] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:35] "GET /all-examples.json HTTP/1.1" 200 -
+  ✓   43 [chromium] › lab.spec.mjs:102:3 › lab demo (index.html, backed by <three-md>) › stepping the component highlights the synced source (1.0s)
+[WebServer] ::1 - - [10/Oct/2026 11:50:35] "GET /index.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:35] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:35] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:35] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:35] "GET /all-examples.json HTTP/1.1" 200 -
+  ✓   41 [chromium] › lab.spec.mjs:75:3 › lab demo (index.html, backed by <three-md>) › every axis tab loads, scrubs cleanly, and syncs the source panel (5.1s)
+[WebServer] ::1 - - [10/Oct/2026 11:50:38] "GET /index.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:38] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:38] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:38] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:39] "GET /all-examples.json HTTP/1.1" 200 -
+  ✓   44 [chromium] › robustness.spec.mjs:37:3 › robustness (no degradation under heavy use) › no rAF-loop accumulation after switching tabs many times (3.8s)
+[WebServer] ::1 - - [10/Oct/2026 11:50:39] "GET /index.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:39] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:39] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:39] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:39] "GET /all-examples.json HTTP/1.1" 200 -
+  ✓   46 [chromium] › robustness.spec.mjs:95:3 › robustness (no degradation under heavy use) › rapid play/pause and scrub leave no timers or errors (2.2s)
+[WebServer] ::1 - - [10/Oct/2026 11:50:41] "GET /index.html?theme=dark HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:41] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:41] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:41] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:41] "GET /all-examples.json HTTP/1.1" 200 -
+  ✓   45 [chromium] › robustness.spec.mjs:65:3 › robustness (no degradation under heavy use) › DOM does not grow and the renderer stays correct after heavy use (3.4s)
+[WebServer] ::1 - - [10/Oct/2026 11:50:42] "GET /index.html?theme=dark HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:42] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:42] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:42] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:42] "GET /all-examples.json HTTP/1.1" 200 -
+  ✓   47 [chromium] › snapshots.spec.mjs:37:3 › stage snapshot: stack (1.1s)
+[WebServer] ::1 - - [10/Oct/2026 11:50:42] "GET /index.html?theme=dark HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:42] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:42] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:42] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:43] "GET /all-examples.json HTTP/1.1" 200 -
+  ✓   48 [chromium] › snapshots.spec.mjs:37:3 › stage snapshot: layers (1.1s)
+[WebServer] ::1 - - [10/Oct/2026 11:50:43] "GET /index.html?theme=dark HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:43] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:43] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:43] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:43] "GET /all-examples.json HTTP/1.1" 200 -
+  ✓   49 [chromium] › snapshots.spec.mjs:37:3 › stage snapshot: scene (1.0s)
+[WebServer] ::1 - - [10/Oct/2026 11:50:43] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:43] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:43] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:43] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:43] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:44] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:44] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:44] "GET /nested-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:44] "GET /binary-samples.json HTTP/1.1" 200 -
+  ✓   50 [chromium] › snapshots.spec.mjs:37:3 › stage snapshot: present (1.1s)
+  ✓   51 [chromium] › viewer.spec.mjs:34:3 › viewer & editor (viewer.html) › opening the page shows lit cubes in the window (666ms)
+[WebServer] ::1 - - [10/Oct/2026 11:50:44] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:44] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:44] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:44] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:44] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:44] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:44] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:44] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:44] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:44] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:44] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:44] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:44] "GET /nested-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:44] "GET /binary-samples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:44] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:44] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:44] "GET /nested-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:44] "GET /binary-samples.json HTTP/1.1" 200 -
+  ✓   53 [chromium] › viewer.spec.mjs:152:3 › viewer & editor (viewer.html) › clicking a visible cube picks its Z slice and blank stage does not (762ms)
+  ✓   52 [chromium] › viewer.spec.mjs:78:3 › viewer & editor (viewer.html) › one cell has filled faces from every side, with gold edges and glyph fill (807ms)
+[WebServer] ::1 - - [10/Oct/2026 11:50:45] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:45] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:45] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:45] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:45] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:45] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:45] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:45] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:45] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:45] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:45] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:45] "GET /nested-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:45] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:45] "GET /binary-samples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:45] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:45] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:45] "GET /binary-samples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:45] "GET /nested-examples.json HTTP/1.1" 200 -
+  ✓   54 [chromium] › viewer.spec.mjs:165:3 › viewer & editor (viewer.html) › renders the starter document with no console errors (781ms)
+[WebServer] ::1 - - [10/Oct/2026 11:50:46] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:46] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:46] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:46] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:46] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:46] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:46] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:46] "GET /binary-samples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:46] "GET /nested-examples.json HTTP/1.1" 200 -
+  ✓   55 [chromium] › viewer.spec.mjs:176:3 › viewer & editor (viewer.html) › editing the source re-renders live (1.1s)
+[WebServer] ::1 - - [10/Oct/2026 11:50:46] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:46] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:46] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:46] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:46] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:46] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:46] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:46] "GET /binary-samples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:46] "GET /nested-examples.json HTTP/1.1" 200 -
+  ✓   56 [chromium] › viewer.spec.mjs:190:3 › viewer & editor (viewer.html) › invalid 3md shows an error without crashing (1.0s)
+[WebServer] ::1 - - [10/Oct/2026 11:50:47] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:47] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:47] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:47] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:47] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:47] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:47] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:47] "GET /nested-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:47] "GET /binary-samples.json HTTP/1.1" 200 -
+  ✓   57 [chromium] › viewer.spec.mjs:204:3 › viewer & editor (viewer.html) › loading an example populates the editor and viewer (1.1s)
+[WebServer] ::1 - - [10/Oct/2026 11:50:47] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:47] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:47] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:47] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:47] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:47] "GET /nested-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:47] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:47] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:47] "GET /binary-samples.json HTTP/1.1" 200 -
+  ✓   58 [chromium] › viewer.spec.mjs:218:3 › viewer & editor (viewer.html) › editor highlights syntax and numbers every line (739ms)
+[WebServer] ::1 - - [10/Oct/2026 11:50:47] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:47] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:47] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:47] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:47] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:48] "GET /nested-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:48] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:48] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:48] "GET /binary-samples.json HTTP/1.1" 200 -
+  ✓   59 [chromium] › viewer.spec.mjs:246:3 › viewer & editor (viewer.html) › Tab indents and Enter continues a list (838ms)
+[WebServer] ::1 - - [10/Oct/2026 11:50:48] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:48] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:48] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:48] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:48] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:48] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:48] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:48] "GET /nested-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:48] "GET /binary-samples.json HTTP/1.1" 200 -
+  ✓   60 [chromium] › viewer.spec.mjs:262:3 › viewer & editor (viewer.html) › clicking a plane outline chip focuses that plane (943ms)
+[WebServer] ::1 - - [10/Oct/2026 11:50:48] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:48] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:48] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:48] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:48] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:49] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:49] "GET /nested-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:49] "GET /binary-samples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:49] "GET /all-examples.json HTTP/1.1" 200 -
+  ✓   61 [chromium] › viewer.spec.mjs:273:3 › viewer & editor (viewer.html) › the highlight backdrop scrolls with the textarea (tall document) (737ms)
+[WebServer] ::1 - - [10/Oct/2026 11:50:49] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:49] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:49] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:49] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:49] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:49] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:49] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:49] "GET /nested-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:49] "GET /binary-samples.json HTTP/1.1" 200 -
+  ✓   62 [chromium] › viewer.spec.mjs:290:3 › viewer & editor (viewer.html) › smart-key edits are undoable and never corrupt the buffer (884ms)
+[WebServer] ::1 - - [10/Oct/2026 11:50:49] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:49] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:49] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:49] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:49] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:49] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:49] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:49] "GET /nested-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:49] "GET /binary-samples.json HTTP/1.1" 200 -
+  ✓   63 [chromium] › viewer.spec.mjs:311:3 › viewer & editor (viewer.html) › validity state is machine-readable via data attributes (1.1s)
+[WebServer] ::1 - - [10/Oct/2026 11:50:50] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:50] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:50] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:50] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:50] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:50] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:50] "GET /binary-samples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:50] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:50] "GET /nested-examples.json HTTP/1.1" 200 -
+  ✓   64 [chromium] › viewer.spec.mjs:337:3 › viewer & editor (viewer.html) › Tab does not trap keyboard focus (Esc then Tab leaves the editor) (745ms)
+[WebServer] ::1 - - [10/Oct/2026 11:50:50] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:50] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:50] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:50] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:50] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:50] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:50] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:50] "GET /binary-samples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:50] "GET /nested-examples.json HTTP/1.1" 200 -
+  ✓   65 [chromium] › viewer.spec.mjs:351:3 › viewer & editor (viewer.html) › agent API validates and reports structured state (745ms)
+[WebServer] ::1 - - [10/Oct/2026 11:50:50] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:50] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:50] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:50] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:50] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+  ✓   66 [chromium] › viewer.spec.mjs:364:3 › viewer & editor (viewer.html) › validate(src) is side-effect-free and reports the error code (668ms)
+[WebServer] ::1 - - [10/Oct/2026 11:50:51] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:51] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:51] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:51] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:51] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:51] "GET /nested-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:51] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:51] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:51] "GET /binary-samples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:51] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:51] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:51] "GET /nested-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:51] "GET /binary-samples.json HTTP/1.1" 200 -
+  ✓   67 [chromium] › viewer.spec.mjs:380:3 › viewer & editor (viewer.html) › repository search opens the 24-generation Conway document (1.2s)
+[WebServer] ::1 - - [10/Oct/2026 11:50:52] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:52] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:52] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:52] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:52] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+  ✓   68 [chromium] › viewer.spec.mjs:395:3 › viewer & editor (viewer.html) › kind 2 canopy opens as text in the element (1.2s)
+[WebServer] ::1 - - [10/Oct/2026 11:50:52] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:52] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:52] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:52] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:52] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:52] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:52] "GET /nested-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:52] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:52] "GET /binary-samples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:52] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:52] "GET /nested-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:52] "GET /binary-samples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:52] "GET /all-examples.json HTTP/1.1" 200 -
+  ✓   69 [chromium] › viewer.spec.mjs:412:3 › viewer & editor (viewer.html) › linked village search resolves the folder (1.3s)
+[WebServer] ::1 - - [10/Oct/2026 11:50:53] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:53] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:53] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:53] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:53] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+  ✓   70 [chromium] › viewer.spec.mjs:426:3 › viewer & editor (viewer.html) › a composition profile shows the root and can switch entries (1.4s)
+[WebServer] ::1 - - [10/Oct/2026 11:50:53] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:53] "GET /binary-samples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:53] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:53] "GET /nested-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:53] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:53] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:53] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:53] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:53] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:54] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:54] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:54] "GET /nested-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:54] "GET /binary-samples.json HTTP/1.1" 200 -
+  ✓   72 [chromium] › viewer.spec.mjs:458:3 › viewer & editor (viewer.html) › desktop layout keeps files beside a panel that switches Edit and Preview (1.0s)
+[WebServer] ::1 - - [10/Oct/2026 11:50:54] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:54] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:54] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:54] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:54] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+  ✓   71 [chromium] › viewer.spec.mjs:441:3 › viewer & editor (viewer.html) › markdown headings become planes and a plane search opens one (1.4s)
+[WebServer] ::1 - - [10/Oct/2026 11:50:54] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:54] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:54] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:54] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:54] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:55] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:55] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:55] "GET /nested-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:55] "GET /binary-samples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:55] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:55] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:55] "GET /nested-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:55] "GET /binary-samples.json HTTP/1.1" 200 -
+  ✓   74 [chromium] › viewer.spec.mjs:546:3 › viewer & editor (viewer.html) › orbiting about 1400 gpu cubes stays interactive (960ms)
+[WebServer] ::1 - - [10/Oct/2026 11:50:55] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:55] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:55] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:55] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:55] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:56] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:56] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:56] "GET /binary-samples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:56] "GET /nested-examples.json HTTP/1.1" 200 -
+  ✓   73 [chromium] › viewer.spec.mjs:514:3 › viewer & editor (viewer.html) › cubes tab draws a fenced grid as translucent cubes (1.3s)
+[WebServer] ::1 - - [10/Oct/2026 11:50:56] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:56] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:56] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:56] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:56] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:56] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:56] "GET /nested-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:56] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:56] "GET /binary-samples.json HTTP/1.1" 200 -
+  ✓   75 [chromium] › viewer.spec.mjs:591:3 › viewer & editor (viewer.html) › narrow layout switches Files and the document, and Edit and Preview still switch (1.2s)
+[WebServer] ::1 - - [10/Oct/2026 11:50:57] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:57] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:57] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:57] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:57] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+  ✓   76 [chromium] › viewer.spec.mjs:627:3 › viewer & editor (viewer.html) › an empty document reads as a neutral prompt, not a red error (1.0s)
+[WebServer] ::1 - - [10/Oct/2026 11:50:57] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:57] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:57] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:57] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:57] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:57] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:57] "GET /nested-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:57] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:57] "GET /binary-samples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:57] "GET /nested-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:57] "GET /binary-samples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:57] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:57] "GET /all-examples.json HTTP/1.1" 200 -
+  ✓   77 [chromium] › viewer.spec.mjs:645:3 › viewer & editor (viewer.html) › axis lint warns on a TYPO but not on a valid free-string semantic axis (763ms)
+  ✓   78 [chromium] › viewer.spec.mjs:671:3 › viewer & editor (viewer.html) › the page has no render-mode switch and does not autoplay (647ms)
+[WebServer] ::1 - - [10/Oct/2026 11:50:57] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:57] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:57] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:57] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:57] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:57] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:57] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:57] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:57] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:57] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:58] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:58] "GET /nested-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:58] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:58] "GET /binary-samples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:58] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:58] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:58] "GET /nested-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:58] "GET /binary-samples.json HTTP/1.1" 200 -
+  ✓   79 [chromium] › viewer.spec.mjs:692:3 › viewer & editor (viewer.html) › the agent schema lists error codes and the axis-to-mode map (778ms)
+[WebServer] ::1 - - [10/Oct/2026 11:50:58] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:58] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:58] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:58] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:58] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+  ✓   80 [chromium] › viewer.spec.mjs:702:3 › viewer & editor (viewer.html) › dangling cross-plane links are flagged as a non-fatal warning (1.0s)
+[WebServer] ::1 - - [10/Oct/2026 11:50:58] "GET /nested-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:58] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:58] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:58] "GET /binary-samples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:58] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:58] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:58] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:58] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:58] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:59] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:59] "GET /binary-samples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:59] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:59] "GET /nested-examples.json HTTP/1.1" 200 -
+  ✓   82 [chromium] › viewer.spec.mjs:722:3 › viewer & editor (viewer.html) › the embedded agent schema marks axis optional, only 3md required (673ms)
+[WebServer] ::1 - - [10/Oct/2026 11:50:59] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:59] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:59] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:59] "GET /assets/theme.js HTTP/1.1" 200 -
+  ✓   81 [chromium] › viewer.spec.mjs:713:3 › viewer & editor (viewer.html) › a corrupt share hash signals a decode error (not a silent starter) (991ms)
+[WebServer] ::1 - - [10/Oct/2026 11:50:59] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:59] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:59] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:59] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:59] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:59] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:59] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:59] "GET /nested-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:59] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:59] "GET /binary-samples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:59] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:59] "GET /binary-samples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:59] "GET /nested-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:50:59] "GET /gallery-data.json HTTP/1.1" 200 -
+  ✓   83 [chromium] › viewer.spec.mjs:729:3 › viewer & editor (viewer.html) › invalid doc clears stale plane/axis data on the badge (1.0s)
+[WebServer] ::1 - - [10/Oct/2026 11:51:00] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:00] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:00] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:00] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:00] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+  ✓   84 [chromium] › viewer.spec.mjs:742:3 › viewer & editor (viewer.html) › an invalid document flags the offending line and the badge (1.2s)
+[WebServer] ::1 - - [10/Oct/2026 11:51:00] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:00] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:00] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:00] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:00] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:00] "GET /binary-samples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:00] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:00] "GET /nested-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:00] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:00] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:00] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:00] "GET /nested-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:00] "GET /binary-samples.json HTTP/1.1" 200 -
+  ✓   85 [chromium] › viewer.spec.mjs:755:3 › viewer & editor (viewer.html) › a shared hash link restores the document (706ms)
+[WebServer] ::1 - - [10/Oct/2026 11:51:01] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:01] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:01] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:01] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:01] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:01] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:01] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:01] "GET /nested-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:01] "GET /binary-samples.json HTTP/1.1" 200 -
+  ✓   86 [chromium] › viewer.spec.mjs:766:3 › viewer & editor (viewer.html) › camera buttons and keyboard orbit, zoom, and fit without changing the document (921ms)
+[WebServer] ::1 - - [10/Oct/2026 11:51:01] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:01] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:01] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:01] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:01] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:01] "GET /nested-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:01] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:01] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:01] "GET /binary-samples.json HTTP/1.1" 200 -
+  ✓   87 [chromium] › viewer.spec.mjs:795:3 › viewer & editor (viewer.html) › full camera turns cross both poles continuously and retain geometry (709ms)
+[WebServer] ::1 - - [10/Oct/2026 11:51:01] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:02] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:02] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:02] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:02] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:02] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:02] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:02] "GET /binary-samples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:02] "GET /nested-examples.json HTTP/1.1" 200 -
+  ✓   88 [chromium] › viewer.spec.mjs:843:3 › viewer & editor (viewer.html) › pan tools and modified dragging move only the camera and Fit recenters (1.0s)
+[WebServer] ::1 - - [10/Oct/2026 11:51:02] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:02] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:02] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:02] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:02] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+  ✓   89 [chromium] › viewer.spec.mjs:874:3 › viewer & editor (viewer.html) › two fingers pan and pinch and a cancelled gesture cannot select a slice (759ms)
+[WebServer] ::1 - - [10/Oct/2026 11:51:02] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:02] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:02] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:02] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:02] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:02] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:02] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:02] "GET /nested-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:02] "GET /binary-samples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:02] "GET /binary-samples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:02] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:02] "GET /nested-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:02] "GET /all-examples.json HTTP/1.1" 200 -
+  ✓   91 [chromium] › viewer.spec.mjs:965:3 › viewer & editor (viewer.html) › phone layout leaves room for cubes and keeps controls outside the drawing (756ms)
+[WebServer] ::1 - - [10/Oct/2026 11:51:03] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:03] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:03] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:03] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:03] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:03] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:03] "GET /nested-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:03] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:03] "GET /binary-samples.json HTTP/1.1" 200 -
+  ✓   92 [chromium] › viewer.spec.mjs:987:3 › viewer & editor (viewer.html) › Document disclosure dismisses with Escape and both downloads preserve the document (922ms)
+[WebServer] ::1 - - [10/Oct/2026 11:51:04] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:04] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:04] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:04] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:04] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:04] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:04] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:04] "GET /nested-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:04] "GET /binary-samples.json HTTP/1.1" 200 -
+  ✓   93 [chromium] › viewer.spec.mjs:1024:3 › viewer & editor (viewer.html) › a prose document offers Preview without replacing its source (802ms)
+[WebServer] ::1 - - [10/Oct/2026 11:51:05] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:05] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:05] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:05] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:05] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:05] "GET /binary-samples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:05] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:05] "GET /nested-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:05] "GET /all-examples.json HTTP/1.1" 200 -
+  ✓   94 [chromium] › viewer.spec.mjs:1042:3 › viewer & editor (viewer.html) › slice navigation keeps the selected plane in a single scrolling row (675ms)
+[WebServer] ::1 - - [10/Oct/2026 11:51:05] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:05] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:05] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:05] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:05] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+  ✓   90 [chromium] › viewer.spec.mjs:897:3 › viewer & editor (viewer.html) › browser camera projects and picks the shared native parity fixture (3.5s)
+[WebServer] ::1 - - [10/Oct/2026 11:51:06] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:06] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:06] "GET /nested-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:06] "GET /binary-samples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:06] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:06] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:06] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:06] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:06] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:06] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:06] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:06] "GET /nested-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:06] "GET /binary-samples.json HTTP/1.1" 200 -
+  ✓   95 [chromium] › viewer.spec.mjs:1064:3 › viewer & editor (viewer.html) › a GitHub load shows busy state and recovers after a rate limit (719ms)
+[WebServer] ::1 - - [10/Oct/2026 11:51:06] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:06] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:06] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:06] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:06] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+  ✓   96 [chromium] › viewer.spec.mjs:1084:3 › viewer & editor (viewer.html) › GPU unavailability explains how to keep reading in Preview (744ms)
+[WebServer] ::1 - - [10/Oct/2026 11:51:06] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:06] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:06] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:06] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:06] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:06] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:06] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:06] "GET /nested-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:06] "GET /binary-samples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:07] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:07] "GET /nested-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:07] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:07] "GET /binary-samples.json HTTP/1.1" 200 -
+  ✓   98 [chromium] › viewer.spec.mjs:1143:3 › viewer & editor (viewer.html) › composition entry switches preserve each draft without copying it into another entry (877ms)
+  ✓   97 [chromium] › viewer.spec.mjs:1100:3 › viewer & editor (viewer.html) › file switches preserve edited, invalid, and empty drafts with caret and slice (1.1s)
+[WebServer] ::1 - - [10/Oct/2026 11:51:07] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:07] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:07] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:07] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:07] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:07] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:07] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:07] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:07] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:07] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:08] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:08] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:08] "GET /nested-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:08] "GET /binary-samples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:08] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:08] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:08] "GET /nested-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:08] "GET /binary-samples.json HTTP/1.1" 200 -
+  ✓   99 [chromium] › viewer.spec.mjs:1170:3 › viewer & editor (viewer.html) › linked entries and file navigation share the same draft (836ms)
+[WebServer] ::1 - - [10/Oct/2026 11:51:08] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:08] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:08] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:08] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:08] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+  ✓  100 [chromium] › viewer.spec.mjs:1195:3 › viewer & editor (viewer.html) › search and packing use drafts rather than original file text (937ms)
+[WebServer] ::1 - - [10/Oct/2026 11:51:08] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:08] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:08] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:08] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:08] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:08] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:08] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:08] "GET /binary-samples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:08] "GET /nested-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:08] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:08] "GET /nested-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:08] "GET /binary-samples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:08] "GET /gallery-data.json HTTP/1.1" 200 -
+  ✓  101 [chromium] › viewer.spec.mjs:1212:3 › viewer & editor (viewer.html) › file filtering, keyboard selection, and phone opens reveal the document (778ms)
+[WebServer] ::1 - - [10/Oct/2026 11:51:09] "GET /viewer.html?src=original-document.3md&theme=dark HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:09] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:09] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:09] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:09] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:09] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:09] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:09] "GET /nested-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:09] "GET /binary-samples.json HTTP/1.1" 200 -
+  ✓  102 [chromium] › viewer.spec.mjs:1240:3 › viewer & editor (viewer.html) › a failed local open preserves the collection and current draft (1.1s)
+[WebServer] ::1 - - [10/Oct/2026 11:51:09] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:09] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:09] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:09] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:09] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:10] "GET /viewer.html?theme=dark HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:10] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:10] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:10] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:10] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:10] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:10] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:10] "GET /nested-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:10] "GET /binary-samples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:10] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:10] "GET /nested-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:10] "GET /binary-samples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:10] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:10] "GET /viewer.html?theme=dark HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:10] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:10] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:10] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:10] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:10] "GET /nested-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:10] "GET /binary-samples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:10] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:10] "GET /gallery-data.json HTTP/1.1" 200 -
+  ✓  103 [chromium] › viewer.spec.mjs:1259:3 › viewer & editor (viewer.html) › explicit document navigation removes stale source queries and reloads the chosen source (1.3s)
+[WebServer] ::1 - - [10/Oct/2026 11:51:10] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:10] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:10] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:10] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:10] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:10] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:10] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:10] "GET /nested-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:10] "GET /binary-samples.json HTTP/1.1" 200 -
+  ✓  105 [chromium] › viewer.spec.mjs:1315:3 › Sculpt Slice parity › grid edits preserve CRLF, labels, prose and downloads exactly (790ms)
+[WebServer] ::1 - - [10/Oct/2026 11:51:11] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:11] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:11] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:11] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:11] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:11] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:11] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:11] "GET /nested-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:11] "GET /binary-samples.json HTTP/1.1" 200 -
+  ✓  104 [chromium] › viewer.spec.mjs:1298:3 › Sculpt Slice parity › shared native strokes, clipped brushes, four-neighbor fill and no-op undo (2.3s)
+[WebServer] ::1 - - [10/Oct/2026 11:51:12] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:12] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:12] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:12] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:12] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+  ✓  106 [chromium] › viewer.spec.mjs:1327:3 › Sculpt Slice parity › keyboard cells, grid zoom, previous overlay and shared WebGL reference (859ms)
+[WebServer] ::1 - - [10/Oct/2026 11:51:12] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:12] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:12] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:12] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:12] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:12] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:12] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:12] "GET /binary-samples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:12] "GET /nested-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:12] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:12] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:12] "GET /nested-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:12] "GET /binary-samples.json HTTP/1.1" 200 -
+  ✓  107 [chromium] › viewer.spec.mjs:1340:3 › Sculpt Slice parity › source typing and Slice share undo and retain it across file navigation (900ms)
+[WebServer] ::1 - - [10/Oct/2026 11:51:13] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:13] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:13] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:13] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:13] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:13] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:13] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:13] "GET /nested-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:13] "GET /binary-samples.json HTTP/1.1" 200 -
+  ✓  109 [chromium] › viewer.spec.mjs:1360:3 › Sculpt Slice parity › phone Slice tools and axis controls stay usable without horizontal page overflow (1.0s)
+  ✓  108 [chromium] › viewer.spec.mjs:1352:3 › Sculpt Slice parity › unsupported grids stay readable and budget rejection restores the full stroke (1.7s)
+[WebServer] ::1 - - [10/Oct/2026 11:51:14] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:14] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:14] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:14] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:14] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:14] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:14] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:14] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:14] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:14] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:14] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:14] "GET /nested-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:14] "GET /binary-samples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:14] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:14] "GET /nested-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:14] "GET /binary-samples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:14] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:14] "GET /gallery-data.json HTTP/1.1" 200 -
+  ✓  110 [chromium] › viewer.spec.mjs:1369:3 › Sculpt Slice parity › 2D editing works with an unavailable WebGL reference (798ms)
+[WebServer] ::1 - - [10/Oct/2026 11:51:14] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:14] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:14] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:14] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:14] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+  ✓  111 [chromium] › viewer.spec.mjs:1374:3 › Sculpt Slice parity › axis inverse, finite inputs, pan steps and Fit leave source and geometry intact (910ms)
+[WebServer] ::1 - - [10/Oct/2026 11:51:15] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:15] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:15] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:15] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:15] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:15] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:15] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:15] "GET /nested-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:15] "GET /binary-samples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:15] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:15] "GET /nested-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:15] "GET /binary-samples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:15] "GET /gallery-data.json HTTP/1.1" 200 -
+  ✓  113 [chromium] › viewer.spec.mjs:1410:1 › Slice navigation finishes a touch stroke and ignores its late pointer movement (885ms)
+(node:46807) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] ::1 - - [10/Oct/2026 11:51:17] "GET /embed-example.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:17] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:17] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:17] "GET /sample.3md HTTP/1.1" 200 -
+  ✓  114 [webkit] › component.spec.mjs:35:3 › <three-md> component › upgrades, renders planes, no console errors (578ms)
+[WebServer] ::1 - - [10/Oct/2026 11:51:20] "GET /embed-example.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:20] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:20] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:20] "GET /sample.3md HTTP/1.1" 200 -
+  ✓  115 [webkit] › component.spec.mjs:53:3 › <three-md> component › all deck cards share one width (focused matches the cards behind it) (3.6s)
+  ✓  112 [chromium] › viewer.spec.mjs:1388:1 › Slice history drops only old snapshots at the per-draft and collection budgets (6.5s)
+(node:46839) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+[WebServer] ::1 - - [10/Oct/2026 11:51:22] "GET /embed-example.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:22] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:22] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:22] "GET /sample.3md HTTP/1.1" 200 -
+  ✓  117 [webkit] › component.spec.mjs:84:3 › <three-md> component › focused plane is frontmost across the scrubber (1.1s)
+[WebServer] ::1 - - [10/Oct/2026 11:51:23] "GET /embed-example.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:23] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:23] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:23] "GET /sample.3md HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:24] "GET /embed-example.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:24] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:24] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:24] "GET /sample.3md HTTP/1.1" 200 -
+  ✓  116 [webkit] › component.spec.mjs:69:3 › <three-md> component › wide ASCII-art content is not clipped (card widens to fit rigid blocks) (3.6s)
+[WebServer] ::1 - - [10/Oct/2026 11:51:27] "GET /embed-example.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:27] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:27] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:27] "GET /sample.3md HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:27] "GET /embed-example.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:27] "GET /sample.3md HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:27] "GET /embed-example.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:27] "GET /sample.3md HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:27] "GET /embed-example.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:27] "GET /sample.3md HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:27] "GET /embed-example.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:27] "GET /sample.3md HTTP/1.1" 200 -
+  ✓  119 [webkit] › component.spec.mjs:109:3 › <three-md> component › no horizontal overflow from 320px to 1440px (3.7s)
+[WebServer] ::1 - - [10/Oct/2026 11:51:28] "GET /embed-example.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:28] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:28] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:28] "GET /sample.3md HTTP/1.1" 200 -
+  ✓  118 [webkit] › component.spec.mjs:94:3 › <three-md> component › works with requestAnimationFrame paused (Low Power Mode) (6.3s)
+[WebServer] ::1 - - [10/Oct/2026 11:51:29] "GET /embed-example.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:29] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:29] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:29] "GET /sample.3md HTTP/1.1" 200 -
+  ✓  121 [webkit] › component.spec.mjs:139:3 › <three-md> component › frame animations render as a flipbook (one frame, no deck) and autoplay (277ms)
+[WebServer] ::1 - - [10/Oct/2026 11:51:29] "GET /embed-example.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:29] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:29] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:29] "GET /sample.3md HTTP/1.1" 200 -
+  ✓  122 [webkit] › component.spec.mjs:160:3 › <three-md> component › does not auto-convert characters; an optional legend maps them (279ms)
+[WebServer] ::1 - - [10/Oct/2026 11:51:30] "GET /embed-example.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:30] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:30] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:30] "GET /sample.3md HTTP/1.1" 200 -
+  ✓  123 [webkit] › component.spec.mjs:184:3 › <three-md> component › camera: WASD/wheel/orbit move the scene; retired modes alias (271ms)
+[WebServer] ::1 - - [10/Oct/2026 11:51:30] "GET /embed-example.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:30] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:30] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:30] "GET /sample.3md HTTP/1.1" 200 -
+  ✓  124 [webkit] › component.spec.mjs:210:3 › <three-md> component › map mode lays planes out by x/y (258ms)
+  ✓  120 [webkit] › component.spec.mjs:123:3 › <three-md> component › playback advances and pauses (animations) (2.6s)
+[WebServer] ::1 - - [10/Oct/2026 11:51:30] "GET /embed-example.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:30] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:30] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:30] "GET /sample.3md HTTP/1.1" 200 -
+  ✓  125 [webkit] › component.spec.mjs:223:3 › <three-md> component › renders Markdown tables (not raw pipes) (269ms)
+[WebServer] ::1 - - [10/Oct/2026 11:51:30] "GET /embed-example.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:30] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:30] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:30] "GET /sample.3md HTTP/1.1" 200 -
+  ✓  126 [webkit] › component.spec.mjs:239:3 › <three-md> component › layers shows aligned overlays at once, with toggle chips (268ms)
+[WebServer] ::1 - - [10/Oct/2026 11:51:30] "GET /embed-example.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:30] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:30] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:30] "GET /sample.3md HTTP/1.1" 200 -
+  ✓  127 [webkit] › component.spec.mjs:261:3 › <three-md> component › blend mode renders content as 3D voxels (265ms)
+[WebServer] ::1 - - [10/Oct/2026 11:51:30] "GET /embed-example.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:30] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:30] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:30] "GET /sample.3md HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:31] "GET /embed-example.html HTTP/1.1" 200 -
+  ✓  128 [webkit] › component.spec.mjs:281:3 › <three-md> component › single-card mode shows only the focused plane (376ms)
+[WebServer] ::1 - - [10/Oct/2026 11:51:31] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:31] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:31] "GET /sample.3md HTTP/1.1" 200 -
+  ✓  129 [webkit] › component.spec.mjs:303:3 › <three-md> component › single-card mode scrolls a long plane (reader) (274ms)
+[WebServer] ::1 - - [10/Oct/2026 11:51:31] "GET /embed-example.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:31] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:31] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:31] "GET /sample.3md HTTP/1.1" 200 -
+  ✓  130 [webkit] › component.spec.mjs:326:3 › <three-md> component › reflects the resolved mode as data-mode (for fullscreen styling) (262ms)
+[WebServer] ::1 - - [10/Oct/2026 11:51:31] "GET /embed-example.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:31] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:31] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:31] "GET /sample.3md HTTP/1.1" 200 -
+  ✓  131 [webkit] › component.spec.mjs:343:3 › <three-md> component › space and PageDown advance like a slideshow (not in reader) (265ms)
+[WebServer] ::1 - - [10/Oct/2026 11:51:31] "GET /embed-example.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:31] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:31] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:31] "GET /sample.3md HTTP/1.1" 200 -
+  ✓  132 [webkit] › component.spec.mjs:366:3 › <three-md> component › cross-plane links [[z=N|text]] are clickable and navigate (261ms)
+[WebServer] ::1 - - [10/Oct/2026 11:51:31] "GET /embed-example.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:31] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:31] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:31] "GET /sample.3md HTTP/1.1" 200 -
+  ✓  133 [webkit] › component.spec.mjs:383:3 › <three-md> component › a tap (pointer, no drag) on a cross-plane link navigates (266ms)
+[WebServer] ::1 - - [10/Oct/2026 11:51:31] "GET /embed-example.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:31] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:31] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:31] "GET /sample.3md HTTP/1.1" 200 -
+  ✓  134 [webkit] › component.spec.mjs:402:3 › <three-md> component › flipbook frames are a fixed size (no resize between frames) (266ms)
+[WebServer] ::1 - - [10/Oct/2026 11:51:31] "GET /embed-example.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:31] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:31] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:31] "GET /sample.3md HTTP/1.1" 200 -
+  ✓  135 [webkit] › component.spec.mjs:420:3 › <three-md> component › loop toggle controls whether playback wraps (270ms)
+[WebServer] ::1 - - [10/Oct/2026 11:51:32] "GET /embed-example.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:32] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:32] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:32] "GET /sample.3md HTTP/1.1" 200 -
+  ✓  136 [webkit] › component.spec.mjs:438:3 › <three-md> component › emits planechange when stepping (271ms)
+[WebServer] ::1 - - [10/Oct/2026 11:51:32] "GET /embed-example.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:32] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:32] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:32] "GET /sample.3md HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:32] "GET /embed-example.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:32] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:32] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:32] "GET /sample.3md HTTP/1.1" 200 -
+  ✓  137 [webkit] › component.spec.mjs:450:3 › <three-md> component › legend values cannot inject HTML (XSS sink is escaped) (465ms)
+  ✓  138 [webkit] › component.spec.mjs:485:3 › <three-md> component › cross-plane links work for decimal z (not just integers) (273ms)
+[WebServer] ::1 - - [10/Oct/2026 11:51:32] "GET /embed-example.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:32] "GET /embed-example.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:32] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:32] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:32] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:32] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:32] "GET /sample.3md HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:32] "GET /sample.3md HTTP/1.1" 200 -
+  ✓  140 [webkit] › component.spec.mjs:518:3 › <three-md> component › blend voxels are the legend-mapped character glyphs, and billboard faces the camera (297ms)
+  ✓  139 [webkit] › component.spec.mjs:503:3 › <three-md> component › switching into blend after load builds voxels (no empty stage) (466ms)
+[WebServer] ::1 - - [10/Oct/2026 11:51:33] "GET /embed-example.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:33] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:33] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:33] "GET /sample.3md HTTP/1.1" 200 -
+  ✓  141 [webkit] › component.spec.mjs:537:3 › <three-md> component › without a legend, blend voxels show the raw characters (266ms)
+[WebServer] ::1 - - [10/Oct/2026 11:51:33] "GET /embed-example.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:33] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:33] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:33] "GET /sample.3md HTTP/1.1" 200 -
+  ✓  142 [webkit] › component.spec.mjs:549:3 › <three-md> component › blend is gated to COMPACT art: a sprawling grid is not voxelizable (falls back to deck) (267ms)
+[WebServer] ::1 - - [10/Oct/2026 11:51:33] "GET /embed-example.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:33] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:33] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:33] "GET /sample.3md HTTP/1.1" 200 -
+  ✓  143 [webkit] › component.spec.mjs:571:3 › <three-md> component › map and layers keep every tile inside the stage on all edges (many tiles) (278ms)
+[WebServer] ::1 - - [10/Oct/2026 11:51:33] "GET /embed-example.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:33] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:33] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:33] "GET /sample.3md HTTP/1.1" 200 -
+  ✓  144 [webkit] › component.spec.mjs:598:3 › <three-md> component › map orbit is clamped so an extreme pose never spills a tile off the stage (255ms)
+[WebServer] ::1 - - [10/Oct/2026 11:51:33] "GET /embed-example.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:33] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:33] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:33] "GET /sample.3md HTTP/1.1" 200 -
+  ✓  146 [webkit] › component.spec.mjs:652:3 › <three-md> component › map: no-coordinate planes lay out in a clean non-overlapping grid (277ms)
+[WebServer] ::1 - - [10/Oct/2026 11:51:34] "GET /embed-example.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:34] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:34] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:34] "GET /sample.3md HTTP/1.1" 200 -
+  ✓  147 [webkit] › component.spec.mjs:672:3 › <three-md> component › map: the focused card pops to a larger readable size than the board tiles (256ms)
+[WebServer] ::1 - - [10/Oct/2026 11:51:34] "GET /embed-example.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:34] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:34] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:34] "GET /sample.3md HTTP/1.1" 200 -
+  ✓  148 [webkit] › component.spec.mjs:689:3 › <three-md> component › map opens on a full-board overview (nothing forced open) until a tile is opened (263ms)
+[WebServer] ::1 - - [10/Oct/2026 11:51:34] "GET /embed-example.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:34] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:34] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:34] "GET /sample.3md HTTP/1.1" 200 -
+  ✓  149 [webkit] › component.spec.mjs:711:3 › <three-md> component › map: partially-positioned planes (only x or only y) do not pile up (247ms)
+[WebServer] ::1 - - [10/Oct/2026 11:51:34] "GET /embed-example.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:34] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:34] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:34] "GET /sample.3md HTTP/1.1" 200 -
+  ✓  150 [webkit] › component.spec.mjs:728:3 › <three-md> component › map: unpositioned planes do not collapse onto explicit (0,0) (278ms)
+[WebServer] ::1 - - [10/Oct/2026 11:51:35] "GET /embed-example.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:35] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:35] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:35] "GET /sample.3md HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:35] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:36] "GET /embed-example.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:36] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:36] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:36] "GET /sample.3md HTTP/1.1" 200 -
+  ✓  145 [webkit] › component.spec.mjs:623:3 › <three-md> component › map snaps coordinates to a non-overlapping grid (same x = column, same y = row) (3.5s)
+  ✓  151 [webkit] › examples-coverage.spec.mjs:8:1 › the component renders every gallery example cleanly (3.2s)
+[WebServer] ::1 - - [10/Oct/2026 11:51:38] "GET /index.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:38] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:38] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:38] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:38] "GET /all-examples.json HTTP/1.1" 200 -
+  ✓  153 [webkit] › lab.spec.mjs:69:3 › lab demo (index.html, backed by <three-md>) › focused plane is frontmost across the scrubber (1.1s)
+[WebServer] ::1 - - [10/Oct/2026 11:51:39] "GET /index.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:39] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:39] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:39] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:39] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:40] "GET /index.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:40] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:40] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:40] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:40] "GET /all-examples.json HTTP/1.1" 200 -
+  ✓  152 [webkit] › lab.spec.mjs:59:3 › lab demo (index.html, backed by <three-md>) › renders via the component with no console errors (4.0s)
+[WebServer] ::1 - - [10/Oct/2026 11:51:41] "GET /index.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:41] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:41] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:41] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:41] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:41] "GET /index.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:41] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:41] "GET /index.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:41] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:41] "GET /index.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:41] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:41] "GET /index.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:41] "GET /all-examples.json HTTP/1.1" 200 -
+  ✓  155 [webkit] › lab.spec.mjs:92:3 › lab demo (index.html, backed by <three-md>) › no horizontal overflow from 320px to 1440px (864ms)
+[WebServer] ::1 - - [10/Oct/2026 11:51:42] "GET /index.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:42] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:42] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:42] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:42] "GET /all-examples.json HTTP/1.1" 200 -
+  ✓  156 [webkit] › lab.spec.mjs:102:3 › lab demo (index.html, backed by <three-md>) › stepping the component highlights the synced source (977ms)
+[WebServer] ::1 - - [10/Oct/2026 11:51:42] "GET /index.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:43] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:43] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:43] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:43] "GET /all-examples.json HTTP/1.1" 200 -
+  ✓  154 [webkit] › lab.spec.mjs:75:3 › lab demo (index.html, backed by <three-md>) › every axis tab loads, scrubs cleanly, and syncs the source panel (4.8s)
+[WebServer] ::1 - - [10/Oct/2026 11:51:44] "GET /index.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:44] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:44] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:44] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:44] "GET /all-examples.json HTTP/1.1" 200 -
+  ✓  157 [webkit] › robustness.spec.mjs:37:3 › robustness (no degradation under heavy use) › no rAF-loop accumulation after switching tabs many times (4.3s)
+[WebServer] ::1 - - [10/Oct/2026 11:51:47] "GET /index.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:47] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:47] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:47] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:47] "GET /all-examples.json HTTP/1.1" 200 -
+  ✓  158 [webkit] › robustness.spec.mjs:65:3 › robustness (no degradation under heavy use) › DOM does not grow and the renderer stays correct after heavy use (4.0s)
+[WebServer] ::1 - - [10/Oct/2026 11:51:48] "GET /index.html?theme=dark HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:48] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:48] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:48] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:48] "GET /all-examples.json HTTP/1.1" 200 -
+  ✓  160 [webkit] › snapshots.spec.mjs:37:3 › stage snapshot: stack (999ms)
+[WebServer] ::1 - - [10/Oct/2026 11:51:49] "GET /index.html?theme=dark HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:49] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:49] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:49] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+  ✓  159 [webkit] › robustness.spec.mjs:95:3 › robustness (no degradation under heavy use) › rapid play/pause and scrub leave no timers or errors (2.2s)
+[WebServer] ::1 - - [10/Oct/2026 11:51:49] "GET /index.html?theme=dark HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:49] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:49] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:49] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:49] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:49] "GET /all-examples.json HTTP/1.1" 200 -
+  ✓  161 [webkit] › snapshots.spec.mjs:37:3 › stage snapshot: layers (1.0s)
+  ✓  162 [webkit] › snapshots.spec.mjs:37:3 › stage snapshot: scene (976ms)
+[WebServer] ::1 - - [10/Oct/2026 11:51:50] "GET /index.html?theme=dark HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:50] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:50] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:50] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:50] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:50] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:50] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:50] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:50] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:50] "GET /nested-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:50] "GET /binary-samples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:50] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:50] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:50] "GET /all-examples.json HTTP/1.1" 200 -
+  ✓  164 [webkit] › viewer.spec.mjs:34:3 › viewer & editor (viewer.html) › opening the page shows lit cubes in the window (423ms)
+[WebServer] ::1 - - [10/Oct/2026 11:51:50] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:50] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:50] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:50] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:50] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:50] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:50] "GET /nested-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:50] "GET /binary-samples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:50] "GET /gallery-data.json HTTP/1.1" 200 -
+  ✓  163 [webkit] › snapshots.spec.mjs:37:3 › stage snapshot: present (1.0s)
+[WebServer] ::1 - - [10/Oct/2026 11:51:51] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:51] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:51] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:51] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:51] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:51] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:51] "GET /binary-samples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:51] "GET /nested-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:51] "GET /all-examples.json HTTP/1.1" 200 -
+  ✓  165 [webkit] › viewer.spec.mjs:78:3 › viewer & editor (viewer.html) › one cell has filled faces from every side, with gold edges and glyph fill (789ms)
+[WebServer] ::1 - - [10/Oct/2026 11:51:51] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:51] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:51] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:51] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:51] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:51] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:51] "GET /binary-samples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:51] "GET /nested-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:51] "GET /all-examples.json HTTP/1.1" 200 -
+  ✓  166 [webkit] › viewer.spec.mjs:152:3 › viewer & editor (viewer.html) › clicking a visible cube picks its Z slice and blank stage does not (692ms)
+[WebServer] ::1 - - [10/Oct/2026 11:51:52] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:52] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:52] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:52] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:52] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:52] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:52] "GET /nested-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:52] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:52] "GET /binary-samples.json HTTP/1.1" 200 -
+  ✓  167 [webkit] › viewer.spec.mjs:165:3 › viewer & editor (viewer.html) › renders the starter document with no console errors (611ms)
+[WebServer] ::1 - - [10/Oct/2026 11:51:52] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:52] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:52] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:52] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:52] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:52] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:52] "GET /nested-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:52] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:52] "GET /binary-samples.json HTTP/1.1" 200 -
+  ✓  168 [webkit] › viewer.spec.mjs:176:3 › viewer & editor (viewer.html) › editing the source re-renders live (986ms)
+[WebServer] ::1 - - [10/Oct/2026 11:51:53] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:53] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:53] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:53] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:53] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:53] "GET /nested-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:53] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:53] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:53] "GET /binary-samples.json HTTP/1.1" 200 -
+  ✓  169 [webkit] › viewer.spec.mjs:190:3 › viewer & editor (viewer.html) › invalid 3md shows an error without crashing (1.0s)
+[WebServer] ::1 - - [10/Oct/2026 11:51:53] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:53] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:53] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:53] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:53] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:53] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:53] "GET /binary-samples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:53] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:53] "GET /nested-examples.json HTTP/1.1" 200 -
+  ✓  170 [webkit] › viewer.spec.mjs:204:3 › viewer & editor (viewer.html) › loading an example populates the editor and viewer (1.1s)
+[WebServer] ::1 - - [10/Oct/2026 11:51:54] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:54] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:54] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:54] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:54] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:54] "GET /nested-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:54] "GET /binary-samples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:54] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:54] "GET /all-examples.json HTTP/1.1" 200 -
+  ✓  171 [webkit] › viewer.spec.mjs:218:3 › viewer & editor (viewer.html) › editor highlights syntax and numbers every line (1.1s)
+[WebServer] ::1 - - [10/Oct/2026 11:51:54] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:54] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:54] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:54] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:54] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:54] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:54] "GET /nested-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:54] "GET /binary-samples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:54] "GET /gallery-data.json HTTP/1.1" 200 -
+  ✓  172 [webkit] › viewer.spec.mjs:246:3 › viewer & editor (viewer.html) › Tab indents and Enter continues a list (733ms)
+[WebServer] ::1 - - [10/Oct/2026 11:51:54] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:54] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:54] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:54] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:54] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:54] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:54] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:54] "GET /binary-samples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:54] "GET /nested-examples.json HTTP/1.1" 200 -
+  ✓  173 [webkit] › viewer.spec.mjs:262:3 › viewer & editor (viewer.html) › clicking a plane outline chip focuses that plane (948ms)
+[WebServer] ::1 - - [10/Oct/2026 11:51:55] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:55] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:55] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:55] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:55] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:55] "GET /binary-samples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:55] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:55] "GET /nested-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:55] "GET /all-examples.json HTTP/1.1" 200 -
+  ✓  174 [webkit] › viewer.spec.mjs:273:3 › viewer & editor (viewer.html) › the highlight backdrop scrolls with the textarea (tall document) (840ms)
+[WebServer] ::1 - - [10/Oct/2026 11:51:55] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:55] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:55] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:55] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:55] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:55] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:55] "GET /nested-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:55] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:55] "GET /binary-samples.json HTTP/1.1" 200 -
+  ✓  175 [webkit] › viewer.spec.mjs:290:3 › viewer & editor (viewer.html) › smart-key edits are undoable and never corrupt the buffer (831ms)
+[WebServer] ::1 - - [10/Oct/2026 11:51:56] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:56] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:56] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:56] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:56] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:56] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:56] "GET /binary-samples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:56] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:56] "GET /nested-examples.json HTTP/1.1" 200 -
+  ✓  176 [webkit] › viewer.spec.mjs:311:3 › viewer & editor (viewer.html) › validity state is machine-readable via data attributes (902ms)
+[WebServer] ::1 - - [10/Oct/2026 11:51:56] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:56] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:56] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:56] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:56] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:56] "GET /nested-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:56] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:56] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:56] "GET /binary-samples.json HTTP/1.1" 200 -
+  ✓  177 [webkit] › viewer.spec.mjs:337:3 › viewer & editor (viewer.html) › Tab does not trap keyboard focus (Esc then Tab leaves the editor) (716ms)
+  ✓  178 [webkit] › viewer.spec.mjs:351:3 › viewer & editor (viewer.html) › agent API validates and reports structured state (548ms)
+[WebServer] ::1 - - [10/Oct/2026 11:51:57] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:57] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:57] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:57] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:57] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:57] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:57] "GET /nested-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:57] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:57] "GET /binary-samples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:57] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:57] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:57] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:57] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:57] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:57] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:57] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:57] "GET /nested-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:57] "GET /binary-samples.json HTTP/1.1" 200 -
+  ✓  179 [webkit] › viewer.spec.mjs:364:3 › viewer & editor (viewer.html) › validate(src) is side-effect-free and reports the error code (637ms)
+[WebServer] ::1 - - [10/Oct/2026 11:51:57] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:57] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:57] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:57] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:57] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:57] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:57] "GET /binary-samples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:57] "GET /nested-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:57] "GET /gallery-data.json HTTP/1.1" 200 -
+  ✓  180 [webkit] › viewer.spec.mjs:380:3 › viewer & editor (viewer.html) › repository search opens the 24-generation Conway document (1.1s)
+[WebServer] ::1 - - [10/Oct/2026 11:51:58] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:58] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:58] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:58] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:58] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:58] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:58] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:58] "GET /binary-samples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:58] "GET /nested-examples.json HTTP/1.1" 200 -
+  ✓  181 [webkit] › viewer.spec.mjs:395:3 › viewer & editor (viewer.html) › kind 2 canopy opens as text in the element (1.1s)
+[WebServer] ::1 - - [10/Oct/2026 11:51:58] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:58] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:58] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:58] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:58] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:58] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:58] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:58] "GET /binary-samples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:58] "GET /nested-examples.json HTTP/1.1" 200 -
+  ✓  182 [webkit] › viewer.spec.mjs:412:3 › viewer & editor (viewer.html) › linked village search resolves the folder (1.0s)
+[WebServer] ::1 - - [10/Oct/2026 11:51:59] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:59] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:59] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:59] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:59] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:59] "GET /nested-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:59] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:59] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:51:59] "GET /binary-samples.json HTTP/1.1" 200 -
+  ✓  183 [webkit] › viewer.spec.mjs:426:3 › viewer & editor (viewer.html) › a composition profile shows the root and can switch entries (1.3s)
+[WebServer] ::1 - - [10/Oct/2026 11:52:00] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:00] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:00] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:00] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:00] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:00] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:00] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:00] "GET /binary-samples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:00] "GET /nested-examples.json HTTP/1.1" 200 -
+  ✓  184 [webkit] › viewer.spec.mjs:441:3 › viewer & editor (viewer.html) › markdown headings become planes and a plane search opens one (1.3s)
+  ✓  185 [webkit] › viewer.spec.mjs:458:3 › viewer & editor (viewer.html) › desktop layout keeps files beside a panel that switches Edit and Preview (779ms)
+[WebServer] ::1 - - [10/Oct/2026 11:52:00] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:00] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:00] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:00] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:00] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:00] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:00] "GET /binary-samples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:00] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:00] "GET /nested-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:00] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:00] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:00] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:00] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:00] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:00] "GET /nested-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:00] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:00] "GET /binary-samples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:00] "GET /gallery-data.json HTTP/1.1" 200 -
+  ✓  187 [webkit] › viewer.spec.mjs:546:3 › viewer & editor (viewer.html) › orbiting about 1400 gpu cubes stays interactive (781ms)
+[WebServer] ::1 - - [10/Oct/2026 11:52:01] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:01] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:01] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:01] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:01] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:01] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:01] "GET /nested-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:01] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:01] "GET /binary-samples.json HTTP/1.1" 200 -
+  ✓  186 [webkit] › viewer.spec.mjs:514:3 › viewer & editor (viewer.html) › cubes tab draws a fenced grid as translucent cubes (1.3s)
+[WebServer] ::1 - - [10/Oct/2026 11:52:01] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:01] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:01] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:01] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:01] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:01] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:01] "GET /binary-samples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:01] "GET /nested-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:01] "GET /all-examples.json HTTP/1.1" 200 -
+  ✓  188 [webkit] › viewer.spec.mjs:591:3 › viewer & editor (viewer.html) › narrow layout switches Files and the document, and Edit and Preview still switch (832ms)
+[WebServer] ::1 - - [10/Oct/2026 11:52:02] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:02] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:02] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:02] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:02] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:02] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:02] "GET /binary-samples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:02] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:02] "GET /nested-examples.json HTTP/1.1" 200 -
+  ✓  189 [webkit] › viewer.spec.mjs:627:3 › viewer & editor (viewer.html) › an empty document reads as a neutral prompt, not a red error (992ms)
+  ✓  190 [webkit] › viewer.spec.mjs:645:3 › viewer & editor (viewer.html) › axis lint warns on a TYPO but not on a valid free-string semantic axis (501ms)
+[WebServer] ::1 - - [10/Oct/2026 11:52:02] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:02] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:02] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:02] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:02] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:02] "GET /binary-samples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:02] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:02] "GET /nested-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:02] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:02] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:02] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:02] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:02] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:02] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:02] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:02] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:02] "GET /binary-samples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:02] "GET /nested-examples.json HTTP/1.1" 200 -
+  ✓  191 [webkit] › viewer.spec.mjs:671:3 › viewer & editor (viewer.html) › the page has no render-mode switch and does not autoplay (476ms)
+  ✓  192 [webkit] › viewer.spec.mjs:692:3 › viewer & editor (viewer.html) › the agent schema lists error codes and the axis-to-mode map (493ms)
+[WebServer] ::1 - - [10/Oct/2026 11:52:03] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:03] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:03] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:03] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:03] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:03] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:03] "GET /binary-samples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:03] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:03] "GET /nested-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:03] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:03] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:03] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:03] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:03] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:03] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:03] "GET /nested-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:03] "GET /binary-samples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:03] "GET /all-examples.json HTTP/1.1" 200 -
+  ✓  194 [webkit] › viewer.spec.mjs:713:3 › viewer & editor (viewer.html) › a corrupt share hash signals a decode error (not a silent starter) (730ms)
+  ✓  193 [webkit] › viewer.spec.mjs:702:3 › viewer & editor (viewer.html) › dangling cross-plane links are flagged as a non-fatal warning (923ms)
+[WebServer] ::1 - - [10/Oct/2026 11:52:04] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:04] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:04] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:04] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:04] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:04] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:04] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:04] "GET /binary-samples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:04] "GET /nested-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:04] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:04] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:04] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:04] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:04] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:04] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:04] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:04] "GET /binary-samples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:04] "GET /nested-examples.json HTTP/1.1" 200 -
+  ✓  195 [webkit] › viewer.spec.mjs:722:3 › viewer & editor (viewer.html) › the embedded agent schema marks axis optional, only 3md required (404ms)
+[WebServer] ::1 - - [10/Oct/2026 11:52:04] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:04] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:04] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:04] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:04] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:04] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:04] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:04] "GET /nested-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:04] "GET /binary-samples.json HTTP/1.1" 200 -
+  ✓  196 [webkit] › viewer.spec.mjs:729:3 › viewer & editor (viewer.html) › invalid doc clears stale plane/axis data on the badge (989ms)
+  ✓  197 [webkit] › viewer.spec.mjs:742:3 › viewer & editor (viewer.html) › an invalid document flags the offending line and the badge (927ms)
+[WebServer] ::1 - - [10/Oct/2026 11:52:05] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:05] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:05] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:05] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:05] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:05] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:05] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:05] "GET /binary-samples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:05] "GET /nested-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:05] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:05] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:05] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:05] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:05] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:05] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:05] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:05] "GET /binary-samples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:05] "GET /nested-examples.json HTTP/1.1" 200 -
+  ✓  198 [webkit] › viewer.spec.mjs:755:3 › viewer & editor (viewer.html) › a shared hash link restores the document (493ms)
+[WebServer] ::1 - - [10/Oct/2026 11:52:05] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:05] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:05] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:05] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:05] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:05] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:05] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:05] "GET /binary-samples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:05] "GET /nested-examples.json HTTP/1.1" 200 -
+  ✓  199 [webkit] › viewer.spec.mjs:766:3 › viewer & editor (viewer.html) › camera buttons and keyboard orbit, zoom, and fit without changing the document (761ms)
+  ✓  200 [webkit] › viewer.spec.mjs:795:3 › viewer & editor (viewer.html) › full camera turns cross both poles continuously and retain geometry (557ms)
+[WebServer] ::1 - - [10/Oct/2026 11:52:06] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:06] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:06] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:06] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:06] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:06] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:06] "GET /binary-samples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:06] "GET /nested-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:06] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:06] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:06] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:06] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:06] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:06] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:06] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:06] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:06] "GET /nested-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:06] "GET /binary-samples.json HTTP/1.1" 200 -
+  ✓  201 [webkit] › viewer.spec.mjs:843:3 › viewer & editor (viewer.html) › pan tools and modified dragging move only the camera and Fit recenters (671ms)
+  ✓  202 [webkit] › viewer.spec.mjs:874:3 › viewer & editor (viewer.html) › two fingers pan and pinch and a cancelled gesture cannot select a slice (608ms)
+[WebServer] ::1 - - [10/Oct/2026 11:52:06] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:06] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:06] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:06] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:06] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:06] "GET /binary-samples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:06] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:06] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:06] "GET /nested-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:06] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:06] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:06] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:06] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:06] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:06] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:06] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:06] "GET /binary-samples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:06] "GET /nested-examples.json HTTP/1.1" 200 -
+  ✓  204 [webkit] › viewer.spec.mjs:965:3 › viewer & editor (viewer.html) › phone layout leaves room for cubes and keeps controls outside the drawing (763ms)
+[WebServer] ::1 - - [10/Oct/2026 11:52:07] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:07] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:07] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:07] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:07] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:07] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:07] "GET /binary-samples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:07] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:07] "GET /nested-examples.json HTTP/1.1" 200 -
+  ✓  205 [webkit] › viewer.spec.mjs:987:3 › viewer & editor (viewer.html) › Document disclosure dismisses with Escape and both downloads preserve the document (805ms)
+[WebServer] ::1 - - [10/Oct/2026 11:52:08] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:08] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:08] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:08] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:08] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:08] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:08] "GET /nested-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:08] "GET /binary-samples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:08] "GET /all-examples.json HTTP/1.1" 200 -
+  ✓  206 [webkit] › viewer.spec.mjs:1024:3 › viewer & editor (viewer.html) › a prose document offers Preview without replacing its source (767ms)
+[WebServer] ::1 - - [10/Oct/2026 11:52:09] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:09] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:09] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:09] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:09] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:09] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:09] "GET /nested-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:09] "GET /binary-samples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:09] "GET /gallery-data.json HTTP/1.1" 200 -
+  ✓  207 [webkit] › viewer.spec.mjs:1042:3 › viewer & editor (viewer.html) › slice navigation keeps the selected plane in a single scrolling row (598ms)
+[WebServer] ::1 - - [10/Oct/2026 11:52:09] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:09] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:09] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:09] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:09] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:09] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:09] "GET /nested-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:09] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:09] "GET /binary-samples.json HTTP/1.1" 200 -
+  ✓  208 [webkit] › viewer.spec.mjs:1064:3 › viewer & editor (viewer.html) › a GitHub load shows busy state and recovers after a rate limit (581ms)
+[WebServer] ::1 - - [10/Oct/2026 11:52:10] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:10] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:10] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:10] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:10] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:10] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:10] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:10] "GET /binary-samples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:10] "GET /nested-examples.json HTTP/1.1" 200 -
+  ✓  203 [webkit] › viewer.spec.mjs:897:3 › viewer & editor (viewer.html) › browser camera projects and picks the shared native parity fixture (4.1s)
+  ✓  209 [webkit] › viewer.spec.mjs:1084:3 › viewer & editor (viewer.html) › GPU unavailability explains how to keep reading in Preview (641ms)
+[WebServer] ::1 - - [10/Oct/2026 11:52:11] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:11] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:11] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:11] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:11] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:11] "GET /nested-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:11] "GET /binary-samples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:11] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:11] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:11] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:11] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:11] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:11] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:11] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:11] "GET /nested-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:11] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:11] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:11] "GET /binary-samples.json HTTP/1.1" 200 -
+  ✓  211 [webkit] › viewer.spec.mjs:1143:3 › viewer & editor (viewer.html) › composition entry switches preserve each draft without copying it into another entry (864ms)
+  ✓  210 [webkit] › viewer.spec.mjs:1100:3 › viewer & editor (viewer.html) › file switches preserve edited, invalid, and empty drafts with caret and slice (1.1s)
+[WebServer] ::1 - - [10/Oct/2026 11:52:12] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:12] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:12] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:12] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:12] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:12] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:12] "GET /nested-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:12] "GET /binary-samples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:12] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:12] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:12] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:12] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:12] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:12] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:12] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:12] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:12] "GET /nested-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:12] "GET /binary-samples.json HTTP/1.1" 200 -
+  ✓  212 [webkit] › viewer.spec.mjs:1170:3 › viewer & editor (viewer.html) › linked entries and file navigation share the same draft (721ms)
+[WebServer] ::1 - - [10/Oct/2026 11:52:12] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:12] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:12] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:12] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:12] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:12] "GET /binary-samples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:12] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:12] "GET /nested-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:12] "GET /all-examples.json HTTP/1.1" 200 -
+  ✓  213 [webkit] › viewer.spec.mjs:1195:3 › viewer & editor (viewer.html) › search and packing use drafts rather than original file text (888ms)
+[WebServer] ::1 - - [10/Oct/2026 11:52:13] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:13] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:13] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:13] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:13] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:13] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:13] "GET /binary-samples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:13] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:13] "GET /nested-examples.json HTTP/1.1" 200 -
+  ✓  214 [webkit] › viewer.spec.mjs:1212:3 › viewer & editor (viewer.html) › file filtering, keyboard selection, and phone opens reveal the document (982ms)
+[WebServer] ::1 - - [10/Oct/2026 11:52:13] "GET /viewer.html?src=original-document.3md&theme=dark HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:13] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:13] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:13] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:13] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:13] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:13] "GET /nested-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:13] "GET /binary-samples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:13] "GET /all-examples.json HTTP/1.1" 200 -
+  ✓  215 [webkit] › viewer.spec.mjs:1240:3 › viewer & editor (viewer.html) › a failed local open preserves the collection and current draft (1.0s)
+[WebServer] ::1 - - [10/Oct/2026 11:52:14] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:14] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:14] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:14] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:14] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:14] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:14] "GET /nested-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:14] "GET /binary-samples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:14] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:14] "GET /viewer.html?theme=dark HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:14] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:14] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:14] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:14] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:14] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:14] "GET /binary-samples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:14] "GET /nested-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:14] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:14] "GET /viewer.html?theme=dark HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:14] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:14] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:14] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:14] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:14] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:14] "GET /nested-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:14] "GET /binary-samples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:14] "GET /gallery-data.json HTTP/1.1" 200 -
+  ✓  216 [webkit] › viewer.spec.mjs:1259:3 › viewer & editor (viewer.html) › explicit document navigation removes stale source queries and reloads the chosen source (1.0s)
+[WebServer] ::1 - - [10/Oct/2026 11:52:14] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:14] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:14] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:14] "GET /nested-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:14] "GET /binary-samples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:14] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:14] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:14] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:14] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:14] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:14] "GET /nested-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:14] "GET /binary-samples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:14] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:14] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:14] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:14] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:14] "GET /nested-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:14] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:14] "GET /binary-samples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:15] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:15] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:15] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:15] "GET /nested-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:15] "GET /binary-samples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:15] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:15] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:15] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:15] "GET /binary-samples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:15] "GET /nested-examples.json HTTP/1.1" 200 -
+  ✓  218 [webkit] › viewer.spec.mjs:1315:3 › Sculpt Slice parity › grid edits preserve CRLF, labels, prose and downloads exactly (856ms)
+[WebServer] ::1 - - [10/Oct/2026 11:52:15] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:15] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:15] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:15] "GET /nested-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:15] "GET /binary-samples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:15] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:15] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:15] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:15] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:15] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:15] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:15] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:15] "GET /binary-samples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:15] "GET /nested-examples.json HTTP/1.1" 200 -
+  ✓  217 [webkit] › viewer.spec.mjs:1298:3 › Sculpt Slice parity › shared native strokes, clipped brushes, four-neighbor fill and no-op undo (1.8s)
+[WebServer] ::1 - - [10/Oct/2026 11:52:15] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:15] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:15] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:15] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:15] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:15] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:15] "GET /nested-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:15] "GET /binary-samples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:15] "GET /gallery-data.json HTTP/1.1" 200 -
+  ✓  219 [webkit] › viewer.spec.mjs:1327:3 › Sculpt Slice parity › keyboard cells, grid zoom, previous overlay and shared WebGL reference (813ms)
+[WebServer] ::1 - - [10/Oct/2026 11:52:16] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:16] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:16] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:16] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:16] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:16] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:16] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:16] "GET /nested-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:16] "GET /binary-samples.json HTTP/1.1" 200 -
+  ✓  220 [webkit] › viewer.spec.mjs:1340:3 › Sculpt Slice parity › source typing and Slice share undo and retain it across file navigation (894ms)
+[WebServer] ::1 - - [10/Oct/2026 11:52:16] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:16] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:16] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:16] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:16] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:16] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:16] "GET /nested-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:16] "GET /binary-samples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:16] "GET /all-examples.json HTTP/1.1" 200 -
+  ✓  221 [webkit] › viewer.spec.mjs:1352:3 › Sculpt Slice parity › unsupported grids stay readable and budget rejection restores the full stroke (857ms)
+[WebServer] ::1 - - [10/Oct/2026 11:52:17] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:17] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:17] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:17] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:17] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:17] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:17] "GET /nested-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:17] "GET /binary-samples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:17] "GET /all-examples.json HTTP/1.1" 200 -
+  ✓  222 [webkit] › viewer.spec.mjs:1360:3 › Sculpt Slice parity › phone Slice tools and axis controls stay usable without horizontal page overflow (1.0s)
+  ✓  223 [webkit] › viewer.spec.mjs:1369:3 › Sculpt Slice parity › 2D editing works with an unavailable WebGL reference (665ms)
+[WebServer] ::1 - - [10/Oct/2026 11:52:17] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:17] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:17] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:17] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:17] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:17] "GET /nested-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:17] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:17] "GET /binary-samples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:17] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:17] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:17] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:17] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:17] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:17] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:17] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:17] "GET /nested-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:17] "GET /binary-samples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:17] "GET /all-examples.json HTTP/1.1" 200 -
+  ✓  224 [webkit] › viewer.spec.mjs:1374:3 › Sculpt Slice parity › axis inverse, finite inputs, pan steps and Fit leave source and geometry intact (802ms)
+[WebServer] ::1 - - [10/Oct/2026 11:52:18] "GET /viewer.html HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:18] "GET /assets/tokens.css HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:18] "GET /assets/theme.js HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:18] "GET /assets/three-md.js?v=1.7.17 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:18] "GET /assets/open-document.js?v=3 HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:18] "GET /gallery-data.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:18] "GET /all-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:18] "GET /nested-examples.json HTTP/1.1" 200 -
+[WebServer] ::1 - - [10/Oct/2026 11:52:18] "GET /binary-samples.json HTTP/1.1" 200 -
+  ✓  226 [webkit] › viewer.spec.mjs:1410:1 › Slice navigation finishes a touch stroke and ignores its late pointer movement (799ms)
+  ✓  225 [webkit] › viewer.spec.mjs:1388:1 › Slice history drops only old snapshots at the per-draft and collection budgets (7.2s)
+
+  226 passed (2.0m)

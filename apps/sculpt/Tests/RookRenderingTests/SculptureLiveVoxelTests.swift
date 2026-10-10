@@ -20,9 +20,17 @@ struct SculptureLiveVoxelTests {
         let view = controller.makeView()
         view.frame = CGRect(x: 0, y: 0, width: 400, height: 320)
         let id = UUID()
+        var rotated = SculptureCamera()
+        rotated.rotate(axis: 2, radians: .pi / 2)
         let poses = [
+            rotated,
             SculptureCamera(yaw: 0, pitch: 0), SculptureCamera(yaw: -0.6, pitch: 0.7),
             SculptureCamera(yaw: 1.1, pitch: -0.4, zoom: 1.2), SculptureCamera(yaw: -.pi / 2, pitch: 0.2),
+            SculptureCamera(yaw: -0.6, pitch: .pi / 2),
+            SculptureCamera(yaw: -0.6, pitch: .pi / 2 + 0.2),
+            SculptureCamera(yaw: 1.1, pitch: -.pi / 2),
+            SculptureCamera(yaw: -0.6, pitch: .pi),
+            SculptureCamera(yaw: -0.6, pitch: 0.35, zoom: 1.2, panX: 1.25, panY: -0.6),
         ]
         for camera in poses {
             controller.configure(
