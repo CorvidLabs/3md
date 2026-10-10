@@ -1881,25 +1881,39 @@ title: Small sculpture
       const limit = Math.min(1, maxEdge / bufferWidth, maxEdge / bufferHeight);
       return [Math.max(2, Math.floor(bufferWidth * limit)), Math.max(2, Math.floor(bufferHeight * limit))];
     }
+    function markCubeContextLost(canvas) {
+      cubeGpu.lost = true;
+      cubeGpu.gl = null;
+      cubeGpu.program = null;
+      cubeGpu.vao = null;
+      cubeGpu.instances = null;
+      cubeGpu.mvpLoc = null;
+      cubeGpu.selectedLoc = null;
+      cubeGpu.volume = null;
+      cubeGpu.failed = false;
+      canvas.__cubeGl = null;
+      canvas.dataset.renderer = "lost";
+      showCubeUnavailable();
+    }
+    function cubeGlFailure(canvas, gl, message) {
+      // Startup can fail before Safari sends webglcontextlost. Latch it here,
+      // otherwise every resize/redraw requests the same unusable context again.
+      if (gl?.isContextLost()) markCubeContextLost(canvas);
+      else { cubeGpu.failed = true; cubeGpu.error = message; }
+      return false;
+    }
     function bindCubeContext(canvas) {
       if (cubeGpu.bound) return;
       cubeGpu.bound = true;
       canvas.addEventListener("webglcontextlost", (event) => {
         event.preventDefault();
-        cubeGpu.lost = true;
-        cubeGpu.gl = null;
-        cubeGpu.program = null;
-        cubeGpu.vao = null;
-        cubeGpu.instances = null;
-        cubeGpu.volume = null;
-        cubeGpu.failed = false;
-        canvas.__cubeGl = null;
-        canvas.dataset.renderer = "lost";
-        showCubeUnavailable();
+        markCubeContextLost(canvas);
       });
       canvas.addEventListener("webglcontextrestored", () => {
         cubeGpu.lost = false;
         cubeGpu.failed = false;
+        cubeGpu.error = null;
+        delete canvas.dataset.glError;
         queueViewerDraw();
       });
       canvas.addEventListener("threemd-cubes", () => drawCubes());
@@ -1915,7 +1929,7 @@ title: Small sculpture
         stencil: false,
         premultipliedAlpha: false,
       });
-      if (!gl || gl.isContextLost()) return false;
+      if (!gl || gl.isContextLost()) return cubeGlFailure(canvas, gl, "WebGL2 context unavailable");
       const vert = `#version 300 es
         layout(location=0) in vec3 aPos;
         layout(location=1) in vec3 aNrm;
@@ -1969,30 +1983,37 @@ title: Small sculpture
         }`;
       function shader(type, source) {
         const compiled = gl.createShader(type);
+        if (!compiled || gl.isContextLost()) {
+          cubeGlFailure(canvas, gl, "Shader creation unavailable");
+          return null;
+        }
         gl.shaderSource(compiled, source);
         gl.compileShader(compiled);
+        if (gl.isContextLost()) { cubeGlFailure(canvas, gl); return null; }
         if (!gl.getShaderParameter(compiled, gl.COMPILE_STATUS)) {
-          cubeGpu.failed = true;
-          cubeGpu.error = gl.getShaderInfoLog(compiled) || "shader";
+          cubeGlFailure(canvas, gl, gl.isContextLost() ? null : gl.getShaderInfoLog(compiled) || "shader");
           return null;
         }
         return compiled;
       }
       const vs = shader(gl.VERTEX_SHADER, vert);
+      if (!vs) return false;
       const fs = shader(gl.FRAGMENT_SHADER, frag);
-      if (!vs || !fs) return false;
+      if (!fs) return false;
       const program = gl.createProgram();
+      if (!program || gl.isContextLost()) return cubeGlFailure(canvas, gl, "Program creation unavailable");
       gl.attachShader(program, vs);
       gl.attachShader(program, fs);
       gl.linkProgram(program);
+      if (gl.isContextLost()) return cubeGlFailure(canvas, gl);
       if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
-        cubeGpu.failed = true;
-        cubeGpu.error = gl.getProgramInfoLog(program) || "link";
-        return false;
+        return cubeGlFailure(canvas, gl, gl.isContextLost() ? null : gl.getProgramInfoLog(program) || "link");
       }
       const vao = gl.createVertexArray();
+      if (!vao || gl.isContextLost()) return cubeGlFailure(canvas, gl, "Vertex array creation unavailable");
       gl.bindVertexArray(vao);
       const mesh = gl.createBuffer();
+      if (!mesh || gl.isContextLost()) return cubeGlFailure(canvas, gl, "Mesh buffer creation unavailable");
       gl.bindBuffer(gl.ARRAY_BUFFER, mesh);
       gl.bufferData(gl.ARRAY_BUFFER, cubeMesh(), gl.STATIC_DRAW);
       gl.enableVertexAttribArray(0);
@@ -2000,6 +2021,7 @@ title: Small sculpture
       gl.enableVertexAttribArray(1);
       gl.vertexAttribPointer(1, 3, gl.FLOAT, false, 24, 12);
       const instances = gl.createBuffer();
+      if (!instances || gl.isContextLost()) return cubeGlFailure(canvas, gl, "Instance buffer creation unavailable");
       gl.bindBuffer(gl.ARRAY_BUFFER, instances);
       gl.bufferData(gl.ARRAY_BUFFER, 4000 * 8 * 4, gl.DYNAMIC_DRAW);
       gl.enableVertexAttribArray(2);
@@ -2021,12 +2043,16 @@ title: Small sculpture
       gl.depthMask(false);
       gl.enable(gl.CULL_FACE);
       gl.cullFace(gl.BACK);
+      if (gl.isContextLost()) return cubeGlFailure(canvas, gl);
+      const mvpLoc = gl.getUniformLocation(program, "uMvp");
+      const selectedLoc = gl.getUniformLocation(program, "uSelected");
+      if (gl.isContextLost()) return cubeGlFailure(canvas, gl);
       cubeGpu.gl = gl;
       cubeGpu.program = program;
       cubeGpu.vao = vao;
       cubeGpu.instances = instances;
-      cubeGpu.mvpLoc = gl.getUniformLocation(program, "uMvp");
-      cubeGpu.selectedLoc = gl.getUniformLocation(program, "uSelected");
+      cubeGpu.mvpLoc = mvpLoc;
+      cubeGpu.selectedLoc = selectedLoc;
       canvas.__cubeGl = gl;
       return true;
     }
@@ -2167,17 +2193,17 @@ title: Small sculpture
       // A lost context cannot be recovered by resizing or getContext(). Wait for
       // webglcontextrestored before allocating drawables or rebuilding resources.
       if (cubeGpu.lost || cubeGpu.gl?.isContextLost()) {
-        cubeGpu.lost = true;
-        canvas.dataset.renderer = "lost";
-        showCubeUnavailable();
+        markCubeContextLost(canvas);
         return;
       }
+      if (cubeGpu.failed) { showCubeUnavailable(); return; }
       const [bufferWidth, bufferHeight] = cubeBufferSize(width, height);
       // A small Slice reference must not leave a low-resolution bitmap stretched
       // across Cubes. Resize only changed drawable dimensions; keep the context,
       // program and geometry installed, then redraw with the current camera.
       if (canvas.width !== bufferWidth) canvas.width = bufferWidth;
       if (canvas.height !== bufferHeight) canvas.height = bufferHeight;
+      if (cubeGpu.gl?.isContextLost()) { markCubeContextLost(canvas); return; }
       if (!cubeGpu.gl && !initCubeGl(canvas)) {
         if (canvas.dataset.renderer !== "lost") canvas.dataset.renderer = "none";
         if (cubeGpu.error) canvas.dataset.glError = cubeGpu.error.slice(0, 240);
@@ -2190,6 +2216,7 @@ title: Small sculpture
       else { cubeGpu.count = 0; cubeGpu.volume = null; cubePick.points = []; }
       const mvp = cubeCamera(width, height, volume, Math.max(doc?.planes?.length || 1, 1));
       const gl = cubeGpu.gl;
+      if (gl.isContextLost()) { markCubeContextLost(canvas); return; }
       gl.viewport(0, 0, canvas.width, canvas.height);
       gl.clearColor(0.065, 0.085, 0.10, 1);
       gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
@@ -2198,6 +2225,7 @@ title: Small sculpture
       gl.uniformMatrix4fv(cubeGpu.mvpLoc, false, mvp);
       gl.uniform1f(cubeGpu.selectedLoc, selected);
       if (cubeGpu.count > 0) gl.drawArraysInstanced(gl.TRIANGLES, 0, 36, cubeGpu.count);
+      if (gl.isContextLost()) { markCubeContextLost(canvas); return; }
       gl.bindVertexArray(null);
       cubePick.width = width;
       cubePick.height = height;

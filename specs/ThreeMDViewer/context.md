@@ -72,3 +72,7 @@ README and `docs/VIEWER.md` provide GitHub-backed text, binary, composition and 
 Resize observers queue a single animation-frame redraw. The Slice surface provides virtual scroll extents while its bitmap covers only visible cells, at capped display density. Context loss suspends GPU allocation/drawing until restoration; drafts, camera and slice remain application state.
 
 The expanded viewer regression set covers all catalog documents and supported local binary/composition/folder inputs, with explicit phone/desktop size boundaries. Preview supports prose documents; only matching rectangular sculpture grids qualify for Slice. Test expansion does not change the shared runtime or the site's d2e875e pin.
+
+## Safari startup follow-up
+
+Leif reported 256 context-loss messages after PR95 and the site import merged. Actual Safari 26.5.2 reproduced the loss on the public site; a fresh copy subsequently rendered, so the hardware/origin cause is not proven. Initialization previously returned on a null or already-lost context without latching it, allowing hundreds of getContext attempts before a loss event. Startup and resource failures now stop further allocations/draws, and restoration clears the cached error and rebuilds once. Shader, color, camera, picking, format and editing behavior remain unchanged. Native Safari evidence complements Playwright WebKit; a green WebKit run alone did not establish Safari stability.

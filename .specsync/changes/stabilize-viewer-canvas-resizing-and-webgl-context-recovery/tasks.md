@@ -10,3 +10,5 @@ artifact: tasks
 - [x] Publish upstream PR95 and import its exact tested revision in the site follow-up checkout; independent site gates and PR publication are owned by that site change.
 
 - [x] Add and verify every text catalog example, local binary/composition/folder inputs and desktop/phone size-boundary regressions requested by Leif.
+
+- [x] Verify the Safari startup/event gap, safe resource failure and actual native restoration.
