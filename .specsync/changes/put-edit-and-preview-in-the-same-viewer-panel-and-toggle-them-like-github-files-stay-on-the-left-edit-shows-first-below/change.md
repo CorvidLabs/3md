@@ -1,6 +1,6 @@
 ---
 id: put-edit-and-preview-in-the-same-viewer-panel-and-toggle-them-like-github-files-stay-on-the-left-edit-shows-first-below
-state: verifying
+state: implementing
 type: feature
 base_commit: e18f35e2c0c2c11c202342c5bf84b514ee12fe58
 ---
