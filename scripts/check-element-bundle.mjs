@@ -1,6 +1,7 @@
 import { mkdtemp, rm } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
+import { fileURLToPath } from "node:url";
 import { $ } from "bun";
 
 const root = new URL("../", import.meta.url);
@@ -19,7 +20,7 @@ const maximumBundleBytes = 50_000;
 const builtBundle = join(tempDir, "three-md.js");
 
 try {
-  await $`bun build ${source.pathname} --outfile ${builtBundle} --format esm --target browser --minify`;
+  await $`bun build ${fileURLToPath(source)} --outfile ${builtBundle} --format esm --target browser --minify`;
 
   const built = await Bun.file(builtBundle).text();
   const web = await Bun.file(webBundle).text();
@@ -49,10 +50,10 @@ try {
   }
 
   if (failed) {
-    process.exit(1);
+    process.exitCode = 1;
+  } else {
+    console.log(`element bundle is current (${bundleBytes} bytes, no storage code)`);
   }
-
-  console.log(`element bundle is current (${bundleBytes} bytes, no storage code)`);
 } finally {
   await rm(tempDir, { recursive: true, force: true });
 }
