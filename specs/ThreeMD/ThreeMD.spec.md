@@ -1,6 +1,6 @@
 ---
 module: ThreeMD
-version: 10
+version: 11
 status: active
 files:
   - Sources/ThreeMD/Axis.swift
@@ -686,11 +686,16 @@ returns no document and no encoded bytes.
   `unicode-normalization = "=0.1.25"` as its only dependency and adds
   `#![forbid(unsafe_code)]`. The fast CRC is table-driven code in each port,
   with no hardware intrinsics required.
+- Repository validation runs the element bundle checker and its subprocess
+  regressions through the existing `element-bundle` lane step. The checker
+  preserves bundle bytes, removes temporary output after success or failure,
+  and supports checkout paths containing spaces. This adds no library dependency.
 
 ## Change Log
 
 | Version | Date | Changes |
 |---------|------|---------|
+| 11 | 2026-10-15 | Run element bundle-check failure cleanup and spaced-path regressions in the native verification lane. |
 | Editing preparation | 2026-10-05 | Additive stable identities, exact-revision typed patches and structured diagnostics; Swift-first release preparation with unchanged text compatibility and historical archives. |
 | 1 | 2026-06-23 | Initial text parser/serializer and HTML rendering spec. |
 | 1 | 2026-06-24 | Shared text contract across Swift, TypeScript and Rust. |

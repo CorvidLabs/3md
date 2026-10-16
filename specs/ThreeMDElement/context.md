@@ -124,6 +124,12 @@ Source lives in `element/src/three-md.ts`, a single module:
 
 ## Rendering pipeline
 
+The element bundle checker is exercised through seven disposable subprocess
+fixtures before checking the real bundle. Validation failures set a nonzero
+exit code without exiting before the cleanup `finally`; source URL paths are
+decoded before passing them to the build command. These checks preserve the
+published bundle and parser-only size/storage boundaries.
+
 The element runs a small fixed flow:
 
 1. **Build.** On first connect (or first `setSource`), attach the shadow root if

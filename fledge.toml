@@ -11,7 +11,7 @@ fmt = "swift-format format --in-place --recursive Sources Tests Package.swift"
 lint = "swift-format lint --strict --recursive Sources Tests Package.swift"
 build = "swift build"
 test = "swift test"
-element-bundle = "bun scripts/check-element-bundle.mjs"
+element-bundle = "bun test scripts/check-element-bundle.test.ts && bun scripts/check-element-bundle.mjs"
 interchange = "swift run threemd-interchange"
 
 [tasks.editor]

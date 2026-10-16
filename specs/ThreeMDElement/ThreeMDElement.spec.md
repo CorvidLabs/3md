@@ -1,6 +1,6 @@
 ---
 module: ThreeMDElement
-version: 1
+version: 2
 status: draft
 files:
   - element/src/three-md.ts
@@ -106,6 +106,10 @@ through CSS custom properties (for example `--three-md-accent`, `--three-md-bg`,
    `js/src/number.ts`, so the parser has no import edge into `storage.ts`. The
    fresh build still equals `web/assets/three-md.js` and, when present,
    `element/dist/three-md.js`.
+5. Bundle verification removes its temporary build directory after both success
+   and failure, preserves the committed bundles, and accepts checkout paths
+   containing spaces. A failed validation exits nonzero without printing the
+   success message.
 
 ## Behavioral Examples
 
@@ -153,4 +157,5 @@ Then a planechange event is dispatched once with detail { index: 1, z: 1, label,
 
 | Version | Date | Changes |
 |---------|------|---------|
+| 2 | 2026-10-15 | Verify scratch cleanup on every bundle-check outcome and support checkout paths containing spaces. |
 | 1 | 2026-06-23 | Initial spec for the `<three-md>` element: attributes (`src`, `mode`), properties (`document`, `currentIndex`, `mode`), methods (`goTo`, `setSource`, `render`), the `planechange` event, the seven render modes, theming through CSS custom properties and `::part`, and the three rendering invariants. Renders format 1.0; package version 1.0.0. |

@@ -94,6 +94,14 @@ Grouped by behavior, with the asserting check of each test.
   and `getBigUint64`, and its size is at most 50,000 bytes (2.0.0: 48,816
   bytes). A storage module with a top-level side effect, or a parser import edge
   into `storage.ts`, fails the step.
+- `scripts/check-element-bundle.test.ts` runs the actual checker in disposable
+  fixtures with matching bundles, stale web/package bundles, storage markers,
+  an oversized bundle, a checkout path containing spaces, and a compiler error.
+  It asserts exit status, diagnostic messages, unchanged bundle files, and no
+  remaining scratch directory. These seven subprocess regressions run before
+  the real bundle check in the native verification lane. Against the previous
+  checker, the four failed-validation cleanup cases and the spaced-path case
+  fail; the matching-bundle and compiler-error controls pass.
 
 ### Gaps and future test ideas
 

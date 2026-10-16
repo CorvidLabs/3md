@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "workflow_version": 2,
+  "workflow_origin_version": 2,
+  "id": "keep-element-bundle-verification-clean-on-failure-and-usable-from-spaced-checkout-paths",
+  "slug": "keep-element-bundle-verification-clean-on-failure-and-usable-from-spaced-checkout-paths",
+  "title": "Keep element bundle verification clean on failure and usable from spaced checkout paths",
+  "description": "Keep element bundle verification clean on failure and usable from spaced checkout paths",
+  "kind": "bug_fix",
+  "state": "draft",
+  "base_commit": "c19963be38ec9843b738c1dc335c53809bb99207",
+  "created_at": 1792120266,
+  "updated_at": 1792121365,
+  "affected_specs": [
+    "ThreeMD",
+    "ThreeMDElement"
+  ],
+  "affected_paths": [
+    "scripts/check-element-bundle.mjs",
+    "scripts/check-element-bundle.test.ts",
+    "fledge.toml",
+    "specs/ThreeMD",
+    "specs/ThreeMDElement"
+  ],
+  "no_spec_change": false,
+  "no_spec_change_rationale": null,
+  "acceptance_criteria": [
+    "Matching bundles pass; stale web/package bundles, storage leakage, oversized output and compiler errors fail without modifying bundles or leaving scratch directories; checkouts containing spaces work; all seven subprocess regressions and the actual bundle check run in the existing native lane."
+  ],
+  "selected_artifacts": [
+    "context",
+    "testing",
+    "tasks",
+    "design"
+  ],
+  "dependencies": [],
+  "answers": {
+    "architecture_risk": "no",
+    "constraints": "Preserve the parser-only element bundle, the 50000-byte budget, exact published bundle bytes, source/library formats, signer policy and truthful human lifecycle boundaries; run substantive subprocess negative controls.",
+    "public_contract": "no"
+  }
+}
