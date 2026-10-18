@@ -1,0 +1,43 @@
+{
+  "approvals": [
+    {
+      "gate": "definition",
+      "actor": "0xLeif",
+      "timestamp": 1792332499,
+      "digest": "4b677788851f857f7d93e23e3714c3cf931ecd0466d9572fa311e130946ad877",
+      "note": "Human definition approval: Leif (0xLeif) answered yes at 2026-10-18 14:07 UTC to the written nine-project implementation scope in source thread 01a118b4-4fe7-70fc-9f2d-dbbe961ba009. Evidence relayed by authorized delegation. Recorded by agent:codex as corvid-agent. Approval covers this prepared definition only; not human implementation acceptance, review, merge, release or deployment.",
+      "approved_scope": {
+        "schema_version": 1,
+        "change_id": "adopt-verified-specsync-6-1-1-approval-review-learning-and-archive-lifecycle-for-3md",
+        "title": "Adopt verified SpecSync 6.1.1 approval review learning and archive lifecycle for 3md",
+        "description": "Adopt verified SpecSync 6.1.1 approval review learning and archive lifecycle for 3md",
+        "kind": "operations",
+        "affected_specs": [],
+        "affected_paths": [
+          ".claude/skills/spec-sync/SKILL.md",
+          ".codex/skills/spec-sync/SKILL.md",
+          ".cursor/skills/spec-sync/SKILL.md",
+          ".gemini/skills/spec-sync/SKILL.md",
+          ".github/workflows/trust.yml",
+          ".specsync/sdd.json",
+          "AGENTS.md",
+          "scripts/check-specsync-lifecycle.sh",
+          "scripts/test-specsync-lifecycle.sh"
+        ],
+        "no_spec_change": true,
+        "no_spec_change_rationale": "Operations-only CI and agent governance migration; product APIs and canonical module contracts remain unchanged.",
+        "acceptance_criteria": [
+          "Exact 6.1.1 writer and action inputs; required meaningful source/test/governance coverage; genuine human definition approval before implementation; separate current scoped human review of the implementation; actual product tests distinct from canonical checks and active-workspace audit; same-PR finalize/archive before merge; read prior lessons and record observed findings with evidence and limits. Preserve all stronger existing checks, risk thresholds, signer policies, archives and unrelated work. A non-mutating lifecycle guard fails for a wrong engine, disabled policy, uncovered meaningful path or unfinished active workspace and passes a clean finalized fixture. No fabricated approvals or inherited-history repairs. Human review and finalization remain pending until they actually happen."
+        ],
+        "dependencies": [],
+        "supersedes": [],
+        "answers": {
+          "architecture_risk": "no",
+          "public_contract": "no"
+        }
+      },
+      "approved_delta_digests": {}
+    }
+  ],
+  "reopenings": []
+}
