@@ -12,3 +12,12 @@ Canonical strict100 coverage passed. All 15 lifecycle controls passed, including
 Cold full verify timed out at240 seconds after lint/build while Swift tests were running; warm full retry PASSED all eight steps in5m41.827s (exit0): lint/build,315 Swift tests,431 JS tests,115 Rust tests (one existing ignored exhaustive mutant test), nine-pair interchange, element bundle drift and editor grammar checks. Linux Sculpt exit1 missing lzfse.h; Godot missing; macOS lane unavailable. Trust initial invocation could not infer comparison range. The root product lane passed. No Sculpt, Godot, complete Trust pass, hosted CI, human implementation review or finalization is asserted.
 
 Owners must recover incomplete inherited plans/interviews, REQ-ThreeMD-044 collision and stale verification separately. Provide Linux LZFSE/Godot prerequisites and macOS Sculpt validation; complete product/Trust gates before readiness.
+
+Final workflow review: even always() steps in the same job make product Trust status red
+until archive finalization. Moved only the new lifecycle controls/guard into an independent
+archive-readiness job with checksum-verified6.1.1 installation. Existing canonical, product,
+risk, provenance and Trust-block steps remain unchanged in the original trust job. Neither
+job depends on the other; readiness still requires both, without forcing human finalization
+before product evidence is available. YAML structure and fixture controls validate the split.
+The prior explicit-range Trust run was interrupted for user-requested cleanup (exit15), not
+a pass; a disk-monitored exact-candidate rerun is pending.

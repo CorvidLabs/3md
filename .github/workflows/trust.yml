@@ -81,9 +81,34 @@ jobs:
         run: |
           grep -q "CorvidLabs trust toolchain: BEGIN" AGENTS.md
 
-      # Independent results: inherited lifecycle debt must not skip existing Trust checks.
+  # Archive readiness is a separate status: product Trust can complete before human
+  # implementation review and same-PR finalization. Both statuses remain required.
+  archive-readiness:
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install checksum-verified SpecSync 6.1.1
+        shell: bash
+        run: |
+          set -euo pipefail
+          archive="$RUNNER_TEMP/specsync-macos-aarch64.tar.gz"
+          checksum="$archive.sha256"
+          base="https://github.com/CorvidLabs/spec-sync/releases/download/v6.1.1"
+          curl -fsSL "$base/specsync-macos-aarch64.tar.gz" -o "$archive"
+          curl -fsSL "$base/specsync-macos-aarch64.tar.gz.sha256" -o "$checksum"
+          expected="$(awk '{print $1}' "$checksum")"
+          actual="$(shasum -a 256 "$archive" | awk '{print $1}')"
+          test "$actual" = "$expected"
+          mkdir -p "$RUNNER_TEMP/specsync-bin"
+          tar -xzf "$archive" -C "$RUNNER_TEMP/specsync-bin"
+          mv "$RUNNER_TEMP/specsync-bin/specsync-macos-aarch64" "$RUNNER_TEMP/specsync-bin/specsync"
+          chmod +x "$RUNNER_TEMP/specsync-bin/specsync"
+          echo "$RUNNER_TEMP/specsync-bin" >> "$GITHUB_PATH"
+
       - name: Lifecycle regression controls
-        if: ${{ always() }}
         run: bash scripts/test-specsync-lifecycle.sh
 
       - name: Active lifecycle and archive gate
