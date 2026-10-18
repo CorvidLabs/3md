@@ -80,6 +80,22 @@
         }
       ],
       "requirement_ids": []
+    },
+    {
+      "timestamp": 1792339982,
+      "commit": "507f63d6cecce32e34efb59ec9039e67bd2f1ea7",
+      "contract_digest": "15696a49a060f43344e43fcc830ce7413d265cda61d9031e33750ef073f6d590",
+      "execution_digest": "ab68f592a2d69ad1942dd3acb8ad6cf063006bcdcc5900342d30ce7ce10c2c4f",
+      "workspace_digest": "19f8e1584958db8fb185453046a406c84fe8af2f79f59aa05fcb8a0d37173bf6",
+      "passed": true,
+      "commands": [
+        {
+          "command": "specsync check --spec ThreeMD --spec ThreeMDViewer --strict",
+          "success": true,
+          "exit_code": 0
+        }
+      ],
+      "requirement_ids": []
     }
   ]
 }
