@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "workflow_version": 2,
+  "workflow_origin_version": 2,
+  "id": "retire-the-superseded-threemd-2-1-documentation-workspace-as-an-unchanged-historical-snapshot",
+  "slug": "retire-the-superseded-threemd-2-1-documentation-workspace-as-an-unchanged-historical-snapshot",
+  "title": "Retire the superseded ThreeMD 2.1 documentation workspace as an unchanged historical snapshot",
+  "description": "Retire the superseded ThreeMD 2.1 documentation workspace as an unchanged historical snapshot",
+  "kind": "operations",
+  "state": "verifying",
+  "canonical_applied": true,
+  "base_commit": "48ff62f8e44f4b6cced9e35c984085764659c282",
+  "created_at": 1792338305,
+  "updated_at": 1792339947,
+  "affected_specs": [],
+  "affected_paths": [
+    ".specsync/changes/update-the-public-docs-for-the-2-1-monorepo-and-make-repository-spec-coverage-100/",
+    ".specsync/retired/"
+  ],
+  "no_spec_change": true,
+  "no_spec_change_rationale": "The 2.1 documentation delta was superseded by canonical 2.2.0 and 2.2.1 release documentation. Preserve its current workspace bytes and verifying state as non-finalized history; do not replay its stale delta or change living specs.",
+  "acceptance_criteria": [
+    "Preserve every file and original verifying state of the superseded 2.1 documentation workspace byte-for-byte under a dated .specsync/retired snapshot with SHA-256 manifest and explicit non-finalized label. Preserve canonical/source tree, prior approvals and archives. Do not reapply obsolete 2.1 requirements. Keep all other unresolved active work and strict policy audit failures visible. Verify manifest, unchanged trees and scope; current retirement operation requires actual definition approval and current human review before native finalization. No merge, release, deployment or engine change."
+  ],
+  "selected_artifacts": [
+    "context",
+    "plan",
+    "testing",
+    "research",
+    "design",
+    "tasks"
+  ],
+  "dependencies": [],
+  "answers": {
+    "architecture_risk": "yes",
+    "constraints": "Only the public-docs/coverage workspace is selected. Its REQ-ThreeMD-044 was superseded by fe20a18 and 4e718b4 release documentation. Other records, especially incomplete structured-binary scope, remain active. Bot retirement is a reference only, not authority. This new definition has no approval yet; do not move files before actual approval or claim prior exact-head review covers it.",
+    "public_contract": "no"
+  }
+}
