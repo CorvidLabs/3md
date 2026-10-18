@@ -114,7 +114,7 @@ config in `.swift-format` enforces the mechanical parts.
 
 ## Binary and composition scope
 
-Use SpecSync 6.0.0 for all lifecycle writers. The local binary is
+Use SpecSync 6.1.1 for all lifecycle writers. The local binary is
 `/Users/leif/.cargo/bin/specsync`; the development Fledge pin is 1.7.2 at
 `/opt/homebrew/bin/fledge`. CI verifies the release checksums and pins Trust
 1.2.2 to `bccd89c111d47778c97c5064fb62ab51695e04ea`. PATH can resolve
@@ -212,3 +212,25 @@ This repository uses one trust gate. Every session must use it and must not bypa
 - Keep generated trust configuration and this managed block in place.
 
 <!-- CorvidLabs trust toolchain: END -->
+
+## Required SpecSync 6.1.1 delivery lifecycle
+
+Use an explicitly verified 6.1.1 executable; the historical local path above is not proof
+of its version. Root required meaningful coverage includes gdscript/, apps/sculpt/ and
+.agents/. Preserve Sculpt's nested specs, hashes and separate Linux/macOS lanes.
+
+Inspect the completed native definition with the human and record only actual approval
+before implementation. Changed definitions need renewed approval. Run product tests,
+canonical validation, scoped change verification and strict active-workspace audit separately.
+An operations check with no spec in scope does not establish product testing.
+
+Run `bash scripts/test-specsync-lifecycle.sh` and `bash scripts/check-specsync-lifecycle.sh`.
+The non-mutating gate requires the exact engine and coverage policy, native strict active
+audit, and no unfinished active workspace. Inherited failures remain owner recovery work;
+do not exempt them or rewrite historical approval.
+
+For agent work, a human must inspect the current implementation, package, canonical delta
+and evidence before `change review`. Definition approval is not implementation acceptance.
+Finalize/archive on that same PR after actual verification and review; do not merge first.
+Read prior lessons and record observed problems, smallest corrections, evidence, applicability
+limits and open questions in native context/lesson bundles. Preserve prior archives.

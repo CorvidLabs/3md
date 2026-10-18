@@ -1,0 +1,12 @@
+{
+  "schema_version": 2,
+  "change_id": "adopt-verified-specsync-6-1-1-approval-review-learning-and-archive-lifecycle-for-3md",
+  "implementation_commit": "aa35d5cff5df3eeac55f69dba538026e6c9da2a6",
+  "implementation_tree": "84c232b8572dc0369729cf549a8884607982eae1",
+  "contract_digest": "4b677788851f857f7d93e23e3714c3cf931ecd0466d9572fa311e130946ad877",
+  "workspace_digest": "647da28121b9f545f3246bdecbb1abebb6d92a801f682f57ba85f1f0d7c8ef24",
+  "closing_digest": "2e7a0a12464b78d7981563784042c7568a56f8af00e88ff28e08544df43dd875",
+  "review_digest": "ae3e073ba73b3cd80e83182032c89271c7ff67a6d5cfb341389335eb3a04c5e8",
+  "finalization_digest": "128ed5764be5ced507882d619d3f61a1a4443d52867717796efdd1ca5c72c779",
+  "timestamp": 1792335718
+}

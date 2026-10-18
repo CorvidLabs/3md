@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "classification": "retired historical snapshot, not accepted or finalized",
+  "source_commit": "48ff62f8e44f4b6cced9e35c984085764659c282",
+  "source_path": ".specsync/changes/update-the-public-docs-for-the-2-1-monorepo-and-make-repository-spec-coverage-100",
+  "snapshot_directory": "update-the-public-docs-for-the-2-1-monorepo-and-make-repository-spec-coverage-100",
+  "original_state": "verifying",
+  "file_count": 12,
+  "files_sha256": {
+    "state.json": "39fd4a45197a4fd9a669da2162a26e1d98ed927cfd60e507cca9f6480afad6a3",
+    "verification-attempts.json": "70e0ab334593273cb638533863594c43c46e89f26a87fc46b8504318b600e39d",
+    "verification.json": "69fffd5759f32e9be4e9809134efb46c6182b3aa02ca92b418a81d40425eb777",
+    "tasks.md": "700763447fe42cda6f481d6e787a0baeffdfda6d483e45b5b547bfc0909ef391",
+    "testing.md": "f37efa695019b83775ac13dc7ee7c8102637d77725bc54225cb33450a98a91ed",
+    "plan.md": "dbf769b2a03c7a52943ea51c044fd38965f8ccbfa11cda5169023cc9d309b2ec",
+    "context.md": "730535d0f92e4750c4aae6456672bb67212d74820b7a002d526649bf6f065ade",
+    "requirements.md": "1d1974a3a41246ef54c03a08d5a5d85c04808e9755452863d23a2c123f3dd535",
+    "approvals.json": "6d9c110c2a73f752b1fcc7e831e6cfdffaba11bfdff651eabbe650b5eb79ab21",
+    "change.md": "f98b38d15cba4f2dd784c93b348787889aa6e2301fabbae255bf637e498e5bc6",
+    "docs.md": "a21196dc9b52024401d32caa907e0824f6af39d6399bd0071f48ff97634af5a1",
+    "deltas/ThreeMD.md": "d61c5cabbff5d5151bc668496e43f708565c384982576c8316524a5fb125666b"
+  }
+}

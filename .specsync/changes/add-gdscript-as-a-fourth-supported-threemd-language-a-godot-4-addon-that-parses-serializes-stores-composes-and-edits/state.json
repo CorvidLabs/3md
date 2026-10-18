@@ -10,7 +10,7 @@
   "state": "draft",
   "base_commit": "773d927edb1e80d0561c4d8a1d155127c7e4d156",
   "created_at": 1791472582,
-  "updated_at": 1791472649,
+  "updated_at": 1792337634,
   "affected_specs": [
     "ThreeMD"
   ],
@@ -39,6 +39,7 @@
   "dependencies": [],
   "answers": {
     "architecture_risk": "yes",
+    "constraints": "Existing plan/context constraints: preserve text grammar, binary envelope and composition profile; Godot 4.7, explicit unsupported LZFSE, no library file/network IO, separate game helper; interchange protocol 3md-interchange-1 with 16 pairs. Sculpt and element/dist rebuilds are out of scope. Preserve trust policy; no publish, tag, merge or invented definition approval. Recorded from the existing artifacts during authorized manual repair, not a new human decision.",
     "public_contract": "yes"
   }
 }

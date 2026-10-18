@@ -35,8 +35,8 @@ jobs:
         with:
           bun-version: latest
 
-      # Strict SpecSync contract uses the same 6.0.0 binary Trust 1.2.2
-      # defaults to. 6.x check is spec validation plus coverage only;
+      # Strict SpecSync and Trust explicitly select the 6.1.1 engine.
+      # Keep the independent canonical contract. 6.x check is spec validation plus coverage only;
       # Trust owns lifecycle verify.
       - name: Install pinned lifecycle tools
         shell: bash
@@ -44,7 +44,7 @@ jobs:
           set -euo pipefail
           archive="$RUNNER_TEMP/specsync-macos-aarch64.tar.gz"
           checksum="$archive.sha256"
-          base="https://github.com/CorvidLabs/spec-sync/releases/download/v6.0.0"
+          base="https://github.com/CorvidLabs/spec-sync/releases/download/v6.1.1"
           curl -fsSL "$base/specsync-macos-aarch64.tar.gz" -o "$archive"
           curl -fsSL "$base/specsync-macos-aarch64.tar.gz.sha256" -o "$checksum"
           expected="$(awk '{print $1}' "$checksum")"
@@ -73,8 +73,44 @@ jobs:
       - name: CorvidLabs Trust gate
         id: trust
         uses: CorvidLabs/trust@bccd89c111d47778c97c5064fb62ab51695e04ea # v1.2.2
+        with:
+          specsync-version: "6.1.1"
 
       # Durability: fail if the standing rules block was removed.
       - name: Trust block present
         run: |
           grep -q "CorvidLabs trust toolchain: BEGIN" AGENTS.md
+
+  # Archive readiness is a separate status: product Trust can complete before human
+  # implementation review and same-PR finalization. Both statuses remain required.
+  archive-readiness:
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install checksum-verified SpecSync 6.1.1
+        shell: bash
+        run: |
+          set -euo pipefail
+          archive="$RUNNER_TEMP/specsync-macos-aarch64.tar.gz"
+          checksum="$archive.sha256"
+          base="https://github.com/CorvidLabs/spec-sync/releases/download/v6.1.1"
+          curl -fsSL "$base/specsync-macos-aarch64.tar.gz" -o "$archive"
+          curl -fsSL "$base/specsync-macos-aarch64.tar.gz.sha256" -o "$checksum"
+          expected="$(awk '{print $1}' "$checksum")"
+          actual="$(shasum -a 256 "$archive" | awk '{print $1}')"
+          test "$actual" = "$expected"
+          mkdir -p "$RUNNER_TEMP/specsync-bin"
+          tar -xzf "$archive" -C "$RUNNER_TEMP/specsync-bin"
+          mv "$RUNNER_TEMP/specsync-bin/specsync-macos-aarch64" "$RUNNER_TEMP/specsync-bin/specsync"
+          chmod +x "$RUNNER_TEMP/specsync-bin/specsync"
+          echo "$RUNNER_TEMP/specsync-bin" >> "$GITHUB_PATH"
+
+      - name: Lifecycle regression controls
+        run: bash scripts/test-specsync-lifecycle.sh
+
+      - name: Active lifecycle and archive gate
+        if: ${{ always() }}
+        run: bash scripts/check-specsync-lifecycle.sh
