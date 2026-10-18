@@ -419,3 +419,19 @@ Leif's veto:
    uncompressed container must fit `Emax`.
 7. **Integration.** WP3 to WP5 land together with WP6 in one integration merge.
 8. **CLI tests.** They stay in `Tests/ThreeMDTests`; no test target is added, so `Package.swift` is not touched.
+
+## Approach
+
+Execute the existing WP0–WP12 plan above for ThreeMD 2.1.0 (SPEC 1.2) across Swift, TypeScript and Rust, preserving the shared fixtures and nine-pair interchange integration point.
+
+## Out of scope
+
+No individual work package merges, tags or publishes on its own. Existing ground rules and declared directory ownership remain binding; this heading normalization adds no delivery scope or approval.
+
+## Steps
+
+Follow the existing Order graph and WP0–WP12 sections above, including integration verification before release readiness. Their detailed work and outstanding evidence remain unchanged.
+
+## Constraints consulted
+
+This normalization uses this plan's Ground rules, Owners and directory ownership, Order and Risks sections. Keep the original pinned-tool historical requirements and explicit prohibition on weakening lifecycle, contract, risk or provenance gates; no claim is made that deferred work is complete.

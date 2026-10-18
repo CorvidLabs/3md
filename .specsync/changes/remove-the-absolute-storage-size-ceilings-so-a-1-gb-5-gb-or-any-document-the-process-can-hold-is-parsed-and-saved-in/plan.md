@@ -13,3 +13,23 @@ artifact: plan
 6. Update SPEC.md, the module spec, the README, the migration note, the linked-file contract, and the test-plan notes. Remove the README chart that says decoding stops at 64 MiB.
 7. Prove a real 1 GB text and kind-2 round trip locally. Do not commit that allocation and do not add it to CI.
 8. Run the focused Swift, Bun, and Rust tests, then `fledge trust verify`. Definition approval stays with the user. Do not tag `v2.1.0`.
+
+## Approach
+
+Use host-supported storage limits and wider length/count integers while preserving explicit caller lower limits and existing small-file encodings.
+
+## Out of scope
+
+Composition profile ceilings and edit budgets remain unchanged. Coordinates retain four-byte integers. This repair does not authorize a tag, merge or publication.
+
+## Steps
+
+Follow the eight existing numbered steps above. Keep the real 1 GB round-trip check local and out of CI, and record its actual evidence separately.
+
+## Risks
+
+The existing context records host-integer limits near 2 GiB on 32-bit processes, JavaScript safe-integer bounds and possible memory exhaustion. Do not run a large allocation without sufficient host memory.
+
+## Constraints consulted
+
+This format normalization uses this record's existing plan.md and context.md and the constraints answer sourced from those artifacts. It adds no human approval, completed-test claim or historical acceptance.
