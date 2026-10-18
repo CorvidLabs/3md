@@ -7,11 +7,11 @@
   "title": "Adopt verified SpecSync 6.1.1 approval review learning and archive lifecycle for 3md",
   "description": "Adopt verified SpecSync 6.1.1 approval review learning and archive lifecycle for 3md",
   "kind": "operations",
-  "state": "verifying",
+  "state": "archived",
   "canonical_applied": true,
   "base_commit": "c19963be38ec9843b738c1dc335c53809bb99207",
   "created_at": 1792331985,
-  "updated_at": 1792333779,
+  "updated_at": 1792335727,
   "affected_specs": [],
   "affected_paths": [
     ".github/workflows/trust.yml",

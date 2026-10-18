@@ -1,6 +1,6 @@
 ---
 id: adopt-verified-specsync-6-1-1-approval-review-learning-and-archive-lifecycle-for-3md
-state: implementing
+state: archived
 type: operations
 base_commit: c19963be38ec9843b738c1dc335c53809bb99207
 ---
