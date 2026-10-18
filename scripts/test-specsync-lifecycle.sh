@@ -43,6 +43,14 @@ p='.specsync/sdd.json'; d=json.load(open(p)); d['meaningful_paths'].remove(sys.a
 PY
   fail_for "missing meaningful paths: $path"
 done
+for ignored in Sources/uncovered.swift Tests/hidden/; do
+  cp "$repo/.specsync/sdd.json" .specsync/sdd.json
+  python3 - "$ignored" <<'INNER'
+import json,sys
+p='.specsync/sdd.json'; d=json.load(open(p)); d['ignored_paths']=[sys.argv[1]]; open(p,'w').write(json.dumps(d))
+INNER
+  fail_for 'unexpected ignored paths'
+done
 cp "$repo/.specsync/sdd.json" .specsync/sdd.json
 mkdir -p .specsync/changes/unfinished
 # An empty orphan directory must also be rejected even when native audit ignores it.
