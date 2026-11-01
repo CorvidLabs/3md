@@ -1,0 +1,72 @@
+{
+  "timestamp": 1793542144,
+  "commit": "b318917517fa4b616e64d933c9abd79d8596666f",
+  "contract_digest": "647b109ba86408f3aae210b49607e66ce58388ee42d6a00cd17099471b834393",
+  "execution_digest": "fb4a07ba68af1d413bfeee79de88570a0a0f3f062a40db1f701e31bd3ff1465d",
+  "workspace_digest": "c7cc4ad8861b8a4e663129f0fb49f5a439c46eeae141004e60044c7ddb922d1d",
+  "acceptance_input_digest": "c9939751b9f01cb2127d355c55e6d7ff8fff74005ccea12725e1bd110dae3deb",
+  "acceptance_manifest": {
+    "schema_version": 1,
+    "entries": [
+      {
+        "path": ".github/workflows/linux.yml",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "de2299b3e51aec64115c748e649e035503170f76ce16568bec908b99c909ee8e",
+        "entry_digest": "69e3a31dee21233f494e438dbff71ddec71d569a960f139ff0207c03250b668e",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": ".github/workflows/pages.yml",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "9bdc8aa3ff329f9e96a698a5defd6e403ca85b3e072aeb7057b3741201a88450",
+        "entry_digest": "ee4cf045d60cbe4553143d24ee92071926b12141e95493650a515da0babc9379",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": ".github/workflows/sculpt.yml",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "94a73ef4905b03474ed9f4ff0756bef5421b0dad39b4b1a742df0e5786e5669d",
+        "entry_digest": "16ebb974d07e959ed788a5070452074855b27ba2a9ee24939b8bd92898498eb6",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": ".github/workflows/trust.yml",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "34334eae1b95d5b8136f0e47a2eebe97307ce1d1e55b08e849f69fe1bb3b46ac",
+        "entry_digest": "538b2f42bb833925784f01a17574fc225f729ae8b308e09c26ddc2faa0d3205d",
+        "owners": [
+          "@exact:delivery"
+        ]
+      },
+      {
+        "path": ".github/workflows/ui.yml",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "69864de20c629a7d70a4a46fedae0b29d11502bdafc24cb2da34d511ad64a745",
+        "entry_digest": "d3caed85baa2c3c2610b9f5f9171ee0eb1c7796a2bd21fb9277404557ed1a2b7",
+        "owners": [
+          "@exact:delivery"
+        ]
+      }
+    ]
+  },
+  "passed": true,
+  "commands": [
+    {
+      "command": "specsync check (no spec in scope)",
+      "success": true,
+      "exit_code": 0
+    }
+  ],
+  "requirement_ids": []
+}

@@ -1,0 +1,46 @@
+{
+  "approvals": [
+    {
+      "gate": "definition",
+      "actor": "0xLeif",
+      "timestamp": 1793542036,
+      "digest": "647b109ba86408f3aae210b49607e66ce58388ee42d6a00cd17099471b834393",
+      "note": null,
+      "approved_scope": {
+        "schema_version": 1,
+        "change_id": "run-the-specsync-archive-gate-before-every-ci-job",
+        "title": "Run the SpecSync archive gate before every CI job",
+        "description": "Run the SpecSync archive gate before every CI job",
+        "kind": "operations",
+        "affected_specs": [],
+        "affected_paths": [
+          ".github/workflows/linux.yml",
+          ".github/workflows/pages.yml",
+          ".github/workflows/sculpt.yml",
+          ".github/workflows/trust.yml",
+          ".github/workflows/ui.yml"
+        ],
+        "no_spec_change": true,
+        "no_spec_change_rationale": "CI workflow ordering only; no canonical spec owns .github/workflows",
+        "acceptance_criteria": [
+          "Every pull_request and push workflow (linux, pages, sculpt, trust, ui) starts with a job named Archive that runs CorvidLabs/spec-sync pinned to 106aaa43d0bcf049f19b173ddb63815a25c3f931 with archive-gate-only true, and every other job in those workflows needs it, so no other job runs while any change under .specsync/changes/ is open."
+        ],
+        "dependencies": [],
+        "supersedes": [],
+        "answers": {
+          "architecture_risk": "no",
+          "public_contract": "no"
+        }
+      },
+      "approved_delta_digests": {}
+    },
+    {
+      "gate": "finalization",
+      "actor": "specsync:finalization",
+      "timestamp": 1793542185,
+      "digest": "79eb4828f2916ae6f28528f38fed15fc5e273e1c48d848c9346cee3dd0f2c7eb",
+      "note": "Same-PR finalization closing digest"
+    }
+  ],
+  "reopenings": []
+}
