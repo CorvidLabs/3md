@@ -1,0 +1,40 @@
+{
+  "schema_version": 1,
+  "workflow_version": 2,
+  "workflow_origin_version": 2,
+  "id": "run-the-specsync-archive-gate-before-every-ci-job",
+  "slug": "run-the-specsync-archive-gate-before-every-ci-job",
+  "title": "Run the SpecSync archive gate before every CI job",
+  "description": "Run the SpecSync archive gate before every CI job",
+  "kind": "operations",
+  "state": "archived",
+  "canonical_applied": true,
+  "base_commit": "c19963be38ec9843b738c1dc335c53809bb99207",
+  "created_at": 1793541369,
+  "updated_at": 1793542192,
+  "affected_specs": [],
+  "affected_paths": [
+    ".github/workflows/linux.yml",
+    ".github/workflows/pages.yml",
+    ".github/workflows/sculpt.yml",
+    ".github/workflows/trust.yml",
+    ".github/workflows/ui.yml"
+  ],
+  "no_spec_change": true,
+  "no_spec_change_rationale": "CI workflow ordering only; no canonical spec owns .github/workflows",
+  "acceptance_criteria": [
+    "Every pull_request and push workflow (linux, pages, sculpt, trust, ui) starts with a job named Archive that runs CorvidLabs/spec-sync pinned to 106aaa43d0bcf049f19b173ddb63815a25c3f931 with archive-gate-only true, and every other job in those workflows needs it, so no other job runs while any change under .specsync/changes/ is open."
+  ],
+  "selected_artifacts": [
+    "context",
+    "plan",
+    "testing",
+    "design",
+    "tasks"
+  ],
+  "dependencies": [],
+  "answers": {
+    "architecture_risk": "no",
+    "public_contract": "no"
+  }
+}
