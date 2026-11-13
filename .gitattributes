@@ -21,3 +21,6 @@ web/examples-gallery.3md linguist-generated linguist-language=Text
 web/gifs/** linguist-generated
 web/assets/three-md.js linguist-generated
 conformance/** linguist-documentation
+.chough/bugs/*.md merge=chough-bug
+knowledge/index.md merge=chough-generated
+knowledge/journal/feed.xml merge=chough-generated
