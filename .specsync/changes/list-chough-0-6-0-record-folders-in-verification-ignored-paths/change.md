@@ -1,6 +1,6 @@
 ---
 id: list-chough-0-6-0-record-folders-in-verification-ignored-paths
-state: draft
+state: approved
 type: operations
 base_commit: 8a005248febe4d91db12456c2f5ab8d91e60ba53
 ---
