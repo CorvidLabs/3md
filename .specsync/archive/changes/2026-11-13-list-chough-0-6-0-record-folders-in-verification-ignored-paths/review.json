@@ -1,0 +1,16 @@
+{
+  "schema_version": 2,
+  "change_id": "list-chough-0-6-0-record-folders-in-verification-ignored-paths",
+  "reviewer": "corvid-agent",
+  "provenance": {
+    "schema_version": 1,
+    "provider": "github_actions_check",
+    "required_check": "SpecSync scoped review"
+  },
+  "verdict": "pass",
+  "implementation_commit": "2f260adc13c764e5d96cbc50c65c5cfd23010f0c",
+  "contract_digest": "a98b653c5e84e4f8808e4e71006532659d5c80f058bace841d196ea2025eb727",
+  "execution_digest": "0648df713065a94812710c5706dea0744e1f0c12f431f8d0b6bdf82ebad58737",
+  "workspace_digest": "f5bfcaf1419722ac006002d856a45c609221299b08e299ea7d8f0fc3a0d9c17a",
+  "timestamp": 1794580560
+}

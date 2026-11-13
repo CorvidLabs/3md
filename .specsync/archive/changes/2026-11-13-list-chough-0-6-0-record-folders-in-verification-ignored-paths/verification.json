@@ -1,0 +1,32 @@
+{
+  "timestamp": 1794580520,
+  "commit": "2f260adc13c764e5d96cbc50c65c5cfd23010f0c",
+  "contract_digest": "a98b653c5e84e4f8808e4e71006532659d5c80f058bace841d196ea2025eb727",
+  "execution_digest": "0648df713065a94812710c5706dea0744e1f0c12f431f8d0b6bdf82ebad58737",
+  "workspace_digest": "f5bfcaf1419722ac006002d856a45c609221299b08e299ea7d8f0fc3a0d9c17a",
+  "acceptance_input_digest": "3f57057f4f560c2638d6fc4a1bdf939823bcb7c3788dcc8e9cfec0da4f200c7d",
+  "acceptance_manifest": {
+    "schema_version": 1,
+    "entries": [
+      {
+        "path": ".specsync/sdd.json",
+        "kind": "file",
+        "mode": 33188,
+        "payload_digest": "7680975e0b84b8abb2631b02d4b57241df924a4bc6f39659037f4294fb16b775",
+        "entry_digest": "e226e676c0f5bf72375d77c642554089804b02979212a0b6e7a94c9ced47e8f6",
+        "owners": [
+          "@exact:delivery"
+        ]
+      }
+    ]
+  },
+  "passed": true,
+  "commands": [
+    {
+      "command": "specsync check (no spec in scope)",
+      "success": true,
+      "exit_code": 0
+    }
+  ],
+  "requirement_ids": []
+}
